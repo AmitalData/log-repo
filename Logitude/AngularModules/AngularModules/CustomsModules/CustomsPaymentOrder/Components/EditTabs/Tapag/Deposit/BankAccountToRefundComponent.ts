@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { AppTool, DateTool } from '../../../../../../Infrastructure/Tools';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
@@ -36,7 +36,7 @@ export class BankAccountToRefundComponent
     public DataContext: BankAccountToRefundComponent = this;
     public ObjectTableId: string;
     public CurrentEditComponentId: string;
-
+    public integer: any;
     _TapagMessagesService: TapagMessagesService = new TapagMessagesService();
     _CustomBankListService: CustomBankListService = new CustomBankListService();
     public banksList: CustomBankList[] = [];
