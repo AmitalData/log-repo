@@ -158,6 +158,7 @@
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\RecallSuppliersFromFileComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\RequiredDocumentComponent.html" />
     <Content Include="CustomsModules\CustomsGeneralRequests\Components\SpecialActivityRequestComponent.html" />
+    <Content Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deposit\BankAccountToRefundComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.html" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.js" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleGeneralComponent.html" />
@@ -327,6 +328,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\SignStationsComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\ModuleCustomsMaintenance.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsPaymentOrder\Components\EditTabs\Tapag\Deposit\BankAccountToRefundComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\ModulePhysicalCheck.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsPhysicalCheck\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsProceduralFault\ModuleDeclarations.ts" />
