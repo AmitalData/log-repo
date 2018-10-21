@@ -336,7 +336,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 if (DRELMetaData != null && DRELMetaData.Count() > 0)
                 {
                     HavingDREL = true;
-                    entityPM.IsSharedWithCustomer = true;
+                    //entityPM.IsSharedWithCustomer = true;
                 }
             }
 
@@ -353,7 +353,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
                 if ((OTName != null && OTName.Name == "Shipment") || theEntityPm.IsDeleted)//&& !string.IsNullOrEmpty(this.Poco.EntityId)
                 {
-                    if (!entityPM.DontAddToQueue && entityPM.IsSharedWithCustomer && !tenantPM.IsDocumentsArchive)
+                    if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantPM.IsDocumentsArchive)
                     {
                         IQueueService queueservice = new DbQueueService();
                         queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
@@ -574,7 +574,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 if (DRELMetaData != null && DRELMetaData.Count() > 0)
                 {
                     HavingDREL = true;
-                    entityPM.IsSharedWithCustomer = true;
+                    //entityPM.IsSharedWithCustomer = true;
                 }
             }
             if (string.IsNullOrEmpty(Poco.SecurityId))
@@ -597,7 +597,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 //var OTName = ObjectTableRepository.GetSingleObjectTable(Poco.ObjectTableId, tenant, false);
                 //if (OTName != null && OTName.Name == "Shipment")//&& !string.IsNullOrEmpty(this.Poco.EntityId)
                 //{
-                if (!entityPM.DontAddToQueue && entityPM.IsSharedWithCustomer && !tenantPM.IsDocumentsArchive && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted))
+                if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantPM.IsDocumentsArchive && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted))
                 {
                     IQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
@@ -775,7 +775,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 if (DRELMetaData != null && DRELMetaData.Count() > 0)
                 {
                     HavingDREL = true;
-                    entityPM.IsSharedWithCustomer = true;
+                    //entityPM.IsSharedWithCustomer = true;
                 }
             }
 
@@ -799,7 +799,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 //if (OTName != null && OTName.Name == "Shipment")//&& !string.IsNullOrEmpty(this.Poco.EntityId)
                 //{
 
-                if (!entityPM.DontAddToQueue && entityPM.IsSharedWithCustomer && !tenantPM.IsDocumentsArchive && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted))
+                if (!entityPM.DontAddToQueue && (entityPM.IsSharedWithCustomer || (theEntityPm.IsSharedWithForwarder && HavingDREL == true)) && !tenantPM.IsDocumentsArchive && (!string.IsNullOrEmpty(entityPM.EntityId) || entityPM.IsDeleted))
                 {
                     if (!LogitudeSettings.IsCostomsDeploy) //ITZIK + YARON 
                     {
