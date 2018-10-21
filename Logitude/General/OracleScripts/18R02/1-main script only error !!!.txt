@@ -149,3 +149,20 @@ ORA-00942: טבלה או view אינם קיימים
 00942. 00000 -  "table or view does not exist"
 *Cause:    
 *Action:
+
+
+
+
+
+----
+
+
+Error starting at line : 472 in command -
+ALTER TABLE declarations MODIFY (acceptancestatuscode VARCHAR2(3 CHAR),mamanstatuscode VARCHAR2(3 CHAR),isclose DEFAULT 0 NOT NULL)
+Error report -
+ORA-02296: לא ניתן לאפשר את (AMINETPRE2_MAIN.) - נמצאו ערכי 'ריק' NULL
+02296. 00000 - "cannot enable (%s.%s) - null values found"
+*Cause:    an alter table enable constraint failed because the table
+           contains values that do not satisfy the constraint.
+*Action:   Obvious
+

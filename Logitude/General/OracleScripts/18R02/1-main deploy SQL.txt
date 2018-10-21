@@ -469,6 +469,12 @@ ALTER TABLE declarations ADD (couriersearchfields NVARCHAR2(500),casualimportera
 
 ALTER TABLE declarations DROP (couriermanifeststatuscode,iscouriermissingclassification);
 
+
+select * from   declarations where acceptancestatuscode is not null;
+/
+commit;
+/
+
 ALTER TABLE declarations MODIFY (acceptancestatuscode VARCHAR2(3 CHAR),mamanstatuscode VARCHAR2(3 CHAR),isclose DEFAULT 0 NOT NULL);
 
 ALTER TABLE declarations ADD CONSTRAINT fk_n772100375 FOREIGN KEY (mamanstatuscode) REFERENCES mamanstatuses (code);
