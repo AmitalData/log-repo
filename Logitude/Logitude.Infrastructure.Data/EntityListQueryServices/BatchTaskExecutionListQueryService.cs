@@ -54,7 +54,8 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                                                             StatusName = a.BatchTaskExecutionStatus.Name,
 
                                                             CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
-
+                                                            
+                                                            Subject = a.Subject,
 
                                                         });
             return query;

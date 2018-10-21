@@ -51,6 +51,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string ProgressMessage { get; set; }
         [Column("ProgressPercentage")]
 	    public int ProgressPercentage { get; set; }
+        [Column("Subject")]
+	    public string Subject { get; set; }
     }
 }
 	 
