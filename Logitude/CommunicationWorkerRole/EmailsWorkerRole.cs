@@ -34,7 +34,8 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.QueueService;
-
+using System.Xml;
+using System.Net.Http;
 
 namespace CommunicationWorkerRole
 {
@@ -414,7 +415,16 @@ namespace CommunicationWorkerRole
                                         case "GLSHK":
                                         case "CHAMP":
                                             {
-                                                SendCommunicationLogToChamp(waitingCommLog, xmlfile);
+                                                if (waitingCommLog.Tenant == 42)
+                                                {
+                                                    SendCommunicationLogToChampAPI(waitingCommLog, xmlfile)
+                                                }
+
+                                                else
+                                                {
+                                                    SendCommunicationLogToChamp(waitingCommLog, xmlfile);
+                                                }
+
                                                 break;
                                             }
 
@@ -436,6 +446,8 @@ namespace CommunicationWorkerRole
 
             }
         }
+
+
 
         private void SendHtmlDocumentByEmail(byte[] filedata, List<CommunicationAttachment> attachmentsList, CommunicationLog currentLog)
         {
@@ -905,6 +917,42 @@ namespace CommunicationWorkerRole
             }
 
             return gateWay;
+        }
+
+        private void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfile)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xmlfile);
+            string jsonText = JsonConvert.SerializeXmlNode(doc);
+
+            string url = "https://community.champ.aero:8443/logitude/test/NO_WAIT";
+
+            var POSTURI = url;
+
+            var content = new StringContent(jsonText, Encoding.UTF8, "application/json");
+
+            using (var client = new HttpClient())
+            {
+
+                client.DefaultRequestHeaders.Add("Password", "logitudett");
+
+                var result = client.PutAsync(POSTURI, content);
+            }
+
+            bool succeeded = true;
+
+            if (succeeded)
+            {                
+                CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+             
+                waitingCommLog.CommunicationStatusTypeCode = "D";
+                waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+                waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                commLogrepository.Update(waitingCommLog);
+                commLogrepository.SubmitChanges();
+            }
         }
     }
 }
