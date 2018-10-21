@@ -1,0 +1,53 @@
+<style>
+    .subTitle{
+        color: #1b90cb;
+        font-size: 16px;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>{{'BatchTaskExecution.TH.Log' | TextCodeTranslationPipe}} </td>
+                    </tr>
+
+                    <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
+
+                    <tr *ngIf="isReady">
+                        <td>
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <table>
+                                            <!-- ErrorLog -->
+                                            <tr class="FormFieldRow">
+                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'ErrorLog'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogTextBox [ObjectFieldName]="'PrametersXml'" [InputType]="'nText'" [DataContext]="DataContext"
+                                                                [RowsCount]="30" [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                            </tr>
+
+
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
