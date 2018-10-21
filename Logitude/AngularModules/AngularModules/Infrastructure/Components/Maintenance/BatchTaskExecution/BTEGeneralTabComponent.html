@@ -12,11 +12,11 @@
                     <tr class="TabTitleRow">
                         <td>{{'BatchTaskExecution.TH.General' | TextCodeTranslationPipe}} </td>
                     </tr>
-                    
+
                     <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
-                    
+
                     <tr *ngIf="isReady">
-                        <td style="width:500px;">
+                        <td style="">
                             <table>
                                 <tr class="FormFieldRow">
                                     <td>
@@ -33,7 +33,7 @@
                                                 </td>
 
                                             </tr>
-                                             
+
                                             <!-- StartDateTime -->
                                             <tr class="FormFieldRow">
                                                 <td [style.text-align]="isRTL ? 'right' : 'left'">
@@ -81,7 +81,7 @@
                                                 </td>
 
                                                 <td [style.text-align]="isRTL ? 'right' : 'left'">
-                                                    {{ProgressPercentage}}
+                                                    {{ProgressPercentage}}%
                                                 </td>
 
                                             </tr>
@@ -93,31 +93,6 @@
                                     </td>
                                 </tr>
                             </table>
-                        </td>
-
-                        <td style="width: 80px;"><div></div></td>
-
-                        <td>
-                            <table>
-                                <!-- PrametersXml -->
-                                <tr class="FormFieldRow">
-                                    <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                                        <LogLabel [ObjectFieldName]="'PrametersXml'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td [style.text-align]="isRTL ? 'right' : 'left'">
-                                        {{PrametersXml}}
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td >
-                                    </td>
-                                </tr>
-                            </table>
-
-
                         </td>
                         <td><div></div></td>
                     </tr>
