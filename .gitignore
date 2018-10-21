@@ -360,3 +360,7 @@ __pycache__/
 
 /Logitude/JustWebFreight/WebFreight.Web/JustWebFreightConnectionStrings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustWebFreightappSettings.config
+
+/JustConfig
+/JustConfig/
+/JustConfig/*
