@@ -39,6 +39,8 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using System.IdentityModel.Protocols.WSTrust;
 using Logitude.SystemLogs;
 using WebFreight.Web.App_Code;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
 
 namespace WebFreight.Web
 {
@@ -1042,7 +1044,18 @@ namespace WebFreight.Web
     
                 shipmentMobilePM = MapPmToShipmentMobilePM(pm, tenant, contactId);
 
-                shipmentMobilePM.PartnerLists = GetShipmentPartnersForMobile(pm, tenant, true);
+                #region SharedLogisticsSetting
+                SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(pm.Tenant);
+                SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(pm.Tenant.ToString(), pm.Tenant);
+                if (sharedLogisticsSetting != null)
+                {
+                    shipmentMobilePM.IsHideMainCarrier = !sharedLogisticsSetting.IsMainCarrierShared;
+                    shipmentMobilePM.IsHidePickDelivCarrier = !sharedLogisticsSetting.IsPickDelivCarriesShared;
+                }
+
+                #endregion
+
+                shipmentMobilePM.PartnerLists = GetShipmentPartnersForMobile(pm, tenant, true, sharedLogisticsSetting);
 
                 shipmentMobilePM.EventsLists = GetEntityEvents(pm.Id, "Shipment", cardtype, tenant , pm);
 
@@ -1123,7 +1136,7 @@ namespace WebFreight.Web
         }
 
 
-        private List<ShipmentPartnerPM> GetShipmentPartnersForMobile(ShipmentPM shipment, int tenant, bool ismobile)
+        private List<ShipmentPartnerPM> GetShipmentPartnersForMobile(ShipmentPM shipment, int tenant, bool ismobile , SharedLogisticsSetting sharedLogisticsSetting)
         {
             List<ShipmentPartnerPM> result = new List<ShipmentPartnerPM>();
 
@@ -1132,12 +1145,12 @@ namespace WebFreight.Web
             CountryRepository countryRepository = new CountryRepository(tenant);
 
             CardRepository cardRepository = new CardRepository(tenant);
-            // ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-
-            //Shipment shipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
 
             if (shipment != null)
             {
+                bool isAgentShared = true;
+                if (sharedLogisticsSetting != null) isAgentShared = sharedLogisticsSetting.IsAgentShared;
+         
 
                 if (!string.IsNullOrEmpty(shipment.ShipperId))
                 {
@@ -1232,7 +1245,7 @@ namespace WebFreight.Web
                     result.Add(item);
                 }
 
-                if (!string.IsNullOrEmpty(shipment.AgentId))
+                if (!string.IsNullOrEmpty(shipment.AgentId) && isAgentShared)
                 {
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
                     item.Id = shipment.AgentId;
@@ -1363,6 +1376,7 @@ namespace WebFreight.Web
                     result.Add(item);
                 }
 
+                
                 if (!string.IsNullOrEmpty(shipment.AccountManagerUserId))
                 {
                     Contact contact = contactRepository.GetSingleContactByIdAndTenant(shipment.AccountManagerUserId, tenant, true);
