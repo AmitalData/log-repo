@@ -418,10 +418,10 @@
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.EntityFramework">
-      <HintPath>..\..\General\Dlls\System.ServiceModel.DomainServices.EntityFramework.dll</HintPath>
+      <HintPath>..\..\..\..\main\JustWebFreight\WebFreight.Web\bin\System.ServiceModel.DomainServices.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel.DomainServices.Hosting">
-      <HintPath>..\..\General\Dlls\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
+      <HintPath>..\..\..\..\main\JustWebFreight\WebFreight.Web\bin\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -2576,6 +2576,8 @@
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceLineAction.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.SATPaymentMethod.cs" />
     <Compile Include="CommonDataModel\DomainServices\PartnersDomainService.WarehouseType.cs" />
+    <Content Include="JustWebFreightappSettings.config" />
+    <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
     <None Include="Resources\Stimulsoft Reports.Ultimate 2013.1 Trial A252_020150909133627201254900033002.mrt.txt" />
@@ -6110,45 +6112,8 @@
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ mkdir  $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\ mkdir  $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Js" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AOTScripts\ mkdir  $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AOTScripts\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\AOTScripts" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AOTScripts\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Appcss\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Appcss\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Appcss" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Appcss\" /Y /E 
- 
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AppStyles\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AppStyles\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\AppStyles" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AppStyles\" /Y /E 
-
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Froala\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Froala\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Froala" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Froala\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\font-awesome\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\font-awesome\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\font-awesome" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\font-awesome\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Images\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Images\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Images" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Images\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Js" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\styles\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\styles\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\styles" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\styles\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\dist\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\dist" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ApplicationStyles\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ApplicationStyles\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\ApplicationStyles" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ApplicationStyles\" /Y /E
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\_Resources\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\_Resources\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\_Resources" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\_Resources\" /Y /E
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!--<Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.4\tools\Microsoft.Bcl.Build.targets" />-->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

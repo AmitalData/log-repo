@@ -134,7 +134,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
           
             this.BuildCustomFromFieldbjectFieldLists();
-            if (this.SelectedOperator.Code == "CHANGED") {
+            if (this.HideGeneralControl(this.SelectedOperator.Code)) {
                 this.IsHideGeneralControl = true;
                 this.FieldValue = "";
                 this.CurrentEntityPM.Value = "";
@@ -341,6 +341,21 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         this.AddEditAutomationsViewModel.IsChangeCondition = true;
     }
 
+
+    HideGeneralControl(operatorCode: string) {
+        var result: boolean = false;
+        if (operatorCode == "CHANGED" || operatorCode == "ISEMPTY" || operatorCode == "ISNOTEMPTY") {
+            result = true;
+        }
+
+        return result;
+    }
+
+
+
+
+
+
     IsHideGeneralControl: boolean = false;
     OperatorListValueChanged(item) {
         if (item) {
@@ -355,20 +370,20 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
             var IsReloadGenerateControl = false;
             this.CurrentEntityPM.OperatorCode = this.SelectedOperator.Code;
 
-            if (item.Code == "CHANGED") {
+            if (this.HideGeneralControl(item.Code)) {
                 this.IsHideGeneralControl = true;
                 this.FieldValue = "";
                 this.CurrentEntityPM.Value = "";
 
             } else {
                 this.IsHideGeneralControl = false;
-                if (item.Code.indexOf("F") != -1 || item.Code == "CHANGED") {
-                    if (this.CurrentEntityPM.OperatorCode.indexOf("F") == -1 || item.Code != "CHANGED") {
+                if (item.Code.indexOf("F") != -1) {
+                    if (this.CurrentEntityPM.OperatorCode.indexOf("F") == -1) {
                         IsReloadGenerateControl = true;
                     }
                 }
                 else {
-                    if (this.CurrentEntityPM.OperatorCode.indexOf("F") != -1 || this.CurrentEntityPM.OperatorCode == "CHANGED") {
+                    if (this.CurrentEntityPM.OperatorCode.indexOf("F") != -1 ) {
                         IsReloadGenerateControl = true;
                     }
                 }
