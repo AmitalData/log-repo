@@ -1,0 +1,101 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+using Logitude.BL.Helpers;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
+
+ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
+{ 
+   public partial class JournalStatusTypeQueryService
+   {
+   
+		Logitude.Accounting.BL.EntityQueryServices.JournalStatusTypeQueryService query; 
+
+        public JournalStatusTypeQueryService(int tenant)
+        {
+		
+			query = new Logitude.Accounting.BL.EntityQueryServices.JournalStatusTypeQueryService(tenant);
+        }
+
+		
+		public JournalStatusType GetJournalStatusTypeByJournalStatusID(string JournalStatusID,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePM(JournalStatusID,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("JournalStatusType with JournalStatusID " + JournalStatusID + " doesn't exist");
+
+				return JournalStatusTypeDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
+		public JournalStatusType JournalStatusTypeDataMapping(JournalStatusTypePM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+        {
+		    try
+            {
+				   
+				   var temp = new JournalStatusType(); 
+				   temp.Code = MyEntityPM.JournalStatusID;
+				   temp.EnglishName = MyEntityPM.EnglishName;
+				   temp.LocalName = MyEntityPM.LocalName;					
+				   return temp;
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        } 
+
+		public JournalStatusTypePM JournalStatusTypeDataMappingAndValidatin(JournalStatusType MyEntity,int Tenant,string ComputingPartnerName = "")
+        {
+		    try
+            {
+				   					var temp = new JournalStatusTypePM();
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePM(MyEntity.Code);
+					} 					   
+					if(temp == null)
+					{
+					    throw new ApplicationException("JournalStatusType with Code " + MyEntity.Code + " doesn't exist");
+					} 
+					temp.JournalStatusID = MyEntity.Code;
+					temp.EnglishName = MyEntity.EnglishName;
+					temp.LocalName = MyEntity.LocalName;					   
+					   return temp;
+		    }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            } 
+        }
+		 
+   }
+}
