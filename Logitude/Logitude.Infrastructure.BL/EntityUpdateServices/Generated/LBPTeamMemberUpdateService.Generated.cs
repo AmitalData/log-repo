@@ -60,7 +60,7 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
   
 		
 	    }
-
+        
 		protected override void FillDefaultValuesOnUpdate(LBPTeamMemberPM entityPM)
         {       
            
