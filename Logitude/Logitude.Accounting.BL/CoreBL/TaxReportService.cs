@@ -289,7 +289,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 taskExe = new BatchTaskExecutionPM()
                 {
-                    Id = IdCounter.GetNumber("BatchTaskExecution", tenant),
                     Tenant = tenant,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     ClassName = "Logitude.Accounting.BL.TestService.BatchTaxReportService,Logitude.Accounting.BL",
