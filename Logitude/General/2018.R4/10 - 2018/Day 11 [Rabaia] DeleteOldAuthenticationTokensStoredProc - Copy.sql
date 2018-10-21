@@ -1,6 +1,6 @@
 
  
-
+drop procedure [dbo].[DeleteOldAuthenticationTokens]
 GO
 /****** Object:  StoredProcedure [dbo].[DeleteOldAuthenticationTokens]    Script Date: 2018-10-11 9:34:04 PM ******/
 SET ANSI_NULLS ON
