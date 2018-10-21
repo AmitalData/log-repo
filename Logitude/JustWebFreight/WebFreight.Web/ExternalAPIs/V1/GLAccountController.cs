@@ -146,7 +146,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         GLAccountQueryService mappingService = new GLAccountQueryService(tenant);
                         GLAccountPM entityPM = mappingService.GLAccountDataMappingAndValidatin(entity, tenant);
 
-
+                        if (entity.Parent != null)
+                        {
+                            mappingService.CheckParentCurrency(entityPM);
+                        }
 
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         GLAccountUpdateService service = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

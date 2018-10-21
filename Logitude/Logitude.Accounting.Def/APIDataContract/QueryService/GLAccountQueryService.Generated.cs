@@ -236,7 +236,8 @@ using Logitude.Accounting.Data;
 					   					   temp.RevenueExpenseType = RevenueExpenseTypeService16.GetRevenueExpenseTypeByCode(MyEntityPM.RevenueExpenseType,Tenant); 
 			       
 					   				   }
-				   					
+				   
+				   temp.Parent = MyEntityPM.DisplayNumber;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -520,7 +521,8 @@ using Logitude.Accounting.Data;
 						 
 					}
 			
-										   
+					
+					temp.DisplayNumber = MyEntity.Parent;					   
 					   return temp;
 		    }
             catch (Exception ex)
