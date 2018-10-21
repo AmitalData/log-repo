@@ -1,0 +1,121 @@
+<table *ngIf="IsResourcesReady">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:100%;vertical-align:top">
+        <td>
+            <table>
+                <tr style="height:20px">
+                    <td>
+                        <table>
+                            <tr>
+                                <td><span style="color:gray;font-size:11px;vertical-align:top;width:300px">In this screen you choose if money and invoices details can be viewed by the customer or not.</span></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:15px">
+                    <td></td>
+                </tr>
+
+                <tr style="height:100%">
+                    <td class="CellStretch">
+                        <div style="border:1px solid lightGray;height:100%">
+                            <table>
+                                <tr style="height:5px;"><td></td></tr>
+                                <tr style="height:100%">
+
+                                    <td style="margin-left:5px;margin-right:5px;">
+
+                                        <table>
+                                            <tr style="height:100%">
+                                                <td style="width:5px;"></td>
+
+                                                <td>
+                                                    <table>
+                                                        <tr class="FormFieldRow">
+                                                            <td style="width: 100%; font-size:13px; color: #1B90CB;">Areas</td>
+
+                                                            <td style="width: 70px; font-size:13px;">Hide</td>
+
+                                                            <td style="width: 10px;"><div></div></td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow">
+                                                            <td style="width: 100%; font-size:12px;">
+                                                                <LogLabel [ObjectFieldName]="'IsInvoicesMenuEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Invoices menu (including Unpaid and All Invoices views)'"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 70px;">
+                                                                <LogCheckBox [ObjectFieldName]="'IsInvoicesMenuEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="IsInvoicesMenuEnabled"></LogCheckBox>
+                                                            </td>
+
+                                                            <td style="width: 10px;"><div></div></td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow">
+                                                            <td style="width: 100%; font-size:12px;">
+                                                                <LogLabel [ObjectFieldName]="'IsMoneyTabEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Money tab (from shipment level)'"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width: 70px;">
+                                                                <LogCheckBox [ObjectFieldName]="'IsMoneyTabEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="IsMoneyTabEnabled"></LogCheckBox>
+                                                            </td>
+
+                                                            <td style="width: 10px;"><div></div></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+
+                                                <td style="width:5px;"></td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                                <tr style="height:5px;"><td></td></tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
