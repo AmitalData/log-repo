@@ -76,7 +76,7 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
 		    }
 					
 	    }
-
+        
 		protected override void FillDefaultValuesOnUpdate(BatchTaskExecutionPM entityPM)
         {       
            
