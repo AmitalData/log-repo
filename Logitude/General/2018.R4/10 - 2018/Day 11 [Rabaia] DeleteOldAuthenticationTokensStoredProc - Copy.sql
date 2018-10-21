@@ -12,6 +12,6 @@ as
 
 begin
 
-delete from [dbo].[AuthenticationTokens] where [CreateDate] < GETDATE() - 60
- 
+delete from [dbo].[AuthenticationTokens] where [CreateDate] < GETDATE() - 60 and ClientType = 'DocumentDownload'
+
 end
