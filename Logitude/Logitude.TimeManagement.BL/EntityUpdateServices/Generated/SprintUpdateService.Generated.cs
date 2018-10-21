@@ -79,11 +79,17 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                         
 					
 	    }
-
+        
 		protected override void FillDefaultValuesOnUpdate(SprintPM entityPM)
         {       
-            
-		    string email = HttpContext.Current.User.Identity.Name;
+             
+            string email = "system@tenant" + entityPM.Tenant + ".com";
+            if (HttpContext.Current != null)
+            {
+                email = HttpContext.Current.User.Identity.Name; 
+            }
+             
+		    //string email = HttpContext.Current.User.Identity.Name;
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
 			if (loggedContact != null)

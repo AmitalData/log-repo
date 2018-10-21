@@ -1,6 +1,6 @@
 
  
-
+drop procedure [dbo].[DeleteOldAuthenticationTokens]
 GO
 /****** Object:  StoredProcedure [dbo].[DeleteOldAuthenticationTokens]    Script Date: 2018-10-11 9:34:04 PM ******/
 SET ANSI_NULLS ON
@@ -12,6 +12,6 @@ as
 
 begin
 
-delete from [dbo].[AuthenticationTokens] where [CreateDate] < GETDATE() - 60
- 
+delete from [dbo].[AuthenticationTokens] where [CreateDate] < GETDATE() - 60 and ClientType = 'DocumentDownload'
+
 end
