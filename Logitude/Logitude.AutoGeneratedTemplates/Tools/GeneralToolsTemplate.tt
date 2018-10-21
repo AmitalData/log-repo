@@ -4,7 +4,7 @@
  
 <#@ Assembly Name="Microsoft.CSharp.dll" #>
 <#@ Assembly Name="System.Linq.dll" #> 
-<#@ Assembly name="$(SolutionDir)General\Dlls\AmazedSaint.Elastic.dll" #>
+<#@ Assembly name="$(SolutionDir)packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll" #>
 <#@ Import Namespace="System.Xml" #>
 <#@ Import Namespace="System.Xml.Linq" #>
 <#@ Import Namespace="System.Linq" #>
