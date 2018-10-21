@@ -70,57 +70,68 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
         this.PartnersList = [];
         this.CarriersList = [];
 
-        var item1: PartnerItem = new PartnerItem();
+        var item1: PartnerItem = new PartnerItem(this);
+        item1.Code = "SH";
         item1.PartnerName = "Shipper";
         item1.SuggestedIsChecked = true;
         item1.ChooseIsChecked = true;
 
-        var item2: PartnerItem = new PartnerItem();
+        var item2: PartnerItem = new PartnerItem(this);
+        item2.Code = "CO";
         item2.PartnerName = "Consignee";
         item2.SuggestedIsChecked = true;
         item2.ChooseIsChecked = true;
 
-        var item3: PartnerItem = new PartnerItem();
+        var item3: PartnerItem = new PartnerItem(this);
+        item3.Code = "AG";
         item3.PartnerName = "Agent";
         item3.SuggestedIsChecked = this.TenantZeroEntity.IsAgentShared;
         item3.ChooseIsChecked = this.EntityPM.IsAgentShared;
 
-        var item4: PartnerItem = new PartnerItem();
+        var item4: PartnerItem = new PartnerItem(this);
+        item4.Code = "SN";
         item4.PartnerName = "Shipper Not Exporter";
         item4.SuggestedIsChecked = this.TenantZeroEntity.IsShipperNotExporterShared;
         item4.ChooseIsChecked = this.EntityPM.IsShipperNotExporterShared;
 
-        var item5: PartnerItem = new PartnerItem();
+        var item5: PartnerItem = new PartnerItem(this);
+        item5.Code = "CN";
         item5.PartnerName = "Consignee Not Importer";
         item5.SuggestedIsChecked = this.TenantZeroEntity.IsConsigneeNotImporterShared;
         item5.ChooseIsChecked = this.EntityPM.IsConsigneeNotImporterShared;
 
-        var item6: PartnerItem = new PartnerItem();
+        var item6: PartnerItem = new PartnerItem(this);
+        item6.Code = "N1";
         item6.PartnerName = "Notify 1";
         item6.SuggestedIsChecked = this.TenantZeroEntity.IsNotify1Shared;
         item6.ChooseIsChecked = this.EntityPM.IsNotify1Shared;
 
-        var item7: PartnerItem = new PartnerItem();
+        var item7: PartnerItem = new PartnerItem(this);
+        item7.Code = "N2";
         item7.PartnerName = "Notify 2";
         item7.SuggestedIsChecked = this.TenantZeroEntity.IsNotify2Shared;
         item7.ChooseIsChecked = this.EntityPM.IsNotify2Shared;
 
-        var item8: PartnerItem = new PartnerItem();
+        var item8: PartnerItem = new PartnerItem(this);
+        item8.Code = "FF";
         item8.PartnerName = "Freight Forwarder";
         item8.SuggestedIsChecked = this.TenantZeroEntity.IsFreightForwarderShared;
         item8.ChooseIsChecked = this.EntityPM.IsFreightForwarderShared;
 
-        var item9: PartnerItem = new PartnerItem();
+        var item9: PartnerItem = new PartnerItem(this);
+        item9.Code = "CL";
         item9.PartnerName = "Coloader";
         item9.SuggestedIsChecked = this.TenantZeroEntity.IsColoaderShared;
         item9.ChooseIsChecked = this.EntityPM.IsColoaderShared;
 
-        var item10: PartnerItem = new PartnerItem();
+        var item10: PartnerItem = new PartnerItem(this);
+        item10.Code = "PI";
         item10.PartnerName = "Pickup and Deliveries Carriers";
         item10.SuggestedIsChecked = this.TenantZeroEntity.IsPickDelivCarriesShared;
         item10.ChooseIsChecked = this.EntityPM.IsPickDelivCarriesShared;
 
-        var item11: PartnerItem = new PartnerItem();
+        var item11: PartnerItem = new PartnerItem(this);
+        item11.Code = "MC";
         item11.PartnerName = "Main Carriage Carrier";
         item11.SuggestedIsChecked = this.TenantZeroEntity.IsMainCarrierShared;
         item11.ChooseIsChecked = this.EntityPM.IsMainCarrierShared;
@@ -200,18 +211,80 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
 
 export class PartnerItem {
 
-    constructor() {
+    constructor(public father: SharedLogisticsPartnersPermissiosComponent) {
 
     }
 
+    public Code: string;
     public PartnerName: string;
     public SuggestedIsChecked: boolean;
 
     private chooseIsChecked: boolean;
     public get ChooseIsChecked() { return this.chooseIsChecked; }
     public set ChooseIsChecked(value: boolean) {
-        if (this.chooseIsChecked != null) {
+        if (this.chooseIsChecked != value) {
             this.chooseIsChecked = value;
+
+            this.SetIsChecked();
+        }
+    }
+
+    private SetIsChecked() {
+        switch (this.Code) {
+            case "SH": {
+                
+                break;
+            }
+
+            case "CO": {
+
+                break;
+            }
+
+            case "AG": {
+                this.father.EntityPM.IsAgentShared = this.ChooseIsChecked;
+                break;
+            }
+
+            case "SN": {
+                this.father.EntityPM.IsShipperNotExporterShared = this.ChooseIsChecked;
+                break;
+            }
+
+            case "CN": {
+                this.father.EntityPM.IsConsigneeNotImporterShared = this.ChooseIsChecked;
+                break;
+            }
+
+            case "N1": {
+                this.father.EntityPM.IsNotify1Shared = this.ChooseIsChecked;
+                break;
+            }
+
+            case "N2": {
+                this.father.EntityPM.IsNotify2Shared = this.ChooseIsChecked;
+                break;
+            }
+
+            case "FF": {
+                this.father.EntityPM.IsFreightForwarderShared = this.ChooseIsChecked;
+                break;
+            }
+
+            case "CL": {
+                this.father.EntityPM.IsColoaderShared = this.ChooseIsChecked;
+                break;
+            }
+
+            case "PI": {
+                this.father.EntityPM.IsPickDelivCarriesShared = this.ChooseIsChecked;
+                break;
+            }
+
+            case "MC": {
+                this.father.EntityPM.IsMainCarrierShared = this.ChooseIsChecked;
+                break;
+            }
         }
     }
 }
