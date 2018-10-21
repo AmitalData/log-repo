@@ -306,6 +306,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public string MobileShipmentReference { get; set; }
 
+        public bool IsHideMainCarrier { get; set; }
+        public bool IsHidePickDelivCarrier { get; set; }
 
         public DateTime? StatusDate { get; set; }
 
