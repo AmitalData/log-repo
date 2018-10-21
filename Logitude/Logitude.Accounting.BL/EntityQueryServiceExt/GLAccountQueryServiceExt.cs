@@ -25,53 +25,20 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
 
 
 
-        public GLAccount GetGLAccountById(string Id, int tenant)
+        public GLAccountPM GetGLAccountByDisplayNumber(string number, int tenant)
         {
             EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
-            try
-            {
+           
+     
+            GLAccountPM gLAccount = query.GetSinglePMByDisplayNumber(number, tenant);
 
-
-                var temp = query.GetSinglePM(Id, tenant);
-                if (temp == null)
-                    throw new ApplicationException("GLAccount with Id " + Id + " doesn't exist");
-
-                return GLAccountDataMapping(temp, tenant);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
+            return gLAccount;
+              
+           
+           
         }
 
-        public GLAccount GLAccountDataMapping(GLAccountPM MyEntityPM, int Tenant, string ComputingPartnerName = "")
-        {
-            try
-            {
-
-                var temp = new GLAccount();
-                temp.Id = MyEntityPM.Id;
-                temp.EnglishName = MyEntityPM.EnglishName;
-                temp.LocalName = MyEntityPM.LocalName;
-               
-                //if (MyEntityPM.MainAddressId != null)
-                //{
-                //    AddressQueryService AddressService0 = new AddressQueryService(Tenant);
-                //    temp.MainAddress = AddressService0.GetAddressById(MyEntityPM.MainAddressId, Tenant);
-
-                //}
-
-                temp.VatNumber = MyEntityPM.VatNumber;
-             
-                return temp;
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
+       
 
 
     }

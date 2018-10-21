@@ -1,4 +1,4 @@
-﻿
+
 
 declare var JSZip: any;
 
@@ -14,23 +14,16 @@ import {EntityResourceService} from '../../Infrastructure/Services/EntityResourc
 import {WindowArgs} from '../../Infrastructure/DataContracts/WindowArgs';
 import {SharedLogisticsSummary} from '../DataContracts/SharedLogisticsSummary';
 import {SharedLogisticsStatusStatistics} from '../DataContracts/SharedLogisticsStatusStatistics';
-
 import {LastLoginPartners} from '../DataContracts/LastLoginPartners';
 import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
-
 import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
-
 import {CustomerPMService} from '../../Common/Services/StandardPMs/CustomerPMService';
 import {TenantPMService} from '../../Common/Services/StandardPMs/TenantPMService';
 import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 import {SharedLogisticsService} from '../Services/Others/SharedLogisticsService';
 import {DocumentTypeListService} from '../../Common/Services/StandardLists/DocumentTypeListService';
-
-
-
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
-
 import {CustomerPM} from '../../Common/EntityPMs/CustomerPM';
 
 @Component({
@@ -39,26 +32,21 @@ import {CustomerPM} from '../../Common/EntityPMs/CustomerPM';
     providers: [SharedLogisticsService, DocumentTypeListService],
 })
 
-
 export class SharedLogisticsMainComponent implements OnInit {
     filterAgrs: ApiQueryFilters;
-
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-
     private _customerPMService: CustomerPMService = new CustomerPMService();
-
     IsDisplayAreaDocument: boolean = false;
     IsShowActivationWizardLink: boolean = false;
     IsShowSettingLink: boolean = false;
     SharedLogisticsActivatedEnabled: boolean = false;
     EAWBQueryGroupVisibility: boolean = true;
     MobileActivatedEnabled: boolean = false;
-
     InvitedCustomersCount: number = 0;
     NotInvitedCustomersCount: number = 0;
     ActivatedCustomersCount: number = 0;
-    ActivatedCustomersForMobileCount: number =0;
-    InvitedAgentsCount: number=0;
+    ActivatedCustomersForMobileCount: number = 0;
+    InvitedAgentsCount: number = 0;
     NotInvitedAgentsCount: number = 0;
     ActivatedAgentsCount: number = 0;
     InvitedCustomersCountIsEnabled: boolean;
@@ -68,8 +56,6 @@ export class SharedLogisticsMainComponent implements OnInit {
     NotInvitedAgentsCountIsEnabled: boolean;
     ActivatedAgentsCountIsEnabled: boolean;
     ActivatedCustomersForMobileCountIsEnabled: boolean;
-
-
     TodayCustomerLogsCount: string = "0";
     LastWeekCustomerLogsCount: string = "0";
     LastMonthCustomerLogsCount: string = "0";
@@ -78,7 +64,6 @@ export class SharedLogisticsMainComponent implements OnInit {
     LastMonthAgentLogsCount: string = "0";
     TodayCustomerIsEnabled: boolean;
     LastWeekCustomerIsEnabled: boolean;
-
     LastMonthCustomerIsEnabled: boolean;
     TodayAgentIsEnabled: boolean;
     LastWeekAgentIsEnabled: boolean;
@@ -96,13 +81,10 @@ export class SharedLogisticsMainComponent implements OnInit {
     constructor(public _sharedLogisticsService: SharedLogisticsService, public _documentTypeListService: DocumentTypeListService) {
         if (this.tenantPMService == null) {
             this.tenantPMService = new TenantPMService();
-
         }
     }
 
     ngOnInit() {
-
-      
         this.LoadData();
 
         if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) this.TitleSettings = "Shared Logistics & Mobile Settings";
@@ -114,195 +96,170 @@ export class SharedLogisticsMainComponent implements OnInit {
         else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) this.TitleStatus = "Shared Logistics Status";
     }
 
-
-
-     LoadData() {
+    LoadData() {
         this.LoadCurrentTenant();
         this.LoadLastLoginPartners();
     }
 
+    LoadCurrentTenant() {
+        this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe(res => {
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+                if (myResult) {
+                    this.myTenantPM = myResult;
+                    this.RefreshTenantScreenData();
+                }
+            }
+        });
+    }
+
+    RefreshTenantScreenData() {
+        if (this.myTenantPM.IsSharedLogisticsActivated || this.myTenantPM.IsMobileActivated) {
+            this.SharedLogisticsActivatedEnabled = true;
+            this.IsShowActivationWizardLink = false;
+            this.IsShowSettingLink = true;
+        }
+
+        else {
+            this.SharedLogisticsActivatedEnabled = false;
+            this.IsShowActivationWizardLink = true;
+            this.IsShowSettingLink = false;
+        }
+
+        if (this.myTenantPM.IsMobileActivated) {
+            this.MobileActivatedEnabled = true;
+            this.IsShowActivationWizardLink = false;
+            this.IsShowSettingLink = true;
+        }
+
+        else {
+            this.MobileActivatedEnabled = false;
+        }
+
+        //this.MobileActivatedEnabled = false;
+        this.LoadCardData();
+        this.LoadSharedLogisticsSummary();
+    }
+
+    LoadCardData() {
+        this._sharedLogisticsService.getSharedLogisticsStatistics(SessionInfo.LoggedUserTenant).subscribe(res => {
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+                if (myResult) {
+                    var data: SharedLogisticsStatusStatistics = myResult;
+
+                    if (data != null) {
+                        this.InvitedCustomersCount = data.InvitedCustomersCount;
+                        this.NotInvitedCustomersCount = data.NotInvitedCustomersCount;
+                        this.ActivatedCustomersCount = data.ActivatedCustomersCount;
+                        this.ActivatedCustomersForMobileCount = data.ActivatedCustomersForMobileCount;
+
+                        this.InvitedAgentsCount = data.InvitedAgentsCount;
+                        this.NotInvitedAgentsCount = data.NotInvitedAgentsCount;
+                        this.ActivatedAgentsCount = data.ActivatedAgentsCount;
+                    }
+
+                    if (this.SharedLogisticsActivatedEnabled) {
+                        this.InvitedCustomersCountIsEnabled = this.InvitedCustomersCount == 0 ? false : true;
+                        this.NotInvitedCustomersCountIsEnabled = this.NotInvitedCustomersCount == 0 ? false : true;
+                        this.ActivatedCustomersCountIsEnabled = this.ActivatedCustomersCount == 0 ? false : true;
+
+                        this.InvitedAgentsCountIsEnabled = this.InvitedAgentsCount == 0 ? false : true;
+                        this.NotInvitedAgentsCountIsEnabled = this.NotInvitedAgentsCount == 0 ? false : true;
+                        this.ActivatedAgentsCountIsEnabled = this.ActivatedAgentsCount == 0 ? false : true;
+                    }
+
+                    else {
+                        this.InvitedCustomersCountIsEnabled = false;
+                        this.NotInvitedCustomersCountIsEnabled = false;
+                        this.ActivatedCustomersCountIsEnabled = false;
+
+                        this.InvitedAgentsCountIsEnabled = false;
+                        this.NotInvitedAgentsCountIsEnabled = false;
+                        this.ActivatedAgentsCountIsEnabled = false;
+                    }
+
+                    if (this.MobileActivatedEnabled) {
+                        this.ActivatedCustomersForMobileCountIsEnabled = this.ActivatedCustomersForMobileCount == 0 ? false : true;
+                    }
+                    else {
+                        this.ActivatedCustomersForMobileCountIsEnabled = false;
+                    }
 
 
-     LoadCurrentTenant() {
-         this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe(res=> {
-             var pmResponse: ServiceResponse = res;
-             if (!pmResponse.HasError) {
-                 var myResult = pmResponse.Result;
-                 if (myResult) {
-                     this.myTenantPM = myResult; 
-                     this.RefreshTenantScreenData();
-                 }
-             }
-         });
-     }
+                }
+
+            }
 
 
+        });
+    }
 
-     RefreshTenantScreenData() {
+    LoadSharedLogisticsSummary() {
+        this._sharedLogisticsService.getSharedLogisticsSummaryData(SessionInfo.LoggedUserTenant).subscribe(res => {
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                this.sharedLogisticsSummary = pmResponse.Result;
 
-         if (this.myTenantPM.IsSharedLogisticsActivated || this.myTenantPM.IsMobileActivated) {
-             this.SharedLogisticsActivatedEnabled = true;
-             this.IsShowActivationWizardLink = false;
-             this.IsShowSettingLink = true;
-       
-         }
+                if (this.sharedLogisticsSummary != null) {
+                    this.TodayCustomerLogsCount = this.sharedLogisticsSummary.TodayCustomersCount.toString();
+                    this.LastWeekCustomerLogsCount = this.sharedLogisticsSummary.LastWeekCustomersCount.toString();
+                    this.LastMonthCustomerLogsCount = this.sharedLogisticsSummary.LastMonthCustomersCount.toString();
 
-         else {
-             this.SharedLogisticsActivatedEnabled = false;
-             this.IsShowActivationWizardLink = true;
-             this.IsShowSettingLink = false;
- 
-         }
+                    this.TodayAgentLogsCount = this.sharedLogisticsSummary.TodayAgentsCount.toString();
+                    this.LastWeekAgentLogsCount = this.sharedLogisticsSummary.LastWeekAgentsCount.toString();
+                    this.LastMonthAgentLogsCount = this.sharedLogisticsSummary.LastMonthAgentsCount.toString();
 
+                    if (this.SharedLogisticsActivatedEnabled) {
+                        this.TodayCustomerIsEnabled = this.TodayCustomerLogsCount == "0" ? false : true;
+                        this.LastWeekCustomerIsEnabled = this.LastWeekCustomerLogsCount == "0" ? false : true;
+                        this.LastMonthCustomerIsEnabled = this.LastMonthCustomerLogsCount == "0" ? false : true;
 
-         if (this.myTenantPM.IsMobileActivated) {
+                        this.TodayAgentIsEnabled = this.TodayAgentLogsCount == "0" ? false : true;
+                        this.LastWeekAgentIsEnabled = this.LastWeekAgentLogsCount == "0" ? false : true;
+                        this.LastMonthAgentIsEnabled = this.LastMonthAgentLogsCount == "0" ? false : true;
+                    }
 
-             this.MobileActivatedEnabled = true;
-             this.IsShowActivationWizardLink = false;
-             this.IsShowSettingLink = true;
-         }
-         else {
-             this.MobileActivatedEnabled = false;
+                    else {
+                        this.TodayCustomerIsEnabled = false;
+                        this.LastWeekCustomerIsEnabled = false;
+                        this.LastMonthCustomerIsEnabled = false;
 
-         }
-  
-         //this.MobileActivatedEnabled = false;
-         this.LoadCardData();
-         this.LoadSharedLogisticsSummary();
-     }
+                        this.TodayAgentIsEnabled = false;
+                        this.LastWeekAgentIsEnabled = false;
+                        this.LastMonthAgentIsEnabled = false;
+                    }
+                }
+            }
+        });
+    }
 
+    LoadLastLoginPartners() {
+        this._sharedLogisticsService.getLastLoginPartners(SessionInfo.LoggedUserTenant).subscribe(res => {
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                this.LastPartnersList = pmResponse.Result;
+                this.LastPartnersList.forEach((item) => {
 
-     LoadCardData() {
-         this._sharedLogisticsService.getSharedLogisticsStatistics(SessionInfo.LoggedUserTenant).subscribe(res => {
-             var pmResponse: ServiceResponse = res;
-             if (!pmResponse.HasError) {
-                 var myResult = pmResponse.Result;
-                 if (myResult) {
-                     var data: SharedLogisticsStatusStatistics = myResult;
+                    item.IsEnabledShowDetailsButton = true;
+                });
+            }
+        });
+    }
 
-                     if (data != null) {
-                         this.InvitedCustomersCount = data.InvitedCustomersCount;
-                         this.NotInvitedCustomersCount = data.NotInvitedCustomersCount;
-                         this.ActivatedCustomersCount = data.ActivatedCustomersCount;
-                         this.ActivatedCustomersForMobileCount = data.ActivatedCustomersForMobileCount;
+    EventsPermissionsLinkClick() {
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 820;
+        logWindow.Height = 520;
+        logWindow.Title = "Events Permissions";
+        logWindow.Show("./SharedLogistics/Components/SharedLogisticsEventPermissiosComponent");
+    }
 
-                         this.InvitedAgentsCount = data.InvitedAgentsCount;
-                         this.NotInvitedAgentsCount = data.NotInvitedAgentsCount;
-                         this.ActivatedAgentsCount = data.ActivatedAgentsCount;
-                     }
-
-                     if (this.SharedLogisticsActivatedEnabled) {
-                         this.InvitedCustomersCountIsEnabled = this.InvitedCustomersCount == 0 ? false : true;
-                         this.NotInvitedCustomersCountIsEnabled = this.NotInvitedCustomersCount == 0 ? false : true;
-                         this.ActivatedCustomersCountIsEnabled = this.ActivatedCustomersCount == 0 ? false : true;
-
-                         this.InvitedAgentsCountIsEnabled = this.InvitedAgentsCount == 0 ? false : true;
-                         this.NotInvitedAgentsCountIsEnabled = this.NotInvitedAgentsCount == 0 ? false : true;
-                         this.ActivatedAgentsCountIsEnabled = this.ActivatedAgentsCount == 0 ? false : true;
-                     }
-
-                     else {
-                         this.InvitedCustomersCountIsEnabled = false;
-                         this.NotInvitedCustomersCountIsEnabled = false;
-                         this.ActivatedCustomersCountIsEnabled = false;
-
-                         this.InvitedAgentsCountIsEnabled = false;
-                         this.NotInvitedAgentsCountIsEnabled = false;
-                         this.ActivatedAgentsCountIsEnabled = false;
-                     }
-
-                     if (this.MobileActivatedEnabled) {
-                         this.ActivatedCustomersForMobileCountIsEnabled = this.ActivatedCustomersForMobileCount == 0 ? false : true;
-                     }
-                     else {
-                         this.ActivatedCustomersForMobileCountIsEnabled = false;
-                     }
-
-
-                 }
-
-             }
-
-
-         });
-     }
-
- 
-
-
-     LoadSharedLogisticsSummary() {
-
-         this._sharedLogisticsService.getSharedLogisticsSummaryData(SessionInfo.LoggedUserTenant).subscribe(res => {
-             var pmResponse: ServiceResponse = res;
-             if (!pmResponse.HasError) {
-                 this.sharedLogisticsSummary = pmResponse.Result;
-
-                 if (this.sharedLogisticsSummary != null) {
-                     this.TodayCustomerLogsCount = this.sharedLogisticsSummary.TodayCustomersCount.toString();
-                     this.LastWeekCustomerLogsCount = this.sharedLogisticsSummary.LastWeekCustomersCount.toString();
-                     this.LastMonthCustomerLogsCount = this.sharedLogisticsSummary.LastMonthCustomersCount.toString();
-
-                     this.TodayAgentLogsCount = this.sharedLogisticsSummary.TodayAgentsCount.toString();
-                     this.LastWeekAgentLogsCount = this.sharedLogisticsSummary.LastWeekAgentsCount.toString();
-                     this.LastMonthAgentLogsCount = this.sharedLogisticsSummary.LastMonthAgentsCount.toString();
-
-                     if (this.SharedLogisticsActivatedEnabled) {
-                         this.TodayCustomerIsEnabled = this.TodayCustomerLogsCount == "0" ? false : true;
-                         this.LastWeekCustomerIsEnabled = this.LastWeekCustomerLogsCount == "0" ? false : true;
-                         this.LastMonthCustomerIsEnabled = this.LastMonthCustomerLogsCount == "0" ? false : true;
-
-                         this.TodayAgentIsEnabled = this.TodayAgentLogsCount == "0" ? false : true;
-                         this.LastWeekAgentIsEnabled = this.LastWeekAgentLogsCount == "0" ? false : true;
-                         this.LastMonthAgentIsEnabled = this.LastMonthAgentLogsCount == "0" ? false : true;
-                     }
-
-                     else {
-                         this.TodayCustomerIsEnabled = false;
-                         this.LastWeekCustomerIsEnabled = false;
-                         this.LastMonthCustomerIsEnabled = false;
-
-                         this.TodayAgentIsEnabled = false;
-                         this.LastWeekAgentIsEnabled = false;
-                         this.LastMonthAgentIsEnabled = false;
-                     }
-                 }
-             }
-
-
-
-         });
-
-     }
-
-
-
-     LoadLastLoginPartners() {
-         this._sharedLogisticsService.getLastLoginPartners(SessionInfo.LoggedUserTenant).subscribe(res => {
-             var pmResponse: ServiceResponse = res;
-             if (!pmResponse.HasError) {
-                 this.LastPartnersList = pmResponse.Result;
-                 this.LastPartnersList.forEach((item) => {
-
-                     item.IsEnabledShowDetailsButton= true;
-                 });
-
-             }
-         });
-
-     }
-
-    
-     EventsPermissionsLinkClick() {
-         var windowArgs: any = {};
-         var logWindow = new LogitudeWindow();
-         logWindow.WindowArgs = windowArgs;
-         logWindow.Width = 820;
-         logWindow.Height = 520;
-         logWindow.Title = "Events Permissions";
-         logWindow.Show("./SharedLogistics/Components/SharedLogisticsEventPermissiosComponent");
-     }
-     DocumentsPermissionsLinkClick() {
-
+    DocumentsPermissionsLinkClick() {
         var windowArgs: any = {};
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = windowArgs;
@@ -310,14 +267,29 @@ export class SharedLogisticsMainComponent implements OnInit {
         logWindow.Height = 520;
         logWindow.Title = "Documents Permissions";
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsDocumentPermissiosComponent");
-
     }
 
+    MoneyPermissionsLinkClick() {
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 820;
+        logWindow.Height = 520;
+        logWindow.Title = "Money Permissions";
+        logWindow.Show("./SharedLogistics/Components/SharedLogisticsMoneyPermissiosComponent");
+    }
 
+    PartnersPermissionsLinkClick() {
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 820;
+        logWindow.Height = 570;
+        logWindow.Title = "Partners Permissions";
+        logWindow.Show("./SharedLogistics/Components/SharedLogisticsPartnersPermissiosComponent");
+    }
 
     ActivationWizardLinkClick() {
-
-
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
         windowArgs.TenantPM = this.myTenantPM;
@@ -327,7 +299,6 @@ export class SharedLogisticsMainComponent implements OnInit {
         logWindow.Title = "Shared Logistics Wizard";
         logWindow.DataContext = this.myTenantPM;
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsWizardComponent");
-
     }
 
     SettingsLinkClick() {
@@ -339,16 +310,7 @@ export class SharedLogisticsMainComponent implements OnInit {
         logWindow.Height = 550;
         logWindow.Title = "Shared Logistics Settings";
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsSettingComponent");
-
-
-
     }
-
-
-
-
-
-
 
     InviteLinkClick(code: string) {
         var backButtonTitle = "Shared Logistics";
@@ -375,6 +337,7 @@ export class SharedLogisticsMainComponent implements OnInit {
                     }
                 default: { break; }
             }
+
             this.filterAgrs = new ApiQueryFilters();
             var listArgs = new ListComponentArgs();
             listArgs.Filters = this.filterAgrs;
@@ -391,17 +354,13 @@ export class SharedLogisticsMainComponent implements OnInit {
                         SessionLocator.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
-
         }
     }
 
-
     CustomersZoomLinkClcik(code: string) {
-
         this.filterAgrs = new ApiQueryFilters();
         this.filterAgrs.addAdditionalFilter("CustomerStatusCode", "ACT", null, null, "Equals", false, true, false, "string");
         this.filterAgrs.addAdditionalFilter("PartnerTypeId", "CS", null, null, "Equals", false, true, false, "string");
-
 
         var backButtonTitle = "Shared Logistics";
         var queryCode = "Shared Logistics Customers";
@@ -473,7 +432,6 @@ export class SharedLogisticsMainComponent implements OnInit {
         }
 
         if (navigate) {
-
             var listArgs = new ListComponentArgs();
             listArgs.Filters = this.filterAgrs;
             listArgs.QueryCode = queryCode;
@@ -488,18 +446,12 @@ export class SharedLogisticsMainComponent implements OnInit {
                     cmpRef.instance.Run(listArgs);
                     SessionLocator.CurrentSession.AddMenuReference(cmpRef);
                 });
-
         }
     }
 
-
-
     ActivityZoomLinkClick(m: string) {
-
-
         var windowArgs: any = {};
         windowArgs.TenantPM = this.myTenantPM;
-
 
         switch (m) {
             case "Today Customers":
@@ -507,8 +459,6 @@ export class SharedLogisticsMainComponent implements OnInit {
                     windowArgs.PartnerTypeId = "CS";
                     windowArgs.DateParameter = "T";
                     windowArgs.DataContext = this;
-                    // model = new ActivityZoomViewModel("CS", "T", myPartnersContext);
-                    //control.DataContext = model;
                     break;
                 }
             case "Last Week Customers":
@@ -556,16 +506,9 @@ export class SharedLogisticsMainComponent implements OnInit {
         logitudeWindow.Height = 600;
         logitudeWindow.Width = 1000;
         logitudeWindow.Show("./SharedLogistics/Components/ActivityZoomComponent");
-
     }
 
-
-
-
-
-
     ShowDetailsButtonclick(item: LastLoginPartners) {
-
         if (item.PartnerTypeName == "Customer") {
             item.IsEnabledShowDetailsButton = false;
             this._customerPMService.get(item.CardId).subscribe(res => {
@@ -578,48 +521,37 @@ export class SharedLogisticsMainComponent implements OnInit {
                         else {
                             var logWindow = new LogitudeWindow();
                             logWindow.Title = "Customer" + " Edit";
-                            if (window.innerHeight > 700 && window.innerWidth > 1200)
-                            {
+                            if (window.innerHeight > 700 && window.innerWidth > 1200) {
                                 logWindow.Width = 1200;
                                 logWindow.Height = 700;
                                 logWindow.ShowEditComponent(myResult.Id, "Customer", null, false);
                             }
                             else logWindow.ShowEditComponent(myResult.Id, "Customer");
                         }
-          
                     }
                 }
-
-
-        });
-
+            });
         }
-
-   
     }
 
-  
-
     ViewBlocedEntity(item: CustomerPM) {
-
         var windowArgs: any = {};
-        windowArgs.CustomerPM =item;
+        windowArgs.CustomerPM = item;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Title = "View Customer";
-        logitudeWindow.Height =500;
+        logitudeWindow.Height = 500;
         logitudeWindow.Width = 800;
         logitudeWindow.Show("./SharedLogistics/Components/ViewBlocedCustomerComponent");
     }
 
     AgentsZoomLinkClcik(arg: any) {
 
-
     }
 
-    ShowDocumentTypeEditButtonclick(documentcode:string) {
+    ShowDocumentTypeEditButtonclick(documentcode: string) {
         var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
-   
+
         apiQueryFilters.GetAll = true;
         apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
         this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
@@ -627,25 +559,18 @@ export class SharedLogisticsMainComponent implements OnInit {
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
 
-                var item = myResult.filter(d=> d.Code == documentcode)[0];
+                var item = myResult.filter(d => d.Code == documentcode)[0];
 
                 if (item) {
                     this.OpenDocumentTypeEdit(item.Id);
                 }
-                
             }
-
         });
-
-        }
+    }
 
     OpenDocumentTypeEdit(documentId: string) {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Document Type" + " Edit";
         logWindow.ShowEditComponent(documentId, "DocumentType");
     }
-
-
-
-
 }

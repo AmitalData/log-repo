@@ -1,4 +1,4 @@
-﻿import {ObjectsLocator} from './ObjectsLocator';
+import {ObjectsLocator} from './ObjectsLocator';
 import {SessionLocator} from '../Utilities/SessionLocator';
 
 import {AppTool, DateTool} from '../Tools';
@@ -7,6 +7,7 @@ import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 import {TenantManagementPM} from '../EntityPMs/TenantManagementPM';
 import {AccountingSettingPM} from '../../Common/EntityPMs/AccountingSettingPM';
 import {CustomsInterfaceSettingPM} from '../../Common/EntityPMs/CustomsInterfaceSettingPM';
+import { SharedLogisticsSettingPM } from '../EntityPMs/SharedLogisticsSettingPM';
 
 export class ObjectsUpdater {
     public static TenantPM: TenantPM;
@@ -54,5 +55,12 @@ export class ObjectsUpdater {
 
         ObjectsLocator.CustomsInterfaceSettingPM = value;
     }
-    
+
+    public static UpdateSharedLogisticsSettingPM(value: SharedLogisticsSettingPM) {
+        if (!value) {
+            value = new SharedLogisticsSettingPM();
+        }
+
+        ObjectsLocator.SharedLogisticsSettingPM = value;
+    }    
 }

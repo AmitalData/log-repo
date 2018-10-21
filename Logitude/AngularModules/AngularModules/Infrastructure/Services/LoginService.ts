@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -242,6 +242,13 @@ export class LoginService {
 
     GetCustomsInterfaceSetting() {
         var url = this.baseMetaUrlApi + '?InterfaceId=' + this.CurrentTenant + '&textcodetranslations=dummy';;
+        return this._http.get(url, { headers: this.AuthHeader }).map(response => {
+            return response.json();
+        });
+    }
+
+    GetSharedLogisticsSetting() {
+        var url = this.baseMetaUrlApi + '?settingId=' + this.CurrentTenant + '&textcodetranslations=dummy';;
         return this._http.get(url, { headers: this.AuthHeader }).map(response => {
             return response.json();
         });

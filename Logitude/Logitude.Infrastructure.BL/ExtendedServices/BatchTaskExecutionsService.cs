@@ -57,6 +57,12 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
                         break;
                     }
                 case "D":
+                    {
+                        // not sure about the failed.
+                        BatchTaskExecution.ProgressPercentage = 100;
+                        BatchTaskExecution.DoneDateTime = GetCurrentDateTime(BatchTaskExecution.Tenant);
+                        break;
+                    }
                 case "F":
                     {
                         // not sure about the failed.

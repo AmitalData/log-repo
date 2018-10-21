@@ -1941,6 +1941,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string parent ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Parent  
+	   {
+	    
+	     get
+		{
+		   return parent;
+		 }
+		 set
+		 {
+		   if(parent != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Parent",OldValue=parent,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   parent=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
