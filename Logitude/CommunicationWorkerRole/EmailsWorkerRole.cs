@@ -417,7 +417,7 @@ namespace CommunicationWorkerRole
                                             {
                                                 if (waitingCommLog.Tenant == 42)
                                                 {
-                                                    SendCommunicationLogToChampAPI(waitingCommLog, xmlfile)
+                                                    SendCommunicationLogToChampAPI(waitingCommLog, xmlfile);
                                                 }
 
                                                 else
