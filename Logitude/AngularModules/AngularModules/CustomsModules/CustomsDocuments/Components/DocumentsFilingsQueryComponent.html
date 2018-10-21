@@ -17,16 +17,16 @@
             <div class="TableHolder">
                 <table>
 
-                    <!-- Filters Fields -->
+                    <!-- Filters Fields [style.pointer-events]="AllowPointerEvents"-->
                     <tr>
                         <td colspan="2" style="width: 700px;">
-                            <table style="table-layout: fixed;" [style.pointer-events]="AllowPointerEvents">
-                                <tr class="FormFieldRow" >
+                            <table style="table-layout: fixed;">
+                                <tr class="FormFieldRow">
                                     <!-- FromCreateDate -->
-                                    <td style="width: 100px; text-align:right !important;" >
-                                       <div style="color: #555555;">
-                                           {{'General.O.CreateDateFrom' |TextCodeTranslationPipe}}
-                                       </div>
+                                    <td style="width: 100px; text-align:right !important;">
+                                        <div style="color: #555555;">
+                                            {{'General.O.CreateDateFrom' |TextCodeTranslationPipe}}
+                                        </div>
                                     </td>
                                     <td style="width: 130px;">
                                         <LogDatePicker [ObjectFieldName]="'FromCreateDate'" [ObjectTableName]="'DocumentsFiling'"
@@ -36,7 +36,7 @@
                                     <td style="width: 30px;"><div></div></td>
 
                                     <!-- ToCreateDate -->
-                                    <td style="width: 100px; text-align:right !important;" >
+                                    <td style="width: 100px; text-align:right !important;">
                                         <div style="color: #555555;">
                                             {{'General.O.CreateDateTo' |TextCodeTranslationPipe}}
                                         </div>
@@ -48,34 +48,33 @@
 
                                     <td colspan="3"></td>
                                 </tr>
-                                <tr class="FormFieldRow" >
+                                <tr class="FormFieldRow">
                                     <!-- DocumentTypeId -->
                                     <td style="text-align:right !important;">
                                         <div style="color: #555555;">
                                             סוג מסמך:
                                         </div>
                                     </td>
-                                    <td >
+                                    <td>
                                         <LogLov [ObjectFieldName]="'DocumentTypeId'"
                                                 [ObjectTableName]="'DocumentsFiling'"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'DocumentType'"
                                                 [HideColumns]="true"
                                                 [SelectedValue]="DocumentTypeId"
-                                                [NoValidation]="true"
-                                                >
+                                                [NoValidation]="true">
                                         </LogLov>
                                     </td>
 
                                     <td style="width: 30px;"><div></div></td>
 
                                     <!-- CustomsDocId -->
-                                    <td style="text-align:right !important;" >
+                                    <td style="text-align:right !important;">
                                         <div style="color: #555555;">
                                             {{'Customs.CustomsDocuments.CustomsDocIdLabel' |TextCodeTranslationPipe}} :
                                         </div>
                                     </td>
-                                    <td >
+                                    <td>
 
                                         <LogTextBox [ObjectFieldName]="'CustomsDocId'" [InputType]="'text'" [DataContext]="DataContext"
                                                     [ObjectTableName]="'DocumentsFiling'" [HideColumns]="true" [Text]="CustomsDocId"></LogTextBox>
@@ -113,8 +112,7 @@
                                         <td>
                                             <!-- Grid -->
                                             <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'DocumentsFiling'" [dataSource]="DataSource"
-                                                            [columns]="columns" [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (rowSelectedEvent)="OnRowSelected($event)" (DataLoaded)="OnDataLoaded($event)"
-                                                           >
+                                                           [columns]="columns" [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (rowSelectedEvent)="OnRowSelected($event)" (DataLoaded)="OnDataLoaded($event)">
                                             </logitude-grid>
                                         </td>
                                     </tr>
@@ -125,7 +123,7 @@
                     </tr>
 
                     <!-- footer -->
-                     <tr style="height: 30px;">
+                    <tr style="height: 30px;">
                         <td>
                             <div></div>
                         </td>
@@ -135,12 +133,12 @@
                         </td>
 
                         <!--<td style="width: 5px;">
-                            <div></div>
-                        </td>
+            <div></div>
+        </td>
 
-                        <td style="width: 57px;">
-                            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
-                        </td>-->
+        <td style="width: 57px;">
+            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+        </td>-->
                     </tr>
 
                 </table>
