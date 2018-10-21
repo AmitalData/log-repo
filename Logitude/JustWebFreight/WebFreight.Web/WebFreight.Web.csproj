@@ -418,10 +418,10 @@
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.EntityFramework">
-      <HintPath>..\..\General\Dlls\System.ServiceModel.DomainServices.EntityFramework.dll</HintPath>
+      <HintPath>..\..\..\..\main\JustWebFreight\WebFreight.Web\bin\System.ServiceModel.DomainServices.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel.DomainServices.Hosting">
-      <HintPath>..\..\General\Dlls\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
+      <HintPath>..\..\..\..\main\JustWebFreight\WebFreight.Web\bin\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
