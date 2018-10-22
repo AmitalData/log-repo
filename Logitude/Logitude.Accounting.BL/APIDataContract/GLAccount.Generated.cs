@@ -162,5 +162,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     public string ConsolidationVat { get; set; }
     
     public RevenueExpenseType RevenueExpenseType { get; set; }
+    
+    public string Parent { get; set; }
     }
 } 

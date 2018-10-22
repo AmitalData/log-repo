@@ -1132,10 +1132,10 @@ namespace WebFreight.Web
                     Email = data.UserName,
                 };
                 
-                if (data.Param1) failedLoginLog.Reason = "Warring Email";
-                else if (data.InValidMailOrPassword) failedLoginLog.Reason = "Warring Password";
+                if (data.Param1) failedLoginLog.Reason = "Wrong Email address";
+                else if (data.InValidMailOrPassword) failedLoginLog.Reason = "Wrong Password";
                 else if (data.IsLocked) failedLoginLog.Reason = "Locked User";
-                else if (data.IpRestricted) failedLoginLog.Reason = "Ip Restricted";
+                else if (data.IpRestricted) failedLoginLog.Reason = "Unauthorized IP address";
 
 
                 data.Param1 = false;

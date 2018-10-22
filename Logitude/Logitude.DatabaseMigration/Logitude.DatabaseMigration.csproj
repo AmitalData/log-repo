@@ -170,16 +170,19 @@
     <Compile Include="Migrations\201810180041541_AddSprintIdToTMEmployeeTabes_Maheera.Designer.cs">
       <DependentUpon>201810180041541_AddSprintIdToTMEmployeeTabes_Maheera.cs</DependentUpon>
     </Compile>
-     <Compile Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.cs" />
+    <Compile Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.cs" />
     <Compile Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.Designer.cs">
       <DependentUpon>201810141302279_ModifyInttraSettingOutSettingOptional.cs</DependentUpon>
     </Compile>
-	<Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\201810210928033_NewField_BTE_Subject.cs" />
+    <Compile Include="Migrations\201810210928033_NewField_BTE_Subject.Designer.cs">
+      <DependentUpon>201810210928033_NewField_BTE_Subject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
       <DependentUpon>201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs</DependentUpon>
     </Compile>
-    
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Migrations\201802141437145_ClassifiedREmarks.resx">
       <DependentUpon>201802141437145_ClassifiedREmarks.cs</DependentUpon>
@@ -247,8 +250,11 @@
     <EmbeddedResource Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.resx">
       <DependentUpon>201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
-   <EmbeddedResource Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.resx">
+    <EmbeddedResource Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.resx">
       <DependentUpon>201810141302279_ModifyInttraSettingOutSettingOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810210928033_NewField_BTE_Subject.resx">
+      <DependentUpon>201810210928033_NewField_BTE_Subject.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

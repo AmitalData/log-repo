@@ -268,7 +268,8 @@ using Logitude.Accounting.Data;
 				   temp.AssessingOfficeCode = MyEntityPM.AssessingOfficeCode;
 				   temp.Occupation = MyEntityPM.Occupation;
 				   temp.DeductionTypeId = MyEntityPM.DeductionTypeId;
-				   temp.ConsolidationVat = MyEntityPM.ConsolidationVat;			  
+				   temp.ConsolidationVat = MyEntityPM.ConsolidationVat;
+                   temp.Parent = MyEntityPM.Parent;
 				   if(MyEntityPM.RevenueExpenseType != null)
 				   {
 					   RevenueExpenseTypeQueryService RevenueExpenseTypeService16 = new RevenueExpenseTypeQueryService(Tenant);
@@ -548,6 +549,7 @@ using Logitude.Accounting.Data;
 					temp.Occupation = MyEntity.Occupation;
 					temp.DeductionTypeId = MyEntity.DeductionTypeId;
 					temp.ConsolidationVat = MyEntity.ConsolidationVat;
+                    temp.Parent = MyEntity.Parent;
 					RevenueExpenseTypeQueryService RevenueExpenseTypeRevenueExpenseTypeService = new RevenueExpenseTypeQueryService(Tenant);
 					if(MyEntity.RevenueExpenseType != null)
 					{

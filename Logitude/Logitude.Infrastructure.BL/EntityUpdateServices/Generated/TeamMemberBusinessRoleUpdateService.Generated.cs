@@ -62,7 +62,7 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
 		    entityPM.Id = IdCounter.GetNumber("TeamMemberBusinessRole", entityPM.Tenant); 
 					
 	    }
-
+        
 		protected override void FillDefaultValuesOnUpdate(TeamMemberBusinessRolePM entityPM)
         {       
            
