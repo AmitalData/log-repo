@@ -80,8 +80,6 @@
             contentType: 'application/json',
 
             success: function (result) {
-                debugger;
-
                 $("#CompanyText").html(result.TenantCompany);
                 $("#MemberText").html(result.ContactName);
                 $("#MemberCardText").html(" (" + result.CardName + ")");
