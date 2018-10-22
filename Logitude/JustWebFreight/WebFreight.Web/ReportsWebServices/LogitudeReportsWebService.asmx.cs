@@ -10497,15 +10497,22 @@ namespace WebFreight.Web.ReportsWebServices
                         timSheetItem_Detailed.WINumber = item.WINumber;
                         timSheetItem_Detailed.Description = item.Description;
 
+                        TMEmployeeTime myTMEmployeeTime = employeeTimeRepository.GetSingleByPrjectandEmployeeandWIandDescription(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, tenant);
                         var wIWorkedHours_Employee = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2);
                         var wIWorkedHours_Employee_Prorated = (wIWorkedHours_Employee / totalNotProratingHours) * totalProratingHours;
                         wIWorkedHours_Employee = wIWorkedHours_Employee + wIWorkedHours_Employee_Prorated;
                         totalWIWorkedDays_Employee += wIWorkedHours_Employee;
                         timSheetItem_Detailed.TotalWIWorkedDays_Employee = DateFormat(wIWorkedHours_Employee);
                         result.DetailedWorkHoursPerProjectList.Add(timSheetItem_Detailed);
+
+                        myTMEmployeeTime.ProratedDuration = wIWorkedHours_Employee_Prorated;
+                        myTMEmployeeTime.FullDuration = wIWorkedHours_Employee;
+                        employeeTimeRepository.Update(myTMEmployeeTime);
+
                     }
                 }
 
+                employeeTimeRepository.SubmitChanges();
                 result.Total_TotalWIWorkedHours = DateFormat((Math.Round(totalWIWorkedDays, 2)));
                 result.Total_TotalWIWorkedHours_Employee = DateFormat(Math.Round(totalWIWorkedDays_Employee, 2));
             }
