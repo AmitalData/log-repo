@@ -2186,5 +2186,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ConsigneeNotImporterReference { get; set; }
 
         public string ForwardingPartnerId { get; set; }
+        public bool IsSharedLogisticsMoneyTabEnabled { get; set; }
     }
 }
