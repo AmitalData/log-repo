@@ -10506,7 +10506,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
-                result.Total_TotalWIWorkedHours = (Math.Round(totalWIWorkedDays, 2)/8) + "";
+                result.Total_TotalWIWorkedHours = (Math.Round(totalWIWorkedDays, 2)) + "";
                 result.Total_TotalWIWorkedHours_Employee = DateFormat(Math.Round(totalWIWorkedDays_Employee, 2));
             }
             return result;
