@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {QueueData, BusinessProcessDomainService} from '../../../../Infrastructure/Services/BusinessProcessDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -43,9 +43,7 @@ export class TasksWorkspaceComponent {
     private InitListArgs() {
         this.filterAgrs = new ApiQueryFilters();
         this.listArgs = new ListComponentArgs();
-
-        this.filterAgrs.addAdditionalFilter("ActivityTypeCode", "TXX", null, null, "Equals", false, false, false, "String");
-
+        
         this.listArgs.QueryCode = "All Activities";
         this.listArgs.ObjectTableName = "Activity";
         this.listArgs.IsTasksMenuClicked = true;
@@ -69,12 +67,24 @@ export class TasksWorkspaceComponent {
                     if (this.QueuesItemsSource.length == 0) {
                         this.NoQueuesVisibility = true;
                     }
+
+                    else {
+                        this.selectedQueue = this.QueuesItemsSource[0];
+                        this.SelectQueue(this.selectedQueue);
+                    }
                 }
             }
         });
     }
 
-    public SelectedQueue: QueueItem;
+    private selectedQueue: QueueItem;
+    get SelectedQueue() { return this.selectedQueue; }
+    set SelectedQueue(value: QueueItem) {
+        if (this.selectedQueue != value) {
+            this.selectedQueue = value;
+        }
+    }
+    
     SelectQueue(entity: any) {
         this.SelectedQueue = entity;
 
@@ -88,7 +98,11 @@ export class TasksWorkspaceComponent {
         else if (this.SelectedFilterValue == "Team") {
             if (!AppTool.IsNullOrEmpty(this.teamsIdsList)) {
                 this.filterAgrs.addAdditionalFilter("TeamId", this.teamsIdsList, null, null, "InList", false, true, false, "string");
-            }                  
+            }
+
+            else {
+                this.filterAgrs.addAdditionalFilter("TeamId", "XXX", null, null, "InList", false, true, false, "string");
+            } 
         }
 
         if (!AppTool.IsNullOrEmpty(this.SelectedQueue.QueueId)) {
