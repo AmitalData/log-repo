@@ -263,9 +263,7 @@ namespace Logitude.XSD.INTTRA.BL
 
             if (this.DataContext.INTTRA_OutSettingsId != null)
             {
-                FTPDetail fTPDetail = (from d in this.CommonContext.FTPDetails
-                                       where d.Tenant == Tenant && d.Id == this.DataContext.INTTRA_OutSettingsId
-                                       select d).FirstOrDefault();
+                FTPDetail fTPDetail = (from d in this.CommonContext.FTPDetails where d.Id == this.DataContext.INTTRA_OutSettingsId select d).FirstOrDefault();
 
                 if (fTPDetail != null)
                 {

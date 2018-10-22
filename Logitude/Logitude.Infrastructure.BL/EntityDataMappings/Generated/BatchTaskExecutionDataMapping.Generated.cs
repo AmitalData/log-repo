@@ -34,7 +34,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         StartDateTime, 
 	         DoneDateTime, 
 	         ProgressMessage, 
-	         ProgressPercentage,
+	         ProgressPercentage, 
+	         Subject,
 	      }
 
 
@@ -55,7 +56,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         ProgressMessage, 
 	         ProgressPercentage, 
 	         StatusName, 
-	         CreatedByUserName,
+	         CreatedByUserName, 
+	         Subject,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -122,6 +124,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProgressPercentage))
             {
 				entityPOCO.ProgressPercentage = entityPM.ProgressPercentage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Subject))
+            {
+				entityPOCO.Subject = entityPM.Subject;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -195,6 +202,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.ProgressPercentage = entityPOCO.ProgressPercentage;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Subject))
+            {
+					entityPM.Subject = entityPOCO.Subject;
+            }
+
 		}
 
 		public void PMToOldPM(BatchTaskExecutionPM entityPM, BatchTaskExecutionPM oldEntityPM)
@@ -261,6 +273,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 oldEntityPM.ProgressPercentage = entityPM.ProgressPercentage;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Subject))
+            {
+                oldEntityPM.Subject = entityPM.Subject;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(BatchTaskExecutionPM entityPM)
@@ -285,6 +302,10 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ProgressMessage)) //T4 find type == nText 
             {
                 entityPM.ProgressMessage = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ProgressMessage));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Subject)) //T4 find type == nText 
+            {
+                entityPM.Subject = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Subject));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

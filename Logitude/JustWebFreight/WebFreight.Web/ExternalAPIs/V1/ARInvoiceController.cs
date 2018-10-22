@@ -241,9 +241,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, tenant);
 
                         entityPM.IsExternalAPI = true;
-
+                    
                         ARInvoiceService service = new ARInvoiceService(MyContext, tenant);
-                        service.Update(entityPM);
+                        service.Update(entityPM, true);
 
                         APIHelper.AddCommunicationLog("D",  oldEntity, entity, "ARInvoice", entityPM.Id, "ARInvoice API", authToken.Tenant);
 

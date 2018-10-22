@@ -35,7 +35,16 @@ namespace Logitude.Accounting.Data.Repositories
                     where qGLAccountIdS.Contains(a.MainGLAccountId) && a.Tenant == tenant
                     select a/*.Id*/);
         }
-   }
+
+        public GLAccountCurrency GetEntityByCurrencyAndGLAccountId(string accountId, string currencyId, int tenant)
+        {
+
+            return (from a in context.GLAccountCurrencies
+                    where a.MainGLAccountId == accountId && a.CurrencyId == currencyId && a.Tenant == tenant
+
+                    select a).FirstOrDefault();
+        }
+    }
 
 }
    

@@ -10201,9 +10201,9 @@ namespace WebFreight.Web.ReportsWebServices
 
         #region Work Per Hours Project Report 
         [WebMethod]
-        public byte[] LoadWorkPerHoursProjectData(byte[] xmlFilters, int tenant)
+        public byte[] LoadWorkPerDaysProjectData(byte[] xmlFilters, int tenant)
         {
-            WorkDaysPerProjectDataProvider dataprovider = GetWorkPerHoursProjectDataProvider(xmlFilters, tenant);
+            WorkDaysPerProjectDataProvider dataprovider = GetWorkPerDaysProjectDataProvider(xmlFilters, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(WorkDaysPerProjectDataProvider));
             MemoryStream memstream = new MemoryStream();
             serializer.Serialize(memstream, dataprovider);
@@ -10214,7 +10214,7 @@ namespace WebFreight.Web.ReportsWebServices
             return bytearray;
         }
 
-        private WorkDaysPerProjectDataProvider GetWorkPerHoursProjectDataProvider(byte[] xmlFilters, int tenant)
+        private WorkDaysPerProjectDataProvider GetWorkPerDaysProjectDataProvider(byte[] xmlFilters, int tenant)
         {
             WorkDaysPerProjectDataProvider result = new WorkDaysPerProjectDataProvider();
             result.SummarizedWorkHoursPerProjectList = new List<WorkDaysPerProjectData>();
@@ -10225,6 +10225,7 @@ namespace WebFreight.Web.ReportsWebServices
             ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
             IQueryable<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d);
             IQueryable<TMEmployeeTime> iQueryable = (from d in myContext.TMEmployeeTimes where d.Tenant == tenant select d);
+            IQueryable<TMEmployeeTime> projectsProrating;
             CardRepository cardRep = new CardRepository(tenant);
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -10315,35 +10316,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            if (customerId != null)
-            {
-                var customerCard = cardRep.GetSingleCard(customerId, tenant);
-                if (customerCard != null)
-                {
-                    result.CustomerName = customerCard.EnglishName;
-                }
-
-                iQueryable = (from myTMEmployeeTime in iQueryable
-                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId  equals db_Projects.Id into joinedData
-                              from myProjct in joinedData
-                              where myTMEmployeeTime.Tenant == tenant
-                              && myProjct.Tenant == tenant
-                              && myProjct.CustomerId == customerId
-                              && myProjct.BudgetId == budgetId
-                              select myTMEmployeeTime);
-            }
-            else
-            {
-                iQueryable = (from myTMEmployeeTime in iQueryable
-                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
-                              from myProjct in joinedData
-                              where myTMEmployeeTime.Tenant == tenant
-                              && myProjct.Tenant == tenant
-                              && myProjct.BudgetId == budgetId
-                              select myTMEmployeeTime);
-
-            }
-
             if (fromDate != null && toDate != null)
             {
                 iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
@@ -10360,6 +10332,53 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            if (customerId != null)
+            {
+                var customerCard = cardRep.GetSingleCard(customerId, tenant);
+                if (customerCard != null)
+                {
+                    result.CustomerName = customerCard.EnglishName;
+                }
+
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId  equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.CustomerId == customerId
+                              && myProjct.BudgetId == budgetId
+                              select myTMEmployeeTime);
+
+                projectsProrating = (from myTMEmployeeTime in iQueryable
+                                         join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                                         from myProjct in joinedData
+                                         where myTMEmployeeTime.Tenant == tenant
+                                         && myProjct.Tenant == tenant
+                                         && myProjct.BudgetId == budgetId
+                                         && myProjct.IsProrated == true
+                                         select myTMEmployeeTime);
+            }
+            else
+            {
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.BudgetId == budgetId
+                              select myTMEmployeeTime);
+
+                projectsProrating = (from myTMEmployeeTime in iQueryable
+                                     join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                                     from myProjct in joinedData
+                                     where myTMEmployeeTime.Tenant == tenant
+                                     && myProjct.Tenant == tenant
+                                     && myProjct.BudgetId == budgetId
+                                     && myProjct.IsProrated == true
+                                     select myTMEmployeeTime);
+
+            }
+
             result.FromDate = fromDate.Value;
             result.ToDate = toDate.Value;
             result.EmployeeUserId = employeeUserId;
@@ -10371,9 +10390,12 @@ namespace WebFreight.Web.ReportsWebServices
             WorkDaysPerProjectData timSheetItem = null;
             double totalWIWorkedDays_Employee = 0;
             double totalWIWorkedDays = 0;
+            double totalProratingHours = 0;
 
             if (iQueryable.Count() > 0)
             {
+                totalProratingHours = Math.Round((projectsProrating.ToList().Sum(a => a.TimeInMinutes)) / 60.0, 2);
+
                 var daysList = (from d in iQueryable
                                 group d by new { d.DateOfWork, d.EmployeeUserId, d.ProjectId, d.WINumber, d.Description } into g
                                 select new
@@ -10411,14 +10433,13 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
 
-                        var wIWorkedDays = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2) / 8;
+                        var wIWorkedDays = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2)/8;
                         totalWIWorkedDays += wIWorkedDays;
                         timSheetItem.TotalWIWorkedDays = DateFormat(wIWorkedDays);
 
                         result.SummarizedWorkHoursPerProjectList.Add(timSheetItem);
                     }
                 }
-
 
                 if (!string.IsNullOrEmpty(employeeUserId))
                 {
@@ -10430,6 +10451,7 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
+                double totalNotProratingHours = Math.Round((iQueryable.ToList().Sum(a => a.TimeInMinutes)) / 60.0, 2);
                 foreach (var item in daysList)
                 {
                     List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) == System.Data.Entity.DbFunctions.TruncateTime(item.DateOfWork) && d.EmployeeUserId == item.EmployeeUserId && d.ProjectId == item.ProjectId && d.WINumber == item.WINumber && d.Description == item.Description).ToList();
@@ -10475,15 +10497,23 @@ namespace WebFreight.Web.ReportsWebServices
                         timSheetItem_Detailed.WINumber = item.WINumber;
                         timSheetItem_Detailed.Description = item.Description;
 
-                        var wIWorkedDays_Employee = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2);
-                        totalWIWorkedDays_Employee += wIWorkedDays_Employee;
-                        timSheetItem_Detailed.TotalWIWorkedDays_Employee = DateFormat(wIWorkedDays_Employee);
-
+                        TMEmployeeTime myTMEmployeeTime = employeeTimeRepository.GetSingleByPrjectandEmployeeandWIandDescription(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, tenant);
+                        var wIWorkedHours_Employee = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2);
+                        var wIWorkedHours_Employee_Prorated = (wIWorkedHours_Employee / totalNotProratingHours) * totalProratingHours;
+                        wIWorkedHours_Employee = wIWorkedHours_Employee + wIWorkedHours_Employee_Prorated;
+                        totalWIWorkedDays_Employee += wIWorkedHours_Employee;
+                        timSheetItem_Detailed.TotalWIWorkedDays_Employee = DateFormat(wIWorkedHours_Employee);
                         result.DetailedWorkHoursPerProjectList.Add(timSheetItem_Detailed);
+
+                        myTMEmployeeTime.ProratedDuration = wIWorkedHours_Employee_Prorated;
+                        myTMEmployeeTime.FullDuration = wIWorkedHours_Employee;
+                        employeeTimeRepository.Update(myTMEmployeeTime);
+
                     }
                 }
 
-                result.Total_TotalWIWorkedHours = DateFormat(Math.Round(totalWIWorkedDays, 2));
+                employeeTimeRepository.SubmitChanges();
+                result.Total_TotalWIWorkedHours = DateFormat((Math.Round(totalWIWorkedDays, 2)));
                 result.Total_TotalWIWorkedHours_Employee = DateFormat(Math.Round(totalWIWorkedDays_Employee, 2));
             }
             return result;

@@ -32,6 +32,7 @@ testem.log
 *.js.map
 *.ngfactory.js
 *.css.shim
+*.signature
 #System Files
 .DS_Store
 
@@ -365,3 +366,5 @@ __pycache__/
 /JustConfig/
 /JustConfig/*
 /Logitude/JustWebFreight/WebFreight.Web/Angular
+/Logitude/JustWebFreight/WebFreight.Web/Angular/out-tsc
+/Logitude/AngularModules/packages

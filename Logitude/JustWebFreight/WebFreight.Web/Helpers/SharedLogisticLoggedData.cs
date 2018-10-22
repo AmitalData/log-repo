@@ -13,5 +13,6 @@ namespace WebFreight.Web.Helpers
         public string LocalCurrencyCode { get; set; }
         public string ProfitCurrencyCode { get; set; }
         public string TenantDateTimeFormat { get; set; }
+        public bool IsInvoicesMenuEnabled { get; set; }
     }
 }

@@ -469,6 +469,11 @@ export class GLAccountPM {
     public set IsPartOfDeductionReport(newValue: boolean) { if (this.isPartOfDeductionReport != newValue) { this.isPartOfDeductionReport = newValue; this.MarkAsDirty("IsPartOfDeductionReport"); } }
        
 	 
+    private parent: string;
+    public get Parent() { return this.parent; }
+    public set Parent(newValue: string) { if (this.parent != newValue) { this.parent = newValue; this.MarkAsDirty("Parent"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		
