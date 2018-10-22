@@ -813,7 +813,6 @@
     });
 
     $(document).ready(function () {
-debugger;
         $("#TAB_INV").hide();
 
         $.ResizePage(130);

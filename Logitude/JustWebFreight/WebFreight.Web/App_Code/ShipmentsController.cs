@@ -1108,6 +1108,8 @@ namespace WebFreight.Web
             if(sharedLogisticsSetting != null)
             {
                 pm.IsSharedLogisticsMoneyTabEnabled = sharedLogisticsSetting.IsMoneyTabEnabled;
+                pm.IsSharedLogisticsMainCarrierVisible = sharedLogisticsSetting.IsMainCarrierShared;
+                pm.IsSharedLogisticsPickDelvCarrierVisible = sharedLogisticsSetting.IsPickDelivCarriesShared;
             }
 
             return pm;
