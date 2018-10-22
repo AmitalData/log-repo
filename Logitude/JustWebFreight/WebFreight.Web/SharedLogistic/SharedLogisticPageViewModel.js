@@ -66,7 +66,7 @@
         }   
 
         else {
-            $("#TAB_INV").hide();
+           $("#TAB_INV").hide();
         }
     });
 
@@ -88,8 +88,8 @@
                 $.TenantDateTimeFormat = result.TenantDateTimeFormat;
                 $.IsInvoicesMenuEnabled = result.IsInvoicesMenuEnabled;
 
-                $.SetSelectedTab();
                 $.SetTabsHidden($.IsInvoicesMenuEnabled);
+                $.SetSelectedTab();                
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
