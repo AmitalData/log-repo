@@ -363,6 +363,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\" />
     <Folder Include="Production\" />
     <Folder Include="ZipFiles\" />
   </ItemGroup>
