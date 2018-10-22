@@ -178,6 +178,14 @@
     <Compile Include="Migrations\201810210928033_NewField_BTE_Subject.Designer.cs">
       <DependentUpon>201810210928033_NewField_BTE_Subject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810220153008_ModifyTheNameFieldOfSprint_Maheera.cs" />
+    <Compile Include="Migrations\201810220153008_ModifyTheNameFieldOfSprint_Maheera.Designer.cs">
+      <DependentUpon>201810220153008_ModifyTheNameFieldOfSprint_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810220655058_ChangeFieldsType_Refs.cs" />
+    <Compile Include="Migrations\201810220655058_ChangeFieldsType_Refs.Designer.cs">
+      <DependentUpon>201810220655058_ChangeFieldsType_Refs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -255,6 +263,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810210928033_NewField_BTE_Subject.resx">
       <DependentUpon>201810210928033_NewField_BTE_Subject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810220153008_ModifyTheNameFieldOfSprint_Maheera.resx">
+      <DependentUpon>201810220153008_ModifyTheNameFieldOfSprint_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810220655058_ChangeFieldsType_Refs.resx">
+      <DependentUpon>201810220655058_ChangeFieldsType_Refs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
