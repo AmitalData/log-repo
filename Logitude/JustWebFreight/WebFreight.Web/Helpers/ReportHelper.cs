@@ -1565,7 +1565,7 @@ namespace WebFreight.Web.Helpers
 
                 case "WDTS":
                     {
-                        dataProvider = logitudeReportsWebService.LoadWorkPerHoursProjectData(filters, reportFliter.tenant);
+                        dataProvider = logitudeReportsWebService.LoadWorkPerDaysProjectData(filters, reportFliter.tenant);
                         break;
                     }
 

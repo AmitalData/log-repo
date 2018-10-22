@@ -1094,7 +1094,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             var active = document.getElementsByClassName("highlighted");
            
             if (!active[0]) {
-                if (this.ItemsSource.length > 0) {
+                if (this.ItemsSource && this.ItemsSource.length > 0) {
                     var input = document.getElementById(this.MyDataListId);
                     var lis = input.getElementsByTagName("li");
                     lis[0].classList.add("highlighted");
@@ -1114,7 +1114,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         else {
             var active = document.getElementsByClassName("highlighted");
             if (active[0]) {
-                if (this.ItemsSource.length > 0) {
+                if (this.ItemsSource && this.ItemsSource.length > 0) {
                     if (active[0].previousElementSibling) {
                         active[0].previousElementSibling.classList.add("highlighted");
                         active = document.getElementsByClassName("highlighted");
