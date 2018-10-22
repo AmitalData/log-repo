@@ -143,7 +143,7 @@
                                     [header]=""
                                     [binding]="'ExpirationDate'">
                             <log-cell-template template="let item" #logcelltemplate>
-                                <div style="width:100%;height:100%;">
+                                <div style="width:100%;height:100%;"  *ngIf="!item.DBVendorID" >
                                     <div class="RightCenter">
                                         <span><button class="Button" (click)="SearchAddVendorRequest(item)">הוסף ספק</button></span>
                                     </div>
