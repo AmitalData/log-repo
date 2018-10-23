@@ -20,10 +20,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
         {
             try
             {
-                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(id);
-                TenantManagementPM entityPM = tenantManagementQuery.GetSinglePM(id);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                if (id == authToken.Tenant)
+                {
+                    SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
+                    TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(id);
+                    TenantManagementPM entityPM = tenantManagementQuery.GetSinglePM(id);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                }
+                else
+                {
+                    throw new Exception("Sorry you’re not authenticated to view company info.");
+                }
+
             }
 
             catch (Exception ex)
