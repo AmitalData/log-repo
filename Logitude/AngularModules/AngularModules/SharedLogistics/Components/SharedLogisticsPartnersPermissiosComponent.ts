@@ -75,12 +75,14 @@ export class SharedLogisticsPartnersPermissiosComponent implements OnInit {
         item1.PartnerName = "Shipper";
         item1.SuggestedIsChecked = true;
         item1.ChooseIsChecked = true;
+        item1.IsEnabled = false;
 
         var item2: PartnerItem = new PartnerItem(this);
         item2.Code = "CO";
         item2.PartnerName = "Consignee";
         item2.SuggestedIsChecked = true;
         item2.ChooseIsChecked = true;
+        item2.IsEnabled = false;
 
         var item3: PartnerItem = new PartnerItem(this);
         item3.Code = "AG";
@@ -218,6 +220,7 @@ export class PartnerItem {
     public Code: string;
     public PartnerName: string;
     public SuggestedIsChecked: boolean;
+    public IsEnabled: boolean = true;
 
     private chooseIsChecked: boolean;
     public get ChooseIsChecked() { return this.chooseIsChecked; }

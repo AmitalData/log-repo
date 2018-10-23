@@ -85,6 +85,8 @@ namespace WebFreight.Web
                     var remainingWorkNew = 0;
                     if (data.resource.fields != null)
                     {
+                        response.IterationPath = data.resource.revision != null ? data.resource.revision.fields["System.IterationPath"] : "";
+
                         var remainingWork = data.resource.fields["Microsoft.VSTS.Scheduling.RemainingWork"];
                         if (remainingWork != null)
                         {
@@ -104,7 +106,7 @@ namespace WebFreight.Web
                             }
                         }
                     }
-                    
+
                     response.Relations = JsonConvert.DeserializeObject<RelationClass[]>(data.resource.revision.relations.ToString());
                 }
 
