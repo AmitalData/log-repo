@@ -128,7 +128,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
 
     var logWindow = new LogitudeWindow();
     logWindow.Width = 770;
-    logWindow.Height = 650;
+    logWindow.Height = 750;
     logWindow.ShowCloseButton = false;
     logWindow.WindowArgs = windowArgs;
     logWindow.Title = "בקשת פיצול מטען ";
