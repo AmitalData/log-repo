@@ -1,4 +1,4 @@
-﻿<table *ngIf="Entity">
+<table *ngIf="Entity">
     <tr>
         <td class="MediaFillAbsolute" style="direction:rtl">
 
@@ -53,7 +53,7 @@
                                  [ngStyle]="{color: Entity.CourierCustomStatusCode | StringToColorPipe:'CourierCustomStatusCode'}"
                                  [style.right]="Entity['HasConstraint'] ? '25px' : '0px'">
                                 <span style="font-weight: bold;">{{Entity[FieldName]}}</span>
-                                <span *ngIf="Entity.CourierCustomStatusCode == '2'" style="font-weight: bold;">- {{Entity.CourierSuspentionReasonName}}</span>
+                                <span *ngIf="Entity.CourierCustomStatusCode == '2' && Entity.CourierSuspentionReasonName != null" style="font-weight: bold;">- {{Entity.CourierSuspentionReasonName}}</span>
                             </div>
                         </div>
                     </div>
