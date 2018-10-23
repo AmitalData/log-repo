@@ -681,13 +681,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else
             {
-                List<ARInvoiceLine> lines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(entityId, this.tenant).ToList();
-                foreach (ARInvoiceLine line in lines)
-                {
-                    line.ReceivableId = null;
-                    invoiceLineRepository.Update(line);
-                }
-
                 ARInvoiceQuery entityQuery = new ARInvoiceQuery(invoiceRepository);
                 ARInvoicePM oldEntityPM = entityQuery.GetSinglePM(entityId, tenant);
 
@@ -799,6 +792,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         ProfitCurrencyAmount = item.ProfitCurrencyAmount * -1,
                         InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1,
                         IsExpense = item.IsExpense,
+                        AutoCreditDummyReceivableId = item.ReceivableId,
                     };
 
                     newInvoicePM.InvoiceLines.Add(newInvoiceLine);
@@ -865,7 +859,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
                         }
 
-                        ShipmentReceivable receivable = receivables.Where(d => d.Tenant == item.Tenant && d.Id == item.ReceivableId).FirstOrDefault();
+                        ShipmentReceivable receivable = receivables.Where(d => d.Tenant == item.Tenant && d.Id == item.AutoCreditDummyReceivableId).FirstOrDefault();
                         if (receivable != null)
                         {
                             receivable.ShipmentReceivableLineStatusCode = "OAMT";
@@ -881,6 +875,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         shipmentReceivableRepository.SubmitChanges();
                     }
                     #endregion
+                }
+
+                List<ARInvoiceLine> lines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(entityId, this.tenant).ToList();
+                foreach (ARInvoiceLine line in lines)
+                {
+                    line.ReceivableId = null;
+                    invoiceLineRepository.Update(line);
                 }
 
                 this.Create(newInvoicePM);

@@ -1,4 +1,4 @@
-﻿
+
 <table *ngIf="Entity">
     <tr>
         <td>
@@ -13,14 +13,14 @@
                                 <!-- FromDate -->
                                 <div *ngIf="FieldName == 'FromDate'">
                                     <div style="font-size:11px;">
-                                        {{Entity[FieldName] | DateTimePipe:'DTTA'}}
+                                        {{Entity[FieldName] | DateTimePipe:'D'}}
                                     </div>
                                 </div>
 
                                 <!-- ToDate -->
                                 <div *ngIf="FieldName == 'ToDate'">
                                     <div style="font-size:11px;">
-                                        {{Entity[FieldName] | DateTimePipe:'DTTA'}}
+                                        {{Entity[FieldName] | DateTimePipe:'D'}}
                                     </div>
                                 </div>
 
