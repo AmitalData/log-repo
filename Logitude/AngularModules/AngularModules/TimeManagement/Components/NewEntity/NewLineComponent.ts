@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TMProjectPM} from '../../EntityPMs/TMProjectPM'; 
 import {TMProjectPMService} from '../../Services/StandardPMs/TMProjectPMService'; 
@@ -132,6 +132,7 @@ export class NewLineComponent extends BaseComponent {
     get DateOfWork() {
         return this.EntityPM.DateOfWork;
     }
+
     set DateOfWork(value: Date) {
         if (this.EntityPM.DateOfWork != value) {
             this.EntityPM.DateOfWork = value;
@@ -220,6 +221,8 @@ export class NewLineComponent extends BaseComponent {
         itemPM.EmployeeUserId = this.EmployeeUserId;
         itemPM.TimeInMinutes = this.DateOfWorkDate.Minuts;
         itemPM.DateOfWork = this.DateOfWorkDate.Date;
+        itemPM.SprintId = this.SprintId;
+
         this.TimeManagementAPIHelper.ItemsPM.push(itemPM);
 
         if (this.myDomainService == null) {

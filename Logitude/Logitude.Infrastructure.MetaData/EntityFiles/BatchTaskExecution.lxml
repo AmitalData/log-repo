@@ -29,11 +29,12 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
-  <Screen Name="&quot;BatchTaskExecutionHeaderScreen&quot;" ObjectTableName="&quot;BatchTaskExecution&quot;" NumberOfColumns="3" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true">
+  <Screen Name="&quot;BatchTaskExecutionHeaderScreen&quot;" ObjectTableName="&quot;BatchTaskExecution&quot;" NumberOfColumns="4" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true">
     <ScreenFields>
-      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;CreateDate&quot;" ScreenName="BatchTaskExecutionHeaderScreen" />
-      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;CreatedByUserId&quot;" ScreenName="BatchTaskExecutionHeaderScreen" />
-      <ScreenField Column="2" Row="0" ObjectFieldName="&quot;StatusName&quot;" ScreenName="BatchTaskExecutionHeaderScreen" />
+      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Subject&quot;" ScreenName="BatchTaskExecutionHeaderScreen" />
+      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;CreatedByUserName&quot;" ScreenName="BatchTaskExecutionHeaderScreen" />
+      <ScreenField Column="2" Row="0" ObjectFieldName="&quot;CreateDate&quot;" ScreenName="BatchTaskExecutionHeaderScreen" />
+      <ScreenField Column="3" Row="0" ObjectFieldName="&quot;StatusName&quot;" ScreenName="BatchTaskExecutionHeaderScreen" />
     </ScreenFields>
   </Screen>
   <Screen Name="&quot;BatchTaskExecutionGeneralTabScreen&quot;" ObjectTableName="&quot;BatchTaskExecution&quot;" NumberOfColumns="2" NumberOfRows="5" IsReadOnly="false" IsHeaderScreen="false">
@@ -49,6 +50,7 @@
   </Screen>
   <Tab TabName="&quot;General&quot;" TabLocalName="&quot;כללי&quot;" ObjectTableName="&quot;BatchTaskExecution&quot;" Code="&quot;BTEG&quot;" ControlPath="&quot;BTEGeneralTabComponent&quot;" TextCode="&quot;BatchTaskExecution.TH.General&quot;" IsPackagable="true" IndexOrder="0" HtmlComponentURL="&quot;./Infrastructure/Components/Maintenance/BatchTaskExecution/BTEGeneralTabComponent&quot;" HtmlComponentName="&quot;BTEGeneralTabComponent&quot;" IsSpellChecked="false" />
   <Tab TabName="&quot;Log&quot;" TabLocalName="&quot;Log&quot;" ObjectTableName="&quot;BatchTaskExecution&quot;" Code="&quot;BTEL&quot;" ControlPath="&quot;BTELogTabComponent&quot;" TextCode="&quot;BatchTaskExecution.TH.Log&quot;" IsPackagable="true" IndexOrder="1" HtmlComponentURL="&quot;./Infrastructure/Components/Maintenance/BatchTaskExecution/BTELogTabComponent&quot;" HtmlComponentName="&quot;BTELogTabComponent&quot;" IsSpellChecked="false" />
+  <Tab TabName="&quot;Parameters&quot;" TabLocalName="&quot;Parameters&quot;" ObjectTableName="&quot;BatchTaskExecution&quot;" Code="&quot;BTEP&quot;" ControlPath="&quot;BTEParameterTabComponent&quot;" TextCode="&quot;BatchTaskExecution.TH.Parameters&quot;" IsPackagable="true" IndexOrder="2" HtmlComponentURL="&quot;./Infrastructure/Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent&quot;" HtmlComponentName="&quot;BTEParameterTabComponent&quot;" IsSpellChecked="false" />
   <EventTypes>
     <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;BatchTaskExecution&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;BatchTaskExecution&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />

@@ -11,6 +11,7 @@
     jQuery.CurrentEntityKey = null;
     jQuery.IsBrandingEnabled = "";
     jQuery.TenantDateTimeFormat = null;
+    jQuery.IsMoneyTabEnabled = false;
 
     var IsTabSelected_PAR = false;
     var IsTabSelected_PAC = false;
@@ -42,6 +43,16 @@
         tabControl.enable($("#TAB_MON"), isEnabled);
         tabControl.enable($("#TAB_DOC"), isEnabled);
         tabControl.enable($("#TAB_EVE"), isEnabled);
+    });
+
+    jQuery.SetTabsHidden = (function (isEnabled) {
+        if(isEnabled){
+            $("#TAB_MON").show();
+        }   
+
+        else {
+            $("#TAB_MON").hide();
+        }
     });
 
     jQuery.GetCompanyLogo = (function () {
@@ -116,12 +127,15 @@
                 if (shipmentPM) {
                     $.CurrentEntityPM = shipmentPM;
                     $.CurrentEntityId = shipmentPM.Id;
+                    $.IsMoneyTabEnabled = shipmentPM.IsSharedLogisticsMoneyTabEnabled;
                     ko.applyBindings(BuildShipmentBackAreaViewModel(shipmentPM, "../"), document.getElementById("BackArea"));
                     ko.applyBindings(BuildShipmentHeaderViewModel(shipmentPM, "../"), document.getElementById("EntityHeaderArea"));
 
                     BuildRoutingLegs(shipmentPM, $.TenantDateTimeFormat);
 
                     $.SetTabsEnabled(true);
+                    $.SetTabsHidden($.IsMoneyTabEnabled);
+
                     $(".ShowOnDataControl").show();
                     $("#RoutingsPageBusyIndicator").hide();
                     $.SendContactActivity($.CurrentEmail, "Shipment", "Shipment Display", $.CurrentTenant, $.CurrentCardId);
@@ -552,7 +566,8 @@
     });
 
     $(document).ready(function () {
-        
+        $("#TAB_MON").hide();
+
         $.ResizePage(210);
         $.SetTabsEnabled(false);
 
@@ -586,7 +601,7 @@
 
             $("#SignOutButton").hide();
             $("#userInfo").hide();
-            $("#BackButton").hide();
+            $("#BackButton").hide();            
 
             $.GetLogginData();
             $.GetCompanyLogo();            
