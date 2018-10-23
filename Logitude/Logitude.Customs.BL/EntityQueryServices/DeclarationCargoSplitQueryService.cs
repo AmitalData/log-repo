@@ -29,6 +29,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 }
             }
 
+            DecCargoSplitCargoIdentifierQueryService decCargoSplitCargoIdentifierQueryService = new DecCargoSplitCargoIdentifierQueryService(context);
+            entityPM.DecCargoSplitCargoIdentifiers = decCargoSplitCargoIdentifierQueryService.GetMulti(DeclarationCargoSplitKeys, true);
             if (entityPM.DecCargoSplitCargoIdentifiers != null)
             {
                 if (entityPM.DecCargoSplitCargoIdentifiers.Count > 0)

@@ -1917,7 +1917,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                     var logWindow = new LogitudeWindow();
 
                                                     logWindow.Width = 770;
-                                                    logWindow.Height = 650;
+                                                    logWindow.Height = 750;
                                                     //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
                                                     logWindow.Title = "בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
                                                     if (myResponse.Result != null) {
