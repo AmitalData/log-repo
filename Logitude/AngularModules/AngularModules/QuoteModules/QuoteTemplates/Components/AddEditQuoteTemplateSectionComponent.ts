@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -152,7 +152,7 @@ export class AddEditQuoteTemplateSectionComponent extends BaseComponent implemen
 
                     logWindow.Title = "Insert Data Field";
                     logWindow.WindowArgs = windowArgs;
-                    logWindow.Show('./Infrastructure/Components/DocumentComponent/DocumentObjectFieldsComponent');
+                    logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentObjectFieldsComponent');
                     logWindow.WindowClosed.subscribe(($event: any) => {
 
                         if ($event) {

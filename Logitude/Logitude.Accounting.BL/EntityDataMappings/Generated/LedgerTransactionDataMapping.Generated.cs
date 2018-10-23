@@ -571,6 +571,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 return;
 
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.Reference1)) //T4 find type == nText 
+            {
+                entityPM.Reference1 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Reference1));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Reference2)) //T4 find type == nText 
+            {
+                entityPM.Reference2 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Reference2));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Reference3)) //T4 find type == nText 
+            {
+                entityPM.Reference3 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Reference3));
+            }
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));

@@ -44,6 +44,8 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityQueryServices;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -845,6 +847,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             CustomsInterfaceSettingRepository repository = new CustomsInterfaceSettingRepository(InterfaceId);
             CustomsInterfaceSettingQuery query = new CustomsInterfaceSettingQuery(repository);
             var setting = query.GetSinglePM(InterfaceId, 0);
+            return setting;
+        }
+
+        [OperationContract]
+        [WebGet(UriTemplate = "shaerdlogisticssettingpm/{settingId}")]
+        public SharedLogisticsSettingPM GetSharedLogisticsSettingM(int settingId)
+        {
+            SharedLogisticsSettingQueryService query = new SharedLogisticsSettingQueryService(settingId);
+            SharedLogisticsSettingPM setting = query.GetSingle(settingId.ToString(), false, false);
             return setting;
         }
     }

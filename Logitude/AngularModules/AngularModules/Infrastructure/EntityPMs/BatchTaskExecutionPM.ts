@@ -99,6 +99,11 @@ export class BatchTaskExecutionPM {
     public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
        
 	 
+    private subject: string;
+    public get Subject() { return this.subject; }
+    public set Subject(newValue: string) { if (this.subject != newValue) { this.subject = newValue; this.MarkAsDirty("Subject"); } }
+       
+	 
 
     public OldEntityPM: BatchTaskExecutionPM;
 		

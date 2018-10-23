@@ -289,7 +289,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 taskExe = new BatchTaskExecutionPM()
                 {
-                    Id = IdCounter.GetNumber("BatchTaskExecution", tenant),
+                    Subject = "Create PNC Flat file for Tax Report",
                     Tenant = tenant,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     ClassName = "Logitude.Accounting.BL.TestService.BatchTaxReportService,Logitude.Accounting.BL",

@@ -104,6 +104,7 @@
     <Compile Include="EntityQueryServices\Generated\TMProjectCategoryQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TMProjectQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TMReleaseQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\SprintQueryService.cs" />
     <Compile Include="EntityQueryServices\TMEmployeeTimeQueryService.cs" />
     <Compile Include="EntityQueryServices\TMOfficeHourQuery.cs" />
     <Compile Include="EntityUpdateServices\Generated\SprintUpdateService.Generated.cs" />

@@ -62,7 +62,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
 		    entityPM.Id = IdCounter.GetNumber("TMProjectCategory", entityPM.Tenant); 
 					
 	    }
-
+        
 		protected override void FillDefaultValuesOnUpdate(TMProjectCategoryPM entityPM)
         {       
            

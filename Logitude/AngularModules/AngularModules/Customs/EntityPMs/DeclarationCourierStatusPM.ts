@@ -209,6 +209,11 @@ export class DeclarationCourierStatusPM {
     public set CourierSuspentionReasonName(newValue: string) { if (this.courierSuspentionReasonName != newValue) { this.courierSuspentionReasonName = newValue; this.MarkAsDirty("CourierSuspentionReasonName"); } }
        
 	 
+    private acceptanceStatusCode: string;
+    public get AcceptanceStatusCode() { return this.acceptanceStatusCode; }
+    public set AcceptanceStatusCode(newValue: string) { if (this.acceptanceStatusCode != newValue) { this.acceptanceStatusCode = newValue; this.MarkAsDirty("AcceptanceStatusCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

@@ -276,7 +276,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
                         }
                         if (this.SearchTextNgModel != undefined) {
 
-                            this.OldSearchInput = this.SearchTextNgModel;
+                            /*this.OldSearchInput = this.SearchTextNgModel;
                             this.IsDropDownVisible = true;
                             this.IsOpen = true; 
                             this._DWQueryBuilderService.GetDWDataForDimTabel(this.ObjectTableName, this.ObjectFieldName, this.SearchTextNgModel).subscribe(myResult => {
@@ -286,7 +286,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
 
                             });
                             this.searchTextChanged = true;
-                          
+                          */
                         } 
                     });
 
@@ -827,13 +827,14 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     OnToggleClicked() {
-        this._DWQueryBuilderService.GetDWDataForDimTabel(this.ObjectTableName, this.ObjectFieldName, this.SearchTextNgModel ? this.SearchTextNgModel : "").subscribe(myResult => {
+        /*this._DWQueryBuilderService.GetDWDataForDimTabel(this.ObjectTableName, this.ObjectFieldName, this.SearchTextNgModel ? this.SearchTextNgModel : "").subscribe(myResult => {
             if (!myResult.HasError) {
                 this.ItemsSource = myResult.Result;
                 this.ToggleOpenDropDown();
             }
 
         });
+        */
        
     }
 

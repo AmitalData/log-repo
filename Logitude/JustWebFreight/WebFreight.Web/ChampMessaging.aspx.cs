@@ -1,5 +1,6 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Logitude.SystemLogs;
+using Newtonsoft.Json;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml;
 
 namespace WebFreight.Web
 {
@@ -24,25 +26,29 @@ namespace WebFreight.Web
 
                 if (iRequest != null)
                 {
-                    string values = "";
+                    string iString = "";
 
                     using (var reader = new StreamReader(Request.InputStream))
                     {
-                        values = reader.ReadToEnd();
+                        iString = reader.ReadToEnd();
+                    }
+
+                    //string jsonData = HttpUtility.UrlDecode(iString);
+
+                    //XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Envelope\":" + jsonData, "Root");
+
+                    //string xmlString = System.Xml.Linq.XElement.Parse(doc.OuterXml).ToString();
+
+                    if (!string.IsNullOrEmpty(iString))
+                    {
+                        this.SaveMessageToAnalyzeQueue(iString);
                     }
                 }
             }
 
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "ChampMessageInWR : SaveMessageToAnalyzeQueue Method", null);
-
-                //if (message != null)
-                //{
-                //    message.Abandon();
-                //}
-
-                //Thread.Sleep(10000);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "ChampMessaging Page", "ChampMessaging Method", null);
             }
         }
 

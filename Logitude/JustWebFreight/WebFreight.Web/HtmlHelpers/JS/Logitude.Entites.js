@@ -702,7 +702,11 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
             leg.ToTime = $.trim(value.ATA) != "" ? $.Convert.ToShortTime(value.ATA) : $.Convert.ToShortTime(value.ETA);
             leg.ToDateTimeIsActual = $.trim(value.ATA) != "";
             leg.ToDateTimeVisibility = ($.trim(value.ETA) != "" || $.trim(value.ATA) != "") ? "visible" : "collapse";
-            leg.Carrier = $.trim($.trim(value.CarrierCode) + " " + $.trim(value.CarrierName));
+
+            if(shipment.IsSharedLogisticsPickDelvCarrierVisible) {
+                leg.Carrier = $.trim($.trim(value.CarrierCode) + " " + $.trim(value.CarrierName));
+            }
+
             leg.CarrierNumber = $.trim(value.CarrierNumber);
             leg.CarrierWebSite = $.trim(value.CarrierWebSite) == "" ? "" : ($.trim(value.CarrierWebSite).indexOf("http://") == -1 ? "http://" + $.trim(value.CarrierWebSite) : $.trim(value.CarrierWebSite));
             leg.CarrierHasWebSite = $.trim(value.CarrierWebSite) != "";
@@ -778,7 +782,11 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
     leg.ToDate = $.trim(shipment.MainCarriageATA) != "" ? $.Convert.ToShortDate(shipment.MainCarriageATA, TenantDateTimeFormat) : $.Convert.ToShortDate(shipment.MainCarriageETA, TenantDateTimeFormat);
     leg.ToTime = $.trim(shipment.MainCarriageATA) != "" ? $.Convert.ToShortTime(shipment.MainCarriageATA) : $.Convert.ToShortTime(shipment.MainCarriageETA);
     leg.ToDateTimeIsActual = $.trim(shipment.MainCarriageATA) != "";
-    leg.Carrier = $.trim($.trim(shipment.MainCarriageCarrierCode) + " " + $.trim(shipment.MainCarriageCarrierName));
+
+    if(shipment.IsSharedLogisticsMainCarrierVisible) {
+        leg.Carrier = $.trim($.trim(shipment.MainCarriageCarrierCode) + " " + $.trim(shipment.MainCarriageCarrierName));
+    }
+
     leg.CarrierNumber = $.trim(shipment.MainCarriageCarrierNumber);
     leg.CarrierWebSite = $.trim(shipment.MainCarriageCarrierWebSite) == "" ? "" : ($.trim(shipment.MainCarriageCarrierWebSite).indexOf("http://") == -1 ? "http://" + $.trim(shipment.MainCarriageCarrierWebSite) : $.trim(shipment.MainCarriageCarrierWebSite));
     leg.CarrierHasWebSite = $.trim(shipment.MainCarriageCarrierWebSite) != "";
@@ -995,7 +1003,11 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
             leg.ToTime = $.trim(value.ATA) != "" ? $.Convert.ToShortTime(value.ATA) : $.Convert.ToShortTime(value.ETA);
             leg.ToDateTimeIsActual = $.trim(value.ATA) != "";
             leg.ToDateTimeVisibility = ($.trim(value.ETA) != "" || $.trim(value.ATA) != "") ? "visible" : "collapse";
-            leg.Carrier = $.trim($.trim(value.CarrierCode) + " " + $.trim(value.CarrierName));
+
+            if(shipment.IsSharedLogisticsPickDelvCarrierVisible) {
+                leg.Carrier = $.trim($.trim(value.CarrierCode) + " " + $.trim(value.CarrierName));
+            }
+
             leg.CarrierNumber = $.trim(value.CarrierNumber);
             leg.CarrierWebSite = $.trim(value.CarrierWebSite) == "" ? "" : ($.trim(value.CarrierWebSite).indexOf("http://") == -1 ? "http://" + $.trim(value.CarrierWebSite) : $.trim(value.CarrierWebSite));
             leg.CarrierHasWebSite = $.trim(value.CarrierWebSite) != "";
