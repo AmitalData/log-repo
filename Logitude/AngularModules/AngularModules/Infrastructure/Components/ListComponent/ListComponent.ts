@@ -2301,6 +2301,14 @@ export class ListComponent implements OnInit, AfterViewInit {
             logWindow.NewWizardArgs = { IsNewEntity: true };
 
             switch (this.ObjectTableName) {
+                case "Customs.Vehicle":
+                    {
+                        logWindow.Width = 1300;
+                        logWindow.Height = 650;
+                        logWindow.ShowCloseButton = true;
+                        break;
+                    }
+
                 case "Customs.Client": {
                     logWindow.Width = 800;
                     logWindow.Height = 500;
