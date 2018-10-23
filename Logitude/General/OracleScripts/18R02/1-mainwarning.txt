@@ -1,0 +1,180 @@
+Severity: High
+Object: arpayments
+Title: DropColumnsDuringRebuild
+The columns arpaymentmethodcode on table arpayments could not be matched to columns in the source table. The columns will be dropped, and any data they contain will be lost.
+----------------------------------------------------
+Severity: High
+Object: glaccounts
+Title: DropColumnsDuringRebuild
+The columns balanceinlocalcurrency, localbalanceindue, nextduedate on table glaccounts could not be matched to columns in the source table. The columns will be dropped, and any data they contain will be lost.
+----------------------------------------------------
+Severity: High
+Object: automaticreconcilemethods
+Title: AddNotNullConstraintColumn
+Deployment cannot update the column "INACTIVE" on table automaticreconcilemethods because it does not allow NULL values. If you run the deployment script, deployment will fail. We recommend you edit the script before running it.
+----------------------------------------------------
+Severity: High
+Object: agenttalkbacktypes
+Title: DropColumn
+The column(s) "NAME" on table agenttalkbacktypes will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: appayments
+Title: DropColumn
+The column(s) qbopaymentaccount on table appayments will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: awbstockusagehistories
+Title: DropColumn
+The column(s) shipmentid, shipmentnumber on table awbstockusagehistories will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: declarations
+Title: DropColumn
+The column(s) couriermanifeststatuscode, iscouriermissingclassification on table declarations will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: quotes
+Title: DropColumn
+The column(s) ordernumberofpackages on table quotes will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: reconcileexternalpagelines
+Title: DropColumn
+The column(s) sequencenumber on table reconcileexternalpagelines will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: shipmentpackages
+Title: DropColumn
+The column(s) seal, seal2 on table shipmentpackages will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: shipmentpickupdeliverypackages
+Title: DropColumn
+The column(s) seal on table shipmentpickupdeliverypackages will be dropped. Any data in the columns will be lost.
+----------------------------------------------------
+Severity: High
+Object: arpaymentmethods
+Title: DropTable
+The table arpaymentmethods will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: oldsupplierinvoiceitemvehicles
+Title: DropTable
+The table oldsupplierinvoiceitemvehicles will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: z1607packagefeatures
+Title: DropTable
+The table z1607packagefeatures will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: z1607packages
+Title: DropTable
+The table z1607packages will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: z1703_chargesgroups
+Title: DropTable
+The table z1703_chargesgroups will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: z201805_objectfields
+Title: DropTable
+The table z201805_objectfields will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: z201805_objecttables
+Title: DropTable
+The table z201805_objecttables will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: z201805_textcodes
+Title: DropTable
+The table z201805_textcodes will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: Medium
+Object: arpayments
+Title: RebuildTable
+The table arpayments will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: customsinterfacesettings
+Title: RebuildTable
+The table customsinterfacesettings will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: glaccounts
+Title: RebuildTable
+The table glaccounts will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: reconcileexternalpages
+Title: RebuildTable
+The table reconcileexternalpages will be rebuilt. To rebuild a table, the table is dropped and then recreated. A temporary table is used to store data when the table is dropped. Note that rebuilding a table can cause the deployment script to run slowly.
+----------------------------------------------------
+Severity: Medium
+Object: arpayments
+Title: PossibleDataTruncation
+Make sure the data in column cashbookid can fit in a VARCHAR2(15 CHAR).
+----------------------------------------------------
+Severity: Medium
+Object: arpayments
+Title: PossibleDataTruncation
+Make sure the data in column qbopaymentmethod can fit in a VARCHAR2(15 CHAR).
+----------------------------------------------------
+Severity: Medium
+Object: customsinterfacesettings
+Title: PossibleDataTruncation
+Make sure the data in column artemusoutsettingsid can fit in a VARCHAR2(15 CHAR).
+----------------------------------------------------
+Severity: Medium
+Object: customsinterfacesettings
+Title: PossibleDataTruncation
+Make sure the data in column artemusinsettingsid can fit in a VARCHAR2(15 CHAR).
+----------------------------------------------------
+Severity: Medium
+Object: glaccounts
+Title: PossibleDataTruncation
+Make sure the data in column previouslocalname can fit in a NVARCHAR2(105).
+----------------------------------------------------
+Severity: Medium
+Object: glaccounts
+Title: PossibleDataTruncation
+Make sure the data in column localname can fit in a NVARCHAR2(105).
+----------------------------------------------------
+Severity: Medium
+Object: reconcileexternalpages
+Title: EnsureDataFormat
+Ensure the data in column pageno can be converted to a NUMBER(10).
+----------------------------------------------------
+Severity: Medium
+Object: accountingsettings
+Title: ColumnRename
+The following column(s) on table accountingsettings will be renamed: vatabletempcard to receivablevatabletempcard, vatexempttempcard to receivablevatexempttempcard. If this is a false positive, turn the "Detect renamed columns" option off in the project options and rerun the comparison.
+----------------------------------------------------
+Severity: Medium
+Object: apinvoices
+Title: ColumnRename
+The following column(s) on table apinvoices will be renamed: vendoeglaccountid to vendorglaccountid. If this is a false positive, turn the "Detect renamed columns" option off in the project options and rerun the comparison.
+----------------------------------------------------
+Severity: Medium
+Object: appayments
+Title: ColumnRename
+The following column(s) on table appayments will be renamed: paymentmethodcode to paymentmethodid. If this is a false positive, turn the "Detect renamed columns" option off in the project options and rerun the comparison.
+----------------------------------------------------
+Severity: Medium
+Object: cards
+Title: ColumnRename
+The following column(s) on table cards will be renamed: accountingcard to receivablesaccountingcard. If this is a false positive, turn the "Detect renamed columns" option off in the project options and rerun the comparison.
+----------------------------------------------------
+Severity: Medium
+Object: declarations
+Title: ColumnRename
+The following column(s) on table declarations will be renamed: courierpaymentstatuscode to acceptancestatuscode, courierdeclarationstatuscode to mamanstatuscode, isclosedforfollowup to isclose. If this is a false positive, turn the "Detect renamed columns" option off in the project options and rerun the comparison.
+----------------------------------------------------
+Severity: Medium
+Object: shipmentpickupdeliveries
+Title: ColumnRename
+The following column(s) on table shipmentpickupdeliveries will be renamed: emptycontainerpartnerid to emptydelcontainerpartnerid. If this is a false positive, turn the "Detect renamed columns" option off in the project options and rerun the comparison.
+----------------------------------------------------

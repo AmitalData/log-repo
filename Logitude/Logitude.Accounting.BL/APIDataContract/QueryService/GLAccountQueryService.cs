@@ -25,6 +25,7 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.APIDataContract.ApiV1;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
@@ -376,12 +377,70 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 temp.Occupation = MyEntity.Occupation;
                 temp.DeductionTypeId = MyEntity.DeductionTypeId;
                 temp.ConsolidationVat = MyEntity.ConsolidationVat;
+
+                if (MyEntity.Parent != null)
+                {
+
+                    temp.Parent = MyEntity.Parent;
+                 CheckParentCurrency(MyEntity);
+
+
+                }
                 return temp;
             }
             catch (Exception ex)
             {
 
                 throw ex;
+            }
+        }
+
+
+        public void CheckParentCurrency(GLAccountPM MyEntity)
+        {
+            Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService accountQueryService = new Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService(MyEntity.Tenant);
+            GLAccountPM parentGLAccount = accountQueryService.GetSinglePMByDisplayNumber(MyEntity.Parent, MyEntity.Tenant);
+            if (parentGLAccount != null)
+            {
+
+                if (parentGLAccount.IsMultiCurrency == false)
+                {
+                    throw new Exception(TextCodesTranslator.TranslateText("GLAccounts.O.MustBeMultiCurrency", MyEntity.Tenant));
+                }
+
+                else
+                {
+                    GLAccountCurrencyQueryService accountcurrencyQueryService = new GLAccountCurrencyQueryService(MyEntity.Tenant);
+                    GLAccountCurrencyPM gLAccountCurrencyPM = accountcurrencyQueryService.GetEntityByCurrencyAndGLAccountId(parentGLAccount.Id, parentGLAccount.CurrencyId, parentGLAccount.Tenant);
+
+                    CurrencyQueryService currencyQueryService = new CurrencyQueryService(MyEntity.Tenant);
+                    Currency currency = currencyQueryService.GetCurrencyById(parentGLAccount.CurrencyId, parentGLAccount.Tenant);
+                    if (gLAccountCurrencyPM != null)
+                    {
+                        throw new Exception("The parent GLAccount(" + parentGLAccount.DisplayNumber + ") already has split GLAccount with currency (" + currency.Code + ")");
+                    }
+                    else
+                    {
+                        IAccountingContext accountingContext = AccountingContext.GetContext(MyEntity.Tenant);
+                        GLAccountCurrencyUpdateService updateService = new GLAccountCurrencyUpdateService(accountingContext, new Dictionary<string, IContext>(), MyEntity.Tenant);
+
+                        GLAccountCurrencyPM newGLAccountCurrency = new GLAccountCurrencyPM()
+                        {
+
+                            CurrencyId = parentGLAccount.CurrencyId,
+                            MainGLAccountId = parentGLAccount.Id,
+
+                            GLAccountId = MyEntity.Id,
+
+                            Tenant = MyEntity.Tenant,
+                            ChangeSetOp = ChangeSetOperation.Insert,
+
+                        };
+
+                        updateService.Update(newGLAccountCurrency, true);
+                    }
+                }
+
             }
         }
 

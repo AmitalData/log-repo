@@ -1,4 +1,4 @@
-﻿export class ApiQueryFilters {
+export class ApiQueryFilters {
 
     constructor(getAll: boolean = false) {
         this.GetAll = getAll;
@@ -23,7 +23,8 @@
         IsCustomField: boolean,
         FieldDataType: string,
         IgnoreFilter: boolean = false,
-        IsCacheOnClient: boolean = false) {
+        IsCacheOnClient: boolean = false,
+        ForceEnableAdd:boolean = false) {
 
         if (!IsCacheOnClient) {
             if (typeof (FieldValue) === "string") {
@@ -46,7 +47,7 @@
             }
         }
         var existedItem = this.AdditionalFilters.find(d => d.FieldName == FieldName);
-        if (!existedItem) {
+        if (!existedItem || ForceEnableAdd) {
             var item = new FilterItem(FieldName, FieldValue, FieldValue2, FieldValue3, Operator, IsCustom, DisplayInList, IsCustomField, FieldDataType, IgnoreFilter, IsCacheOnClient);
             this.AdditionalFilters.push(item);
         }

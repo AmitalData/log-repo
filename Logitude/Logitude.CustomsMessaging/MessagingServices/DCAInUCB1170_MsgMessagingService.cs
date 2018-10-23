@@ -190,6 +190,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SelectedBOLValue = requestParamsData.SelectedBOLValue,
                 SelectedStatusValue = requestParamsData.SelectedStatusValue,
                 SelectedTotalInvoiceValue = requestParamsData.SelectedTotalInvoiceValue,
+                DeclarationsList = requestParamsData.Declarations,
 
                 tenant = tenant,
                 MyMoreParams = "",
@@ -285,9 +286,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string CourierMasterId { get; set; }
         public string master { get; set; }
         public string CourierDeclarationStatusCode { get; set; }
-
+        public List<string> DeclarationsList { get; set; }
         public string MyMoreParams { get; set; }
-
 
 
         public string SelectedBOLValue { get; set; }

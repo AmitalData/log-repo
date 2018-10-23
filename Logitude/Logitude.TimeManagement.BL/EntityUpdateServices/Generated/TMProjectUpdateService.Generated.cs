@@ -60,7 +60,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
   
 		
 	    }
-
+        
 		protected override void FillDefaultValuesOnUpdate(TMProjectPM entityPM)
         {       
            

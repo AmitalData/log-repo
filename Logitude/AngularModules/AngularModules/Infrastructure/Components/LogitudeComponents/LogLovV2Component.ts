@@ -583,7 +583,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, this.LookUpTable.CacheOnClient);
                     }
                     
-                    //apiQueryFilter = this.QueryFilterItems;
+                    
                 }
                // apiQueryFilter.GetAll = true; by mohammad.
                 this.entityListService.getAllFromCache("PartnerType", apiQueryFilter).then((res3:any)=> {
@@ -915,7 +915,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     apiFilters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, filter.FieldValue3, filter.Operator,
                         filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, this.LookUpTable.CacheOnClient);
             }
-                //apiFilters = this.QueryFilterItems;
+               
             }
             if (lookup.CacheOnClient) {
                 this.entityListService.getSingleFromCache(value, this.LookUpTableName, apiFilters).then((res:any) => {
@@ -1094,7 +1094,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             var active = document.getElementsByClassName("highlighted");
            
             if (!active[0]) {
-                if (this.ItemsSource.length > 0) {
+                if (this.ItemsSource && this.ItemsSource.length > 0) {
                     var input = document.getElementById(this.MyDataListId);
                     var lis = input.getElementsByTagName("li");
                     lis[0].classList.add("highlighted");
@@ -1114,7 +1114,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         else {
             var active = document.getElementsByClassName("highlighted");
             if (active[0]) {
-                if (this.ItemsSource.length > 0) {
+                if (this.ItemsSource && this.ItemsSource.length > 0) {
                     if (active[0].previousElementSibling) {
                         active[0].previousElementSibling.classList.add("highlighted");
                         active = document.getElementsByClassName("highlighted");
@@ -1400,7 +1400,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
             }
             else {
-               // tenantZeroFilters = this.QueryFilterItems;
+               
                 tenantZeroFilters = new ApiQueryFilters();
                 for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
                     var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
@@ -2533,28 +2533,62 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
 
         if (searchText) {
 
+            //if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0 && this.callCount == 0) {
+            //    this.callCount = 1;
+                
+            //}
+
             if (this.currentFilter == null || this.currentFilter == undefined) {
                 this.callCount = 1;
-                filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false,  this.LookUpTable.CacheOnClient);
+                var forceEnableAdd = false;
+                if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0) {
+                    for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
+                        var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
+                        if (this.LookUp1 == filter.FieldName)
+                        {
+                            forceEnableAdd = true;
+                        }
+                    }
+                }
+                
+                filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = this.LookUp1;
             }
             else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined) {
                 this.callCount = 2;
+                var forceEnableAdd = false;
+                if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0) {
+                    for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
+                        var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
+                        if (this.LookUp2 == filter.FieldName) {
+                            forceEnableAdd = true;
+                        }
+                    }
+                }
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp1 && this.LookUpTable.DependencyFilter2 != this.LookUp1 && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
                 }
-                filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null, false,  this.LookUpTable.CacheOnClient);
+                filters.addAdditionalFilter(this.LookUp2, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = this.LookUp2;
             }
             else {
                 this.callCount = 3;
+                var forceEnableAdd = false;
+                if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0) {
+                    for (var i = 0; i < this.QueryFilterItems.AdditionalFilters.length; i++) {
+                        var filter: FilterItem = this.QueryFilterItems.AdditionalFilters[i];
+                        if ("SearchFields" == filter.FieldName) {
+                            forceEnableAdd = true;
+                        }
+                    }
+                }
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp1 && this.LookUpTable.DependencyFilter2 != this.LookUp1 && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
                 }
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp2 && this.LookUpTable.DependencyFilter2 != this.LookUp2 && this.LookUpTable.DependencyFilter3 != this.LookUp2) {
                     filters.removeAdditionalFilter(this.LookUp2);
                 }
-                filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null, false, this.LookUpTable.CacheOnClient);
+                filters.addAdditionalFilter("SearchFields", searchText, null, null, "Contains", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = null;
             }
         }
@@ -2615,14 +2649,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.ItemsSourceCount = this.ItemsSource.length;//resp.Result.length;
                     }
                     
-                    //if (this.QueryFilterItems != null && this.QueryFilterItems != undefined) {
-                    //    this.QueryFilterItems = new ApiQueryFilters();
-                    //    for (var i = 0; i < this.OriginalQueryFilterItems.AdditionalFilters.length; i++) {
-                    //        var filter: FilterItem = this.OriginalQueryFilterItems.AdditionalFilters[i];
-                    //        this.QueryFilterItems.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, filter.FieldValue3, filter.Operator,
-                    //            filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, filter.IsCacheOnClient);
-                    //    }
-                    //}
+                    
                 }
                 else {
 
@@ -2662,14 +2689,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.ItemsSource = this.bufferData;//resp.Result;
                         this.ItemsSourceCount = this.ItemsSource.length;//resp.Result.length;
                     }
-                    //if (this.QueryFilterItems != null && this.QueryFilterItems != undefined) {
-                    //    this.QueryFilterItems = new ApiQueryFilters();
-                    //    for (var i = 0; i < this.OriginalQueryFilterItems.AdditionalFilters.length; i++) {
-                    //        var filter: FilterItem = this.OriginalQueryFilterItems.AdditionalFilters[i];
-                    //        this.QueryFilterItems.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, filter.FieldValue3, filter.Operator,
-                    //            filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, filter.IsCacheOnClient);
-                    //    }
-                    //}
+                  
                 }
                 if (!this.ManipulateData) {
                     if (this.ItemsSourceCount == 0) {
@@ -2765,14 +2785,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.ItemsSource = this.bufferData;//resp.Result;
                         this.ItemsSourceCount = this.ItemsSource.length;//resp.Result.length;
                     }
-                    //if (this.QueryFilterItems != null && this.QueryFilterItems != undefined) {
-                    //    this.QueryFilterItems = new ApiQueryFilters();
-                    //    for (var i = 0; i < this.OriginalQueryFilterItems.AdditionalFilters.length; i++) {
-                    //        var filter: FilterItem = this.OriginalQueryFilterItems.AdditionalFilters[i];
-                    //        this.QueryFilterItems.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, filter.FieldValue3, filter.Operator,
-                    //            filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, filter.IsCacheOnClient);
-                    //    }
-                    //}
+                  
                 }
                 else {
 
@@ -2791,14 +2804,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                         this.ItemsSource = this.bufferData;//resp.Result;
                         this.ItemsSourceCount = this.ItemsSource.length;//resp.Result.length;
                     }
-                    //if (this.QueryFilterItems != null && this.QueryFilterItems != undefined) {
-                    //    this.QueryFilterItems = new ApiQueryFilters();
-                    //    for (var i = 0; i < this.OriginalQueryFilterItems.AdditionalFilters.length; i++) {
-                    //        var filter: FilterItem = this.OriginalQueryFilterItems.AdditionalFilters[i];
-                    //        this.QueryFilterItems.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, filter.FieldValue3, filter.Operator,
-                    //            filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, filter.IsCacheOnClient);
-                    //    }
-                    //}
+                  
                 }
                 if (!this.ManipulateData) {
                     if (this.ItemsSourceCount == 0) {

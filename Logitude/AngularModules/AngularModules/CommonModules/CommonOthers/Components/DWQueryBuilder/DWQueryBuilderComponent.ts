@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 
 import {Component, ViewContainerRef, OnInit, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core'; 
 import {DWObjectFieldPM} from '../../../../Infrastructure/EntityPMs/DWObjectFieldPM';
@@ -29,6 +29,7 @@ export class DWQueryBuilderComponent extends BaseComponent{
     @Output() onDataSourceChangedEvent = new EventEmitter();
     @Output() onUnselectedDataSourceChangedEvent = new EventEmitter();
     DataSource: DWObjectFieldsDetails[];
+    AllFieldsDataSource: DWObjectFieldsDetails[];
     SelectedFieldsDataSource: DWObjectFieldsDetails[] = [];
     SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
     public ObsList: any[] = [];
@@ -68,6 +69,7 @@ export class DWQueryBuilderComponent extends BaseComponent{
                             this.ObsListAll.push(view);
                         });
                         this.DataSource = this.ObsList;
+                        this.AllFieldsDataSource = this.ObsList;
                     }
 
                 });
@@ -236,13 +238,13 @@ export class DWQueryBuilderComponent extends BaseComponent{
     public get SearchText() { return this.searchText; }
     public set SearchText(newValue: string) {
         this.searchText = newValue;
-        //if (newValue != null && newValue != "") {
-        //    this.unSelectedList = this.Fixedunselected.filter(f => TextCodeTranslator.Translate(f.FullNameTextCodeCode).toLowerCase().indexOf(newValue.toLowerCase()) > -1 );
-        //}
-        //else {
-        //    this.unSelectedList = this.Fixedunselected;
-        //}
-        this.onUnselectedDataSourceChangedEvent.emit(this.unSelectedList);
+        if (newValue != null && newValue != "") { 
+            this.DataSource = this.AllFieldsDataSource.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1 );
+        }
+        else {
+            this.DataSource = this.AllFieldsDataSource;
+        }
+        //this.onUnselectedDataSourceChangedEvent.emit(this.unSelectedList);
         //this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
 
     }
@@ -551,7 +553,7 @@ export class DWQueryBuilderComponent extends BaseComponent{
             this._DWObjectFieldPMService.getDWObjectFieldsByDWTableId(mytbl.ParentDimTabelName).subscribe(Result => {
                 if (!Result.HasError) {
                     var Key = Result.Result.filter(a => a.IsPrimaryKey == true)[0];
-                    var FactKey = this.DataSource.filter(a => a.DimensionTableCode == mytbl.ParentDimTabelName)[0];
+                    var FactKey = this.AllFieldsDataSource.filter(a => a.DimensionTableCode == mytbl.ParentDimTabelName)[0];
                     SelectStmt += " inner join " + mytbl.ParentDimTabelName + " on " + Fact + "." + FactKey.Code + " = " + mytbl.ParentDimTabelName + "." + Key.Code
                     //.forEach((field) => {
                     //    var view = new DWObjectFieldsDetails(field);
