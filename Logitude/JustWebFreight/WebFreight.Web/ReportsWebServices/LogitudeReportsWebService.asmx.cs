@@ -699,6 +699,8 @@ namespace WebFreight.Web.ReportsWebServices
                     profitrecord.ShipmentMasterNumber = a.MasterShipmentNumber;
                     profitrecord.Origin = a.MainCarriageFromPortName;
                     profitrecord.Destination = a.ToPortName;
+                    profitrecord.Notes = a.Notes;
+
 
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, a, profitrecord);
@@ -1074,7 +1076,7 @@ namespace WebFreight.Web.ReportsWebServices
             totalList = list_ARInvoices.Concat(list_APInvoices).Concat(list_ARPayments).Concat(list_APPayments).ToList();
 
             List<string> allShipmentIds = totalList.Select(s => s.ShipmentId).ToList();
-            List<ShipmentEntityClass> allShipmentData = (from d in shipmentsContext.Shipments.Include("ShipperCard")
+            List<ShipmentEntityClass> allShipmentData = (from d in shipmentsContext.Shipments.Include("ShipperCard").Include("ConsigneeCard")
                                                          where d.Tenant == tenant && allShipmentIds.Contains(d.Id)
                                                          select new ShipmentEntityClass
                                                          {
@@ -1083,6 +1085,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                              ShipperRef1 = d.ShipperReference1,
                                                              ShipperRef2 = d.ShipperReference2,
                                                              DescriptionOfGoods = d.DescriptionOfGoods,
+                                                             ConsigneeName = d.ConsigneeCard == null ? null : d.ConsigneeCard.EnglishName,
                                                          }).ToList();
 
             foreach (StatementDataProvider.StatementRecord record in totalList)
@@ -1130,6 +1133,8 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
                     record.DescriptionOfGoods = shipmentEntity.DescriptionOfGoods;
+                    record.Shipper = shipmentEntity.ShipperName;
+                    record.Consignee = shipmentEntity.ConsigneeName;
                 }
             }
 
@@ -12500,6 +12505,7 @@ namespace WebFreight.Web.ReportsWebServices
     {
         public string ShipmentId { get; set; }
         public string ShipperName { get; set; }
+        public string ConsigneeName { get; set; }
         public string ShipperRef1 { get; set; }
         public string ShipperRef2 { get; set; }
         public string DescriptionOfGoods { get; set; }
