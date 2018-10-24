@@ -362,5 +362,7 @@ __pycache__/
 /Logitude/JustWebFreight/WebFreight.Web/JustWebFreightConnectionStrings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustWebFreightCustomsappSettings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustWebFreightappSettings.config
+/Logitude/JustWebFreight/WebFreight.Web/JustWebFreightConnectionStrings.config
 /Logitude/JustWebFreight/WebFreight.Web/Angular/out-tsc
+/Logitude/Logitude.DatabaseMigration/JustWebFreightConnectionStrings.config
 /Logitude/AngularModules/packages

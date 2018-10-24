@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .TitleBackGround {
         background: #F0F0F0; /* For browsers that do not support gradients */
         background: -webkit-linear-gradient(#F0F0F0, #C5C7C7); /* For Safari 5.1 to 6.0 */
@@ -81,13 +81,67 @@
             font-size: 11px;
             cursor: pointer;
         }
+    .ItemBox {
+        display: inline-block;
+        vertical-align: top;
+        width: auto;
+        height: 30px;
+        border: 1px solid gray;
+        border-radius: 0px;
+        margin-left: 5px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        background: white;
+    }
+    .SelectedItemBox {
+        display: inline-block;
+        vertical-align: top;
+        width: auto;
+        height: 30px;
+        border: 1px solid gray;
+        border-radius: 0px;
+        margin-left: 5px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        background: #AAB6FF;
+    }
+    .SelectedItemBoxContent {
+        margin-left: 1px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: 4px;
+    }
+    .RemoveBtn {
+        width: 14px;
+        display: inline-block;
+        height: 14px;
+        margin-left: 2px;
+        margin-right: 3px; 
+    }
+        .RemoveBtn:hover {
+            width: 14px;
+            display: inline-block;
+            height: 14px;
+            margin-left: 2px;
+            margin-right: 3px; 
+            border: 1px solid red;
+            /*border-top: none;*/
+        }
+    .ArrowBtn {
+        width: 14px;
+        display: inline-block;
+        height: 14px;
+        margin-left: 2px;
+        margin-right: 3px;
+        cursor:pointer;
+    }
 </style>
 <table>
     <tr>
         <td>
             <table>
                 <tr>
-                    <td style="width: 45%;height:100%;">
+                    <td style="width: 30%;height:100%;">
                         <div style="height:100%;width:100%;border:solid 1px #BABABA;border-radius:5px">
                             <table>
                                 <tr>
@@ -260,7 +314,7 @@
                         </table>-->
                        
                     </td>
-                    <td style="width: 45%;height:100%;">
+                    <td style="width: 55%;height:100%;">
                         <table>
                             <tr style="height:120px;">
                                 <td>
@@ -273,30 +327,45 @@
                                                             <label style="margin:5px;vertical-align: middle;">Selected Query Columns</label><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
                                                             <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
                                                         </div>
-                                                        <div style="float:right;">
+                                                        <!--<div style="float:right;">
                                                             <button (click)="btnUp_Click()" class="Button" [disabled]="IsbtnDownEnabled" style="width:26px;margin-right: 2px;margin-top:3px;float:right;">
                                                                 <img src="./Images/Icons/ArrowUp.png" style="height:16px;vertical-align:middle;" />
                                                             </button>
                                                             <button (click)="btnDown_Click()" class="Button" [disabled]="IsbtnUpEnabled" style="width:26px;margin-top:3px;margin-right: 5px; float:right;">
                                                                 <img src="./Images/Icons/ArrowDown.png" style="height:16px;vertical-align:middle;" />
                                                             </button>
-                                                        </div>
+                                                        </div>-->
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <table class="BodyBackground">
+                                                    <div class="EmailBoxMultiLinesText" style="height:100%;white-space: normal;max-width: 812px;overflow-y: auto;background:linear-gradient(#F2F8FF, #E6EBF0);">
+                                                        <div class="ItemBox" *ngFor="let item of SelectedFieldsDataSource" [class.SelectedItemBox]="FieldSelectedItem == item" (click)="SetFieldSelectedItem(item)">
+                                                            <div class="SelectedItemBoxContent">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td><span style="width:20px;"><img *ngIf="FieldSelectedItem == item" (click)="btnUp_Click()" src="./Images/ArrowLeft.png" class="ArrowBtn" /></span></td>
+                                                                        <td><span style="margin-left:2px;cursor: default;">{{item.DisplayName}}</span></td>
+                                                                        <td><span><img (click)="btnRemove_Click(item)" src="./Images/RedX2.png" class="RemoveBtn" /></span></td>
+                                                                        <td><span style="width:20px;"><img *ngIf="FieldSelectedItem == item" (click)="btnDown_Click()" src="./Images/ArrowRight.png" class="ArrowBtn" /></span></td>
+                                                                    </tr>
+                                                                </table> 
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <!--<table class="BodyBackground">
                                                         <tr>
                                                             <td>
-                                                                <!--<LogListBox [DataSource]="OrderedQueryColumnsList" [Height]="'325'" [Binding]="'ObjectFieldListLabelTextCodeCode'" [event]="onSelectedDataLoadedEvent" [DataSourceChanged]="onDataSourceChangedEvent" (SelectedItemChanged)="onSelectedItemChanged($event)"></LogListBox>-->
-                                                                <ul style="width:100%;margin-top:5px;height:120px;overflow:auto;background-color:transparent;max-height:120px"> 
-                                                                    <li *ngFor="let item of SelectedFieldsDataSource" class="ListBoxItem" [class.SelectedListBoxItem]="FieldSelectedItem == item" (click)="SetFieldSelectedItem(item)">{{item.DisplayName.replace('[', '').replace(']','')}}</li>
+                                                                <ul style="width:100%;margin-top:5px;height:120px;overflow:auto;background-color:transparent;max-height:120px">
+                                                                    <li *ngFor="let item of SelectedFieldsDataSource" class="ListBoxItem" [class.SelectedListBoxItem]="FieldSelectedItem == item" (click)="SetFieldSelectedItem(item)">{{item.DisplayName}}</li>
                                                                 </ul>
                                                             </td>
                                                         </tr>
                                                         <tr><td style="height:100%;"></td></tr>
-                                                    </table>
+                                                    </table>-->
+
                                                 </td>
                                             </tr>
 
@@ -339,7 +408,7 @@
                                                                                 <div style="width:7px;"></div>
                                                                             </td>
                                                                             <td class="ListBoxItem" style="width:150px;height:24px">
-                                                                                <p style="display:inline-block;margin-top:6px;width:150px;">{{item.DisplayName.replace('[', '').replace(']','')}}</p>
+                                                                                <p style="display:inline-block;margin-top:6px;width:150px;">{{item.DisplayName}}</p>
                                                                             </td>
                                                                             <td class="ListBoxItem" style="width:7px;height:24px">
                                                                                 <div style="width:7px;"></div>
@@ -479,7 +548,7 @@
                                                 <td>
                                                     <div class="LocationDirective" style="height:150px;">
                                                         <div *ngIf="IsPreview == false" class="BodyBackground MediaFill">
-                                                            <LogTextBox [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'Notes'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="Notes"></LogTextBox>
+                                                            <LogTextBox [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'Notes'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="Notes" [InputType]="'Text'"></LogTextBox>
                                                         </div>
                                                         <div *ngIf="IsPreview == true" class="BodyBackground MediaFill">
                                                             <div class="SimpleGridView">
