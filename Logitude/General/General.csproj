@@ -487,6 +487,16 @@
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />
     <Content Include="OracleScripts\18R01\global -compare aminet_glo to aminetpre_glo.txt" />
+    <Content Include="OracleScripts\18R02\0-i change due bad in customs 563 573 582 .txt" />
+    <Content Include="OracleScripts\18R02\1-main deploy SQL.txt" />
+    <Content Include="OracleScripts\18R02\1-main script error .txt" />
+    <Content Include="OracleScripts\18R02\1-main script only error !!!.txt" />
+    <Content Include="OracleScripts\18R02\1-mainwarning.txt" />
+    <Content Include="OracleScripts\18R02\2-global deploy sql.txt" />
+    <Content Include="OracleScripts\18R02\2-global warning .txt" />
+    <Content Include="OracleScripts\18R02\56 AMINETPRE  TO  AMINETPRE2  .txt" />
+    <Content Include="OracleScripts\18R02\57 AMINETPRE  TO  AMINETPRE2  .txt" />
+    <Content Include="OracleScripts\18R02\snapshoot move to network .txt" />
     <Content Include="OracleScripts\2018\[Alaa] update supplierinvoiceitems searchfields.sql" />
     <Content Include="Main Branch\2018\03 - 2018\Day 28 [Abed] InsertAPICommunicationLogType.sql" />
     <Content Include="Main Branch\2018\03 - 2018\Day 29 [Abed] FillPortsInWarehouseEntryData.sql" />

@@ -1,6 +1,7 @@
 ﻿using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.NotificationBL;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.Data;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -22,10 +23,6 @@ using UnifreightIIG.Common.MessageLib.Deposit;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
-    //public class DOC_NG_5101_GNMessageToAgentResponseService :
-    //  ResponseServiceBase<INF_MSG_GenericResponseData, DOC_NG_5101_GNMessageToAgent, GenericRequestParams>
-
-
 
     public class DEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestResponseService : ResponseServiceBase<
         INF_MSG_GenericResponseData,
@@ -34,7 +31,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
     {
         public int _MyTenant { get; set; }
         public ICustomContext _MyContext;
-        public TapagPM _MyTapagPM ;
+        public TapagPM _MyTapagPM;
+        public DepositPM _MyDepositPM;
         public DeclarationPM _MyDeclarationPM;
         private ICommonDataContext _CommonContext;
 
@@ -54,24 +52,51 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string assigneToNotificationTypeCode = "I";
 
             //Check if Tapag file is already exist
-            
+
             string requestFileNumber = string.Concat(customResponse.TapagIdentifier.fileNumber, "-", customResponse.TapagIdentifier.numeral);
             string tapagId = tapagConnectionTableQueryService.GetTapagIdByRequestFileNumber(requestFileNumber, this._MyTenant);
 
             if (!String.IsNullOrWhiteSpace(tapagId))
             {
                 notificationDescription = "בקשה להשלמת פרטי החזר פקדון תיק תפ\"ג" + requestFileNumber;
-                LogMessagingUtil.Instance.AppendLine("Start Sending Notification... ");
-                DoUpdateNotification("2753A", this._MyTenant, null, notificationDescription, assigneToNotificationTypeCode, null);
             }
-            
+
 
 
             this.MyRequestSheetParam = new RequestSheetParam();
             if (!String.IsNullOrWhiteSpace(tapagId))
             {
-                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Tapag");
-                this.MyRequestSheetParam.EntityId1 = tapagId;
+                var depositId = depositQueryService.GetDepositIdByTapagNumber(tapagId, this._MyTenant);
+                if (depositId != null) this._MyDepositPM = depositQueryService.GetSingle(depositId, true, false);
+
+                if (this._MyDepositPM == null)
+                {
+                    this.MyResponseData = new INF_MSG_GenericResponseData()
+                    {
+                        Succeeded = true,
+                        HasException = true,
+                        UserMessage = "Can not find tapag file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral,
+                    };
+                    LogMessagingUtil.Instance.AppendLine("Can not find tapag file (not exist in connection table) " + "fileNumber=" + customResponse.TapagIdentifier.fileNumber + "Numeral=" + customResponse.TapagIdentifier.numeral);
+                    return;
+                }
+
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Deposit");
+                this.MyRequestSheetParam.EntityId1 = depositId;
+                this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Tapag");
+                this.MyRequestSheetParam.EntityId2 = tapagId;
+                this.MyRequestSheetParam.RequestDescription = notificationDescription;
+
+                string myDeclarationId = null;
+                if (_MyDepositPM.EntityTypeCode == "1055")
+                {
+                    var myDeclarationQueryService = new DeclarationQueryService(this._MyTenant);
+                    myDeclarationId = myDeclarationQueryService.GetIdByDeclarationNumber(_MyDepositPM.EntityNumber, this._MyTenant);
+                    if (!string.IsNullOrWhiteSpace(myDeclarationId))
+                    {
+                        _MyDeclarationPM = myDeclarationQueryService.GetSingle(myDeclarationId, false, false);
+                    }
+                }
             }
             this.MyRequestSheetParam.RequestDescription = notificationDescription;
             if (_MyDeclarationPM != null)
@@ -83,9 +108,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     MyRequestSheetParam.RequestDescription = string.Concat(MyRequestSheetParam.RequestDescription, "\n", this._MyDeclarationPM.UserNotes);
                 }
+                notificationDescription = notificationDescription + " (" + _MyDeclarationPM.CustomFileNo + ")";
             }
 
-            
+            LogMessagingUtil.Instance.AppendLine("Start Sending Notification... ");
+            DoUpdateNotification("2753A", this._MyTenant, null, notificationDescription, assigneToNotificationTypeCode, _MyDeclarationPM);
 
             this.MyResponseData = new INF_MSG_GenericResponseData()
             {
@@ -115,7 +142,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.Reference2Number = responseToMessage;
             newNotificationPM.DueDate = DateTime.Now;
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
-
+            newNotificationPM.EntityId = _MyDepositPM.Id;
+            newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Deposit");
+            if(!String.IsNullOrWhiteSpace(_MyDepositPM.TapagNumber)) newNotificationPM.Reference2Number = _MyDepositPM.TapagNumber;
             string customerId = null;
             string referentUserId = null;
             if (connectedDeclarationPM != null)
@@ -130,9 +159,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             if (connectedDeclarationPM != null && !string.IsNullOrWhiteSpace(connectedDeclarationPM.CustomerId)) newNotificationPM.CustomerId = connectedDeclarationPM.CustomerId; // moran 20.6.16 - Task 20789
 
-            //newNotificationPM.AssigneToId =
-            //   NotificationBase.
-            //   CalcAssigneToId(newNotificationPM.Tenant, customerId, referentUserId, notificationDefinitionCode, "");
+            newNotificationPM.AssigneToId =
+               NotificationBase.
+               CalcAssigneToId(newNotificationPM.Tenant, customerId, referentUserId, notificationDefinitionCode, "");
 
             if (connectedDeclarationPM != null && !string.IsNullOrWhiteSpace(newNotificationPM.DeclarationOfficeCode))
             {

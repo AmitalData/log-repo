@@ -88,6 +88,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string PendingRemarks  { get; set; }
        [DataMember]
        public string CourierSuspentionReasonName  { get; set; }
+       [DataMember]
+       public string AcceptanceStatusCode  { get; set; }
    }
 
 }

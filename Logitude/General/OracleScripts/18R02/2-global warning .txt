@@ -1,0 +1,20 @@
+Severity: High
+Object: z1607apicredintials
+Title: DropTable
+The table z1607apicredintials will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: z1607globalcontacts
+Title: DropTable
+The table z1607globalcontacts will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: z1607monitorservicelastupdat
+Title: DropTable
+The table z1607monitorservicelastupdat will be dropped. Any data in the table will be lost.
+----------------------------------------------------
+Severity: High
+Object: z1607tenantmanagementlicense
+Title: DropTable
+The table z1607tenantmanagementlicense will be dropped. Any data in the table will be lost.
+----------------------------------------------------
