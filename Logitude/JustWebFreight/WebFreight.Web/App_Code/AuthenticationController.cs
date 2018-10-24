@@ -606,6 +606,7 @@ namespace WebFreight.Web
             try
             {
 
+
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = SecurityUtility.getLoggedDomain();
                 if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
@@ -617,13 +618,17 @@ namespace WebFreight.Web
                 string email = loginParameters.Email.Trim();
                 string password = loginParameters.Password;
                 string Techology = "";
-                //email = !string.IsNullOrEmpty(email) ? email.Trim() : email;
-                //password = !string.IsNullOrEmpty(password) ? password.Trim() : password;
-                UserData data;
+                UserData data = new UserData();
                 List<CompanyLogin> loginsList = new List<CompanyLogin>();
                 IGlobalContext globalObjectContext = GlobalContext.GetContext();
                 ContactPassword contactPassword = null;
-                data = CheckUserState(email.ToLower(), password, ref contactPassword, loginParameters.ByToken);
+          
+               data = CheckCaptchaState(loginParameters);
+
+                if (!data.HasError)
+                {
+                    data = CheckUserState(email.ToLower(), password, ref contactPassword, loginParameters.ByToken, loginParameters.ClientType);
+                }
 
                 if (!data.HasError)
                 {
@@ -1094,18 +1099,21 @@ namespace WebFreight.Web
                 {
                     if (data.InValidMailOrPassword || data.IsLocked || data.IpRestricted)
                     {
-                        AddFailedLoginLog(data);
+                        AddFailedLoginLog(data , loginParameters);
                         int sleepTime = data.NumberOfRetries > 0 ? data.NumberOfRetries : 1;
+
+                        if (!data.IpRestricted && loginParameters.ClientType == "Web")
+                        {
+                            AddCaptchaKey(loginParameters, data);
+                        }
+
                         Thread.Sleep(sleepTime);
                     }
-                }
 
-                if (data.HasError && data.NumberOfRetries > 4)
-                {
-                    string captchaCode = RandomString(6);
-                    data.CaptchaImage = GenerateCaptchaImage(captchaCode);
-                }
+          
 
+                }
+            
                 return data;
             }
             catch (Exception e)
@@ -1124,8 +1132,65 @@ namespace WebFreight.Web
         }
 
 
+        private bool CheckCaptchaCodeValidated(LoginParameters loginParameters)
+        {
 
+            bool result = false;
+            if (!string.IsNullOrEmpty(loginParameters.CaptchaKey) && !string.IsNullOrEmpty(loginParameters.CaptchaCode))
+            {
+                CaptchaKeyRepository captchaKeyRepository = new CaptchaKeyRepository();
+                CaptchaKey captchaKey = captchaKeyRepository.GetSingleCaptchaKey(loginParameters.CaptchaKey);
+                if (captchaKey != null)
+                {
+                    if (captchaKey.Code == loginParameters.CaptchaCode)
+                        result = true;
+                }
+            }
+            return result;
+        }
+        private UserData CheckCaptchaState(LoginParameters loginParameters)
+        {
+            UserData data = new UserData();
+            if (!loginParameters.IsMobileLogin)
+            {
+                IGlobalContext globalContext = GlobalContext.GetContext();
+                ContactPassword contactPassword = globalContext.ContactPasswords.Where(c => c.Email.ToLower() == loginParameters.Email).FirstOrDefault();
+                if (contactPassword != null)
+                {
+                    if (contactPassword.NumberOfRetries > 4)
+                    {
+                        if (!CheckCaptchaCodeValidated(loginParameters))
+                        {
+                            AddCaptchaKey(loginParameters, data);
 
+                        }
+                    }
+                }
+            }
+            return data;
+        }
+
+        private void AddCaptchaKey(LoginParameters loginParameters, UserData data)
+        {
+            CaptchaKeyRepository captchaKeyRepository = new CaptchaKeyRepository();
+            CaptchaKey captchaKey = new CaptchaKey()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Code = RandomString(6),
+                CreateDate = DateTime.Now,
+                Email = loginParameters.Email
+            };
+            captchaKeyRepository.Add(captchaKey);
+            captchaKeyRepository.SubmitChanges();
+
+            if (!data.HasError)
+            {
+                data.HasError = true;
+                data.InValidCaptcha = true;
+            }
+            data.CaptchaImage = GenerateCaptchaImage(captchaKey.Code);
+            data.CaptchaKey = captchaKey.Id;
+        }
 
         private static Random random = new Random();
         public static string RandomString(int length)
@@ -1135,7 +1200,7 @@ namespace WebFreight.Web
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        private void AddFailedLoginLog(UserData data)
+        private void AddFailedLoginLog(UserData data, LoginParameters loginParameters)
         {
 
             FailedLoginLogRepository failedLoginLogRepository = new FailedLoginLogRepository();
@@ -1151,9 +1216,9 @@ namespace WebFreight.Web
 
             if (data.Param1) failedLoginLog.Reason = "Wrong Email address";
             else if (data.InValidMailOrPassword) failedLoginLog.Reason = "Wrong Password";
-            else if (data.IsLocked) failedLoginLog.Reason = "Locked User";
             else if (data.IpRestricted) failedLoginLog.Reason = "Unauthorized IP address";
-
+            else if (data.InValidCaptcha) failedLoginLog.Reason = "Valid Captcha";
+            else if (data.IsLocked) failedLoginLog.Reason = "Locked User";
 
             data.Param1 = false;
             string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
@@ -1193,7 +1258,6 @@ namespace WebFreight.Web
                 DateTime DateBeforePostLoginData = DateTime.Now;
 
                 if (!string.IsNullOrEmpty(parameters.Email)) parameters.Email = parameters.Email.ToLower();
-
 
                 string email = parameters.Email;
                 string password = parameters.Password;
@@ -1267,8 +1331,9 @@ namespace WebFreight.Web
                         via = "PC";
                     }
 
+               
 
-                    user = ValidateUser(email, password, customData, out userData, isUser, cardId, cardType, parameters.ByToken, via, parameters.IsAngularLogin);
+                    user = ValidateUser(email, password, customData, out userData, isUser, cardId, cardType, parameters.ByToken, via, parameters.IsAngularLogin, parameters.ClientType);
 
 
 
@@ -1295,7 +1360,7 @@ namespace WebFreight.Web
                     else
                     {
                         contactPassword = null;
-                        user = CheckUserState(email, password, ref contactPassword, parameters.ByToken);
+                        user = CheckUserState(email, password, ref contactPassword, parameters.ByToken , parameters.ClientType);
                     }
                 }
                 else
@@ -1417,7 +1482,7 @@ namespace WebFreight.Web
 
                 if (user.HasError)
                 {
-                    if (user.InValidMailOrPassword || user.IsLocked || user.IpRestricted)
+                    if (user.InValidMailOrPassword ||  ((user.IsLocked && parameters.ClientType!="Web") || (user.InValidCaptcha && parameters.ClientType == "Web")) || user.IpRestricted)
                     {
                         int sleepTime = user.NumberOfRetries > 0 ? user.NumberOfRetries : 1;
                         Thread.Sleep(sleepTime);
@@ -1832,7 +1897,7 @@ namespace WebFreight.Web
             return result;
         }
 
-        private UserData ValidateUser(string name, string password, string customData, out string userData, bool isUser, string cardId, string cardType, bool byToken, string via, bool isAngularLogin)
+        private UserData ValidateUser(string name, string password, string customData, out string userData, bool isUser, string cardId, string cardType, bool byToken, string via, bool isAngularLogin,string clientType)
         {
             ContactPassword contactPassword = null;
             UserData user = null;
@@ -1939,9 +2004,9 @@ namespace WebFreight.Web
 
                     if (contactPassword != null)
                     {
-                        CheckLockedUser(contactPassword, globalObjectContext);
+                        CheckLockedUser(contactPassword, globalObjectContext , clientType);
 
-                        if (!contactPassword.IsLocked && (!contactPassword.MustChangePassword || this.OneTimePassword))
+                        if ((!contactPassword.IsLocked  || clientType == "Web") && (!contactPassword.MustChangePassword || this.OneTimePassword))
                         {
                             member = globalObjectContext.GlobalContacts.Where(m => m.Email == name && m.GlobalTenantId == 0).FirstOrDefault();
                             if (member == null)
@@ -2237,7 +2302,7 @@ namespace WebFreight.Web
 
         PasswordCheckService passwordChkService = new PasswordCheckService();
 
-        private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken)
+        private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken, string clientType)
         {
 
             if (!string.IsNullOrEmpty(email)) email = email.ToLower();
@@ -2268,7 +2333,7 @@ namespace WebFreight.Web
 
             if (contactPassword != null)
             {
-                CheckLockedUser(contactPassword, globalContext);
+                CheckLockedUser(contactPassword, globalContext, clientType);
 
                 GlobalContact contact = globalContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.InActive == false && d.Email.ToLower() == email).FirstOrDefault(); //mohammad
                 bool customerCare = false;
@@ -2324,8 +2389,8 @@ namespace WebFreight.Web
                     contactPassword.NumberOfRetries++;
                     if (contactPassword.NumberOfRetries >= 10)
                     {
-                        contactPassword.IsLocked = true;
-                        contactPassword.LockDateTime = DateTime.Now;
+                       contactPassword.IsLocked = true;
+                       contactPassword.LockDateTime = DateTime.Now;
                     }
                     globalContext.SaveChanges();
                 }
@@ -2338,7 +2403,8 @@ namespace WebFreight.Web
                 }
             }
 
-            userData.HasError = (userData.InValidMailOrPassword || userData.IpRestricted || userData.IsLocked || userData.MustChangePassword);
+
+            userData.HasError = (userData.InValidMailOrPassword || userData.IpRestricted || (userData.IsLocked && clientType != "Web") || userData.MustChangePassword);
 
             if (contactPassword != null)
             {
@@ -2348,16 +2414,14 @@ namespace WebFreight.Web
             return userData;
         }
 
-
-
-        private void CheckLockedUser(ContactPassword contact, IGlobalContext globalContext)
+        private void CheckLockedUser(ContactPassword contact, IGlobalContext globalContext , string clientType)
         {
             if (contact.IsLocked)
             {
                 if (contact.LockDateTime != null)
                 {
                     TimeSpan timeElapsed = (DateTime.Now - contact.LockDateTime.Value);
-                    if (timeElapsed.TotalMinutes > 30)
+                    if (timeElapsed.TotalMinutes > 30 || clientType == "Web")
                     {
                         contact.IsLocked = false;
                         contact.LockDateTime = null;
@@ -2372,8 +2436,13 @@ namespace WebFreight.Web
                     contact.LockDateTime = null;
                     globalContext.SaveChanges();
                 }
-
-
+            }
+            else if (clientType == "Web")
+            {
+                contact.IsLocked = false;
+                contact.LockDateTime = null;
+                contact.NumberOfRetries = 0;
+                globalContext.SaveChanges();
             }
         }
 

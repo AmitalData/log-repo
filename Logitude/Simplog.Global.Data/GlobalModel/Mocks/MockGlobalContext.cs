@@ -260,6 +260,14 @@ namespace WebFreight.Web.GlobalModelDB
             }
         }
 
+        public IDbSet<CaptchaKey> CaptchaKeys
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
 
     }
 }
