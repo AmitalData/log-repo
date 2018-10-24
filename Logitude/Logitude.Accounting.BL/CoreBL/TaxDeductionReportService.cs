@@ -156,6 +156,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             else
             {
+
                 myStringBuilder.Append("0");
             }
 
