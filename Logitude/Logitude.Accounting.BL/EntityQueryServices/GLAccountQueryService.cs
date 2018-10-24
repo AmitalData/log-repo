@@ -557,17 +557,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return Accounts;
         }
 
-        public List<TaxDeductionReportData> GetTaxDeductionReportData(int? reportYear, int tenant)
+        public TaxDeductionReportData GetTaxDeductionReportData(int? reportYear, int tenant)
         {
             Simplog.Data.CommonDataModel.ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
-            List<TaxDeductionReportData> taxDeductions = new List<TaxDeductionReportData>();
+            TaxDeductionReportData taxDeduction = new TaxDeductionReportData();
             // 1- get ap payments by year and status ad
             // 2- group appayments by vendorId and percentage
             // 3- Get Cards by list of vendorids from step 2
             // 4- Get GlAccounts by list of glaccountids from step 3
             // 5- GetAddresses by card ids from step 3 with filter of main address.
-
+            taxDeduction.ByVendorList = new List<ByVendorList>();
             List<APPayment> payments = (from a in invoicecontext.APPayments
                                         where a.RegisterDate.Value.Year == reportYear && a.Tenant == tenant && a.StatusCode == "AD"
                                         select a).ToList();
@@ -580,8 +580,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                    TaxDeductionPercentage = g.Key.TaxDeductionPercentage,
                                                    AmountInLocalCurrency = g.Sum(s => s.AmountInLocalCurrency),
                                                    TaxDeductionLocalAmount = g.Sum(s => s.TaxDeductionLocalAmount),
+                                                   RegisterDate= g.Select(s => s.RegisterDate).FirstOrDefault(),
                                                } into s
                                                select s).ToList();
+
+           var groupedByMonthpayments = (from a in payments
+                                               group a by
+                                                new { a.RegisterDate.Value.Month } into g
+                                             select new 
+                                             {
+                                               
+                                                 g.Key
+                                             });
+            groupedByMonthpayments = groupedByMonthpayments.ToList();
 
             List<string> vendorIds = groupedpayments.Select(d => d.VendorId).ToList();
             List<CardList> vendors = (from a in commoncontext.Cards
@@ -597,7 +608,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                           MainAddressId = d.Name,
                                           GLAccountId = a.GLAccountId,
                                           IsAutonomy = a.IsAutonomy,
-                                          IsInternationalPartner = a.IsInternationalPartner
+                                          IsInternationalPartner = a.IsInternationalPartner,
+                                          EnglishName= a.EnglishName,
                                   }
                                       ).ToList();
 
@@ -613,7 +625,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                               DeductionTypeName = a.AccountingCompanyType != null ? a.AccountingCompanyType.LocalName : null,
                                               DeductionFileTypeCode = a.WithholdingTaxDeductionType != null? a.WithholdingTaxDeductionType.Code :null,
                                               DeductionFileTypeName = a.WithholdingTaxDeductionType!= null? a.WithholdingTaxDeductionType.LocalName : null,
-                                              AssessingOfficeCode = a.AssessingOfficeCode,
+                                              AssessingOfficeCode = a.TaxWithholdingAssessOffice != null ? a.TaxWithholdingAssessOffice.Code :null,
                                               AssessingOfficeName = a.TaxWithholdingAssessOffice != null? a.TaxWithholdingAssessOffice.LocalName:null,
                                               EnglishName = a.EnglishName,
                                               DeductionTypeEnglishName = a.AccountingCompanyType != null ? a.AccountingCompanyType.EnglishName:null,
@@ -626,9 +638,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             foreach(APPayment item in groupedpayments)
             {
-                TaxDeductionReportData taxDeductionReportData = new TaxDeductionReportData()
+                ByVendorList  byVendorList= new ByVendorList()
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Month= item.RegisterDate.Value.Month,
                     TaxDeductionPercentage = item.TaxDeductionPercentage,
                     VendorId = item.VendorId,
 
@@ -637,48 +649,70 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 CardList selectedVendor = (from a in vendors
                                               where a.Id == item.VendorId
                                               select a).FirstOrDefault();
-                GLAccountList gLAccount = (from a in glaccounts
-                                       where a.Id == selectedVendor.GLAccountId
-                                       select a).FirstOrDefault();
-
-                if(gLAccount != null)
+                if (selectedVendor != null)
                 {
-                    taxDeductionReportData.DisplayNumber = gLAccount.DisplayNumber;
+                    GLAccountList gLAccount = (from a in glaccounts
+                                               where a.Id == selectedVendor.GLAccountId
+                                               select a).FirstOrDefault();
+                    if (gLAccount != null)
+                    {
+                        byVendorList.DisplayNumber = gLAccount.DisplayNumber;
 
-                    taxDeductionReportData.Occupation = gLAccount.Occupation;
-                    taxDeductionReportData.GLAccountLocalName = gLAccount.LocalName;
-                    taxDeductionReportData.AssessingOfficerCode = gLAccount.AssessingOfficeCode;
-                    taxDeductionReportData.AssessingOfficerName = gLAccount.AssessingOfficeName;
-                    taxDeductionReportData.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
-                    taxDeductionReportData.DeductionFileNumber = gLAccount.DeductionFileNumber;
-                    taxDeductionReportData.DeductionType = gLAccount.DeductionTypeName;
-                    taxDeductionReportData.EnglishName = gLAccount.EnglishName;
+                        byVendorList.Occupation = gLAccount.Occupation;
+                        byVendorList.GLAccountLocalName = gLAccount.LocalName;
+                        byVendorList.AssessingOfficerCode = gLAccount.AssessingOfficeCode;
+                        byVendorList.AssessingOfficerName = gLAccount.AssessingOfficeName;
+                        byVendorList.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
+                        byVendorList.DeductionFileNumber = gLAccount.DeductionFileNumber;
+                        byVendorList.DeductionType = gLAccount.DeductionTypeName;
+                        byVendorList.EnglishName = gLAccount.EnglishName;
+                    }
+
+
+                    
+                        byVendorList.VATNumber = selectedVendor.VatNumber;
+                        byVendorList.VendorName = selectedVendor.EnglishName;
+                        byVendorList.VendorAddress = selectedVendor.MainAddressId;
+                        byVendorList.VendorCity = selectedVendor.CityName;
+                        byVendorList.IsAutonomy = selectedVendor.IsAutonomy;
+                        byVendorList.IsInternationlPartner = selectedVendor.IsInternationalPartner;
+                    
                 }
-              if(selectedVendor != null)
-                {
-                    taxDeductionReportData.VATNumber = selectedVendor.VatNumber;
-
-                    taxDeductionReportData.VendorAddress = selectedVendor.MainAddressId;
-                    taxDeductionReportData.VendorCity = selectedVendor.CityName;
-                    taxDeductionReportData.IsAutonomy = selectedVendor.IsAutonomy;
-                    taxDeductionReportData.IsInternationlPartner = selectedVendor.IsInternationalPartner;
-                }
-               
-                taxDeductionReportData.SumOfAmountInLocalCurrency = item.AmountInLocalCurrency;
-                taxDeductionReportData.SumOfTaxDeductionLocalAmount = item.TaxDeductionLocalAmount;
+                byVendorList.SumOfAmountInLocalCurrency = item.AmountInLocalCurrency;
+                byVendorList.SumOfTaxDeductionLocalAmount = item.TaxDeductionLocalAmount;
 
 
-                taxDeductions.Add(taxDeductionReportData);
+              
+                taxDeduction.ByVendorList.Add(byVendorList);
 
             }
 
-         
+            taxDeduction.ByMonthList = new List<ByMonthList>();
+            foreach (var item in groupedByMonthpayments)
+            {
+                var month = item.Key;
+                ByMonthList byMonthList = new ByMonthList()
+                {
+                    Month = month.Month,
+                };
 
 
-            return taxDeductions;
+                //taxDeductions.Where(d => d.Month == month.Month).Count();
+                //taxDeductions.Where(d => d.Month == month.Month && d.DeductionType != "18").Sum(d => d.SumOfAmountInLocalCurrency);
+                //taxDeductions.Where(d => d.Month == month.Month && d.DeductionType != "18").Sum(d => d.SumOfTaxDeductionLocalAmount);
+                //taxDeductions.Where(d => d.Month == month.Month && d.DeductionType == "18").Sum(d => d.SumOfAmountInLocalCurrency);
+                //taxDeductions.Where(d => d.Month == month.Month && d.DeductionType == "18").Sum(d => d.SumOfTaxDeductionLocalAmount);
+               
+                taxDeduction.ByMonthList.Add(byMonthList);
+            }
+
+
+            return taxDeduction;
 
 
         }
+
+        
     }
     public class GLAccountCurrencyBalance
     {

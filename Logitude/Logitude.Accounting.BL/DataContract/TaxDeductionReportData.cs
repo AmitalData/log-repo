@@ -11,6 +11,30 @@ namespace Logitude.Accounting.BL.DataContract
     {
         [Key]
         public string Id { get; set; }
+     
+      
+        public string SettingDeductionFileNumber { get; set; }
+        public string TenantVatNumber { get; set; }
+        public string Phone {get; set;}
+      
+        public List<ByMonthList> ByMonthList { get; set; }
+        public List<ByVendorList> ByVendorList { get; set; }
+
+
+    }
+
+
+    public class ByMonthList
+    {
+        public int Month { get; set; }
+        public double? TotalAmountInLocalCurrency { get; set; }
+        public decimal? TotalTaxDeductionLocalAmount { get; set; }
+    }
+
+    public class ByVendorList
+    {
+        public string VendorName { get; set; }
+        public int Month { get; set; }
         public string DeductionFileNumber { get; set; }
         public string DeductionFileTypeCode { get; set; }
         public string VATNumber { get; set; }
@@ -29,16 +53,6 @@ namespace Logitude.Accounting.BL.DataContract
         public bool IsAutonomy { get; set; }
         public bool IsInternationlPartner { get; set; }
         public string EnglishName { get; set; }
-        public string SettingDeductionFileNumber { get; set; }
-        public string TenantVatNumber { get; set; }
-        public string Phone {get; set;}
-
-    }
-
-
-    public class ResultList
-    {
-
     }
 }
 

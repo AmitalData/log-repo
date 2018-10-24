@@ -17,6 +17,9 @@ import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 //import { TaxDeductionReportExtendedPMService } from '../../Services/ExtendedPMs/TaxReportExtendedPMService';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
+import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrintHelper';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+
 
 export class TaxDeductionReportMenuButtonsHandler {
 
@@ -64,8 +67,12 @@ export class TaxDeductionReportMenuButtonsHandler {
         switch (menuButton.EventCode) {
             case "DNBD": 
                 {
-                  
-                 
+
+                    var myPrintHelper = new GeneralPrintHelper("TaxDeductionReport", "TPPD", this.EntityPM.Id, null, this.EntityPM.ReportNumber.toString(), null);
+                    if (myPrintHelper.IsLoadPrintControl) {
+                        ServiceLocator.SendTotangoUserActivity("TaxDeductionReport", "Print");
+                        myPrintHelper.ShowPrintControl();
+                    }
 
                     break;
                 }
