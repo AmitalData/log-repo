@@ -376,7 +376,17 @@
                                                 
                                             </div> 
                                             </td>
+
                                             </tr>
+                                              <%--Start Areacpatcha--%>
+                                                 <tr id="Areacpatcha" style ="height:30px;margin-top:5px;display:none;">
+                                                 <td>
+                                               <img id="CpatchaImage" style="height:auto;width:auto;float:left"  /> 
+                                                <input  style="height:19px;width:260px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="cpatchaTextBox"/>
+
+                                            </td>
+                                            </tr>
+                                             <%--End Areacpatcha--%>
                                                 
                                               <tr>
                                             <td  class="column1"> 
@@ -394,7 +404,7 @@
                                                 </td>
                                             </tr>
                                             
-                                              <tr style="height:50px;width:50px">
+                                         <tr style="height:50px;width:50px">
                                                   <td>
                                                          <div id="loginBusyindicator" style="display:none"><img width="50" height="50" src="images/LoginScreen/indicator.gif" alt='loading' /></div>
                                                   </td>
@@ -885,6 +895,8 @@
 
 
     <script type="text/javascript">
+
+        
         function getTwoFactorKeys() {
             var allKeys = [];
             for (var key in window.localStorage) {
@@ -1279,6 +1291,18 @@
                 }
 
 
+                var areacpatcha = document.getElementById("Areacpatcha");
+
+                if (areacpatcha.style.display == "block") {
+                    if (!document.getElementById("cpatchaTextBox").value) {
+                        document.getElementById("errorsList").innerHTML = "Please re-enter the characters you see in the image above";
+                        $("#errorsList").show();
+                        return;
+                    }
+                    document.getElementById("loginBusyindicator").style.marginTop = "-55px";
+                    
+                }
+               
 
                 save_data_to_cookie();
                 disableForm(true);
@@ -1312,22 +1336,39 @@
                         UserDataPrompt = userdata;
 
                         if (!userdata.HasError) {
+                            areacpatcha.style.display = "none";
                             ComplateProcessLogin(userdata);
                         }
                         else {
 
                             $("#loginBusyindicator").hide();
-
                             if (userdata.ExceptionMessage) {
 
                                 alert(userdata.ExceptionMessage);
                             }
                             else {
 
-                                if (userdata.MustChangePassword) {
+                                if (userdata.NumberOfRetries > 5) {
+                                    if (areacpatcha.style.display == "block") {
+                                        document.getElementById("errorsList").innerHTML = "Please re-enter the characters you see in the image above";
+                                        $("#errorsList").show();
+                                    }
+
+                                    areacpatcha.style.display = "block";
+                                    $("#CpatchaImage").attr("src", userdata.CaptchaImage);
+
+                                    document.getElementById("divMayus").style.display = "none";
+                                    document.getElementById("BusyindicatorArea").style.width = "0px";
+                                    document.getElementById("BusyindicatorArea").style.height = "0px";
+                                }
+
+
+                               else if (userdata.MustChangePassword) {
 
                                     document.location.href = "PasswordChangePage.aspx?email=" + email
-                                } else if (userdata.PasswordExpirationDateMessage) {
+                                }
+
+                                else if (userdata.PasswordExpirationDateMessage) {
                                     document.getElementById("myform").style.display = "none";
                                     document.getElementById("verificationForm").style.display = "none";
                                     document.getElementById("PromptView").style.display = "none";
@@ -1346,10 +1387,10 @@
 
                                     }
 
-                                    if (userdata.IsLocked) {
+                                    //if (userdata.IsLocked) {
 
-                                        errorMessage = "Your account has been locked out!" + "<br/>" + "please try again after 30 minutes.";
-                                    }
+                                    //    errorMessage = "Your account has been locked out!" + "<br/>" + "please try again after 30 minutes.";
+                                    //}
                                     if (userdata.InActive) {
                                         errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
                                     }
@@ -1593,16 +1634,7 @@
         }
 
 
-
-       
-
-
-
-
-
-
-
-
+        
         function RunLogin(userdata) {
 
             if (!Technology) Technology = userdata.Technology;

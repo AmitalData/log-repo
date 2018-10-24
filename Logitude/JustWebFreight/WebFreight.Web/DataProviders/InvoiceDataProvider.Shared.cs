@@ -193,8 +193,14 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeRef1 { get; set; }
         public string ConsigneeRef2 { get; set; }
         public string FromLocation { get; set; }
+        public string FromLocation_PortName { get; set; }
+        public string FromLocation_CountryName { get; set; }
         public string ToLocation { get; set; }
+        public string ToLocation_PortName { get; set; }
+        public string ToLocation_CountryName { get; set; }
         public string FinalLocation { get; set; }
+        public string FinalLocation_PortName { get; set; }
+        public string FinalLocation_CountryName { get; set; }
         public string OriginalInvoiceNumber { get; set; }
         public string OriginalInvoiceNumber_label { get; set; }
         public string LocalCurrencyExchangeRates { get; set; }

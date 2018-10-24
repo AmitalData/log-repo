@@ -10890,6 +10890,8 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.NumberOfContainers = a.NumberOfContainers;
                     myRecord.ETA = a.MainCarriageETA;
                     myRecord.IsCancelled = a.IsCancelled;
+                    myRecord.LastSharedEventDate = a.LastSharedEventDate;
+                    myRecord.LastSharedEventNote = a.LastSharedEventNotes;
 
                     myRecord.PortOfLoading = a.MainCarriageFromPortCode;
                     myRecord.PortOfDischarge = a.MainCarriageFinalDestinationPortCode;
