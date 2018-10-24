@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ElementRef}  from '@angular/core';
+import {Component, OnInit, ElementRef}  from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
