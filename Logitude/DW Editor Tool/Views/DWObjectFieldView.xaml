@@ -108,6 +108,12 @@
                                 <ComboBox Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1"   SelectedValue="{Binding AggregationTypeCode}"  ItemsSource="{Binding AggregationTypesList}"/>
                                 
                             </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                                <TextBlock  Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Display In Query Builder:" />
+                                <CheckBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" IsChecked="{Binding DisplayInQueryBuilder, Mode=TwoWay}" IsThreeState="False"/>
+
+                            </StackPanel>
                         </StackPanel>
 
                       
