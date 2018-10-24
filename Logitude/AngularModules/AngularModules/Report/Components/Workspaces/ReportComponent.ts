@@ -194,7 +194,9 @@ export class ReportsGrpupClass {
 
         else {
             myReports.forEach((item) => {
-                if (!AppTool.IsNullOrEmpty(item.Name) && item.Name.toUpperCase().indexOf(this.fatherComponent.mySearchText.toUpperCase()) > -1) {
+                if (!AppTool.IsNullOrEmpty(item.Name) && item.Name.toUpperCase().indexOf(this.fatherComponent.mySearchText.toUpperCase()) > -1
+                    ||
+                    !AppTool.IsNullOrEmpty(item.LocalName) && item.LocalName.toUpperCase().indexOf(this.fatherComponent.mySearchText.toUpperCase()) > -1) {
                     this.ItemsSource.push(item);
                 }
             });
