@@ -230,6 +230,9 @@ implements OnDestroy
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.HAWB = this.entityPM.HAWB;
         currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        }
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe(res => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
@@ -942,6 +945,21 @@ implements OnDestroy
             }
         }
 
+        switch (this._SelectedAvailableValue) {
+            case "AD": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "AV": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "1", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "NAV": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "0", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
         }
@@ -1036,6 +1054,21 @@ implements OnDestroy
             }
             case "1000": {
                 filters.addAdditionalFilter("TotalInvoiceAmountInUSD", 501, 1000, null, "Between", false, false, false, "number", false);
+                break;
+            }
+        }
+
+        switch (this._SelectedAvailableValue) {
+            case "AD": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "AV": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "1", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "NAV": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "0", null, null, "Equals", false, false, false, "string");
                 break;
             }
         }

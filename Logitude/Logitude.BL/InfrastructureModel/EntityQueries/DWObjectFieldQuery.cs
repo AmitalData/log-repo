@@ -47,6 +47,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder
                     }).FirstOrDefault();
         }
 
@@ -70,6 +71,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder
                     }
                   );
         }
@@ -93,6 +95,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder
                     }
                   );
         }
@@ -114,6 +117,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         MaxLength = a.MaxLength,
                         MinLength = a.MinLength,
                         IsPrimaryKey = a.IsPrimaryKey,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder
                     }).FirstOrDefault();
         }
 
@@ -136,6 +140,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder
                     });
         }
 
@@ -156,6 +161,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        MinLength = a.MinLength,
                                                        IsMeasurement = a.IsMeasurement,
                                                        AggregationTypeCode = a.AggregationTypeCode,
+                                                       DisplayInQueryBuilder = a.DisplayInQueryBuilder
                                                    };
 
             return result;

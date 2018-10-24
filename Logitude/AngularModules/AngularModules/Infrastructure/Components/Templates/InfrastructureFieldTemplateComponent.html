@@ -28,6 +28,20 @@
 
                     </div>
                 </div>
+
+                <!-- BatchTaskExecution -->
+                <div *ngIf="ObjectTableName == 'BatchTaskExecution'">
+                    <div *ngIf="FieldName == 'StatusName'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" [style.color]="GetStatusColor()">{{ FieldValue }}</div>
+                    </div>
+                    <div *ngIf="FieldName == 'ProgressPercentage'">
+                        <div style="text-align: center;">{{FieldValue}}%</div>
+                    </div>
+                    <div *ngIf="FieldName == 'CreateDate'||FieldName == 'StartDateTime'||FieldName == 'DoneDateTime'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'">{{FieldValue | DateTimePipe:'DT'}}</div>
+                    </div>
+                
+                </div>
             </div>
         </td>
     </tr>

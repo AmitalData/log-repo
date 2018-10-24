@@ -10,6 +10,6 @@ namespace Logitude.Accounting.Def.EntityQueryServicesExt
     public interface IGLAccountQueryServiceExt
     {
         GLAccountPM GetSingleGLAccountPM(string id, int tenant);
-     //   GLAccount GetGLAccountById(string id, int tenant);
+        GLAccountPM GetGLAccountByDisplayNumber(string id, int tenant);
     }
 }

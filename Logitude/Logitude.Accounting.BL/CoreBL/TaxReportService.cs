@@ -289,7 +289,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 taskExe = new BatchTaskExecutionPM()
                 {
-                    Id = IdCounter.GetNumber("BatchTaskExecution", tenant),
+                    Subject = "Create PNC Flat file for Tax Report",
                     Tenant = tenant,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     ClassName = "Logitude.Accounting.BL.TestService.BatchTaxReportService,Logitude.Accounting.BL",
@@ -352,46 +352,46 @@ namespace Logitude.Accounting.BL.CoreBL
 			firstLine += "1";
 			firstLine += taxReport.CreateDate.ToString("yyyyMMdd");
 
-			//TotalTaxableOutputAmount
-			firstLine += taxReport.TaxableOutputAmount >= 0 ? '+' : '-';
-			firstLine += Math.Abs(Convert.ToInt32(taxReport.TaxableOutputAmount)).ToString().PadLeft(9, '0');
+            //TotalTaxableOutputAmount
+            firstLine += taxReport.TaxableOutputAmount >= 0 ? '+' : '-';
+            firstLine += Math.Abs(Math.Truncate(taxReport.TaxableOutputAmount.Value)).ToString().PadLeft(9, '0');
 
-			//OutputTaxAmount
-			firstLine += taxReport.OutputTaxAmount >= 0 ? '+' : '-';
-			firstLine += Math.Abs(Convert.ToInt32(taxReport.OutputTaxAmount)).ToString().PadLeft(9, '0');
+            //OutputTaxAmount
+            firstLine += taxReport.OutputTaxAmount >= 0 ? '+' : '-';
+            firstLine += Math.Abs(Math.Truncate(taxReport.OutputTaxAmount.Value)).ToString().PadLeft(9, '0');
 
-			//TaxableOutputsWithDiffPercent
-			firstLine += '+';
-			firstLine += Math.Abs(Convert.ToInt32(taxReport.TaxableOutputsWithDiffPercent)).ToString().PadLeft(9, '0');
+            //TaxableOutputsWithDiffPercent
+            firstLine += '+';
+            firstLine += Math.Abs(Math.Truncate(taxReport.TaxableOutputsWithDiffPercent.Value)).ToString().PadLeft(9, '0');
 
-			//OutputTaxAmountWithDiffPercent
-			firstLine += '+';
-			firstLine += Math.Abs(Convert.ToInt32(taxReport.OutputTaxAmountWithDiffPercent)).ToString().PadLeft(11, '0');
+            //OutputTaxAmountWithDiffPercent
+            firstLine += '+';
+            firstLine += Math.Abs(Math.Truncate(taxReport.OutputTaxAmountWithDiffPercent.Value)).ToString().PadLeft(11, '0');
 
-			//OutputLinesCount
-			firstLine += taxReport.OutputLinesCount == null ? "000000000" : taxReport.OutputLinesCount.Value.ToString().PadLeft(9, '0');
+            //OutputLinesCount
+            firstLine += taxReport.OutputLinesCount == null ? "000000000" : taxReport.OutputLinesCount.Value.ToString().PadLeft(9, '0');
 
 
-			//ExemptTaxableOutput
-			firstLine += taxReport.ExemptTaxableOutput >= 0 ? '+' : '-';
-			firstLine += Math.Abs(Convert.ToInt32(taxReport.ExemptTaxableOutput)).ToString().PadLeft(11, '0');
+            //ExemptTaxableOutput
+            firstLine += taxReport.ExemptTaxableOutput >= 0 ? '+' : '-';
+            firstLine += Math.Abs(Math.Truncate(taxReport.ExemptTaxableOutput.Value)).ToString().PadLeft(11, '0');
 
-			//OtherInputsTaxAmount
-			firstLine += taxReport.OtherInputsTaxAmount >= 0 ? '+' : '-';
-			firstLine += Math.Abs(Convert.ToInt32(taxReport.OtherInputsTaxAmount)).ToString().PadLeft(9, '0');
+            //OtherInputsTaxAmount
+            firstLine += taxReport.OtherInputsTaxAmount >= 0 ? '+' : '-';
+            firstLine += Math.Abs(Math.Truncate(taxReport.OtherInputsTaxAmount.Value)).ToString().PadLeft(9, '0');
 
-			//EquipmentInputsTaxAmount
-			firstLine += taxReport.EquipmentInputsTaxAmount >= 0 ? '+' : '-';
-			firstLine += Math.Abs(Convert.ToInt32(taxReport.EquipmentInputsTaxAmount)).ToString().PadLeft(9, '0');
+            //EquipmentInputsTaxAmount
+            firstLine += taxReport.EquipmentInputsTaxAmount >= 0 ? '+' : '-';
+            firstLine += Math.Abs(Math.Truncate(taxReport.EquipmentInputsTaxAmount.Value)).ToString().PadLeft(9, '0');
 
-			//InputLinesCount
-			firstLine += taxReport.InputLinesCount == null ? "000000000" : taxReport.InputLinesCount.Value.ToString().PadLeft(9, '0');
+            //InputLinesCount
+            firstLine += taxReport.InputLinesCount == null ? "000000000" : taxReport.InputLinesCount.Value.ToString().PadLeft(9, '0');
 
-			//AmountForPayRefund
-			firstLine += taxReport.AmountForPayRefund >= 0 ? '+' : '-';
-			firstLine += Math.Abs(Convert.ToInt32(taxReport.AmountForPayRefund)).ToString().PadLeft(11, '0');
+            //AmountForPayRefund
+            firstLine += taxReport.AmountForPayRefund >= 0 ? '+' : '-';
+            firstLine += Math.Abs(Math.Truncate(taxReport.AmountForPayRefund.Value)).ToString().PadLeft(11, '0');
 
-			linesArray.Add(firstLine);
+            linesArray.Add(firstLine);
 
 			//
 			// Line: [report lines]

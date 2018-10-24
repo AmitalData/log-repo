@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Counters;
+using Logitude.TimeManagement.BL.EntityPMs;
+using Logitude.TimeManagement.BL.EntityUpdateServices;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
@@ -65,7 +67,7 @@ namespace WebFreight.Web.Helpers
             string accountUri = "https://logitudeteam.visualstudio.com";
             var personalAccessToken = "qcxofyaix25ph4bxun4n2pzmicxhp3d3t2w6bgissmpgsjwn4egq";
             int workItemId = wi;
-           
+
             // new VssOAuthAccessTokenCredential(personalAccessToken)
             VssConnection connection = new VssConnection(new Uri(accountUri), new VssBasicCredential("logitudo@live.com", personalAccessToken));
             // Get an instance of the work item tracking client
@@ -87,7 +89,7 @@ namespace WebFreight.Web.Helpers
                 }
                 if (projectNo == null)
                 {
-                   
+
                     var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
                     if (relation != null)
                     {
@@ -142,6 +144,7 @@ namespace WebFreight.Web.Helpers
         {
             ITimeManagementContext myContext = TimeManagementContext.GetContext(Tenant);
             TMEmployeeTimeRepository tmEmployeeTimeRepository = new TMEmployeeTimeRepository(myContext);
+            TMEmployeeTimeUpdateService service = new TMEmployeeTimeUpdateService(myContext);
             TMProjectRepository tmProjectRepository = new TMProjectRepository(myContext);
             ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(Tenant);
             UserRepository userRepository = new UserRepository(Tenant);
@@ -186,7 +189,7 @@ namespace WebFreight.Web.Helpers
             {
                 if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null)
                 {
-                    var newItem = new TMEmployeeTime();
+                    var newItem = new TMEmployeeTimePM();
                     newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
                     newItem.Tenant = Tenant;
                     //newItem.TimeInMinutes = System.Convert.ToInt32(Details.RemainingWork.Value) * 60;
@@ -201,8 +204,14 @@ namespace WebFreight.Web.Helpers
                     newItem.UpdatedByUserId = updatedByUser.Id;
                     newItem.CreatedByUserId = updatedByUser.Id;
                     newItem.AnalyzeQueueId = this.AnalyzeQueueId;
-                    tmEmployeeTimeRepository.Add(newItem);
-                    tmEmployeeTimeRepository.SubmitChanges();
+                    var sprint = computingPartnerHelper.GetLogitudeCodeTranslation(Details.IterationPath, "G-TFS", "Sprint");
+                    SprintRepository sprintRepository = new SprintRepository(Tenant);
+                    var sprintPOCO = sprintRepository.GetSprintByName(sprint, Tenant);
+                    newItem.SprintId = sprintPOCO != null ? sprintPOCO.Id : null;
+                    newItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                    service.Update(newItem, true);
+                    //tmEmployeeTimeRepository.Add(newItem);
+                    //tmEmployeeTimeRepository.SubmitChanges();
                 }
             }
             else

@@ -6,6 +6,7 @@
     jQuery.CurrentCardType = null;
     jQuery.TenantDateTimeFormat = null;
     jQuery.IsBrandingEnabled = "";
+    jQuery.IsInvoicesMenuEnabled = false;
 
     jQuery.SearchText_SHI = null;
     jQuery.SearchText_INV = null;
@@ -59,6 +60,16 @@
         });
     });
 
+    jQuery.SetTabsHidden = (function (isEnabled) {
+        if(isEnabled){
+            $("#TAB_INV").show();
+        }   
+
+        else {
+           $("#TAB_INV").hide();
+        }
+    });
+
     jQuery.GetLogginData = (function () {
 
         var url = "api/commondata/?email=" + $.CurrentEmail + "&tenant=" + $.CurrentTenant + "&cardId=" + $.CurrentCardId;
@@ -73,7 +84,10 @@
                 $("#MemberText").html(result.ContactName);
                 $("#MemberCardText").html(" (" + result.CardName + ")");
                 $.TenantDateTimeFormat = result.TenantDateTimeFormat;
-                $.SetSelectedTab();
+                $.IsInvoicesMenuEnabled = result.IsInvoicesMenuEnabled;
+
+                $.SetTabsHidden($.IsInvoicesMenuEnabled);
+                $.SetSelectedTab();                
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
@@ -797,6 +811,7 @@
     });
 
     $(document).ready(function () {
+        $("#TAB_INV").hide();
 
         $.ResizePage(130);
 

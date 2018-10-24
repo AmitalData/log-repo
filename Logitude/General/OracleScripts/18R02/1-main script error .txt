@@ -1,0 +1,1458 @@
+﻿
+Table CASHBOOKS altered.
+
+
+Table RECONCILIATIONS altered.
+
+
+Table GLACCOUNTCURRENCIES altered.
+
+
+Table GLACCOUNTCURRENCIES altered.
+
+
+Table REVALUATIONS altered.
+
+
+Table REVALUATIONS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table BANKACCOUNTS altered.
+
+
+Table BANKACCOUNTS altered.
+
+
+Table ARPAYMENTCHEQUES altered.
+
+
+Table ARINVOICEPAYMENTS altered.
+
+
+Table BRANCHES altered.
+
+
+Table BRANCHES altered.
+
+
+Table PARTICIPANTS altered.
+
+
+Table TRUCKERS altered.
+
+
+Table BANKPAGEENTRYTYPES created.
+
+
+Table ACTIONCODES created.
+
+
+Table CARGOSPLITREQUESTSTATUSES created.
+
+
+Table SPLITORMERGEREASONS created.
+
+
+Table DECLARATIONCARGOSPLITS created.
+
+
+Table TREATMENTWAYS created.
+
+
+Table DECCARGOSPLITCONS created.
+
+
+Table TEMPERATUREUNITS created.
+
+
+Table REPORTSTEMPLATES altered.
+
+
+Table HYBRIDPARTNERS altered.
+
+
+Table AUTOMATICEXTERNALRCONCILMTHODS created.
+
+
+Table DOCUMENTTYPES altered.
+
+
+Table QUOTES altered.
+
+
+Table QUOTES altered.
+
+
+Table QUOTES altered.
+
+
+Table PRODUCTTYPES altered.
+
+
+Table PRODUCTTYPES altered.
+
+
+Table COURIERMASTERS altered.
+
+
+Table MAMANSTATUSES created.
+
+
+Table CUSTOMAGENTS altered.
+
+
+Table PICKUPDELIVERYTRANSPORTMODES created.
+
+
+Table INTTRASTATUS created.
+
+
+Table SHIPMENTPACKAGES altered.
+
+
+Table SHIPMENTPACKAGES altered.
+
+
+Table SHIPMENTPACKAGES altered.
+
+
+Table SHIPMENTPACKAGES altered.
+
+
+Table SHIPMENTPACKAGES altered.
+
+
+Table SHIPMENTPACKAGES altered.
+
+
+Table SHIPMENTPACKAGES altered.
+
+
+Table SHIPMENTPACKAGES altered.
+
+
+Table OBJECTTABLES altered.
+
+
+Table QUOTETEMPLATES altered.
+
+
+Table CLIENTDRIVINGLICENSES altered.
+
+
+Table CLIENTDRIVINGLICENSES altered.
+
+
+Table CLIENTDRIVINGLICENSES altered.
+
+
+Table ARPAYMENTCHEQUES altered.
+
+
+Table SHIPMENTCOMPUTEDFIELDS altered.
+
+
+Table DOCUMENTFILINGBACKUPSETTINGS created.
+
+
+Table CUSTOMSAIRLINES created.
+
+
+Table WITHHOLDINGTAXDEDUCTIONTYPES created.
+
+
+Table COMMUNICATIONLOGS altered.
+
+
+Table COMMUNICATIONLOGS altered.
+
+
+Table COMMUNICATIONLOGS altered.
+
+
+Table WAREHOUSEENTRYPACKAGES altered.
+
+
+Table WAREHOUSEENTRYPACKAGES altered.
+
+
+Table APINVOICEPAYMENTS altered.
+
+
+Table TPGFILETYPES created.
+
+
+Table REVALUATIONSTATUS created.
+
+
+Table FILINGINBOXES altered.
+
+
+Table SHIPPINGAGENTS altered.
+
+
+Table SCREENFIELDS altered.
+
+
+Table INTTRADOCUMENTTYPES created.
+
+
+Table DECCARGOSPLITCARGOIDENTIFIERS created.
+
+
+Table ACCOUNTINGCOMPANYTYPES created.
+
+
+Table TAXWITHHOLDINGASSESSOFFICES created.
+
+
+Table RG_TEMP_573579100_0 created.
+
+
+0 rows inserted.
+
+
+Table GLACCOUNTS dropped.
+
+
+Table AMINETPRE2_MAIN.RG_TEMP_573579100_0 altered.
+
+
+Table AMINETPRE2_MAIN.GLACCOUNTS altered.
+
+
+Table AMINETPRE2_MAIN.GLACCOUNTS altered.
+
+
+Table AMINETPRE2_MAIN.GLACCOUNTS altered.
+
+
+Table AMINETPRE2_MAIN.GLACCOUNTS altered.
+
+
+Table AMINETPRE2_MAIN.GLACCOUNTS altered.
+
+
+Table AMINETPRE2_MAIN.GLACCOUNTS altered.
+
+
+Table AMINETPRE2_MAIN.GLACCOUNTS altered.
+
+
+Table AMINETPRE2_MAIN.GLACCOUNTS altered.
+
+
+Index IX_N1207598544 created.
+
+
+Index IX_GLACCOUNTS_CONTROLACCOUNTID created.
+
+
+Index IX_GLACCOUNTS_CATEGORY1ID created.
+
+
+Index IX_GLACCOUNTS_CATEGORY4ID created.
+
+
+Index IX_GLACCOUNTS_CATEGORY5ID created.
+
+
+Index IX_GLACCOUNTS_CATEGORY2ID created.
+
+
+Index IX_GLACCOUNTS_CATEGORY3ID created.
+
+
+Index IX_1964644507 created.
+
+
+Index IX_GLACCOUNTS_CURRENCYID created.
+
+
+Index IX_N119326688 created.
+
+
+Index IX_N1132446641 created.
+
+
+Index IX_GLACCOUNTS_ACCOUNTTYPECODE created.
+
+
+Index IX_N1704685419 created.
+
+
+Index IX_N1289730714 created.
+
+
+Table OBJECTFIELDS altered.
+
+
+Table OBJECTFIELDS altered.
+
+
+Index IX_N1569178442 dropped.
+
+
+Index IX_10840826 dropped.
+
+
+Index IX_2056851029 dropped.
+
+
+Table ACCEPTANCESTATUSES created.
+
+
+Table DECLARATIONS altered.
+
+
+Table DECLARATIONS altered.
+
+
+Table DECLARATIONS altered.
+
+
+Table DECLARATIONS altered.
+
+
+Table DECLARATIONS altered.
+
+
+Table DECLARATIONS altered.
+
+
+Table DECLARATIONS altered.
+
+
+Table DECLARATIONS altered.
+
+
+Table DECLARATIONS altered.
+
+
+Table DECLARATIONS altered.
+
+
+Table DECLARATIONS altered.
+
+
+Table WAREHOUSERELEASES altered.
+
+
+Table WAREHOUSERELEASES altered.
+
+
+Table WAREHOUSERELEASES altered.
+
+
+Table WAREHOUSERELEASES altered.
+
+
+Table SHIPPINGLINES altered.
+
+
+Table SHIPMENTCUSTOMERTYPES altered.
+
+
+Table TMPROJECTCATEGORIES created.
+
+
+Table WAREHOUSEENTRIES altered.
+
+
+Table WAREHOUSEENTRIES altered.
+
+
+Table WAREHOUSEENTRIES altered.
+
+
+Table WAREHOUSEENTRIES altered.
+
+
+Table WAREHOUSEENTRIES altered.
+
+
+Table WAREHOUSEENTRIES altered.
+
+
+Table WAREHOUSEENTRIES altered.
+
+
+Table WAREHOUSEENTRIES altered.
+
+
+Table POINTERLEVELS created.
+
+
+Table CUSTOMDOCUMENTTYPES altered.
+
+
+Table CUSTOMDOCUMENTTYPES altered.
+
+
+Table TMBUDGETS created.
+
+
+Table TMPROJECTS altered.
+
+
+Table TMPROJECTS altered.
+
+
+Index SYS_C00327738 altered.
+
+
+Table TMPROJECTS altered.
+
+
+Table TMPROJECTS altered.
+
+
+Table TMPROJECTS altered.
+
+
+Table "USERS" altered.
+
+
+Index IX_2125776290 dropped.
+
+
+Table APPAYMENTS altered.
+
+
+Table APPAYMENTS altered.
+
+
+Table APPAYMENTS altered.
+
+
+Table APPAYMENTS altered.
+
+
+Table APPAYMENTS altered.
+
+
+Error starting at line : 561 in command -
+ALTER TABLE appayments ADD CONSTRAINT fk_160022457 FOREIGN KEY (paymentmethodid) REFERENCES appaymentmethods ("ID")
+Error report -
+ORA-00904: "ID": זיהוי לא תקף
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+
+Error starting at line : 563 in command -
+ALTER TABLE appayments ADD CONSTRAINT fk_n1240671409 FOREIGN KEY (accountingpaymentmethodid) REFERENCES accountingpaymentmethods ("ID")
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Table APPAYMENTS altered.
+
+
+Table APPAYMENTMETHODS altered.
+
+
+Table APPAYMENTMETHODS altered.
+
+
+Table APPAYMENTMETHODS altered.
+
+
+Table WAREHOUSERELEASEPACKAGES altered.
+
+
+Table ACCOUNTINGSETTINGS altered.
+
+
+Table ACCOUNTINGSETTINGS altered.
+
+
+Table ACCOUNTINGSETTINGS altered.
+
+
+Table DOCUMENTTYPETEMPLATES altered.
+
+
+Table TENANTS altered.
+
+
+Table TENANTS altered.
+
+
+Table APINVOICES altered.
+
+
+Table RG_TEMP_573579100_1 created.
+
+
+0 rows inserted.
+
+
+Table RECONCILEEXTERNALPAGES dropped.
+
+
+Table AMINETPRE2_MAIN.RG_TEMP_573579100_1 altered.
+
+
+Table AMINETPRE2_MAIN.RECONCILEEXTERNALPAGES altered.
+
+
+Index IX_1597147817 created.
+
+
+Index IX_65897605 created.
+
+
+Index IX_1460409694 created.
+
+
+Index IX_1698616249 created.
+
+
+Index IX_1813640344 created.
+
+
+Table SLAHEADERS altered.
+
+
+Table REPORTS altered.
+
+
+Table ENTITYCHANGES altered.
+
+
+Table SHIPMENTPICKUPDELIVERIES altered.
+
+
+Table SHIPMENTPICKUPDELIVERIES altered.
+
+
+Table SHIPMENTPICKUPDELIVERIES altered.
+
+
+Table SHIPMENTPICKUPDELIVERIES altered.
+
+
+Table ARINVOICES altered.
+
+
+Table ARINVOICES altered.
+
+
+Table VEHICLEOWNERS altered.
+
+
+Table VEHICLEOWNERS altered.
+
+
+Table VEHICLEOWNERS altered.
+
+
+Table VEHICLES altered.
+
+
+Table VEHICLES altered.
+
+
+Table VEHICLES altered.
+
+
+Table VEHICLES altered.
+
+
+Table CUSTOMSCOUNTRIES altered.
+
+
+Table CUSTOMSCOUNTRIES altered.
+
+
+Table CUSTOMSCOUNTRIES altered.
+
+
+Table VENDORS altered.
+
+
+Table AGENTTALKBACKTYPES altered.
+
+
+Table AGENTTALKBACKTYPES altered.
+
+
+Table AGENTTALKBACKTYPES altered.
+
+
+Table DECCARGOSPLITCONSITEMS created.
+
+
+Table BANKACCOUNTLITES altered.
+
+
+Table COURIERPENDINGREASONS created.
+
+
+Table DECLARATIONCOURIERSTATUSES created.
+
+
+Table PACKAGETYPES altered.
+
+
+Index IX_TMEMPLOYEETIMES_PROJECTID dropped.
+
+
+Table TMEMPLOYEETIMES altered.
+
+
+Table TAXREPORTSTATUS created.
+
+
+Table JOURNALS altered.
+
+
+Table JOURNALS altered.
+
+
+Table CUSTOMERTENANTACCESSES altered.
+
+
+Table CUSTOMERS altered.
+
+
+Table BUSINESSPROCESSQUEUES created.
+
+
+Table ACTIVITYOWNERHISTORIES altered.
+
+
+Table LEDGERTRANSACTIONS altered.
+
+
+Table AUTOMATICRECONCILEMETHODS altered.
+
+
+Table BANKCODES altered.
+
+
+Table BOOKINGS altered.
+
+
+Table PRODUCTTYPEMODIFICATIONS altered.
+
+
+Table CARDS altered.
+
+
+Table CARDS altered.
+
+
+Table SHIPMENTCOMMODITIES altered.
+
+
+Index IX_FTPDETAILS_TENANT dropped.
+
+
+Table FTPDETAILS altered.
+
+
+Table FTPDETAILS altered.
+
+
+Table AUTHENTICATIONTOKENS altered.
+
+
+Table AUTHENTICATIONTOKENS altered.
+
+
+Index IX_817907127 dropped.
+
+
+Table AWBSTOCKUSAGEHISTORIES altered.
+
+
+Table AWBSTOCKUSAGEHISTORIES altered.
+
+
+Table AWBSTOCKUSAGEHISTORIES altered.
+
+
+Table SHIPMENTPICKUPDELIVERYPACKAGES altered.
+
+
+Table SHIPMENTPICKUPDELIVERYPACKAGES altered.
+
+
+Table BUSINESSROLES created.
+
+
+Table PORTS altered.
+
+
+Table CLIENTDRIVINGLICENSETYPES altered.
+
+
+Table PAYMENTCHEQUESTATUSES created.
+
+
+Error starting at line : 826 in command -
+CREATE TABLE rg_temp_573579100_2 (
+  tenant NUMBER(10) NOT NULL,
+  customsinterfacecode VARCHAR2(4 CHAR),
+  activatecustmanaginshipments NUMBER(1) NOT NULL,
+  localcustomsinterfacecode VARCHAR2(4 CHAR),
+  importtousainterfacecode VARCHAR2(4 CHAR),
+  localcompanyid VARCHAR2(25 CHAR),
+  localuserid VARCHAR2(25 CHAR),
+  localpassword VARCHAR2(25 CHAR),
+  artemusoutsettingsid VARCHAR2(15 CHAR),
+  artemusinsettingsid VARCHAR2(15 CHAR),
+  exportfromusainterfacecode VARCHAR2(4 CHAR),
+  PRIMARY KEY (tenant),
+  CONSTRAINT RG_TEMP_573579100_13 FOREIGN KEY (artemusinsettingsid) REFERENCES ftpdetails ("ID"),
+  CONSTRAINT RG_TEMP_573579100_14 FOREIGN KEY (artemusoutsettingsid) REFERENCES ftpdetails ("ID"),
+  CONSTRAINT RG_TEMP_573579100_15 FOREIGN KEY (localcustomsinterfacecode) REFERENCES customsinterfaces (code),
+  CONSTRAINT RG_TEMP_573579100_16 FOREIGN KEY (exportfromusainterfacecode) REFERENCES customsinterfaces (code),
+  CONSTRAINT RG_TEMP_573579100_17 FOREIGN KEY (importtousainterfacecode) REFERENCES customsinterfaces (code)
+)
+Error report -
+ORA-02267: סוג עמודה לא תואם לסוג העמודה שאליה פונים
+02267. 00000 -  "column type incompatible with referenced column type"
+*Cause:    The datatype of the referencing column is incompatible with the
+
+Error starting at line : 846 in command -
+INSERT INTO aminetpre2_main.rg_temp_573579100_2(tenant,customsinterfacecode,activatecustmanaginshipments,localcustomsinterfacecode,importtousainterfacecode,localcompanyid,localuserid,localpassword,artemusoutsettingsid,artemusinsettingsid,exportfromusainterfacecode) SELECT tenant,customsinterfacecode,activatecustmanaginshipments,localcustomsinterfacecode,importtousainterfacecode,localcompanyid,localuserid,localpassword,SUBSTR(artemusoutsettingsid, 0, LEAST(LENGTH(artemusoutsettingsid), 15)),SUBSTR(artemusinsettingsid, 0, LEAST(LENGTH(artemusinsettingsid), 15)),exportfromusainterfacecode FROM customsinterfacesettings
+Error at Command Line : 846 Column : 29
+Error report -
+SQL Error: ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Table CUSTOMSINTERFACESETTINGS dropped.
+
+
+Error starting at line : 850 in command -
+ALTER TABLE aminetpre2_main.rg_temp_573579100_2 RENAME TO customsinterfacesettings
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 852 in command -
+ALTER TABLE aminetpre2_main.customsinterfacesettings RENAME CONSTRAINT RG_TEMP_573579100_13 TO fk_n1906078603
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 854 in command -
+ALTER TABLE aminetpre2_main.customsinterfacesettings RENAME CONSTRAINT RG_TEMP_573579100_14 TO fk_n611060055
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 856 in command -
+ALTER TABLE aminetpre2_main.customsinterfacesettings RENAME CONSTRAINT RG_TEMP_573579100_15 TO fk_1297541450
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 858 in command -
+ALTER TABLE aminetpre2_main.customsinterfacesettings RENAME CONSTRAINT RG_TEMP_573579100_16 TO fk_1617877326
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 860 in command -
+ALTER TABLE aminetpre2_main.customsinterfacesettings RENAME CONSTRAINT RG_TEMP_573579100_17 TO fk_302233247
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 862 in command -
+CREATE INDEX ix_n852852489 ON customsinterfacesettings(artemusoutsettingsid)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 864 in command -
+CREATE INDEX ix_n1391806650 ON customsinterfacesettings(exportfromusainterfacecode)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 866 in command -
+CREATE INDEX ix_1514658956 ON customsinterfacesettings(localcustomsinterfacecode)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 868 in command -
+CREATE INDEX ix_n908481237 ON customsinterfacesettings(customsinterfacecode)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 870 in command -
+CREATE INDEX ix_517559605 ON customsinterfacesettings(artemusinsettingsid)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 872 in command -
+CREATE INDEX ix_1727515238 ON customsinterfacesettings(importtousainterfacecode)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Table WAREHOUSES altered.
+
+
+Table COURIERSTATUSES created.
+
+
+Table QUOTECUSTOMERTYPES altered.
+
+
+Index IX_863072537 dropped.
+
+
+Table INTTRASISTATUS created.
+
+
+Table SHIPMENTS altered.
+
+
+Table SHIPMENTS altered.
+
+
+Table SHIPMENTS altered.
+
+
+Table SHIPMENTS altered.
+
+
+Table SHIPMENTS altered.
+
+
+Table SHIPMENTS altered.
+
+
+Table TEAMS created.
+
+
+Table SHIPMENTADDITIONALCLOUDDATAS altered.
+
+
+Table TICKETS altered.
+
+
+Table DOCUMENTSFILINGS altered.
+
+
+Table INSIDESHIPMENTPACKAGES altered.
+
+
+Table AIRLINES altered.
+
+
+Table INTERNATIONALSITES altered.
+
+
+Table INTERNATIONALSITES altered.
+
+
+Table COMMODITIES altered.
+
+
+Table VESSELS altered.
+
+
+Table VESSELS altered.
+
+
+Table VESSELS altered.
+
+
+Table ACCOUNTINGPAYMENTMETHODS created.
+
+
+Table DECCARGOSPLITCONSPACKDETS created.
+
+
+Table RG_TEMP_573579100_3 created.
+
+
+0 rows inserted.
+
+
+Table ARPAYMENTS dropped.
+
+
+Table AMINETPRE2_MAIN.RG_TEMP_573579100_3 altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Table AMINETPRE2_MAIN.ARPAYMENTS altered.
+
+
+Index IX_ARPAYMENTS_UPDATEDBYUSERID created.
+
+
+Index IX_529623321 created.
+
+
+Index IX_184274905 created.
+
+
+Index IX_ARPAYMENTS_STATUSCODE created.
+
+
+Index IX_ARPAYMENTS_PRINTBYUSERID created.
+
+
+Index IX_ARPAYMENTS_BILLTOID created.
+
+
+Index IX_ARPAYMENTS_BILLTOADDRESSID created.
+
+
+Index IX_N104392442 created.
+
+
+Index IX_ARPAYMENTS_CREATEDBYUSERID created.
+
+
+Index IX_1402333928 created.
+
+
+Index IX_ARPAYMENTS_DEBITACCOUNTID created.
+
+
+Index IX_ARPAYMENTS_BRANCHID created.
+
+
+Index IX_1618986894 created.
+
+
+Index IX_ARPAYMENTS_LOCALCURRENCYID created.
+
+
+Index IX_ARPAYMENTS_CREDITCARDTYPEID created.
+
+
+Index IX_ARPAYMENTS_ARACCOUNTID created.
+
+
+Table ACTIVITIES altered.
+
+
+Table ACTIVITIES altered.
+
+
+Table ACTIVITIES altered.
+
+
+Table ACTIVITIES altered.
+
+
+Table REVALUATIONS altered.
+
+
+Table REVALUATIONS altered.
+
+
+Table COMPUTINGPARTNERTABLES altered.
+
+
+Table COMPUTINGPARTNERTABLES altered.
+
+
+Table AGENTS altered.
+
+
+Table TENANTLOGINPOLICIES altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table SUPPLIERINVOICES altered.
+
+
+Table RECONCILEEXTERNALPAGELINES altered.
+
+
+Table RECONCILEEXTERNALPAGELINES altered.
+
+
+Table RECONCILEEXTERNALPAGELINES altered.
+
+
+Table RECONCILEEXTERNALPAGELINES altered.
+
+
+Table BANKACCOUNTS altered.
+
+
+Table Z1607PACKAGES dropped.
+
+
+Table Z1607PACKAGEFEATURES dropped.
+
+
+Table Z1703_CHARGESGROUPS dropped.
+
+
+Table Z201805_OBJECTFIELDS dropped.
+
+
+Table Z201805_OBJECTTABLES dropped.
+
+
+Table Z201805_TEXTCODES dropped.
+
+
+Table ARPAYMENTMETHODS dropped.
+
+
+Table OLDSUPPLIERINVOICEITEMVEHICLES dropped.
+
+
+Index IX_N971540603 created.
+
+
+Index IX_1859042792 created.
+
+
+Index IX_527281997 created.
+
+
+Index IX_1453656957 created.
+
+
+Index IX_N1509655872 created.
+
+
+Index IX_775607961 created.
+
+
+Index IX_1659343066 created.
+
+
+Index IX_APPAYMENTS_PAYMENTMETHODID created.
+
+
+Index IX_N1262923456 created.
+
+
+Index IX_WAREHOUSEENTRIES_TOPORTID created.
+
+
+Index IX_WAREHOUSEENTRIES_SHIPPERID created.
+
+
+Index IX_1147667857 created.
+
+
+Index IX_1513469198 created.
+
+
+Index IX_TENANTS_TEMPERATUREUNITCODE created.
+
+
+Index IX_N453860838 created.
+
+
+Index IX_N1954667306 created.
+
+
+Index IX_TEAMS_CREATEDBYUSERID created.
+
+
+Index IX_1754876792 created.
+
+
+Index IX_N1419103078 created.
+
+
+Index IX_N760448055 created.
+
+
+Index IX_TEAMS_MANAGERUSERID created.
+
+
+Index IX_N738266810 created.
+
+
+Index IX_1379914583 created.
+
+
+Index IX_1030748660 created.
+
+
+Index IX_GLACCOUNTS_DEDUCTIONTYPEID created.
+
+
+Index IX_1872786969 created.
+
+
+Index IX_N552810518 created.
+
+
+Index IX_N1219289447 created.
+
+
+Index IX_1712000854 created.
+
+
+Index IX_N1568594331 created.
+
+
+Index IX_1683845028 created.
+
+
+Index IX_WAREHOUSEENTRIES_FROMPORTID created.
+
+
+Index IX_2113006131 created.
+
+
+Index IX_N1873176872 created.
+
+
+Index IX_1302040000 created.
+
+
+Index IX_1481739651 created.
+
+
+Index IX_713217035 created.
+
+
+Index IX_N29967118 created.
+
+
+Index IX_620127 created.
+
+
+Index IX_1512831738 created.
+
+
+Index IX_2052970386 created.
+
+
+Index IX_REVALUATIONS_STATUS created.
+
+
+Index IX_N462562385 created.
+
+
+Index IX_TMPROJECTS_CATEGORYID created.
+
+
+Index IX_1736316330 created.
+
+
+Index IX_318936315 created.
+
+
+Index IX_ARPAYMENTS_METODOPAGOCODE created.
+
+
+Index IX_2003973389 created.
+
+
+Index IX_TMPROJECTS_BUDGETID created.
+
+
+Index IX_N2494558 created.
+
+
+Index IX_706026461 created.
+
+
+Index IX_297468799 created.
+
+
+Index IX_1513789012 created.
+
+
+Index IX_ACTIVITIES_TEAMID created.
+
+
+Index IX_N1934393287 created.
+
+
+Index IX_N557003130 created.
+
+
+Index IX_1279444794 created.
+
+
+Index IX_N1973093173 created.
+
+
+Index IX_N1823184115 created.
+
+
+Index IX_938749705 created.
+
+
+Index IX_1588568059 created.
+
+
+Index IX_BRANCHES_INTTRACONTACTID created.
+
+
+Index IX_APPAYMENTS_APPROVEDBYUSERID created.
+
+
+Index IX_N830292177 created.
+
+
+Index IX_1667130132 created.
+
+
+Index IX_N1756315413 created.
+
+
+Index IX_1977706450 created.
+
+
+Index IX_N397121049 created.
+
+
+Index IX_N1129777049 created.
+
+
+Index IX_N445713033 created.
+
+
+Index IX_1366272780 created.
+
+
+Index IX_N1760020479 created.
+
+
+Index IX_307689355 created.
+
+
+Index IX_TEAMS_UPDATEDBYUSERID created.
+
+
+Index IX_1723606505 created.
+
+
+Index IX_N835353658 created.
+
+
+Index IX_VESSELS_COUNTRYID created.
+
+
+Index IX_N247673174 created.
+
+
+Index IX_121656766 created.
+
+
+Procedure USP_UPDATEQUEUECOMMUNICATIONLO altered.
+
+
+Trigger TRG_VALID_DECLARATIONS_U altered.
+
+Warning: הביצוע הושלם עם אזהרה
+
+Function TOTALINCOME altered.
+
+
+Procedure USP_SSO altered.
+
+
+Table AMINETPRE2_MAIN.CASHBOOKS altered.
+
+
+Table AMINETPRE2_MAIN.RECONCILIATIONS altered.
+
+
+Table AMINETPRE2_MAIN.GLACCOUNTCURRENCIES altered.
+
+
+Table AMINETPRE2_MAIN.GLACCOUNTCURRENCIES altered.
+
+
+Table REVALUATIONS altered.
+
+
+Table REVALUATIONS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table FULLACCOUNTINGSETTINGS altered.
+
+
+Table BANKACCOUNTS altered.
+
+
+Table BANKACCOUNTS altered.
+
+
+Table BANKACCOUNTS altered.
+
+
+Table ARPAYMENTCHEQUES altered.
+
+
+Table AMINETPRE2_MAIN.ARINVOICEPAYMENTS altered.
+
+
+PL/SQL procedure successfully completed.
+
+
+Commit complete.
+

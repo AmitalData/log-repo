@@ -1,4 +1,4 @@
-﻿<table style="height:75px;width:100%;">
+<table style="height:75px;width:100%;">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -11,7 +11,7 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:60px;"><div style="width:60px;">Provider:</div></td>
+                    <td style="width:60px;"><div style="width:60px;">Customer:</div></td>
                     <td style="width:120px;">
                         <LogLov [NoObjectField]="true" [ObjectFieldName]="'CustomerId'"
                                 [DataContext]="DataContext"

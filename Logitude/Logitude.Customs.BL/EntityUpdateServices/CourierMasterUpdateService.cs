@@ -134,8 +134,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if(entityPM.ShortHAWB.Length > 8)
                 {
-                    var end = entityPM.ShortHAWB.Length - 8;
-                    var start = end + 1;
+                    var start = entityPM.ShortHAWB.Length - 8;
                     entityPM.ShortHAWB = entityPM.ShortHAWB.Substring(start);
                 }
             }

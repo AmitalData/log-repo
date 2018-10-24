@@ -183,6 +183,7 @@ namespace WebFreight.Web.Helpers
         public string AssignedTo { get; set; }
         public string Description { get; set; }
         public double? RemainingWork { get; set; }
+        public string IterationPath { get; set; }
         public RelationClass[] Relations { get; set; }
     }
 

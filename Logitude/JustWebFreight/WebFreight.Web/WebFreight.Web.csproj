@@ -122,8 +122,8 @@
     <Reference Include="HtmlAgilityPack, Version=1.8.8.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\HtmlAgilityPack.1.8.8\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=1.0.0.999, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpZipLib.1.0.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Intuit.Ipp.Core, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.Core.dll</HintPath>
@@ -247,6 +247,9 @@
     <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Tools, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceModel.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Tools.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
     </Reference>
@@ -349,6 +352,13 @@
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
     </Reference>
+    <Reference Include="Simplog.Server.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Simplog.Server.Infrastructure\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.2.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StackExchange.Redis.1.2.5\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="Stimulsoft.Base, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Base.dll</HintPath>
     </Reference>
@@ -391,6 +401,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http">
       <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll</HintPath>
@@ -417,14 +428,14 @@
     </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.DomainServices.EntityFramework">
-      <HintPath>..\..\General\Dlls\System.ServiceModel.DomainServices.EntityFramework.dll</HintPath>
+    <Reference Include="System.ServiceModel.DomainServices.EntityFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="System.ServiceModel.DomainServices.Hosting">
-      <HintPath>..\..\General\Dlls\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <HintPath>..\..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -2576,6 +2587,10 @@
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceLineAction.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.SATPaymentMethod.cs" />
     <Compile Include="CommonDataModel\DomainServices\PartnersDomainService.WarehouseType.cs" />
+    <Content Include="JustWebFreightappSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
     <None Include="Resources\Stimulsoft Reports.Ultimate 2013.1 Trial A252_020150909133627201254900033002.mrt.txt" />
@@ -6049,10 +6064,6 @@
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
       <Name>Simplog.Global.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
-      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
-      <Name>Simplog.Server.Infrastructure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Unifreight.BL\Unifreight.BL.csproj">
       <Project>{0ec1bd46-2613-4227-a6d7-d345dd0978cd}</Project>
       <Name>Unifreight.BL</Name>
@@ -6110,45 +6121,8 @@
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ mkdir  $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\ mkdir  $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Js" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AOTScripts\ mkdir  $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AOTScripts\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\AOTScripts" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AOTScripts\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Appcss\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Appcss\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Appcss" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Appcss\" /Y /E 
- 
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AppStyles\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AppStyles\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\AppStyles" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AppStyles\" /Y /E 
-
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Froala\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Froala\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Froala" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Froala\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\font-awesome\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\font-awesome\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\font-awesome" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\font-awesome\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Images\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Images\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Images" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Images\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Js" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\styles\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\styles\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\styles" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\styles\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\dist\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\dist" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ApplicationStyles\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ApplicationStyles\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\ApplicationStyles" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ApplicationStyles\" /Y /E
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\_Resources\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\_Resources\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\_Resources" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\_Resources\" /Y /E
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!--<Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.4\tools\Microsoft.Bcl.Build.targets" />-->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

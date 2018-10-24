@@ -60,6 +60,32 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
         this.SetUIProperty();
 
+        this.Listen();
+    }
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    Listen() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    }
+                });
+            }
+
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.FillGrids();
+                        console.log("Entity Reloaded");
+                    }
+                });
+            }
+        }
     }
 
     ngOnInit() {
@@ -155,7 +181,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     }
 
 
-    //#endregion 
+    //#endregion
 
     //#region Filter Methods
     TaxableTransactionsCount: number = 0;
@@ -182,7 +208,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         if (!AppTool.IsNullOrEmpty(this.searchText))
             filteredLines = filteredLines.filter(d => d.SearchFields.toLowerCase().includes(this.searchText.toLowerCase()));
 
-        //update filters count 
+        //update filters count
         this.TaxableTransactionsCount = filteredLines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "O" && d.TaxReportLinePM.VatAmount > 0).length;
         this.ExemptTransactionsCount = filteredLines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "O" && d.TaxReportLinePM.VatAmount == 0).length;
         this.AllTransactionsCount = filteredLines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "O").length;
@@ -296,8 +322,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     RefreshButtonClicked() {
 
         SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-        this.FillGrids();
+        //this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
     }
 
     EditLine(line: ReportLineModel) {
@@ -319,6 +344,10 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             });
             logWindow.Show('./Accounting/Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent');
         }
+
+
+
+
     }
 
     ReloadScreen() {

@@ -37,7 +37,7 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
                 myLoggedUserId = contact.Id;
             }
 
-            if(entityPM.Id == null) entityPM.Id = IdCounter.GetNumber("BatchTaskExecution", entityPM.Tenant);
+            entityPM.Id = IdCounter.GetNumber("BatchTaskExecution", entityPM.Tenant);
             entityPM.CreateDate= TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             entityPM.CreatedByUserId = myLoggedUserId;
             base.OnCreating(entityPM, entityParentPM);
