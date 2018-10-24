@@ -31,6 +31,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                            Inactive = a.Inactive,
                                                 ErrorPlace = a.ErrorPlace,
                                                 Tenant = a.Tenant,
+                                                UnifreightStatusCode = a.UnifreightStatusCode,
 		                    	            });
             return query;
 		}

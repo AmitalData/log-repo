@@ -373,6 +373,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsPackDetPM.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAirlineListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsAirlinePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\Others\GITITEMCacheService.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
