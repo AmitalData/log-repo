@@ -114,7 +114,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         else if (this.textValue && (newValue == "" || newValue == null || newValue == undefined)) {
             this.HasValue.emit(false);
         }
-        switch (this.InputType.toLowerCase()) {
+        switch (this.InputType && this.InputType.toLowerCase()) {
             case 'text':
             case 'ntext':
                 {
@@ -1398,7 +1398,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ValidateField(emitPropertyChanged: boolean = true) {
 
-        switch (this.InputType.toLowerCase()) {
+        switch (this.InputType && this.InputType.toLowerCase()) {
             case 'text':
             case 'ntext':
                 {

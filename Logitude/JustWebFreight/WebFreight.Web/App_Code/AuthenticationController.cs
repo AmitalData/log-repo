@@ -19,7 +19,7 @@ using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 using System.Text.RegularExpressions;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Counters;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -47,6 +47,9 @@ using WebFreight.Web.App_Code;
 using System.Threading;
 using Logitude.SystemLogs.POCOs;
 using Logitude.SystemLogs.Repositories;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
 
 namespace WebFreight.Web
 {
@@ -366,7 +369,7 @@ namespace WebFreight.Web
                     FolderName = "logos",
                     Extension = "png",
                     Tenant = companyId,
-                    
+
                 };
 
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
@@ -549,7 +552,7 @@ namespace WebFreight.Web
                 Email = email,
                 CreateDate = DateTime.Now,
                 Country = "Palestine",
-                LastUpdateDate= DateTime.Now
+                LastUpdateDate = DateTime.Now
 
             };
 
@@ -1051,7 +1054,7 @@ namespace WebFreight.Web
 
                 #region PasswordExpirationDate
 
-                if (data!=null &&  !data.HasError && loginParameters.ClientType == "Web")
+                if (data != null && !data.HasError && loginParameters.ClientType == "Web")
                 {
                     if (contactPassword == null)
                     {
@@ -1089,15 +1092,18 @@ namespace WebFreight.Web
 
                 if (data.HasError)
                 {
-                    if (data.InValidMailOrPassword || data.IsLocked || data.IpRestricted )
+                    if (data.InValidMailOrPassword || data.IsLocked || data.IpRestricted)
                     {
                         AddFailedLoginLog(data);
-
                         int sleepTime = data.NumberOfRetries > 0 ? data.NumberOfRetries : 1;
                         Thread.Sleep(sleepTime);
                     }
-                 
-   
+                }
+
+                if (data.HasError && data.NumberOfRetries > 4)
+                {
+                    string captchaCode = RandomString(6);
+                    data.CaptchaImage = GenerateCaptchaImage(captchaCode);
                 }
 
                 return data;
@@ -1118,36 +1124,47 @@ namespace WebFreight.Web
         }
 
 
-        private void AddFailedLoginLog(UserData data)
+
+
+
+        private static Random random = new Random();
+        public static string RandomString(int length)
         {
-            
-                FailedLoginLogRepository failedLoginLogRepository = new FailedLoginLogRepository();
-                FailedLoginLog failedLoginLog = new FailedLoginLog()
-                {
-                    Id = IdCounter.GetNumber("FailedLoginLog", data.Tenant).ToString(),
-                    Browser = HttpContext.Current.Request.Browser.Type,
-                    IP = AuthenticationUtil.GetIP4Address(),
-                    GMTDateTime = DateTime.Now,
-                    UserAgent = !string.IsNullOrEmpty(HttpContext.Current.Request.UserAgent) ? (HttpContext.Current.Request.UserAgent.Length <= 500 ? HttpContext.Current.Request.UserAgent : HttpContext.Current.Request.UserAgent.Substring(0, 500)) : null,
-                    Email = data.UserName,
-                };
-                
-                if (data.Param1) failedLoginLog.Reason = "Wrong Email address";
-                else if (data.InValidMailOrPassword) failedLoginLog.Reason = "Wrong Password";
-                else if (data.IsLocked) failedLoginLog.Reason = "Locked User";
-                else if (data.IpRestricted) failedLoginLog.Reason = "Unauthorized IP address";
-
-
-                data.Param1 = false;
-                string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                if (!string.IsNullOrEmpty(currentIP)) failedLoginLog.Browser = failedLoginLog.Browser.ToUpper();
-
-                failedLoginLogRepository.Add(failedLoginLog);
-                failedLoginLogRepository.SubmitChanges();
-            
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";//"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";//"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-      
+        private void AddFailedLoginLog(UserData data)
+        {
+
+            FailedLoginLogRepository failedLoginLogRepository = new FailedLoginLogRepository();
+            FailedLoginLog failedLoginLog = new FailedLoginLog()
+            {
+                Id = IdCounter.GetNumber("FailedLoginLog", data.Tenant).ToString(),
+                Browser = HttpContext.Current.Request.Browser.Type,
+                IP = AuthenticationUtil.GetIP4Address(),
+                GMTDateTime = DateTime.Now,
+                UserAgent = !string.IsNullOrEmpty(HttpContext.Current.Request.UserAgent) ? (HttpContext.Current.Request.UserAgent.Length <= 500 ? HttpContext.Current.Request.UserAgent : HttpContext.Current.Request.UserAgent.Substring(0, 500)) : null,
+                Email = data.UserName,
+            };
+
+            if (data.Param1) failedLoginLog.Reason = "Wrong Email address";
+            else if (data.InValidMailOrPassword) failedLoginLog.Reason = "Wrong Password";
+            else if (data.IsLocked) failedLoginLog.Reason = "Locked User";
+            else if (data.IpRestricted) failedLoginLog.Reason = "Unauthorized IP address";
+
+
+            data.Param1 = false;
+            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+            if (!string.IsNullOrEmpty(currentIP)) failedLoginLog.Browser = failedLoginLog.Browser.ToUpper();
+
+            failedLoginLogRepository.Add(failedLoginLog);
+            failedLoginLogRepository.SubmitChanges();
+
+        }
+
+
         private void SetSessionPolicy(UserData data)
         {
             SessionPolicyRepository sessionPolicyRepository = new SessionPolicyRepository();
@@ -1160,12 +1177,12 @@ namespace WebFreight.Web
             }
         }
 
-     
 
 
 
 
-    bool OneTimePassword = false;
+
+        bool OneTimePassword = false;
         public UserData PostLoginData(LoginParameters parameters, int tenant)
         {
 
@@ -1190,7 +1207,7 @@ namespace WebFreight.Web
                 IGlobalContext globalContext = GlobalContext.GetContext();
                 ContactPassword contactPassword = null;
 
-              
+
 
                 var passResult = ResolvePassword(password);
                 if (passResult != null)
@@ -1277,8 +1294,8 @@ namespace WebFreight.Web
                     }
                     else
                     {
-                       contactPassword = null;
-                       user = CheckUserState(email, password, ref contactPassword, parameters.ByToken);
+                        contactPassword = null;
+                        user = CheckUserState(email, password, ref contactPassword, parameters.ByToken);
                     }
                 }
                 else
@@ -1328,24 +1345,24 @@ namespace WebFreight.Web
                         {
                             string hashedPassword = "";
                             contactPassword = AuthenticationUtil.VerifyContactPassword(parameters.Email, parameters.Password, globalContext);
-                            if(contactPassword != null)
+                            if (contactPassword != null)
                             {
                                 hashedPassword = contactPassword.Password;
                             }
-              
+
                             if (passResult != null)
                             {
                                 hashedPassword = passResult.Password;
-                            
+
                             }
-                            
+
                             // if (!parameters.InternalLoginValidationCall || parameters.IsMobileLogin)
                             //{
                             string token = AuthenticationUtil.GenerateToken();// Guid.NewGuid().ToString();
                             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
-                            AuthenticationToken authentication = new AuthenticationToken() { CreateDate = DateTime.Now, Email = email, Password = hashedPassword, Token = token, Tenant = user.CurrentTenant,ClientType = parameters.IsMobileLogin ?"Mobile": parameters.ClientType };
-                            if (!user.KeepUserLoggedIn  && authentication.ClientType == "Web" && user.WebTokenLifeTime!=0) authentication.ExpirationDate = DateTime.Now.AddMinutes(user.WebTokenLifeTime);
-                      
+                            AuthenticationToken authentication = new AuthenticationToken() { CreateDate = DateTime.Now, Email = email, Password = hashedPassword, Token = token, Tenant = user.CurrentTenant, ClientType = parameters.IsMobileLogin ? "Mobile" : parameters.ClientType };
+                            if (!user.KeepUserLoggedIn && authentication.ClientType == "Web" && user.WebTokenLifeTime != 0) authentication.ExpirationDate = DateTime.Now.AddMinutes(user.WebTokenLifeTime);
+
                             AuthenticationToken authenticationDocument = new AuthenticationToken()
                             {
                                 CreateDate = DateTime.Now,
@@ -1845,7 +1862,7 @@ namespace WebFreight.Web
             {
             }
 
- 
+
             string hashedPassword = hashedPassword = byToken ? password : PasswordGenerator.GetHashedPassword(name, password);
 
             bool isHashPassword = byToken;
@@ -1859,12 +1876,12 @@ namespace WebFreight.Web
                     isHashPassword = passResult.isHashPassword;
                 }
             }
-            
-          
+
+
             IGlobalContext globalObjectContext = GlobalContext.GetContext();
 
-          
-           
+
+
 
             bool customerCare = false;
             bool distributor = false;
@@ -1915,9 +1932,9 @@ namespace WebFreight.Web
 
                 if (isIpAuthenticated)
                 {
-                 
+
                     string pass = isHashPassword ? hashedPassword : password;
-                     contactPassword = AuthenticationUtil.VerifyContactPassword(name, pass, globalObjectContext, isHashPassword);
+                    contactPassword = AuthenticationUtil.VerifyContactPassword(name, pass, globalObjectContext, isHashPassword);
 
 
                     if (contactPassword != null)
@@ -2220,7 +2237,7 @@ namespace WebFreight.Web
 
         PasswordCheckService passwordChkService = new PasswordCheckService();
 
-        private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken  )
+        private UserData CheckUserState(string email, string password, ref ContactPassword contactPassword, bool byToken)
         {
 
             if (!string.IsNullOrEmpty(email)) email = email.ToLower();
@@ -2331,7 +2348,7 @@ namespace WebFreight.Web
             return userData;
         }
 
-      
+
 
         private void CheckLockedUser(ContactPassword contact, IGlobalContext globalContext)
         {
@@ -2643,7 +2660,7 @@ namespace WebFreight.Web
                 {
                     currentpassword = contactPasswordRepository.GetOldPasswordByEmail(param.Email);
                     successMobile.IsScceed = passwordChangeHelper.ChangePassword(param.Email, newPassword);
-           
+
                     if (successMobile.IsScceed) log = "(Change password) Change password successfully";
 
                     else log = "(Change password)  Change password failure ( the old Password entered was invalid )";
@@ -2804,7 +2821,7 @@ namespace WebFreight.Web
                 {
                     authToken.InActive = true;
                     authToken.InActiveDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
-                    authToken.InActiveReason = "Sign Out"; 
+                    authToken.InActiveReason = "Sign Out";
                     AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(authToken.Tenant);
                     authenticationTokenRepository.Update(authToken);
                     authenticationTokenRepository.SubmitChanges();
@@ -2828,8 +2845,8 @@ namespace WebFreight.Web
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
-           
-           
+
+
         }
 
 
@@ -2843,7 +2860,7 @@ namespace WebFreight.Web
                     var passwordarray = password.Contains("@OneTimePassword") ? password.Split(new string[] { "@OneTimePassword" }, StringSplitOptions.None) : password.Split(new string[] { "@HashPassword" }, StringSplitOptions.None);
                     if (passwordarray.Length > 0)
                     {
-                        result =  new PasswordParameter();
+                        result = new PasswordParameter();
                         result.Password = passwordarray[0];
                         if (password.Contains("@OneTimePassword")) result.IsOneTimePassword = true;
                         result.isHashPassword = true;
@@ -2889,7 +2906,7 @@ namespace WebFreight.Web
 
 
 
-        public HttpResponseMessage GetDocumentDownloadToken( string documentToken)//New Method
+        public HttpResponseMessage GetDocumentDownloadToken(string documentToken)//New Method
         {
             try
             {
@@ -2914,7 +2931,7 @@ namespace WebFreight.Web
                             }
                         }
                     }
-                 
+
                     if (string.IsNullOrEmpty(result))
                     {
                         AuthenticationToken authenticationDocument = new AuthenticationToken()
@@ -2946,6 +2963,62 @@ namespace WebFreight.Web
 
 
         }
+
+        private string GenerateCaptchaImage (string code)
+        {
+            int fontsize = 17;
+            System.Drawing.Font font = new System.Drawing.Font(
+              new FontFamily("Times New Roman"),
+                  ((float)fontsize),
+                  FontStyle.Bold | FontStyle.Italic,    // + obviously doesn't work, but what am I meant to do?
+                  GraphicsUnit.Pixel
+              );
+
+            int height = 30;
+
+            int width = 90;
+
+            Bitmap bmp = new Bitmap(width, height);
+
+            RectangleF rectf = new RectangleF(10, 5, 0, 0);
+
+            Graphics g = Graphics.FromImage(bmp);
+
+            g.Clear(Color.White);
+
+
+            //    // Fill in the background.
+            Rectangle rect = new Rectangle(0, 0, 100, 30);
+            HatchBrush hatchBrush = new HatchBrush(HatchStyle.SmallConfetti, Color.LightGray, Color.White);
+            g.FillRectangle(hatchBrush, rect);
+
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            g.DrawString(code, font, Brushes.Green, rectf);
+
+            g.DrawRectangle(new Pen(Color.Transparent), 1, 1, width - 2, height - 2);
+
+            g.Flush();
+
+           
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, ImageFormat.Jpeg);
+
+            g.Dispose();
+
+
+            byte[] byteImage = ms.ToArray();
+            string base64String = Convert.ToBase64String(byteImage); //here you should get a base64 string
+            base64String = "data:image/" + "Jpeg" + ";base64," + base64String;
+
+
+            return base64String;
+        }
+
 
 
 
