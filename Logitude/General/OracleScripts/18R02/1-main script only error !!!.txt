@@ -1,0 +1,168 @@
+﻿
+Error starting at line : 561 in command -
+ALTER TABLE appayments ADD CONSTRAINT fk_160022457 FOREIGN KEY (paymentmethodid) REFERENCES appaymentmethods ("ID")
+Error report -
+ORA-00904: "ID": זיהוי לא תקף
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+
+Error starting at line : 563 in command -
+ALTER TABLE appayments ADD CONSTRAINT fk_n1240671409 FOREIGN KEY (accountingpaymentmethodid) REFERENCES accountingpaymentmethods ("ID")
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+
+
+Error starting at line : 826 in command -
+CREATE TABLE rg_temp_573579100_2 (
+  tenant NUMBER(10) NOT NULL,
+  customsinterfacecode VARCHAR2(4 CHAR),
+  activatecustmanaginshipments NUMBER(1) NOT NULL,
+  localcustomsinterfacecode VARCHAR2(4 CHAR),
+  importtousainterfacecode VARCHAR2(4 CHAR),
+  localcompanyid VARCHAR2(25 CHAR),
+  localuserid VARCHAR2(25 CHAR),
+  localpassword VARCHAR2(25 CHAR),
+  artemusoutsettingsid VARCHAR2(15 CHAR),
+  artemusinsettingsid VARCHAR2(15 CHAR),
+  exportfromusainterfacecode VARCHAR2(4 CHAR),
+  PRIMARY KEY (tenant),
+  CONSTRAINT RG_TEMP_573579100_13 FOREIGN KEY (artemusinsettingsid) REFERENCES ftpdetails ("ID"),
+  CONSTRAINT RG_TEMP_573579100_14 FOREIGN KEY (artemusoutsettingsid) REFERENCES ftpdetails ("ID"),
+  CONSTRAINT RG_TEMP_573579100_15 FOREIGN KEY (localcustomsinterfacecode) REFERENCES customsinterfaces (code),
+  CONSTRAINT RG_TEMP_573579100_16 FOREIGN KEY (exportfromusainterfacecode) REFERENCES customsinterfaces (code),
+  CONSTRAINT RG_TEMP_573579100_17 FOREIGN KEY (importtousainterfacecode) REFERENCES customsinterfaces (code)
+)
+Error report -
+ORA-02267: סוג עמודה לא תואם לסוג העמודה שאליה פונים
+02267. 00000 -  "column type incompatible with referenced column type"
+*Cause:    The datatype of the referencing column is incompatible with the
+
+Error starting at line : 846 in command -
+INSERT INTO aminetpre2_main.rg_temp_573579100_2(tenant,customsinterfacecode,activatecustmanaginshipments,localcustomsinterfacecode,importtousainterfacecode,localcompanyid,localuserid,localpassword,artemusoutsettingsid,artemusinsettingsid,exportfromusainterfacecode) SELECT tenant,customsinterfacecode,activatecustmanaginshipments,localcustomsinterfacecode,importtousainterfacecode,localcompanyid,localuserid,localpassword,SUBSTR(artemusoutsettingsid, 0, LEAST(LENGTH(artemusoutsettingsid), 15)),SUBSTR(artemusinsettingsid, 0, LEAST(LENGTH(artemusinsettingsid), 15)),exportfromusainterfacecode FROM customsinterfacesettings
+Error at Command Line : 846 Column : 29
+Error report -
+SQL Error: ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Table CUSTOMSINTERFACESETTINGS dropped.
+
+
+Error starting at line : 850 in command -
+ALTER TABLE aminetpre2_main.rg_temp_573579100_2 RENAME TO customsinterfacesettings
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 852 in command -
+ALTER TABLE aminetpre2_main.customsinterfacesettings RENAME CONSTRAINT RG_TEMP_573579100_13 TO fk_n1906078603
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 854 in command -
+ALTER TABLE aminetpre2_main.customsinterfacesettings RENAME CONSTRAINT RG_TEMP_573579100_14 TO fk_n611060055
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 856 in command -
+ALTER TABLE aminetpre2_main.customsinterfacesettings RENAME CONSTRAINT RG_TEMP_573579100_15 TO fk_1297541450
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 858 in command -
+ALTER TABLE aminetpre2_main.customsinterfacesettings RENAME CONSTRAINT RG_TEMP_573579100_16 TO fk_1617877326
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 860 in command -
+ALTER TABLE aminetpre2_main.customsinterfacesettings RENAME CONSTRAINT RG_TEMP_573579100_17 TO fk_302233247
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 862 in command -
+CREATE INDEX ix_n852852489 ON customsinterfacesettings(artemusoutsettingsid)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 864 in command -
+CREATE INDEX ix_n1391806650 ON customsinterfacesettings(exportfromusainterfacecode)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 866 in command -
+CREATE INDEX ix_1514658956 ON customsinterfacesettings(localcustomsinterfacecode)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 868 in command -
+CREATE INDEX ix_n908481237 ON customsinterfacesettings(customsinterfacecode)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 870 in command -
+CREATE INDEX ix_517559605 ON customsinterfacesettings(artemusinsettingsid)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 872 in command -
+CREATE INDEX ix_1727515238 ON customsinterfacesettings(importtousainterfacecode)
+Error report -
+ORA-00942: טבלה או view אינם קיימים
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+
+
+
+
+----
+
+
+Error starting at line : 472 in command -
+ALTER TABLE declarations MODIFY (acceptancestatuscode VARCHAR2(3 CHAR),mamanstatuscode VARCHAR2(3 CHAR),isclose DEFAULT 0 NOT NULL)
+Error report -
+ORA-02296: לא ניתן לאפשר את (AMINETPRE2_MAIN.) - נמצאו ערכי 'ריק' NULL
+02296. 00000 - "cannot enable (%s.%s) - null values found"
+*Cause:    an alter table enable constraint failed because the table
+           contains values that do not satisfy the constraint.
+*Action:   Obvious
+

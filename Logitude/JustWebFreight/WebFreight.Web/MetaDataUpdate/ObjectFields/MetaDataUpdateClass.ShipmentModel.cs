@@ -192,6 +192,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "Shipment",
                 ValidForQuerySection2 = "ShipmentFollowUp",
                 Operator = "Equals",
+                CanFilter = true,
                 ListPropertyPath = "LastSharedEventId",
                 PMPropertyPath = "LastSharedEventId",
                 DisplayInEntityVariables = false,

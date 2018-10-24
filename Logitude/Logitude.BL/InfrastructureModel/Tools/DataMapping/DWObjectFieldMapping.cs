@@ -29,6 +29,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.MinLength = entityPM.MinLength;
             entityPOCO.IsMeasurement = entityPM.IsMeasurement;
             entityPOCO.AggregationTypeCode = entityPM.AggregationTypeCode;
+            entityPOCO.DisplayInQueryBuilder = entityPM.DisplayInQueryBuilder;
+
 
         }
     }

@@ -88,6 +88,8 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("IsPrimaryKey", fieldViewModel.IsPrimaryKey.ToString().ToLower(), fieldElement);
                 SetAttribute("IsMeasurement", fieldViewModel.IsMeasurement.ToString().ToLower(), fieldElement);
                 SetAttribute("AggregationTypeCode", GetStringValue(fieldViewModel.AggregationTypeCode), fieldElement);
+                SetAttribute("DisplayInQueryBuilder", fieldViewModel.DisplayInQueryBuilder.ToString().ToLower(), fieldElement);
+
 
 
 
@@ -174,6 +176,10 @@ namespace DW_Editor_Tool.Helpers
             fieldViewModel.IsPrimaryKey = GetAttributeBoolValue(fieldNode.Attributes["IsPrimaryKey"]);
             fieldViewModel.IsMeasurement = GetAttributeBoolValue(fieldNode.Attributes["IsMeasurement"]);
             fieldViewModel.AggregationTypeCode = GetAttributeStringValue(fieldNode.Attributes["AggregationTypeCode"]);
+            fieldViewModel.DisplayInQueryBuilder = GetAttributeBoolValueDefaultTrue(fieldNode.Attributes["DisplayInQueryBuilder"]);
+            
+           
+
 
 
             return fieldViewModel;
@@ -214,6 +220,20 @@ namespace DW_Editor_Tool.Helpers
         public static bool GetAttributeBoolValue(XmlAttribute att)
         {
             bool result = false;
+            if (att != null)
+            {
+                if (!string.IsNullOrEmpty(att.Value))
+                {
+                    result = bool.Parse(att.Value);
+                }
+            }
+
+            return result;
+        }
+
+        public static bool GetAttributeBoolValueDefaultTrue(XmlAttribute att)
+        {
+            bool result = true;
             if (att != null)
             {
                 if (!string.IsNullOrEmpty(att.Value))

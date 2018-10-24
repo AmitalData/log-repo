@@ -481,10 +481,10 @@
             // 
             // send8250ToolStripMenuItem
             // 
-            this.Send8373ToolStripMenuItem.Name = "send8250ToolStripMenuItem";
-            this.Send8373ToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.Send8373ToolStripMenuItem.Text = "Send8373";
-            this.Send8373ToolStripMenuItem.Click += new System.EventHandler(this.Send8373ToolStripMenuItem_Click);
+            this.send8250ToolStripMenuItem.Name = "send8250ToolStripMenuItem";
+            this.send8250ToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.send8250ToolStripMenuItem.Text = "Send8373";
+            //this.send8250ToolStripMenuItem.Click += new System.EventHandler(this.send8250ToolStripMenuItem_Click);
             // 
             // uploadMultiToolStripMenuItem
             // 
@@ -741,7 +741,8 @@
         private System.Windows.Forms.ToolStripMenuItem loadTestAPIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sendInBatchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restoreDecToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem Send8373ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem send8250ToolStripMenuItem;
+        //private System.Windows.Forms.ToolStripMenuItem send8250ToolStripMenuItem;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ToolStripMenuItem clearCacheToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uploadMultiToolStripMenuItem;
