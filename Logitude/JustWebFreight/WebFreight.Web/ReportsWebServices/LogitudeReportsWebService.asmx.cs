@@ -701,6 +701,7 @@ namespace WebFreight.Web.ReportsWebServices
                     profitrecord.Destination = a.ToPortName;
                     profitrecord.Notes = a.Notes;
 
+
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, a, profitrecord);
 
