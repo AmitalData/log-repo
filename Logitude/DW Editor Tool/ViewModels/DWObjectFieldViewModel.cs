@@ -220,6 +220,13 @@ namespace DW_Editor_Tool.ViewModels
 
         }
 
+        bool displayInQueryBuilder = true;
+        public bool DisplayInQueryBuilder
+        {
+            get { return displayInQueryBuilder; }
+            set { displayInQueryBuilder = value; FirePropertyChanged("DisplayInQueryBuilder"); }
+        }
+
 
     }
 }

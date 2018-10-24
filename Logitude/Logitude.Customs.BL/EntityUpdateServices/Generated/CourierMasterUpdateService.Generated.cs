@@ -72,7 +72,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		    }
 					
 	    }
-
+        
 		protected override void FillDefaultValuesOnUpdate(CourierMasterPM entityPM)
         {       
            

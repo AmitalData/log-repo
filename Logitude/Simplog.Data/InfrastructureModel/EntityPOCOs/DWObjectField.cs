@@ -24,7 +24,9 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool IsPrimaryKey { get; set; }
         public bool IsMeasurement { get; set; }
         public string AggregationTypeCode { get; set; }
-        
+        public bool DisplayInQueryBuilder { get; set; }
+
+
 
         [ForeignKey("DWObjectTableCode")]
         public virtual DWObjectTable DWObjectTable { get; set; }
