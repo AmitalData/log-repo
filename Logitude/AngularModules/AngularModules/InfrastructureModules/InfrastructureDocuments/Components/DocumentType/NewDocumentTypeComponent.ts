@@ -104,6 +104,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
                 case "PaymentCheque":
                 case "WarehouseRelease":
                 case "TaxReport":
+                case"TaxDeductionReport":
                 {
                         
                     if (tempList.filter(f => f.Name == item.Name).length == 0) {

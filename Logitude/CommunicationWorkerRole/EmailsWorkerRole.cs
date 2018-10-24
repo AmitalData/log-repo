@@ -36,6 +36,7 @@ using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.QueueService;
 using System.Xml;
 using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace CommunicationWorkerRole
 {

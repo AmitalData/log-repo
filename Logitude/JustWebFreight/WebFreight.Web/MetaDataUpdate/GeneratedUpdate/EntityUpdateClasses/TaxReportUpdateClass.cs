@@ -1869,6 +1869,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "NeedsRebulid",
+					  						OldFieldName =  "NeedsRebulid",
 					  						ObjectTableName =  "TaxReport",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -1886,6 +1887,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "NeedsRebulid",
 					  						ListPropertyPath =  "NeedsRebulid",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1940,9 +1942,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn ALLTAXREPORTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 0, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "TaxReportMonth" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ALLTAXREPORTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 1, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXREPORTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 1, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "StatusEnglishName" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn ALLTAXREPORTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 2, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn ALLTAXREPORTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 2, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn ALLTAXREPORTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ALLTAXREPORTSQuery.Id, IndexOrder = 3, ObjectFieldId = TaxReportObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 	   

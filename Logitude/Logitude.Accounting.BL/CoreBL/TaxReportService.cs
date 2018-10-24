@@ -292,7 +292,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     Subject = "Create PNC Flat file for Tax Report",
                     Tenant = tenant,
                     ChangeSetOp = ChangeSetOperation.Insert,
-                    ClassName = "Logitude.Accounting.BL.TestService.BatchTaxReportService,Logitude.Accounting.BL",
+                    ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchTaxReportService,Logitude.Accounting.BL",
                     CreateDate = DateTime.Now,
                     PrametersXml = xmlParameters,
                     StatusCode = "C",
