@@ -37,6 +37,7 @@ using Logitude.Server.Tools.QueueService;
 using System.Xml;
 using System.Net.Http;
 using Newtonsoft.Json;
+using Logitude.Server.Tools.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -128,11 +129,22 @@ namespace CommunicationWorkerRole
                                     }
                                     else
                                     {
-                                        SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
-                                        queueservice.Complete();
+                                        if (EmailLimitationHelper.CheckEmailSendingQuotaForTenant(tenant))
+                                        {
+                                            SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
+                                        }
+                                        else
+                                        {
+                                            cl.CommunicationStatusTypeCode = "F";
+                                            cl.ExceptionMessage = "Quota exceeded";
+                                            cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
+                                            communicationLogRep.Update(cl);
+                                            communicationLogRep.SubmitChanges();
+                                        }
 
+                                        queueservice.Complete();
                                         LogDoneItemInMemory();
-                                        
+
                                     }
                                 }
                                 else

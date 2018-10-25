@@ -190,8 +190,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RegulatedAgentNumber).HasColumnName("RegulatedAgentNumber");
             this.Property(t => t.RegulatedAgentRegimeActivated).HasColumnName("RegulatedAgentRegimeActivated");
             this.Property(t => t.LogBoxAdminUserId).HasColumnName("LogBoxAdminUserId");
-            
-            
+            this.Property(t => t.TenantEmailSendingQuota).HasColumnName("TenantEmailSendingQuota");
+
+
+
             this.HasOptional(t => t.Address).WithMany().HasForeignKey(d => d.AddressId);
             this.HasOptional(t => t.AgentCard).WithMany().HasForeignKey(d => d.AgentId);
             this.HasOptional(t => t.Currency).WithMany().HasForeignKey(d => d.CurrencyId);

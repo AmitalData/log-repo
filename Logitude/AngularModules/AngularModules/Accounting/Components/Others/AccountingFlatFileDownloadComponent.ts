@@ -13,6 +13,8 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { TaxDeductionReportExtendedPMService } from '../../Services/ExtendedPMs/TaxDeductionReportExtendedPMService';
+import { TaxDeductionReportPM } from '../../EntityPMs/TaxDeductionReportPM';
 
 declare var window;
 
@@ -25,7 +27,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
     ObjectTableName: string = "TaxReport";
     DataContext: any = this;
     reportPM: TaxReportPM;
-
+    taxDeductionPM: TaxDeductionReportPM;
     public ValidationErrorsList: string[] = [];
     timerInterval:number = 1000;
     Loading: boolean = false;
@@ -40,6 +42,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
     _DocumentsFilingViewsExtService: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
     _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
     _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
+    taxDeductionReportExtendedPMService: TaxDeductionReportExtendedPMService = new TaxDeductionReportExtendedPMService();
 
     constructor() {
         super();
@@ -54,24 +57,25 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
             this.ChangeStatus();
 
             this.ObjectTableName = args.ObjectTableName;
-
+          
             // Tax Report
-            if (this.ObjectTableName == "TaxReport")
-            {
+            if (this.ObjectTableName == "TaxReport") {
                 this.reportPM = args.EntityPM;
-
                 // if the file does not need rebuild, show download button 
-                if (!this.reportPM.NeedsRebulid)
-                {
+                if (!this.reportPM.NeedsRebulid) {
                     //update status
                     this.ChangeStatus("inprogress");
 
                     //get documentid
                     this.GetDocument();
                 }
+              
+            }
+            else if (this.ObjectTableName == "TaxDeductionReport") {
+                this.taxDeductionPM = args.EntityPM;
             }
 
-
+           
             if (args.StartDirectly)
                 this.RunService(false);
 
@@ -119,9 +123,28 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
                     break;
                 }
 
-            case "TaxDeduction":
+            case "TaxDeductionReport":
                 {
-                    // ...
+                    //if (byButton || this.reportPM.NeedsRebulid) {
+                        this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.taxDeductionPM).subscribe(myResult => {
+                            var mm: ServiceResponse = myResult;
+                            var entity = mm.Result;
+                            this.btePM = entity;
+
+                            this.ChangeStatus("inprogress");
+
+                            this.timer = setInterval(() => {
+                                this.GetBTE();
+                            }, this.timerInterval);
+
+                        });
+                    //} else {
+                    //    //update status
+                    //    this.ChangeStatus("ready");
+
+                    //    //get documentid
+                    //    this.GetDocument();
+                    //}
                     break;
                 }
 
@@ -172,23 +195,43 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
     GetDocument() {
 
         var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
-        
-        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.reportPM.Id, objectTable.Id).subscribe(myResult => {
-            console.log("[GetLastDocumentsFilingPM]", myResult);
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-                this.docFilingPM = mm.Result;
+        if (this.ObjectTableName == "TaxReport") {
 
-                if (!this.reportPM.NeedsRebulid)
-                    this.ChangeStatus("ready");
-                else
-                    this.ChangeStatus("done");
 
-            }
-            else {
-                console.error("GetLastDocumentsFilingPM ERROR", mm);
-            }
-        });
+            this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.reportPM.Id, objectTable.Id).subscribe(myResult => {
+                console.log("[GetLastDocumentsFilingPM]", myResult);
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    this.docFilingPM = mm.Result;
+
+                    if (!this.reportPM.NeedsRebulid)
+                        this.ChangeStatus("ready");
+                    else
+                        this.ChangeStatus("done");
+
+                }
+                else {
+                    console.error("GetLastDocumentsFilingPM ERROR", mm);
+                }
+            });
+        }
+        else if (this.ObjectTableName == "TaxDeductionReport") {
+            this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.taxDeductionPM.Id, objectTable.Id).subscribe(myResult => {
+                console.log("[GetLastDocumentsFilingPM]", myResult);
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    this.docFilingPM = mm.Result;
+
+                    
+                        this.ChangeStatus("ready");
+                   
+
+                }
+                else {
+                    console.error("GetLastDocumentsFilingPM ERROR", mm);
+                }
+            });
+        }
     }
 
     //#region Buttons
