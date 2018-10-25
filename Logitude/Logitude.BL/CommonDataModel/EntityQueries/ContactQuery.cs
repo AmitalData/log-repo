@@ -1406,7 +1406,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public IQueryable<ContactList> GetContactListsByListIdsForTenantReport(List<string> contactIds)
         {
             IQueryable<ContactList> contactLists = (from a in repository.context.Contacts
-                                                    where contactIds.Contains(a.Id)
+                                                    where contactIds.Contains(a.Id) && a.UserType == "R"
                                                     select new ContactList()
                                                     {
                                                         Id = a.Id,
