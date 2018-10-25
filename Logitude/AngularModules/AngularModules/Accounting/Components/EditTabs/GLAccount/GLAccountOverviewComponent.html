@@ -120,6 +120,7 @@
         font-size: 15px;
         /*font-weight: bold;*/
         font-family: sans-serif;
+        direction: ltr;
     }
     .labels-table td{
         text-align: center;
@@ -164,7 +165,6 @@
 
                         <td style="vertical-align: top;">
                             <div>
-
                                 <!-- Widget: Balance Section -->
                                 <div [style.float]="isRTL ? 'right' : 'left'" *ngIf="GLAccountMoreData" class="widget">
                                     <div class="content-no-header" style="height: 90px;">
@@ -180,9 +180,9 @@
                                                 <td class="amount-labels" style="color: black;">{{ GLAccountOpenTransactionsCount }}</td>
                                             </tr>
                                             <tr>
-                                                <td><a style="font-size: 11px;" (click)="DisplayTransactionsLinkClicked()">{{ 'GLAccounts.O.DispalyTransactions' | TextCodeTranslationPipe }}</a></td>
-                                                <td style="font-size: 11px;">{{ 'GLAccounts.O.NextDueDate' | TextCodeTranslationPipe }}: {{GLAccountMoreData.NextDueDate | DateTimePipe:'SD'}}</td>
-                                                <td><a style="font-size: 11px;" (click)="ReconcileLinkClicked()">{{ 'GLAccounts.O.Reconcile' | TextCodeTranslationPipe }}</a></td>
+                                                <td><a style="font-size: 12px;" (click)="DisplayTransactionsLinkClicked()">{{ 'GLAccounts.O.DispalyTransactions' | TextCodeTranslationPipe }}</a></td>
+                                                <td style="font-size: 12px;">{{ 'GLAccounts.O.NextDueDate' | TextCodeTranslationPipe }}: {{GLAccountMoreData.NextDueDate | DateTimePipe:'SD'}}</td>
+                                                <td><a style="font-size: 12px;" (click)="ReconcileLinkClicked()">{{ 'GLAccounts.O.Reconcile' | TextCodeTranslationPipe }}</a></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -219,8 +219,8 @@
                                                 <div style="width: 100px;padding: 9px 0;">
                                                     {{ transaction.AccountingDate | DateTimePipe:'SD' }}
                                                 </div>
-                                                <div class="TextTrimming" style="width: 100px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;" [class.red]='transaction["OpenAmount"]>0'>
-                                                    {{ (transaction["OpenAmount"] != 0 ? -1*Abs(transaction["OpenAmount"]) : Abs(transaction["OpenAmount"]))| NumbersPipe:'N2' }}
+                                                <div class="TextTrimming" style="width: 100px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;" [class.red]='GetTransAmount(transaction)>0'>
+                                                    {{ GetTransAmount(transaction) | NumbersPipe:'N2' }}
                                                 </div>
 
                                                 <div style="width: 145px;padding: 9px 5px;">

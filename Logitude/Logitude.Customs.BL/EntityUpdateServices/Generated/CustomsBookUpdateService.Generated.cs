@@ -62,7 +62,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		    entityPM.Id = IdCounter.GetNumber("CustomsBook", entityPM.Tenant); 
 					
 	    }
-
+        
 		protected override void FillDefaultValuesOnUpdate(CustomsBookPM entityPM)
         {       
            

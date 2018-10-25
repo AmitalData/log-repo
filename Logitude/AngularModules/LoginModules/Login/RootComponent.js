@@ -103,7 +103,7 @@ var RootComponent = (function () {
                 });
             }
             else {
-                DynamicLoaderTSC_1.DynamicLoaderTSC.Load("./Login/Components/LoginComponent", this.location)
+                DynamicLoaderTSC_1.DynamicLoaderTSC.Load("./Login/Components/DSVLoginComponent", this.location)
                     .then(function (cmpRef) {
                     //cmpRef.instance.Blocking.subscribe(s => {
                     //    SessionLocator.BlockType = s;

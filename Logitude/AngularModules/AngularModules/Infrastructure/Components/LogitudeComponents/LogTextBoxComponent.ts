@@ -114,7 +114,19 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         else if (this.textValue && (newValue == "" || newValue == null || newValue == undefined)) {
             this.HasValue.emit(false);
         }
-        
+        switch (this.InputType && this.InputType.toLowerCase()) {
+            case 'text':
+            case 'ntext':
+                {
+                    break;
+                }
+            default: {
+                if (newValue && newValue.indexOf(',') > -1) {
+                    newValue = newValue.replace(',', '');
+                }
+            }
+                
+        }
         this.textValue = newValue;
         if (this.IsPasted) {
             this.TextValueChanges(newValue);
@@ -1385,7 +1397,25 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ValidateField(emitPropertyChanged: boolean = true) {
-        if (!this.NoValidation && this.uiProperty != null) {
+
+        switch (this.InputType && this.InputType.toLowerCase()) {
+            case 'text':
+            case 'ntext':
+                {
+                    break;
+                }
+            default: {
+                if (isNaN(Number(this.TextValue))) {
+                    this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
+                }
+                else {
+                    this.SetValidity(true, null);
+                }
+            }
+
+        }
+
+        if (!this.NoValidation && this.uiProperty != null && this.uiProperty.ValidValue) {
             var errors = null;
             var table = window.ObjectTables.filter(d => d.Name === this.uiProperty.ObjectTableName)[0];
             if (table) {

@@ -221,6 +221,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             vehicleDetails.IsTPSSpecified = _MyVehicle.IsTPS == true ? true : false;
             vehicleDetails.VehicleCategory = _MyVehicle.VehicleCategory;
             vehicleDetails.VehicleMaxPowerKW = _MyVehicle.VehicleMaxPowerKW;
+            vehicleDetails.VehicleMaxPowerKWSpecified = _MyVehicle.VehicleMaxPowerKW > 0 ? true : false;
+            vehicleDetails.isThreeWheeledForReduction = _MyVehicle.IsThreeWheeledForReduction;
+            vehicleDetails.isThreeWheeledForReductionSpecified = _MyVehicle.IsThreeWheeledForReduction == true ? true : false;
+
             //Get VehicleSafetyAccessoryInstallation Details
             if (_MyVehicle.VehicleSafetyAccessories != null &&_MyVehicle.VehicleSafetyAccessories.Count() > 0)
             {

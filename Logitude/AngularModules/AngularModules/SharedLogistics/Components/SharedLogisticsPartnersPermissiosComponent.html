@@ -63,11 +63,27 @@
                                                                                             </td>
 
                                                                                             <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
-                                                                                                <CheckBox [IsEnabled]="false" [IsChecked]="item.SuggestedIsChecked" (Checked)="item.SuggestedIsChecked = $event"></CheckBox>
+                                                                                                <table>
+                                                                                                    <tr>
+                                                                                                        <td style="width:45px;"><div></div></td>
+
+                                                                                                        <td>
+                                                                                                            <CheckBox [IsEnabled]="false" [IsChecked]="item.SuggestedIsChecked" (Checked)="item.SuggestedIsChecked = $event"></CheckBox>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>                                                                                                
                                                                                             </td>
 
                                                                                             <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
-                                                                                                <CheckBox [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
+                                                                                                <table>
+                                                                                                    <tr>
+                                                                                                        <td style="width:30px;"><div></div></td>
+
+                                                                                                        <td>
+                                                                                                            <CheckBox [IsEnabled]="item.IsEnabled" [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>                                                                                                
                                                                                             </td>
                                                                                         </tr>
 
@@ -128,11 +144,27 @@
                                                                                             </td>
 
                                                                                             <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
-                                                                                                <CheckBox [IsEnabled]="false" [IsChecked]="item.SuggestedIsChecked" (Checked)="item.SuggestedIsChecked = $event"></CheckBox>
+                                                                                                <table>
+                                                                                                    <tr>
+                                                                                                        <td style="width:45px;"><div></div></td>
+
+                                                                                                        <td>
+                                                                                                            <CheckBox [IsEnabled]="false" [IsChecked]="item.SuggestedIsChecked" (Checked)="item.SuggestedIsChecked = $event"></CheckBox>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>                                                                                                
                                                                                             </td>
 
                                                                                             <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
-                                                                                                <CheckBox [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
+                                                                                                <table>
+                                                                                                    <tr>
+                                                                                                        <td style="width:30px;"><div></div></td>
+
+                                                                                                        <td>
+                                                                                                            <CheckBox [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>                                                                                                
                                                                                             </td>
                                                                                         </tr>
 

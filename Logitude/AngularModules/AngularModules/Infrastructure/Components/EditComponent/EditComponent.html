@@ -154,7 +154,7 @@
 
                         <!--new row next and previous-->
 
-                        <tr style="height:22px;" *ngIf="NextPreviousVisible">
+                        <tr style="height:22px;" *ngIf="false">
                           <td>
                            
 
@@ -182,37 +182,51 @@
                         <tr style="height: 1px;" *ngIf="NextPreviousVisible">
                           <td style="vertical-align: top;">
                             <table>
-                              <tr>
+                                <tr>
 
-                                <td style="width: 50%; min-width: 10px;">
-                                  <div></div>
-                                </td>
-                                <!--next-->
-                                <td style="width: 57px; min-width: 57px;">
-                                  <!--<button [disabled] ="NextButtonDisabled" class="Button" (click)="Next()" style="width:40px; font-weight:bold; font-size:medium;" title="Next"><</button>-->
-                                  <button class="Button" [disabled]="NextButtonDisabled" (click)="Next()">
-                                    <img src="./Images/Arrow-right.png" style="height:10px;width:10px;" />
-                                    {{'Customs.General.O.Next' | TextCodeTranslationPipe}}
+                                    <td style="width: 50%; min-width: 10px;">
+                                        <div></div>
+                                    </td>
+                                    <!--message-->
+                                    <td>
+                                        <div class="DisbleBox" *ngIf="NextPreviousVisible">
+                                            {{DeclarationNavigationMessage}}
+                                        </div>
+                                    </td>
+                                    <td style="width:5px; min-width:5px;">
+                                        <div></div>
+                                    </td>
+                                    <!--next-->
+                                    <td style="width: 57px; min-width: 57px;">
+                                        <!--<button [disabled] ="NextButtonDisabled" class="Button" (click)="Next()" style="width:40px; font-weight:bold; font-size:medium;" title="Next"><</button>-->
+                                        <button class="Button" [disabled]="NextButtonDisabled" (click)="Next()">
+                                            <img src="./Images/Arrow-right.png" style="height:10px;width:10px;" />
+                                            {{'Customs.General.O.Next' | TextCodeTranslationPipe}}
 
-                                  </button>
-                                </td>
-                                <td style="width:5px; min-width:5px;">
-                                  <div></div>
-                                </td>
-                                <!-- previous -->
-                                <td style="width: 57px; min-width: 57px;">
+                                        </button>
+                                    </td>
+                                    <td style="width:5px; min-width:5px;">
+                                        <div></div>
+                                    </td>
+                                    <!-- previous -->
+                                    <td style="width: 57px; min-width: 57px;">
 
-                                  <!--<button [disabled] ="PreviousButtonDisabled" class="Button" (click)="Previous()" style="width:40px; font-weight:bold; font-size:medium;" title="Previous">></button>-->
-                                  <button class="Button" [disabled]="PreviousButtonDisabled" (click)="Previous()">
-                                    {{'Customs.General.O.Previous' |TextCodeTranslationPipe}}
-                                    <img src="./Images/Arrow-left.png" style="height:10px;width:10px;" />
-                                  </button>
-                                </td>
+                                        <!--<button [disabled] ="PreviousButtonDisabled" class="Button" (click)="Previous()" style="width:40px; font-weight:bold; font-size:medium;" title="Previous">></button>-->
+                                        <button class="Button" [disabled]="PreviousButtonDisabled" (click)="Previous()">
+                                            {{'Customs.General.O.Previous' |TextCodeTranslationPipe}}
+                                            <img src="./Images/Arrow-left.png" style="height:10px;width:10px;" />
+                                        </button>
+                                    </td>
 
-                                <td style="width: 50%; min-width: 10px;">
-                                  <div></div>
-                                </td>
-                              </tr>
+
+
+
+
+
+                                    <td style="width: 50%; min-width: 10px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
                             </table>
                           </td>
                         </tr>

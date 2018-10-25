@@ -33,6 +33,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
             entityPM.VatNumber = tenantPM.VatNumber;
             entityPM.TaxableOutputsWithDiffPercent = 0;
+            entityPM.NeedsRebulid = true;
             entityPM.StatusCode = "P";
             entityPM.ProcessStartDate = DateTime.Now;
             entityPM.TaxReportNumber = entityPM.TaxReportMonth.Month.ToString() + entityPM.Year.ToString();

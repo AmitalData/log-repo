@@ -32,6 +32,7 @@ testem.log
 *.js.map
 *.ngfactory.js
 *.css.shim
+*.signature
 #System Files
 .DS_Store
 
@@ -357,9 +358,20 @@ __pycache__/
 
 # End of https://www.gitignore.io/api/windows,angular,visualstudio
 /Logitude/AngularModules/LoginModules/bower_components
+
+
+
+/JustConfig
+/JustConfig/
+/JustConfig/*
+/Logitude/JustWebFreight/WebFreight.Web/Angular
+/Logitude/JustWebFreight/WebFreight.Web/Angular/out-tsc
+/Logitude/AngularModules/packages
 /Logitude/JustWebFreight/WebFreight.Web/JustWebFreightCustomsConnectionStrings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustWebFreightConnectionStrings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustWebFreightCustomsappSettings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustWebFreightappSettings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustConfig/Master.ConnectionStrings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustConfig/Master.appSettings.config
+/Logitude/JustWebFreight/WebFreight.Web/Angular
+/Logitude/JustWebFreight/WebFreight.Web/JustConfig
