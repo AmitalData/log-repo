@@ -89,6 +89,36 @@ export class SharedLogisticsSettingPM {
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
+    private isIssuingCarrierAgentShared: boolean;
+    public get IsIssuingCarrierAgentShared() { return this.isIssuingCarrierAgentShared; }
+    public set IsIssuingCarrierAgentShared(newValue: boolean) { if (this.isIssuingCarrierAgentShared != newValue) { this.isIssuingCarrierAgentShared = newValue; this.MarkAsDirty("IsIssuingCarrierAgentShared"); } }
+       
+	 
+    private isCustomsAgentExportShared: boolean;
+    public get IsCustomsAgentExportShared() { return this.isCustomsAgentExportShared; }
+    public set IsCustomsAgentExportShared(newValue: boolean) { if (this.isCustomsAgentExportShared != newValue) { this.isCustomsAgentExportShared = newValue; this.MarkAsDirty("IsCustomsAgentExportShared"); } }
+       
+	 
+    private isCustomsAgentImportShared: boolean;
+    public get IsCustomsAgentImportShared() { return this.isCustomsAgentImportShared; }
+    public set IsCustomsAgentImportShared(newValue: boolean) { if (this.isCustomsAgentImportShared != newValue) { this.isCustomsAgentImportShared = newValue; this.MarkAsDirty("IsCustomsAgentImportShared"); } }
+       
+	 
+    private isCustomClearancePoinShared: boolean;
+    public get IsCustomClearancePoinShared() { return this.isCustomClearancePoinShared; }
+    public set IsCustomClearancePoinShared(newValue: boolean) { if (this.isCustomClearancePoinShared != newValue) { this.isCustomClearancePoinShared = newValue; this.MarkAsDirty("IsCustomClearancePoinShared"); } }
+       
+	 
+    private isConsolidatorShared: boolean;
+    public get IsConsolidatorShared() { return this.isConsolidatorShared; }
+    public set IsConsolidatorShared(newValue: boolean) { if (this.isConsolidatorShared != newValue) { this.isConsolidatorShared = newValue; this.MarkAsDirty("IsConsolidatorShared"); } }
+       
+	 
+    private isReleasingAgentShared: boolean;
+    public get IsReleasingAgentShared() { return this.isReleasingAgentShared; }
+    public set IsReleasingAgentShared(newValue: boolean) { if (this.isReleasingAgentShared != newValue) { this.isReleasingAgentShared = newValue; this.MarkAsDirty("IsReleasingAgentShared"); } }
+       
+	 
 
     public OldEntityPM: SharedLogisticsSettingPM;
 		

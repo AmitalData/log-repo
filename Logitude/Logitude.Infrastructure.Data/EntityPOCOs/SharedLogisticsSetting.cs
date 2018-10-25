@@ -45,6 +45,18 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
      [Key]
         [Column("Id")]
 	    public string Id { get; set; }
+        [Column("IsIssuingCarrierAgentShared")]
+	    public bool IsIssuingCarrierAgentShared { get; set; }
+        [Column("IsCustomsAgentExportShared")]
+	    public bool IsCustomsAgentExportShared { get; set; }
+        [Column("IsCustomsAgentImportShared")]
+	    public bool IsCustomsAgentImportShared { get; set; }
+        [Column("IsCustomClearancePoinShared")]
+	    public bool IsCustomClearancePoinShared { get; set; }
+        [Column("IsConsolidatorShared")]
+	    public bool IsConsolidatorShared { get; set; }
+        [Column("IsReleasingAgentShared")]
+	    public bool IsReleasingAgentShared { get; set; }
     }
 }
 	 
