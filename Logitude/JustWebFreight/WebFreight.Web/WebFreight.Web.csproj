@@ -1793,6 +1793,7 @@
     <Compile Include="CustomWebServices\BL\XLSExport\MasavPaymentsToAgentProvider.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportService.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportBase.cs" />
+    <Compile Include="CustomWebServices\Testers\Tester.cs" />
     <Compile Include="DataContracts\CommunicationLogSettings.cs" />
     <Compile Include="DataContracts\AgentSharedManifestsSummaryClass.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.AccumalationState.cs" />
