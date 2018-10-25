@@ -348,13 +348,16 @@
       <QueryFilter QueryCode="&quot;All GLAccounts&quot;" PredefinedValue="&quot;1&quot;" ObjectFieldName="&quot;AccountTypeCode&quot;" IsPredefined="true" Operator="&quot;Equals&quot;" IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Screen Name="&quot;Header Screen&quot;" ObjectTableName="&quot;GLAccount&quot;" NumberOfColumns="5" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;GLAccount.HeaderScreen&quot;">
+  <Screen Name="&quot;Header Screen&quot;" ObjectTableName="&quot;GLAccount&quot;" NumberOfColumns="5" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true" Code="&quot;GLAccount.HeaderScreen&quot;">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;DisplayNumber&quot;" ScreenName="Header Screen" />
-      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;EnglishName&quot;" ScreenName="Header Screen" />
+      <ScreenField Column="0" Row="1" ObjectFieldName="&quot;BalanceInLocalCurrency&quot;" ScreenName="Header Screen" />
+      <ScreenField Column="1" Row="0" ObjectFieldName="&quot;LocalName&quot;" ScreenName="Header Screen" />
+      <ScreenField Column="1" Row="1" ObjectFieldName="&quot;LocalBalanceInDue&quot;" ScreenName="Header Screen" />
       <ScreenField Column="2" Row="0" ObjectFieldName="&quot;CurrencyCode&quot;" ScreenName="Header Screen" />
+      <ScreenField Column="2" Row="1" ObjectFieldName="&quot;NextDueDate&quot;" ScreenName="Header Screen" />
       <ScreenField Column="3" Row="0" ObjectFieldName="&quot;ReconcileMethodName&quot;" ScreenName="Header Screen" />
-      <ScreenField Column="4" Row="0" ObjectFieldName="&quot;ActiveStatusName&quot;" ScreenName="Header Screen" />
+      <ScreenField Column="4" Row="0" ObjectFieldName="&quot;InternalNumber&quot;" ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>
   <Tab TabName="&quot;Overview&quot;" TabLocalName="&quot;מבט על&quot;" ObjectTableName="&quot;GLAccount&quot;" Code="&quot;GAOV&quot;" ControlPath="&quot;&quot;" TextCode="&quot;GLAccount.TH.Overview&quot;" IsPackagable="true" IndexOrder="0" HtmlComponentURL="&quot;./Accounting/Components/EditTabs/GLAccount/GLAccountOverviewComponent&quot;" HtmlComponentName="&quot;GLAccountOverviewComponent&quot;" IsSpellChecked="false" />
