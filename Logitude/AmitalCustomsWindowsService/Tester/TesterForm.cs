@@ -225,7 +225,9 @@ namespace AmitalCustomsWindowsService.Tester
         {
             //http://lodmpn05/DSVWebFreightDebug/api/DeclarationWebService/GetDeclarationMandatoryTicketList/?parentEntityId=1-92241&parentEntityCode=Declaration
             //DbContextBaseUtil.ToLog = true;
-            clsTester.GetDeclarationMandatoryTicketList(parentEntityId: "1-92241", parentEntityCode: "Declaration");
+            WebFreight.Web.CustomWebServices.Testers.Tester.TestNOWait();
+
+            //clsTester.GetDeclarationMandatoryTicketList(parentEntityId: "1-92241", parentEntityCode: "Declaration");
             //clsTester.TestLockTab();
             return;
             clsTester.TestNull();
