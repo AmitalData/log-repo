@@ -31,6 +31,11 @@ export class LoginComponent {
     PasswordExpirationDateMessage: string;
     PasswordExpirationDateMessage2: string;
 
+    IsShowAreaCaptcha: boolean;
+    CaptchaImageUrl: string;
+    CaptchaTextValue: string;
+    CaptchaKey: string;
+
     public IsShowPasswordExpirationDateArea: boolean = false;
 
     //private _objectTableRulePMService: ObjectTableRulePMService = new ObjectTableRulePMService();
@@ -346,13 +351,23 @@ export class LoginComponent {
 
 
     LoginClicked() {
+
+        if (!this.Email || !this.Password) {
+            this.errorMessage = "Login failed! invalid user name or password.";
+            return; 
+        }
+
+        if (this.IsShowAreaCaptcha && !this.CaptchaTextValue) {
+            this.errorMessage = "Please re-enter the characters you see in the image above";
+            return;
+        }
+
         if (IsBrowserSupported() == false) {
             alert("This Browser is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
         }
         else {
             this.SaveDataToCookie();
             this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
-            if (this.Email != null && this.Password != null) {
                 this.ShowLoadingIndicator = true;
                 this.LoginParams = {
                     Email: this.Email,
@@ -366,12 +381,14 @@ export class LoginComponent {
                     IsAngularLogin: true,
                     MobileVersion: "",
                     ClientType: "Web",
+                    CaptchaKey: this.CaptchaKey,
+                    CaptchaCode: this.CaptchaTextValue,
 
                 };
 
                 this.HidePendingLoading = false;
                 this.PostUserValidation(this.LoginParams);
-            }
+            
         }
     }
 
@@ -381,6 +398,7 @@ export class LoginComponent {
 
     ShowTenantList: boolean = false;
     errorMessage: string = "";
+
     PostUserValidation(loginParameters) {
         this.errorMessage = "";
         this.loginService.PostUserValidation(loginParameters).subscribe(userData => {
@@ -388,9 +406,22 @@ export class LoginComponent {
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 this.LoginFailed = true;
                 this.HidePendingLoading = true;
+                
+                this.CaptchaKey = userData ? userData.CaptchaKey:"";
 
                 if (userData && userData.ExceptionMessage) {
                     alert(userData.ExceptionMessage);
+                }
+
+
+                else if (userData.InValidCaptcha) {
+                    if (this.IsShowAreaCaptcha) {
+                        this.CaptchaTextValue = "";
+                        this.errorMessage = "Please re-enter the characters you see in the image above";
+                    }
+
+                    this.IsShowAreaCaptcha = true;
+                    this.CaptchaImageUrl = userData.CaptchaImage; 
                 }
                 else if (userData.MustChangePassword) {
                     SessionInfo.LoggedUserEmail = userData.UserName;
@@ -434,6 +465,15 @@ export class LoginComponent {
 
                         this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
                     }
+
+
+                    if (this.errorMessage == "Login failed! invalid user name or password.") {
+                        if (this.IsShowAreaCaptcha) {
+
+                            this.CaptchaImageUrl = userData.CaptchaImage;
+                            this.CaptchaTextValue = "";
+                        }
+                    }
                 }
 
             }
@@ -469,6 +509,8 @@ export class LoginComponent {
                 IsAngularLogin: true,
                 MobileVersion: "",
                 ClientType: "Web",
+                CaptchaKey: this.CaptchaKey,
+                CaptchaCode: this.CaptchaTextValue,
             };
 
             this.loginService.CurrentTenant = this.Tenant;

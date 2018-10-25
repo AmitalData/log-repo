@@ -20,6 +20,13 @@ export class ResetPasswordComponent {
     Succeeded: boolean = false;
     Email: string;
     ShowbusyIndicator: boolean = false;
+
+    IsShowAreaCaptcha: boolean;
+    CaptchaImageUrl: string;
+    CaptchaTextValue: string;
+    CaptchaKey: string;
+
+
     constructor(public _LoginService: LoginService) {
 
     }
@@ -49,13 +56,22 @@ export class ResetPasswordComponent {
                 }
                 else {
 
-
+                    this.CaptchaKey = userdata ? userdata.CaptchaKey : "";
                     //disableForm(false);
 
                     var errorMessage = "Submit failed! invalid email." + "<br/>";
 
+                    if (userdata.InValidCaptcha) {
+                        if (this.IsShowAreaCaptcha) {
+                            this.CaptchaTextValue = "";
+                            errorMessage = "Please re-enter the characters you see in the image above";
+                        }
 
-                    if (userdata.IpRestricted) {
+                        this.IsShowAreaCaptcha = true;
+                        this.CaptchaImageUrl = userdata.CaptchaImage;
+                    }
+
+                  else  if (userdata.IpRestricted) {
 
                         errorMessage = "Trying to submit in from unauthorised station!" + "<br/>" + "(The IP address you are trying to " + "<br/>" + "submit from is restricted for this user)";//
 
@@ -70,6 +86,15 @@ export class ResetPasswordComponent {
                     if (userdata.InActive) {
                         errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
                     }
+
+
+                    if (errorMessage == "Submit failed! invalid email." + "<br/>") {
+                        if (this.IsShowAreaCaptcha) {
+                            this.CaptchaImageUrl = userdata.CaptchaImage;
+                            this.CaptchaTextValue = "";
+                        }
+                    }
+
 
                     //document.getElementById("errorsList").innerHTML = errorMessage;
                     // $("#errorsList").text(errorMessage);
