@@ -97,7 +97,9 @@ var LoginService = (function () {
     };
     LoginService.prototype.GetTenantManagement = function () {
         var url = this.baseUrlApi + 'TenantManagement/GetSingleTenantManagementPM?id=' + this.CurrentTenant;
-        return this._http.get(url, { headers: this.AuthHeader }).map(function (response) {
+        var authHeader = new http_1.Headers();
+        authHeader.append('Token', SessionInfo_1.SessionInfo.Token);
+        return this._http.get(url, { headers: authHeader }).map(function (response) {
             return response.json();
         });
     };

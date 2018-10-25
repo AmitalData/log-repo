@@ -378,15 +378,18 @@
                                             </td>
 
                                             </tr>
-                                              <%--Start Areacpatcha--%>
-                                                 <tr id="Areacpatcha" style ="height:30px;margin-top:5px;display:none;">
+                                              <%--Start Areacaptcha--%>
+                                                 <tr id="Areacaptcha" style ="height:30px;margin-top:5px;display:none;">
                                                  <td>
-                                               <img id="CpatchaImage" style="height:auto;width:auto;float:left"  /> 
-                                                <input  style="height:19px;width:260px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="cpatchaTextBox"/>
+                                               <img id="CaptchaImage" style="height:auto;width:auto;float:left"  /> 
+                                                <input oninput="onCaptchaInPutChanged()" style="height:19px;width:260px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="captchaTextBox"/>
+                                                
+
 
                                             </td>
                                             </tr>
-                                             <%--End Areacpatcha--%>
+
+                                             <%--End Areacaptcha--%>
                                                 
                                               <tr>
                                             <td  class="column1"> 
@@ -404,7 +407,7 @@
                                                 </td>
                                             </tr>
                                             
-                                         <tr style="height:50px;width:50px">
+                                         <tr id="BusyindicatorArea" style="height:50px;width:50px">
                                                   <td>
                                                          <div id="loginBusyindicator" style="display:none"><img width="50" height="50" src="images/LoginScreen/indicator.gif" alt='loading' /></div>
                                                   </td>
@@ -1141,10 +1144,26 @@
             document.getElementById(id).selectionStart = cursorPosition;
             document.getElementById(id).selectionEnd = cursorPosition;
         }
-        //data-bind="event: {blur: getContacts}"
-        onPasswordChanged = function () {
 
-            $("#errorsList").hide();
+
+
+        onCaptchaInPutChanged = function () {
+
+            if ( document.getElementById("errorsList").innerHTML == "Please re-enter the characters you see in the image above") {
+                if ($("#captchaTextBox").val())
+                    $("#errorsList").hide();
+            }
+        }
+   
+
+        //data-bind="event: {blur: getContacts}"
+
+        onPasswordChanged = function () {
+    
+            if (document.getElementById("errorsList").innerHTML !="Please re-enter the characters you see in the image above") {
+                  $("#errorsList").hide();
+            }
+ 
             var emailstring = $("#Password").val();
             if (emailstring) {
 
@@ -1264,19 +1283,24 @@
                 //$("#busyIndicator").hide();
             }
 
-
+            var captchaKey = "";
 
             this.validateMethod = function () {
 
                 password = $("#Password").val();
                 email = $("#Email").val();
+                $("#errorsList").hide();
+
+
+                var areacaptcha = document.getElementById("Areacaptcha");
+                if (areacaptcha.style.display == "block") {
+                    document.getElementById("BusyindicatorArea").style.width = "0px";
+                    document.getElementById("BusyindicatorArea").style.height = "0px";
+                }
+
+                
                 var persist = false;
-                //var tenant = $("#cmdTenant").val();
-                // get the dataItem corresponding to the selectedIndex.
-                //var dataItem = combobox.dataItem();
-                //var combobox = $("#cmbTenants").data("kendoComboBox");
-                //$("#cmdTenant").val(tenant);
-                // currentTenant, string email, string password, bool persistCookie
+                
 
                 var validatable = $("#myform").kendoValidator().data("kendoValidator");
 
@@ -1291,18 +1315,23 @@
                 }
 
 
-                var areacpatcha = document.getElementById("Areacpatcha");
+          
 
-                if (areacpatcha.style.display == "block") {
-                    if (!document.getElementById("cpatchaTextBox").value) {
+                var BusyindicatorAreawidthHeight = "50px";
+
+                if (areacaptcha.style.display == "block") {
+                    if (!document.getElementById("captchaTextBox").value) {
                         document.getElementById("errorsList").innerHTML = "Please re-enter the characters you see in the image above";
                         $("#errorsList").show();
                         return;
                     }
-                    document.getElementById("loginBusyindicator").style.marginTop = "-55px";
-                    
+                    BusyindicatorAreawidthHeight = "40px";
+                    document.getElementById("loginBusyindicator").style.marginTop = "-7px";
                 }
-               
+
+
+                document.getElementById("BusyindicatorArea").style.width = BusyindicatorAreawidthHeight;
+                document.getElementById("BusyindicatorArea").style.height = BusyindicatorAreawidthHeight;
 
                 save_data_to_cookie();
                 disableForm(true);
@@ -1316,6 +1345,8 @@
                     this.Password = password;
                     this.GetToken = true;
                     this.ClientType = "Web";
+                    this.CaptchaKey = captchaKey;
+                    this.CaptchaCode = document.getElementById("captchaTextBox").value;
                 };
 
                 
@@ -1336,7 +1367,7 @@
                         UserDataPrompt = userdata;
 
                         if (!userdata.HasError) {
-                            areacpatcha.style.display = "none";
+                            areacaptcha.style.display = "none";
                             ComplateProcessLogin(userdata);
                         }
                         else {
@@ -1348,20 +1379,21 @@
                             }
                             else {
 
-                                if (userdata.NumberOfRetries > 5) {
-                                    if (areacpatcha.style.display == "block") {
+                                captchaKey = userdata.CaptchaKey;
+                           
+                                if (userdata.InValidCaptcha) {
+                                    if (areacaptcha.style.display == "block") {
+                                        document.getElementById("captchaTextBox").value = "";
                                         document.getElementById("errorsList").innerHTML = "Please re-enter the characters you see in the image above";
                                         $("#errorsList").show();
                                     }
 
-                                    areacpatcha.style.display = "block";
-                                    $("#CpatchaImage").attr("src", userdata.CaptchaImage);
-
+                                    areacaptcha.style.display = "block";
+                                    $("#CaptchaImage").attr("src", userdata.CaptchaImage);
                                     document.getElementById("divMayus").style.display = "none";
                                     document.getElementById("BusyindicatorArea").style.width = "0px";
                                     document.getElementById("BusyindicatorArea").style.height = "0px";
                                 }
-
 
                                else if (userdata.MustChangePassword) {
 
@@ -1387,10 +1419,10 @@
 
                                     }
 
-                                    //if (userdata.IsLocked) {
+                                    if (userdata.IsLocked) {
 
-                                    //    errorMessage = "Your account has been locked out!" + "<br/>" + "please try again after 30 minutes.";
-                                    //}
+                                        errorMessage = "Your account has been locked out!" + "<br/>" + "please try again after 30 minutes.";
+                                    }
                                     if (userdata.InActive) {
                                         errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
                                     }
@@ -1399,6 +1431,17 @@
                                         errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
                                     }
 
+                                    if (errorMessage == "Login failed! invalid user name or password." + "<br/>") {
+
+                                        if (areacaptcha.style.display == "block") {
+                                            $("#CaptchaImage").attr("src", userdata.CaptchaImage);
+                                            document.getElementById("captchaTextBox").value = "";
+                                            document.getElementById("BusyindicatorArea").style.width = "0px";
+                                            document.getElementById("BusyindicatorArea").style.height = "0px";
+
+                                        }
+
+                                    }
 
                                     document.getElementById("errorsList").innerHTML = errorMessage;
                                     // $("#errorsList").text(errorMessage);

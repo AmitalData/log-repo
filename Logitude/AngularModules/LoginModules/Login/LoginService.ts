@@ -341,6 +341,10 @@ export class LoginParameters {
     IsAngularLogin: boolean;
     MobileVersion: string;
     ClientType: string;
+    CaptchaKey: string;
+    CaptchaCode: string;
+
+
     //contructor() {
     //    this.IsAngularLogin = true;
     //}

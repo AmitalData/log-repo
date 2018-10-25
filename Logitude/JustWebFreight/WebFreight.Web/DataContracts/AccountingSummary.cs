@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+//test
 namespace WebFreight.Web.DataContracts
 {
     public class AccountReceivablesSummary

@@ -125,7 +125,7 @@ namespace Simplog.Global.Data.GlobalModel
             modelBuilder.Configurations.Add(new TenantManagmentPrivateLabelsMap());
             modelBuilder.Configurations.Add(new AgentSharedLogisticsKeyMap());
             modelBuilder.Configurations.Add(new SessionPolicyMap());
-
+            modelBuilder.Configurations.Add(new CaptchaKeyMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -188,6 +188,10 @@ namespace Simplog.Global.Data.GlobalModel
 
         public IDbSet<AgentSharedLogisticsKey> AgentSharedLogisticsKeys { get; set; }
         public IDbSet<SessionPolicy> SessionPolicies { get; set; }
+        public IDbSet<CaptchaKey> CaptchaKeys { get; set; }
+        
+
+
 
     }
 }
