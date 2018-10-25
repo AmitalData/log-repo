@@ -230,6 +230,10 @@
     <Compile Include="Migrations\201810240810162_AbedAddNewTableCaptchaKey.Designer.cs">
       <DependentUpon>201810240810162_AbedAddNewTableCaptchaKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs" />
+    <Compile Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.Designer.cs">
+      <DependentUpon>201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -260,6 +264,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810240810162_AbedAddNewTableCaptchaKey.resx">
       <DependentUpon>201810240810162_AbedAddNewTableCaptchaKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.resx">
+      <DependentUpon>201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

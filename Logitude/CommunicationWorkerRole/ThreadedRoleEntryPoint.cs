@@ -144,7 +144,7 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.SMSServiceUserId = setting.SMSServiceUserId;
                 LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
                 LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
-
+                LogitudeSettings.EmailSendingQuota = setting.EmailSendingQuota;
                 //LogitudeSettings.ABMProductId = setting.ABMProductId;
 
             }
