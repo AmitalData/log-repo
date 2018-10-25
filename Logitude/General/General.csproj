@@ -484,6 +484,7 @@
     <Content Include="Main Branch\2018\10 - 2018\Day 23 [Abdullah] Update External Reconciliation SearchFields.sql" />
     <Content Include="Main Branch\2018\10 - 2018\Day 22 [Maheera] Add Sprint Table to Computing Partners.sql" />
     <Content Include="Main Branch\2018\10 - 2018\Day 23 [Abed]QuoteVariableReplacementInDocumentTemplate.sql" />
+    <Content Include="Main Branch\2018\10 - 2018\Day 24 [Samar] update shared logistics settings.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />

@@ -219,8 +219,8 @@
                                                 <div style="width: 100px;padding: 9px 0;">
                                                     {{ transaction.AccountingDate | DateTimePipe:'SD' }}
                                                 </div>
-                                                <div class="TextTrimming" style="width: 100px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;" [class.red]='transaction["OpenAmount"]>0'>
-                                                    {{ (transaction["OpenAmount"] != 0 ? -1*Abs(transaction["OpenAmount"]) : Abs(transaction["OpenAmount"]))| NumbersPipe:'N2' }}
+                                                <div class="TextTrimming" style="width: 100px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;" [class.red]='GetTransAmount(transaction)>0'>
+                                                    {{ GetTransAmount(transaction) | NumbersPipe:'N2' }}
                                                 </div>
 
                                                 <div style="width: 145px;padding: 9px 5px;">

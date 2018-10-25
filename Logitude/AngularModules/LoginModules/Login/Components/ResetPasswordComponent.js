@@ -41,9 +41,18 @@ var ResetPasswordComponent = (function () {
                     _this.HasErrors = false;
                 }
                 else {
+                    _this.CaptchaKey = userdata ? userdata.CaptchaKey : "";
                     //disableForm(false);
                     var errorMessage = "Submit failed! invalid email." + "<br/>";
-                    if (userdata.IpRestricted) {
+                    if (userdata.InValidCaptcha) {
+                        if (_this.IsShowAreaCaptcha) {
+                            _this.CaptchaTextValue = "";
+                            errorMessage = "Please re-enter the characters you see in the image above";
+                        }
+                        _this.IsShowAreaCaptcha = true;
+                        _this.CaptchaImageUrl = userdata.CaptchaImage;
+                    }
+                    else if (userdata.IpRestricted) {
                         errorMessage = "Trying to submit in from unauthorised station!" + "<br/>" + "(The IP address you are trying to " + "<br/>" + "submit from is restricted for this user)"; //
                     }
                     if (userdata.IsLocked) {
@@ -51,6 +60,12 @@ var ResetPasswordComponent = (function () {
                     }
                     if (userdata.InActive) {
                         errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                    }
+                    if (errorMessage == "Submit failed! invalid email." + "<br/>") {
+                        if (_this.IsShowAreaCaptcha) {
+                            _this.CaptchaImageUrl = userdata.CaptchaImage;
+                            _this.CaptchaTextValue = "";
+                        }
                     }
                     //document.getElementById("errorsList").innerHTML = errorMessage;
                     // $("#errorsList").text(errorMessage);

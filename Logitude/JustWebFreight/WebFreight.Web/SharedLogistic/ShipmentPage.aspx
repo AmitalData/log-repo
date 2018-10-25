@@ -803,12 +803,12 @@ img {
                         <td style="width:250px; vertical-align:central; text-align:left;">
                             <div style="width:250px; margin:0; padding:0">
 
-                                <div>
+                                <div style="visibility: #= CarrierVisibility #;">
                                   <span style="width:40px;">Carrier:</span>
                                   <span class="ValueTextStyle" style="display:inline-block; vertical-align: middle; font-size: 11px; width:200px; max-width:200px; white-space:nowrap; overflow: hidden; text-overflow: ellipsis; margin:auto;">${Carrier}</span>                                   
                                 </div>
 
-                                <div>
+                                <div style="visibility: #= CarrierVisibility #;">
                                   <span style="display:inline-block; width:40px;">No:</span>
                                   <span class="ValueTextStyle" style="font-size: 11px">${CarrierNumber}</span>
                                 </div>

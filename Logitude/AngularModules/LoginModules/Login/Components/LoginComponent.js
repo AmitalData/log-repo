@@ -261,30 +261,38 @@ var LoginComponent = (function () {
         }
     };
     LoginComponent.prototype.LoginClicked = function () {
+        if (!this.Email || !this.Password) {
+            this.errorMessage = "Login failed! invalid user name or password.";
+            return;
+        }
+        if (this.IsShowAreaCaptcha && !this.CaptchaTextValue) {
+            this.errorMessage = "Please re-enter the characters you see in the image above";
+            return;
+        }
         if (IsBrowserSupported() == false) {
             alert("This Browser is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
         }
         else {
             this.SaveDataToCookie();
             this.loginService.LoggedUserEmail = SessionInfo_1.SessionInfo.LoggedUserEmail;
-            if (this.Email != null && this.Password != null) {
-                this.ShowLoadingIndicator = true;
-                this.LoginParams = {
-                    Email: this.Email,
-                    Password: this.Password,
-                    ByToken: false,
-                    CardId: "",
-                    CardType: "",
-                    IsMobileLogin: false,
-                    IsUser: true,
-                    GetToken: true,
-                    IsAngularLogin: true,
-                    MobileVersion: "",
-                    ClientType: "Web",
-                };
-                this.HidePendingLoading = false;
-                this.PostUserValidation(this.LoginParams);
-            }
+            this.ShowLoadingIndicator = true;
+            this.LoginParams = {
+                Email: this.Email,
+                Password: this.Password,
+                ByToken: false,
+                CardId: "",
+                CardType: "",
+                IsMobileLogin: false,
+                IsUser: true,
+                GetToken: true,
+                IsAngularLogin: true,
+                MobileVersion: "",
+                ClientType: "Web",
+                CaptchaKey: this.CaptchaKey,
+                CaptchaCode: this.CaptchaTextValue,
+            };
+            this.HidePendingLoading = false;
+            this.PostUserValidation(this.LoginParams);
         }
     };
     LoginComponent.prototype.PostUserValidation = function (loginParameters) {
@@ -295,8 +303,17 @@ var LoginComponent = (function () {
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 _this.LoginFailed = true;
                 _this.HidePendingLoading = true;
+                _this.CaptchaKey = userData ? userData.CaptchaKey : "";
                 if (userData && userData.ExceptionMessage) {
                     alert(userData.ExceptionMessage);
+                }
+                else if (userData.InValidCaptcha) {
+                    if (_this.IsShowAreaCaptcha) {
+                        _this.CaptchaTextValue = "";
+                        _this.errorMessage = "Please re-enter the characters you see in the image above";
+                    }
+                    _this.IsShowAreaCaptcha = true;
+                    _this.CaptchaImageUrl = userData.CaptchaImage;
                 }
                 else if (userData.MustChangePassword) {
                     SessionInfo_1.SessionInfo.LoggedUserEmail = userData.UserName;
@@ -333,6 +350,12 @@ var LoginComponent = (function () {
                     if (userData.Unlicensed) {
                         _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
                     }
+                    if (_this.errorMessage == "Login failed! invalid user name or password.") {
+                        if (_this.IsShowAreaCaptcha) {
+                            _this.CaptchaImageUrl = userData.CaptchaImage;
+                            _this.CaptchaTextValue = "";
+                        }
+                    }
                 }
             }
             else {
@@ -360,6 +383,8 @@ var LoginComponent = (function () {
                 IsAngularLogin: true,
                 MobileVersion: "",
                 ClientType: "Web",
+                CaptchaKey: this.CaptchaKey,
+                CaptchaCode: this.CaptchaTextValue,
             };
             this.loginService.CurrentTenant = this.Tenant;
             var f = { valid: true };
