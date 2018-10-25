@@ -231,7 +231,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
-
+           
             DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, taxDeductionReportPM);
 
             return docOut;
@@ -286,7 +286,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             // prepare file string
             string file = string.Join(Environment.NewLine,lines);
-
+           
             // create document
             int tenant = taxDeductionReport.Tenant;
             ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
@@ -320,8 +320,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 SecurityId = "100",
             };
 
-            document.FileData = file.Select(d => (byte)d).ToArray();
-            docService.Create(document, file.Select(d => (byte)d).ToArray(), loggedUser.Id);
+            byte[] bytearray = Encoding.Unicode.GetBytes(file);
+            document.FileData = bytearray;
+            docService.Create(document, document.FileData, loggedUser.Id);
 
 
             //get document out

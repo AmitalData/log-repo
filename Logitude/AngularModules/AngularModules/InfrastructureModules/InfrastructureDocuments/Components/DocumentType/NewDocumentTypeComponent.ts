@@ -212,8 +212,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[];
     SaveButtonClicked() {
         
-        this.NewDocumentTypePM.Code = "TDDP";
-        this.NewDocumentTypePM.Name = "TDDP";
+      
              this.ValidationErrorsList = [];
              var errorsArray = this.validator.Validate("DocumentType", this.NewDocumentTypePM);
              if (errorsArray.length > 0) {
