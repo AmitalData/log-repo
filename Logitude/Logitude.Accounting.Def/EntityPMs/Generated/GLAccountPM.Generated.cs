@@ -1964,6 +1964,121 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string deductionTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeductionTypeName  
+	   {
+	    
+	     get
+		{
+		   return deductionTypeName;
+		 }
+		 set
+		 {
+		   if(deductionTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeductionTypeName",OldValue=deductionTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   deductionTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string deductionFileTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeductionFileTypeCode  
+	   {
+	    
+	     get
+		{
+		   return deductionFileTypeCode;
+		 }
+		 set
+		 {
+		   if(deductionFileTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeductionFileTypeCode",OldValue=deductionFileTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   deductionFileTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string deductionFileTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeductionFileTypeName  
+	   {
+	    
+	     get
+		{
+		   return deductionFileTypeName;
+		 }
+		 set
+		 {
+		   if(deductionFileTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeductionFileTypeName",OldValue=deductionFileTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   deductionFileTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string assessingOfficeName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AssessingOfficeName  
+	   {
+	    
+	     get
+		{
+		   return assessingOfficeName;
+		 }
+		 set
+		 {
+		   if(assessingOfficeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AssessingOfficeName",OldValue=assessingOfficeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   assessingOfficeName=value;
+		   }
+			
+		 }
+	   }
+	  private string deductionTypeEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeductionTypeEnglishName  
+	   {
+	    
+	     get
+		{
+		   return deductionTypeEnglishName;
+		 }
+		 set
+		 {
+		   if(deductionTypeEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeductionTypeEnglishName",OldValue=deductionTypeEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   deductionTypeEnglishName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

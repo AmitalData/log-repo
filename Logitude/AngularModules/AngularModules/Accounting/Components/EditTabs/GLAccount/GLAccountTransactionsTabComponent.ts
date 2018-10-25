@@ -35,7 +35,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     public EntityPM: GLAccountPM = null;
     public ObjectTableName = "GLAccount";
     public DataContext = this;
-   
+
     // Services
     private _entityListService: EntityListService;
     private _CurrencyListService: CurrencyListService = new CurrencyListService();
@@ -60,7 +60,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     ForeignSums: number[];
     isSingleCurrency: boolean = false;
     isControlAccount: boolean = false;
-    
+
     public isRTL: boolean = false;
 
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
@@ -125,7 +125,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
 
         this.CD.detectChanges();
-       
+
     }
 
     LoadDefaultValues() {
@@ -155,7 +155,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.openAmountHint = value;
         }
     }
-    
+
     private fromDate: Date;
     get FromDate() { return this.fromDate; }
     set FromDate(value: Date) {
@@ -213,7 +213,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             }
             this.GetLTB();
 
-            
+
 
         }
     }
@@ -392,7 +392,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        
+
         //this.CustomColumnsReady.emit(this.columns);
     }
 
@@ -422,7 +422,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
-        
+
         filters.PageSize = 30;
         filters.PageIndex = skip;
         filters.GetAll = false;
@@ -465,9 +465,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                             this.isSingleCurrency = false;
                     }
 
-                    // Calculate commulative sums 
+                    // Calculate commulative sums
                     for (var i = 0; i < this.ItemsSource.length; i++) {
-                        
+
                         if (i == 0) {
                             this.LocalSums[i] = this.ItemsSource[i].LocalAmountCredit - this.ItemsSource[i].LocalAmountDebit;
                             this.ForeignSums[i] = this.ItemsSource[i].ForeignAmountCredit - this.ItemsSource[i].ForeignAmountDebit;
@@ -530,7 +530,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
                                     for (let item of this.LTBSummery.StartBalanceForeignList) {
                                         item.CurrencyCode = this.GetCurrencyCode(item.CurrencyId);
-                                        item.CurrencySign = this.GetCurrencySign(item.CurrencyId);   
+                                        item.CurrencySign = this.GetCurrencySign(item.CurrencyId);
 
                                         //text += item.CurrencyCode + ' ' + item.BalanceForeign + ' ' + item.CurrencyCode + '<br>';
                                     }
@@ -542,25 +542,27 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                             }
                         }
                     });
-        
+
     }
 
+    currencyFilterValues;
     OnDataLoaded(result) {
         if (result && this.EntityPM.IsMultiCurrency) {
             var transactions = result;
 
-            var currencyFilterValues = "";
-            // Create filter string that maintain values of current curreincies in the list
-            transactions.forEach((item) => {
-                if (item.rowData) {
-                    currencyFilterValues += (item.rowData.CurrencyId + ",");
-                }
-            });
+            if (!this.currencyFilterValues) {
+                // Create filter string that maintain values of current curreincies in the list
+                transactions.forEach((item) => {
+                    if (item.rowData) {
+                        this.currencyFilterValues += (item.rowData.CurrencyId + ",");
+                    }
+                });
 
-            this.CurrencyFilters = new ApiQueryFilters(true);
-            this.CurrencyFilters.addAdditionalFilter("Id", currencyFilterValues, null, null, "InListExact", false, false, false, "string", false, true);
+                this.CurrencyFilters = new ApiQueryFilters(true);
+                this.CurrencyFilters.addAdditionalFilter("Id", this.currencyFilterValues, null, null, "InListExact", false, false, false, "string", false, true);
+            }
 
-            console.log(currencyFilterValues);
+            console.log(this.currencyFilterValues);
         } else {
             this.CurrencyFilters = new ApiQueryFilters(true);
         }
@@ -602,9 +604,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 this.CD.detectChanges();
             }, 200);
 
-            
 
-            //// Change dates 
+
+            //// Change dates
             //this.timerToken = setTimeout(() => {
             //    this.isValidate = true;
             //    this.FromDate = this.oldFromDate;
@@ -652,7 +654,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
                 else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
 
-               
+
                 var windowArgs: any = {};
                 windowArgs.GLAccountPM = this.EntityPM;
                 windowArgs.openAmountCurrency = openAmountCurrency;
@@ -675,7 +677,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
 
             }
-        }); 
+        });
     }
 
     RefreshButtonClicked() {
@@ -742,7 +744,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 if (this.isMouseIn) {
                     var i = document.getElementById("tooltip-body-1");
                     if (AppTool.IsNullOrEmpty(i))
-                        return; 
+                        return;
                     document.getElementById("tooltip-body-1").style.position = "fixed";
                     document.getElementById("tooltip-body-1").style.top = (itemRect.top - 70) + 'px';
                     document.getElementById("tooltip-body-1").style.left = (itemRect.left + 22) + 'px';
