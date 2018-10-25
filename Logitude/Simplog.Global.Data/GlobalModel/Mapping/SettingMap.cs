@@ -136,7 +136,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.OceanInsightsToken).HasColumnName("OceanInsightsToken");
             this.Property(t => t.IsFullBuildDWRunning).HasColumnName("IsFullBuildDWRunning");
             this.Property(t => t.IsIncrementalDWRunning).HasColumnName("IsIncrementalDWRunning");
+            this.Property(t => t.EmailSendingQuota).HasColumnName("EmailSendingQuota");
 
-    }
+        }
     }
 }
