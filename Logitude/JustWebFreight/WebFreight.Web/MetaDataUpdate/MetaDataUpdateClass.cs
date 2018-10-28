@@ -60291,6 +60291,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Logs", LocalDefaultText = "לוג", DefaultText = "Logs", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.CorrelationID", LocalDefaultText = "מתאם", DefaultText = "Correlation ID", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.MoreDetails", LocalDefaultText = "פרטים נוספים", DefaultText = "More Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.B.Details", LocalDefaultText = "פרטים", DefaultText = "Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
 
             #region APILogs
 
