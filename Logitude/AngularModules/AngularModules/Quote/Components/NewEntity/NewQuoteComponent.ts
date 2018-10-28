@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuotePM} from '../../EntityPMs/QuotePM';
 import {QuotePackagePM} from '../../EntityPMs/QuotePackagePM';
@@ -1696,7 +1696,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             if (this.GrossWeight == null && this.EntityPM.VolumetricWeight == null) {
                 this.EntityPM.VolumetricWeight = result;
                 this.EntityPM.GrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, result);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, result, this.EntityPM.Ratio);                
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.EntityPM.Ratio);                
             }
         }
     }

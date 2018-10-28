@@ -241,6 +241,14 @@
     <Compile Include="Migrations\201810280818131_AbedAddTableInvalidEmailResetPassword.Designer.cs">
       <DependentUpon>201810280818131_AbedAddTableInvalidEmailResetPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810280913468_AbedAddNewFieldIPToChangePasswordLog.cs" />
+    <Compile Include="Migrations\201810280913468_AbedAddNewFieldIPToChangePasswordLog.Designer.cs">
+      <DependentUpon>201810280913468_AbedAddNewFieldIPToChangePasswordLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810281007451_AbedAddNewFieldActivityToCaptchaKey.cs" />
+    <Compile Include="Migrations\201810281007451_AbedAddNewFieldActivityToCaptchaKey.Designer.cs">
+      <DependentUpon>201810281007451_AbedAddNewFieldActivityToCaptchaKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -277,6 +285,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810280818131_AbedAddTableInvalidEmailResetPassword.resx">
       <DependentUpon>201810280818131_AbedAddTableInvalidEmailResetPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810280913468_AbedAddNewFieldIPToChangePasswordLog.resx">
+      <DependentUpon>201810280913468_AbedAddNewFieldIPToChangePasswordLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810281007451_AbedAddNewFieldActivityToCaptchaKey.resx">
+      <DependentUpon>201810281007451_AbedAddNewFieldActivityToCaptchaKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

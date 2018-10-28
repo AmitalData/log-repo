@@ -36,7 +36,12 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.Email)
             .HasMaxLength(70)
             .IsUnicode(false);
-            
+
+            this.Property(t => t.Activity)
+                .HasMaxLength(70)
+                .IsUnicode(false);
+
+
 
             // Table & Column Mappings
             this.ToTable("CaptchaKeys");
@@ -45,6 +50,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t =>t.Code).HasColumnName("Code");
             this.Property(t => t.IP).HasColumnName("IP");
+            this.Property(t => t.Activity).HasColumnName("Activity");
         }
     }
 }
