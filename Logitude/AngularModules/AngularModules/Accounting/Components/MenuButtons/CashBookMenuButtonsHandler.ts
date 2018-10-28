@@ -1,4 +1,4 @@
-﻿import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
+﻿import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 declare var window: any;
 import {CashBookPM} from '../../EntityPMs/CashBookPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
