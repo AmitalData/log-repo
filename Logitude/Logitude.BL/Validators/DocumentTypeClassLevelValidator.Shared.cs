@@ -87,6 +87,7 @@ namespace Logitude.BL.Validators
                     && documentType.ObjectTableName != "WarehouseEntry"
                     && documentType.ObjectTableName != "PaymentCheque"
                     && documentType.ObjectTableName != "TaxReport"
+                     && documentType.ObjectTableName != "TaxDeductionReport"
                     && documentType.ObjectTableName != "WarehouseRelease")
                 {
 

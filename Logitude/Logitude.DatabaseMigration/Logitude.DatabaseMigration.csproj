@@ -198,6 +198,10 @@
     <Compile Include="Migrations\201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.Designer.cs">
       <DependentUpon>201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.cs" />
+    <Compile Include="Migrations\201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.Designer.cs">
+      <DependentUpon>201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201810250853052_AddActivationPropertiesToCustomer_Samar.cs" />
     <Compile Include="Migrations\201810250853052_AddActivationPropertiesToCustomer_Samar.Designer.cs">
       <DependentUpon>201810250853052_AddActivationPropertiesToCustomer_Samar.cs</DependentUpon>
@@ -294,6 +298,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.resx">
       <DependentUpon>201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.resx">
+      <DependentUpon>201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810250853052_AddActivationPropertiesToCustomer_Samar.resx">
       <DependentUpon>201810250853052_AddActivationPropertiesToCustomer_Samar.cs</DependentUpon>
