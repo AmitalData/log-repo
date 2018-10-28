@@ -6349,6 +6349,9 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_AgentId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AgentId").FirstOrDefault();
             QueryFilterItem filterItem_CurrencyCodeType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyCodeType").FirstOrDefault();
             QueryFilterItem filterItem_IncludeOperationalyClosed = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeOperationalyClosed").FirstOrDefault();
+            QueryFilterItem filterItem_Direction = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Direction").FirstOrDefault();
+            QueryFilterItem filterItem_TransportMode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TransportMode").FirstOrDefault();
+            QueryFilterItem filterItem_ShipmentLevel = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipmentLevel").FirstOrDefault();
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime myStartDate = todayDate.AddMonths(-1);
@@ -6359,6 +6362,9 @@ namespace WebFreight.Web.ReportsWebServices
             string CurrencyCodeType = null;
             bool IncludeOperationalyClosed = false;
             bool isByCreateDate = true;
+            string Direction = null;
+            string TransportMode = null;
+            string ShipmentLevel = null;
 
             if (filterItem_IsByCreateDate != null)
             {
@@ -6401,7 +6407,30 @@ namespace WebFreight.Web.ReportsWebServices
                     IncludeOperationalyClosed = (bool)filterItem_IncludeOperationalyClosed.FieldValue;
                 }
             }
+            
+            if (filterItem_Direction != null)
+            {
+                if (filterItem_Direction.FieldValue != null)
+                {
+                    Direction = filterItem_Direction.FieldValue.ToString();
+                }
+            }
 
+            if (filterItem_TransportMode != null)
+            {
+                if (filterItem_TransportMode.FieldValue != null)
+                {
+                    TransportMode = filterItem_TransportMode.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_ShipmentLevel != null)
+            {
+                if (filterItem_ShipmentLevel.FieldValue != null)
+                {
+                    ShipmentLevel = filterItem_ShipmentLevel.FieldValue.ToString();
+                }
+            }
             #endregion
 
             #region Base Data Filtered
@@ -6447,6 +6476,21 @@ namespace WebFreight.Web.ReportsWebServices
             if (!IncludeOperationalyClosed)
             {
                 iQueryable = iQueryable.Where(d => !d.IsOperationalClosed);
+            }
+
+            if (!string.IsNullOrEmpty(Direction))
+            {
+                iQueryable = iQueryable.Where(d => d.DirectionId == Direction);
+            }
+
+            if (!string.IsNullOrEmpty(TransportMode))
+            {
+                iQueryable = iQueryable.Where(d => d.TransportModeId == TransportMode);
+            }
+
+            if (!string.IsNullOrEmpty(ShipmentLevel))
+            {
+                iQueryable = iQueryable.Where(d => d.ShipmentLevelCode == ShipmentLevel);
             }
 
             #endregion
