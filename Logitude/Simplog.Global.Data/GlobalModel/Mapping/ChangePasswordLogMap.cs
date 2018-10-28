@@ -45,11 +45,12 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
 
             this.Property(t => t.CreateDate)
                  .IsRequired();
-               
-              
-               
 
-         
+
+            this.Property(t => t.IP)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
 
             // Table & Column Mappings
             this.ToTable("ChangePasswordLogs");
@@ -59,7 +60,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.EnteredPassword).HasColumnName("EnteredPassword");
             this.Property(t => t.CurrentPassword).HasColumnName("CurrentPassword");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
-
+            this.Property(t => t.IP).HasColumnName("IP");
             this.Property(t => t.log).HasColumnName("log");
 
 
