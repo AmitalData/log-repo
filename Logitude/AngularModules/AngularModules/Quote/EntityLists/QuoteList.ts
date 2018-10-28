@@ -168,5 +168,6 @@ export class QuoteList {
 		NotifyName: string;
 		NotifyNote: string;
 		NumberOfFollowUps: number;
+		IsDangerous: boolean;
 	
 }

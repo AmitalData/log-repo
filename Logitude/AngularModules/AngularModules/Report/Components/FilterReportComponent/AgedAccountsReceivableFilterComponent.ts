@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -21,6 +21,8 @@ export class AgedAccountsReceivableFilterComponent extends BaseComponent impleme
     public IsAr: boolean = false;
     public IsAp: boolean = false;
     public IsAll: boolean = true;
+    public ProfitCurrencyCode: string = SessionLocator.TenantPM.ProfitCurrencyCode;
+    public LocalCurrencyCode: string = SessionLocator.TenantPM.AccountingCurrencyCode;
 
     settingShipmentTypeCode(code) {
         this.ShipmentTypeRadio = code;
@@ -56,7 +58,15 @@ export class AgedAccountsReceivableFilterComponent extends BaseComponent impleme
         this.IsAp = false;
         this.IsAr = true;
     }
-    
+
+public selectedCurrency: string = this.LocalCurrencyCode;
+    public get SelectedCurrency() {
+        return this.selectedCurrency;
+    }
+    public set SelectedCurrency(value: string) {
+        this.selectedCurrency = value;
+    }
+
     queryFilterItems: QueryFilterItem[];    
     queryFilterItem: QueryFilterItem;
 
@@ -91,6 +101,20 @@ export class AgedAccountsReceivableFilterComponent extends BaseComponent impleme
         this.queryFilterItem.FieldValue = this.InvoiceType;
         this.queryFilterItem.Operator = "Equals";
         this.queryFilterItems.push(this.queryFilterItem);
+
+        var currencyType: string;
+        if (this.SelectedCurrency == this.LocalCurrencyCode)
+            currencyType = "local";
+        else
+            currencyType = "profit";
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "CurrencyType";
+        this.queryFilterItem.FieldValue = currencyType;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+              
 
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;

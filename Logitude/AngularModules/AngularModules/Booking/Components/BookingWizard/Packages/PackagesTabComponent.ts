@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {BookingPM} from '../../../EntityPMs/BookingPM';
@@ -650,7 +650,7 @@ export class BookingWizardPackageItem extends BaseComponent {
             if (this.BookingPM.TransportModeCode == "A") {
                 if (this.Width == null || this.Height == null || this.Length == null) {
                     this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.BookingPM.GrossWeightUnitCode, this.BookingPM.ChargeableWeightUnitCode, this.EntityPM.Weight);
-                    this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.BookingPM.ChargeableWeightUnitCode, this.BookingPM.VolumeUnitCode, this.EntityPM.Weight, this.BookingPM.Ratio);
+                    this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.BookingPM.ChargeableWeightUnitCode, this.BookingPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.BookingPM.Ratio);
 
                     this.SetUIProperties();
                     this.fatherComponent.ResetTotalEditedValues();

@@ -95,6 +95,7 @@ namespace Logitude.Global.OracleMigration.GlobalModel
             modelBuilder.Configurations.Add(new OneTimePasswordMap());
             modelBuilder.Configurations.Add(new TenantManagmentPrivateLabelsMap());
             modelBuilder.Configurations.Add(new CaptchaKeyMap());
+            modelBuilder.Configurations.Add(new InvalidEmailResetPasswordMap());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -156,6 +157,8 @@ namespace Logitude.Global.OracleMigration.GlobalModel
         public IDbSet<AgentSharedLogisticsKey> AgentSharedLogisticsKeys { get; set; }
         public IDbSet<SessionPolicy> SessionPolicies { get; set; }
         public IDbSet<CaptchaKey> CaptchaKeys { get; set; }
+        public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; set; }
+        
 
     }
 }

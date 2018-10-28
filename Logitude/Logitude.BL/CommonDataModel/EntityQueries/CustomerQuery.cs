@@ -56,7 +56,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
-                    entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus")
+                    entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
                               where a.Tenant == tenant && a.Id == id
                               select new CustomerPM()
                               {
@@ -164,7 +164,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SATForeignRFC = a.Card.SATForeignRFC,
                                   MetodoPagoCode = a.Card.MetodoPagoCode,
                                   UsoCFDICode = a.Card.UsoCFDICode,
-                                  CompetitorFields=a.CompetitorFields,
+                                  CompetitorFields = a.CompetitorFields,
+                                  ActivationDate = a.ActivationDate,
+                                  InactiveDate = a.InactiveDate,
+                                  ActivationRequestDate = a.ActivationRequestDate,
+                                  ActivatedByUserId = a.ActivatedByUserId,                                  
+                                  SetAsInactiveByUserId = a.SetAsInactiveByUserId,                                  
+                                  ActivationRequestedByUserId = a.ActivationRequestedByUserId,
+                                  
                                   Card = new CardPM()
                                   {
                                       Id = a.Id,
@@ -199,7 +206,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             else
             {
-                entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus")
+                entity = (from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Rank").Include("Card.SharedLogisticsInvitationStatus").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource").Include("CustomerStatus").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
                           where a.Id == id && a.Tenant == tenant
                           select new CustomerPM()
                           {
@@ -308,6 +315,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               MetodoPagoCode = a.Card.MetodoPagoCode,
                               UsoCFDICode = a.Card.UsoCFDICode,
                               CompetitorFields = a.CompetitorFields,
+                              ActivationDate = a.ActivationDate,
+                              InactiveDate = a.InactiveDate,
+                              ActivationRequestDate = a.ActivationRequestDate,
+                              ActivatedByUserId = a.ActivatedByUserId,
+                              SetAsInactiveByUserId = a.SetAsInactiveByUserId,
+                              ActivationRequestedByUserId = a.ActivationRequestedByUserId,
                               Card = new CardPM
                               {
                                   Id = a.Id,
@@ -2337,7 +2350,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   Address2 = customer.Address2,
                                                   Phone = customer.Phone,
                                                   ZipCode = customer.ZipCode,
-                                                  CompetitorFields=customer.CompetitorFields,
+                                                  CompetitorFields = customer.CompetitorFields,
+                                                  ActivationDate = customer.ActivationDate,
+                                                  InactiveDate = customer.InactiveDate,
+                                                  ActivationRequestDate = customer.ActivationRequestDate,
+                                                  ActivatedByUserId = customer.ActivatedByUserId,
+                                                  SetAsInactiveByUserId = customer.SetAsInactiveByUserId,
+                                                  ActivationRequestedByUserId = customer.ActivationRequestedByUserId,
+                                                  ActivatedByUserName = customer.ActivatedByUserName,
+                                                  SetAsInactiveByUserName = customer.SetAsInactiveByUserName,
+                                                  ActivationRequestedByUserName = customer.ActivationRequestedByUserName,
                                               };
 
             return result;
@@ -2345,7 +2367,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public CustomerList GetSingleCustomerList(string id, int tenant)
         {
-            CustomerList customerList = (from customer in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.CreatedByUser.Contact").Include("Card.UpdatedByUser.Contact").Include("Card.PrimaryContact").Include("Region").Include("CustomerSize")
+            CustomerList customerList = (from customer in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("Card.CreatedByUser.Contact").Include("Card.UpdatedByUser.Contact").Include("Card.PrimaryContact").Include("Region").Include("CustomerSize").Include("ActivatedByUser.Contact").Include("SetAsInactiveByUser.Contact").Include("ActivationRequestedByUser.Contact")
                                          where customer.Tenant == tenant && customer.Id == id
                                          select new CustomerList()
                                          {
@@ -2461,6 +2483,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              UsoCFDICode = customer.Card.UsoCFDICode,
                                              Address1 = customer.Card!= null ? customer.Card.Address1 : null,
                                              Address2 = customer.Card != null ? customer.Card.Address2 : null,
+                                             ActivationDate = customer.ActivationDate,
+                                             ActivationRequestDate = customer.ActivationRequestDate,
+                                             InactiveDate = customer.InactiveDate,
+                                             ActivatedByUserId = customer.ActivatedByUserId,
+                                             SetAsInactiveByUserId = customer.SetAsInactiveByUserId,
+                                             ActivationRequestedByUserId = customer.ActivationRequestedByUserId,
+                                             ActivatedByUserName = customer.ActivatedByUser == null ? null : (customer.ActivatedByUser.Contact == null ? null : customer.ActivatedByUser.Contact.EnglishName),
+                                             SetAsInactiveByUserName = customer.SetAsInactiveByUser == null ? null : (customer.SetAsInactiveByUser.Contact == null ? null : customer.SetAsInactiveByUser.Contact.EnglishName),
+                                             ActivationRequestedByUserName = customer.ActivationRequestedByUser == null ? null : (customer.ActivationRequestedByUser.Contact == null ? null : customer.ActivationRequestedByUser.Contact.EnglishName),
                                          }).FirstOrDefault();
 
             return customerList;

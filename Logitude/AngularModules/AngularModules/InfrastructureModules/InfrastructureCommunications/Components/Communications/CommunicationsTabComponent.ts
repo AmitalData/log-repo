@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnDestroy} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
@@ -101,5 +101,14 @@ export class CommunicationsTabComponent implements OnDestroy {
 
     ViewXMLClicked(item: CommunicationLogList) {
         DownloadManager.DownloadCommunicationLogXML(item);
+    }
+    EditItemClicked(item: CommunicationLogList) {
+        var entityId = item.Id;
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: 'CommunicationLog' });
+            });
     }
 }
