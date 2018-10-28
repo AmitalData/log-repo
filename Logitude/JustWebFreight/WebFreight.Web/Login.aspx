@@ -1188,14 +1188,19 @@
             $("#errorsList").hide();
             var emailstring = $("#Email").val();
             if (emailstring) {
+                  $("#Email").val($.trim(emailstring));
 
-                // var cursorPosition = document.getElementById("Email").selectionStart;
-                $("#Email").val($.trim(emailstring));
+                if (email != $("#Email").val()) {
+                    var areacaptcha = document.getElementById("Areacaptcha");
+                    if (areacaptcha && areacaptcha.style.display == "block") {
+                        document.getElementById("captchaTextBox").value = "";
+                        areacaptcha.style.display = "none";
+                        captchaKey = "";
+                    }
 
-                //setCaretToPos("Email", cursorPosition);
-                //$("#Email").sele
-                //setCaretToPos($("#Email"), cursorPosition);
-
+       
+                }
+              
 
             }
             //$("#cmbTenants").hide();

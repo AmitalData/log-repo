@@ -233,12 +233,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                                                              </td>
                                                          </tr>
 
-         
-                                            <tr style="height:5px;"><td></td></tr>
+<%--         
+                                            <tr style="height:5px;"><td></td></tr>--%>
 
                                                 
                                      
-                                                  <tr id="Areacaptcha" style ="height:30px;margin-top:5px;display:none;">
+                                                  <tr id="Areacaptcha" style ="height:30px;margin-top:3px;display:none;">
                                                  <td>
                                               <img id="CaptchaImage" style="height:auto;width:auto;float:left;" />
                                                 <input oninput="onCaptchaInPutChanged()" style="height:19px;width:260px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="captchaTextBox"/>
@@ -263,7 +263,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
 
                                                          <tr style="vertical-align:bottom;" >
                                                              <td >
-                                                                  <p style="font-family:Arial; font-size:12px;height:12px; color:#4B4A4A" class="column1"> 
+                                                                  <p id="HavingtroubleId" style="font-family:Arial; font-size:12px;height:12px; color:#4B4A4A" class="column1"> 
                                                                          Having trouble logging in? 
                                                                          <a id="DefaultContactUs" href="mailto:info@logitudeworld.com" >Contact us</a>  
                                                                          <a id="LogBoxContactUs" style="display:none" href="mailto:sales@logbox.co.il" >Contact us</a>  
@@ -490,6 +490,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
             }
         }
 
+        function HideCaptchaArea() {
+            captchaKey = null;
+            document.getElementById("captchaTextBox").value = null;
+            document.getElementById("Areacaptcha").style.display = "none";
+            document.getElementById("BusyindicatorArea").style.height = "";
+            document.getElementById("BusyindicatorArea").style.width = "";
+            document.getElementById("ImagebusyIndicator").width = "";
+            document.getElementById("ImagebusyIndicator").height = "";
+            document.getElementById("busyIndicator").style.marginTop = "0px";
+            document.getElementById("HavingtroubleId").style.height = "";
+            
+        }
+
 
         function viewModel() {
 
@@ -516,21 +529,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                     return;
                 }
        
-            
+                var heightWidthbusyIndicator = "";
                 if (areacaptcha.style.display == "block") {
+                    heightWidthbusyIndicator = "35px";
+                    document.getElementById("busyIndicator").style.marginTop = "-8px";
+
                     if (!document.getElementById("captchaTextBox").value) {
                         document.getElementById("errorsList").innerHTML = "Please re-enter the characters you see in the <br /> image above"; 
                         $("#errorsList").show();
                         return;
                     }
                 }
-
-                var heightWidthbusyIndicator = "50px";
-                if (areacaptcha.style.display == "block") {
-                    heightWidthbusyIndicator = "35px";
-                    document.getElementById("busyIndicator").style.marginTop = "-8px";
-                }
-
+                
                 document.getElementById("ImagebusyIndicator").width = heightWidthbusyIndicator.replace("px","");
                 document.getElementById("ImagebusyIndicator").height = heightWidthbusyIndicator.replace("px","");
 
@@ -547,30 +557,29 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                     email = email + "^" + Tenant;
                 }
 
-                var captchaCode = document.getElementById("captchaTextBox").value;
+                 var url = "api/ResetPassword?PostResetPassword";
+                function ResetPasswordParameters() {
 
-                var url = "api/Authentication/?email=" + email + "&ischamplogin=" + IsChampLogin + "&captchaCode=" + captchaCode +  "&captchaKey=" + captchaKey;
+                    this.Email = email;
+                    this.IsChampLogin =IsChampLogin;
+                    this.CaptchaKey = captchaKey;
+                    this.CaptchaCode = document.getElementById("captchaTextBox").value;
+                };
 
+                
+                var param = new ResetPasswordParameters();
                 $.ajax({
                     url: url,
-                    type: 'GET',
+                    type: 'POST',
+                    data: JSON.stringify(param),
                     contentType: 'application/json',
-
                     success: function (userdata) {
-
 
                         $("#busyIndicator").hide();
 
                         if (!userdata.HasError) {
-
-                            //string logindata = user.UserName + ":" + user.Id + ":" + user.CurrentTenant + ":" + computerId + ":" + user.IsAuthenticated;
-
                             $("#message").show();
-                            captchaKey = null;
-                            document.getElementById("captchaTextBox").value = null;
-                             areacaptcha.style.display = "none";
-                            //alert("submit completed");
-                            //document.location.href = "login.aspx";
+                            HideCaptchaArea();
 
                         }
                         else {
@@ -586,9 +595,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                                     document.getElementById("captchaTextBox").value = "";
                    
                                 }
-                                    errorMessage = "Please re-enter the characters you see in the <br> image above";
-                                    document.getElementById("BusyindicatorArea").style.width = "0px";
-                                    document.getElementById("BusyindicatorArea").style.height = "0px";
+                                errorMessage = "Please re-enter the characters you see in the <br> image above";
+                                document.getElementById("BusyindicatorArea").style.width = "0px";
+                                document.getElementById("BusyindicatorArea").style.height = "0px";
 
                                 areacaptcha.style.display = "block";
                                 $("#CaptchaImage").attr("src", userdata.CaptchaImage);
