@@ -26,5 +26,6 @@ export class CustomerTenantAccessList {
 		SearchFields: string;
 		IsPrivateLabelCustomer: boolean;
 		CustomCompanyName: string;
+		StockTypeCode: string;
 	
 }
