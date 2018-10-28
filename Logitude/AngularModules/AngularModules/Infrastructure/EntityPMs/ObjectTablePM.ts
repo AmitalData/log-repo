@@ -4,7 +4,6 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 // </auto-generated>
-//
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
@@ -315,10 +314,7 @@ export class ObjectTablePM {
     public get AllowedInQueues() { return this.allowedInQueues; }
     public set AllowedInQueues(newValue: boolean) { if (this.allowedInQueues != newValue) { this.allowedInQueues = newValue; this.MarkAsDirty("AllowedInQueues"); } }
        
-    private displayName: string;
-    public get DisplayName() { return this.displayName; }
-    public set DisplayName(newValue: string) { this.displayName = newValue; this.MarkAsDirty(); }
-
+	 
 
     public OldEntityPM: ObjectTablePM;
 		

@@ -64,6 +64,16 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime? ReadyForActivationDate { get; set; }
         public string RegionId { get; set; }
 
+        public DateTime? ActivationDate { get; set; }
+        public DateTime? InactiveDate { get; set; }
+        public DateTime? ActivationRequestDate { get; set; }
+        public string ActivatedByUserId { get; set; }
+        public string SetAsInactiveByUserId { get; set; }
+        public string ActivationRequestedByUserId { get; set; }
+        public virtual User ActivatedByUser { get; set; }
+        public virtual User SetAsInactiveByUser { get; set; }
+        public virtual User ActivationRequestedByUser { get; set; }
+
         public string FreelancerId { get; set; }
         [ForeignKey("FreelancerId")]
         public virtual User Freelancer { get; set; }

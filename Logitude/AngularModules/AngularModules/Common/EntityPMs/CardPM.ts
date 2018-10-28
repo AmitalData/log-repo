@@ -382,6 +382,16 @@ export class CardPM {
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
        
 	 
+    private isInternationalPartner: boolean;
+    public get IsInternationalPartner() { return this.isInternationalPartner; }
+    public set IsInternationalPartner(newValue: boolean) { if (this.isInternationalPartner != newValue) { this.isInternationalPartner = newValue; this.MarkAsDirty("IsInternationalPartner"); } }
+       
+	 
+    private isAutonomy: boolean;
+    public get IsAutonomy() { return this.isAutonomy; }
+    public set IsAutonomy(newValue: boolean) { if (this.isAutonomy != newValue) { this.isAutonomy = newValue; this.MarkAsDirty("IsAutonomy"); } }
+       
+	 
 
     public OldEntityPM: CardPM;
 		
