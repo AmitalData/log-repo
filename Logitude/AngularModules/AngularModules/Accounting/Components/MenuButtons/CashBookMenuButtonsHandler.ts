@@ -4,7 +4,6 @@ import {CashBookPM} from '../../EntityPMs/CashBookPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {CashBookPMService} from '../../Services/StandardPMs/CashBookPMService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {AppTool} from '../../../Infrastructure/Tools';
