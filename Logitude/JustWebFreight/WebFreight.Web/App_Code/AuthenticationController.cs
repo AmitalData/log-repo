@@ -1176,6 +1176,7 @@ namespace WebFreight.Web
             CaptchaKey captchaKey = new CaptchaKey()
             {
                 Id = Guid.NewGuid().ToString(),
+                IP =  AuthenticationUtil.GetIP4Address(),
                 Code = RandomString(6),
                 CreateDate = DateTime.Now,
                 Email = loginParameters.Email

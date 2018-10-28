@@ -114,6 +114,7 @@
     <Compile Include="GlobalModel\EntityPOCOs\ContactPassword.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ConvertProgramInfo.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BatchServicesDefinitionMods.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\InvalidEmailResetPassword.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\SessionPolicy.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\TenantManagmentPrivateLabels.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\GlobalContact.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="GlobalModel\Mapping\ConvertProgramInfoMap.cs" />
     <Compile Include="GlobalModel\Mapping\ApiCredintialsMap.cs" />
     <Compile Include="GlobalModel\Mapping\BatchServicesDefinitionModsMap.cs" />
+    <Compile Include="GlobalModel\Mapping\InvalidEmailResetPasswordMap.cs" />
     <Compile Include="GlobalModel\Mapping\SessionPolicyMap.cs" />
     <Compile Include="GlobalModel\Mapping\TenantManagmentPrivateLabelsMap.cs" />
     <Compile Include="GlobalModel\Mapping\GlobalContactMap.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="GlobalModel\Repositories\ConvertProgramInfoRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ApiCredintialsRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BatchServicesDefinitionModsRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\InvalidEmailResetPasswordRepository.cs" />
     <Compile Include="GlobalModel\Repositories\SessionPolicyRepository.cs" />
     <Compile Include="GlobalModel\Repositories\TenantManagmentPrivateLabelsRepository.cs" />
     <Compile Include="GlobalModel\Repositories\GlobalContactRepository.cs" />
@@ -234,6 +237,10 @@
     <Compile Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.Designer.cs">
       <DependentUpon>201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810280818131_AbedAddTableInvalidEmailResetPassword.cs" />
+    <Compile Include="Migrations\201810280818131_AbedAddTableInvalidEmailResetPassword.Designer.cs">
+      <DependentUpon>201810280818131_AbedAddTableInvalidEmailResetPassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -267,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.resx">
       <DependentUpon>201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810280818131_AbedAddTableInvalidEmailResetPassword.resx">
+      <DependentUpon>201810280818131_AbedAddTableInvalidEmailResetPassword.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

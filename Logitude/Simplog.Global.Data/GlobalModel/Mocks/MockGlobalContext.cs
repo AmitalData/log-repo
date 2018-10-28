@@ -268,6 +268,15 @@ namespace WebFreight.Web.GlobalModelDB
             }
         }
 
+        public IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+        
+
 
     }
 }
