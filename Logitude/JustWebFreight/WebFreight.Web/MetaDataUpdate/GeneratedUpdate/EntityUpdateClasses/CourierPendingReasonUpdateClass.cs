@@ -101,7 +101,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "AddEditCourierPendingReasonComponent",
-			      				    LocalDefaultText =  "טבלת קשר לסטטוס יוניפרייט",
+			      				    LocalDefaultText =  "סיבת Pending",
 			      				    DefaultText =  "Courier Pending Reason",
 			      				    Code =  "aef0",
 			      				    Name =  "Customs.CourierPendingReason Query Group",
@@ -111,7 +111,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
 			      				    NewWizardComponentPath =  "./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddEditCourierPendingReasonComponent",
-			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
