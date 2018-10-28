@@ -24,14 +24,14 @@ export class OpportunityShortTitleComponent {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomerId)) {
             if (this.EntityPM.IsCustomerBlockedBusinessUnit) {
                 var service = new CustomerListService();
-                // service.getSingleFromCache(this.EntityPM.CustomerId).subscribe((myResponse: ServiceResponse) => {
-                //     if (!myResponse.HasError) {
-                //         var customerList = myResponse.Result;
-                //         if (customerList != null) {
-                //             this.EditBlockedCustomer(customerList);
-                //         }
-                //     }
-                // });
+                service.getSingleFromCache(this.EntityPM.CustomerId).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var customerList = myResponse.Result;
+                        if (customerList != null) {
+                            this.EditBlockedCustomer(customerList);
+                        }
+                    }
+                });
             }
             else {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
