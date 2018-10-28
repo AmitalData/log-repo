@@ -444,6 +444,11 @@ export class ARPaymentPM {
     public set SelloPago(newValue: string) { if (this.selloPago != newValue) { this.selloPago = newValue; this.MarkAsDirty("SelloPago"); } }
        
 	 
+    private branchName: string;
+    public get BranchName() { return this.branchName; }
+    public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
+       
+	 
 
     public OldEntityPM: ARPaymentPM;
 		

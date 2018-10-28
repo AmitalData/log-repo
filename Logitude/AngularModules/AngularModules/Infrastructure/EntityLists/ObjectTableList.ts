@@ -53,5 +53,6 @@ export class ObjectTableList {
 		CodeField: string;
 		NameField: string;
 		DisableSearchBox: boolean;
+		AllowedInQueues: boolean;
 	
 }

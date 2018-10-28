@@ -113,6 +113,15 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.BlockNewInvoiceCreation).HasColumnName("BlockNewInvoiceCreation");
             this.Property(t => t.BlockNewShipmentCreation).HasColumnName("BlockNewShipmentCreation");
             this.Property(t => t.ExternalId2).HasColumnName("ExternalId2");
+            this.Property(t => t.ActivationDate).HasColumnName("ActivationDate");
+            this.Property(t => t.InactiveDate).HasColumnName("InactiveDate");
+            this.Property(t => t.ActivationRequestDate).HasColumnName("ActivationRequestDate");
+            this.Property(t => t.ActivatedByUserId).HasColumnName("ActivatedByUserId");
+            this.Property(t => t.SetAsInactiveByUserId).HasColumnName("SetAsInactiveByUserId");
+            this.Property(t => t.ActivationRequestedByUserId).HasColumnName("ActivationRequestedByUserId");
+            this.Property(t => t.ActivatedByUserName).HasColumnName("ActivatedByUserName");
+            this.Property(t => t.SetAsInactiveByUserName).HasColumnName("SetAsInactiveByUserName");
+            this.Property(t => t.ActivationRequestedByUserName).HasColumnName("ActivationRequestedByUserName");
         }
     }
 }

@@ -58,5 +58,6 @@ export class APPaymentList {
 		ApprovedDateTime: Date;
 		AccountingPaymentMethodId: string;
 		BankAccountId: string;
+		BranchName: string;
 	
 }
