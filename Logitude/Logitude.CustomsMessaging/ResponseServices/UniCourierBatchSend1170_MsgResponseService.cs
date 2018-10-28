@@ -42,16 +42,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
             var qs = new DeclarationCourierStatusQueryService(context);
-            List<DeclarationCourierStatusPM> listPM = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
-                customResponse.SelectedBOLValue,
-                customResponse.SelectedStatusValue,
-                customResponse.SelectedTotalInvoiceValue);
-            if (customResponse.CourierDeclarationStatusCode == "RV")
+            List<DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
+            if (customResponse.DeclarationsList != null && customResponse.DeclarationsList.Count > 0)
             {
-                var listPM2 = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
-                customResponse.SelectedStatusValue,
-                customResponse.SelectedTotalInvoiceValue);
-                listPM = listPM.Concat(listPM2).ToList();
+                listPM = qs.GetDeclarationsByIds(customResponse.DeclarationsList, requestParams.Tenant);
+            }
+            else
+            {
+                listPM = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
+                   customResponse.SelectedBOLValue,
+                   customResponse.SelectedStatusValue,
+                   customResponse.SelectedTotalInvoiceValue);
+                if (customResponse.CourierDeclarationStatusCode == "RV")
+                {
+                    var listPM2 = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
+                    customResponse.SelectedStatusValue,
+                    customResponse.SelectedTotalInvoiceValue);
+                    listPM = listPM.Concat(listPM2).ToList();
+                }
             }
             if (listPM.Count == 0)
             {

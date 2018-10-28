@@ -37,6 +37,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsPrimaryKey).HasColumnName("IsPrimaryKey");
             this.Property(t => t.IsMeasurement).HasColumnName("IsMeasurement");
             this.Property(t => t.AggregationTypeCode).HasColumnName("AggregationTypeCode");
+            this.Property(t => t.DisplayInQueryBuilder).HasColumnName("DisplayInQueryBuilder");
+
 
 
             this.HasRequired(t => t.DWObjectTable).WithMany().HasForeignKey(d => d.DWObjectTableCode);

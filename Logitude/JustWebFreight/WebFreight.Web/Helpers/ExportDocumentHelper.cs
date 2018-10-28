@@ -41,6 +41,8 @@ using Logitude.WarehouseLib.BL.EntityQueryServices;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.AccountingModel.Reports.PaymentCheque;
+using WebFreight.Web.AccountingModel.Reports.TaxDeductionReport;
+using Logitude.Accounting.BL.DataContract;
 
 namespace WebFreight.Web.Helpers
 {
@@ -427,6 +429,17 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "PCDR", Name = "PaymentChequeDataProvider", BusinessObjectValue = paymentChequeDP };
+                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
+                        break;
+                    }
+
+                case "TDDP":
+                    {
+                        TaxDeductionReportPrintService service = new TaxDeductionReportPrintService();
+                        TaxDeductionReportData taxDeductionDP = service.LoadDataProvider(entityId, tenant);
+
+                        theT2 = System.DateTime.Now.Ticks;
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "TDDP", Name = "TaxDeductionReportData", BusinessObjectValue = taxDeductionDP };
                         report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
 
                     }

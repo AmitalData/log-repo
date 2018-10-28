@@ -25,7 +25,7 @@ import {DocumentTypeTemplatePM} from '../../../../Common/EntityPMs/DocumentTypeT
 @Component({
     moduleId: module.id,
     selector: 'DocumentTypeGeneral',
-    templateUrl: './DocumentTypeGeneralTabComponent.html',   
+    templateUrl: './DocumentTypeGeneralTabComponent.html',
     providers: [DocumentTypeTemplatePMExtendedService],
 })
 
@@ -86,7 +86,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
                 });
 
 
-     
+
             }
         });
 
@@ -138,6 +138,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
                 case "BankDeposit":
                 case "GLAccount":
                 case "WarehouseEntry":
+                case "TaxReport":
                 case "PaymentCheque":
                 case "WarehouseRelease":
                     {
@@ -175,7 +176,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             this.SelectedFormat = "Print";
             this.PointerEventsAreaStimulDocument = "auto";
             this.OpacityAreaStimulDocument = "1";
- 
+
 
         }
         else if (this.EntityPM.TemplateFormatCode == "M") {
@@ -237,7 +238,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         else {
 
             this.EntityPM.TemplateFormatCode = "M";
-   
+
         }
 
 
@@ -258,7 +259,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             this.EntityPM.ObjectTableId = null;
             this.SelectedObjectTable = null;
         }
-        
+
     }
 
 
@@ -280,12 +281,12 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         }
         else {
             this.IsEnableFormat = false;
-    
+
             this.PointerEventsAreaStimulDocument = "none";
             this.PointerEventsHTMLDocument = "none";
             this.OpacityAreaStimulDocument = "0.5";
             this.OpacityAreaHTMLDocument = "0.5";
- 
+
         }
 
 
@@ -328,7 +329,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         }
     }
 
-  
+
 
 
     LoadTemplate() {
@@ -346,8 +347,8 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             }
             this.IsLoadTemplate = true;
             SessionLocator.CurrentSession.StopBusyIndicator();
-   
-      
+
+
         });
 
 

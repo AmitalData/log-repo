@@ -164,7 +164,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     temp.Notes = item.Notes;
                     temp.ValueDate = item.ValueDate;
                     temp.DateForInterest = item.DateForInterest;
-
+                    temp.Quantity = item.Quantity;
+                    temp.UnitPriceInForeignCurrency = item.UnitPrice;
                     if (item.VatTypeId != null)
                     {
                         VatTypeQueryService VatTypeService2 = new VatTypeQueryService(Tenant);

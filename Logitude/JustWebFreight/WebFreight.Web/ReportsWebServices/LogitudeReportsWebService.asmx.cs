@@ -699,6 +699,8 @@ namespace WebFreight.Web.ReportsWebServices
                     profitrecord.ShipmentMasterNumber = a.MasterShipmentNumber;
                     profitrecord.Origin = a.MainCarriageFromPortName;
                     profitrecord.Destination = a.ToPortName;
+                    profitrecord.Notes = a.Notes;
+
 
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, a, profitrecord);
@@ -1074,7 +1076,7 @@ namespace WebFreight.Web.ReportsWebServices
             totalList = list_ARInvoices.Concat(list_APInvoices).Concat(list_ARPayments).Concat(list_APPayments).ToList();
 
             List<string> allShipmentIds = totalList.Select(s => s.ShipmentId).ToList();
-            List<ShipmentEntityClass> allShipmentData = (from d in shipmentsContext.Shipments.Include("ShipperCard")
+            List<ShipmentEntityClass> allShipmentData = (from d in shipmentsContext.Shipments.Include("ShipperCard").Include("ConsigneeCard")
                                                          where d.Tenant == tenant && allShipmentIds.Contains(d.Id)
                                                          select new ShipmentEntityClass
                                                          {
@@ -1083,6 +1085,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                              ShipperRef1 = d.ShipperReference1,
                                                              ShipperRef2 = d.ShipperReference2,
                                                              DescriptionOfGoods = d.DescriptionOfGoods,
+                                                             ConsigneeName = d.ConsigneeCard == null ? null : d.ConsigneeCard.EnglishName,
                                                          }).ToList();
 
             foreach (StatementDataProvider.StatementRecord record in totalList)
@@ -1130,6 +1133,8 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
                     record.DescriptionOfGoods = shipmentEntity.DescriptionOfGoods;
+                    record.Shipper = shipmentEntity.ShipperName;
+                    record.Consignee = shipmentEntity.ConsigneeName;
                 }
             }
 
@@ -10225,7 +10230,6 @@ namespace WebFreight.Web.ReportsWebServices
             ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
             IQueryable<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d);
             IQueryable<TMEmployeeTime> iQueryable = (from d in myContext.TMEmployeeTimes where d.Tenant == tenant select d);
-            IQueryable<TMEmployeeTime> projectsProrating;
             CardRepository cardRep = new CardRepository(tenant);
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -10348,15 +10352,6 @@ namespace WebFreight.Web.ReportsWebServices
                               && myProjct.CustomerId == customerId
                               && myProjct.BudgetId == budgetId
                               select myTMEmployeeTime);
-
-                projectsProrating = (from myTMEmployeeTime in iQueryable
-                                         join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
-                                         from myProjct in joinedData
-                                         where myTMEmployeeTime.Tenant == tenant
-                                         && myProjct.Tenant == tenant
-                                         && myProjct.BudgetId == budgetId
-                                         && myProjct.IsProrated == true
-                                         select myTMEmployeeTime);
             }
             else
             {
@@ -10367,16 +10362,6 @@ namespace WebFreight.Web.ReportsWebServices
                               && myProjct.Tenant == tenant
                               && myProjct.BudgetId == budgetId
                               select myTMEmployeeTime);
-
-                projectsProrating = (from myTMEmployeeTime in iQueryable
-                                     join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
-                                     from myProjct in joinedData
-                                     where myTMEmployeeTime.Tenant == tenant
-                                     && myProjct.Tenant == tenant
-                                     && myProjct.BudgetId == budgetId
-                                     && myProjct.IsProrated == true
-                                     select myTMEmployeeTime);
-
             }
 
             result.FromDate = fromDate.Value;
@@ -10390,12 +10375,9 @@ namespace WebFreight.Web.ReportsWebServices
             WorkDaysPerProjectData timSheetItem = null;
             double totalWIWorkedDays_Employee = 0;
             double totalWIWorkedDays = 0;
-            double totalProratingHours = 0;
 
             if (iQueryable.Count() > 0)
             {
-                totalProratingHours = Math.Round((projectsProrating.ToList().Sum(a => a.TimeInMinutes)) / 60.0, 2);
-
                 var daysList = (from d in iQueryable
                                 group d by new { d.DateOfWork, d.EmployeeUserId, d.ProjectId, d.WINumber, d.Description } into g
                                 select new
@@ -10451,7 +10433,6 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
-                double totalNotProratingHours = Math.Round((iQueryable.ToList().Sum(a => a.TimeInMinutes)) / 60.0, 2);
                 foreach (var item in daysList)
                 {
                     List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) == System.Data.Entity.DbFunctions.TruncateTime(item.DateOfWork) && d.EmployeeUserId == item.EmployeeUserId && d.ProjectId == item.ProjectId && d.WINumber == item.WINumber && d.Description == item.Description).ToList();
@@ -10499,20 +10480,13 @@ namespace WebFreight.Web.ReportsWebServices
 
                         TMEmployeeTime myTMEmployeeTime = employeeTimeRepository.GetSingleByPrjectandEmployeeandWIandDescription(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, tenant);
                         var wIWorkedHours_Employee = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2);
-                        var wIWorkedHours_Employee_Prorated = (wIWorkedHours_Employee / totalNotProratingHours) * totalProratingHours;
+                        var wIWorkedHours_Employee_Prorated = myTMEmployeeTime.ProratedDuration;
                         wIWorkedHours_Employee = wIWorkedHours_Employee + wIWorkedHours_Employee_Prorated;
                         totalWIWorkedDays_Employee += wIWorkedHours_Employee;
                         timSheetItem_Detailed.TotalWIWorkedDays_Employee = DateFormat(wIWorkedHours_Employee);
                         result.DetailedWorkHoursPerProjectList.Add(timSheetItem_Detailed);
-
-                        myTMEmployeeTime.ProratedDuration = wIWorkedHours_Employee_Prorated;
-                        myTMEmployeeTime.FullDuration = wIWorkedHours_Employee;
-                        employeeTimeRepository.Update(myTMEmployeeTime);
-
                     }
                 }
-
-                employeeTimeRepository.SubmitChanges();
                 result.Total_TotalWIWorkedHours = DateFormat((Math.Round(totalWIWorkedDays, 2)));
                 result.Total_TotalWIWorkedHours_Employee = DateFormat(Math.Round(totalWIWorkedDays_Employee, 2));
             }
@@ -10921,6 +10895,8 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.NumberOfContainers = a.NumberOfContainers;
                     myRecord.ETA = a.MainCarriageETA;
                     myRecord.IsCancelled = a.IsCancelled;
+                    myRecord.LastSharedEventDate = a.LastSharedEventDate;
+                    myRecord.LastSharedEventNote = a.LastSharedEventNotes;
 
                     myRecord.PortOfLoading = a.MainCarriageFromPortCode;
                     myRecord.PortOfDischarge = a.MainCarriageFinalDestinationPortCode;
@@ -12529,6 +12505,7 @@ namespace WebFreight.Web.ReportsWebServices
     {
         public string ShipmentId { get; set; }
         public string ShipperName { get; set; }
+        public string ConsigneeName { get; set; }
         public string ShipperRef1 { get; set; }
         public string ShipperRef2 { get; set; }
         public string DescriptionOfGoods { get; set; }

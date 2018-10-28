@@ -188,6 +188,8 @@
     <Content Include="CRMModules\CRMActivity\Components\NewEntity\NewTaskComponent.html" />
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
+    <Content Include="Images\ArrowLeft.png" />
+    <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessRoleNewComponent.html" />
@@ -260,6 +262,8 @@
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\AddEditPrivateLabelsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelLoadComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
+    <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />
@@ -1602,6 +1606,7 @@
     <Content Include="TimeManagement\Components\NewEntity\NewLineComponent.html" />
     <Content Include="Social\Components\QueryColumnsComponents\SocialContactNameLink.html" />
     <Content Include="TimeManagement\Components\NewEntity\NewSprintComponent.html" />
+    <Content Include="TimeManagement\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\Projects\ProjectsWorkspaceComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\ReportsWorkspaceComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\SettingsWorkspaceComponent.html" />
@@ -5932,6 +5937,7 @@
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewProjectComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewLineComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewSprintComponent.ts" />
+    <TypeScriptCompile Include="TimeManagement\Components\Templates\FieldTemplateComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Workspaces\Projects\ProjectsWorkspaceComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Workspaces\TimeSheet\ClockTimeComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Workspaces\TimeSheet\DailyTimeSheetComponent.ts" />

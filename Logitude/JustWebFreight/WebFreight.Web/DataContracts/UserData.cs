@@ -66,6 +66,12 @@ namespace WebFreight.Web.DataContracts
 
         public bool Param1 { get; set; } // Email IsValid 
 
+
+        public string CaptchaImage { get; set; }
+        public string CaptchaKey {  get; set;  }
+        public bool InValidCaptcha { get; set; }
+
+     
         //public string LoginPolicyCode { get; set; }
         //[Key]
         //public string Name

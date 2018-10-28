@@ -35,6 +35,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         }
 
+        public int GetCommunicationLogCountForTenantInLasthour(int tenant)
+        {
+            DateTime datetime = DateTime.Now.AddHours(-1);
+            return (from a in context.CommunicationLogs
+                    where a.Tenant == tenant && a.CreateDate > datetime
+                    select a).Count();
+        }
+
+
+
         public CommunicationLog GetSingleCommunicationLog(string id, int tenant, DateTime? createDate)
         {
             return (from a in context.CommunicationLogs.Include("CommunicationLogType").Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("ObjectTable").Include("InternalDocument").Include("ExternalDocument").Include("Document").Include("CurrentTenant")

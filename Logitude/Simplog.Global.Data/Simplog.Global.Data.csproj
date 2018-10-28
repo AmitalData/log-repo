@@ -108,6 +108,7 @@
     <Compile Include="GlobalModel\EntityPOCOs\AWBMessagesCCSType.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BatchServicesDefinition.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BluesnapContract.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\CaptchaKey.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ChangePasswordLog.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ContactMobileDevice.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ContactPassword.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="GlobalModel\Mapping\AWBMessagesCCSTypeMap.cs" />
     <Compile Include="GlobalModel\Mapping\BatchServicesDefinitionMap.cs" />
     <Compile Include="GlobalModel\Mapping\BluesnapContractMap.cs" />
+    <Compile Include="GlobalModel\Mapping\CaptchaKeyMap.cs" />
     <Compile Include="GlobalModel\Mapping\ChangePasswordLogMap.cs" />
     <Compile Include="GlobalModel\Mapping\ContactMobileDeviceMap.cs" />
     <Compile Include="GlobalModel\Mapping\ContactPasswordMap.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="GlobalModel\Repositories\AWBMessagesCCSTypeRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BatchServicesDefinitionRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BluesnapContractRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\CaptchaKeyRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ChangePasswordLogRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ContactMobileDeviceRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ContactPasswordRepository.cs" />
@@ -223,6 +226,14 @@
     <Compile Include="Migrations\201810150949517_IncreaseTenantNotesFieldLength_Samar.Designer.cs">
       <DependentUpon>201810150949517_IncreaseTenantNotesFieldLength_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810240810162_AbedAddNewTableCaptchaKey.cs" />
+    <Compile Include="Migrations\201810240810162_AbedAddNewTableCaptchaKey.Designer.cs">
+      <DependentUpon>201810240810162_AbedAddNewTableCaptchaKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs" />
+    <Compile Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.Designer.cs">
+      <DependentUpon>201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -250,6 +261,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810150526331_AbedAddNewTableSessionPolicy.resx">
       <DependentUpon>201810150526331_AbedAddNewTableSessionPolicy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810240810162_AbedAddNewTableCaptchaKey.resx">
+      <DependentUpon>201810240810162_AbedAddNewTableCaptchaKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.resx">
+      <DependentUpon>201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
