@@ -40,7 +40,7 @@ namespace WebFreight.Web.Helpers
                     if (invalidEmailResetPasswordCount >= 5) checkCaptcha = true;
                     else
                     {
-                        int countCaptchaKey = globalObjectContext.CaptchaKeys.Where(a => a.IP == iP && a.CreateDate >= dateNowBefor5Minutes && a.CreateDate > lastResetDate).Count();
+                        int countCaptchaKey = globalObjectContext.CaptchaKeys.Where(a => a.IP == iP && a.CreateDate >= dateNowBefor5Minutes && a.CreateDate > lastResetDate && a.Activity == "ResetPassword").Count();
                         if (countCaptchaKey >= 5) checkCaptcha = true;
                     }
                 }

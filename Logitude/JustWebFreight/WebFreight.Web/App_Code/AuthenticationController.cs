@@ -1110,7 +1110,7 @@ namespace WebFreight.Web
                                 if (contactPassword.NumberOfRetries++ >= 5)
                                 {
                                     CaptchaHelper captchaHelper = new CaptchaHelper();
-                                    captchaHelper.AddCaptchaKey(loginParameters.Email, data, "Web");
+                                    captchaHelper.AddCaptchaKey(loginParameters.Email, data, "Login");
                                 }
                             }
                         }
@@ -1159,7 +1159,7 @@ namespace WebFreight.Web
                             if (contactPassword.LockDateTime > dateNowBefor5Minutes) isCheckCaptchaCode = true;
                             if (!isCheckCaptchaCode)
                             {
-                                int countCaptchaKey = globalContext.CaptchaKeys.Where(a => a.Email == loginParameters.Email && a.CreateDate >= dateNowBefor5Minutes).Count();
+                                int countCaptchaKey = globalContext.CaptchaKeys.Where(a => a.Email == loginParameters.Email && a.Activity == "Login" && a.CreateDate >= dateNowBefor5Minutes).Count();
                                 if (countCaptchaKey >= 5) isCheckCaptchaCode = true;
                             }
                         }
@@ -1168,7 +1168,7 @@ namespace WebFreight.Web
 
                 if (isCheckCaptchaCode && !captchaHelper.CheckCaptchaCodeValidated(loginParameters.CaptchaCode, loginParameters.CaptchaKey))
                 {
-                    captchaHelper.AddCaptchaKey(loginParameters.Email, data, "Web");
+                    captchaHelper.AddCaptchaKey(loginParameters.Email, data, "Login");
                 }
 
             }
