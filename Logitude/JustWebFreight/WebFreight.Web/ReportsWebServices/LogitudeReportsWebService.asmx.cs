@@ -70,6 +70,9 @@ using Logitude.Accounting.Data;
 using WebFreight.Web.Helpers.DataProviderHelpers;
 using System.Text;
 using System.Web;
+using Logitude.BL.DataContracts;
+using Simplog.Data.InfrastructureModel;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -2131,8 +2134,10 @@ namespace WebFreight.Web.ReportsWebServices
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
 
             QueryFilterItem filterItem_InvoiceType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceType").FirstOrDefault();
+            QueryFilterItem filterItem_CurrencyType = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyType").FirstOrDefault();
 
             string invoiceType = null;
+            string currencyType = null;
 
             if (filterItem_InvoiceType != null)
             {
@@ -2142,14 +2147,28 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            if (filterItem_CurrencyType != null)
+            {
+                if (filterItem_CurrencyType.FieldValue != null)
+                {
+                    currencyType = filterItem_CurrencyType.FieldValue.ToString();
+                }
+            }
+
             #endregion
 
             #region General Report Data
+
+            string localCurrencyCode = "";
+            string profitCurrencyCode = "";
 
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
             if (currentTenant != null)
             {
+                localCurrencyCode = currentTenant.AccountingCurrencyCode;
+                profitCurrencyCode = currentTenant.ProfitCurrencyCode;
+
                 dataProvider.CompanyName = currentTenant.Company;
                 dataProvider.TenantName = currentTenant.Company;
                 dataProvider.Signature = currentTenant.Signature;
@@ -2291,12 +2310,38 @@ namespace WebFreight.Web.ReportsWebServices
                 List<AgingStatemantDataItem> Due91_120Items = tempList.Where(d => (((todayDate - d.Date.Value).TotalDays) > 90) && (((todayDate - d.Date.Value).TotalDays) <= 120)).ToList();
                 List<AgingStatemantDataItem> over120Items = tempList.Where(d => (todayDate - d.Date.Value).TotalDays > 120).ToList();
 
-                currentsum = currentDueItems.Sum(d => d.Debit + d.Credit);
-                sum1_30 = Due1_30Items.Sum(d => d.Debit + d.Credit);
-                sum31_60 = Due31_60Items.Sum(d => d.Debit + d.Credit);
-                sum61_90 = Due61_90Items.Sum(d => d.Debit + d.Credit);
-                sum91_120 = Due91_120Items.Sum(d => d.Debit + d.Credit);
-                over120 = over120Items.Sum(d => d.Debit + d.Credit);
+                if (currencyType == "profit")
+                {
+                    if (!string.IsNullOrEmpty(localCurrencyCode) && !string.IsNullOrEmpty(profitCurrencyCode))
+                    {
+                        Currency localCurrency = commonContext.Currencies.Where(d => d.Code == localCurrencyCode && d.Tenant == tenant).FirstOrDefault();
+                        Currency profictCurrency = commonContext.Currencies.Where(d => d.Code == profitCurrencyCode && d.Tenant == tenant).FirstOrDefault();
+
+                        if (localCurrency != null && profictCurrency != null)
+                        {
+                            LastRate rate = this.GetCurrencysExchangeRate(tenant, localCurrency, profictCurrency, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
+                            if (rate != null && rate.Rate != 0)
+                            {
+                                currentsum = (currentDueItems.Sum(d => d.Debit + d.Credit / rate.Rate));
+                                sum1_30 = (Due1_30Items.Sum(d => d.Debit + d.Credit / rate.Rate));
+                                sum31_60 = (Due31_60Items.Sum(d => d.Debit + d.Credit / rate.Rate));
+                                sum61_90 = (Due61_90Items.Sum(d => d.Debit + d.Credit / rate.Rate));
+                                sum91_120 = (Due91_120Items.Sum(d => d.Debit + d.Credit / rate.Rate));
+                                over120 = (over120Items.Sum(d => d.Debit + d.Credit / rate.Rate));
+                            }
+                        }
+                    }
+                }
+
+                else
+                {
+                    currentsum = currentDueItems.Sum(d => d.Debit + d.Credit);
+                    sum1_30 = Due1_30Items.Sum(d => d.Debit + d.Credit);
+                    sum31_60 = Due31_60Items.Sum(d => d.Debit + d.Credit);
+                    sum61_90 = Due61_90Items.Sum(d => d.Debit + d.Credit);
+                    sum91_120 = Due91_120Items.Sum(d => d.Debit + d.Credit);
+                    over120 = over120Items.Sum(d => d.Debit + d.Credit);
+                }
 
                 CardEntityClass cardEntity = allCardData.Where(d => d.Id == cardId).FirstOrDefault();
 
@@ -2345,6 +2390,25 @@ namespace WebFreight.Web.ReportsWebServices
                     item.Debit *= -1;
                 }
             }
+        }
+        private LastRate GetCurrencysExchangeRate(int tenant, Currency localCurrency, Currency foreignCurrency, DateTime rateDate)
+        {
+            LastRate result = null;
+
+            IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
+            RatesTableRepository ratesTablesRepository = new RatesTableRepository(objectContext);
+            RatesTableQuery ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
+            CurrencyRepository currencyRepository = new CurrencyRepository(tenant);
+
+            LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, foreignCurrency.Id, localCurrency.Id, rateDate);
+            if (lastRate != null)
+            {
+                lastRate.BaseCurrencyId = localCurrency.Id;
+                lastRate.BaseCurrencyCode = localCurrency.Code;
+                result = lastRate;
+            }
+
+            return result;
         }
         #endregion
 
@@ -2964,796 +3028,7 @@ namespace WebFreight.Web.ReportsWebServices
             return dataProvider;
         }
         #endregion
-
-        #region AccountingLedger
-        //[WebMethod]
-        //public byte[] LoadAccountingLedgerData(byte[] xmlFilters, int tenant, string dateType)
-        //{
-        //    AccountingLedgerDataProvider dataprovider = LoadAccountingLedgerDataProvider(xmlFilters, tenant, dateType);
-        //    XmlSerializer serializer = new XmlSerializer(typeof(AccountingLedgerDataProvider));
-        //    MemoryStream memstream = new MemoryStream();
-        //    serializer.Serialize(memstream, dataprovider);
-        //    memstream.Seek(0, SeekOrigin.Begin);
-        //    var reader = new StreamReader(memstream);
-        //    string content = reader.ReadToEnd();
-        //    byte[] bytearray = memstream.ToArray();
-        //    return bytearray;
-        //}
-
-        //public AccountingLedgerDataProvider LoadAccountingLedgerDataProvider(byte[] xmlFilters, int tenant, string dateType)
-        //{
-        //    AccountingLedgerDataProvider dataProvider = new AccountingLedgerDataProvider();
-        //    ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
-        //    ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
-        //    APPaymentRepository aPPaymentRepository = new APPaymentRepository(tenant);
-        //    APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(tenant);
-        //    ARPaymentQuery arPaymentQuery = new ARPaymentQuery(aRPaymentRepository);
-        //    ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(aRInvoiceRepository);
-        //    APPaymentQuery aPPaymentQuery = new APPaymentQuery(aPPaymentRepository);
-        //    APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(aPInvoiceRepository);
-        //    MemoryStream memorystream = new MemoryStream(xmlFilters);
-        //    XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-        //    QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-        //    GenericFilter filter = new GenericFilter();
-        //    GenericSort sortClass = new GenericSort();
-        //    ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-
-        //    TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
-
-        //    IQueryable<ARInvoice> iQueryable = aRInvoiceRepository.GetAccountingLedgerARInvoices(tenant);
-        //    IQueryable<ARPayment> iQueryablePayment = aRPaymentRepository.GetAccountingLedgerARPayments(tenant);
-        //    IQueryable<APPayment> iQueryableApPayment = aPPaymentRepository.GetAccountingLedgerAPPayments(tenant);
-        //    IQueryable<APInvoice> iQueryableApInvoice = aPInvoiceRepository.GetAccountingLedgerAPInvoices(tenant);
-
-        //    QueryOperations nonListQueryOperation = new QueryOperations();
-        //    nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-        //    QueryOperations listQueryOperation = new QueryOperations();
-        //    listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-        //    InvoiceCustomFilter customFilters = new InvoiceCustomFilter(tenant);
-
-        //    QueryFilterItem fromDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
-        //    DateTime fromDate;
-        //    DateTime.TryParse(fromDateItem.FieldValue.ToString(), out fromDate);
-        //    dataProvider.FromPeriod = fromDate;
-
-        //    QueryFilterItem toDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
-        //    DateTime toDate;
-        //    DateTime.TryParse(toDateItem.FieldValue.ToString(), out toDate);
-        //    toDate = toDate.Date.AddHours(23).AddMinutes(59);
-        //    dataProvider.ToPeriod = toDate;
-        //    toDateItem.FieldValue = toDate;
-
-        //    AddressQuery addressQuery = new AddressQuery(tenant);
-        //    AddressPM address = addressQuery.GetSingleAddressPM(currentTenant.AddressId, currentTenant.Id, false);
-        //    if (address != null)
-        //    {
-        //        dataProvider.Address1 = address.Address1;
-        //        dataProvider.Address2 = address.Address2;
-        //        dataProvider.City = address.City;
-        //        dataProvider.Country = address.CountryName;
-        //        dataProvider.TenantFax = address.FaxNumber;
-        //        dataProvider.TenantPhone = address.PhoneNumber;
-        //        dataProvider.State = address.StateEnglishName;
-        //        dataProvider.ZipCode = address.ZipCode;
-        //        dataProvider.State = address.StateEnglishName;
-
-        //    }
-        //    dataProvider.CompanyAddress = currentTenant.CompanyAddress;
-        //    dataProvider.CompanyName = currentTenant.Company;
-        //    dataProvider.TenantName = currentTenant.Company;
-        //    dataProvider.Signature = currentTenant.Signature;
-        //    dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
-
-        //    QueryFilterItem valueFromDateItem = null;
-        //    QueryFilterItem valueToDateItem = null;
-        //    if (dateType == "ValueDate")
-        //    {
-        //        fromDateItem.FieldName = "InvoiceDate";
-        //        toDateItem.FieldName = "InvoiceDate";
-        //        valueFromDateItem = new QueryFilterItem() { FieldName = "InvoiceDate", FieldValue = fromDate, Operator = "GreaterThanOrEqual", DisplayInList = false };
-        //        valueToDateItem = new QueryFilterItem() { FieldName = "InvoiceDate", FieldValue = toDate, Operator = "LessThanOrEqual", DisplayInList = false };
-        //    }
-
-        //    ARPaymentCustomFilter ARpaymentFilters = new ARPaymentCustomFilter(tenant);
-
-        //    iQueryable = customFilters.GetFilteredQuery(queryOperations, iQueryable);
-        //    iQueryable = filter.GetFilteredQuery<ARInvoice>(nonListQueryOperation, iQueryable);
-        //    if (dateType == "ValueDate")
-        //    {
-        //        fromDateItem.FieldName = "ValueDate";
-        //        toDateItem.FieldName = "ValueDate";
-        //    }
-
-        //    iQueryablePayment = ARpaymentFilters.GetFilteredQuery(queryOperations, iQueryablePayment);
-        //    iQueryablePayment = filter.GetFilteredQuery<ARPayment>(nonListQueryOperation, iQueryablePayment);
-
-        //    IQueryable<ARInvoiceList> invoicequery = arInvoiceQuery.GetIQueryableEntityList(iQueryable);
-        //    IQueryable<ARPaymentList> paymentquery = arPaymentQuery.GetIQueryableEntityList(iQueryablePayment);
-
-        //    QueryFilterItem customerItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BillToId" && d.Operator == "Equals").FirstOrDefault();
-        //    string id = "";
-        //    Card customer = null;
-        //    if (customerItem != null)
-        //    {
-        //        id = customerItem.FieldValue.ToString();
-        //        customer = CardRepository.GetSingleCard(id, tenant, true);
-        //        dataProvider.CustomerName = customer.EnglishName;
-        //    }
-        //    else
-        //    {
-        //        dataProvider.CustomerName = "All";
-        //    }
-
-        //    AddressRepository addressRepository = new AddressRepository(tenant);
-        //    IQueryable<APInvoiceList> openAPInvoiceQuery = null;
-        //    IQueryable<APPaymentList> openAPPaymentQuery = null;
-        //    IQueryable<ARPaymentList> openiARPaymentQuery = null;
-        //    IQueryable<ARInvoiceList> openARInoiceQuery = null;
-        //    IQueryable<APPaymentList> aPpaymentQuery = null;
-        //    IQueryable<APInvoiceList> aPinvoiceQuery = null;
-
-        //    QueryOperations APqueryOperations = new QueryOperations() { QueryFilterItems = new List<QueryFilterItem>(), };
-        //    QueryFilterItem vendorFilterItem = new QueryFilterItem() { DisplayInList = false, FieldName = "VendorId", FieldValue = customerItem.FieldValue, Operator = customerItem.Operator, };
-        //    APqueryOperations.QueryFilterItems.Add(vendorFilterItem);
-        //    if (dateType == "CreateDate")
-        //    {
-        //        APqueryOperations.QueryFilterItems.Add(fromDateItem);
-        //        APqueryOperations.QueryFilterItems.Add(toDateItem);
-        //    }
-        //    else
-        //    {
-        //        APqueryOperations.QueryFilterItems.Add(valueFromDateItem);
-        //        APqueryOperations.QueryFilterItems.Add(valueToDateItem);
-        //    }
-
-        //    QueryOperations nonListAPQueryOperation = new QueryOperations();
-        //    nonListAPQueryOperation.QueryFilterItems = APqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-        //    QueryOperations listAPQueryOperation = new QueryOperations();
-        //    listAPQueryOperation.QueryFilterItems = APqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-        //    APInvoiceCustomFilter APinvoiceFilters = new APInvoiceCustomFilter(tenant);
-        //    iQueryableApInvoice = APinvoiceFilters.GetFilteredQuery(APqueryOperations, iQueryableApInvoice);
-        //    APPaymentCustomFilter APpaymentFilters = new APPaymentCustomFilter(tenant);
-        //    iQueryableApPayment = APpaymentFilters.GetFilteredQuery(APqueryOperations, iQueryableApPayment);
-
-        //    iQueryableApInvoice = filter.GetFilteredQuery<APInvoice>(nonListAPQueryOperation, iQueryableApInvoice);
-        //    aPinvoiceQuery = aPInvoiceQuery.GetIQueryableEntityList(iQueryableApInvoice);
-
-        //    if (dateType == "ValueDate")
-        //    {
-        //        valueFromDateItem.FieldName = "ValueDate";
-        //        valueToDateItem.FieldName = "ValueDate";
-        //    }
-
-        //    iQueryableApPayment = filter.GetFilteredQuery<APPayment>(nonListAPQueryOperation, iQueryableApPayment);
-        //    aPpaymentQuery = aPPaymentQuery.GetIQueryableEntityList(iQueryableApPayment);
-
-        //    #region Open
-
-        //    IQueryable<ARInvoice> OpeniQueryable = aRInvoiceRepository.GetAccountingLedgerARInvoices(tenant);
-        //    IQueryable<ARPayment> openiQueryablePayment = aRPaymentRepository.GetAccountingLedgerARPayments(tenant);
-        //    IQueryable<APPayment> openiQueryableApPayment = aPPaymentRepository.GetAccountingLedgerAPPayments(tenant);
-        //    IQueryable<APInvoice> openiQueryableApInvoice = aPInvoiceRepository.GetAccountingLedgerAPInvoices(tenant);
-
-        //    QueryFilterItem OpenDateItem = new QueryFilterItem() { FieldName = "CreateDate", FieldValue = fromDateItem.FieldValue, Operator = "LessThan", DisplayInList = false };
-        //    if (dateType == "ValueDate")
-        //    {
-        //        OpenDateItem.FieldName = "InvoiceDate";
-        //    }
-
-        //    QueryOperations openARqueryOperations = new QueryOperations() { QueryFilterItems = new List<QueryFilterItem>(), };
-        //    openARqueryOperations.QueryFilterItems.Add(OpenDateItem);
-        //    openARqueryOperations.QueryFilterItems.Add(customerItem);
-
-        //    QueryOperations nonListARQueryOperation = new QueryOperations();
-        //    nonListARQueryOperation.QueryFilterItems = openARqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-        //    QueryOperations listARQueryOperation = new QueryOperations();
-        //    listARQueryOperation.QueryFilterItems = openARqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-        //    QueryOperations openAPqueryOperations = new QueryOperations() { QueryFilterItems = new List<QueryFilterItem>(), };
-        //    openAPqueryOperations.QueryFilterItems.Add(OpenDateItem);
-        //    openAPqueryOperations.QueryFilterItems.Add(vendorFilterItem);
-
-        //    QueryOperations nonListOpenAPQueryOperation = new QueryOperations();
-        //    nonListOpenAPQueryOperation.QueryFilterItems = openAPqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-        //    QueryOperations listAPOpenQueryOperation = new QueryOperations();
-        //    listAPOpenQueryOperation.QueryFilterItems = openAPqueryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-        //    OpeniQueryable = filter.GetFilteredQuery<ARInvoice>(nonListARQueryOperation, OpeniQueryable);
-        //    openARInoiceQuery = arInvoiceQuery.GetIQueryableEntityList(OpeniQueryable);
-        //    openiQueryableApInvoice = filter.GetFilteredQuery<APInvoice>(nonListOpenAPQueryOperation, openiQueryableApInvoice);
-        //    openAPInvoiceQuery = aPInvoiceQuery.GetIQueryableEntityList(openiQueryableApInvoice);
-
-        //    if (dateType == "ValueDate")
-        //    {
-        //        OpenDateItem.FieldName = "ValueDate";
-        //    }
-
-        //    openiQueryablePayment = filter.GetFilteredQuery<ARPayment>(nonListARQueryOperation, openiQueryablePayment);
-        //    openiARPaymentQuery = arPaymentQuery.GetIQueryableEntityList(openiQueryablePayment);
-        //    openiQueryableApPayment = filter.GetFilteredQuery<APPayment>(nonListOpenAPQueryOperation, openiQueryableApPayment);
-        //    openAPPaymentQuery = aPPaymentQuery.GetIQueryableEntityList(openiQueryableApPayment);
-
-        //    #endregion
-
-        //    string Id = "";
-        //    Card vendor = null;
-        //    if (vendorFilterItem != null)
-        //    {
-        //        Id = vendorFilterItem.FieldValue.ToString();
-        //        vendor = CardRepository.GetSingleCard(id, tenant, true);
-        //        dataProvider.CustomerName = vendor.EnglishName;
-        //    }
-        //    else
-        //    {
-        //        dataProvider.CustomerName = "All";
-        //    }
-
-        //    Address cardAddress = addressRepository.GetMainAddressByCardId(id, tenant);
-        //    if (cardAddress != null)
-        //    {
-        //        dataProvider.Address = DataProviders.General.GetAddress(cardAddress);
-        //        dataProvider.Phone = cardAddress.PhoneNumber;
-        //        if (cardAddress.State != null)
-        //            dataProvider.CustomerState = cardAddress.State.EnglishName;
-        //        dataProvider.ZIPCode = cardAddress.ZipCode;
-        //    }
-
-        //    double? Openbalance = 0;
-        //    List<AccountingLedgerDataProvider.AccountingLedger> OpeningAccounts = new List<AccountingLedgerDataProvider.AccountingLedger>();
-
-        //    Dictionary<string, object> openAccountingDectionary = new Dictionary<string, object>();
-
-        //    foreach (ARInvoiceList openArInvoice in openARInoiceQuery)
-        //    {
-        //        openAccountingDectionary.Add(openArInvoice.Id + "arin", openArInvoice);
-        //    }
-
-        //    foreach (ARPaymentList openArPayment in openiARPaymentQuery)
-        //    {
-        //        openAccountingDectionary.Add(openArPayment.Id + "arpa", openArPayment);
-        //    }
-
-        //    foreach (APInvoiceList openApInvoice in openAPInvoiceQuery)
-        //    {
-        //        openAccountingDectionary.Add(openApInvoice.Id + "apin", openApInvoice);
-        //    }
-
-        //    foreach (APPaymentList openApPayment in openAPPaymentQuery)
-        //    {
-        //        openAccountingDectionary.Add(openApPayment.Id + "appa", openApPayment);
-        //    }
-
-        //    foreach (object openItem in openAccountingDectionary.Values)
-        //    {
-        //        ARInvoiceList openARinvoice = openItem as ARInvoiceList;
-        //        if (openARinvoice != null)
-        //        {
-        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
-
-        //            accountingLedgerRecord.Currency = openARinvoice.InvoiceCurrencyCode;
-        //            if (openARinvoice.ARInvoiceTypeCode == "CD")
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "Credit Note";
-        //            }
-
-        //            else if (openARinvoice.ARInvoiceTypeCode == "CC")
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "Customs Credit";
-        //            }
-
-        //            else if (openARinvoice.ARInvoiceTypeCode == "CI")
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "Customs Invoice";
-        //            }
-
-        //            else
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "A\\R Invoice";
-        //            }
-
-        //            if (openARinvoice.ARInvoiceTypeCode == "IN" || openARinvoice.ARInvoiceTypeCode == "MN" || openARinvoice.ARInvoiceTypeCode == "CI")
-        //            {
-        //                if (openARinvoice.StatusCode == "AC")
-        //                {
-        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
-        //                }
-
-        //                else
-        //                {
-        //                    accountingLedgerRecord.Debit = openARinvoice.AmountInInvoiceCurrency;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
-        //            }
-
-        //            accountingLedgerRecord.Notes = openARinvoice.InternalNotes;
-        //            OpeningAccounts.Add(accountingLedgerRecord);
-        //            continue;
-        //        }
-
-        //        ARPaymentList openARpayment = openItem as ARPaymentList;
-        //        if (openARpayment != null)
-        //        {
-        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
-        //            accountingLedgerRecord.ReferenceType = "A\\R Payment";
-
-        //            if (openARpayment.AccountingPaymentMethodCode == "FS")
-        //            {
-        //                if(openARpayment.AmountInPaymentCurrency < 0)
-        //                {
-        //                    accountingLedgerRecord.Debit = (double)Math.Abs((decimal)openARpayment.AmountInPaymentCurrency);
-        //                }
-
-        //                else
-        //                {
-        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARpayment.AmountInPaymentCurrency);
-        //                }
-        //            }
-
-        //            else
-        //            {
-        //                accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARpayment.AmountInPaymentCurrency);
-        //            }
-
-        //            accountingLedgerRecord.Currency = openARpayment.PaymentCurrencyCode;
-        //            accountingLedgerRecord.Notes = openARpayment.InternalNotes;
-        //            OpeningAccounts.Add(accountingLedgerRecord);
-        //            continue;
-        //        }
-
-        //        APPaymentList openAPpayment = openItem as APPaymentList;
-        //        if (openAPpayment != null)
-        //        {
-        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
-        //            accountingLedgerRecord.ReferenceType = "A\\P Payment";
-
-        //            if (openAPpayment.PaymentMethodCode == "FS")
-        //            {
-        //                if (openAPpayment.AmountInPaymentCurrency < 0)
-        //                {
-        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openAPpayment.AmountInPaymentCurrency);
-        //                }
-
-        //                else
-        //                {
-        //                    accountingLedgerRecord.Debit = (double)Math.Abs((decimal)openAPpayment.AmountInPaymentCurrency);
-        //                }
-        //            }
-
-        //            else
-        //            {
-        //                accountingLedgerRecord.Debit = (double)Math.Abs((decimal)openAPpayment.AmountInPaymentCurrency);
-        //            }
-
-        //            accountingLedgerRecord.Currency = openAPpayment.PaymentCurrencyCode;
-        //            accountingLedgerRecord.Notes = openAPpayment.InternalNotes;
-        //            OpeningAccounts.Add(accountingLedgerRecord);
-        //            continue;
-        //        }
-
-        //        APInvoiceList openAPInvoice = openItem as APInvoiceList;
-        //        if (openAPInvoice != null)
-        //        {
-        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
-
-        //            if (openAPInvoice.AmountInInvoiceCurrency > 0)
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "A\\P Invoice";
-        //                accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openAPInvoice.AmountInInvoiceCurrency);
-        //            }
-        //            else
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "A\\P Credit Note";
-        //                accountingLedgerRecord.Debit = (double)Math.Abs((decimal)openAPInvoice.AmountInInvoiceCurrency);
-        //            }
-
-        //            if (accountingLedgerRecord.Debit != null || accountingLedgerRecord.Credits != null)
-        //            {
-        //                accountingLedgerRecord.Currency = openAPInvoice.InvoiceCurrencyCode;
-        //            }
-
-        //            accountingLedgerRecord.Notes = openAPInvoice.InternalNotes;
-        //            OpeningAccounts.Add(accountingLedgerRecord);
-        //            continue;
-        //        }
-        //    }
-
-        //    OpeningAccounts = OpeningAccounts.OrderBy(d => d.CreateDate).ToList();
-
-        //    var OpenledgerGroups = from item in OpeningAccounts
-        //                           group item by item.Currency into g
-        //                           select new { CurrencyCode = g.Key, Items = g };
-
-        //    List<AccountingLedgerDataProvider.AccountingLedger> lastLedgers = new List<AccountingLedgerDataProvider.AccountingLedger>();
-
-        //    foreach (var ledgerGroup in OpenledgerGroups)
-        //    {
-        //        Openbalance = 0;
-        //        foreach (AccountingLedgerDataProvider.AccountingLedger ledger in ledgerGroup.Items)
-        //        {
-        //            switch (ledger.ReferenceType)
-        //            {
-        //                case "A\\P Payment":
-        //                case "A\\R Invoice":
-        //                case "A\\P Credit Note":
-        //                    {
-        //                        Openbalance = Openbalance + ledger.Debit;
-        //                        ledger.AccountBanalnce = Openbalance;
-        //                        break;
-        //                    }
-
-
-        //                case "A\\R Payment":
-        //                case "Credit Note":
-        //                case "A\\P Invoice":
-        //                    {
-        //                        Openbalance = Openbalance - ledger.Credits;
-        //                        ledger.AccountBanalnce = Openbalance;
-        //                        break;
-        //                    }
-        //            }
-        //        }
-        //        AccountingLedgerDataProvider.AccountingLedger lastLedger = ledgerGroup.Items.LastOrDefault();
-        //        AccountingLedgerDataProvider.AccountingLedger newLastLedger = new AccountingLedgerDataProvider.AccountingLedger()
-        //        {
-        //            AccountBanalnce = lastLedger.AccountBanalnce,
-
-        //            ReferenceType = "Opening Balance",
-        //            Currency = lastLedger.Currency,
-        //        };
-        //        lastLedgers.Add(newLastLedger);
-        //    }
-
-        //    #region Accounting
-
-        //    double? balance = 0;
-        //    dataProvider.AccountingLedgerList = new List<AccountingLedgerDataProvider.AccountingLedger>();
-        //    Dictionary<string, object> accountingDictionary = new Dictionary<string, object>();
-
-        //    foreach (ARInvoiceList arInvoice in invoicequery)
-        //    {
-        //        accountingDictionary.Add(arInvoice.Id + "arin", arInvoice);
-        //    }
-
-        //    foreach (ARPaymentList arPayment in paymentquery)
-        //    {
-        //        accountingDictionary.Add(arPayment.Id + "arpa", arPayment);
-        //    }
-
-        //    foreach (APInvoiceList apInvoice in aPinvoiceQuery)
-        //    {
-        //        accountingDictionary.Add(apInvoice.Id + "apin", apInvoice);
-        //    }
-
-        //    foreach (APPaymentList apPayment in aPpaymentQuery)
-        //    {
-        //        accountingDictionary.Add(apPayment.Id + "appa", apPayment);
-        //    }
-
-        //    foreach (object accountingItem in accountingDictionary.Values)
-        //    {
-        //        #region ARInvoice
-        //        ARInvoiceList arInvoice = accountingItem as ARInvoiceList;
-        //        if (arInvoice != null)
-        //        {
-        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
-        //            accountingLedgerRecord.ReferenceNumber = arInvoice.InvoiceNumber;
-        //            accountingLedgerRecord.Currency = arInvoice.InvoiceCurrencyCode;
-        //            accountingLedgerRecord.DueDate = arInvoice.DueDate.Value;
-        //            accountingLedgerRecord.Notes = arInvoice.InternalNotes;
-        //            if (!string.IsNullOrEmpty(arInvoice.MainEntityId))
-        //            {
-        //                Shipment shipment = shipmentRepository.GetSingleShipment(arInvoice.MainEntityId, tenant);
-        //                if (shipment != null)
-        //                {
-        //                    accountingLedgerRecord.ShipperReference1 = shipment.ShipperReference1;
-        //                    accountingLedgerRecord.ShipperReference2 = shipment.ShipperReference2;
-        //                    accountingLedgerRecord.ShipmentNumber = shipment.ShipmentNumber;
-        //                }
-        //            }
-
-        //            if (dateType == "ValueDate")
-        //            {
-        //                accountingLedgerRecord.CreateDate = arInvoice.InvoiceDate.Value;
-        //            }
-        //            else
-        //            {
-        //                accountingLedgerRecord.CreateDate = arInvoice.CreateDate.Value;
-        //            }
-
-        //            if (arInvoice.ARInvoiceTypeCode == "CD")
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "Credit Note";
-        //            }
-
-        //            else if (arInvoice.ARInvoiceTypeCode == "CC")
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "Customs Credit";
-        //            }
-
-        //            else if (arInvoice.ARInvoiceTypeCode == "CI")
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "Customs Invoice";
-        //            }
-
-        //            else
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "A\\R Invoice";
-        //            }
-
-        //            if (arInvoice.ARInvoiceTypeCode == "IN" || arInvoice.ARInvoiceTypeCode == "MN" || arInvoice.ARInvoiceTypeCode == "CI")
-        //            {
-        //                if (arInvoice.StatusCode == "AC")
-        //                {
-        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)arInvoice.AmountInInvoiceCurrency);
-        //                }
-
-        //                else
-        //                {
-        //                    accountingLedgerRecord.Debit = arInvoice.AmountInInvoiceCurrency;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                if (arInvoice.StatusCode == "AC" && (arInvoice.CreditedByARInvoiceTypeCode == "CD" || arInvoice.CreditedByARInvoiceTypeCode == "CC"))
-        //                {
-        //                    accountingLedgerRecord.Debit = arInvoice.AmountInInvoiceCurrency;
-        //                }
-
-        //                else
-        //                {
-        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)arInvoice.AmountInInvoiceCurrency);
-        //                }
-        //            }
-
-        //            dataProvider.AccountingLedgerList.Add(accountingLedgerRecord);
-        //            continue;
-        //        }
-        //        #endregion
-
-        //        #region ARPayment
-        //        ARPaymentList arPaymentList = accountingItem as ARPaymentList;
-        //        if (arPaymentList != null)
-        //        {
-        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
-
-        //            if (dateType == "ValueDate")
-        //            {
-        //                accountingLedgerRecord.CreateDate = arPaymentList.ValueDate.Value;
-        //            }
-        //            else
-        //            {
-        //                accountingLedgerRecord.CreateDate = arPaymentList.CreateDate.Value;
-        //            }
-        //            accountingLedgerRecord.DueDate = arPaymentList.ValueDate != null ? arPaymentList.ValueDate.Value : arPaymentList.CreateDate.Value;
-        //            accountingLedgerRecord.ReferenceNumber = arPaymentList.PaymentNo;
-        //            accountingLedgerRecord.ReferenceType = "A\\R Payment";
-
-        //            if (arPaymentList.AccountingPaymentMethodCode == "FS")
-        //            {
-        //                if (arPaymentList.AmountInPaymentCurrency < 0)
-        //                {
-        //                    accountingLedgerRecord.Debit = (double)Math.Abs((decimal)arPaymentList.AmountInPaymentCurrency);
-        //                }
-
-        //                else
-        //                {
-        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)arPaymentList.AmountInPaymentCurrency);
-        //                }
-        //            }
-
-        //            else
-        //            {
-        //                accountingLedgerRecord.Credits = (double)Math.Abs((decimal)arPaymentList.AmountInPaymentCurrency);
-        //            }
-
-        //            accountingLedgerRecord.Currency = arPaymentList.PaymentCurrencyCode;
-        //            accountingLedgerRecord.Notes = arPaymentList.InternalNotes;
-        //            accountingLedgerRecord.RegisterDate = arPaymentList.RegisterDate;
-        //             accountingLedgerRecord.ValueDate = arPaymentList.ValueDate;
-        //             accountingLedgerRecord.PaymentMethod = arPaymentList.AccountingPaymentMethodName;
-        //             dataProvider.AccountingLedgerList.Add(accountingLedgerRecord);
-        //             continue;
-        //         }
-        //         #endregion
-
-        //        #region APInvoice
-        //        APInvoiceList apInvoiceList = accountingItem as APInvoiceList;
-        //        if (apInvoiceList != null)
-        //        {
-        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
-        //            accountingLedgerRecord.DueDate = apInvoiceList.DueDate.Value;
-        //            accountingLedgerRecord.ReferenceNumber = apInvoiceList.InvoiceNumber;
-        //            accountingLedgerRecord.Notes = apInvoiceList.InternalNotes;
-        //            if (!string.IsNullOrEmpty(apInvoiceList.MainEntityReference))
-        //            {
-        //                Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(apInvoiceList.MainEntityReference, tenant);
-        //                if (shipment != null)
-        //                {
-        //                    accountingLedgerRecord.ShipperReference1 = shipment.ShipperReference1;
-        //                    accountingLedgerRecord.ShipperReference2 = shipment.ShipperReference2;
-        //                    accountingLedgerRecord.ShipmentNumber = shipment.ShipmentNumber;
-        //                }
-        //            }
-
-        //            if (dateType == "ValueDate")
-        //            {
-        //                accountingLedgerRecord.CreateDate = apInvoiceList.InvoiceDate.Value;
-        //            }
-        //            else
-        //            {
-        //                accountingLedgerRecord.CreateDate = apInvoiceList.CreateDate.Value;
-        //            }
-
-        //            if (apInvoiceList.AmountInInvoiceCurrency > 0)
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "A\\P Invoice";
-        //                accountingLedgerRecord.Credits = (double)Math.Abs((decimal)apInvoiceList.AmountInInvoiceCurrency);
-        //            }
-        //            else
-        //            {
-        //                accountingLedgerRecord.ReferenceType = "A\\P Credit Note";
-        //                accountingLedgerRecord.Debit = (double)Math.Abs((decimal)apInvoiceList.AmountInInvoiceCurrency);
-        //            }
-
-        //            if (accountingLedgerRecord.Debit != null || accountingLedgerRecord.Credits != null)
-        //            {
-        //                accountingLedgerRecord.Currency = apInvoiceList.InvoiceCurrencyCode;
-        //            }
-
-        //            dataProvider.AccountingLedgerList.Add(accountingLedgerRecord);
-        //            continue;
-        //        }
-        //        #endregion
-
-        //        #region APPayment
-        //        APPaymentList apPaymentList = accountingItem as APPaymentList;
-        //        if (apPaymentList != null)
-        //        {
-        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
-
-        //            if (dateType == "ValueDate")
-        //            {
-        //                accountingLedgerRecord.CreateDate = apPaymentList.ValueDate.Value;
-        //            }
-        //            else
-        //            {
-        //                accountingLedgerRecord.CreateDate = apPaymentList.CreateDate.Value;
-        //            }
-        //            accountingLedgerRecord.DueDate = apPaymentList.ValueDate != null ? apPaymentList.ValueDate.Value : apPaymentList.CreateDate.Value;
-        //            accountingLedgerRecord.ReferenceNumber = apPaymentList.PaymentNo;
-        //            accountingLedgerRecord.ReferenceType = "A\\P Payment";
-
-        //            if (apPaymentList.PaymentMethodCode == "FS")
-        //            {
-        //                if (apPaymentList.AmountInPaymentCurrency < 0)
-        //                {
-        //                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)apPaymentList.AmountInPaymentCurrency);
-        //                }
-
-        //                else
-        //                {
-        //                    accountingLedgerRecord.Debit = (double)Math.Abs((decimal)apPaymentList.AmountInPaymentCurrency);
-        //                }
-        //            }
-
-        //            else
-        //            {
-        //                accountingLedgerRecord.Debit = (double)Math.Abs((decimal)apPaymentList.AmountInPaymentCurrency);
-        //            }
-
-        //            accountingLedgerRecord.Currency = apPaymentList.PaymentCurrencyCode;
-        //            accountingLedgerRecord.Notes = apPaymentList.InternalNotes;
-        //            accountingLedgerRecord.RegisterDate = apPaymentList.RegisterDate;
-        //            accountingLedgerRecord.ValueDate = apPaymentList.ValueDate;
-        //            accountingLedgerRecord.PaymentMethod = apPaymentList.PaymentMethodName;
-        //            dataProvider.AccountingLedgerList.Add(accountingLedgerRecord);
-        //            continue;
-        //        }
-        //        #endregion
-        //    }
-
-        //    dataProvider.AccountingLedgerList = dataProvider.AccountingLedgerList.OrderBy(d => d.CreateDate).ToList();
-        //    var ledgerGroups = from item in dataProvider.AccountingLedgerList
-        //                       group item by item.Currency into g
-        //                       select new { CurrencyCode = g.Key, Items = g };
-
-        //    foreach (var ledgerGroup in ledgerGroups)
-        //    {
-        //        balance = 0;
-        //        foreach (AccountingLedgerDataProvider.AccountingLedger ledger in ledgerGroup.Items)
-        //        {
-        //            switch (ledger.ReferenceType)
-        //            {
-        //                case "A\\P Payment":
-        //                case "A\\R Invoice":
-        //                case "A\\P Credit Note":
-        //                    {
-        //                        balance = balance + ledger.Debit;
-        //                        ledger.AccountBanalnce = balance;
-        //                        break;
-        //                    }
-
-        //                case "A\\R Payment":
-        //                case "Credit Note":
-        //                case "A\\P Invoice":
-        //                    {
-        //                        balance = balance - ledger.Credits;
-        //                        ledger.AccountBanalnce = balance;
-        //                        break;
-        //                    }
-        //            }
-        //        }
-        //    }
-
-        //    #endregion
-
-        //    double? firstitem = 0;
-        //    foreach (AccountingLedgerDataProvider.AccountingLedger ledger in lastLedgers)
-        //    {
-        //        dataProvider.AccountingLedgerList.Add(ledger);
-        //    }
-
-        //    var list = (from item in dataProvider.AccountingLedgerList
-        //                group item by item.Currency into g
-        //                select new { Currency = g.Key, Items = g });
-
-        //    dataProvider.AccountingLedgerList = new List<AccountingLedgerDataProvider.AccountingLedger>();
-
-        //    foreach (var group in list)
-        //    {
-        //        List<AccountingLedgerDataProvider.AccountingLedger> ledgerList = group.Items.ToList();
-        //        List<AccountingLedgerDataProvider.AccountingLedger> OpenList = group.Items.Where(d => d.ReferenceType == "Opening Balance").ToList();
-        //        if (OpenList.Count() == 0)
-        //        {
-        //            AccountingLedgerDataProvider.AccountingLedger accountingLedgerRecord = new AccountingLedgerDataProvider.AccountingLedger();
-        //            accountingLedgerRecord.ReferenceType = "Opening Balance";
-        //            accountingLedgerRecord.AccountBanalnce = 0.00;
-        //            accountingLedgerRecord.Currency = group.Currency;
-        //            ledgerList.Add(accountingLedgerRecord);
-        //        }
-
-        //        ledgerList = ledgerList.OrderBy(d => d.CreateDate).ToList();
-
-        //        foreach (AccountingLedgerDataProvider.AccountingLedger ledger in ledgerList)
-        //        {
-        //            dataProvider.AccountingLedgerList.Add(ledger);
-
-        //            int i = ledgerList.IndexOf(ledger);
-
-        //            if (i == 0)
-        //            {
-        //                firstitem = ledgerList[i].AccountBanalnce;
-        //            }
-
-        //            if (i < ledgerList.Count && i != 0)
-        //            {
-        //                ledger.AccountBanalnce = ledgerList[i - 1].AccountBanalnce + (ledgerList[i].Credits != null ? -1 * ledgerList[i].Credits : ledgerList[i].Debit);
-        //            }
-
-        //            ledger.Total = ledger.AccountBanalnce;
-        //        }
-        //    }
-
-        //    dataProvider.Name = @"Accounting Ledger";
-
-        //    if (dateType == "ValueDate")
-        //    {
-        //        dataProvider.DateType = "Value Date";
-        //    }
-        //    else
-        //    {
-        //        dataProvider.DateType = "Create Date";
-        //    }
-
-        //    return dataProvider;
-        //}
-        #endregion
-
+        
         #region AP Invoice Include Vat
 
         [WebMethod]
