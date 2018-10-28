@@ -314,7 +314,10 @@ export class ObjectTablePM {
     public get AllowedInQueues() { return this.allowedInQueues; }
     public set AllowedInQueues(newValue: boolean) { if (this.allowedInQueues != newValue) { this.allowedInQueues = newValue; this.MarkAsDirty("AllowedInQueues"); } }
        
-	 
+    private displayName: string;
+    public get DisplayName() { return this.displayName; }
+    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
+
 
     public OldEntityPM: ObjectTablePM;
 		
