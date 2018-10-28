@@ -23,6 +23,11 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
                 .HasMaxLength(40)
                 .IsUnicode(false);
 
+
+            this.Property(t => t.IP)
+        .HasMaxLength(15)
+        .IsUnicode(false);
+
             this.Property(t => t.Code)
             .IsRequired()
             .HasMaxLength(6)
@@ -39,7 +44,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.Email).HasColumnName("Email");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t =>t.Code).HasColumnName("Code");
-
+            this.Property(t => t.IP).HasColumnName("IP");
         }
     }
 }
