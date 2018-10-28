@@ -17,6 +17,8 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -562,6 +564,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             Simplog.Data.CommonDataModel.ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
             TaxDeductionReportData taxDeduction = new TaxDeductionReportData();
+            taxDeduction.TaxYear = reportYear;
             // 1- get ap payments by year and status ad
             // 2- group appayments by vendorId and percentage
             // 3- Get Cards by list of vendorids from step 2
@@ -629,6 +632,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                               AssessingOfficeName = a.TaxWithholdingAssessOffice != null? a.TaxWithholdingAssessOffice.LocalName:null,
                                               EnglishName = a.EnglishName,
                                               DeductionTypeEnglishName = a.AccountingCompanyType != null ? a.AccountingCompanyType.EnglishName:null,
+                                              DeductionFileNumber= a.DeductionFileNumber
                                           }
                                           ).ToList();
 
@@ -694,17 +698,33 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 ByMonthList byMonthList = new ByMonthList()
                 {
                     Month = month.Month,
-                };
+                   TotalVendors = taxDeduction.ByVendorList.Where(d => d.Month == month.Month).Count(),
+                 TotalPaymentsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionType != "18").Sum(d => d.SumOfAmountInLocalCurrency),
+                TotalDeductionsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionType != "18").Sum(d => d.SumOfTaxDeductionLocalAmount),
+                TotalDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionType == "18").Sum(d => d.SumOfAmountInLocalCurrency),
+                TotalDeductionsFromDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionType == "18").Sum(d => d.SumOfTaxDeductionLocalAmount)
+
+            };
 
 
-                //taxDeductions.Where(d => d.Month == month.Month).Count();
-                //taxDeductions.Where(d => d.Month == month.Month && d.DeductionType != "18").Sum(d => d.SumOfAmountInLocalCurrency);
-                //taxDeductions.Where(d => d.Month == month.Month && d.DeductionType != "18").Sum(d => d.SumOfTaxDeductionLocalAmount);
-                //taxDeductions.Where(d => d.Month == month.Month && d.DeductionType == "18").Sum(d => d.SumOfAmountInLocalCurrency);
-                //taxDeductions.Where(d => d.Month == month.Month && d.DeductionType == "18").Sum(d => d.SumOfTaxDeductionLocalAmount);
-               
+              
                 taxDeduction.ByMonthList.Add(byMonthList);
             }
+
+
+            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
+            FullAccountingSettingPM setting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+            TotalForCompany companyTotal = new TotalForCompany()
+            {
+                DeductionFileNumber = setting.DeductionFileNumber,
+                CompanyName = tenantPM.Company,
+                TotalDeductions = taxDeduction.ByVendorList.Sum(d => d.SumOfTaxDeductionLocalAmount),
+                TotalPayments = taxDeduction.ByVendorList.Sum(d => d.SumOfAmountInLocalCurrency),
+            };
+            taxDeduction.TotalForCompany = new List<TotalForCompany>();
+            taxDeduction.TotalForCompany.Add(companyTotal);
 
 
             return taxDeduction;
