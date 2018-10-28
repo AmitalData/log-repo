@@ -2174,7 +2174,15 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.Signature = currentTenant.Signature;
                 dataProvider.Logo = DataProviders.General.GetLogo(currentTenant.Id);
                 dataProvider.Name = @" Aging report - Statement summarized";
-                dataProvider.Currency = currentTenant.AccountingCurrencyCode;
+
+                if (currencyType == "profit")
+                {
+                    dataProvider.Currency = profitCurrencyCode;
+                }
+                else
+                {
+                    dataProvider.Currency = localCurrencyCode;
+                }
 
                 Address tenantAddress = addressRepository.GetSingleAddress(currentTenant.AddressId, currentTenant.Id);
                 if (tenantAddress != null)
