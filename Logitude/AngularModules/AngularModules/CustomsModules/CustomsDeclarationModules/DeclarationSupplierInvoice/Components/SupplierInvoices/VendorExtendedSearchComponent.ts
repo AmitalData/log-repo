@@ -272,10 +272,10 @@ export class VendorExtendedSearchComponent extends BaseComponent {
 
     }
     _PeriodDeclarationList: ObservableCollection;
-    _PeriodDeclarationListSave: [];
+    _PeriodDeclarationListSave: any[]=[];
     _HavePeriodDecResult: boolean = false;
     UpdateImporterDeposition() {
-
+        this.searchText = "";
         SessionLocator.CurrentSession.StartBusyIndicator("");
         let customSendOptionsArgs: CustomSendOptionsArgs = new CustomSendOptionsArgs();
         //var month = new Date().getMonth();
