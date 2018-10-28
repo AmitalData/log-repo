@@ -1,4 +1,4 @@
-﻿
+
 declare var System: any;
 declare var window: any;
 import {Component, AfterViewInit, OnInit} from '@angular/core';
@@ -11,16 +11,14 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {DocumentTypeTemplatePM} from '../../../Common/EntityPMs/DocumentTypeTemplatePM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-declare var jQuery: any;
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-declare var SelectionInput, GetPercentageImageHeight, SetNewValue, HTMLID: any;
+declare var SelectionInput, GetPercentageImageHeight, SetNewValue, jQuery , HTMLID: any;
 import {DocumentTypeTemplatePMExtendedService} from '../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
 import {DocumentTypeTemplateFilter} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/DocumentTypeTemplateFilter';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {GeneralEmailSender} from '../../../Infrastructure/Helpers/GeneralEmailSender';
 import {AttachmentsList} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/AttachmentsList';
-declare var SelectionInput, GetPercentageImageHeight, HTMLID: any;
 import {ReportsTemplateListExtendedService} from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';

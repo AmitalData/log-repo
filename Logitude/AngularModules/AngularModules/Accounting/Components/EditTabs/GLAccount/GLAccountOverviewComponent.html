@@ -175,8 +175,8 @@
                                                 <td class="header-labels">{{ 'GLAccounts.O.OpenTransactions' | TextCodeTranslationPipe }}</td>
                                             </tr>
                                             <tr>
-                                                <td class="amount-labels" [class.red]="GLAccountMoreData.BalanceInLocalCurrency<=0">{{ GLAccountMoreData.BalanceInLocalCurrency | NumbersPipe:'N2' }}</td>
-                                                <td class="amount-labels" [class.red]="GLAccountMoreData.LocalBalanceInDue<=0">{{ GLAccountMoreData.LocalBalanceInDue | NumbersPipe:'N2' }}</td>
+                                                <td class="amount-labels" [class.red]="GLAccountMoreData.BalanceInLocalCurrency<=0">{{ (GLAccountMoreData.BalanceInLocalCurrency ?GLAccountMoreData.BalanceInLocalCurrency:0) | NumbersPipe:'N2' }}</td>
+                                                <td class="amount-labels" [class.red]="GLAccountMoreData.LocalBalanceInDue<=0">{{ (GLAccountMoreData.LocalBalanceInDue?GLAccountMoreData.LocalBalanceInDue:0) | NumbersPipe:'N2' }}</td>
                                                 <td class="amount-labels" style="color: black;">{{ GLAccountOpenTransactionsCount }}</td>
                                             </tr>
                                             <tr>
