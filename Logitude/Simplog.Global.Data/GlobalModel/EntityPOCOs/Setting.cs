@@ -71,6 +71,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string OceanInsightsToken { get; set; }
         public bool IsFullBuildDWRunning { get; set; }
         public bool IsIncrementalDWRunning { get; set; }
+        public int EmailSendingQuota { get; set; }
 
     }
 }

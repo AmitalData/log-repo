@@ -1151,7 +1151,7 @@ namespace WebFreight.Web
         private UserData CheckCaptchaState(LoginParameters loginParameters)
         {
             UserData data = new UserData();
-            if (!loginParameters.IsMobileLogin)
+            if (!loginParameters.IsMobileLogin && loginParameters.ClientType == "Web")
             {
                 IGlobalContext globalContext = GlobalContext.GetContext();
                 ContactPassword contactPassword = globalContext.ContactPasswords.Where(c => c.Email.ToLower() == loginParameters.Email).FirstOrDefault();

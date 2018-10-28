@@ -35,7 +35,7 @@ export class GLAccountMenuButtonsHandler {
     }
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
-      
+
 
         if (this.EntityPM != null) {
             if (this.entityArgs.EditComponent != null) {
@@ -50,7 +50,7 @@ export class GLAccountMenuButtonsHandler {
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
                     switch (button.EventCode) {
-                        
+
                         case "GLAccountInactive":
                             {
                                 if (this.EntityPM.Inactive == true) {
@@ -79,17 +79,17 @@ export class GLAccountMenuButtonsHandler {
                         case "Reconcile":
                             {
                                 button.DisplayText = TextCodeTranslator.Translate("GLAccount.B.Reconcile") + " (" + this.EntityPM.ReconcilationCount + ")";
-                              
-                             
+
+
                                        if (this.EntityPM.IsControlAccount == true || this.EntityPM.ReconcilationCount==0 ) {
                                            button.IsDisabled = true;
-                                       
-                                  
-                                      
+
+
+
                                     }
 
-                              
-                               
+
+
                                 break;
                             }
                     }
@@ -103,25 +103,24 @@ export class GLAccountMenuButtonsHandler {
     public MenuButtonClick(menuButton: MenuButtonPM) {
 
         var errors = [];
-        
+
         if (errors.length == 0) {
             switch (menuButton.EventCode) {
 
-                case "GLAccountInactive": 
+                case "GLAccountInactive":
                     {
                         var myGLAccountListService: GLAccountListService = new GLAccountListService();
                         myGLAccountListService.getSingle(this.EntityPM.Id)
                             .subscribe((myResponse: ServiceResponse) => {
                                 var myGLAccountList: GLAccountList = myResponse.Result as GLAccountList;
 
-                                //if (this.EntityPM.BalanceInLocalCurrency != 0) {
-                                if (myGLAccountList.BalanceInLocalCurrency != 0) {
-                                    this.entityArgs.EditComponent.ValidationErrorsList = [];
-                                    this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
-                                } else {
+                                if (!myGLAccountList.BalanceInLocalCurrency || myGLAccountList.BalanceInLocalCurrency == 0) {
                                     this.EntityPM.Inactive = true;
                                     this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
                                     this.entityArgs.EditComponent.SaveChanges();
+                                } else {
+                                    this.entityArgs.EditComponent.ValidationErrorsList = [];
+                                    this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
                                 }
                             });
                         break;
@@ -135,7 +134,7 @@ export class GLAccountMenuButtonsHandler {
                 case "Reconcile":
                     {
                         this.ReconcileButtonClicked();
-                        
+
                         break;
                     }
             }
@@ -185,8 +184,8 @@ export class GLAccountMenuButtonsHandler {
                         // show alert
                     }
                     this.GetNonReconciledTransactionsCount();
-                  
-                   
+
+
                 });
 
             }
@@ -219,16 +218,16 @@ export class GLAccountMenuButtonsHandler {
             return document.body.clientWidth;
         }
     }
- 
+
 
     GetNonReconciledTransactionsCount() {
         this.glAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe(myResult => {
-         
+
 
             if (!AppTool.IsNullOrEmpty(myResult)) {
-               
+
                 this.EntityPM.ReconcilationCount = myResult;
-              
+
                 this.SaveChenges();
             }
 
@@ -249,5 +248,5 @@ export class GLAccountMenuButtonsHandler {
         });
     }
 
- 
+
 }
