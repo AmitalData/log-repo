@@ -253,6 +253,11 @@ export class ARInvoiceLinePM {
     public set IsExpense(newValue: boolean) { if (this.isExpense != newValue) { this.isExpense = newValue; this.MarkAsDirty("IsExpense"); } }
        
 	 
+    private autoCreditDummyReceivableId: string;
+    public get AutoCreditDummyReceivableId() { return this.autoCreditDummyReceivableId; }
+    public set AutoCreditDummyReceivableId(newValue: string) { if (this.autoCreditDummyReceivableId != newValue) { this.autoCreditDummyReceivableId = newValue; this.MarkAsDirty("AutoCreditDummyReceivableId"); } }
+       
+	 
 
     public OldEntityPM: ARInvoiceLinePM;
 	    

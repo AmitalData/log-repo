@@ -813,6 +813,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CustomerStatusCode = "ACT";
                 entityPM.CustomerStatusName = "Active";
                 entityPM.PartnerTypeId = "CS";
+                entityPM.ActivationDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.ActivatedByUserId = loggedContact.Id;
             }
 
             else if (entityPM.SetReady)
@@ -820,6 +822,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CustomerStatusCode = "WAC";
                 entityPM.CustomerStatusName = "Waiting for Activation";
                 entityPM.ReadyForActivationDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.ActivationRequestDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.ActivationRequestedByUserId = loggedContact.Id;
 
                 CustomerEmailAlert customerEmailAlert = new CustomerEmailAlert();
                 customerEmailAlert.SendEmailAlert(entityPM, entityPM.Tenant, "GCAC", false);
@@ -830,6 +834,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.BeforeDeactiveStatusCode = entityPM.CustomerStatusCode;
                 entityPM.CustomerStatusCode = "INA";
                 entityPM.CustomerStatusName = "Inactive";
+                entityPM.InactiveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.SetAsInactiveByUserId = loggedContact.Id;
                 entityPM.InActive = true;
             }
 
