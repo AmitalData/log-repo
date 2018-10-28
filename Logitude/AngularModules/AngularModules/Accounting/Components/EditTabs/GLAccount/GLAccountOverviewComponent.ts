@@ -173,10 +173,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./Accounting/Components/Others/ReconcileComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                    if ($event == 'ok') {
-                        // show alert
-                    }
-
+                    this.LoadAllData();
                 });
 
             }

@@ -265,6 +265,12 @@ function ResetItemFunnel() {
                 html +=customNumberFormat(item.dataContext.data);
                 return html;
             },
+            "chartScrollbar": {
+              "graph": "g1",
+                "oppositeAxis":false,
+                "offset":20,
+                "scrollbarHeight": 30
+            },
 
             "legend": {
                 "divId": LegendDiv,
