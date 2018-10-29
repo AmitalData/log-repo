@@ -32,7 +32,38 @@ export class GLAccountMenuButtonsHandler {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
 
+
+        this.Listen();
     }
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
+    Listen() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    }
+                });
+            }
+
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        console.log("Entity Reloaded");
+                    }
+                });
+            }
+
+
+        }
+    }
+
+
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
 
