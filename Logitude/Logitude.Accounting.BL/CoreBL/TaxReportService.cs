@@ -418,11 +418,11 @@ namespace Logitude.Accounting.BL.CoreBL
 				line += itemPM.Reference.PadLeft(9, '0');
 
 				//VatAmount
-				line += Math.Abs(Convert.ToInt32(itemPM.VatAmount)).ToString().PadLeft(9, '0');
+				line += Math.Abs(Math.Truncate(itemPM.VatAmount.Value)).ToString().PadLeft(9, '0');
 
 				//VatableInvoiceAmount
 				line += itemPM.VatableInvoiceAmount >= 0 ? '+' : '-';
-				line += Math.Abs(Convert.ToInt32(itemPM.VatableInvoiceAmount)).ToString().PadLeft(10, '0');
+				line += Math.Abs(Math.Truncate(itemPM.VatableInvoiceAmount.Value)).ToString().PadLeft(10, '0');
 
 
 				line += "000000000";
