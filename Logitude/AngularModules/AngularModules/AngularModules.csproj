@@ -100,6 +100,7 @@
     <Content Include="CommonModules\CommonFlightsSchedules\Components\FlightsSchedules\FVASimulatorComponent.html" />
     <Content Include="CommonModules\CommonFlightsSchedules\Components\FlightsSchedules\XMLFlightsSimulatorComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderComponent.html" />
+    <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_Branch.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_ChargesType.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_Currency.html" />
@@ -262,6 +263,7 @@
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\AddEditPrivateLabelsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelLoadComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
+    <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />
