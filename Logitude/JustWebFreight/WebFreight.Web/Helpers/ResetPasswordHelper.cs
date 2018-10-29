@@ -15,7 +15,7 @@ namespace WebFreight.Web.Helpers
 {
     public class ResetPasswordHelper
     {
-        public UserData ForgetPassword(string email, bool ischamplogin, bool ismobile, string captchaCode, string captchaKey, string appEnvironment = "Unifreight")
+        public UserData ForgetPassword(string email, bool ischamplogin, bool ismobile, bool usecaptcha, string captchaCode =null, string captchaKey = null, string appEnvironment = "Unifreight")
         {
             CaptchaHelper captchaHelper = new CaptchaHelper();
             PasswordCheckService passwordChkService = new PasswordCheckService();
@@ -30,7 +30,7 @@ namespace WebFreight.Web.Helpers
             bool checkCaptcha = false;
             DateTime lastResetDate = globalObjectContext.ChangePasswordLogs.Where(a => a.IP == iP).OrderByDescending(d=>d.CreateDate).Select(d=>d.CreateDate).FirstOrDefault();
 
-            if (!ismobile)
+            if (usecaptcha)
             {
                 invalidEmailResetPasswordCount = globalObjectContext.InvalidEmailResetPasswords.Where(a => a.IP == iP && a.CreateDate >= dateNowBefor5Minutes && a.CreateDate > lastResetDate).Count();
 
@@ -57,7 +57,7 @@ namespace WebFreight.Web.Helpers
                     userData.HasError = true;
                     userData.InValidMailOrPassword = true;
                     AddInvalidEmailResetPassword(email, 0);
-                    if (!ismobile)
+                    if (usecaptcha)
                     {
                         if ((invalidEmailResetPasswordCount + 1) >= 5)
                         {

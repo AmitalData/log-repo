@@ -2414,7 +2414,7 @@ namespace WebFreight.Web
         public UserData GetRequestResetUserPassword(string email, bool ischamplogin)
         {
             ResetPasswordHelper resetPasswordHelper = new ResetPasswordHelper();
-            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), ischamplogin, false, null, null);
+            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), ischamplogin, false,false);
 
             return userData;
         }
@@ -2442,7 +2442,7 @@ namespace WebFreight.Web
         public UserData GetRequestResetUserPassword(bool ismobile, string email)
         {
             ResetPasswordHelper resetPasswordHelper = new ResetPasswordHelper();
-            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), false, ismobile, null, null, null);
+            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), false, ismobile, false);
 
             return userData;
         }
@@ -2451,7 +2451,7 @@ namespace WebFreight.Web
         public UserData GetRequestResetUserPassword(string email, string appEnvironment)//New Method
         {
             ResetPasswordHelper resetPasswordHelper = new ResetPasswordHelper();
-            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), false, true, null, appEnvironment);
+            UserData userData = resetPasswordHelper.ForgetPassword(email.ToLower(), false, true, false,null,null, appEnvironment);
 
             return userData;
         }
