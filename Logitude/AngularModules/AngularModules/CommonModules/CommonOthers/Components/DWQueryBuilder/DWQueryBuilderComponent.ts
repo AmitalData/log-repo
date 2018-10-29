@@ -528,7 +528,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             }
             else {
                 //Myfilter.FilterItems.filter(a => a.TextValue != null).forEach((filter) => {
-                if (Myfilter.TextValue != null) {
+                if (!AppTool.IsNullOrEmpty(Myfilter.TextValue)) {
                     var filter = Myfilter;
                     var OperationSimpol = "";
                     if (filter.Operation.Code == filter.equalsOp.Code) {
@@ -583,7 +583,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     }
 
     GetIfFiltersHaveValues(FiltersList: DWObjectFieldsDetails[]) {
-        return FiltersList.filter(a => a.TextValue != null && a.TextValue != "").length > 0;
+        return FiltersList.filter(a => !AppTool.IsNullOrEmpty(a.TextValue)).length > 0;
     }
 
     GetWhereJoined(FiltersList: DWObjectFieldsDetails[]) {
