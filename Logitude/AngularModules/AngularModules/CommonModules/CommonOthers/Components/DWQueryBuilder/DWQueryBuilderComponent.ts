@@ -445,9 +445,10 @@ export class DWQueryBuilderComponent extends BaseComponent {
         var view = new DWObjectFieldsDetails(item.BaseDWObjectField, this);
         if (view.DWObjectTableCode.indexOf("DIM_") != -1) {
             view.ParentDataTypeCode = "LookUp";
+            view.ParentDimTabelName = item.BaseDWObjectField.DWObjectTableCode;
         }
-        else { 
-            view.ParentDataTypeCode = view.DataTypeCode;
+        else {
+            view.ParentDataTypeCode = item.BaseDWObjectField.DataTypeCode; 
         }
         this.SelectedItem = view;
         if (this.SelectedItem && this.SelectedItem.DataTypeCode != "LookUp" && this.SelectedItem.DataTypeCode != "Dimension" && this.SelectedFiltersDataSource.indexOf(this.SelectedItem) == -1) {
@@ -1072,6 +1073,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     FieldValueChanged(DWObjectField: DWObjectFieldsDetails) {
         //this.MyParentClass = ParentClass;
+        this.TextValue = ""; 
         this.Name = DWObjectField.Name;
         this.Code = DWObjectField.Code;
         this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
@@ -1080,15 +1082,23 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.DisplayName = DWObjectField.Code;
         this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
         this.IsMeasurement = DWObjectField.IsMeasurement;
-        this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
-        this.ParentDataTypeCode = DWObjectField.DataTypeCode;
-        this.ParentDimTabelName = DWObjectField.ParentDimTabelName;
+        this.AggregationTypeCode = DWObjectField.AggregationTypeCode; 
+        if (this.DWObjectTableCode.indexOf("DIM_") != -1) {
+            this.ParentDataTypeCode = "LookUp";
+            this.ParentDimTabelName = DWObjectField.DWObjectTableCode;
+        }
+        else {
+            this.ParentDataTypeCode = DWObjectField.DataTypeCode;
+            this.ParentDimTabelName = DWObjectField.ParentDimTabelName;
+        }
+        //this.ParentDataTypeCode = DWObjectField.DataTypeCode;
+     
         this.Operators = this.GetFieldOperators(this);
         if ((this.ParentDataTypeCode == "Text" || this.ParentDataTypeCode == "nText")) {
             this.Operation = new ObjectFieldOperator("StartsWith", "Starts With");
         }
         else {
-            this.operation = new ObjectFieldOperator("Equals", "Equals to");
+            this.Operation = new ObjectFieldOperator("Equals", "Equals to");
         }
         //this.IndexOrder = ParentClass.SelectedFieldsDataSource.length;
         //var Filters = DWObjectField.MyParentClass.SelectedFiltersDataSource;
