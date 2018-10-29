@@ -225,6 +225,9 @@ var LoginComponent = (function () {
             this.IsShowAreaCaptcha = false;
             this.CaptchaKey = null;
             this.CaptchaTextValue = null;
+            if (this.errorMessage == "Please re-enter the characters you see in the image above") {
+                this.errorMessage = "";
+            }
         }
     };
     LoginComponent.prototype.PasswordExpirationButtomClicked = function (type) {
@@ -314,15 +317,7 @@ var LoginComponent = (function () {
                 if (userData && userData.ExceptionMessage) {
                     alert(userData.ExceptionMessage);
                 }
-                else if (userData.InValidCaptcha) {
-                    if (_this.IsShowAreaCaptcha) {
-                        _this.CaptchaTextValue = "";
-                        _this.errorMessage = "Please re-enter the characters you see in the image above";
-                    }
-                    _this.IsShowAreaCaptcha = true;
-                    _this.CaptchaImageUrl = userData.CaptchaImage;
-                }
-                else if (userData.MustChangePassword) {
+                if (userData.MustChangePassword) {
                     SessionInfo_1.SessionInfo.LoggedUserEmail = userData.UserName;
                     if (SessionInfo_1.SessionInfo.MainLocation) {
                         SessionInfo_1.SessionInfo.MainLocation.clear();
@@ -345,17 +340,27 @@ var LoginComponent = (function () {
                 }
                 else {
                     _this.errorMessage = "Login failed! invalid user name or password.";
-                    if (userData.IpRestricted) {
-                        _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
+                    if (userData.InValidCaptcha) {
+                        if (_this.IsShowAreaCaptcha) {
+                            _this.CaptchaTextValue = "";
+                            _this.errorMessage = "Please re-enter the characters you see in the image above";
+                        }
+                        _this.IsShowAreaCaptcha = true;
+                        _this.CaptchaImageUrl = userData.CaptchaImage;
                     }
-                    if (userData.IsLocked) {
-                        _this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
-                    }
-                    if (userData.InActive) {
-                        _this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
-                    }
-                    if (userData.Unlicensed) {
-                        _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                    else {
+                        if (userData.IpRestricted) {
+                            _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
+                        }
+                        if (userData.IsLocked) {
+                            _this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
+                        }
+                        if (userData.InActive) {
+                            _this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
+                        }
+                        if (userData.Unlicensed) {
+                            _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                        }
                     }
                     if (_this.errorMessage == "Login failed! invalid user name or password.") {
                         if (_this.IsShowAreaCaptcha) {
