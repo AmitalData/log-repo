@@ -448,7 +448,7 @@ export class LoginComponent {
                     this.IsShowPasswordExpirationDateArea = true;
                 }
                 else {
-                    this.errorMessage = "Login failed! invalid user name or password.";
+                    this.errorMessage = "";
 
                      if (userData.InValidCaptcha) {
                          if (this.IsShowAreaCaptcha) {
@@ -461,6 +461,9 @@ export class LoginComponent {
                      }
 
                      else {
+
+                         this.errorMessage = "Login failed! invalid user name or password.";
+
                          if (userData.IpRestricted) {
 
                              this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//

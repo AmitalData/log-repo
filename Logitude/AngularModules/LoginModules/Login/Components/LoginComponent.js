@@ -339,7 +339,7 @@ var LoginComponent = (function () {
                     _this.IsShowPasswordExpirationDateArea = true;
                 }
                 else {
-                    _this.errorMessage = "Login failed! invalid user name or password.";
+                    _this.errorMessage = "";
                     if (userData.InValidCaptcha) {
                         if (_this.IsShowAreaCaptcha) {
                             _this.CaptchaTextValue = "";
@@ -349,6 +349,7 @@ var LoginComponent = (function () {
                         _this.CaptchaImageUrl = userData.CaptchaImage;
                     }
                     else {
+                        _this.errorMessage = "Login failed! invalid user name or password.";
                         if (userData.IpRestricted) {
                             _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
                         }

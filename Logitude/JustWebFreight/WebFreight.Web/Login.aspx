@@ -1404,14 +1404,16 @@
 
                                 else {
 
-                                    var errorMessage = "Login failed! invalid user name or password." + "<br/>";
+                                    var errorMessage ="" ;
 
                                     if (userdata.InValidCaptcha) {
                                         if (areacaptcha.style.display == "block") {
                                             document.getElementById("captchaTextBox").value = "";
                                             errorMessage = "Please re-enter the characters you see in the image above";
+                                        } else {
+                                           
                                         }
-
+                                    
                                         areacaptcha.style.display = "block";
                                         $("#CaptchaImage").attr("src", userdata.CaptchaImage);
                                         document.getElementById("divMayus").style.display = "none";
@@ -1419,7 +1421,7 @@
                                         document.getElementById("BusyindicatorArea").style.height = "0px";
                                     }
                                     else {
-
+                                        errorMessage = "Login failed! invalid user name or password." + "<br/>";
                                         if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
 
                                         if (userdata.IsLocked)  errorMessage = "Your account has been locked out!" + "<br/>" + "please try again after 30 minutes.";
