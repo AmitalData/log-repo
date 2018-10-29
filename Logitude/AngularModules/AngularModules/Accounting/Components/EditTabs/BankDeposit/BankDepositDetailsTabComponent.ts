@@ -389,6 +389,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                         this.SetUIProperty();
                         this.EntityPM.IsCashDeposit = true;
 
+                        this._CashbookTotal = this.CashBookPM.TotalAmount;
+
                         //copy amount
                         //this.EntityPM.LocalDepositAmount = this.CashBookPM.TotalAmount;
                         this.EntityPM.ForeignAmount = this.CashBookPM.TotalAmount;
@@ -454,6 +456,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 // local currecny
                 this.currencyRate = 1;
                 this.CalculateLocal(this.EntityPM.ForeignAmount);
+                this.isCurrencyRateLoaded = true;
+
             }
             else
             {
