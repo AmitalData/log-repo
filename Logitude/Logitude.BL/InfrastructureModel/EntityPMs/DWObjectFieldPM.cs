@@ -22,6 +22,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsMeasurement { get; set; }
         public string AggregationTypeCode { get; set; }
         public bool DisplayInQueryBuilder { get; set; }
+        public string DisplayName { get; set; }
 
     }
 

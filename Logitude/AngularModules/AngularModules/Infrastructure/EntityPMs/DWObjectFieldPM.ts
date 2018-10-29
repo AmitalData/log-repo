@@ -38,6 +38,10 @@ export class DWObjectFieldPM {
     private name: string;
     public get Name() { return this.name; }
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
+
+    private displayName: string;
+    public get DisplayName() { return this.displayName; }
+    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
        
 	 
     private code: string;
