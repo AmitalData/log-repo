@@ -694,7 +694,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return (from a in context.LedgerTransactions
                     join j in context.Journals on a.JournalId equals j.Id
                    
-                    where j.TaxReportId != null && a.AccountingDate <= taxReportMonth
+                    where j.TaxReportId == null && a.AccountingDate <= taxReportMonth
                     && a.DocumentDate >= last180days && a.AccountId == setting.VATInputsGLAccountId
                     select new TaxReportData()
                     {

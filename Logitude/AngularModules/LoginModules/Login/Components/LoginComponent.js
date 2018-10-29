@@ -220,6 +220,16 @@ var LoginComponent = (function () {
     //        this.HidePendingLoading = true;
     //    });
     //}
+    LoginComponent.prototype.onEmailBlur = function (email) {
+        if (email != this.Email) {
+            this.IsShowAreaCaptcha = false;
+            this.CaptchaKey = null;
+            this.CaptchaTextValue = null;
+            if (this.errorMessage == "Please re-enter the characters you see in the image above") {
+                this.errorMessage = "";
+            }
+        }
+    };
     LoginComponent.prototype.PasswordExpirationButtomClicked = function (type) {
         if (type == "Yes") {
             SessionInfo_1.SessionInfo.LoggedUserEmail = this.UserDataPrompt.UserName;
@@ -307,15 +317,7 @@ var LoginComponent = (function () {
                 if (userData && userData.ExceptionMessage) {
                     alert(userData.ExceptionMessage);
                 }
-                else if (userData.InValidCaptcha) {
-                    if (_this.IsShowAreaCaptcha) {
-                        _this.CaptchaTextValue = "";
-                        _this.errorMessage = "Please re-enter the characters you see in the image above";
-                    }
-                    _this.IsShowAreaCaptcha = true;
-                    _this.CaptchaImageUrl = userData.CaptchaImage;
-                }
-                else if (userData.MustChangePassword) {
+                if (userData.MustChangePassword) {
                     SessionInfo_1.SessionInfo.LoggedUserEmail = userData.UserName;
                     if (SessionInfo_1.SessionInfo.MainLocation) {
                         SessionInfo_1.SessionInfo.MainLocation.clear();
@@ -337,18 +339,29 @@ var LoginComponent = (function () {
                     _this.IsShowPasswordExpirationDateArea = true;
                 }
                 else {
-                    _this.errorMessage = "Login failed! invalid user name or password.";
-                    if (userData.IpRestricted) {
-                        _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
+                    _this.errorMessage = "";
+                    if (userData.InValidCaptcha) {
+                        if (_this.IsShowAreaCaptcha) {
+                            _this.CaptchaTextValue = "";
+                            _this.errorMessage = "Please re-enter the characters you see in the image above";
+                        }
+                        _this.IsShowAreaCaptcha = true;
+                        _this.CaptchaImageUrl = userData.CaptchaImage;
                     }
-                    if (userData.IsLocked) {
-                        _this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
-                    }
-                    if (userData.InActive) {
-                        _this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
-                    }
-                    if (userData.Unlicensed) {
-                        _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                    else {
+                        _this.errorMessage = "Login failed! invalid user name or password.";
+                        if (userData.IpRestricted) {
+                            _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
+                        }
+                        if (userData.IsLocked) {
+                            _this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
+                        }
+                        if (userData.InActive) {
+                            _this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
+                        }
+                        if (userData.Unlicensed) {
+                            _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                        }
                     }
                     if (_this.errorMessage == "Login failed! invalid user name or password.") {
                         if (_this.IsShowAreaCaptcha) {

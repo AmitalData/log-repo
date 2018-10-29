@@ -55,10 +55,9 @@ var LoginService = (function () {
             return response.json();
         });
     };
-    LoginService.prototype.GetRequestResetUserPassword = function (email, IsChampLogin) {
-        var url = this.baseUrlApi + "Authentication?email=" + email + "&ischamplogin=" + IsChampLogin;
-        ;
-        return this._http.get(url, { headers: this.AuthHeader }).map(function (response) {
+    LoginService.prototype.PostRequestResetUserPassword = function (resetPasswordParameters) {
+        var url = this.baseUrlApi + "ResetPassword?PostResetPassword";
+        return this._http.post(url, JSON.stringify(resetPasswordParameters), { headers: this.AuthHeader }).map(function (response) {
             var result = response.json();
             return result;
         });

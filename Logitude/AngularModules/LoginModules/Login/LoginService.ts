@@ -65,13 +65,14 @@ export class LoginService {
         });
     }
 
-    GetRequestResetUserPassword(email: string, IsChampLogin: boolean) {
-        var url = this.baseUrlApi + "Authentication?email=" + email + "&ischamplogin=" + IsChampLogin;;
 
-        return this._http.get(url, { headers: this.AuthHeader }).map(response => {
+    PostRequestResetUserPassword(resetPasswordParameters: any) {
+        var url = this.baseUrlApi + "ResetPassword?PostResetPassword";
+        return this._http.post(url, JSON.stringify(resetPasswordParameters), { headers: this.AuthHeader }).map(response => {
             var result = response.json();
             return result;
         });
+
     }
 
 

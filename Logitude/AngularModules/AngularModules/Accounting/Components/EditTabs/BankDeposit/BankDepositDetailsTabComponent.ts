@@ -389,6 +389,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                         this.SetUIProperty();
                         this.EntityPM.IsCashDeposit = true;
 
+                        this._CashbookTotal = this.CashBookPM.TotalAmount;
+
                         //copy amount
                         //this.EntityPM.LocalDepositAmount = this.CashBookPM.TotalAmount;
                         this.EntityPM.ForeignAmount = this.CashBookPM.TotalAmount;
@@ -454,6 +456,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 // local currecny
                 this.currencyRate = 1;
                 this.CalculateLocal(this.EntityPM.ForeignAmount);
+                this.isCurrencyRateLoaded = true;
+
             }
             else
             {
@@ -505,16 +509,22 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     CalculateTotals() {
         this.CashBookTotal = 0;
-        if (!AppTool.IsNullOrEmpty(this.CashBookLines)) {
 
-            if (this.CashBookPM.CashBookTypeCode == "1") { // 1-cash
-                this.CashBookTotal = this.CashBookPM.TotalAmount;
-            } else {
+        if (this.CashBookPM.CashBookTypeCode == "1")
+        {
+            this.CashBookTotal = this.CashBookPM.TotalAmount;
+        }
+        else
+        {
+            if (!AppTool.IsNullOrEmpty(this.CashBookLines))
+            {
                 for (let line of this.CashBookLines) {
                     this.CashBookTotal += line.ForeignAmount == null ? 0 : line.ForeignAmount;
                 }
             }
         }
+
+
 
         this.SelectedTotal = 0;
         var localSum = 0.0;

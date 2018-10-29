@@ -898,6 +898,7 @@
     <Content Include="App_Code\DirectApiV1Controller.cs" />
     <Content Include="App_Code\WarehouseDataController.cs" />
     <Content Include="App_Code\ActivityMobileLogController.cs" />
+    <Content Include="App_Code\ResetPasswordController.cs" />
     <Compile Include="AtlasRegistrationPage.aspx.cs">
       <DependentUpon>AtlasRegistrationPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2127,6 +2128,7 @@
     <Compile Include="Helpers\APIHelpers\UserLicenseUpdateHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ValidateShipmentMasterArgs.cs" />
     <Compile Include="Helpers\AutomationHelper.cs" />
+    <Compile Include="Helpers\CaptchaHelper.cs" />
     <Compile Include="Helpers\ConvertTemplateHelper.cs" />
     <Compile Include="Helpers\CustomUserIdProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryDataProviderHelper.cs" />
@@ -2146,6 +2148,7 @@
     <Compile Include="Helpers\QuoteTemplateHelper.cs" />
     <Compile Include="Helpers\QuoteTemplateReportHelper.cs" />
     <Compile Include="Helpers\ReportHelper.cs" />
+    <Compile Include="Helpers\ResetPasswordHelper.cs" />
     <Compile Include="Helpers\SecurityDocumentHelper.cs" />
     <Compile Include="Helpers\SendGrid\SendGridAnalyzer.cs" />
     <Compile Include="Helpers\SharedLogisticContactHelper.cs" />
@@ -2591,6 +2594,9 @@
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.SATPaymentMethod.cs" />
     <Compile Include="CommonDataModel\DomainServices\PartnersDomainService.WarehouseType.cs" />
     <Content Include="JustWebFreightappSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="JustWebFreightConnectionStrings.config">
       <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\PublishProfiles\main.pubxml" />
