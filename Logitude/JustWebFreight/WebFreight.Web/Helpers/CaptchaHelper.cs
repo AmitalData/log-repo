@@ -80,7 +80,7 @@ namespace WebFreight.Web.Helpers
                 CaptchaKey captchaKey = captchaKeyRepository.GetSingleCaptchaKey(Key);
                 if (captchaKey != null)
                 {
-                    if (captchaKey.Code == code)
+                    if (captchaKey.Code.ToUpper() == code.ToUpper())
                         result = true;
                 }
             }
@@ -113,7 +113,7 @@ namespace WebFreight.Web.Helpers
         public static Random random = new Random();
         public static string RandomString(int length)
         {
-            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";//"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";//"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "ABCDEFGHIJKLMNPQRSTUVWXYZ123456789";
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
