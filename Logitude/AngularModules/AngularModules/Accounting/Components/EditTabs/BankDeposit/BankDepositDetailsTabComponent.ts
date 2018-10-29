@@ -505,16 +505,22 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     CalculateTotals() {
         this.CashBookTotal = 0;
-        if (!AppTool.IsNullOrEmpty(this.CashBookLines)) {
 
-            if (this.CashBookPM.CashBookTypeCode == "1") { // 1-cash
-                this.CashBookTotal = this.CashBookPM.TotalAmount;
-            } else {
+        if (this.CashBookPM.CashBookTypeCode == "1")
+        {
+            this.CashBookTotal = this.CashBookPM.TotalAmount;
+        }
+        else
+        {
+            if (!AppTool.IsNullOrEmpty(this.CashBookLines))
+            {
                 for (let line of this.CashBookLines) {
                     this.CashBookTotal += line.ForeignAmount == null ? 0 : line.ForeignAmount;
                 }
             }
         }
+
+
 
         this.SelectedTotal = 0;
         var localSum = 0.0;
