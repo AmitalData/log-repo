@@ -113,13 +113,27 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 					};
-                 
+                    Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(invoice.BillToId, tenant);
                     if(line.VatNumber == null) {
                         line.VatNumber = "999999999";
 
-                    } 
+                    }
 
-					taxReport.TaxReportLines.Add(line);
+                    if (line.VatNumber == tenantPM.VatNumber)
+                    {
+                        line.LineTypeCode = "M";
+
+                    }
+                    else if (card!= null && card.IsAutonomy)
+                    {
+                        line.LineTypeCode = "I";
+                    }
+                    else
+                    {
+                        line.LineTypeCode = "S";
+                    }
+
+                    taxReport.TaxReportLines.Add(line);
 				}
 			}
 
