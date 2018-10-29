@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
@@ -1029,7 +1029,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             if (this.GrossWeight == null && this.EntityPM.VolumetricWeight == null) {
                 this.EntityPM.VolumetricWeight = result;
                 this.EntityPM.GrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, result);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, result, this.EntityPM.Ratio);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.EntityPM.Ratio);
             }
 
             if (this.EntityPM.QuoteTypeCode == "A") {
@@ -1271,7 +1271,7 @@ export class QuotePackageItem extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
             if (this.Width == null || this.Height == null || this.Length == null) {
                 this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.QuotePM.GrossWeightUnitCode, this.QuotePM.ChargeableWeightUnitCode, this.EntityPM.GrossWeight);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.QuotePM.ChargeableWeightUnitCode, this.QuotePM.VolumeUnitCode, this.EntityPM.GrossWeight, this.QuotePM.Ratio);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.QuotePM.ChargeableWeightUnitCode, this.QuotePM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.QuotePM.Ratio);
 
                 this.SetUIProperties();
                 this.fatherComponent.ComputeTotals();

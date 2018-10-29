@@ -291,6 +291,13 @@ export class LoginComponent {
 
     //}
 
+    onEmailBlur(email) {
+        if (email != this.Email) {
+            this.IsShowAreaCaptcha = false;
+            this.CaptchaKey = null;
+            this.CaptchaTextValue = null;
+        }
+    }
 
     PasswordExpirationButtomClicked(type: string) {
 

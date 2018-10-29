@@ -220,6 +220,13 @@ var LoginComponent = (function () {
     //        this.HidePendingLoading = true;
     //    });
     //}
+    LoginComponent.prototype.onEmailBlur = function (email) {
+        if (email != this.Email) {
+            this.IsShowAreaCaptcha = false;
+            this.CaptchaKey = null;
+            this.CaptchaTextValue = null;
+        }
+    };
     LoginComponent.prototype.PasswordExpirationButtomClicked = function (type) {
         if (type == "Yes") {
             SessionInfo_1.SessionInfo.LoggedUserEmail = this.UserDataPrompt.UserName;
