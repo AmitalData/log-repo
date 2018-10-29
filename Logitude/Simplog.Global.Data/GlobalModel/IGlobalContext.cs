@@ -42,7 +42,9 @@ namespace Simplog.Global.Data.GlobalModel
         IDbSet<TenantManagmentPrivateLabels> TenantManagmentPrivateLabels { get; }
         IDbSet<AgentSharedLogisticsKey> AgentSharedLogisticsKeys { get; }
         IDbSet<SessionPolicy> SessionPolicies { get; }
-
+        IDbSet<CaptchaKey> CaptchaKeys { get; }
+        IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; }
+        
         string GetCurrentConnection();
         void SetAsModified(object entity);
           

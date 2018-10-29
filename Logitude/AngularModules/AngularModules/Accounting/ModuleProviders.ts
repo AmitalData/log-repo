@@ -114,7 +114,7 @@ import {BankAccountMenuButtonsHandler} from './Components/MenuButtons/BankAccoun
 import {ReconciliationMenuButtonsHandler} from './Components/MenuButtons/ReconciliationMenuButtonsHandler';
 import { ExternalReconciliationMenuButtonsHandler } from './Components/MenuButtons/ExternalReconciliationMenuButtonsHandler';
 import { TaxReportMenuButtonsHandler } from './Components/MenuButtons/TaxReportMenuButtonsHandler';
-
+import { TaxDeductionReportMenuButtonsHandler } from './Components/MenuButtons/TaxDeductionReportMenuButtonsHandler';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -243,7 +243,8 @@ export class ModuleProviders {
             case "BankAccountMenuButtonsHandler": { myResult = new BankAccountMenuButtonsHandler; break; } 
             case "ReconciliationMenuButtonsHandler": { myResult = new ReconciliationMenuButtonsHandler; break; } 
             case "ExternalReconciliationMenuButtonsHandler": { myResult = new ExternalReconciliationMenuButtonsHandler; break; } 
-            case "TaxReportMenuButtonsHandler": { myResult = new TaxReportMenuButtonsHandler; break; } 
+            case "TaxReportMenuButtonsHandler": { myResult = new TaxReportMenuButtonsHandler; break; }
+            case "TaxDeductionReportMenuButtonsHandler": { myResult = new TaxDeductionReportMenuButtonsHandler; break; }
 
         }
 

@@ -194,6 +194,18 @@
     <Compile Include="Migrations\201810230951486_AddDisplayInQBFieldToDWObjectFields_Rabaia.Designer.cs">
       <DependentUpon>201810230951486_AddDisplayInQBFieldToDWObjectFields_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.cs" />
+    <Compile Include="Migrations\201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.Designer.cs">
+      <DependentUpon>201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.cs" />
+    <Compile Include="Migrations\201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.Designer.cs">
+      <DependentUpon>201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810250853052_AddActivationPropertiesToCustomer_Samar.cs" />
+    <Compile Include="Migrations\201810250853052_AddActivationPropertiesToCustomer_Samar.Designer.cs">
+      <DependentUpon>201810250853052_AddActivationPropertiesToCustomer_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -283,6 +295,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810230951486_AddDisplayInQBFieldToDWObjectFields_Rabaia.resx">
       <DependentUpon>201810230951486_AddDisplayInQBFieldToDWObjectFields_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.resx">
+      <DependentUpon>201810250535297_AddOtherPartnersToSharedLogisticsSettings_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.resx">
+      <DependentUpon>201810251004526_AbedAddNewFieldTenantEmailSendingQuotaToTenantTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810250853052_AddActivationPropertiesToCustomer_Samar.resx">
+      <DependentUpon>201810250853052_AddActivationPropertiesToCustomer_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

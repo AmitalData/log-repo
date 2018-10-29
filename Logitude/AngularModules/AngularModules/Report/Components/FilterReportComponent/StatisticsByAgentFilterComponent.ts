@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
@@ -139,6 +139,33 @@ export class StatisticsByAgentFilterComponent extends BaseComponent  {
             this.queryFilterItem.FieldDataType = "Date";
             this.queryFilterItems.push(this.queryFilterItem); 
 
+            if (this.SelectedDirectionFilter != "All") {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "Direction";
+                this.queryFilterItem.FieldValue = this.SelectedDirectionFilter;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            if (this.SelectedTransportFilter != "All") {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "TransportMode";
+                this.queryFilterItem.FieldValue = this.SelectedTransportFilter;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            if (this.LevelCodeSelectedValue != "All") {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "ShipmentLevel";
+                this.queryFilterItem.FieldValue = this.LevelCodeSelectedValue;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
             this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
@@ -170,5 +197,38 @@ export class StatisticsByAgentFilterComponent extends BaseComponent  {
         date.setUTCMinutes(0);
         date.setUTCSeconds(0);
         return date;
+    }
+
+    private mySelectedDirectionFilter: string = "All";
+    get SelectedDirectionFilter() { return this.mySelectedDirectionFilter; }
+    set SelectedDirectionFilter(value: string) {
+        if (this.mySelectedDirectionFilter != value) {
+            this.mySelectedDirectionFilter = value;           
+        }
+    }
+
+    private mySelectedTransportFilter: string = "All";
+    get SelectedTransportFilter() { return this.mySelectedTransportFilter; }
+    set SelectedTransportFilter(value: string) {
+        if (this.mySelectedTransportFilter != value) {
+            this.mySelectedTransportFilter = value;
+        }
+    }
+
+    public LevelCodeSelectedValue: string = "All";
+    LevelCodeitemClicked(itemValue: string) {
+        if (this.LevelCodeSelectedValue != itemValue) {
+            this.LevelCodeSelectedValue = itemValue;                        
+        }
+    }
+    LevelCodeMouseOver(itemValue: string) {
+        if (this.LevelCodeSelectedValue != itemValue) {
+           
+        }
+    }
+    LevelCodeMouseLeave(itemValue: string) {
+        if (this.LevelCodeSelectedValue != itemValue) {
+            
+        }
     }
 }

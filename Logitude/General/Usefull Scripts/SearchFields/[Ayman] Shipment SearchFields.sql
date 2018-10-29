@@ -115,12 +115,14 @@ declare @MasterShipmentNumber as varchar(15)
 declare @MainCarriageVesselId as varchar(15)
 declare @MainCarriageVesselCode as varchar(5)
 declare @MainCarriageVesselName as varchar(40)
-
 declare @MainCarriageCarrierId as varchar(15)
 declare @MainCarriageCarrierCode as varchar(15)
 declare @MainCarriageCarrierName as varchar(60)
 declare @MainCarriageCarrierPrefix as varchar(3)
 declare @MainCarriageCarrierNumber as varchar(15)
+declare @Transshipment1AdditionalMAWBOBLBL as varchar(20)
+declare @Transshipment2AdditionalMAWBOBLBL as varchar(20)
+declare @Transshipment3AdditionalMAWBOBLBL as varchar(20)
 END
 
 -- Custom Fields
@@ -226,7 +228,10 @@ BEGIN
 					@MainCarriageFinalDestinationPortId = MainCarriageFinalDestinationPortId,
 					@ImportManifest = ImportManifest,
 					@BookingConfirmationNumber = BookingConfirmationNumber,
-					@CarrierTransportDocumentNumber = CarrierTransportDocumentNumber
+					@CarrierTransportDocumentNumber = CarrierTransportDocumentNumber,
+					@Transshipment1AdditionalMAWBOBLBL = Transshipment1AdditionalMAWBOBLBL,
+					@Transshipment2AdditionalMAWBOBLBL = Transshipment2AdditionalMAWBOBLBL,
+					@Transshipment3AdditionalMAWBOBLBL = Transshipment3AdditionalMAWBOBLBL
 					from ShipmentMasterDatas
 					where Id = @MasterShipmentDataId AND Tenant = @Tenant					
 				END
@@ -299,6 +304,24 @@ BEGIN
 			begin
 				if (@MySearchFields = '') set @MySearchFields = @CarrierTransportDocumentNumber
 				else set @MySearchFields = @MySearchFields + ',' + @CarrierTransportDocumentNumber
+			end
+
+			if (@Transshipment1AdditionalMAWBOBLBL is not null AND @Transshipment1AdditionalMAWBOBLBL <> '')
+			begin
+				if (@MySearchFields = '') set @MySearchFields = @Transshipment1AdditionalMAWBOBLBL
+				else set @MySearchFields = @MySearchFields + ',' + @Transshipment1AdditionalMAWBOBLBL
+			end
+
+			if (@Transshipment2AdditionalMAWBOBLBL is not null AND @Transshipment2AdditionalMAWBOBLBL <> '')
+			begin
+				if (@MySearchFields = '') set @MySearchFields = @Transshipment2AdditionalMAWBOBLBL
+				else set @MySearchFields = @MySearchFields + ',' + @Transshipment2AdditionalMAWBOBLBL
+			end
+
+			if (@Transshipment3AdditionalMAWBOBLBL is not null AND @Transshipment3AdditionalMAWBOBLBL <> '')
+			begin
+				if (@MySearchFields = '') set @MySearchFields = @Transshipment3AdditionalMAWBOBLBL
+				else set @MySearchFields = @MySearchFields + ',' + @Transshipment3AdditionalMAWBOBLBL
 			end
 
 			if (@QuoteId is not null)

@@ -64,7 +64,10 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
     FIELD_IS_REQUIERD: string = null;
     ValidationErrorsList: string[] = [];
     OkButtonClicked() {
-       
+        this.entityPM.CreateDate = new Date();
+        this.entityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+        this.entityPM.UpdateDate = new Date();
+        this.entityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         var errors: string[] = [];
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         Validator.TryValidateObject(this.entityPM, this.ObjectTableName, errors);

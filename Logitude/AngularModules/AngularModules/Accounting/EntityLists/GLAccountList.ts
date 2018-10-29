@@ -82,6 +82,11 @@ export class GLAccountList {
 	ConsolidationVat: string;
 	IsEquipmentVendor: boolean;
 	IsPartOfDeductionReport: boolean;
+	DeductionTypeName: string;
+	DeductionFileTypeCode: string;
+	DeductionFileTypeName: string;
+	AssessingOfficeName: string;
+	DeductionTypeEnglishName: string;
 	
 }
  

@@ -34,5 +34,8 @@ export class CustomAgentList {
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
 		SATForeignRFC: string;
+		PrimaryContactName: string;
+		PrimaryContactEmail: string;
+		PrimaryContactPhone: string;
 	
 }

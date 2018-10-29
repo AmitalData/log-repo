@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -910,7 +910,7 @@ export class AWBWizardPackageItem extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
             if (this.Width == null || this.Height == null || this.Length == null) {
                 this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.EntityPM.Weight);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.Weight, this.ShipmentPM.Ratio);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
 
                 this.SetUIProperties();
                 this.fatherComponent.ResetTotalEditedValues();

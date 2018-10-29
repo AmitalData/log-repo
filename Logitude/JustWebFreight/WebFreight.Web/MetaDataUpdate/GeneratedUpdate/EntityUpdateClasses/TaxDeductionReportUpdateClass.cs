@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ServerModuleName =  "Accounting",
 			      				    NewWizardComponentPath =  "./Accounting/Components/NewEntity/NewTaxDeductionReportComponent",
 			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
+			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
@@ -1018,6 +1018,76 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
+		   FeatureRepository featureRepository = new FeatureRepository(0); 
+		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   ObjectTable TaxDeductionReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault();       
+    
+			   Feature TaxDeductionReportFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TDMR", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+			   Feature TaxDeductionReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DNBD", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.DownloadBDFfile", NameTextCodeDefaultText = "Download BDF file", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature TaxDeductionReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DNTX", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.Downloadtextfile", NameTextCodeDefaultText = "Download text file", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+              
+
+		   TextCodeRepository.SubmitChanges();
+		   FeaturesRepository.SubmitChanges();
+		   MenuButtonGroup TaxDeductionReportMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+				{
+					MenuButtonGroupType = "TaxDeductionReportEdit",
+					Name = "TaxDeductionReportEditButtonsGroup",
+					ObjectTableId = TaxDeductionReportObjectTable.Id,
+					Tenant = 0
+				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+   
+			   MenuButton TaxDeductionReportMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "TDMR",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "TaxDeductionReport.B.More",
+						LabelTextCodeDefaultText = "More",
+						Tenant = 0,
+						MenuButtonGroupId = TaxDeductionReportMenuButtonGroup.Id,
+						ObjectTableId = TaxDeductionReportObjectTable.Id,
+						MenuButtonType = "dropdownbutton",
+						FeatureId = TaxDeductionReportFeature_MB0.Id,
+						Style = null,
+						LocalDefaultText = "יותר",
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+			   MenuButton TaxDeductionReportMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "DNBD",
+						Index = 0, 
+						IsActive = true,
+						LabelTextCodeCode = "TaxDeductionReport.B.DownloadBDFfile",
+						LabelTextCodeDefaultText = "Download BDF file",
+						Tenant = 0,
+						MenuButtonGroupId = TaxDeductionReportMenuButtonGroup.Id,
+						ParentMenuButtonId = TaxDeductionReportMenuButton0.Id,
+						ObjectTableId = TaxDeductionReportObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  TaxDeductionReportFeature_MB00.Id,
+						Style = null,
+						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton TaxDeductionReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "DNTX",
+						Index = 1, 
+						IsActive = true,
+						LabelTextCodeCode = "TaxDeductionReport.B.Downloadtextfile",
+						LabelTextCodeDefaultText = "Download text file",
+						Tenant = 0,
+						MenuButtonGroupId = TaxDeductionReportMenuButtonGroup.Id,
+						ParentMenuButtonId = TaxDeductionReportMenuButton0.Id,
+						ObjectTableId = TaxDeductionReportObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  TaxDeductionReportFeature_MB01.Id,
+						Style = null,
+						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
 	    }     
 
    }

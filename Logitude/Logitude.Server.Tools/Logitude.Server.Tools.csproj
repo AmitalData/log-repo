@@ -252,6 +252,7 @@
     <Compile Include="Helpers\AmitalConvertUtil.cs" />
     <Compile Include="Helpers\AuthenticationUtil.cs" />
     <Compile Include="Helpers\DropBoxActionsHelper.cs" />
+    <Compile Include="Helpers\EmailLimitationHelper.cs" />
     <Compile Include="Helpers\EntityChangeHelper.cs" />
     <Compile Include="Helpers\ByteCompressor.cs" />
     <Compile Include="Helpers\ContactsUnseenEntitiesHelper.cs" />

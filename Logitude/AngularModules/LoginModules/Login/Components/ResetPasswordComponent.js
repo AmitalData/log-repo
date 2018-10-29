@@ -19,6 +19,11 @@ var ResetPasswordComponent = (function () {
         this.Succeeded = false;
         this.ShowbusyIndicator = false;
     }
+    ResetPasswordComponent.prototype.HideAreaCaptcha = function () {
+        this.IsShowAreaCaptcha = false;
+        this.CaptchaCode = null;
+        this.CaptchaKey = null;
+    };
     ResetPasswordComponent.prototype.SubmitBtnClicked = function () {
         var _this = this;
         this.ShowbusyIndicator = true;
@@ -32,18 +37,37 @@ var ResetPasswordComponent = (function () {
             this.HasErrors = true;
             this.ErrorMessage = "Your email address is invalid !";
         }
+        else if (this.IsShowAreaCaptcha && !this.CaptchaCode) {
+            this.ShowbusyIndicator = false;
+            this.HasErrors = true;
+            this.ErrorMessage = "Please re-enter the characters you see in the image above";
+        }
         else {
             this.HasErrors = false;
-            this._LoginService.GetRequestResetUserPassword(this.Email, false).subscribe(function (userdata) {
+            var params = {
+                Email: this.Email,
+                IsChampLogin: false,
+                CaptchaCode: this.CaptchaCode,
+                CaptchaKey: this.CaptchaKey,
+            };
+            this._LoginService.PostRequestResetUserPassword(params).subscribe(function (userdata) {
                 _this.ShowbusyIndicator = false;
                 if (!userdata.HasError) {
                     _this.Succeeded = true;
                     _this.HasErrors = false;
+                    _this.HideAreaCaptcha();
                 }
                 else {
+                    _this.CaptchaKey = userdata ? userdata.CaptchaKey : "";
                     //disableForm(false);
-                    var errorMessage = "Submit failed! invalid email." + "<br/>";
-                    if (userdata.IpRestricted) {
+                    var errorMessage = "Submit failed! invalid email.";
+                    if (userdata.InValidCaptcha) {
+                        errorMessage = "Please re-enter the characters you see in the image above";
+                        _this.CaptchaCode = "";
+                        _this.IsShowAreaCaptcha = true;
+                        _this.CaptchaImageUrl = userdata.CaptchaImage;
+                    }
+                    else if (userdata.IpRestricted) {
                         errorMessage = "Trying to submit in from unauthorised station!" + "<br/>" + "(The IP address you are trying to " + "<br/>" + "submit from is restricted for this user)"; //
                     }
                     if (userdata.IsLocked) {

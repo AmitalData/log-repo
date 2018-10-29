@@ -83,14 +83,22 @@ export class DWObjectFieldPM {
     public get IsPrimaryKey() { return this.isPrimaryKey; }
     public set IsPrimaryKey(newValue: boolean) { if (this.isPrimaryKey != newValue) { this.isPrimaryKey = newValue; this.MarkAsDirty("IsPrimaryKey"); } }
        
+	 
     private isMeasurement: boolean;
     public get IsMeasurement() { return this.isMeasurement; }
     public set IsMeasurement(newValue: boolean) { if (this.isMeasurement != newValue) { this.isMeasurement = newValue; this.MarkAsDirty("IsMeasurement"); } }
-
+       
+	 
     private aggregationTypeCode: string;
     public get AggregationTypeCode() { return this.aggregationTypeCode; }
     public set AggregationTypeCode(newValue: string) { if (this.aggregationTypeCode != newValue) { this.aggregationTypeCode = newValue; this.MarkAsDirty("AggregationTypeCode"); } }
-
+       
+	 
+    private displayInQueryBuilder: boolean;
+    public get DisplayInQueryBuilder() { return this.displayInQueryBuilder; }
+    public set DisplayInQueryBuilder(newValue: boolean) { if (this.displayInQueryBuilder != newValue) { this.displayInQueryBuilder = newValue; this.MarkAsDirty("DisplayInQueryBuilder"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		
