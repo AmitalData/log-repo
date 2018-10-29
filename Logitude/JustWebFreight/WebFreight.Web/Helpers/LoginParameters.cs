@@ -19,6 +19,9 @@ namespace WebFreight.Web.Helpers
         public bool IsAngularLogin { get; set; }
         public bool InternalLoginValidationCall { get; set; }
         public string ClientType { get; set; }
+        public string CaptchaKey { get; set; }
+        public string CaptchaCode { get; set; }
+
 
     }
 }

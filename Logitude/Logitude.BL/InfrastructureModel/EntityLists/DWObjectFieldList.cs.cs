@@ -21,5 +21,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsRequiered { get; set; }
         public bool IsMeasurement { get; set; }
         public string AggregationTypeCode { get; set; }
+        public bool DisplayInQueryBuilder { get; set; }
+
     }
 }

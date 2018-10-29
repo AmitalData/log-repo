@@ -93,6 +93,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     LimitedLength = true,
                 };
 
+                if (tenant == 0)
+                {
+                    this.entityPOCO.CheckDigit = true;
+                }
+
                 this.InitializeComponent();
 
                 AirlineValidating.Validate(entityPM);

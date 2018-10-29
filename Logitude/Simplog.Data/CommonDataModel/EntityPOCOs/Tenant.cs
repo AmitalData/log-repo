@@ -160,5 +160,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public string DefaultSLAId { get; set; }
         public string StockTypeCode { get; set; }
+        public int TenantEmailSendingQuota { get; set; }
+
     }
 }

@@ -220,6 +220,16 @@ var LoginComponent = (function () {
     //        this.HidePendingLoading = true;
     //    });
     //}
+    LoginComponent.prototype.onEmailBlur = function (email) {
+        if (email != this.Email) {
+            this.IsShowAreaCaptcha = false;
+            this.CaptchaKey = null;
+            this.CaptchaTextValue = null;
+            if (this.errorMessage == "Please re-enter the characters you see in the image above") {
+                this.errorMessage = "";
+            }
+        }
+    };
     LoginComponent.prototype.PasswordExpirationButtomClicked = function (type) {
         if (type == "Yes") {
             SessionInfo_1.SessionInfo.LoggedUserEmail = this.UserDataPrompt.UserName;
@@ -261,30 +271,38 @@ var LoginComponent = (function () {
         }
     };
     LoginComponent.prototype.LoginClicked = function () {
+        if (!this.Email || !this.Password) {
+            this.errorMessage = "Login failed! invalid user name or password.";
+            return;
+        }
+        if (this.IsShowAreaCaptcha && !this.CaptchaTextValue) {
+            this.errorMessage = "Please re-enter the characters you see in the image above";
+            return;
+        }
         if (IsBrowserSupported() == false) {
             alert("This Browser is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
         }
         else {
             this.SaveDataToCookie();
             this.loginService.LoggedUserEmail = SessionInfo_1.SessionInfo.LoggedUserEmail;
-            if (this.Email != null && this.Password != null) {
-                this.ShowLoadingIndicator = true;
-                this.LoginParams = {
-                    Email: this.Email,
-                    Password: this.Password,
-                    ByToken: false,
-                    CardId: "",
-                    CardType: "",
-                    IsMobileLogin: false,
-                    IsUser: true,
-                    GetToken: true,
-                    IsAngularLogin: true,
-                    MobileVersion: "",
-                    ClientType: "Web",
-                };
-                this.HidePendingLoading = false;
-                this.PostUserValidation(this.LoginParams);
-            }
+            this.ShowLoadingIndicator = true;
+            this.LoginParams = {
+                Email: this.Email,
+                Password: this.Password,
+                ByToken: false,
+                CardId: "",
+                CardType: "",
+                IsMobileLogin: false,
+                IsUser: true,
+                GetToken: true,
+                IsAngularLogin: true,
+                MobileVersion: "",
+                ClientType: "Web",
+                CaptchaKey: this.CaptchaKey,
+                CaptchaCode: this.CaptchaTextValue,
+            };
+            this.HidePendingLoading = false;
+            this.PostUserValidation(this.LoginParams);
         }
     };
     LoginComponent.prototype.PostUserValidation = function (loginParameters) {
@@ -295,10 +313,11 @@ var LoginComponent = (function () {
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 _this.LoginFailed = true;
                 _this.HidePendingLoading = true;
+                _this.CaptchaKey = userData ? userData.CaptchaKey : "";
                 if (userData && userData.ExceptionMessage) {
                     alert(userData.ExceptionMessage);
                 }
-                else if (userData.MustChangePassword) {
+                if (userData.MustChangePassword) {
                     SessionInfo_1.SessionInfo.LoggedUserEmail = userData.UserName;
                     if (SessionInfo_1.SessionInfo.MainLocation) {
                         SessionInfo_1.SessionInfo.MainLocation.clear();
@@ -320,18 +339,35 @@ var LoginComponent = (function () {
                     _this.IsShowPasswordExpirationDateArea = true;
                 }
                 else {
-                    _this.errorMessage = "Login failed! invalid user name or password.";
-                    if (userData.IpRestricted) {
-                        _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
+                    _this.errorMessage = "";
+                    if (userData.InValidCaptcha) {
+                        if (_this.IsShowAreaCaptcha) {
+                            _this.CaptchaTextValue = "";
+                            _this.errorMessage = "Please re-enter the characters you see in the image above";
+                        }
+                        _this.IsShowAreaCaptcha = true;
+                        _this.CaptchaImageUrl = userData.CaptchaImage;
                     }
-                    if (userData.IsLocked) {
-                        _this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
+                    else {
+                        _this.errorMessage = "Login failed! invalid user name or password.";
+                        if (userData.IpRestricted) {
+                            _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
+                        }
+                        if (userData.IsLocked) {
+                            _this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
+                        }
+                        if (userData.InActive) {
+                            _this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
+                        }
+                        if (userData.Unlicensed) {
+                            _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                        }
                     }
-                    if (userData.InActive) {
-                        _this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
-                    }
-                    if (userData.Unlicensed) {
-                        _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                    if (_this.errorMessage == "Login failed! invalid user name or password.") {
+                        if (_this.IsShowAreaCaptcha) {
+                            _this.CaptchaImageUrl = userData.CaptchaImage;
+                            _this.CaptchaTextValue = "";
+                        }
                     }
                 }
             }
@@ -360,6 +396,8 @@ var LoginComponent = (function () {
                 IsAngularLogin: true,
                 MobileVersion: "",
                 ClientType: "Web",
+                CaptchaKey: this.CaptchaKey,
+                CaptchaCode: this.CaptchaTextValue,
             };
             this.loginService.CurrentTenant = this.Tenant;
             var f = { valid: true };

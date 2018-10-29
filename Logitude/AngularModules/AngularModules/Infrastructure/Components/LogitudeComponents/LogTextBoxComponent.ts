@@ -114,7 +114,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         else if (this.textValue && (newValue == "" || newValue == null || newValue == undefined)) {
             this.HasValue.emit(false);
         }
-        switch (this.InputType.toLowerCase()) {
+        switch (this.InputType && this.InputType.toLowerCase()) {
             case 'text':
             case 'ntext':
                 {
@@ -1398,21 +1398,23 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ValidateField(emitPropertyChanged: boolean = true) {
 
-        switch (this.InputType.toLowerCase()) {
-            case 'text':
-            case 'ntext':
-                {
-                    break;
+        if (this.InputType) {
+            switch (this.InputType.toLowerCase()) {
+                case 'text':
+                case 'ntext':
+                    {
+                        break;
+                    }
+                default: {
+                    if (isNaN(Number(this.TextValue))) {
+                        this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
+                    }
+                    else {
+                        this.SetValidity(true, null);
+                    }
                 }
-            default: {
-                if (isNaN(Number(this.TextValue))) {
-                    this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
-                }
-                else {
-                    this.SetValidity(true, null);
-                }
-            }
 
+            }
         }
 
         if (!this.NoValidation && this.uiProperty != null && this.uiProperty.ValidValue) {

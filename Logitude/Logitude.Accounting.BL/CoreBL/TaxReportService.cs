@@ -113,13 +113,27 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 					};
-                 
+                    Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(invoice.BillToId, tenant);
                     if(line.VatNumber == null) {
                         line.VatNumber = "999999999";
 
-                    } 
+                    }
 
-					taxReport.TaxReportLines.Add(line);
+                    if (line.VatNumber == tenantPM.VatNumber)
+                    {
+                        line.LineTypeCode = "M";
+
+                    }
+                    else if (card!= null && card.IsAutonomy)
+                    {
+                        line.LineTypeCode = "I";
+                    }
+                    else
+                    {
+                        line.LineTypeCode = "S";
+                    }
+
+                    taxReport.TaxReportLines.Add(line);
 				}
 			}
 
@@ -292,7 +306,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     Subject = "Create PNC Flat file for Tax Report",
                     Tenant = tenant,
                     ChangeSetOp = ChangeSetOperation.Insert,
-                    ClassName = "Logitude.Accounting.BL.TestService.BatchTaxReportService,Logitude.Accounting.BL",
+                    ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchTaxReportService,Logitude.Accounting.BL",
                     CreateDate = DateTime.Now,
                     PrametersXml = xmlParameters,
                     StatusCode = "C",
@@ -418,11 +432,11 @@ namespace Logitude.Accounting.BL.CoreBL
 				line += itemPM.Reference.PadLeft(9, '0');
 
 				//VatAmount
-				line += Math.Abs(Convert.ToInt32(itemPM.VatAmount)).ToString().PadLeft(9, '0');
+				line += Math.Abs(Math.Truncate(itemPM.VatAmount.Value)).ToString().PadLeft(9, '0');
 
 				//VatableInvoiceAmount
 				line += itemPM.VatableInvoiceAmount >= 0 ? '+' : '-';
-				line += Math.Abs(Convert.ToInt32(itemPM.VatableInvoiceAmount)).ToString().PadLeft(10, '0');
+				line += Math.Abs(Math.Truncate(itemPM.VatableInvoiceAmount.Value)).ToString().PadLeft(10, '0');
 
 
 				line += "000000000";

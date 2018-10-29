@@ -50,6 +50,11 @@ export class DWObjectTablePM {
     public set TypeCode(newValue: string) { if (this.typeCode != newValue) { this.typeCode = newValue; this.MarkAsDirty("TypeCode"); } }
        
 	 
+    private isClosed: boolean;
+    public get IsClosed() { return this.isClosed; }
+    public set IsClosed(newValue: boolean) { if (this.isClosed != newValue) { this.isClosed = newValue; this.MarkAsDirty("IsClosed"); } }
+       
+	 
 
     public OldEntityPM: DWObjectTablePM;
 		

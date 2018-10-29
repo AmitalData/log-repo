@@ -24,7 +24,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                if (id == authToken.Tenant)
+                if (id == authToken.Tenant || authToken.Tenant == 0)
                 {
                     SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
                     TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(id);

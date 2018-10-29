@@ -5,6 +5,7 @@ using Simplog.Server.Infrastructure.Helpers;
 
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.Helpers;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -34,6 +35,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a).FirstOrDefault();
 
         }
+
+        public int GetCommunicationLogCountForTenantInLasthour(int tenant)
+        {
+
+            DateTime datetime = TenantServerConfigration.GetCurrentDateTime(tenant).AddHours(-1);
+            return (from a in context.CommunicationLogs
+                    where a.Tenant == tenant && a.CreateDate > datetime
+                    select a).Count();
+        }
+
+
 
         public CommunicationLog GetSingleCommunicationLog(string id, int tenant, DateTime? createDate)
         {

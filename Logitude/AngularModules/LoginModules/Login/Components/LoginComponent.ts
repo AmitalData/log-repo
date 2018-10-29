@@ -31,6 +31,11 @@ export class LoginComponent {
     PasswordExpirationDateMessage: string;
     PasswordExpirationDateMessage2: string;
 
+    IsShowAreaCaptcha: boolean;
+    CaptchaImageUrl: string;
+    CaptchaTextValue: string;
+    CaptchaKey: string;
+
     public IsShowPasswordExpirationDateArea: boolean = false;
 
     //private _objectTableRulePMService: ObjectTableRulePMService = new ObjectTableRulePMService();
@@ -286,6 +291,17 @@ export class LoginComponent {
 
     //}
 
+    onEmailBlur(email) {
+        if (email != this.Email) {
+            this.IsShowAreaCaptcha = false;
+            this.CaptchaKey = null;
+            this.CaptchaTextValue = null;
+            if (this.errorMessage == "Please re-enter the characters you see in the image above") {
+                this.errorMessage = "";
+            }
+
+        }
+    }
 
     PasswordExpirationButtomClicked(type: string) {
 
@@ -346,13 +362,23 @@ export class LoginComponent {
 
 
     LoginClicked() {
+
+        if (!this.Email || !this.Password) {
+            this.errorMessage = "Login failed! invalid user name or password.";
+            return; 
+        }
+
+        if (this.IsShowAreaCaptcha && !this.CaptchaTextValue) {
+            this.errorMessage = "Please re-enter the characters you see in the image above";
+            return;
+        }
+
         if (IsBrowserSupported() == false) {
             alert("This Browser is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
         }
         else {
             this.SaveDataToCookie();
             this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
-            if (this.Email != null && this.Password != null) {
                 this.ShowLoadingIndicator = true;
                 this.LoginParams = {
                     Email: this.Email,
@@ -366,12 +392,14 @@ export class LoginComponent {
                     IsAngularLogin: true,
                     MobileVersion: "",
                     ClientType: "Web",
+                    CaptchaKey: this.CaptchaKey,
+                    CaptchaCode: this.CaptchaTextValue,
 
                 };
 
                 this.HidePendingLoading = false;
                 this.PostUserValidation(this.LoginParams);
-            }
+            
         }
     }
 
@@ -381,6 +409,7 @@ export class LoginComponent {
 
     ShowTenantList: boolean = false;
     errorMessage: string = "";
+
     PostUserValidation(loginParameters) {
         this.errorMessage = "";
         this.loginService.PostUserValidation(loginParameters).subscribe(userData => {
@@ -388,11 +417,16 @@ export class LoginComponent {
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 this.LoginFailed = true;
                 this.HidePendingLoading = true;
+                
+                this.CaptchaKey = userData ? userData.CaptchaKey:"";
 
                 if (userData && userData.ExceptionMessage) {
                     alert(userData.ExceptionMessage);
                 }
-                else if (userData.MustChangePassword) {
+
+
+              
+                 if (userData.MustChangePassword) {
                     SessionInfo.LoggedUserEmail = userData.UserName;
                     if (SessionInfo.MainLocation) {
                         SessionInfo.MainLocation.clear();
@@ -414,25 +448,47 @@ export class LoginComponent {
                     this.IsShowPasswordExpirationDateArea = true;
                 }
                 else {
-                    this.errorMessage = "Login failed! invalid user name or password.";
+                    this.errorMessage = "";
+
+                     if (userData.InValidCaptcha) {
+                         if (this.IsShowAreaCaptcha) {
+                             this.CaptchaTextValue = "";
+                             this.errorMessage = "Please re-enter the characters you see in the image above";
+                         }
+
+                         this.IsShowAreaCaptcha = true;
+                         this.CaptchaImageUrl = userData.CaptchaImage;
+                     }
+
+                     else {
+
+                         this.errorMessage = "Login failed! invalid user name or password.";
+
+                         if (userData.IpRestricted) {
+
+                             this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
+
+                         }
+                         if (userData.IsLocked) {
+
+                             this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
+                         }
+                         if (userData.InActive) {
+                             this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
+                         }
+                         if (userData.Unlicensed) {
+
+                             this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                         }
+                     }
 
 
-                    if (userData.IpRestricted) {
+                    if (this.errorMessage == "Login failed! invalid user name or password.") {
+                        if (this.IsShowAreaCaptcha) {
 
-                        this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
-
-                    }
-
-                    if (userData.IsLocked) {
-
-                        this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
-                    }
-                    if (userData.InActive) {
-                        this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
-                    }
-                    if (userData.Unlicensed) {
-
-                        this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                            this.CaptchaImageUrl = userData.CaptchaImage;
+                            this.CaptchaTextValue = "";
+                        }
                     }
                 }
 
@@ -469,6 +525,8 @@ export class LoginComponent {
                 IsAngularLogin: true,
                 MobileVersion: "",
                 ClientType: "Web",
+                CaptchaKey: this.CaptchaKey,
+                CaptchaCode: this.CaptchaTextValue,
             };
 
             this.loginService.CurrentTenant = this.Tenant;

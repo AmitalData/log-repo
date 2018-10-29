@@ -357,6 +357,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 case "CONTRL":
                     {
+                        #region
                         iMessageTenantError = "Unknown message tenant";
 
                         if (this.iMessage != null)
@@ -364,7 +365,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                             INTTRA.Header iHeader = this.iMessage.Header;
 
                             if (iHeader != null)
-                            {                               
+                            {
                                 string HeaderDocumentIdentifier = iHeader.DocumentIdentifier;
 
                                 if (!string.IsNullOrEmpty(HeaderDocumentIdentifier))
@@ -382,12 +383,13 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 }
                             }
                         }
-
+                        #endregion
                         break;
                     }
 
                 case "ApplicationAcknowledgment":
                     {
+                        #region
                         iMessageTenantError = "Unknown message tenant";
 
                         if (this.iMessage != null)
@@ -429,10 +431,58 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 }
                             }
                         }
-
+                        #endregion
                         break;
                     }
 
+                case "Status":
+                    {
+                        #region
+                        iMessageTenantError = "Unknown message tenant";
+
+                        if (this.iMessage_Status != null)
+                        {
+                            INTTRA_Status.MessageBodyType iMessageBody = iMessage_Status.MessageBody;
+
+                            if (iMessageBody != null)
+                            {
+                                INTTRA_Status.MessageDetailsType iMessageDetails = iMessageBody.MessageDetails;
+
+                                if (iMessageDetails != null)
+                                {
+                                    INTTRA_Status.EquipmentDetailsType equipmentDetails = iMessageDetails.EquipmentDetails;
+                                    if (equipmentDetails != null)
+                                    {
+                                        if (equipmentDetails.EquipmentIdentifier != null)
+                                        {
+                                            if (!string.IsNullOrEmpty(equipmentDetails.EquipmentIdentifier.Value))
+                                            {
+                                                string iContainerNumber = equipmentDetails.EquipmentIdentifier.Value;
+
+                                                if (!string.IsNullOrEmpty(iContainerNumber))
+                                                {
+                                                    List<Shipment> iShipments = (from d in myShipmentContext.Shipments where d.ShipmentNumber == this.ShipmentNumber select d).ToList();
+
+                                                    foreach (Shipment item in iShipments)
+                                                    {
+                                                        ShipmentPackage iPackage = (from d in myShipmentContext.ShipmentPackages where d.ShipmentId == item.Id && d.ContainerNumber == iContainerNumber select d).FirstOrDefault();
+
+                                                        if (iPackage != null)
+                                                        {
+                                                            iMessageTenant = item.Tenant;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        #endregion
+                        break;
+                    }
 
                 default:
                     {
@@ -464,7 +514,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     }
             }
 
-            if(iMessageTenant != null)
+            if (iMessageTenant != null)
             {
                 this.Tenant = iMessageTenant.Value;
                 this.myAnalyzeQueue.Tenant = this.Tenant;

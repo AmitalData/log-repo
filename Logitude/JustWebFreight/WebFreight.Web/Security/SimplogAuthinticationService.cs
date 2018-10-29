@@ -172,7 +172,7 @@ namespace WebFreight.Web.Security
                                 //if (globalContact != null)
                                 //{
                                 contactPassword.NumberOfRetries++;
-                                if (contactPassword.NumberOfRetries == 10)
+                                if (contactPassword.NumberOfRetries == 5)
                                 {
                                     contactPassword.IsLocked = true;
                                 }

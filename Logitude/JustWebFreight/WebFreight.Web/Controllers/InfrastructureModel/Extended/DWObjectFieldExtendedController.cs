@@ -65,9 +65,34 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             }
            
         }
-	
-			 		
-      
+
+        public HttpResponseMessage getDWObjectFieldsWithChildrenByDWTableId(string DWOTId)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                //SecurityUtility.CheckContactFeature("DWObjectField", "READ", authToken.Tenant);
+                DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(authToken.Tenant);
+                List<DWObjectFieldPM> dWObjectFieldPM = dWObjectFieldQuery.GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(0, DWOTId).ToList();
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, dWObjectFieldPM);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
+
     }
 }
 	 

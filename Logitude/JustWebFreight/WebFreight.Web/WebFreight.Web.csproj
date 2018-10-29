@@ -356,6 +356,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Simplog.Server.Infrastructure\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.2.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StackExchange.Redis.1.2.5\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="Stimulsoft.Base, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Base.dll</HintPath>
     </Reference>
@@ -398,6 +401,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http">
       <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll</HintPath>
@@ -868,6 +872,7 @@
     <Compile Include="AccountingModel\DomainServices\Generated\ARPaymentChequeStatusDomainService.Generated.cs" />
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequeDataProvider.cs" />
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequePrintService.cs" />
+    <Compile Include="AccountingModel\Reports\TaxDeductionReport\TaxDeductionReportPrintService.cs" />
     <Compile Include="AccountingWebServices\Testers\TrailReport.aspx.cs">
       <DependentUpon>TrailReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -893,6 +898,7 @@
     <Content Include="App_Code\DirectApiV1Controller.cs" />
     <Content Include="App_Code\WarehouseDataController.cs" />
     <Content Include="App_Code\ActivityMobileLogController.cs" />
+    <Content Include="App_Code\ResetPasswordController.cs" />
     <Compile Include="AtlasRegistrationPage.aspx.cs">
       <DependentUpon>AtlasRegistrationPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -958,6 +964,7 @@
     <Compile Include="Controllers\AccountingModel\ReconcileExternalPageController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationController.cs" />
     <Compile Include="Controllers\AccountingModel\RevaluationOpController.cs" />
+    <Compile Include="Controllers\AccountingModel\TaxDeductionReportFileController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxReportOpController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxReportController.cs" />
     <Compile Include="Controllers\BookingModel\Extended\BookingProductsExtendedController.cs" />
@@ -2121,6 +2128,7 @@
     <Compile Include="Helpers\APIHelpers\UserLicenseUpdateHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ValidateShipmentMasterArgs.cs" />
     <Compile Include="Helpers\AutomationHelper.cs" />
+    <Compile Include="Helpers\CaptchaHelper.cs" />
     <Compile Include="Helpers\ConvertTemplateHelper.cs" />
     <Compile Include="Helpers\CustomUserIdProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryDataProviderHelper.cs" />
@@ -2140,6 +2148,7 @@
     <Compile Include="Helpers\QuoteTemplateHelper.cs" />
     <Compile Include="Helpers\QuoteTemplateReportHelper.cs" />
     <Compile Include="Helpers\ReportHelper.cs" />
+    <Compile Include="Helpers\ResetPasswordHelper.cs" />
     <Compile Include="Helpers\SecurityDocumentHelper.cs" />
     <Compile Include="Helpers\SendGrid\SendGridAnalyzer.cs" />
     <Compile Include="Helpers\SharedLogisticContactHelper.cs" />
@@ -2563,6 +2572,7 @@
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
+    <Content Include="Monitoring\EmailSendingQuotaExceeded.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
     <Content Include="Monitoring\FailedTokenLog.aspx" />
     <Content Include="Monitoring\ForwarderShipmentDocumentQueue.aspx" />
@@ -2583,7 +2593,12 @@
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceLineAction.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.SATPaymentMethod.cs" />
     <Compile Include="CommonDataModel\DomainServices\PartnersDomainService.WarehouseType.cs" />
-    <Content Include="JustWebFreightappSettings.config" />
+    <Content Include="JustWebFreightappSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="JustWebFreightConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
@@ -4574,6 +4589,13 @@
     <Compile Include="Monitoring\AnalyzeQueue.aspx.designer.cs">
       <DependentUpon>AnalyzeQueue.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\EmailSendingQuotaExceeded.aspx.cs">
+      <DependentUpon>EmailSendingQuotaExceeded.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\EmailSendingQuotaExceeded.aspx.designer.cs">
+      <DependentUpon>EmailSendingQuotaExceeded.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Monitoring\FailedLoginLog.aspx.cs">
       <DependentUpon>FailedLoginLog.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5915,6 +5937,7 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
+    <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
     <Folder Include="MobileApplication\Views\DeclarationVehicleModification\" />

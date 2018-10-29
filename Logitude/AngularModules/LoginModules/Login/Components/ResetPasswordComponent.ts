@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {LoginService, LoginParameters} from '../LoginService';
+import { LoginService} from '../LoginService';
 import {Headers} from '@angular/http';
 import {SessionInfo} from '../SessionInfo';
 import {PasswordChangeService} from '../PasswordChangeService';
@@ -20,9 +20,23 @@ export class ResetPasswordComponent {
     Succeeded: boolean = false;
     Email: string;
     ShowbusyIndicator: boolean = false;
+
+    IsShowAreaCaptcha: boolean;
+    CaptchaImageUrl: string;
+    CaptchaCode: string;
+    CaptchaKey: string;
+
+
     constructor(public _LoginService: LoginService) {
 
     }
+
+    HideAreaCaptcha() {
+        this.IsShowAreaCaptcha = false;
+        this.CaptchaCode = null;
+        this.CaptchaKey = null;
+    }
+
 
 
     SubmitBtnClicked() {
@@ -37,25 +51,47 @@ export class ResetPasswordComponent {
             this.HasErrors = true;
             this.ErrorMessage = "Your email address is invalid !";
         }
+        else if (this.IsShowAreaCaptcha && !this.CaptchaCode) {
+            this.ShowbusyIndicator = false;
+            this.HasErrors = true;
+            this.ErrorMessage = "Please re-enter the characters you see in the image above";
+        }
         else {
             this.HasErrors = false;
-            this._LoginService.GetRequestResetUserPassword(this.Email, false).subscribe(userdata => {
+
+
+            var params = {
+                Email: this.Email,
+                IsChampLogin: false,
+                CaptchaCode: this.CaptchaCode,
+                CaptchaKey: this.CaptchaKey,
+            }
+
+            this._LoginService.PostRequestResetUserPassword(params).subscribe(userdata => {
                 this.ShowbusyIndicator = false;
 
                 if (!userdata.HasError) {
 
                     this.Succeeded = true;
                     this.HasErrors = false;
+                    this.HideAreaCaptcha();
                 }
                 else {
 
-
+                    this.CaptchaKey = userdata ? userdata.CaptchaKey : "";
                     //disableForm(false);
 
-                    var errorMessage = "Submit failed! invalid email." + "<br/>";
+                    var errorMessage = "Submit failed! invalid email.";
 
+                    if (userdata.InValidCaptcha) {
+                        errorMessage = "Please re-enter the characters you see in the image above";
+                        this.CaptchaCode = "";
+                        this.IsShowAreaCaptcha = true;
+                        this.CaptchaImageUrl = userdata.CaptchaImage;
 
-                    if (userdata.IpRestricted) {
+                    }
+
+                  else  if (userdata.IpRestricted) {
 
                         errorMessage = "Trying to submit in from unauthorised station!" + "<br/>" + "(The IP address you are trying to " + "<br/>" + "submit from is restricted for this user)";//
 

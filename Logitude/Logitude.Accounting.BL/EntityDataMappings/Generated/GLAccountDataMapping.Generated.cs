@@ -153,7 +153,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ReconcilationCount, 
 	         IsEquipmentVendor, 
 	         IsPartOfDeductionReport, 
-	         Parent,
+	         Parent, 
+	         DeductionTypeName, 
+	         DeductionFileTypeCode, 
+	         DeductionFileTypeName, 
+	         AssessingOfficeName, 
+	         DeductionTypeEnglishName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

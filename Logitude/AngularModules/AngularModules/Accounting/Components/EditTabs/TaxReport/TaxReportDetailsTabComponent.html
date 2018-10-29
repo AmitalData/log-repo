@@ -169,21 +169,14 @@
                         <td colspan="3">
                             {{ 'Accounting.General.O.Details' | TextCodeTranslationPipe}}
                         </td>
-
-                    </tr>
-
-                    <!--Error Msg-->
-                    <tr *ngIf="ShowErrorMsg" style="height: 30px;">
-                        <td colspan="3">
-                            <div style="width: 100%;text-align:center">
-                                <div class="DisbleBox">
-                                    {{GetErrorMsg()}}
-                                    <!--<span style="padding: 0px 16px;">-</span>
-                                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>-->
-
-                                </div>
+                        <div *ngIf="errorsCount > 0" style="position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
+                            <div class="DisbleBox" style="margin: 0 auto;">
+                                {{GetErrorMsg()}}
+                                <!--<span style="padding: 0px 16px;">-</span>
+                                <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>-->
                             </div>
-                        </td>
+                        </div>
+
                     </tr>
 
                     <!-- Fields -->

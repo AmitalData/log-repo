@@ -479,7 +479,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
 
                     double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
-                    double? lineInvoiceAmount_Computed = MethodHelper.Round(item.LocalCurrencyAmount / entityPM.InvoiceCurrencyExchangeRate, 2);
+                    double? exchangeRate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
+                    double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
                     if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
                     {
                         if (lineInvoiceAmount != lineForiegnAmount)
@@ -660,6 +661,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                 #region Local Amount
                 double? localAmount = MethodHelper.Round(entityPM.AmountInLocalCurrency, 2);
+             //   double? rate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
                 double? localAmount_Computed = MethodHelper.Round(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate, 2);
                 if (localAmount != localAmount_Computed)
                 {

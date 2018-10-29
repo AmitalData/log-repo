@@ -18548,6 +18548,135 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Activation Date",
+                FullFieldLable = "ActivationDate",
+                FieldName = "ActivationDate",
+                FieldsDataType = "DateTime",
+                MaxLength = 1,
+                MinLength = 0,
+                DisplayInList = true,
+                ObjectTableId = CustomersObject.Id,
+                ObjectTableName = CustomersObject.Name,
+                ValidForQuerySection1 = CustomersObject.Name,
+                ListFieldLable = "ActivationDateLabel",
+                ListLableDefaultText = "Activation Date",
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "StartsWith",
+                ListPropertyPath = "ActivationDate",
+                PMPropertyPath = "ActivationDate"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Inactive Date",
+                FullFieldLable = "InactiveDate",
+                FieldName = "InactiveDate",
+                FieldsDataType = "DateTime",
+                MaxLength = 1,
+                MinLength = 0,
+                DisplayInList = true,
+                ObjectTableId = CustomersObject.Id,
+                ObjectTableName = CustomersObject.Name,
+                ValidForQuerySection1 = CustomersObject.Name,
+                ListFieldLable = "InactiveDateLabel",
+                ListLableDefaultText = "Inactive Date",
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "StartsWith",
+                ListPropertyPath = "InactiveDate",
+                PMPropertyPath = "InactiveDate"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Activation Request Date",
+                FullFieldLable = "ActivationRequestDate",
+                FieldName = "ActivationRequestDate",
+                FieldsDataType = "DateTime",
+                MaxLength = 1,
+                MinLength = 0,
+                DisplayInList = true,
+                ObjectTableId = CustomersObject.Id,
+                ObjectTableName = CustomersObject.Name,
+                ValidForQuerySection1 = CustomersObject.Name,
+                ListFieldLable = "ActivationRequestDateLabel",
+                ListLableDefaultText = "Activation Request Date",
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "StartsWith",
+                ListPropertyPath = "ActivationRequestDate",
+                PMPropertyPath = "ActivationRequestDate"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Activated by",
+                FullFieldLable = "ActivatedByUserName",
+                FieldName = "ActivatedByUserName",
+                FieldsDataType = "Text",
+                MaxLength = 60,
+                MinLength = 0,
+                ObjectTableId = CustomersObject.Id,
+                ObjectTableName = CustomersObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                DisplayInList = true,
+                ListFieldLable = "ActivatedByUserNameLabel",
+                ListLableDefaultText = "Activated by",
+                ValidForQuerySection1 = CustomersObject.Name,
+                Operator = "Equals",
+                ListPropertyPath = "ActivatedByUserName",
+                PMPropertyPath = "ActivatedByUserName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Set as Inactive by",
+                FullFieldLable = "SetAsInactiveByName",
+                FieldName = "SetAsInactiveByName",
+                FieldsDataType = "Text",
+                MaxLength = 60,
+                MinLength = 0,
+                ObjectTableId = CustomersObject.Id,
+                ObjectTableName = CustomersObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                DisplayInList = true,
+                ListFieldLable = "SetAsInactiveByNameLabel",
+                ListLableDefaultText = "Set as Inactive by",
+                ValidForQuerySection1 = CustomersObject.Name,
+                Operator = "Equals",
+                ListPropertyPath = "SetAsInactiveByName",
+                PMPropertyPath = "SetAsInactiveByName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Activation Requested by",
+                FullFieldLable = "ActivationRequestedByUserName",
+                FieldName = "ActivationRequestedByUserName",
+                FieldsDataType = "Text",
+                MaxLength = 60,
+                MinLength = 0,
+                ObjectTableId = CustomersObject.Id,
+                ObjectTableName = CustomersObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                DisplayInList = true,
+                ListFieldLable = "ActivationRequestedByUserNameLabel",
+                ListLableDefaultText = "Activation Requested by",
+                ValidForQuerySection1 = CustomersObject.Name,
+                Operator = "Equals",
+                ListPropertyPath = "ActivationRequestedByUserName",
+                PMPropertyPath = "ActivationRequestedByUserName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Metodo Pago",
                 DisplayOnLookUp = false,
                 FullFieldLable = "MetodoPagoCode",
@@ -18569,7 +18698,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "MetodoPagoCode",
                 PMPropertyPath = "MetodoPagoCode",
                 HelpTextDefaultText = "Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
-
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -18596,7 +18724,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "UsoCFDICode",
                 HelpTextDefaultText = "Use of Digital Fiscal Receipt through Internet"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
@@ -60291,6 +60418,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Logs", LocalDefaultText = "לוג", DefaultText = "Logs", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.CorrelationID", LocalDefaultText = "מתאם", DefaultText = "Correlation ID", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.MoreDetails", LocalDefaultText = "פרטים נוספים", DefaultText = "More Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.B.Details", LocalDefaultText = "פרטים", DefaultText = "Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
 
             #region APILogs
 
@@ -63432,7 +63560,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.PaymentAmountPaidCantBeBigger", DefaultText = "Payment Amount Paid can't be bigger than Payment Amount", LocalDefaultText = "סכום התשלום ששולם לא יכול להיות גדול מסכום התשלום ", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.AccountingSettingsDontAllowVoid", DefaultText = "Accounting Settings doesn't allow void A/R Payment", LocalDefaultText = "ע''פ הגדרות מערכת הנהח''ש לא ניתן להתעלם מקבלה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.DisconnectInvoices", DefaultText = "Please disconnect all invoices", LocalDefaultText = "אנא נתק את כל החשבוניות המקושרות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ConfirmVoid", DefaultText = "Once you void or delete a payment, the change is permanent. If you void or delete a payment and want to restore it later, you'll have to create a new payment.", LocalDefaultText = "כאשר אתה מבטל תשלום או מתעלם ממנו זהו צעד בלתי הפיך", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ConfirmVoid", DefaultText = "Once you void or delete a payment, the change is permanent. If you void or delete a payment and want to restore it later, you'll have to create a new payment.", LocalDefaultText = "האם אתה בטוח שברצונך לבטל את הקבלה ?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.NoTemplate", DefaultText = "A/R Payment document has no template!", LocalDefaultText = "אין תבנית הדפסה למסמך קבלה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.OnlyMinusValue", DefaultText = "Only negative value allowed", LocalDefaultText = "מותר רק ערך שלילי", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.AmountPaidNotLess", DefaultText = "Amount Paid can't be less than", LocalDefaultText = "הסכום ששולם אינו יכול להיות נמוך מ", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);

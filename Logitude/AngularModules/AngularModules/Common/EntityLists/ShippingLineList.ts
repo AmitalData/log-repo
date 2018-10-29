@@ -41,5 +41,8 @@ export class ShippingLineList {
 		UsoCFDICode: string;
 		IsINTTRARegistered: boolean;
 		INTTRARegistrationNotes: string;
+		PrimaryContactName: string;
+		PrimaryContactEmail: string;
+		PrimaryContactPhone: string;
 	
 }

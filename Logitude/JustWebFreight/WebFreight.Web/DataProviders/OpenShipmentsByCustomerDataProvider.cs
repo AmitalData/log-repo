@@ -52,5 +52,7 @@ namespace WebFreight.Web.DataProviders
         public bool IsCancelled { get; set; }
         public string ContainersNumbersArray { get; set; }
         public string ContainersNumbersAndTypesArray { get; set; }
+        public DateTime? LastSharedEventDate { get; set; }
+        public string LastSharedEventNote { get; set; }
     }
 }
