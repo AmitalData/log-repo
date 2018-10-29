@@ -291,6 +291,17 @@ export class LoginComponent {
 
     //}
 
+    onEmailBlur(email) {
+        if (email != this.Email) {
+            this.IsShowAreaCaptcha = false;
+            this.CaptchaKey = null;
+            this.CaptchaTextValue = null;
+            if (this.errorMessage == "Please re-enter the characters you see in the image above") {
+                this.errorMessage = "";
+            }
+
+        }
+    }
 
     PasswordExpirationButtomClicked(type: string) {
 
@@ -414,16 +425,8 @@ export class LoginComponent {
                 }
 
 
-                else if (userData.InValidCaptcha) {
-                    if (this.IsShowAreaCaptcha) {
-                        this.CaptchaTextValue = "";
-                        this.errorMessage = "Please re-enter the characters you see in the image above";
-                    }
-
-                    this.IsShowAreaCaptcha = true;
-                    this.CaptchaImageUrl = userData.CaptchaImage; 
-                }
-                else if (userData.MustChangePassword) {
+              
+                 if (userData.MustChangePassword) {
                     SessionInfo.LoggedUserEmail = userData.UserName;
                     if (SessionInfo.MainLocation) {
                         SessionInfo.MainLocation.clear();
@@ -445,26 +448,39 @@ export class LoginComponent {
                     this.IsShowPasswordExpirationDateArea = true;
                 }
                 else {
-                    this.errorMessage = "Login failed! invalid user name or password.";
+                    this.errorMessage = "";
 
+                     if (userData.InValidCaptcha) {
+                         if (this.IsShowAreaCaptcha) {
+                             this.CaptchaTextValue = "";
+                             this.errorMessage = "Please re-enter the characters you see in the image above";
+                         }
 
-                    if (userData.IpRestricted) {
+                         this.IsShowAreaCaptcha = true;
+                         this.CaptchaImageUrl = userData.CaptchaImage;
+                     }
 
-                        this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
+                     else {
 
-                    }
+                         this.errorMessage = "Login failed! invalid user name or password.";
 
-                    if (userData.IsLocked) {
+                         if (userData.IpRestricted) {
 
-                        this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
-                    }
-                    if (userData.InActive) {
-                        this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
-                    }
-                    if (userData.Unlicensed) {
+                             this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
 
-                        this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
-                    }
+                         }
+                         if (userData.IsLocked) {
+
+                             this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
+                         }
+                         if (userData.InActive) {
+                             this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
+                         }
+                         if (userData.Unlicensed) {
+
+                             this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                         }
+                     }
 
 
                     if (this.errorMessage == "Login failed! invalid user name or password.") {

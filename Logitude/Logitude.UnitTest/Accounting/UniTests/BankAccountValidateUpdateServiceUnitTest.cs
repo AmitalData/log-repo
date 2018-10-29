@@ -53,7 +53,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             TestsUtil.AssertThrows<Exception>(() =>
             {
                 bankAccountValidateService.CheckBankAccountExists(entityPM);
-            }, "Bank accountkkk exist");
+            }, "Bank account exist");
             
         }
 
