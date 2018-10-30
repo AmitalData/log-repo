@@ -2121,6 +2121,8 @@ namespace WebFreight.Web
                             commonDataContext.UserLastLogins.Add(lastLogin);
                         }
 
+                        user.LastLoginDateTime = lastLogin.LoginDateTime;
+
                         lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                         lastLogin.Tenant = tenant;
                         commonDataContext.UserLoginLogs.Add(userLog);

@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .TabCloseIcon:hover {
         background: url('./Images/Tab.X.Blue.png') no-repeat;
@@ -404,6 +404,12 @@
 
                             <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!_AmitalBrowserInUse">+</li>
                         </ul>
+                        <div *ngIf="IsShowLastSuccessfulLoginComponent" style="float:right;height:20px;width:250px;margin-top:-24px">
+                            <LastSuccessfulLoginComponent></LastSuccessfulLoginComponent>
+                           
+                        </div>
+
+
                     </div>
 
                     <div class="TabControlBody" (mouseup)="OnSessionMouseUp($event)" style="background: white;" id="ApplicationSession">
