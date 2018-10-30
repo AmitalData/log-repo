@@ -481,6 +481,7 @@
     <Content Include="Main Branch\2018\10 - 2018\Day 14 [Abed] UpdateTenantLoginPoliciesSetDefultValueSessionTimeout.sql" />
     <Content Include="Main Branch\2018\10 - 2018\Day 18 [Maheera] Fill Budgets Categories Sprints Defaults values.sql" />
     <Content Include="Main Branch\2018\10 - 2018\Day 17 [Samar] Fill default shared logistics setting record.sql" />
+    <Content Include="Main Branch\2018\10 - 2018\Day 30 [Abdullah] Delete old objectfields for GLAccount.sql" />
     <Content Include="Main Branch\2018\10 - 2018\Day 25 [Abdullah] Delete old GLAccount header.sql" />
     <Content Include="Main Branch\2018\10 - 2018\Day 23 [Abdullah] Update External Reconciliation SearchFields.sql" />
     <Content Include="Main Branch\2018\10 - 2018\Day 22 [Maheera] Add Sprint Table to Computing Partners.sql" />
