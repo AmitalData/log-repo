@@ -57,7 +57,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                if (id == authToken.Tenant)
+                if (id == authToken.Tenant || authToken.Tenant == 0)
                 {
                     SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
                     TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();

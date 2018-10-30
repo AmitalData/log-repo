@@ -35478,7 +35478,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "EntityStatusId",
                 PMPropertyPath = "EntityStatusId",
-                DisplayOnly = true,
+                //DisplayOnly = true,
                 HelpTextCode = "EntityStatusId",
                 HelpTextDefaultText = "The status to which the entity should switch when this event occurs for that entity.",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);

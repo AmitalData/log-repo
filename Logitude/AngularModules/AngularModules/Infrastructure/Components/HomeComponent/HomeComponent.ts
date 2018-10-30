@@ -38,6 +38,7 @@ export class HomeComponent {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("ApplicationLocation", { read: ViewContainerRef }) ApplicationLocation: ViewContainerRef;
     SettingBtnVisibility: boolean = false;
+    IsShowLastSuccessfulLoginComponent: boolean = true;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         this.Tenant = SessionLocator.Tenant;
@@ -692,6 +693,9 @@ export class HomeComponent {
         this.SelectionChanged(this.Tabs[this.Tabs.length - 1]);
         this.Retries = 0;
         this.RunComponentTimer();
+
+        if (this.Tabs.length > 4) this.IsShowLastSuccessfulLoginComponent = false;
+  
     }
     SelectionChanged(clickdTab: SessionTabItem) {
         if (clickdTab != null) {
@@ -773,6 +777,10 @@ export class HomeComponent {
 
             tabItem.SessionComponent.DestroySession();
             tabItem = null;
+
+            if (this.Tabs.length <= 4) {
+                if (!this.IsShowLastSuccessfulLoginComponent) this.IsShowLastSuccessfulLoginComponent = true;
+            }
         }
     }
     RunSignupWizard() {
