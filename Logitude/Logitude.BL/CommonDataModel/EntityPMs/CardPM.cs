@@ -114,7 +114,24 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SATForeignRFC { get; set; }
 
-
+        // used for customer API
+        private List<ContactPM> contacts;
+        [Include]
+        [Association("ContactsCards", "Id", "CardId")]
+        public virtual List<ContactPM> Contacts
+        {
+            get
+            {
+                if (contacts == null)
+                {
+                    contacts = new List<ContactPM>();
+                }
+                return contacts;
+            }
+            set { contacts = value; }
+        }
+        //////////////////////////////////////
+        
         private List<AddressPM> addresses;
         [Include]
         [Association("CardPMAddressPM", "Id", "CardId")]
