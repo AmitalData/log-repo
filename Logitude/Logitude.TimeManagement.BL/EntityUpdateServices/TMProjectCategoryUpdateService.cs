@@ -13,20 +13,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Logitude.TimeManagement.BL.EntityUpdateServices
 {
-    public partial class SprintUpdateService
+    public partial class TMProjectCategoryUpdateService
     {
-
-        protected override void OnCreating(SprintPM entityPM, Server.Tools.EntityPM entityParentPM)
+        protected override void OnCreating(TMProjectCategoryPM entityPM, Server.Tools.EntityPM entityParentPM)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
-                entityPM.Id = IdCounter.GetNumber("Sprint", entityPM.Tenant);
+                entityPM.Id = IdCounter.GetNumber("TMProjectCategory", entityPM.Tenant);
             }
         }
 
-        protected override void OnUpdating(SprintPM entityPM)
+        protected override void OnUpdating(TMProjectCategoryPM entityPM)
         {
             DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
@@ -49,19 +49,9 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
             {
                 myLoggedUserId = contact.Id;
             }
-
-            entityPM.UpdatedByUserId = myLoggedUserId;
-
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-            {
-                if (entityPM.CreatedByUserId == null)
-                {
-                    entityPM.CreatedByUserId = myLoggedUserId;
-                }
-            }
         }
 
-        protected override void Trace(SprintPM entityPM, Sprint entityPOCO, string changesXml)
+        protected override void Trace(TMProjectCategoryPM entityPM, TMProjectCategory entityPOCO, string changesXml)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
@@ -75,7 +65,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                     EventTypeCode = "UPEV",
                     UserId = contact.Id,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "Sprint",
+                    ObjectTableName = "TMProjectCategory",
                     Notes = changesXml
                 });
 
@@ -89,7 +79,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                     EventTypeCode = "CREV",
                     UserId = contact.Id,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "Sprint",
+                    ObjectTableName = "TMProjectCategory",
                     Notes = changesXml
                 });
             }

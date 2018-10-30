@@ -23,23 +23,23 @@ using Simplog.Data.CommonDataModel;
 
  namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 { 
-   public partial class CountryQueryService
+   public partial class PaymentTermQueryService
    {
    
 		ICommonDataContext  context;
-		//CountryService service; 
+		//PaymentTermService service; 
 		
-		CountryQuery query; 
+		PaymentTermQuery query; 
 
-        public CountryQueryService(int tenant)
+        public PaymentTermQueryService(int tenant)
         {
 				    context = CommonDataContext.GetContext(tenant); 
-			//service = new CountryService(context, tenant); 
-			query = new CountryQuery(tenant);
+			//service = new PaymentTermService(context, tenant); 
+			query = new PaymentTermQuery(tenant);
         }
 
 		
-		public Country GetCountryById(string Id,int Tenant)
+		public PaymentTerm GetPaymentTermById(string Id,int Tenant)
         { 
 		    try
             {
@@ -47,9 +47,9 @@ using Simplog.Data.CommonDataModel;
 				
 				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
-                    throw new ApplicationException("Country with Id " + Id + " doesn't exist");
+                    throw new ApplicationException("PaymentTerm with Id " + Id + " doesn't exist");
 
-				return CountryDataMapping(temp,Tenant);
+				return PaymentTermDataMapping(temp,Tenant);
 			}
             catch (Exception ex)
             {
@@ -58,17 +58,16 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Country CountryDataMapping(CountryPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		public PaymentTerm PaymentTermDataMapping(PaymentTermPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				   var temp = new Country(); 
+				   var temp = new PaymentTerm(); 
 				   temp.Id = MyEntityPM.Id;
-				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.Code = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Country");  
 				   temp.EnglishName = MyEntityPM.EnglishName;
-				   temp.LocalName = MyEntityPM.LocalName;					
+				   temp.LocalName = MyEntityPM.LocalName;
+				   temp.Days = MyEntityPM.Days;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -78,44 +77,27 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public CountryPM CountryDataMappingAndValidatin(Country MyEntity,int Tenant,string ComputingPartnerName = "")
+		public PaymentTermPM PaymentTermDataMappingAndValidatin(PaymentTerm MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
-				   					var temp = new CountryPM();								  
+				   					var temp = new PaymentTermPM();								  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-					
-					if (!string.IsNullOrEmpty(MyEntity.Code))
-					{
-						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.Code,ComputingPartnerName,"Country");
-					    if(string.IsNullOrEmpty(MyCode))
-						{
-						  throw new ApplicationException("Country with Partner Code " + MyEntity.Code + " doesn't match any record");
-						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant);
-						
-						
-					}
-					
-					   					   
+										   
 					if(temp == null)
 					{
-					    throw new ApplicationException("Country with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("PaymentTerm with Id " + MyEntity.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 						temp.Id = MyEntity.Id;
 					}
-					if(string.IsNullOrEmpty(temp.Code))
-					{
-						temp.Code = MyEntity.Code;
-					}
 					temp.EnglishName = MyEntity.EnglishName;
-					temp.LocalName = MyEntity.LocalName;					   
+					temp.LocalName = MyEntity.LocalName;
+					temp.Days = MyEntity.Days;					   
 					   return temp;
 		    }
             catch (Exception ex)

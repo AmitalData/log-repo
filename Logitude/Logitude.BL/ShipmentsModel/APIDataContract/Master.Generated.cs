@@ -80,5 +80,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public List<CustomField> CustomFields { get; set; }
     
     public List<House> Houses { get; set; }
+    
+    public bool IsOperationalClosed { get; set; }
     }
 } 

@@ -460,6 +460,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomatedBackup.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationCondition.ts" />
@@ -501,6 +502,7 @@
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.html" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DetectUserInActivity.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.html" />
+    <Content Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.html" />
@@ -1604,6 +1606,7 @@
     <Content Include="TimeManagement\Components\Connections\ConnectToParentComponent.html" />
     <Content Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.html" />
     <Content Include="TimeManagement\Components\NewEntity\NewOfficeHourComponent.html" />
+    <Content Include="TimeManagement\Components\NewEntity\NewProjectCategoryComponent.html" />
     <Content Include="TimeManagement\Components\NewEntity\NewProjectComponent.html" />
     <Content Include="TimeManagement\Components\NewEntity\NewLineComponent.html" />
     <Content Include="Social\Components\QueryColumnsComponents\SocialContactNameLink.html" />
@@ -5936,6 +5939,7 @@
     <TypeScriptCompile Include="TimeManagement\Components\Connections\ConnectToParentComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewOfficeHourComponent.ts" />
+    <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewProjectCategoryComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewProjectComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewLineComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewSprintComponent.ts" />

@@ -90,10 +90,7 @@ import {QueryListComponent} from './Components/LogitudeComponents/QueryListCompo
 import {LogitudeListBoxComponent} from './Components/LogitudeComponents/LogitudeListBox/LogitudeListBoxComponent';
 import {GeneralTabComponent} from './GenericComponents/GeneralTabComponent';
 import {GeneratedComponent} from './GenericComponents/GeneratedComponent';
-
-
-
-
+import { LastSuccessfulLoginComponent } from './Components/LogitudeCustomComponents/LastSuccessfulLoginComponent';
 
 import {TipsComponent} from './Components/LogitudeComponents/TipsComponent/TipsComponent';
 
@@ -243,6 +240,7 @@ export const ControlsComponents =
         FroalaEditorComponent,
         DocsOutTabComponent,
         DocsInTabComponent,
+        LastSuccessfulLoginComponent,
     ];
 export const Components =
     [
@@ -312,6 +310,7 @@ export const Components =
         BTEGeneralTabComponent,
         BTELogTabComponent,
         BTEParameterTabComponent,
+        LastSuccessfulLoginComponent,
     ];
 
 export class ModuleDeclarations {
@@ -402,6 +401,9 @@ export class ModuleDeclarations {
             case 'BTEGeneralTabComponent': { myResult = BTEGeneralTabComponent; break; }
             case 'BTELogTabComponent': { myResult = BTELogTabComponent; break; }
             case 'BTEParameterTabComponent': { myResult = BTEParameterTabComponent; break; }
+            case 'LastSuccessfulLoginComponent': { myResult = LastSuccessfulLoginComponent; break; }
+
+                
         }
 
         return myResult;
