@@ -1,0 +1,3 @@
+<div *ngIf="LastLoginData" style="color:green;font-size:12PX">
+    Last successful login : <span>{{LastLoginData | DateTimeToDatePipe}} {{LastLoginData | DateTimeToTimePipe}} </span>
+</div>

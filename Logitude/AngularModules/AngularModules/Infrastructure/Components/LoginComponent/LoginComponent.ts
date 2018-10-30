@@ -222,6 +222,9 @@ export class LoginComponent implements OnInit {
             SessionInfo.WebTokenExpirationWarning = userData.WebTokenExpirationWarning;
             SessionInfo.WebTokenLifeTime = userData.WebTokenLifeTime;
             SessionInfo.KeepUserLoggedIn = userData.KeepUserLoggedIn;
+            SessionInfo.LastLoginDateTime = userData.LastLoginDateTime;
+            
+
 
             AmitalGatewayUtil.Instance.AmitalBrowserInUse = userData.AmitalBrowserInUse;
             this.authHeader.append('token', userData.Token);
