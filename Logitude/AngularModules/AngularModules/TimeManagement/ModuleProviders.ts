@@ -1,4 +1,4 @@
-﻿import {TMEmployeeTimeListService} from './Services/StandardLists/TMEmployeeTimeListService';
+import {TMEmployeeTimeListService} from './Services/StandardLists/TMEmployeeTimeListService';
 import {TMProjectListService} from './Services/StandardLists/TMProjectListService';
 import {TMLocationListService} from './Services/StandardLists/TMLocationListService';
 import {TMOfficeHourListService} from './Services/StandardLists/TMOfficeHourListService';
@@ -12,6 +12,10 @@ import {TMBudgetPMService} from './Services/StandardPMs/TMBudgetPMService';
 import {TMProjectCategoryPMService} from './Services/StandardPMs/TMProjectCategoryPMService';
 import {SprintListService} from './Services/StandardLists/SprintListService';
 import {SprintPMService} from './Services/StandardPMs/SprintPMService';
+
+
+
+
 
 
 export class ModuleProviders {
@@ -29,10 +33,11 @@ export class ModuleProviders {
             case "TMOfficeHourPMService": { myResult = new TMOfficeHourPMService(); break; }
             case "TMProjectPMService": { myResult = new TMProjectPMService(); break; }
             case "TMBudgetPMService": { myResult = new TMProjectPMService(); break; }
-            case "TMProjectCategoryPMService": { myResult = new TMProjectPMService(); break; }
+            case "TMProjectCategoryPMService": { myResult = new TMProjectCategoryPMService(); break; }
 
             case "SprintListService": { myResult = new SprintListService(); break; }
             case "SprintPMService": { myResult = new SprintPMService(); break; }
+
         }
         return myResult;
     }
