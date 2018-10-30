@@ -335,6 +335,30 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? ActivationDate { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? InactiveDate { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? ActivationRequestDate { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ActivatedByUserId { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string SetAsInactiveByUserId { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ActivationRequestedByUserId { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool SetReActivated { get; set; }
 
         [DataMember]
@@ -936,5 +960,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public int CustomerTenant { get; set; }
+
+        public string MainAddressId { get; set; }
     }
 }

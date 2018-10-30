@@ -233,14 +233,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                                                              </td>
                                                          </tr>
 
-         
-                                            <tr style="height:5px;"><td></td></tr>
+<%--         
+                                            <tr style="height:5px;"><td></td></tr>--%>
 
                                                 
                                      
-                                                  <tr id="Areacaptcha" style ="height:30px;margin-top:5px;display:none;">
+                                                  <tr id="Areacaptcha" style ="height:30px;margin-top:3px;display:none;">
                                                  <td>
-                                              <img style="height:auto;width:auto;float:left;" src="data:image/Jpeg;base64,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" />
+                                              <img id="CaptchaImage" style="height:auto;width:auto;float:left;" />
                                                 <input oninput="onCaptchaInPutChanged()" style="height:19px;width:260px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="captchaTextBox"/>
                                                 
 
@@ -263,7 +263,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
 
                                                          <tr style="vertical-align:bottom;" >
                                                              <td >
-                                                                  <p style="font-family:Arial; font-size:12px;height:12px; color:#4B4A4A" class="column1"> 
+                                                                  <p id="HavingtroubleId" style="font-family:Arial; font-size:12px;height:12px; color:#4B4A4A" class="column1"> 
                                                                          Having trouble logging in? 
                                                                          <a id="DefaultContactUs" href="mailto:info@logitudeworld.com" >Contact us</a>  
                                                                          <a id="LogBoxContactUs" style="display:none" href="mailto:sales@logbox.co.il" >Contact us</a>  
@@ -490,6 +490,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
             }
         }
 
+        function HideCaptchaArea() {
+            captchaKey = null;
+            document.getElementById("captchaTextBox").value = null;
+            document.getElementById("Areacaptcha").style.display = "none";
+            document.getElementById("BusyindicatorArea").style.height = "";
+            document.getElementById("BusyindicatorArea").style.width = "";
+            document.getElementById("ImagebusyIndicator").width = "";
+            document.getElementById("ImagebusyIndicator").height = "";
+            document.getElementById("busyIndicator").style.marginTop = "0px";
+            document.getElementById("HavingtroubleId").style.height = "";
+            
+        }
+
 
         function viewModel() {
 
@@ -516,21 +529,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                     return;
                 }
        
-            
+                var heightWidthbusyIndicator = "";
                 if (areacaptcha.style.display == "block") {
+                    heightWidthbusyIndicator = "35px";
+                    document.getElementById("busyIndicator").style.marginTop = "-8px";
+
                     if (!document.getElementById("captchaTextBox").value) {
                         document.getElementById("errorsList").innerHTML = "Please re-enter the characters you see in the <br /> image above"; 
                         $("#errorsList").show();
                         return;
                     }
                 }
-
-                var heightWidthbusyIndicator = "50px";
-                if (areacaptcha.style.display == "block") {
-                    heightWidthbusyIndicator = "35px";
-                    document.getElementById("busyIndicator").style.marginTop = "-8px";
-                }
-
+                
                 document.getElementById("ImagebusyIndicator").width = heightWidthbusyIndicator.replace("px","");
                 document.getElementById("ImagebusyIndicator").height = heightWidthbusyIndicator.replace("px","");
 
@@ -547,29 +557,29 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                     email = email + "^" + Tenant;
                 }
 
-                var url = "api/Authentication/?email=" + email + "&ischamplogin=" + IsChampLogin;
+                 var url = "api/ResetPassword?PostResetPassword";
+                function ResetPasswordParameters() {
 
+                    this.Email = email;
+                    this.IsChampLogin =IsChampLogin;
+                    this.CaptchaKey = captchaKey;
+                    this.CaptchaCode = document.getElementById("captchaTextBox").value;
+                };
+
+                
+                var param = new ResetPasswordParameters();
                 $.ajax({
                     url: url,
-                    type: 'GET',
+                    type: 'POST',
+                    data: JSON.stringify(param),
                     contentType: 'application/json',
-
                     success: function (userdata) {
-
 
                         $("#busyIndicator").hide();
 
-
-
-
-
                         if (!userdata.HasError) {
-
-                            //string logindata = user.UserName + ":" + user.Id + ":" + user.CurrentTenant + ":" + computerId + ":" + user.IsAuthenticated;
-
                             $("#message").show();
-                            //alert("submit completed");
-                            //document.location.href = "login.aspx";
+                            HideCaptchaArea();
 
                         }
                         else {
@@ -583,10 +593,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                             if (userdata.InValidCaptcha) {
                                 if (areacaptcha.style.display == "block") {
                                     document.getElementById("captchaTextBox").value = "";
-                                    errorMessage = "Please re-enter the characters you see in the <br> image above";
+                   
                                 }
-                                   document.getElementById("BusyindicatorArea").style.width = "0px";
-                                    document.getElementById("BusyindicatorArea").style.height = "0px";
+                                errorMessage = "Please re-enter the characters you see in the <br> image above";
+                                document.getElementById("BusyindicatorArea").style.width = "0px";
+                                document.getElementById("BusyindicatorArea").style.height = "0px";
 
                                 areacaptcha.style.display = "block";
                                 $("#CaptchaImage").attr("src", userdata.CaptchaImage);

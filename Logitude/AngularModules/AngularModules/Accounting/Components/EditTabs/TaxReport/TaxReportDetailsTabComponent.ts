@@ -80,7 +80,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
                 this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.FillGrids();
+                        this.ReloadScreen();
                         console.log("Entity Reloaded");
                     }
                 });
@@ -91,6 +91,12 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     ngOnInit() {
         this.GetStatuses();
         this.FillGrids();
+    }
+
+    ReloadScreen(){
+        this.GetStatuses();
+        this.FillGrids();
+        this.FilterSelectedValue = 'All';
     }
 
     SetUIProperty() {
@@ -322,7 +328,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     RefreshButtonClicked() {
 
         SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        //this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
     }
 
     EditLine(line: ReportLineModel) {
@@ -348,10 +353,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
 
 
-    }
-
-    ReloadScreen() {
-        this.RefreshButtonClicked();
     }
 
     GetErrorMsg() {

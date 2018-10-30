@@ -70,8 +70,10 @@ namespace WebFreight.Web.DataContracts
         public string CaptchaImage { get; set; }
         public string CaptchaKey {  get; set;  }
         public bool InValidCaptcha { get; set; }
+        public DateTime? LastLoginDateTime { get; set; }
+        
 
-     
+
         //public string LoginPolicyCode { get; set; }
         //[Key]
         //public string Name

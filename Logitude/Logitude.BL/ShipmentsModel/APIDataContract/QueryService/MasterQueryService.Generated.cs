@@ -204,7 +204,8 @@ using Simplog.Data.ShipmentsModel;
 					 temp.Houses = HouseService16.HouseCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentConsoleShipments,Tenant);
 				}
 
-							 					
+							 
+				   temp.IsOperationalClosed = MyEntityPM.IsOperationalClosed;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -434,7 +435,8 @@ using Simplog.Data.ShipmentsModel;
 						temp.ShipmentConsoleShipments = HouseService16.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
 					}
 
-								 					   
+								 
+					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;					   
 					   return temp;
 		    }
             catch (Exception ex)

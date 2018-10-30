@@ -3,7 +3,7 @@ var barChart;
 var itemLine;
 var PieItem;
 
-function playAnimation(chart,effect, duration) {   
+function playAnimation(chart,effect, duration) {
     chart.startEffect = effect;
     chart.startDuration = duration;
     chart.sequencedAnimation = false;
@@ -260,10 +260,9 @@ function ResetItemFunnel() {
             "marginRight": 5,
             "marginTop": 5,
             "columnSpacing": 5,
-            "columnWidth": 0.7,
             "balloonFunction": function (item, content) {
                 var html = "";
-                html +=customNumberFormat(item.dataContext.data);            
+                html +=customNumberFormat(item.dataContext.data);
                 return html;
             },
 
@@ -273,7 +272,7 @@ function ResetItemFunnel() {
                 "enabled": legendFlag
             },
 
-       
+
             "startDuration": 0,
             "showHandOnHover":true,
             "fontSize": 13,
@@ -293,7 +292,7 @@ function ResetItemFunnel() {
                         return label.substr(0, 2) + '...';
                     return label;
                 }
-            
+
             },
             "borderAlpha": 0,
             "trendLines": [],
@@ -307,14 +306,14 @@ function ResetItemFunnel() {
                 "id": "ValueAxis-1",
                 "title": "",
                 "labelFunction": function (item, content) {
-		   
+
                     var html = "";
-                    html +=customNumberFormat(item);            
+                    html +=customNumberFormat(item);
                     return html;
                 },
                 "gridColor": "#FFFFFF",
-                "minorGridEnabled": true,            
-                    
+                "minorGridEnabled": true,
+
                 "minorTickLength": 3,
                 "maximum": max,
                 "minimum": minimum,
@@ -415,7 +414,7 @@ function ResetItemFunnel() {
         {
             var legend = new AmCharts.AmLegend();
             chart.addLegend(legend, LegendDiv);
-       
+
         }
         //  playAnimation(chart, 'easeInSine', 0.5);
 
@@ -545,7 +544,7 @@ function ResetItemFunnel() {
         return PieItem;
     }
 
-    
+
 
     function makePieChart(name, data, flag, legendFlag, LegendDiv,width) {
         if (width == null)
@@ -573,7 +572,7 @@ function ResetItemFunnel() {
                 "valueWidth": 0,
                 "labelWidth": width,
             },
-    
+
             "showHandOnHover": true,
             "colorField": "color",
 
@@ -607,13 +606,13 @@ function ResetItemFunnel() {
              "listeners": [{
     "event": "clickSlice",
     "method": function(e) {
-        PieItem = e;           
+        PieItem = e;
         }
         }]
 
 
-        
-       
+
+
         });
 
         chart.showHandOnHover = true;
@@ -686,7 +685,7 @@ function ResetItemFunnel() {
                 "startOnAxis": true,
                 "minHorizontalGap": 60,
                 "minorGridEnabled": true,
-               
+
 
             },
             "valueAxes": [
@@ -711,7 +710,7 @@ function ResetItemFunnel() {
             //console.log(event);
         }
         //playAnimation(chart, 'Bounce', 0.5);
-       
+
 
     }
 

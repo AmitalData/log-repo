@@ -14,5 +14,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string Code { get; set; }
         public DateTime CreateDate { get; set; }
         public string Email { get; set; }
+        public string IP { get; set; }
+        public string Activity { get; set; }
     }
 }
