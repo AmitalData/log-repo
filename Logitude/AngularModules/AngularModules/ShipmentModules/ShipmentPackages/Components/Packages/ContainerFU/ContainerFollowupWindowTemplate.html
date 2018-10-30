@@ -1,4 +1,4 @@
-﻿
+
 <table>
 
     <!-- Follow up -->
@@ -26,13 +26,21 @@
                         <div style="width:1px; height: 22px; background: #DADADA; margin:auto;"></div>
                     </td>
 
+                    <td style="width: 1px;" *ngIf="HasRouting">
+                        <Hyperlink (click)="DisconnectDeliveryLinkClicked()">Disconnect from delivery</Hyperlink>
+                    </td>
+
+                    <td style="width: 15px;" *ngIf="HasRouting && !IsDeliveryConnectedWithMultiContainers">
+                        <div style="width:1px; height: 22px; background: #DADADA; margin:auto;"></div>
+                    </td>
+
                     <td style="width: 1px;" *ngIf="HasRouting && !IsDeliveryConnectedWithMultiContainers">
                         <Hyperlink (click)="DeleteRoutingLinkClicked()">{{DeleteRoutingLinkText}}</Hyperlink>
                     </td>
 
-                    <td style="width: 1px;" *ngIf="HasRouting && IsDeliveryConnectedWithMultiContainers">
-                        <Hyperlink (click)="DisconnectDeliveryLinkClicked()">Disconnect from delivery</Hyperlink>
-                    </td>
+                    <!--<td style="width: 1px;" *ngIf="HasRouting && IsDeliveryConnectedWithMultiContainers">
+        <Hyperlink (click)="DisconnectDeliveryLinkClicked()">Disconnect from delivery</Hyperlink>
+    </td>-->
 
                     <td>
                         <div></div>
