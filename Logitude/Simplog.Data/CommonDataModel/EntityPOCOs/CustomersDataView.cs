@@ -130,7 +130,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SetAsInactiveByUserId { get; set; }
         public string ActivationRequestedByUserId { get; set; }
         public string ActivatedByUserName { get; set; }
-        public string SetAsInactiveByUserName { get; set; }
+        public string SetAsInactiveByName { get; set; }
         public string ActivationRequestedByUserName { get; set; }
     }
 }

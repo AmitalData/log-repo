@@ -1,9 +1,12 @@
-﻿using Logitude.BL.ShipmentsModel.CustomFilters;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -603,6 +606,56 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        [HttpGet]
+        public HttpResponseMessage RemoveShipmentTasks(string id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
+
+                IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
+
+                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant); 
+                DocumentsFilingRepository DocRepo = new DocumentsFilingRepository(tenant);
+                var entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(id, tenant);
+                var ShipmentDocs = DocRepo.GetRequestedDocumentsFilingPMsByEntityId(id, tenant);
+                foreach (var Doc in ShipmentDocs)
+                {  
+                    Doc.IsRequested = false;
+                    Doc.IsDigitalSignRequired = false;
+                    DocRepo.Update(Doc);
+                    DocRepo.SubmitChanges();
+                }
+                entityComputedFields.IsDigitalSignRequired = false;
+                entityComputedFields.IsRequestedDocuments = false;
+                entityComputedFields.RequestedDocumentsCount = 0;
+                shipmentComputedFieldsRepository.Update(entityComputedFields);
+                shipmentComputedFieldsRepository.SubmitChanges();
+                //ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                //ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(id, tenant);
+                //shipmentPM.IsOperationalClosed = true;
+                //ShipmentService service = new ShipmentService(objectContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
+                //service.Update(true);
+
+
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+
+
+
         }
     }
 }

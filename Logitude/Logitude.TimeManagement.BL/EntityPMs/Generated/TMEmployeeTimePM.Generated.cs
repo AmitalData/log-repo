@@ -549,6 +549,29 @@ namespace Logitude.TimeManagement.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool needsProrating ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool NeedsProrating  
+	   {
+	    
+	     get
+		{
+		   return needsProrating;
+		 }
+		 set
+		 {
+		   if(needsProrating != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NeedsProrating",OldValue=needsProrating,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   needsProrating=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

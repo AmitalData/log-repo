@@ -8,6 +8,8 @@
 //------------------------------------------------------------------------------
 
 
+import {ContactPM} from './ContactPM';
+
 import {AddressPM} from './AddressPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -288,6 +290,21 @@ export class CardPM {
        
 	 
      
+	private contacts: ContactPM[];
+    get  Contacts() {
+        if (this.contacts == null) {
+            this.contacts = [];
+        }
+
+        return this.contacts;
+    }
+    set  Contacts(newValue: ContactPM[]) {
+        if (this.contacts != newValue) {
+            this.contacts = newValue;
+        }
+    }
+    //public Contacts: Array<ContactPMPM>= [];
+      
 	private addresses: AddressPM[];
     get  Addresses() {
         if (this.addresses == null) {

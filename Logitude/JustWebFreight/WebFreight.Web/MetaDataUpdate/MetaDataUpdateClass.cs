@@ -20435,7 +20435,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 1,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 0,
-
                 FullFieldLable = "LocalName",
                 FullLocalDefaultText = "שם מקומי",
                 FieldName = "LocalName",
@@ -20450,7 +20449,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ListFieldLable = "LocalNameListLable",
-
                 ListLableDefaultText = "Local Name",
                 DisplayInList = true,
                 ValidForQuerySection1 = "Customer",
@@ -20590,58 +20588,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Website",
                 PMPropertyPath = "Website"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            //{
-            //    DefaultText = "Bill To",
-            //    DisplayOnLookUp = false,
-            //    FullFieldLable = "BillToId",
-            //    FieldName = "BillToId",
-            //    FieldsDataType = "LookUp",
-            //    IsCustom = false,
-            //    Isoveridden = false,
-            //    IsRequired = false,
-            //    MaxLength = 15,
-            //    MinLength = 0,
-            //    ObjectTableId = CustomersObject.Id,
-            //    ObjectTableName = CustomersObject.Name,
-            //    Tenant = 0,
-            //    TextCodeType = "F",
-            //    LookUpTableId = CardsObject.Id,
-            //    ListFieldLable = "BillToIdListLable",
-            //    ListLableDefaultText = "Bill To",
-            //    DisplayInList = false,
-            //    CanFilter = false,
-            //    ValidForQuerySection1 = CustomersObject.Name,
-            //    Operator = "Equals",
-            //    ListPropertyPath = "BillToId",
-            //    PMPropertyPath = "BillToId",
-            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            //{
-            //    DefaultText = "Bill To",
-            //    FullFieldLable = "BillToName",
-            //    FieldName = "BillToName",
-            //    FieldsDataType = "Text",
-            //    IsCustom = false,
-            //    Isoveridden = false,
-            //    IsRequired = false,
-            //    MaxLength = 100,
-            //    MinLength = 0,
-            //    ObjectTableId = CustomersObject.Id,
-            //    ObjectTableName = CustomersObject.Name,
-            //    Tenant = 0,
-            //    TextCodeType = "F",
-            //    ListFieldLable = "BillToNameListLable",
-            //    ListLableDefaultText = "Bill To",
-            //    DisplayInList = false,
-            //    ValidForQuerySection1 = CustomersObject.Name,
-            //    Operator = "StartsWith",
-            //    ListPropertyPath = "BillToName",
-            //    PMPropertyPath = "BillToName",
-            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "VAT No.",
@@ -21022,9 +20969,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "CityNameListLable",
                 ListLableDefaultText = "City",
                 DisplayInList = true,
-                CanFilter = false,
-                ValidForQuerySection1 = CustomersObject.Name,
+                CanFilter = true,
                 Operator = "StartsWith",
+                ValidForQuerySection1 = CustomersObject.Name,                
                 ListPropertyPath = "CityName",
                 PMPropertyPath = "CityName"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
@@ -21359,57 +21306,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "IBANNumber",
                 PMPropertyPath = "IBANNumber",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            //{
-            //    DefaultText = "Country",
-            //    FullFieldLable = "MainAddressCountryId",
-            //    FieldName = "MainAddressCountryId",
-            //    FieldsDataType = "LookUp",
-            //    IsRequired = false,
-            //    MaxLength = 15,
-            //    MinLength = 0,
-            //    ObjectTableId = CustomersObject.Id,
-            //    ObjectTableName = CustomersObject.Name,
-            //    Tenant = 0,
-            //    TextCodeType = "F",
-            //    ListFieldLable = "MainAddressCountryIdListLable",
-            //    ListLableDefaultText = "Country",
-            //    DisplayInList = false,
-            //    ValidForQuerySection1 = "Customer",
-            //    LookUpTableId = CountriesObject.Id,
-            //    CanFilter = true,
-            //    IsCustomFilter = true,
-            //    Operator = "StartsWith",
-            //    ListPropertyPath = "DummyMainAddressCountryId",
-            //    PMPropertyPath = "DummyMainAddressCountryId",
-            //    DisplayInEntityVariables = false,
-            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            //{
-            //    DefaultText = "Country",
-            //    FullFieldLable = "MainAddressCountryName",
-            //    FieldName = "MainAddressCountryName",
-            //    FieldsDataType = "Text",
-            //    IsRequired = false,
-            //    MaxLength = 120,
-            //    MinLength = 0,
-            //    ObjectTableId = CustomersObject.Id,
-            //    ObjectTableName = CustomersObject.Name,
-            //    Tenant = 0,
-            //    TextCodeType = "F",
-            //    ListFieldLable = "MainAddressCountryNameListLable",
-            //    ListLableDefaultText = "Country",
-            //    DisplayInList = true,
-            //    ValidForQuerySection1 = "Customer",
-            //    CanFilter = false,
-            //    Operator = "StartsWith",
-            //    ListPropertyPath = "DummyMainAddressCountryName",
-            //    PMPropertyPath = "DummyMainAddressCountryName",
-            //    DisplayInEntityVariables = false,
-            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Is Credit Limit Enabled",
@@ -21500,8 +21397,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "SAT Foreign RFC",
@@ -21523,9 +21419,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+                       
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Zip Code",
@@ -21573,8 +21467,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Address1",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Address2",
@@ -21598,9 +21491,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Address2",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+                       
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Phone",
@@ -21624,8 +21515,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Phone",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Country",
@@ -21649,32 +21539,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "CountryName",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "City",
-                DisplayOnLookUp = false,
-                FullFieldLable = "CityName",
-                FieldName = "CityName",
-                FieldsDataType = "Text",
-                IsCustom = false,
-                Isoveridden = false,
-                IsRequired = false,
-                MaxLength = 25,
-                MinLength = 0,
-                ObjectTableId = CustomersObject.Id,
-                ObjectTableName = CustomersObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CityName",
-                ListLableDefaultText = "City",
-                DisplayInList = true,
-                CanFilter = true,
-                ListPropertyPath = "CityName",
-                ValidForQuerySection1 = "Customer",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Competitor",
@@ -21700,8 +21565,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "CompetitorFields",
                 DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
 
             this.ObjectContext.SaveChanges();
         }
@@ -22674,9 +22537,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Address2",
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+                       
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Phone",
@@ -22701,7 +22562,27 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
-
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = AgentObject.Id,
+                ObjectTableName = AgentObject.Name,
+                ValidForQuerySection1 = AgentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Country",
@@ -22709,10 +22590,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 FullFieldLable = "CountryName",
                 FieldName = "CountryName",
                 FieldsDataType = "Text",
-                IsCustom = false,
-                Isoveridden = false,
-                IsRequired = false,
-                MaxLength = 25,
+                MaxLength = 120,
                 MinLength = 0,
                 ObjectTableId = AgentObject.Id,
                 ObjectTableName = AgentObject.Name,
@@ -22721,7 +22599,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "CountryName",
                 ListLableDefaultText = "Country",
                 DisplayInList = true,
-                CanFilter = true,
                 ListPropertyPath = "CountryName",
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
@@ -22733,9 +22610,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 FullFieldLable = "CityName",
                 FieldName = "CityName",
                 FieldsDataType = "Text",
-                IsCustom = false,
-                Isoveridden = false,
-                IsRequired = false,
                 MaxLength = 25,
                 MinLength = 0,
                 ObjectTableId = AgentObject.Id,
@@ -22746,6 +22620,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListLableDefaultText = "City",
                 DisplayInList = true,
                 CanFilter = true,
+                Operator = "StartsWith",
                 ListPropertyPath = "CityName",
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
@@ -22757,6 +22632,71 @@ namespace WebFreight.Web.MetaDataUpdate
         #region CreateCustomAgentFields()
         private void CreateCustomAgentFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = CustomAgentsObject.Id,
+                ObjectTableName = CustomAgentsObject.Name,
+                ValidForQuerySection1 = CustomAgentsObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = CustomAgentsObject.Id,
+                ObjectTableName = CustomAgentsObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = CustomAgentsObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = CustomAgentsObject.Id,
+                ObjectTableName = CustomAgentsObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = CustomAgentsObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Primary Contact Name",
@@ -23487,6 +23427,71 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShippingAgentsObject.Id,
+                ObjectTableName = ShippingAgentsObject.Name,
+                ValidForQuerySection1 = ShippingAgentsObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = ShippingAgentsObject.Id,
+                ObjectTableName = ShippingAgentsObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = ShippingAgentsObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = ShippingAgentsObject.Id,
+                ObjectTableName = ShippingAgentsObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = ShippingAgentsObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -23640,8 +23645,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -24284,6 +24288,71 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = AirlinesObject.Id,
+                ObjectTableName = AirlinesObject.Name,
+                ValidForQuerySection1 = AirlinesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = AirlinesObject.Id,
+                ObjectTableName = AirlinesObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = AirlinesObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = AirlinesObject.Id,
+                ObjectTableName = AirlinesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = AirlinesObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -24437,9 +24506,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -25792,6 +25859,71 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShippingLinesObject.Id,
+                ObjectTableName = ShippingLinesObject.Name,
+                ValidForQuerySection1 = ShippingLinesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = ShippingLinesObject.Id,
+                ObjectTableName = ShippingLinesObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = ShippingLinesObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = ShippingLinesObject.Id,
+                ObjectTableName = ShippingLinesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = ShippingLinesObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -26708,6 +26840,71 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = TruckersObject.Id,
+                ObjectTableName = TruckersObject.Name,
+                ValidForQuerySection1 = TruckersObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = TruckersObject.Id,
+                ObjectTableName = TruckersObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = TruckersObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = TruckersObject.Id,
+                ObjectTableName = TruckersObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = TruckersObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -26819,8 +27016,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "UsoCFDICode",
                 HelpTextDefaultText = "Use of Digital Fiscal Receipt through Internet"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Forma Pago",
@@ -26839,9 +27035,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+                       
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "SAT Foreign RFC",
@@ -26863,10 +27057,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
-
+                                 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -27190,30 +27381,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "InActive",
                 PMPropertyPath = "InActive"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            //{
-            //    DefaultText = "Inactive Trucker",
-            //    DisplayOnLookUp = false,
-            //    FieldLable = "InActive",
-            //    FieldName = "InActive",
-            //    FieldsDataType = "Boolean",
-            //    IsCustom = false,
-            //    Isoveridden = false,
-            //    IsRequired = false,
-            //    MaxLength = 15,
-            //    MinLength = 0,
-            //    ObjectTableId = TruckersObject.Id,
-            //    ObjectTableName = TruckersObject.Name,
-            //    Tenant = 0,
-            //    TextCodeType = "F",
-            //    ListFieldLable = "InActiveListLable",
-            //    ListLableDefaultText = "Inactive",
-            //    DisplayInList = true,
-            //    CanFilter = true,
-            //    Operator = "StartsWith"
-            //}, TextCodeRepository, ObjectFieldsRepository,objectFields,textCodes);
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "VAT No.",
@@ -27514,8 +27682,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "IBANNumber",
                 PMPropertyPath = "IBANNumber",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             this.ObjectContext.SaveChanges();
         }
         #endregion
@@ -27523,6 +27690,71 @@ namespace WebFreight.Web.MetaDataUpdate
         #region CreateVendorFields()
         private void CreateVendorFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = VendorObject.Id,
+                ObjectTableName = VendorObject.Name,
+                ValidForQuerySection1 = VendorObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = VendorObject.Id,
+                ObjectTableName = VendorObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = VendorObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = VendorObject.Id,
+                ObjectTableName = VendorObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = VendorObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Primary Contact Name",
@@ -27676,10 +27908,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -28254,6 +28483,71 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = WareHouseObject.Id,
+                ObjectTableName = WareHouseObject.Name,
+                ValidForQuerySection1 = WareHouseObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = WareHouseObject.Id,
+                ObjectTableName = WareHouseObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = WareHouseObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = WareHouseObject.Id,
+                ObjectTableName = WareHouseObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = WareHouseObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -28362,6 +28656,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "MetodoPagoCode",
                 HelpTextDefaultText = "Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "UsoCFDI",
@@ -28405,9 +28700,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+                       
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -28588,7 +28881,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 LookUpTableId = null,
-
                 ValidForQuerySection1 = "Warehouse",
                 Operator = "StartsWith",
                 ListPropertyPath = "ComputedLocalName",
@@ -50898,6 +51190,71 @@ namespace WebFreight.Web.MetaDataUpdate
         #region CreateParticipantFields()
         private void CreateParticipantFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ParticipantObject.Id,
+                ObjectTableName = ParticipantObject.Name,
+                ValidForQuerySection1 = ParticipantObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = ParticipantObject.Id,
+                ObjectTableName = ParticipantObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = ParticipantObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = ParticipantObject.Id,
+                ObjectTableName = ParticipantObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = ParticipantObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Primary Contact Name",

@@ -117,6 +117,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.MainAddress, Tenant, ComputingPartnerName);
                     address.AddressTypeId = "M";
                     address.Description = "Main Address";
+                    address.Tenant = Tenant;
                     temp.Addresses.Add(address);
                 }
 

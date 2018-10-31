@@ -249,6 +249,10 @@
     <Compile Include="Migrations\201810281007451_AbedAddNewFieldActivityToCaptchaKey.Designer.cs">
       <DependentUpon>201810281007451_AbedAddNewFieldActivityToCaptchaKey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810300620134_AbedAddDWNextRunTimeToTableSetting.cs" />
+    <Compile Include="Migrations\201810300620134_AbedAddDWNextRunTimeToTableSetting.Designer.cs">
+      <DependentUpon>201810300620134_AbedAddDWNextRunTimeToTableSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -291,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810281007451_AbedAddNewFieldActivityToCaptchaKey.resx">
       <DependentUpon>201810281007451_AbedAddNewFieldActivityToCaptchaKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810300620134_AbedAddDWNextRunTimeToTableSetting.resx">
+      <DependentUpon>201810300620134_AbedAddDWNextRunTimeToTableSetting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
