@@ -1,10 +1,12 @@
-﻿import {Component, OnInit, OnDestroy}  from '@angular/core';
+import {Component, OnInit, OnDestroy}  from '@angular/core';
 import {AppTool, DateTool, FontTool} from '../../../../Infrastructure/Tools';
 import {ShipmentTool, RoutingHelper} from '../../../../Shipment/Tools';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
+import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
+import { ShipmentPackagePM } from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import {ShipmentPickUpPM} from '../../../../Shipment/EntityPMs/ShipmentPickUpPM';
-import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
+import { ShipmentDeliveryPM } from '../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
+import { ShipmentPickUpDeliveryPackagePM } from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -971,7 +973,8 @@ export class RoutingItem extends BaseComponent {
         this.GetFromCountryData();
         this.GetToCountryData();
         this.GetCarrierData();
-        this.GetDates();        
+        this.GetDates();
+        this.GetContainersNumbers();
     }
 
     public LegHeight: number;
@@ -2050,5 +2053,81 @@ export class RoutingItem extends BaseComponent {
             this.EntityPM.WarehouseLegVGMCutOffDate = value;
         }
     }
+
+    public HasContainers: boolean = false;
+    public AllContainers: string = null;
+    public DisplayContainers: string = null;
+    GetContainersNumbers() {
+        this.HasContainers = false;
+        this.AllContainers = null;
+        this.DisplayContainers = null;
+        var AllContainersNumbers: string[] = [];
+
+        if (this.fatherComponent.IsFCLEntity) {
+
+            switch (this.LegType) {            
+                case "Pick Up": {
+                    if (this.Pickup) {
+                        this.Pickup.ShipmentPickUpDeliveryPackages.forEach((item: ShipmentPickUpDeliveryPackagePM) => {
+                            if (!AppTool.IsNullOrEmpty(item.ContainerNumber)) {
+                                AllContainersNumbers.push(item.ContainerNumber);
+                            }
+                        });
+                    }
+
+                    break;
+                }
+                case "EmptyCR":
+                case "Delivery": {
+                    if (this.Delivery) {
+                        this.Delivery.ShipmentPickUpDeliveryPackages.forEach((item: ShipmentPickUpDeliveryPackagePM) => {
+                            if (!AppTool.IsNullOrEmpty(item.ContainerNumber)) {
+                                AllContainersNumbers.push(item.ContainerNumber);
+                            }
+                        });
+                    }
+
+                    break;
+                }
+                case "On Carriage": {
+                    if (this.EntityPM.SplitOnCarriage == true) {
+                        this.EntityPM.ShipmentPackages.forEach((item: ShipmentPackagePM) => {
+                            if (!AppTool.IsNullOrEmpty(item.ContainerNumber)) {
+                                AllContainersNumbers.push(item.ContainerNumber);
+                            }
+                        });
+                    }
+
+                    break;
+                }
+            }
+
+            if (AllContainersNumbers.length > 0) {
+
+                var count: number = 0;
+
+                AllContainersNumbers.forEach(item => {
+
+                    count++;
+
+                    if (AppTool.IsNullOrEmpty(this.AllContainers)) {
+                        this.AllContainers = item;
+                        this.DisplayContainers = item;
+                    }
+
+                    else {
+                        this.AllContainers += "," + item;
+
+                        if (count <= 5) {
+                            this.DisplayContainers += "," + item;
+                        }
+                    }
+                });
+
+                this.HasContainers = true;
+            }
+        }
+    }
 }
+
 
