@@ -13,6 +13,8 @@ namespace WarehouseDataService
         public static int UpdateWarehouseSleepTime { get; set; }
         public static List<DayOfWeekClass> WarehouseBuildDays { get; set; }
         public static string WarehouseBuildHours { get; set; }
+        public static int RetryBuildWithinHours { get; set; }
+        
         public static string Mode { get; set; }
         public static bool UpdatingServiceWorking { get; set; }
         public static bool BliudingServiceWorking { get; set; }
