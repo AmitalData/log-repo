@@ -5825,6 +5825,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleShipmentTabs.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\CustomReferenceListTemplate.ts" />
+    <TypeScriptCompile Include="Shipment\Components\ListTemplates\RemoveTasksButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\EditShipmentButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\ApprovePaymentButtonListTemplate.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DigitalSignDocTypeComponent.ts" />
