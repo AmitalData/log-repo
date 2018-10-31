@@ -38,7 +38,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         Inactive, 
 	         BudgetId, 
 	         CategoryId, 
-	         IsProrated,
+	         IsProrated, 
+	         ExternalProjectNumber,
 	      }
 
 
@@ -63,7 +64,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         Inactive, 
 	         BudgetId, 
 	         CategoryId, 
-	         IsProrated,
+	         IsProrated, 
+	         ExternalProjectNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -150,6 +152,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsProrated))
             {
 				entityPOCO.IsProrated = entityPM.IsProrated;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalProjectNumber))
+            {
+				entityPOCO.ExternalProjectNumber = entityPM.ExternalProjectNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -243,6 +250,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 					entityPM.IsProrated = entityPOCO.IsProrated;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExternalProjectNumber))
+            {
+					entityPM.ExternalProjectNumber = entityPOCO.ExternalProjectNumber;
+            }
+
 		}
 
 		public void PMToOldPM(TMProjectPM entityPM, TMProjectPM oldEntityPM)
@@ -327,6 +339,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsProrated))
             {
                 oldEntityPM.IsProrated = entityPM.IsProrated;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExternalProjectNumber))
+            {
+                oldEntityPM.ExternalProjectNumber = entityPM.ExternalProjectNumber;
             }
 			
 		}
