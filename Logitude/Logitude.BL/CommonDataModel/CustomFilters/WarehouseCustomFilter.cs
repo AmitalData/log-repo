@@ -1,26 +1,28 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Logitude.BL.CommonDataModel.CustomFilters
 {
-    public class CustomAgentCustomFilter
+    public class WarehouseCustomFilter
     {
-        private int tenant;
-        public CustomAgentCustomFilter(int tenant)
+        public WarehouseCustomFilter(int tenant)
         {
             this.Tenant = tenant;
         }
 
+        private int tenant;
         public int Tenant
         {
             get { return tenant; }
             set { tenant = value; }
         }
 
-        public IQueryable<CustomAgent> GetFilteredQuery(QueryOperations operations, IQueryable<CustomAgent> queryableData)
+        public IQueryable<Warehouse> GetFilteredQuery(QueryOperations operations, IQueryable<Warehouse> queryableData)
         {
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
 
@@ -35,16 +37,6 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                         if (!string.IsNullOrEmpty(filterFieldId))
                         {
                             queryableData = queryableData.Where(c => c.Card.CountryId == filterFieldId);
-                        }
-                    }
-
-                    if (item.FieldName == "PaymentTermId")
-                    {
-                        string filterFieldId = item.FieldValue as string;
-
-                        if (!string.IsNullOrEmpty(filterFieldId))
-                        {
-                            queryableData = queryableData.Where(c => c.Card.PaymentTermId == filterFieldId);
                         }
                     }
                 }
