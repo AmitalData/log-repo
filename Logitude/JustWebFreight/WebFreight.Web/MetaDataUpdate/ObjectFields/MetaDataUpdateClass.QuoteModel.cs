@@ -8006,6 +8006,22 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "EditMainCarriage",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Quote Sale Currency Default",
+                FullFieldLable = "IsSaleAsCostCurrency",
+                FieldName = "IsSaleAsCostCurrency",
+                FieldsDataType = "Boolean",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = QuoteSettingObject.Id,
+                ObjectTableName = QuoteSettingObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "IsSaleAsCostCurrency",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             this.ObjectContext.SaveChanges();
         }
     }
