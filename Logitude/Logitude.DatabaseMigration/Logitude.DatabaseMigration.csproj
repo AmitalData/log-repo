@@ -210,6 +210,18 @@
     <Compile Include="Migrations\201810301407197_AddDeclarationWCOXmlToshipmentAdditionalCloudData_Rabaia.Designer.cs">
       <DependentUpon>201810301407197_AddDeclarationWCOXmlToshipmentAdditionalCloudData_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810310725135_AddExternalProjectnumberToTMProject_Maheera.cs" />
+    <Compile Include="Migrations\201810310725135_AddExternalProjectnumberToTMProject_Maheera.Designer.cs">
+      <DependentUpon>201810310725135_AddExternalProjectnumberToTMProject_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810310812037_AddNeedsProratingToTMEmployeeTime_Maheera.cs" />
+    <Compile Include="Migrations\201810310812037_AddNeedsProratingToTMEmployeeTime_Maheera.Designer.cs">
+      <DependentUpon>201810310812037_AddNeedsProratingToTMEmployeeTime_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810311144451_AddNewQuoteSettingsFields.cs" />
+    <Compile Include="Migrations\201810311144451_AddNewQuoteSettingsFields.Designer.cs">
+      <DependentUpon>201810311144451_AddNewQuoteSettingsFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -311,6 +323,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810301407197_AddDeclarationWCOXmlToshipmentAdditionalCloudData_Rabaia.resx">
       <DependentUpon>201810301407197_AddDeclarationWCOXmlToshipmentAdditionalCloudData_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810310725135_AddExternalProjectnumberToTMProject_Maheera.resx">
+      <DependentUpon>201810310725135_AddExternalProjectnumberToTMProject_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810310812037_AddNeedsProratingToTMEmployeeTime_Maheera.resx">
+      <DependentUpon>201810310812037_AddNeedsProratingToTMEmployeeTime_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810311144451_AddNewQuoteSettingsFields.resx">
+      <DependentUpon>201810311144451_AddNewQuoteSettingsFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

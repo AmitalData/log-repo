@@ -18,6 +18,11 @@
       <ScreenField Column="0" Row="1" ObjectFieldName="&quot;Inactive&quot;" ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>
+  <Screen Name="&quot;TMProjectCategoryHeaderScreen&quot;" ObjectTableName="&quot;TMProjectCategory&quot;" NumberOfColumns="1" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true">
+    <ScreenFields>
+      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Name&quot;" ScreenName="TMProjectCategoryHeaderScreen" />
+    </ScreenFields>
+  </Screen>
   <Tab TabName="&quot;General&quot;" TabLocalName="&quot;General&quot;" ObjectTableName="&quot;TMProjectCategory&quot;" Code="&quot;GEPG&quot;" ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;" TextCode="&quot;TMProjectCategory.TH.General&quot;" IsPackagable="true" IndexOrder="0" IsSpellChecked="false" />
   <Tab TabName="&quot;Events&quot;" TabLocalName="&quot;Events&quot;" ObjectTableName="&quot;TMProjectCategory&quot;" Code="&quot;EVPG&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TextCode="&quot;TMProjectCategory.TH.Events&quot;" IsPackagable="true" IndexOrder="1" IsSpellChecked="false" />
   <EventTypes>

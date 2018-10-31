@@ -273,6 +273,7 @@
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
+    <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />
@@ -1757,6 +1758,8 @@
     <Content Include="_Resources\Images\Icons\All\CheckBoxIcon.png" />
     <Content Include="_Resources\Images\Icons\All\Help.png" />
     <Content Include="_Resources\Images\Icons\All\RadioButtonChecked.png" />
+    <Content Include="_Resources\Images\Icons\All\SidebarLeft.png" />
+    <Content Include="_Resources\Images\Icons\All\SidebarRight.png" />
     <Content Include="_Resources\Images\Icons\All\Tab.X.Blue.png" />
     <Content Include="_Resources\Images\Icons\All\Tab.X.Gray.png" />
     <Content Include="_Resources\Images\Icons\All\ToggleIcon.png" />
@@ -5832,6 +5835,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleShipmentTabs.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\CustomReferenceListTemplate.ts" />
+    <TypeScriptCompile Include="Shipment\Components\ListTemplates\RemoveTasksButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\EditShipmentButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\ApprovePaymentButtonListTemplate.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DigitalSignDocTypeComponent.ts" />

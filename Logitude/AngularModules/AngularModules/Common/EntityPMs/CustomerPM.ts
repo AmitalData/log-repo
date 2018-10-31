@@ -1314,6 +1314,11 @@ export class CustomerPM {
     public set CustomerTenant(newValue: number) { if (this.customerTenant != newValue) { this.customerTenant = newValue; this.MarkAsDirty("CustomerTenant"); } }
        
 	 
+    private mainAddressId: string;
+    public get MainAddressId() { return this.mainAddressId; }
+    public set MainAddressId(newValue: string) { if (this.mainAddressId != newValue) { this.mainAddressId = newValue; this.MarkAsDirty("MainAddressId"); } }
+       
+	 
 
     public OldEntityPM: CustomerPM;
 		

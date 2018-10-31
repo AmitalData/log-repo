@@ -120,7 +120,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SetAsInactiveByUserId).HasColumnName("SetAsInactiveByUserId");
             this.Property(t => t.ActivationRequestedByUserId).HasColumnName("ActivationRequestedByUserId");
             this.Property(t => t.ActivatedByUserName).HasColumnName("ActivatedByUserName");
-            this.Property(t => t.SetAsInactiveByUserName).HasColumnName("SetAsInactiveByUserName");
+            this.Property(t => t.SetAsInactiveByName).HasColumnName("SetAsInactiveByName");
             this.Property(t => t.ActivationRequestedByUserName).HasColumnName("ActivationRequestedByUserName");
         }
     }

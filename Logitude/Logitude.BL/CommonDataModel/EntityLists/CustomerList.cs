@@ -269,7 +269,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ActivatedByUserName { get; set; }
 
         [DataMember]
-        public string SetAsInactiveByUserName { get; set; }
+        public string SetAsInactiveByName { get; set; }
 
         [DataMember]
         public string ActivationRequestedByUserName { get; set; }

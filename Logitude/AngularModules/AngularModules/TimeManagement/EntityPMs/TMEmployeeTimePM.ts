@@ -139,6 +139,11 @@ export class TMEmployeeTimePM {
     public set FullDuration(newValue: number) { if (this.fullDuration != newValue) { this.fullDuration = newValue; this.MarkAsDirty("FullDuration"); } }
        
 	 
+    private needsProrating: boolean;
+    public get NeedsProrating() { return this.needsProrating; }
+    public set NeedsProrating(newValue: boolean) { if (this.needsProrating != newValue) { this.needsProrating = newValue; this.MarkAsDirty("NeedsProrating"); } }
+       
+	 
 
     public OldEntityPM: TMEmployeeTimePM;
 		

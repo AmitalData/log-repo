@@ -119,6 +119,11 @@ export class TMProjectPM {
     public set IsProrated(newValue: boolean) { if (this.isProrated != newValue) { this.isProrated = newValue; this.MarkAsDirty("IsProrated"); } }
        
 	 
+    private externalProjectNumber: string;
+    public get ExternalProjectNumber() { return this.externalProjectNumber; }
+    public set ExternalProjectNumber(newValue: string) { if (this.externalProjectNumber != newValue) { this.externalProjectNumber = newValue; this.MarkAsDirty("ExternalProjectNumber"); } }
+       
+	 
 
     public OldEntityPM: TMProjectPM;
 		
