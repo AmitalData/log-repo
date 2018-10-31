@@ -213,11 +213,33 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./Accounting/Components/Others/ReconcileComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                    this.LoadAllData();
+                    // this.LoadAllData();
+                    this.GetNonReconciledTransactionsCount();
 
                 });
 
             }
+        });
+    }
+
+    GetNonReconciledTransactionsCount() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe(myResult => {
+
+
+            if (!AppTool.IsNullOrEmpty(myResult)) {
+
+                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.ReconcilationCount = myResult;
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(($event) => {
+                    if ($event == true) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                });
+            }
+
         });
     }
     getScreenHeight() {
