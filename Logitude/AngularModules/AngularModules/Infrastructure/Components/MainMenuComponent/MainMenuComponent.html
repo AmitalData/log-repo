@@ -1,6 +1,10 @@
 
 
 <style>
+    .SidebarCollapseButton:hover {
+        opacity: 1;
+    }
+
     .SidebarCollapseButton {
         opacity: 0.75;
         cursor: pointer;
@@ -26,7 +30,7 @@
                                         <tr style="height: 20px;">
                                             <td>
                                                 <img *ngIf="IsMainSidebarCollapsed == true" src="./_Resources/Images/Icons/All/SidebarRight.png" class="SidebarCollapseButton" (click)="IsMainSidebarCollapsed = false" />
-                                                <img *ngIf="IsMainSidebarCollapsed == false" src="./_Resources/Images/Icons/All/SidebarLeft.png" class="SidebarCollapseButton" (click)="IsMainSidebarCollapsed = true"  />
+                                                <img *ngIf="IsMainSidebarCollapsed == false" src="./_Resources/Images/Icons/All/SidebarLeft.png" class="SidebarCollapseButton" (click)="IsMainSidebarCollapsed = true" />
                                             </td>
                                         </tr>
 
