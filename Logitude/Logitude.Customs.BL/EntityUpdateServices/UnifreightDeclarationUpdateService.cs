@@ -1964,7 +1964,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     cCUMSHGRPM.PARTIALITYID = "3";// "2";task 44331
                     break;
                 case "N":
-                    cCUMSHGRPM.PARTIALITYID = "2";// 3";task 44331
+                    cCUMSHGRPM.PARTIALITYID = "2";// 3";task 44331            
                     break;
                 default:
                     cCUMSHGRPM.PARTIALITYID = "";
