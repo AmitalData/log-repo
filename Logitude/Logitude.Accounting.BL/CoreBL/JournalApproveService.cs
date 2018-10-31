@@ -221,7 +221,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             UpdateInReconcileProgressToFalse();
                         }
-                        UpdateJornalWithReconcileNumber(myCreateAutoReconcileWhileStreamingService);
+                        UpdateJournalWithReconcileNumber(myCreateAutoReconcileWhileStreamingService);
 
                     }
                     //}
@@ -273,7 +273,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        private void UpdateJornalWithReconcileNumber(CreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService)
+        private void UpdateJournalWithReconcileNumber(CreateAutoReconcileWhileStreamingService myCreateAutoReconcileWhileStreamingService)
         {
             if (
                                         this._JournalPM.AccountingEntityCode == "10"// - Reconciliation
