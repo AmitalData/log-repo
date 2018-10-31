@@ -44,9 +44,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.entityPM.Id = IdCounter.GetNumber("EventType", tenant).ToString();
+            this.entityPM.AddedManually = true;
+
             this.Poco = new EventType();
             this.Poco.Id = this.entityPM.Id;
-
+            
             EventTypeValidating.Validate(theEntityPm);
 
             if (!entityPM.IsHybrid)
@@ -57,7 +59,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             EventTypeMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-
         }
 
         public void Update(EventTypePM theEntityPm)

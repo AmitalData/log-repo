@@ -65,7 +65,8 @@ using Simplog.Data.CommonDataModel;
 				   
 				   var temp = new Country(); 
 				   temp.Id = MyEntityPM.Id;
-				   temp.Code = MyEntityPM.Code;
+				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+				   temp.Code = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Country");  
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;					
 				   return temp;
@@ -86,7 +87,21 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+					
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.Code,ComputingPartnerName,"Country");
+					    if(string.IsNullOrEmpty(MyCode))
+						{
+						  throw new ApplicationException("Country with Partner Code " + MyEntity.Code + " doesn't match any record");
+						}
+						temp = query.GetSinglePMByCode(MyCode, Tenant);
+						
+						
+					}
+					
+					   					   
 					if(temp == null)
 					{
 					    throw new ApplicationException("Country with Id " + MyEntity.Id + " doesn't exist");

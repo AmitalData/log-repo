@@ -107,6 +107,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 throw new ApplicationException("The Customer Doesn't Exist on the shipment");
                             }
+                        }
+
+                        if (entityPM.IsOperationalClosed)
+                        {
+
 
                         }
 

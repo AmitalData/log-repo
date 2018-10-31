@@ -223,7 +223,8 @@ using Simplog.Data.ShipmentsModel;
 				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"Shipment");
 				temp.CustomFields = customFieldService.CustomFieldCustomDataMapping(MyEntityPM, Tenant);
 				 
-				   					
+				   
+				   temp.IsOperationalClosed = MyEntityPM.IsOperationalClosed;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -472,7 +473,8 @@ using Simplog.Data.ShipmentsModel;
 					 customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
 				}		
 			
-										   
+					
+					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;					   
 					   return temp;
 		    }
             catch (Exception ex)

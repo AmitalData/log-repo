@@ -118,6 +118,7 @@
     <Compile Include="EntityUpdateServices\SprintUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TMEmployeeTimeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TMOfficeHourUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TMProjectCategoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TMProjectUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\TimeManagementClassLevelValidator.cs" />

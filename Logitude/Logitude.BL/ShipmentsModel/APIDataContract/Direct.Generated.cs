@@ -94,5 +94,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public List<PickUp> PickUps { get; set; }
     
     public List<CustomField> CustomFields { get; set; }
+    
+    public bool IsOperationalClosed { get; set; }
     }
 } 
