@@ -65,6 +65,8 @@ namespace Logitude.TimeManagement.Data.EntityPOCOs
 	    public double ProratedDuration { get; set; }
         [Column("FullDuration")]
 	    public double FullDuration { get; set; }
+        [Column("NeedsProrating")]
+	    public bool NeedsProrating { get; set; }
     }
 }
 	 
