@@ -28,6 +28,7 @@ export class TMProjectList {
 	BudgetId: string;
 	CategoryId: string;
 	IsProrated: boolean;
+	ExternalProjectNumber: string;
 	
 }
  

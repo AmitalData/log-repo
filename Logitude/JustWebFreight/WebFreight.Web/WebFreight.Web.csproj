@@ -849,6 +849,7 @@
     <Content Include="HtmlHelpers\Kendo.2013.2.918\kendo.default.min.css" />
     <Content Include="HtmlHelpers\Kendo.2013.2.918\kendo.mobile.all.min.css" />
     <Content Include="images\primaryContact.png" />
+    <Content Include="LinksGateway.aspx" />
     <Content Include="LogBoxMailgunWebPage.aspx" />
     <Content Include="LogInUserControls\DsvLoginUC.ascx" />
     <Content Include="MailgunWebPage.aspx" />
@@ -2105,6 +2106,7 @@
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />
     <Compile Include="ExternalAPIs\V1\BlobInfoController.cs" />
+    <Compile Include="ExternalAPIs\V1\CustomerController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountController.cs" />
     <Compile Include="ExternalAPIs\V1\MasterController.cs" />
     <Compile Include="ExternalAPIs\V1\JournalController.cs" />
@@ -2161,6 +2163,13 @@
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.BankAccountLite.cs" />
+    <Compile Include="LinksGateway.aspx.cs">
+      <DependentUpon>LinksGateway.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinksGateway.aspx.designer.cs">
+      <DependentUpon>LinksGateway.aspx</DependentUpon>
+    </Compile>
     <Compile Include="LogBoxMailgunWebPage.aspx.cs">
       <DependentUpon>LogBoxMailgunWebPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
