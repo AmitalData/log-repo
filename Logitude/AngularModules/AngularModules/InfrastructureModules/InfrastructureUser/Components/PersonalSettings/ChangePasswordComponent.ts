@@ -149,16 +149,19 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     PasswordValidation() {
-
+        var isvalidPass: boolean = true;
         if (this.NewPassword.length < 8) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMinimumLengthIs8Characters"));
+            isvalidPass = false;
         }
 
         if (this.NewPassword.length > 16) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMaximumLlengthIs16Characters"));
+            isvalidPass = false;
         }
 
-        if (!this.strongPassword) {
+        if (!this.strongPassword && isvalidPass) {
+
             this.ValidationErrorsList.push("Password is not strong enough. Please use at least three of the four characters types possible.");
         }
 
