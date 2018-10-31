@@ -93,7 +93,7 @@ export class CustomerList {
 		SetAsInactiveByUserId: string;
 		ActivationRequestedByUserId: string;
 		ActivatedByUserName: string;
-		SetAsInactiveByUserName: string;
+		SetAsInactiveByName: string;
 		ActivationRequestedByUserName: string;
 		BeforeDeactiveStatusCode: string;
 		ReadyForActivationDate: Date;
