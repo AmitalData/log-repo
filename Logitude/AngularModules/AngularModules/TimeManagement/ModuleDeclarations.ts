@@ -1,4 +1,4 @@
-﻿import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
+import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 
 // Workspaces
 import {TimeManagementWorkspaceComponent} from './Components/Workspaces/TimeManagementWorkspaceComponent';
@@ -25,7 +25,7 @@ import {NewLineComponent} from './Components/NewEntity/NewLineComponent';
 import {NewProjectComponent} from  './Components/NewEntity/NewProjectComponent';
 import {NewOfficeHourComponent} from  './Components/NewEntity/NewOfficeHourComponent';
 import {NewSprintComponent} from  './Components/NewEntity/NewSprintComponent';
-
+import { NewProjectCategoryComponent } from './Components/NewEntity/NewProjectCategoryComponent';
 
 export const Components =
     [
@@ -54,6 +54,7 @@ export const Components =
         NewProjectComponent,
         NewOfficeHourComponent,
         NewSprintComponent,
+        NewProjectCategoryComponent,
     ];
 
 export class ModuleDeclarations {
@@ -90,6 +91,7 @@ export class ModuleDeclarations {
             case "NewProjectComponent": { myResult = NewProjectComponent; break; }
             case "NewOfficeHourComponent": { myResult = NewOfficeHourComponent; break; }
             case "NewSprintComponent": { myResult = NewSprintComponent; break; }
+            case "NewProjectCategoryComponent": { myResult = NewProjectCategoryComponent; break; }
                 
         }
 

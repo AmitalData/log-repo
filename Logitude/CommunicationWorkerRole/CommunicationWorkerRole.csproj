@@ -451,6 +451,7 @@
     <Compile Include="Tasks\ITaskManager.cs" />
     <Compile Include="Tasks\PayableARPaymentChequeTask.cs" />
     <Compile Include="Tasks\TaskManagerBase.cs" />
+    <Compile Include="Tasks\UpdateTimeManagementDurations.cs" />
     <Compile Include="TaxWorkerRole.cs" />
     <Compile Include="TenantStatisticsMessageWorkerRole.cs" />
     <Compile Include="TenantStatisticsWorkerRole.cs" />

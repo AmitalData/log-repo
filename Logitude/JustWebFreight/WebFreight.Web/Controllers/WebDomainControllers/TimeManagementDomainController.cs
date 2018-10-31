@@ -374,6 +374,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                  WINumber_db = a.WINumber,
                                                  ProjectId = a.ProjectId,
                                                  ProjectId_db = a.ProjectId,
+                                                 SprintId=a.SprintId,
                                                  ProjectName = (allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault() != null ? allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault().Name : null),
                                              }).ToList();
 
