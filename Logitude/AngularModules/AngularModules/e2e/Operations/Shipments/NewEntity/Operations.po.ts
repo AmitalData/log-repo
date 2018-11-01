@@ -18,7 +18,7 @@ export class OperationsComp {
     this.Operation.SelectOperationsTab('SHIP');
   //  this.ShipmentWorkSpace.CreateWizard('M');
 
-      this.ShipmentWorkSpace.CreateShipment('D', 'Export', 'A', '');
+      // this.ShipmentWorkSpace.CreateShipment('D', 'Export', 'A', '');
      
 
 
