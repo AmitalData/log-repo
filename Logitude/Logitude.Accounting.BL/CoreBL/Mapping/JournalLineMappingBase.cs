@@ -194,7 +194,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             MyLedgerTransaction.AccountId = null;
 
             //MyLedgerTransaction.AccountingDate = _JournalPM.AccountingDate;
-            if (_JournalLine.AccountingDate == DateTime.MaxValue)
+            if (_JournalLine.AccountingDate == DateTime.MinValue)
             {
                 throw new Exception("_JournalLine.AccountingDate is must");//20180111-Bug 44298: באג בתאריך חשבונאי בהעברת פקודת יומן לתנועה
             }
