@@ -218,6 +218,7 @@
     <Compile Include="CoreBL\TaxDeductionReportService.cs" />
     <Compile Include="CoreBL\YearTransferService.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
+    <Compile Include="DataContract\TaxReportLinesCounter.cs" />
     <Compile Include="EntityDataMappings\AccountingCompanyTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingEntityDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingEntityService.cs" />

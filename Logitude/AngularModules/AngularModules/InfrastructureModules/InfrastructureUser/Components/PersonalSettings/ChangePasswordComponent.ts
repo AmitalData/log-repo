@@ -105,17 +105,7 @@ export class ChangePasswordComponent implements OnInit {
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
-
-        if (this.NewPassword.length < 8) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMinimumLengthIs8Characters"));
-            return;
-        }
-
-        if (this.NewPassword.length > 16) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMaximumLlengthIs16Characters"));
-            return;
-        }
-
+        
         if (!AppTool.IsNullOrEmpty(this.CurrentPassword)) {
             SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
@@ -133,7 +123,7 @@ export class ChangePasswordComponent implements OnInit {
 
                         if (this.CurrentPassword == this.NewPassword) {
                             SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            this.ValidationErrorsList.push("New password can't be the same as the current password");
+                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.NewPasswordCantBeSameAsCurrentOne"));
                         } else this.ChangePassword();
 
                        
@@ -159,6 +149,22 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     PasswordValidation() {
+        var isvalidPass: boolean = true;
+        if (this.NewPassword.length < 8) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMinimumLengthIs8Characters"));
+            isvalidPass = false;
+        }
+
+        if (this.NewPassword.length > 16) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordsMaximumLlengthIs16Characters"));
+            isvalidPass = false;
+        }
+
+        if (!this.strongPassword && isvalidPass) {
+
+            this.ValidationErrorsList.push("Password is not strong enough. Please use at least three of the four characters types possible.");
+        }
+
 
         var userName = SessionInfo.LoggedUserPM.EnglishName.split(' ');
         var email = SessionInfo.LoggedUserPM.Email;
@@ -180,7 +186,6 @@ export class ChangePasswordComponent implements OnInit {
 
         if (ContainsUserName) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.PasswordMustntContainUserName"));
-            return;
         }
 
 
@@ -213,15 +218,12 @@ export class ChangePasswordComponent implements OnInit {
         }
         if (ContainsEmail) {
             this.ValidationErrorsList.push("Password mustn't contain user email!");
-            return;
+
         }
 
-
         // contain series(5 letters / numbers)
-        if (this.IsPasswordContainsSeries(this.NewPassword)) {
+        if (this.IsPasswordContainsSeries(this.NewPassword) || this.IsPasswordContainsSeriesSameNumber(this.NewPassword)) {
             this.ValidationErrorsList.push("Password can't contain series (5 letters/numbers)");
-
-            return;
         }
 
     }
@@ -231,20 +233,7 @@ export class ChangePasswordComponent implements OnInit {
         if (this.NewPassword) {
 
             if (this.NewPassword == this.RetypePassword) {
-                if (!this.strongPassword) {
-                    this.ValidationErrorsList.push("Password is not strong enough. Please use at least three of the four characters types possible.");
-
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-
-                }
-
-
-                else if (this.NewPassword == this.CurrentPassword) {
-                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.NewPasswordCantBeSameAsCurrentOne"));
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                }
-                else {
-
+              
                     var changePasswordParameter: ChangePasswordParameter = new ChangePasswordParameter();
                     changePasswordParameter.Email = SessionInfo.LoggedUserPM.Email;
                     changePasswordParameter.NewPassword = this.NewPassword;
@@ -278,7 +267,7 @@ export class ChangePasswordComponent implements OnInit {
 
                     });
 
-                }
+                
 
             }
 
@@ -358,94 +347,7 @@ export class ChangePasswordComponent implements OnInit {
 
     }
 
-
-    IsSeriesNumnber(password: string) {
-        if (password) password = password.toLowerCase();
-        var seriesNumnberCount: number = 0;
-        var seriesNumnberList: any = [];
-        for (var i = 0; i < password.length; i++) {
-            var IsNotSeriesNumnber = false;
-
-            var char = password.charAt(i);
-
-            if ('0123456789'.indexOf(char) !== -1) {
-                if (seriesNumnberList.length == 0) {
-                    var x = Number(char);
-                    seriesNumnberList.push(x);
-                } else {
-
-                    var x = Number(char);
-                    if (seriesNumnberList[seriesNumnberList.length - 1] + 1 == x) {
-                        seriesNumnberList.push(x);
-                        seriesNumnberCount += 1;
-                    } else {
-                        IsNotSeriesNumnber = true;
-                    }
-                }
-
-            } else IsNotSeriesNumnber = true;
-
-            if (seriesNumnberCount ==4) {
-                return true; 
-            }
-
-            if (IsNotSeriesNumnber) {
-                seriesNumnberCount = 0;
-                seriesNumnberList = [];
-            }
-
-        }
-
-        return false;
-     
-
-    }
-
-
-    IsSeriesCharcter(password: string) {
-
-        if (password) password = password.toLowerCase();
-        var seriesNumnberCount: number = 0;
-        var seriesNumnberList: any = [];
-        for (var i = 0; i < password.length; i++) {
-            var IsNotSeriesNumnber = false;
-
-            var char = password.charAt(i);
-
-            if ('0123456789'.indexOf(char) == -1) {
-                if (seriesNumnberList.length == 0) {
-                    var x = char.charCodeAt(0);
-                    seriesNumnberList.push(x);
-                } else {
-
-                    var x = char.charCodeAt(0);
-
-                    if (seriesNumnberList[seriesNumnberList.length - 1] + 1 == x) {
-                        seriesNumnberList.push(x);
-                        seriesNumnberCount += 1;
-                    } else {
-                        IsNotSeriesNumnber = true;
-                    }
-                }
-
-            } else IsNotSeriesNumnber = true;
-
-            if (seriesNumnberCount == 4) {
-                return true;
-            }
-
-            if (IsNotSeriesNumnber) {
-                seriesNumnberCount = 0;
-                seriesNumnberList = [];
-            }
-
-        }
-
-        return false;
-
-
-    }
-
+    
 
     IsPasswordContainsSeries(password: string) {
 
@@ -486,7 +388,7 @@ export class ChangePasswordComponent implements OnInit {
             } else IsNotSeriesNumnber = true;
 
 
-            if (seriesNumnberCount == 4) {
+            if (seriesNumnberCount ==2) {
                 result = true;
                 return;
             }
@@ -500,6 +402,62 @@ export class ChangePasswordComponent implements OnInit {
 
         return result; 
     }
+
+    IsPasswordContainsSeriesSameNumber(password: string) {
+
+        var result = false;
+        if (password) password = password.toUpperCase();
+
+        var passwordNumnberList: any = [];
+        for (var i = 0; i < password.length; i++) {
+            var char = password.charAt(i);
+            var x = 0;
+            if ('0123456789'.indexOf(char) !== -1) {
+                x = Number(char);
+
+            } else {
+                x = char.charCodeAt(0);
+            }
+
+            passwordNumnberList.push(x);
+        }
+
+        var seriesNumnberCount: number = 0;
+        var seriesNumnberList: any = [];
+        passwordNumnberList.forEach((item) => {
+            var IsNotSeriesNumnber = false;
+            if (item <= 9 || ((item >= 65 && item <= 90))) {
+                if (seriesNumnberList.length == 0) {
+                    seriesNumnberList.push(item);
+                }
+                else {
+                    if (seriesNumnberList[seriesNumnberList.length - 1] == item) {
+                        seriesNumnberList.push(item);
+                        seriesNumnberCount += 1;
+                    } else {
+                        IsNotSeriesNumnber = true;
+                    }
+                }
+
+            } else IsNotSeriesNumnber = true;
+
+
+            if (seriesNumnberCount == 2) {
+                result = true;
+                return;
+            }
+
+            if (IsNotSeriesNumnber) {
+                seriesNumnberCount = 0;
+                seriesNumnberList = [];
+            }
+
+        });
+
+        return result;
+    }
+
+
 
 }
 

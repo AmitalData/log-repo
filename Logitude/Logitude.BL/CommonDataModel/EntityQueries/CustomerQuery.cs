@@ -2358,7 +2358,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   SetAsInactiveByUserId = customer.SetAsInactiveByUserId,
                                                   ActivationRequestedByUserId = customer.ActivationRequestedByUserId,
                                                   ActivatedByUserName = customer.ActivatedByUserName,
-                                                  SetAsInactiveByUserName = customer.SetAsInactiveByUserName,
+                                                  SetAsInactiveByName = customer.SetAsInactiveByName,
                                                   ActivationRequestedByUserName = customer.ActivationRequestedByUserName,
                                               };
 
@@ -2490,7 +2490,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              SetAsInactiveByUserId = customer.SetAsInactiveByUserId,
                                              ActivationRequestedByUserId = customer.ActivationRequestedByUserId,
                                              ActivatedByUserName = customer.ActivatedByUser == null ? null : (customer.ActivatedByUser.Contact == null ? null : customer.ActivatedByUser.Contact.EnglishName),
-                                             SetAsInactiveByUserName = customer.SetAsInactiveByUser == null ? null : (customer.SetAsInactiveByUser.Contact == null ? null : customer.SetAsInactiveByUser.Contact.EnglishName),
+                                             SetAsInactiveByName = customer.SetAsInactiveByUser == null ? null : (customer.SetAsInactiveByUser.Contact == null ? null : customer.SetAsInactiveByUser.Contact.EnglishName),
                                              ActivationRequestedByUserName = customer.ActivationRequestedByUser == null ? null : (customer.ActivationRequestedByUser.Contact == null ? null : customer.ActivationRequestedByUser.Contact.EnglishName),
                                          }).FirstOrDefault();
 

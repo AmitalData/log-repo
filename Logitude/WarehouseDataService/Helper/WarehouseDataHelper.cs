@@ -25,15 +25,47 @@ namespace WarehouseDataService.Helper
                     DateTime todayDate = DateTime.Now;
                     DateTime? warehouseDate = null;
                     if (!string.IsNullOrEmpty(ApplicationInfo.WarehouseBuildHours) && ApplicationInfo.WarehouseBuildDays.Count > 0) warehouseDate = GetWarehouseRunDate(todayDate);
-   
-                    if (warehouseDate != null)
+
+                    #region DWNextRunTime
+                    WarehouseHelper warehouseHelper = new WarehouseHelper();
+                    string[] sourceConnectionArray = ApplicationInfo.SourceConnection.Split(',');
+                    string sourceConnectionString = warehouseHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+                    bool IsBuildNow = false;
+
+                    DateTime? DWNextRunTime = warehouseHelper.GetDWNextRunTime(sourceConnectionString);
+
+                    if (DWNextRunTime == null)
                     {
-                        TimeSpan span = (DateTime)warehouseDate - todayDate;
-                        int sleepTime = (int)span.TotalMilliseconds;
-                        Thread.Sleep(sleepTime);
-                        StartBuildWarehouseData();
+                        DWNextRunTime = warehouseDate;
+                        warehouseHelper.UpdateDWNextRunTime(sourceConnectionString, DWNextRunTime);
                     }
-                    else Thread.Sleep((20 * 60000));
+
+
+                    if (DWNextRunTime != null)
+                    {
+                       if(warehouseDate!= DWNextRunTime)
+                        {
+                            if (DWNextRunTime.Value.AddHours(5) > DateTime.Now) IsBuildNow = true;
+                          
+                        }
+                    }
+                    #endregion
+
+                    if (warehouseDate != null || IsBuildNow)
+                    {
+                        if (!IsBuildNow)
+                        {
+                            TimeSpan span = (DateTime)warehouseDate - todayDate;
+                            int sleepTime = (int)span.TotalMilliseconds;
+                            Thread.Sleep(sleepTime);
+                        }
+                       
+                        StartBuildWarehouseData();
+
+                        DWNextRunTime = GetWarehouseRunDate(DateTime.Now);
+                        warehouseHelper.UpdateDWNextRunTime(sourceConnectionString, DWNextRunTime);
+                    }
+                    else Thread.Sleep((5 * 60000));
 
 
                 }
