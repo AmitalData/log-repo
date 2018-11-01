@@ -263,7 +263,7 @@ export class ChangePasswordComponent {
             } else IsNotSeriesNumnber = true;
 
 
-            if (seriesNumnberCount == 4) {
+            if (seriesNumnberCount == 2) {
                 result = true;
                 return;
             }
@@ -336,7 +336,7 @@ export class ChangePasswordComponent {
                 } else IsNotSeriesNumnber = true;
 
 
-                if (seriesNumnberCount == 4) {
+                if (seriesNumnberCount == 2) {
                     result = true;
                     return;
                 }

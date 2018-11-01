@@ -105,6 +105,9 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature shipmentAnalysisTotalsReportFeature = tenantFeatures.Where(d => d.Code == "SHIPMENTANALYSISTOTALS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature revenueEexpenseReportFeature = tenantFeatures.Where(d => d.Code == "REVEXP" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature trailBalanceReportFeature = tenantFeatures.Where(d => d.Code == "TRAIL" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature shipmentsStocksReportFeature = tenantFeatures.Where(d => d.Code == "SHIPMENTSSTOCKS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+
+
 
             AddReports.AddReport(new ReportDetails() { Code = "RACL", Description = "Accounting Ledger", Name = "Accounting Ledger", FilterControlName = "AccountingLedgerFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = accountingLedgerFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/AccountingLedgerFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "RAAR", Description = "AgedAccountsReceivable", Name = "Aging report - Statement summarized", FilterControlName = "AgedAccountsReceivableFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = agedAccountsReceivableFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/AgedAccountsReceivableFilterComponent" }, reportRepository, tenantReports);
@@ -121,6 +124,9 @@ namespace WebFreight.Web.MetaDataUpdate
             AddReports.AddReport(new ReportDetails() { Code = "SCHT", Description = "Shipment Charges Analysis include Totals", Name = "Shipment Charges Analysis include Totals", FilterControlName = "ShipmentChargesAnalysisFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = shipmentAnalysisTotalsReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ShipmentChargesAnalysisFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "REXR", Description = "Profit and loss report", Name = "Profit and loss report", LocalName = "דוח רווח והפסד", FilterControlName = "RevenueExpenseFilterComponent", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = revenueEexpenseReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/RevenueExpenseFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "TRBR", Description = "Trail balance report", Name = "Trail balance report", LocalName = "דוח מאזן בוחן", FilterControlName = "TrailBalanceFiltersComponent", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = trailBalanceReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/TrailBalanceFiltersComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "SHST", Description = "Shipments Stocks", Name = "Shipments Stocks", LocalName = "Shipments Stocks", FilterControlName = "ShipmentsStocksFiltersComponent", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = shipmentsStocksReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ShipmentsStocksFiltersComponent" }, reportRepository, tenantReports);
+            
+
 
         }
         private void LoadReports_Quotes(ReportGroup quotesGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)

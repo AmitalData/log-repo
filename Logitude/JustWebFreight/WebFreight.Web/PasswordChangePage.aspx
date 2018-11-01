@@ -676,7 +676,7 @@
             } else IsNotSeriesNumnber = true;
 
 
-            if (seriesNumnberCount == 4) {
+            if (seriesNumnberCount == 2) {
                 result = true;
                 return;
             }
@@ -746,7 +746,7 @@
             } else IsNotSeriesNumnber = true;
 
 
-            if (seriesNumnberCount == 4) {
+            if (seriesNumnberCount == 2) {
                 result = true;
                 return;
             }

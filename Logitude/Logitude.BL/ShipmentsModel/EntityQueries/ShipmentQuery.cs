@@ -33,6 +33,7 @@ using Logitude.BookingLib.Data.Repositories;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using System.Reflection;
+using Logitude.BL.CommonDataModel.EntityLists;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -8822,7 +8823,49 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
+        public List<ShipmentList> GetShipmentListsByCustomerIdsAndDates(List<string>customerIds, DateTime? fromDate, DateTime? toDate, int tenant)
+        {
+            List<ShipmentList> result = new List<ShipmentList>();
+            IQueryable<ShipmentList> shipmentLists = (from s in repository.context.Shipments.Include("EntityStatus")
+                                                      where s.Tenant == tenant && customerIds.Contains(s.CustomerId) && !string.IsNullOrEmpty(s.CustomerShipmentNumber) && !s.IsCancelled && s.CreateDateTime >= fromDate && s.CreateDateTime <= toDate
+                                                      select new ShipmentList()
+                                                      {
+                                                          Id = s.Id,
+                                                          ShipmentNumber = s.ShipmentNumber,
+                                                          CreateDateTime = s.CreateDateTime,
+                                                          StatusName = s.EntityStatus.Name,
+                                                          CustomerTenantNumber = s.CustomerTenantNumber,
+                                                      });
 
+            if (shipmentLists.Count() > 0)
+            {
+                CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
+                List<int?> customerTenantNumbers = shipmentLists.GroupBy(d => d.CustomerTenantNumber).Select(d => d.FirstOrDefault().CustomerTenantNumber).ToList();
+                if (customerTenantNumbers.Count > 0)
+                {
+                    List<CustomerTenantAccessList> customerTenantAccessLists = customerTenantAccessQuery.GetCustomerTenantAccessListsByCustomer(customerTenantNumbers).Where(d => d.StockTypeCode == "A").ToList();
+
+                    if (customerTenantAccessLists.Count > 0)
+                    {
+                        foreach (CustomerTenantAccessList customerTenantAccessList in customerTenantAccessLists)
+                        {
+                            List<ShipmentList> shipments = shipmentLists.Where(d => d.CustomerTenantNumber == customerTenantAccessList.CustomerTenant).ToList();
+                            if (shipments.Count > 0)
+                            {
+                                result =  result.Concat(shipments).ToList();
+                            }
+                     
+                        }
+                    }
+
+                }
+            }
+
+
+
+            return result;
+
+        }
     }
 
     public class DeparturesArrivalsDataItem

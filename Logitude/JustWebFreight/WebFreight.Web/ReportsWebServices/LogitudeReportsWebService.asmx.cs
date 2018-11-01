@@ -11649,6 +11649,28 @@ namespace WebFreight.Web.ReportsWebServices
 
         #endregion
 
+
+
+        #region Load Shipments Stocks
+        public byte[] LoadShipmentsStocksData(byte[] xmlFilters, int tenant)
+        {
+            ShipmentsStocksDataProviderHelper shipmentsStocksDataProviderHelper = new ShipmentsStocksDataProviderHelper();
+            ShipmentsStocksDataProvider dataprovider = shipmentsStocksDataProviderHelper.LoadShipmentsStocksDataProvider(xmlFilters, tenant);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(ShipmentsStocksDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+        #endregion
+
+
+
+
         #region Load Users By Tenant 
         public byte[] LoadUsersByTenantData(byte[] xmlFilters, int tenant)
         {
