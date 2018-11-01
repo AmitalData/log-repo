@@ -193,8 +193,15 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             MyLedgerTransaction.CreateDate = _JournalPM.CreateDate;
             MyLedgerTransaction.AccountId = null;
 
-            MyLedgerTransaction.AccountingDate = _JournalPM.AccountingDate;
-            MyLedgerTransaction.DocumentDate = _JournalLine.DocumentDate;
+            //MyLedgerTransaction.AccountingDate = _JournalPM.AccountingDate;
+            if (_JournalLine.AccountingDate == DateTime.MaxValue)
+            {
+                throw new Exception("_JournalLine.AccountingDate is must");//20180111-Bug 44298: באג בתאריך חשבונאי בהעברת פקודת יומן לתנועה
+            }
+            MyLedgerTransaction.AccountingDate = _JournalLine.AccountingDate;//20180111-Bug 44298: באג בתאריך חשבונאי בהעברת פקודת יומן לתנועה
+            
+
+                MyLedgerTransaction.DocumentDate = _JournalLine.DocumentDate;
             MyLedgerTransaction.DueDate = //(DateTime)
                 _JournalLine.DueDate;
             MyLedgerTransaction.CurrencyId = _JournalLine.CurrencyId;
