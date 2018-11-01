@@ -134,7 +134,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     onSearchTextChangeEvent(searchtext) {
         console.log("Search");
-        if (this.searchFields != searchtext) {
+        if ((this.searchFields != searchtext) && !(searchtext == null && this.searchFields == "")) {
             this.searchFields = searchtext;
             if (this.timerToken) {
                 clearTimeout(this.timerToken);
