@@ -214,7 +214,7 @@ export class ChangePasswordComponent {
 
 
         // contain series(5 letters / numbers)
-        if (this.IsPasswordContainsSeries(this.NewPassword) || this.IsPasswordContainsSeriesSameNumber(this.NewPassword)) {
+        if (this.IsPasswordContainsSeries(this.NewPassword)) {
             messageError = "Password can't contain series (5 letters/numbers)";
             return messageError;
         }
@@ -242,6 +242,7 @@ export class ChangePasswordComponent {
             passwordNumnberList.push(x);
         }
 
+        //Series
         var seriesNumnberCount: number = 0;
         var seriesNumnberList: any = [];
         passwordNumnberList.forEach((item) => {
@@ -274,64 +275,89 @@ export class ChangePasswordComponent {
 
         });
 
-        return result;
-    }
 
-    IsPasswordContainsSeriesSameNumber(password: string) {
 
-        var result = false;
-        if (password) password = password.toUpperCase();
+        //Same
+        if (!result) {
+            seriesNumnberCount = 0;
+            seriesNumnberList = [];
+            passwordNumnberList.forEach((item) => {
+                var IsNotSeriesNumnber = false;
+                if (item <= 9 || ((item >= 65 && item <= 90))) {
+                    if (seriesNumnberList.length == 0) {
+                        seriesNumnberList.push(item);
+                    }
+                    else {
+                        if (seriesNumnberList[seriesNumnberList.length - 1] == item) {
+                            seriesNumnberList.push(item);
+                            seriesNumnberCount += 1;
+                        } else {
+                            IsNotSeriesNumnber = true;
+                        }
+                    }
 
-        var passwordNumnberList: any = [];
-        for (var i = 0; i < password.length; i++) {
-            var char = password.charAt(i);
-            var x = 0;
-            if ('0123456789'.indexOf(char) !== -1) {
-                x = Number(char);
+                } else IsNotSeriesNumnber = true;
 
-            } else {
-                x = char.charCodeAt(0);
-            }
 
-            passwordNumnberList.push(x);
+                if (seriesNumnberCount == 2) {
+                    result = true;
+                    return;
+                }
+
+                if (IsNotSeriesNumnber) {
+                    seriesNumnberCount = 0;
+                    seriesNumnberList = [];
+                }
+
+            });
         }
 
-        var seriesNumnberCount: number = 0;
-        var seriesNumnberList: any = [];
-        passwordNumnberList.forEach((item) => {
-            var IsNotSeriesNumnber = false;
-            if (item <= 9 || ((item >= 65 && item <= 90))) {
-                if (seriesNumnberList.length == 0) {
-                    seriesNumnberList.push(item);
-                }
-                else {
-                    if (seriesNumnberList[seriesNumnberList.length - 1] == item) {
+
+        //reverse
+        if (!result) {
+            seriesNumnberCount = 0;
+            seriesNumnberList = [];
+
+            passwordNumnberList.forEach((item) => {
+                var IsNotSeriesNumnber = false;
+                if (item <= 9 || ((item >= 65 && item <= 90))) {
+                    if (seriesNumnberList.length == 0) {
                         seriesNumnberList.push(item);
-                        seriesNumnberCount += 1;
-                    } else {
-                        IsNotSeriesNumnber = true;
                     }
+                    else {
+                        if (seriesNumnberList[seriesNumnberList.length - 1] - 1 == item) {
+                            seriesNumnberList.push(item);
+                            seriesNumnberCount += 1;
+                        } else {
+                            IsNotSeriesNumnber = true;
+                        }
+                    }
+
+                } else IsNotSeriesNumnber = true;
+
+
+                if (seriesNumnberCount == 4) {
+                    result = true;
+                    return;
                 }
 
-            } else IsNotSeriesNumnber = true;
+                if (IsNotSeriesNumnber) {
+                    seriesNumnberCount = 0;
+                    seriesNumnberList = [];
+                }
+
+            });
 
 
-            if (seriesNumnberCount == 2) {
-                result = true;
-                return;
-            }
 
-            if (IsNotSeriesNumnber) {
-                seriesNumnberCount = 0;
-                seriesNumnberList = [];
-            }
+        }
 
-        });
+
 
         return result;
     }
 
-
+    
 
     ChangePassword() {
         var params = {

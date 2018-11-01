@@ -219,8 +219,8 @@ export class LoginComponent implements OnInit {
             SessionInfo.Token = userData.Token;
             SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
             SessionInfo.SessionTimeout = userData.SessionTimeout;
-            SessionInfo.WebTokenExpirationWarning = userData.WebTokenExpirationWarning;
-            SessionInfo.WebTokenLifeTime = userData.WebTokenLifeTime;
+            SessionInfo.WebTokenExpirationWarningInMinutes = userData.WebTokenExpirationWarningInMinutes;
+            SessionInfo.WebTokenLifeTimeInMinutes = userData.WebTokenLifeTimeInMinutes;
             SessionInfo.KeepUserLoggedIn = userData.KeepUserLoggedIn;
             SessionInfo.LastLoginDateTime = userData.LastLoginDateTime;
             

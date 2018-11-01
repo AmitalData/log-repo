@@ -253,6 +253,10 @@
     <Compile Include="Migrations\201810300620134_AbedAddDWNextRunTimeToTableSetting.Designer.cs">
       <DependentUpon>201810300620134_AbedAddDWNextRunTimeToTableSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811010618518_ChangeFieldNameInTableSessionPolicies.cs" />
+    <Compile Include="Migrations\201811010618518_ChangeFieldNameInTableSessionPolicies.Designer.cs">
+      <DependentUpon>201811010618518_ChangeFieldNameInTableSessionPolicies.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -298,6 +302,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810300620134_AbedAddDWNextRunTimeToTableSetting.resx">
       <DependentUpon>201810300620134_AbedAddDWNextRunTimeToTableSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811010618518_ChangeFieldNameInTableSessionPolicies.resx">
+      <DependentUpon>201811010618518_ChangeFieldNameInTableSessionPolicies.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
