@@ -26,8 +26,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             // Table & Column Mappings
             this.ToTable("SessionPolicies");
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.WebTokenLifeTime).HasColumnName("WebTokenLifeTime");
-            this.Property(t => t.WebTokenExpirationWarning).HasColumnName("WebTokenExpirationWarning");
+            this.Property(t => t.WebTokenLifeTimeInMinutes).HasColumnName("WebTokenLifeTimeInMinutes");
+            this.Property(t => t.WebTokenExpirationWarningInMinutes).HasColumnName("WebTokenExpirationWarningInMinutes");
 
         }
     }

@@ -61,8 +61,8 @@ namespace WebFreight.Web.DataContracts
         public int NumberOfRetries { get; set; }
 
         public int SessionTimeout { get; set; }
-        public int WebTokenExpirationWarning { get; set; }
-        public int WebTokenLifeTime { get; set; }
+        public int WebTokenExpirationWarningInMinutes { get; set; }
+        public int WebTokenLifeTimeInMinutes { get; set; }
 
         public bool Param1 { get; set; } // Email IsValid 
 

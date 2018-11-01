@@ -75,6 +75,29 @@ export class TaxReportExtendedPMService {
 
     }
 
+    GetReportLinesCounter(taxReportId: string) {
+
+            return Observable.defer(() => {
+
+                var authHeader = new Headers();
+                authHeader.append('Token', SessionInfo.Token);
+                authHeader.append('Content-Type', 'application/json');
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+
+                return this._http.get(this._apiUrl+'/GetLinesCounters?taxReportId='+taxReportId, { headers: authHeader }).map(response => {
+                    var allLists = response.json();
+
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = allLists;
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+            });
+
+    }
+
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TaxReportPM = null) {
 
@@ -249,5 +272,5 @@ export class TaxReportExtendedPMService {
         return entityPM;
     }
 
-    
-} 
+
+}
