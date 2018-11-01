@@ -223,7 +223,7 @@ export class ChangePasswordComponent implements OnInit {
 
         // contain series(5 letters / numbers)
         if (this.IsPasswordContainsSeries(this.NewPassword)) {
-            this.ValidationErrorsList.push("Password can't contain series (5 letters/numbers)");
+            this.ValidationErrorsList.push("Password can't contain series (3 letters/numbers)");
         }
 
     }
