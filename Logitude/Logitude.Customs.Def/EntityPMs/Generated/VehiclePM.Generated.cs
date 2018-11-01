@@ -1677,6 +1677,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string passportName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PassportName  
+	   {
+	    
+	     get
+		{
+		   return passportName;
+		 }
+		 set
+		 {
+		   if(passportName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PassportName",OldValue=passportName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   passportName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
