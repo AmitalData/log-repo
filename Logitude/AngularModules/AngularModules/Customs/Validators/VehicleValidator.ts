@@ -48,7 +48,7 @@ export class VehicleValidator {
 
         if (this._VehiclePM != null) {
             if (AppTool.IsNullOrEmpty(this._VehiclePM.ImporterIdentityId) && (AppTool.IsNullOrEmpty(this._VehiclePM.ImporterPassportNumber) || AppTool.IsNullOrEmpty(this._VehiclePM.ImporterPassCountryCode) || AppTool.IsNullOrEmpty(this._VehiclePM.ImporterPassportTypeCode) || AppTool.IsNullOrEmpty(this._VehiclePM.PassportName))) {
-                errorMessage = "חובה להזין מס' יבואן או נתוני דרכון(מס' דרכון, מדינת הדרכון, סוג תעודת מסע ושם דרכון) לרכב";
+                errorMessage = "חובה להזין מס' יבואן או נתוני דרכון(מס' דרכון; מדינת הדרכון; סוג תעודת מסע ושם דרכון) לרכב";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }
