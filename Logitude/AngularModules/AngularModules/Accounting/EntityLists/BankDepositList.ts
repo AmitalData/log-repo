@@ -37,6 +37,7 @@ export class BankDepositList {
 	LastActivityByUserName: string;
 	CreatedByUserName: string;
 	BankAccountNumber: string;
+	JournalQueueId: string;
 	
 }
  

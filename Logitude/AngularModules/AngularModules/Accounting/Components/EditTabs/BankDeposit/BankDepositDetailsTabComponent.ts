@@ -1,4 +1,5 @@
-﻿import {Component}  from '@angular/core';
+﻿import { SessionLocator } from './../../../../Infrastructure/Utilities/SessionLocator';
+import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {BankDepositPM} from '../../../EntityPMs/BankDepositPM';
 import {BankDepositLinePM} from '../../../EntityPMs/BankDepositLinePM';
@@ -63,7 +64,6 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
             this.GetCashBook();
             this.BankDepositLines = this.EntityPM.BankDepositLines;
-            this.CalculateTotals();
             this.SetUIProperty();
 
             console.log("Deposit: ", this.EntityPM);
@@ -375,7 +375,10 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     //#region Get Methods
     GetCashBook() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         this._CashBookPMService.get(this.EntityPM.CashBookId).subscribe(myResult => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {
