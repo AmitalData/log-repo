@@ -1,4 +1,4 @@
-﻿/* CheckBox | Radio Buttons */
+/* CheckBox | Radio Buttons */
 /*http://ryanfait.com/resources/custom-checkboxes-and-radio-buttons/*/
 
 .RadioButton input:focus + label {
@@ -105,6 +105,61 @@
     position: absolute;
 }
 .CheckBox {
+    position: relative;
+    display: block;
+    height: 16px;
+}
+
+/*------------
+    Filters CheckBox  
+------------*/
+.FiltersCheckBox input:focus + label {
+    border: 1px solid #3BB3E2;
+}
+
+.FiltersCheckBox input:disabled + label {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.FiltersCheckBox input:checked + label {
+    background: url('../Images/Icons/All/CheckBoxIcon.png') center center no-repeat white;
+}
+
+.FiltersCheckBox label {
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+
+.FiltersCheckBox label {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    display: block;
+    background: white;
+    border: 1px solid #AAAAAA;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -moz-box-shadow: inset 0 0 3px #AAAAAA;
+    -webkit-box-shadow: inset 0 0 3px #AAAAAA;
+    box-shadow: inset 0 0 3px #AAAAAA;
+    line-height: 15px;
+    text-indent: 20px;
+    font-size: 11px;
+    color: #6E7172;
+    position: absolute;
+}
+
+.FiltersCheckBox input {
+    opacity: 0;
+    /*display: none;*/
+    position: absolute;
+}
+
+.FiltersCheckBox {
     position: relative;
     display: block;
     height: 16px;

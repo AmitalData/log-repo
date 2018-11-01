@@ -29,6 +29,7 @@
   <ItemGroup>
     <Content Include="Accounting\Components\EditTabs\BankAccount\ManageRecoTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\BankPagesTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankDeposit\BankDepositDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\AddEditTaxWithholdingLineComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountAdditionalDataTabComponent.html" />
@@ -48,11 +49,13 @@
     <Content Include="Accounting\Components\EditTabs\GLAccount\ManageReconciliationsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Journal\JournalDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Revaluation\RevaluationDetailsComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxReport\EditTaxReportLine\EditTaxReportLineComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxReport\TaxReportDetailsTabComponent.html" />
     <Content Include="Accounting\Components\ListTemplates\ManageReconciliationListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageLineListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageListTemplate.html" />
+    <Content Include="Accounting\Components\ListTemplates\TaxReportListTemplate.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingPeriodEventComponent.html" />
     <Content Include="Accounting\Components\Maintenance\EditAccountingPeriodComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingPeriodsComponent.html" />
@@ -263,7 +266,11 @@
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\AddEditPrivateLabelsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelLoadComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
@@ -1751,6 +1758,8 @@
     <Content Include="_Resources\Images\Icons\All\CheckBoxIcon.png" />
     <Content Include="_Resources\Images\Icons\All\Help.png" />
     <Content Include="_Resources\Images\Icons\All\RadioButtonChecked.png" />
+    <Content Include="_Resources\Images\Icons\All\SidebarLeft.png" />
+    <Content Include="_Resources\Images\Icons\All\SidebarRight.png" />
     <Content Include="_Resources\Images\Icons\All\Tab.X.Blue.png" />
     <Content Include="_Resources\Images\Icons\All\Tab.X.Gray.png" />
     <Content Include="_Resources\Images\Icons\All\ToggleIcon.png" />
@@ -5826,6 +5835,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleShipmentTabs.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\CustomReferenceListTemplate.ts" />
+    <TypeScriptCompile Include="Shipment\Components\ListTemplates\RemoveTasksButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\EditShipmentButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\ApprovePaymentButtonListTemplate.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DigitalSignDocTypeComponent.ts" />
