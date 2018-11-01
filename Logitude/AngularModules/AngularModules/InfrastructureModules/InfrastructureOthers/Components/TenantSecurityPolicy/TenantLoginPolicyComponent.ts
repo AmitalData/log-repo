@@ -414,10 +414,9 @@ export class TenantLoginPolicyComponent extends BaseComponent {
         if ((this.EntityPM.LoginPolicyCode === "COMPIP") && AppTool.IsNullOrEmpty(this.EntityPM.AllowedIPs)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("TenantLoginPolicy.F.AllowedIPs") + " field is required!");
         }
-
-
+   
         if (this.IsSessionTimeoutValueHasError) {
-            this.ValidationErrorsList.push("Session Timeout should be have value  between 1 h and 8 hours");
+            this.ValidationErrorsList.push("Maximum session timeout 8 hours");
         }
 
         if (this.ValidationErrorsList.length > 0)
