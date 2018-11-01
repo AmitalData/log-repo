@@ -38,6 +38,7 @@ namespace WebFreight.Web.Helpers
                         if (site.Name == SiteName)
                         {
                             iisManager.ApplicationPools[site.Applications["/"].ApplicationPoolName].Recycle();
+                            LogitudeSettings.HandleLogMe($"SiteName({SiteName}).Recycle() ", false, "RecycleMe", DateTime.MaxValue);
                             break;
                         }
                     }
