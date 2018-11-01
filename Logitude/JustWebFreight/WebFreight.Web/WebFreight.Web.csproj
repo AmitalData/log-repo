@@ -309,6 +309,7 @@
       <HintPath>..\..\packages\Microsoft.VisualStudio.Services.Client.16.136.1-preview\lib\net45\Microsoft.VisualStudio.Services.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -351,10 +352,6 @@
     </Reference>
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
-    </Reference>
-    <Reference Include="Simplog.Server.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Simplog.Server.Infrastructure\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\StackExchange.Redis.1.2.5\lib\net45\StackExchange.Redis.dll</HintPath>
@@ -2137,6 +2134,7 @@
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
     <Compile Include="Helpers\FlatFileHelper.cs" />
+    <Compile Include="Helpers\IISManager.cs" />
     <Compile Include="Helpers\LogBox\LogBoxMailgunAnalyzer.cs" />
     <Compile Include="Helpers\PasswordChangeHelper.cs" />
     <Compile Include="Helpers\QueueMessagesWebHelper.cs" />
@@ -6062,6 +6060,10 @@
     <ProjectReference Include="..\..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
       <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Unifreight.BL\Unifreight.BL.csproj">
       <Project>{0ec1bd46-2613-4227-a6d7-d345dd0978cd}</Project>
