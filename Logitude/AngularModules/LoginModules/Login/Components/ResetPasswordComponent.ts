@@ -80,36 +80,29 @@ export class ResetPasswordComponent {
 
                     this.CaptchaKey = userdata ? userdata.CaptchaKey : "";
                     //disableForm(false);
+                    var errorMessage = null;
 
-                    var errorMessage = "Submit failed! invalid email.";
 
                     if (userdata.InValidCaptcha) {
-                        errorMessage = "Please re-enter the characters you see in the image above";
                         this.CaptchaCode = "";
                         this.IsShowAreaCaptcha = true;
                         this.CaptchaImageUrl = userdata.CaptchaImage;
 
                     }
 
-                  else  if (userdata.IpRestricted) {
+                    if (userdata.IpRestricted) {
 
                         errorMessage = "Trying to submit in from unauthorised station!" + "<br/>" + "(The IP address you are trying to " + "<br/>" + "submit from is restricted for this user)";//
 
                     }
 
-                    if (userdata.IsLocked) {
-
-                        errorMessage = "Your account has been locked out!" + "<br/>" + "please contact your administrator.";
-                    }
-
-
                     if (userdata.InActive) {
                         errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
                     }
+                    if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
 
-                    //document.getElementById("errorsList").innerHTML = errorMessage;
-                    // $("#errorsList").text(errorMessage);
-                    //$("#errorsList").show();
+                    if (userdata.InValidCaptcha) errorMessage = "Please re-enter the characters you see in the image above";
+           
                     this.HasErrors = true;
                     this.ErrorMessage = errorMessage;
 

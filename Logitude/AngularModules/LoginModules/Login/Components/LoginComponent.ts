@@ -461,35 +461,29 @@ export class LoginComponent {
                      }
 
                      else {
+                         this.errorMessage = "";
 
-                         this.errorMessage = "Login failed! invalid user name or password.";
+                         if (userData.InValidCaptcha) {
+                             if (this.IsShowAreaCaptcha) {
+                                 this.CaptchaTextValue = "";
+                             }
 
-                         if (userData.IpRestricted) {
-
-                             this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
-
+                             this.IsShowAreaCaptcha = true;
+                             this.CaptchaImageUrl = userData.CaptchaImage;
                          }
-                         if (userData.IsLocked) {
 
-                             this.errorMessage = "Your account has been locked out!" + " please try again after 30 minutes.";
-                         }
-                         if (userData.InActive) {
-                             this.errorMessage = "Your account has been deactivated!" + " please contact your administrator.";
-                         }
-                         if (userData.Unlicensed) {
 
-                             this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
-                         }
+
+                         if (userData.IpRestricted) this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
+                         if (userData.InActive) this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                         if (userData.Unlicensed) this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                         if (userData.InValidCaptcha) this.errorMessage = "Please re-enter the characters you see in the image above";
+                     
+
                      }
 
 
-                    if (this.errorMessage == "Login failed! invalid user name or password.") {
-                        if (this.IsShowAreaCaptcha) {
-
-                            this.CaptchaImageUrl = userData.CaptchaImage;
-                            this.CaptchaTextValue = "";
-                        }
-                    }
+             
                 }
 
             }
