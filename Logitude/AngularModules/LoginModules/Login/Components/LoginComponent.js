@@ -343,29 +343,21 @@ var LoginComponent = (function () {
                     if (userData.InValidCaptcha) {
                         if (_this.IsShowAreaCaptcha) {
                             _this.CaptchaTextValue = "";
-                            _this.errorMessage = "Please re-enter the characters you see in the image above";
                         }
                         _this.IsShowAreaCaptcha = true;
                         _this.CaptchaImageUrl = userData.CaptchaImage;
                     }
-                    else {
-                        _this.errorMessage = "";
-                        if (userData.InValidCaptcha) {
-                            if (_this.IsShowAreaCaptcha) {
-                                _this.CaptchaTextValue = "";
-                            }
-                            _this.IsShowAreaCaptcha = true;
-                            _this.CaptchaImageUrl = userData.CaptchaImage;
-                        }
-                        if (userData.IpRestricted)
-                            _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
-                        if (userData.InActive)
-                            _this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                        if (userData.Unlicensed)
-                            _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
-                        if (userData.InValidCaptcha)
-                            _this.errorMessage = "Please re-enter the characters you see in the image above";
-                    }
+                    _this.errorMessage = "";
+                    if (userData.InValidCaptcha)
+                        _this.errorMessage = "Please re-enter the characters you see in the image above";
+                    if (userData.IpRestricted)
+                        _this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
+                    if (userData.InActive)
+                        _this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                    if (userData.Unlicensed)
+                        _this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                    if (userData.InValidMailOrPassword)
+                        _this.errorMessage = "Login failed! invalid user name or password.";
                 }
             }
             else {
@@ -410,38 +402,40 @@ var LoginComponent = (function () {
     LoginComponent.prototype.PostLoginData = function () {
         var _this = this;
         this.loginService.PostLoginData(this.LoginParams).subscribe(function (userData) {
-            var data = JSON.stringify(userData);
-            window.sessionStorage.setItem("userdata", data);
-            var mypageUrl = window.location.href;
-            var AngularURL = "";
-            var urlMenu = "";
-            //userData.KeepUserLoggedIn == true &&
-            if (userData.Token && _this.IsHaveTenantInUrl) {
-                window.localStorage.setItem("Token_" + userData.CurrentTenant, userData.Token);
-            }
-            var pageUrl = window.location.href;
-            var externalTenant = null;
-            if (pageUrl) {
-                var args = pageUrl.split('&');
-                if (args[1] && args[1].indexOf('Tenant=') != -1) {
-                    externalTenant = args[1].split('=')[1];
+            if (userData && !userData.HasError) {
+                var data = JSON.stringify(userData);
+                window.sessionStorage.setItem("userdata", data);
+                var mypageUrl = window.location.href;
+                var AngularURL = "";
+                var urlMenu = "";
+                //userData.KeepUserLoggedIn == true &&
+                if (userData.Token && _this.IsHaveTenantInUrl) {
+                    window.localStorage.setItem("Token_" + userData.CurrentTenant, userData.Token);
                 }
-            }
-            if (userData.HtmlVersion) {
-                var version = userData.HtmlVersion;
-                AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
-            }
-            else {
-                AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular/index.html";
-            }
-            if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
-                urlMenu = mypageUrl.split("Menu=")[1];
-                AngularURL += ("?Menu=" + urlMenu);
-                if (externalTenant) {
-                    AngularURL = AngularURL.replace("&Tenant=" + externalTenant, "");
+                var pageUrl = window.location.href;
+                var externalTenant = null;
+                if (pageUrl) {
+                    var args = pageUrl.split('&');
+                    if (args[1] && args[1].indexOf('Tenant=') != -1) {
+                        externalTenant = args[1].split('=')[1];
+                    }
                 }
+                if (userData.HtmlVersion) {
+                    var version = userData.HtmlVersion;
+                    AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular" + version + "/index.html";
+                }
+                else {
+                    AngularURL = SessionInfo_1.SessionInfo.GetLogitudeURL() + "Angular/index.html";
+                }
+                if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
+                    urlMenu = mypageUrl.split("Menu=")[1];
+                    AngularURL += ("?Menu=" + urlMenu);
+                    if (externalTenant) {
+                        AngularURL = AngularURL.replace("&Tenant=" + externalTenant, "");
+                    }
+                }
+                document.location.href = AngularURL;
             }
-            document.location.href = AngularURL;
         });
     };
     LoginComponent.prototype.SaveDataToCookie = function () {

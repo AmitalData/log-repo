@@ -38,7 +38,7 @@ export class ResetPasswordComponent {
     }
 
 
-
+    HasCaptchaErrors: boolean = false;
     SubmitBtnClicked() {
         this.ShowbusyIndicator = true;
         if (!this.Email) {
@@ -82,27 +82,25 @@ export class ResetPasswordComponent {
                     //disableForm(false);
                     var errorMessage = null;
 
-
                     if (userdata.InValidCaptcha) {
                         this.CaptchaCode = "";
                         this.IsShowAreaCaptcha = true;
                         this.CaptchaImageUrl = userdata.CaptchaImage;
+                        this.HasCaptchaErrors = true;
 
                     }
 
-                    if (userdata.IpRestricted) {
 
-                        errorMessage = "Trying to submit in from unauthorised station!" + "<br/>" + "(The IP address you are trying to " + "<br/>" + "submit from is restricted for this user)";//
-
-                    }
-
-                    if (userdata.InActive) {
-                        errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                    }
-                    if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
-
+                    if (userdata.IpRestricted) errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
+                    if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                    if (userdata.Unlicensed) errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
                     if (userdata.InValidCaptcha) errorMessage = "Please re-enter the characters you see in the image above";
-           
+                    if (userdata.InValidMailOrPassword) {
+
+                        errorMessage = "Login failed! invalid user name or password.";
+                        this.HasCaptchaErrors = false;
+                    }
+
                     this.HasErrors = true;
                     this.ErrorMessage = errorMessage;
 

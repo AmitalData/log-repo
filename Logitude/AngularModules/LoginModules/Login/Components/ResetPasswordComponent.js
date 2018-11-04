@@ -18,6 +18,7 @@ var ResetPasswordComponent = (function () {
         this.ErrorMessage = null;
         this.Succeeded = false;
         this.ShowbusyIndicator = false;
+        this.HasCaptchaErrors = false;
     }
     ResetPasswordComponent.prototype.HideAreaCaptcha = function () {
         this.IsShowAreaCaptcha = false;
@@ -65,17 +66,20 @@ var ResetPasswordComponent = (function () {
                         _this.CaptchaCode = "";
                         _this.IsShowAreaCaptcha = true;
                         _this.CaptchaImageUrl = userdata.CaptchaImage;
+                        _this.HasCaptchaErrors = true;
                     }
-                    if (userdata.IpRestricted) {
-                        errorMessage = "Trying to submit in from unauthorised station!" + "<br/>" + "(The IP address you are trying to " + "<br/>" + "submit from is restricted for this user)"; //
-                    }
-                    if (userdata.InActive) {
+                    if (userdata.IpRestricted)
+                        errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)"; //
+                    if (userdata.InActive)
                         errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                    }
                     if (userdata.Unlicensed)
                         errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
                     if (userdata.InValidCaptcha)
                         errorMessage = "Please re-enter the characters you see in the image above";
+                    if (userdata.InValidMailOrPassword) {
+                        errorMessage = "Login failed! invalid user name or password.";
+                        _this.HasCaptchaErrors = false;
+                    }
                     _this.HasErrors = true;
                     _this.ErrorMessage = errorMessage;
                 }
