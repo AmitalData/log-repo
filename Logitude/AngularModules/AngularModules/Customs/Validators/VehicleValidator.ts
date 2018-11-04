@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { AppTool, DateTool } from '../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
@@ -47,8 +47,8 @@ export class VehicleValidator {
         var errorMessage: string = "";
 
         if (this._VehiclePM != null) {
-            if (AppTool.IsNullOrEmpty(this._VehiclePM.ImporterIdentityId) && (AppTool.IsNullOrEmpty(this._VehiclePM.ImporterPassportNumber) || AppTool.IsNullOrEmpty(this._VehiclePM.ImporterPassCountryCode) || AppTool.IsNullOrEmpty(this._VehiclePM.ImporterPassportTypeCode))) {
-                errorMessage = "חובה להזין מס' יבואן או נתוני דרכון(מס' דרכון, מדינת הדרכון וסוג תעודת מסע) לרכב";
+            if (AppTool.IsNullOrEmpty(this._VehiclePM.ImporterIdentityId) && (AppTool.IsNullOrEmpty(this._VehiclePM.ImporterPassportNumber) || AppTool.IsNullOrEmpty(this._VehiclePM.ImporterPassCountryCode) || AppTool.IsNullOrEmpty(this._VehiclePM.ImporterPassportTypeCode) || AppTool.IsNullOrEmpty(this._VehiclePM.PassportName))) {
+                errorMessage = "חובה להזין מס' יבואן או נתוני דרכון(מס' דרכון; מדינת הדרכון; סוג תעודת מסע ושם דרכון) לרכב";
                 if (!AppTool.IsNullOrEmpty(errorMessage)) {
                     this.ValidationErrorMessageCodes.push(errorMessage);
                 }

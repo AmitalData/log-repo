@@ -276,6 +276,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsItemDetailsHistoryMap());
 	
+            modelBuilder.Configurations.Add(new CustomsPartnerFtpMap());
+	
             modelBuilder.Configurations.Add(new CustomsPartnersItemMap());
 	
             modelBuilder.Configurations.Add(new CustomsPaymentTermMap());
@@ -1659,6 +1661,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsItemDetailsHistory> CustomsItemDetailsHistorys 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsPartnerFtp> CustomsPartnerFtps 
 	 {
 	      get; set;
 	 

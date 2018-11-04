@@ -318,6 +318,7 @@
     <Compile Include="EntityDataMappings\CustomsInsuranceCompanyDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsItemDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsItemDetailsHistoryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsPartnerFtpDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsPartnersItemDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsPaymentTermsDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsRequestsSheetDataMapping.cs" />
@@ -468,6 +469,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomsInsuranceCompanyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsItemDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsItemDetailsHistoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsPartnerFtpDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsPartnersItemDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsPaymentTermsDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsRequestsSheetDataMapping.Generated.cs" />
@@ -814,6 +816,7 @@
     <Compile Include="EntityQueryServices\Generated\CustomsAirlineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsDocumentsDefinitionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsInsuranceCompanyQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsPartnerFtpQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DecCargoSplitCargoIdentifierQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DecCargoSplitConQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DecCargoSplitConsItemQueryService.Generated.cs" />
@@ -1200,6 +1203,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsAirlineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsDocumentsDefinitionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsInsuranceCompanyUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsPartnerFtpUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DecCargoSplitCargoIdentifierUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DecCargoSplitConsItemUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DecCargoSplitConsPackDetUpdateService.Generated.cs" />

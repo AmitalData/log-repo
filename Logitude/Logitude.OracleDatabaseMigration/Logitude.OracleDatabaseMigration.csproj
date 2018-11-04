@@ -90,6 +90,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LogitudeModel\LogitudeMigrationContext.cs" />
+    <Compile Include="Migrations\201811040823109_CustomsPartnerFtp.cs" />
+    <Compile Include="Migrations\201811040823109_CustomsPartnerFtp.Designer.cs">
+      <DependentUpon>201811040823109_CustomsPartnerFtp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -139,6 +143,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201811040823109_CustomsPartnerFtp.resx">
+      <DependentUpon>201811040823109_CustomsPartnerFtp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
