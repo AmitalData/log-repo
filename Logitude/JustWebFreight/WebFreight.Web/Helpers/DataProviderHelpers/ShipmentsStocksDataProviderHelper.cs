@@ -33,8 +33,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
 
 
-            if (xmlFilters != null)
-            {
+            //if (xmlFilters != null)
+            //{
                 MemoryStream memorystream = new MemoryStream(xmlFilters);
                 XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
                 QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
@@ -50,14 +50,14 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 //IncludeShipmentsDetails
                 queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeShipmentsDetails").FirstOrDefault();
                 if (queryFilterItem != null && queryFilterItem.FieldValue != null) includeShipmentsDetails = queryFilterItem.FieldValue.ToString().ToLower() == "true" ? true : false;
-            }
-            else
-            {
-                includeShipmentsDetails = true;
-                fromDate = DateTime.Now.AddYears(-1);
-                toDate = DateTime.Now;
-                tenant = 946;
-            }
+           // }
+            //else
+            //{
+            //    includeShipmentsDetails = true;
+            //    fromDate = DateTime.Now.AddYears(-1);
+            //    toDate = DateTime.Now;
+            //    tenant = 946;
+            //}
 
             CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
             List<string> cardIds = customerTenantAccessCardQuery.GetCustomerIdsByTenant(tenant);
