@@ -127,6 +127,7 @@
     <Compile Include="EntityKeys\MamanStatusKeys.cs" />
     <Compile Include="EntityKeys\ManifestCargoStatusKeys.cs" />
     <Compile Include="EntityKeys\MAWBTypeKeys.cs" />
+    <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
     <Compile Include="EntityKeys\PointerLevelKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
     <Compile Include="EntityKeys\TPGFileTypeKeys.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="EntityListQueryServices\Generated\MamanStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ManifestCargoStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MAWBTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PointerLevelListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TPGFileTypeListQueryService.Generated.cs" />
@@ -197,6 +199,7 @@
     <Compile Include="EntityListQueryServices\MamanStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ManifestCargoStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MAWBTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PointerLevelListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TPGFileTypeListQueryService.cs" />
@@ -232,6 +235,7 @@
     <Compile Include="EntityLists\Generated\MamanStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ManifestCargoStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MAWBTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PendingErrorPlaceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PointerLevelList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SplitOrMergeReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TPGFileTypeList.Generated.cs" />
@@ -268,6 +272,7 @@
     <Compile Include="EntityMapping\MamanStatusMap.cs" />
     <Compile Include="EntityMapping\ManifestCargoStatusMap.cs" />
     <Compile Include="EntityMapping\MAWBTypeMap.cs" />
+    <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
     <Compile Include="EntityMapping\PointerLevelMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
     <Compile Include="EntityMapping\TPGFileTypeMap.cs" />
@@ -304,6 +309,7 @@
     <Compile Include="EntityPOCOs\MamanStatus.cs" />
     <Compile Include="EntityPOCOs\ManifestCargoStatus.cs" />
     <Compile Include="EntityPOCOs\MAWBType.cs" />
+    <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
     <Compile Include="EntityPOCOs\PointerLevel.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
     <Compile Include="EntityPOCOs\TPGFileType.cs" />
@@ -367,6 +373,7 @@
     <Compile Include="Repsitories\Generated\MamanStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ManifestCargoStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MAWBTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PointerLevelRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TPGFileTypeRepository.Generated.cs" />
@@ -376,6 +383,7 @@
     <Compile Include="Repsitories\MamanStatusRepository.cs" />
     <Compile Include="Repsitories\ManifestCargoStatusRepository.cs" />
     <Compile Include="Repsitories\MAWBTypeRepository.cs" />
+    <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />
     <Compile Include="Repsitories\PointerLevelRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
     <Compile Include="Repsitories\TPGFileTypeRepository.cs" />

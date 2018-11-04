@@ -17,17 +17,17 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {TPGFileTypeList} from '../../EntityLists/TPGFileTypeList';
+import {PendingErrorPlaceList} from '../../EntityLists/PendingErrorPlaceList';
 
 @Injectable()
 
-export class TPGFileTypeListService {
+export class PendingErrorPlaceListService {
 	private _http: Http;
     private _apiUrl: string;   
-	public static CachedData: Array<TPGFileTypeList> = [];
+	public static CachedData: Array<PendingErrorPlaceList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/tpgfiletypeviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/pendingerrorplaceviews';  
     }
 
     getSingle(code: string) {
@@ -41,7 +41,7 @@ export class TPGFileTypeListService {
             }).map(response => {
                 var list = response.json();
                     
-                var entity: TPGFileTypeList;
+                var entity: PendingErrorPlaceList;
 				if(list)
 				{
                    entity = this.MapJsonToEntityList(list);
@@ -51,7 +51,7 @@ export class TPGFileTypeListService {
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TPGFileType", "GetSingleList", 'code=' + code); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PendingErrorPlace", "GetSingleList", 'code=' + code); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -71,12 +71,12 @@ export class TPGFileTypeListService {
             }).map(response => {
 
               var allLists = response.json();
-              var _mappedListsArray: Array< TPGFileTypeList> = [];
+              var _mappedListsArray: Array< PendingErrorPlaceList> = [];
 		      if(allLists)
 			  {
 				for (var key in  allLists) {
 				
-				   var entity: TPGFileTypeList;
+				   var entity: PendingErrorPlaceList;
                    entity = this.MapJsonToEntityList(allLists[key]);
 				   _mappedListsArray.push(entity);
 
@@ -87,7 +87,7 @@ export class TPGFileTypeListService {
                 serviceResponse.Result = _mappedListsArray;  
 				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TPGFileType", "GetAll", ""); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PendingErrorPlace", "GetAll", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -139,12 +139,12 @@ export class TPGFileTypeListService {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array< TPGFileTypeList> = [];
+                var _mappedListsArray: Array< PendingErrorPlaceList> = [];
 				if(serviceResponse.Result)
 				{
                 for (var key in serviceResponse.Result) {
 				
-				   var entity: TPGFileTypeList;
+				   var entity: PendingErrorPlaceList;
                    entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
 				   _mappedListsArray.push(entity);
 
@@ -154,7 +154,7 @@ export class TPGFileTypeListService {
                 serviceResponse.Result = _mappedListsArray;      
 		        serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TPGFileType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "PendingErrorPlace", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  				
 				            
                 return serviceResponse;
@@ -172,11 +172,11 @@ export class TPGFileTypeListService {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
 
-        if (TPGFileTypeListService.CachedData.length > 0) {
+        if (PendingErrorPlaceListService.CachedData.length > 0) {
 
             return Observable.defer(() => {
 
-                var filteredData = TPGFileTypeListService.CachedData.filter(a => a.Code === code)[0];
+                var filteredData = PendingErrorPlaceListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
 				serviceResponse.Result = filteredData; 
                 return Observable.of(serviceResponse);
@@ -185,26 +185,26 @@ export class TPGFileTypeListService {
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("Customs.TPGFileType").map(cachedJson=> {
+            return CachedDataManager.GetClosedTableData("Customs.PendingErrorPlace").map(cachedJson=> {
 
-                var _mappedListsArray: Array<TPGFileTypeList> = [];
+                var _mappedListsArray: Array<PendingErrorPlaceList> = [];
                 if (cachedJson) {
                     for (var key in cachedJson) {
 
-                        var entity: TPGFileTypeList;
+                        var entity: PendingErrorPlaceList;
                         entity = this.MapJsonToEntityList(cachedJson[key]);
                         _mappedListsArray.push(entity);
 
                     }
                 }
 
-                TPGFileTypeListService.CachedData = _mappedListsArray;
+                PendingErrorPlaceListService.CachedData = _mappedListsArray;
 
-                var filteredData = TPGFileTypeListService.CachedData.filter(a => a.Code === code)[0];
+                var filteredData = PendingErrorPlaceListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.Result = filteredData; 
 				serviceResponse.CallTime = callTime;
 			     
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "TPGFileType", "GetSingleListFromCache", 'code=' + code); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "PendingErrorPlace", "GetSingleListFromCache", 'code=' + code); 
 
                 return serviceResponse;
 
@@ -233,16 +233,16 @@ export class TPGFileTypeListService {
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse();
 
-        if (TPGFileTypeListService.CachedData.length > 0) {
+        if (PendingErrorPlaceListService.CachedData.length > 0) {
 
             return Observable.defer(() => {
                 if(filters.GetAll)
 				{
-					serviceResponse.Result = TPGFileTypeListService.CachedData; 
+					serviceResponse.Result = PendingErrorPlaceListService.CachedData; 
 				}
 				else
 				{
-					var filteredData = InfraGenericFilter.GetFilteredArray(TPGFileTypeListService.CachedData, filters);
+					var filteredData = InfraGenericFilter.GetFilteredArray(PendingErrorPlaceListService.CachedData, filters);
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 				}
@@ -252,13 +252,13 @@ export class TPGFileTypeListService {
         }
         else {
 
-            return CachedDataManager.GetClosedTableData("Customs.TPGFileType").map(cachedJson=> {
+            return CachedDataManager.GetClosedTableData("Customs.PendingErrorPlace").map(cachedJson=> {
 
-                var _mappedListsArray: Array<TPGFileTypeList> = [];
+                var _mappedListsArray: Array<PendingErrorPlaceList> = [];
                 if (cachedJson) {
                     for (var key in cachedJson) {
 
-                        var entity: TPGFileTypeList;
+                        var entity: PendingErrorPlaceList;
                         entity = this.MapJsonToEntityList(cachedJson[key]);
                         _mappedListsArray.push(entity);
 
@@ -267,7 +267,7 @@ export class TPGFileTypeListService {
 
 
 
-                TPGFileTypeListService.CachedData = _mappedListsArray;
+                PendingErrorPlaceListService.CachedData = _mappedListsArray;
                 if(filters.GetAll)
 				{
 					serviceResponse.Result = _mappedListsArray; 
@@ -279,7 +279,7 @@ export class TPGFileTypeListService {
 
 							      
 			   
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "TPGFileType", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "PendingErrorPlace", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 					serviceResponse.Result = _mappedListsArray; 
 					serviceResponse.CallTime = callTime;
@@ -293,8 +293,8 @@ export class TPGFileTypeListService {
 	
 	    MapJsonToEntityList(jsonList: any) {
        
-            var entityList: TPGFileTypeList;
-            entityList = new TPGFileTypeList();
+            var entityList: PendingErrorPlaceList;
+            entityList = new PendingErrorPlaceList();
             var jsonListKeys = Object.keys(jsonList);
 
             for (var key in jsonListKeys) {

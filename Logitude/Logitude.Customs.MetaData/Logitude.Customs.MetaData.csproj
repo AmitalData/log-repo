@@ -107,6 +107,7 @@
     <None Include="EntityFiles\DecCargoSplitCargoIdentifier.lxml" />
     <None Include="EntityFiles\DecCargoSplitConsPackDet.lxml" />
     <None Include="EntityFiles\DecCargoSplitConsItem.lxml" />
+    <None Include="EntityFiles\PendingErrorPlace.lxml" />
     <None Include="EntityFiles\TPGFileType.lxml" />
     <None Include="EntityFiles\TreatmentWay.lxml" />
     <None Include="EntityFiles\CargoSplitRequestStatus.lxml" />

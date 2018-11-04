@@ -892,6 +892,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<PointerLevel> PointerLevel { get; set; }
         public IDbSet<ClientDrivingLicense> ClientDrivingLicense { get; set; }
         public IDbSet<ClientDrivingLicenseType> ClientDrivingLicenseType { get; set; }
+        public IDbSet<PendingErrorPlace> PendingErrorPlace { get; set; }
 
         #endregion
 
@@ -3887,6 +3888,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
             modelBuilder.Configurations.Add(new TPGFileTypeMap());
             modelBuilder.Configurations.Add(new DecCargoSplitCargoIdentifierMap());
+            modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
 
             #endregion
 
