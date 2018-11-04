@@ -51,6 +51,120 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "First Pickup ATA",
+                FullFieldLable = "FirstPickupATA",
+                FieldName = "FirstPickupATA",
+                FieldsDataType = "DateTime",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                Operator = "Equals",
+                ListPropertyPath = "FirstPickupATA",
+                PMPropertyPath = "FirstPickupATA"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "First Pickup ATD",
+                FullFieldLable = "FirstPickupATD",
+                FieldName = "FirstPickupATD",
+                FieldsDataType = "DateTime",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                Operator = "Equals",
+                ListPropertyPath = "FirstPickupATD",
+                PMPropertyPath = "FirstPickupATD"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Final Delivery ETA",
+                FullFieldLable = "FinalDeliveryETA",
+                FieldName = "FinalDeliveryETA",
+                FieldsDataType = "DateTime",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                Operator = "Equals",
+                ListPropertyPath = "FinalDeliveryETA",
+                PMPropertyPath = "FinalDeliveryETA"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Final Delivery ETD",
+                FullFieldLable = "FinalDeliveryETD",
+                FieldName = "FinalDeliveryETD",
+                FieldsDataType = "DateTime",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                Operator = "Equals",
+                ListPropertyPath = "FinalDeliveryETD",
+                PMPropertyPath = "FinalDeliveryETD"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Final Delivery ATA",
+                FullFieldLable = "FinalDeliveryATA",
+                FieldName = "FinalDeliveryATA",
+                FieldsDataType = "DateTime",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                Operator = "Equals",
+                ListPropertyPath = "FinalDeliveryATA",
+                PMPropertyPath = "FinalDeliveryATA"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Final Delivery ATD",
+                FullFieldLable = "FinalDeliveryATD",
+                FieldName = "FinalDeliveryATD",
+                FieldsDataType = "DateTime",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                Operator = "Equals",
+                ListPropertyPath = "FinalDeliveryATD",
+                PMPropertyPath = "FinalDeliveryATD"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Split On Carriage",
                 FullFieldLable = "SplitOnCarriage",
                 FieldName = "SplitOnCarriage",

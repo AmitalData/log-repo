@@ -552,8 +552,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     RefreshButtonClicked() {
         SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        this.ListFilters = new ApiQueryFilters();
-        this.FilterSelectedValue = 'All';
+        //this.ListFilters = new ApiQueryFilters();
+        //this.FilterSelectedValue = 'All';
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
     }
