@@ -22,6 +22,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                 entityPM.Id = IdCounter.GetNumber("TMEmployeeTime", entityPM.Tenant);
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                entityPM.NeedsProrating = true;
             }
         }
 
@@ -35,14 +36,15 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
             }
         }
 
-
         protected override void OnUpdating(EntityPMs.TMEmployeeTimePM entityPM, TMEmployeeTime entityPOCO)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
-          
+                if(entityPM.TimeInMinutes != entityPOCO.TimeInMinutes)
+                {
+                    entityPM.NeedsProrating = true;
+                }
             }
-
         }
 
         protected override void AfterUpdating(TMEmployeeTimePM entityPM, Server.Tools.EntityPM entityParentPM)
