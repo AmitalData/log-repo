@@ -1,4 +1,4 @@
-﻿
+
 
 declare var System: any;
 declare var window: any;
@@ -11,6 +11,8 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 import {AppTool} from '../../../Infrastructure/Tools';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+
 
 @Component({
     moduleId: module.id,

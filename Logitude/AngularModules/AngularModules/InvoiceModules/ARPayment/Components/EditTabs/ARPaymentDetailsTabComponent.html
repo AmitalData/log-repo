@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .customtrclass td {
         text-align: left;
@@ -343,6 +343,10 @@
                                                     <LogLabel [ObjectFieldName]="'Account'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
+                                                <td *ngIf="FullAccounting" style="width:150px; left: -10px;">
+                                                    <div></div>
+                                                </td>
+
                                                 <td>
                                                     <div></div>
                                                 </td>
@@ -392,6 +396,10 @@
                                                     <LogTextBox [ObjectFieldName]="'Account'" [Text]="Account" [InputType]="'text'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
 
+                                                <td *ngIf="FullAccounting"  style="width:150px;" [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px;">
+                                                    {{ARPaymentChequeStatus}}
+                                                </td>
+                                              
                                                 <td>
                                                     <div></div>
                                                 </td>

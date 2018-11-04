@@ -1,4 +1,3 @@
-﻿import { SessionLocator } from './../../../../Infrastructure/Utilities/SessionLocator';
 import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {BankDepositPM} from '../../../EntityPMs/BankDepositPM';
