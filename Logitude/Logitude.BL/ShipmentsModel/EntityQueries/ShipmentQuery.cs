@@ -8831,9 +8831,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        public List<ShipmentList> GetShipmentListsByCustomerIdsAndDates(List<string>customerIds, DateTime? fromDate, DateTime? toDate, int tenant)
+        public IQueryable<ShipmentList> GetShipmentListsByCustomerIdsAndDates(List<string>customerIds, DateTime? fromDate, DateTime? toDate, int tenant)
         {
-            List<ShipmentList> result = new List<ShipmentList>();
+
+            IQueryable<ShipmentList> result = Enumerable.Empty<ShipmentList>().AsQueryable();
+
             IQueryable<ShipmentList> shipmentLists = (from s in repository.context.Shipments.Include("EntityStatus")
                                                       where s.Tenant == tenant && customerIds.Contains(s.CustomerId) && !string.IsNullOrEmpty(s.CustomerShipmentNumber) && !s.IsCancelled && s.CreateDateTime >= fromDate && s.CreateDateTime <= toDate
                                                       select new ShipmentList()
@@ -8852,16 +8854,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 List<int?> customerTenantNumbers = shipmentLists.GroupBy(d => d.CustomerTenantNumber).Select(d => d.FirstOrDefault().CustomerTenantNumber).ToList();
                 if (customerTenantNumbers.Count > 0)
                 {
-                    List<CustomerTenantAccessList> customerTenantAccessLists = customerTenantAccessQuery.GetCustomerTenantAccessListsByCustomer(customerTenantNumbers).Where(d => d.StockTypeCode == "A").ToList();
+                    string stockTypeCode = "C";
+                    List<CustomerTenantAccessList> customerTenantAccessLists = customerTenantAccessQuery.GetCustomerTenantAccessListsByCustomer(customerTenantNumbers).Where(d => d.StockTypeCode == stockTypeCode).ToList();
 
                     if (customerTenantAccessLists.Count > 0)
                     {
                         foreach (CustomerTenantAccessList customerTenantAccessList in customerTenantAccessLists)
                         {
                             List<ShipmentList> shipments = shipmentLists.Where(d => d.CustomerTenantNumber == customerTenantAccessList.CustomerTenant).ToList();
-                            if (shipments.Count > 0)
+                            if (shipments.Count() > 0)
                             {
-                                result =  result.Concat(shipments).ToList();
+                                result = result.Concat(shipments);
                             }
                      
                         }
