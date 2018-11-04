@@ -113,10 +113,15 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
              
                                 Id = shipment.Id,
                                 ParentId = card.Id,
-                                CustomerName = shipment.ShipmentNumber,
-                                LastShipmentDate = createDate,
                                 Status = shipment.StatusName,
-                           
+                                ShipmentNumber  = shipment.ShipmentNumber,
+                                CreateDate = shipment.CreateDateTime,
+
+                                CustomerName = shipment.ShipmentNumber,
+                                TotalShipments = createDate,
+                                LastShipmentDate = shipment.StatusName,
+                                
+
                             });
                         }
                     }
