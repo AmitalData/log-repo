@@ -21,9 +21,9 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             ShipmentsStocksDataProvider dataProvider = new ShipmentsStocksDataProvider();
             dataProvider.ResultList = new List<ShipmentsStocksResult>();
 
-            bool includeShipmentsDetails = false;// true;
-            DateTime? fromDate = null; // DateTime.Now.AddYears(-1);
-            DateTime? toDate = null;// DateTime.Now;
+            bool includeShipmentsDetails =  false;
+            DateTime? fromDate = null;
+            DateTime? toDate = null;
 
 
             #region Report Filters
@@ -48,9 +48,14 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeShipmentsDetails").FirstOrDefault();
                 if (queryFilterItem != null && queryFilterItem.FieldValue != null) includeShipmentsDetails = queryFilterItem.FieldValue.ToString().ToLower() == "true" ? true : false;
             }
-
+            else
+            {
+                includeShipmentsDetails = true;
+                fromDate = DateTime.Now.AddYears(-1);
+                toDate = DateTime.Now;
+                tenant = 946;
+            }
             CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
-
             List<string> cardIds = customerTenantAccessCardQuery.GetCustomerIdsByTenant(tenant);
             List<CardList> cardLists = null;
             if (cardIds.Count > 0)
@@ -66,15 +71,16 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 List<ShipmentList> shipmentLists = shipmentQuery.GetShipmentListsByCustomerIdsAndDates(cardIds, fromDate, toDate, tenant);
                 foreach (CardList card in cardLists)
                 {
+                    var lastShipment = shipmentLists.Where(d => d.CustomerId == card.Id).OrderByDescending(d => d.CreateDateTime).FirstOrDefault();
+                    int shipmentCount = shipmentLists.Where(d => d.CustomerId == card.Id).Count();
+
                     dataProvider.ResultList.Add(new ShipmentsStocksResult()
                     {
                         Id = card.Id,
                         CustomerName = card.EnglishName,
-                        LastShipmentDate = shipmentLists.Where(d => d.CustomerId == card.Id).OrderByDescending(d => d.CreateDateTime).FirstOrDefault().CreateDateTime,
-                        TotalShipments = shipmentLists.Where(d => d.CustomerId == card.Id).Count(),
+                        LastShipmentDate = lastShipment!=null ?(DateTime?)lastShipment.CreateDateTime:null,
+                        TotalShipments = shipmentCount,
                     });
-
-
 
                     if (includeShipmentsDetails)
                     {
@@ -89,13 +95,11 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                             });
                         }
                     }
-
                 }
 
                 dataProvider.TotlaShipment = shipmentLists.Count();
             }
 
-    
             #endregion
             return dataProvider;
         }

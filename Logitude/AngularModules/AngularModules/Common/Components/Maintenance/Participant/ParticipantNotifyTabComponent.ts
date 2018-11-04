@@ -1,11 +1,13 @@
-import {Component} from '@angular/core';
-import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {DateTool, AppTool} from '../../../../../Infrastructure/Tools';
-import {ParticipantPM} from '../../../../../Common/EntityPMs/ParticipantPM';
-import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
-import {ContactPMService} from '../../../../../Common/Services/StandardPMs/ContactPMService';
-import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+﻿import {Component} from '@angular/core';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {TenantPM} from '../../../EntityPMs/TenantPM';
+import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
+import {ParticipantPM} from '../../../EntityPMs/ParticipantPM';
+import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {ContactPMService} from '../../../Services/StandardPMs/ContactPMService';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 @Component({
     selector: 'NewCurrencyComponent',
     moduleId: module.id,
