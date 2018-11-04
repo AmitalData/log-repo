@@ -1574,7 +1574,7 @@
                     if (result == true) {
                         document.location.href = "WebPages/UpgradeScreen.aspx";
                     }
-                    else {
+                    else if (userdata.UserName.toLowerCase() != "perla@amital.co.il" && userdata.CurrentTenant != 341) {
 
                         if (navigator.sayswho && navigator.sayswho.toString().indexOf("IE") > -1) {
                             alert("Internet explorer is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
