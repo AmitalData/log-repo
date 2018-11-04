@@ -481,6 +481,14 @@ namespace Logitude.XSD.INTTRA.BL
 
                 foreach (ShipmentPackage item in this.ShipmentPackages)
                 {
+                    if (!string.IsNullOrEmpty(item.Harmonize))
+                    {
+                        if (item.Harmonize.Length > 35)
+                        {
+                            this.Errors.Add("Harmonize Field max length must be 35");
+                        }
+                    }
+
                     if (item.IsDangerous)
                     {
                         if (string.IsNullOrEmpty(item.IMDGCode))
