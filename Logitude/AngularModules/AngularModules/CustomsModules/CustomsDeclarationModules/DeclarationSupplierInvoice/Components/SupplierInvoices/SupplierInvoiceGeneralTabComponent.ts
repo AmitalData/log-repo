@@ -3149,7 +3149,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                         originCountryName = this.OriginCountryName;
                   }
 
-                    itemCodeDetails.IsNew = true;
+                    //itemCodeDetails.IsNew = true;
                   
                     //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType));
                   GITITEMCacheService.Instance.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
