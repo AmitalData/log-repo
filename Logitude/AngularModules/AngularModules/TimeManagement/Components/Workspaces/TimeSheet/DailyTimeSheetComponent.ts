@@ -215,6 +215,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "New Line";
         var args: any = {};
+        args.IsNew = true;
         args.LocationCode = this.LocationCode;
         args.EmployeeUserId = this.EmployeeUserId;
         args.Father = this;

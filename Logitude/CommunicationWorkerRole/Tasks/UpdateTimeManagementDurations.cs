@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Logitude.TimeManagement.Data;
+using Logitude.TimeManagement.Data.EntityPOCOs;
+using Logitude.TimeManagement.Data.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +11,11 @@ namespace CommunicationWorkerRole.Tasks
 {
     public class UpdateTimeManagementDurations : TaskManagerBase
     {
+        public int Tenant;
         public UpdateTimeManagementDurations(string Id, int tenant)
             : base(Id, tenant)
         {
+            this.Tenant = tenant;
         }
 
         public override void StartTask()
@@ -21,45 +26,45 @@ namespace CommunicationWorkerRole.Tasks
 
         private void CalculatingTheProratingProjectsTime()
         {
-            //string sprintId = entityPM.SprintId;
-            //SprintRepository sprintRepository = new SprintRepository(entityPM.Tenant);
-            //Sprint sprint = sprintRepository.GetSingle(sprintId, entityPM.Tenant);
-            //if (sprint != null)
-            //{
-            //    DateTime? fromDate = sprint.FromDate;
-            //    DateTime? toDate = sprint.ToDate;
+            ITimeManagementContext currentContext = TimeManagementContext.GetContext(this.Tenant);
+            SprintRepository sprintRepository = new SprintRepository(currentContext);
+            TMEmployeeTimeRepository tMEmployeeTimeRepository = new TMEmployeeTimeRepository(currentContext);
+            IQueryable<TMEmployeeTime> iQueryable = (from d in currentContext.TMEmployeeTimes where d.Tenant == this.Tenant && d.NeedsProrating == true select d);
+            IQueryable<TMProject> allProjects = (from d in currentContext.TMProjects where d.Tenant == this.Tenant select d);
 
-            //    ITimeManagementContext currentContext = TimeManagementContext.GetContext(entityPM.Tenant);
+            if (iQueryable != null)
+            {
+                var groupedItems = (from d in iQueryable
+                                    group d by new { d.EmployeeUserId, d.SprintId, d.WINumber, d.Id } into g
+                                    select new
+                                    {
+                                        Id = g.Key.Id,
+                                        EmployeeUserId = g.Key.EmployeeUserId,
+                                        SprintId = g.Key.SprintId,
+                                        WINumber = g.Key.WINumber
+                                    });
+                IQueryable<TMEmployeeTime> projectsProrating = (from myTMEmployeeTime in iQueryable
+                                                                join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                                                                from myProjct in joinedData
+                                                                where myTMEmployeeTime.Tenant == this.Tenant
+                                                                && myProjct.Tenant == this.Tenant
+                                                                && myProjct.IsProrated == true
+                                                                select myTMEmployeeTime);
 
-            //    IQueryable<TMEmployeeTime> iQueryable = (from d in currentContext.TMEmployeeTimes where d.Tenant == entityPM.Tenant select d);
-            //    IQueryable<TMProject> allProjects = (from d in currentContext.TMProjects where d.Tenant == entityPM.Tenant select d);
-
-            //    if (fromDate != null && toDate != null)
-            //    {
-            //        iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-            //        iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-            //    }
-
-            //    IQueryable<TMEmployeeTime> projectsProrating = (from myTMEmployeeTime in iQueryable
-            //                                                    join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
-            //                                                    from myProjct in joinedData
-            //                                                    where myTMEmployeeTime.Tenant == entityPM.Tenant
-            //                                                    && myProjct.Tenant == entityPM.Tenant
-            //                                                    && myProjct.IsProrated == true
-            //                                                    select myTMEmployeeTime);
-
-            //    double totalProratingHours = Math.Round((projectsProrating.ToList().Sum(a => a.TimeInMinutes)) / 60.0, 2);
-            //    double totalNotProratingHours = Math.Round((iQueryable.ToList().Sum(a => a.TimeInMinutes)) / 60.0, 2);
-
-            //    List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) == System.Data.Entity.DbFunctions.TruncateTime(entityPM.DateOfWork) && d.EmployeeUserId == entityPM.EmployeeUserId && d.ProjectId == entityPM.ProjectId && d.WINumber == entityPM.WINumber && d.Description == entityPM.Description).ToList();
-
-            //    var wIWorkedHours_Employee = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2);
-            //    var wIWorkedHours_Employee_Prorated = (wIWorkedHours_Employee / totalNotProratingHours) * totalProratingHours;
-            //    wIWorkedHours_Employee = wIWorkedHours_Employee + wIWorkedHours_Employee_Prorated;
-
-            //    entityPM.ProratedDuration = wIWorkedHours_Employee_Prorated;
-            //    entityPM.FullDuration = wIWorkedHours_Employee;
-            //}
+                foreach (var item in groupedItems)
+                {
+                    TMEmployeeTime itemPOCO = tMEmployeeTimeRepository.GetSingle(item.Id, this.Tenant);
+                    double totalProratingHours = Math.Round((projectsProrating.ToList().Sum(a => a.TimeInMinutes)) / 60.0, 2);
+                    double totalNotProratingHours = Math.Round((iQueryable.ToList().Sum(a => a.TimeInMinutes)) / 60.0, 2);
+                    List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) == System.Data.Entity.DbFunctions.TruncateTime(itemPOCO.DateOfWork) && d.EmployeeUserId == itemPOCO.EmployeeUserId && d.ProjectId == itemPOCO.ProjectId && d.WINumber == item.WINumber && d.Description == itemPOCO.Description).ToList();
+                    var wIWorkedHours_Employee = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2);
+                    var wIWorkedHours_Employee_Prorated = (wIWorkedHours_Employee / totalNotProratingHours) * totalProratingHours;
+                    wIWorkedHours_Employee = wIWorkedHours_Employee + wIWorkedHours_Employee_Prorated;
+                    itemPOCO.ProratedDuration = wIWorkedHours_Employee_Prorated;
+                    itemPOCO.FullDuration = wIWorkedHours_Employee;
+                }
+                currentContext.SaveChanges();
+            }
         }
     }
 }

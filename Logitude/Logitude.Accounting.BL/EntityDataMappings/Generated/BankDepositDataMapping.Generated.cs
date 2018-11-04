@@ -72,7 +72,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LastActivityTypeName, 
 	         LastActivityByUserName, 
 	         CreatedByUserName, 
-	         BankAccountNumber,
+	         BankAccountNumber, 
+	         JournalQueueId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

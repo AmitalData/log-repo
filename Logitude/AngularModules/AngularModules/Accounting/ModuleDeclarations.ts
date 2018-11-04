@@ -53,6 +53,7 @@ import {ReconcileExternalPageListTemplate} from './Components/ListTemplates/Reco
 import {ReconcileExternalPageLineListTemplate} from './Components/ListTemplates/ReconcileExternalPageLineListTemplate';
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {ManageReconciliationListTemplate} from './Components/ListTemplates/ManageReconciliationListTemplate';
+import {TaxReportListTemplate} from './Components/ListTemplates/TaxReportListTemplate';
 
 import {ReconcileComponent} from './Components/Others/ReconcileComponent';
 import {ReconciledMessage} from './Components/Others/ReconciledMessage';
@@ -147,7 +148,8 @@ export const Components =
         ReconcileExternalPageListTemplate,
         ReconcileExternalPageLineListTemplate,
         FieldTemplateComponent,
-        ManageReconciliationListTemplate, 
+        ManageReconciliationListTemplate,
+        TaxReportListTemplate,
         //Others
         ReconcileComponent,
         ReconciledMessage,
@@ -220,12 +222,12 @@ export class ModuleDeclarations {
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
             case "JournalDetailsTabComponent": { myResult = JournalDetailsTabComponent; break; }
             case "CashBookDetailsTabComponent": { myResult = CashBookDetailsTabComponent; break; }
-            case "CashBookManageDepoTabComponent": { myResult = CashBookManageDepoTabComponent; break; } 
-            case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; } 
-            case "BankDepositDetailsTabComponent": { myResult = BankDepositDetailsTabComponent; break; } 
-            case "BankAccountGeneralTabComponent": { myResult = BankAccountGeneralTabComponent; break; } 
-            case "BankPagesTabComponent": { myResult = BankPagesTabComponent; break; } 
-            case "ManageRecoTabComponent": { myResult = ManageRecoTabComponent; break; } 
+            case "CashBookManageDepoTabComponent": { myResult = CashBookManageDepoTabComponent; break; }
+            case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; }
+            case "BankDepositDetailsTabComponent": { myResult = BankDepositDetailsTabComponent; break; }
+            case "BankAccountGeneralTabComponent": { myResult = BankAccountGeneralTabComponent; break; }
+            case "BankPagesTabComponent": { myResult = BankPagesTabComponent; break; }
+            case "ManageRecoTabComponent": { myResult = ManageRecoTabComponent; break; }
             case "ReconciliationDetailsTabComponent": { myResult = ReconciliationDetailsTabComponent; break; }
             case "RevaluationDetailsComponent": { myResult = RevaluationDetailsComponent; break; }
             case "ExternalRecoDetailsTabComponent": { myResult = ExternalRecoDetailsTabComponent; break; }
@@ -242,6 +244,7 @@ export class ModuleDeclarations {
             case "ReconcileExternalPageLineListTemplate": { myResult = ReconcileExternalPageLineListTemplate; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "ManageReconciliationListTemplate": { myResult = ManageReconciliationListTemplate; break; }
+            case "TaxReportListTemplate": { myResult = TaxReportListTemplate; break; }
             //Others
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }

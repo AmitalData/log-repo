@@ -29,6 +29,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.EditMainCarriage = entityPM.EditMainCarriage;
             entityPoco.CopyAgent = entityPM.CopyAgent;
             entityPoco.CopyNotify = entityPM.CopyNotify;
+            entityPoco.IsSaleAsCostCurrency = entityPM.IsSaleAsCostCurrency;
         }
     }
 }
