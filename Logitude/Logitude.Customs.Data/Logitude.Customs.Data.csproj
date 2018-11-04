@@ -114,6 +114,7 @@
     <Compile Include="EntityKeys\CourierStatusKeys.cs" />
     <Compile Include="EntityKeys\CustomsAirlineKeys.cs" />
     <Compile Include="EntityKeys\CustomsDocumentsDefinitionKeys.cs" />
+    <Compile Include="EntityKeys\CustomsPartnerFtpKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitCargoIdentifierKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConsItemKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConKeys.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="EntityMapping\CourierStatusMap.cs" />
     <Compile Include="EntityMapping\CustomsAirlineMap.cs" />
     <Compile Include="EntityMapping\CustomsDocumentsDefinitionMap.cs" />
+    <Compile Include="EntityMapping\CustomsPartnerFtpMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitCargoIdentifierMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConsItemMap.cs" />
@@ -289,6 +291,7 @@
     <Compile Include="EntityPOCOs\CourierStatus.cs" />
     <Compile Include="EntityPOCOs\CustomsAirline.cs" />
     <Compile Include="EntityPOCOs\CustomsDocumentsDefinition.cs" />
+    <Compile Include="EntityPOCOs\CustomsPartnerFtp.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitCargoIdentifier.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitCon.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitConsItem.cs" />
@@ -324,6 +327,7 @@
     <Compile Include="Repsitories\CourierStatusRepository.cs" />
     <Compile Include="Repsitories\CustomsAirlineRepository.cs" />
     <Compile Include="Repsitories\CustomsDocumentsDefinitionRepository.cs" />
+    <Compile Include="Repsitories\CustomsPartnerFtpRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitCargoIdentifierRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConsItemRepository.cs" />
@@ -350,6 +354,7 @@
     <Compile Include="Repsitories\Generated\CourierStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsAirlineRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsDocumentsDefinitionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomsPartnerFtpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitCargoIdentifierRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConsItemRepository.Generated.cs" />

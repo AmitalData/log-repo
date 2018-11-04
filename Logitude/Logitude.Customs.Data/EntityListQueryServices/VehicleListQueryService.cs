@@ -91,6 +91,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  IsTPS = a.IsTPS,
                                                  VehicleCategory = a.VehicleCategory,
                                                  VehicleMaxPowerKW = a.VehicleMaxPowerKW,
+                                                 PassportName = a.PassportName,
                                              });
             return query;
 		}

@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .FormFieldRow {
         height: 32px;
     }
@@ -30,6 +30,7 @@
                                     [ObjectTableName]="'Customs.Vehicle'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.Client'"
+                                    [SelectedValue]="ImporterIdentityId"
                                     [HideColumns]="true">
                             </LogLov>
 
@@ -60,6 +61,7 @@
                         <td style="width: 200px;">
                             <LogTextBox [ObjectFieldName]="'ImporterPassportNumber'"
                                         [ObjectTableName]="'Customs.Vehicle'"
+                                        [Text]="ImporterPassportNumber"
                                         [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
                         </td>
@@ -75,6 +77,7 @@
                                     [ObjectTableName]="'Customs.Vehicle'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.CustomsCountry'"
+                                    [SelectedValue]="ImporterPassCountryCode"
                                     [HideColumns]="true">
                             </LogLov>
                         </td>
@@ -94,12 +97,23 @@
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.PassportType'"
+                                    [SelectedValue]="ImporterPassportTypeCode"
                                     [HideColumns]="true">
                             </LogLov>
                         </td>
 
-                        <td></td>
-                        <td></td>
+                        <!-- PassportName -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'PassportName'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <LogTextBox [ObjectFieldName]="'PassportName'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [Text]="PassportName"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+                        </td>
 
                         <td><div></div></td>
 
