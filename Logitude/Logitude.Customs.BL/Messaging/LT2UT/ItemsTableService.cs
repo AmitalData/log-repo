@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Xml.Linq;
 using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;
@@ -22,13 +23,13 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
 {
     public partial class ItemsTableService
     {
-        private GITITEMPM _EntityPM;
+        private List<GITITEMPM> _ListGITITEMPM;
         private int _Tenant;
 
-        public ItemsTableService(GITITEMPM entityPM, int tenant)
+        public ItemsTableService(List<GITITEMPM> listGITITEMPM, int tenant)
         {
             _Tenant = tenant;
-            _EntityPM = entityPM;
+            _ListGITITEMPM = listGITITEMPM;
         }
 
         public void OpenUnifreighTask(string xmlReq)
@@ -72,19 +73,40 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                     unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_Tenant);
                 }
 
-                var myFile = new UpdateItemsTable();
-                var myItemData = new ItemData();
-                myItemData.itemNo = _EntityPM.ITEMNO;
-                myItemData.customerId = _EntityPM.PARTNERID;
-                myItemData.supplierId = _EntityPM.SAPAKID;
-                myItemData.pratCode = _EntityPM.PRATID;
-                myItemData.itemName = _EntityPM.NAMEENG;
-                myItemData.originCountryCode = _EntityPM.ORIGINCOUNTRY;
-                myItemData.unitId = _EntityPM.UNITID;
+                var myUpdateList = new List<UpdateItemsTable>();
 
-                myFile.ItemsDataList = new List<ItemData> { myItemData };
-                var xml = XmlGenericUtil<UpdateItemsTable>.SerializeObject(myFile, true);
+                _ListGITITEMPM.ForEach(pm =>
+                {
+                    var myUpdateItemsTable = new UpdateItemsTable();
+                    var myItemData = new ItemData();
+                    myItemData.itemNo = pm.ITEMNO;
+                    myItemData.customerId = pm.PARTNERID;
+                    myItemData.supplierId = pm.SAPAKID;
+                    myItemData.pratCode = pm.PRATID;
+                    myItemData.itemName = pm.NAMEENG;
+                    myItemData.originCountryCode = pm.ORIGINCOUNTRY;
+                    myItemData.unitId = pm.UNITID;
+                    myUpdateItemsTable.ItemsDataList = new List<ItemData>() { myItemData };
+                });
+
+                //myUpdateList.ItemsDataList =  new List<ItemData> { myItemData };
+                var xml = XmlGenericUtil<List<UpdateItemsTable>>.SerializeObject(myUpdateList, true);
                 requestData = xml;
+                var doc = new XDocument(
+   new XElement("UpdateItemsTable",
+   from c in _ListGITITEMPM
+   select new XElement("ItemsDataList",
+   new XElement("ItemData",
+            new XElement("customerId", c.PARTNERID),
+            new XElement("supplierId", c.SAPAKID),
+        new XElement("itemNo", c.ITEMNO),
+        new XElement("itemName", c.NAMEENG),
+        new XElement("pratCode", c.PRATID),
+        new XElement("originCountryCode", c.ORIGINCOUNTRY)
+   )
+   )
+));
+                requestData = doc.ToString(SaveOptions.None);
 
                 var myYCULTASKPM = new YCULTASKPM()
                 {
@@ -92,7 +114,7 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                     STATUS = "W",
                     REQUESTDATA = requestData,
                     ENTNAME = "GITITEM",
-                    PRIMARYNUM = _EntityPM.COUNTER.ToString(),
+                    PRIMARYNUM = _ListGITITEMPM.First().COUNTER.ToString(),//EITAN SEE ITS ZERO
                     PRIORITY = YCULTASKPM.calcPriority("LT2UT"),
                     TYPE = "LT2UT",
                     USRCODE = unifreightUser,
@@ -112,7 +134,7 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                     TRY = 9,
                     PRIORITY = 8,
                     ENTNAME = "GITITEM",
-                    PRIMARYNUM = _EntityPM.COUNTER.ToString(),
+                    PRIMARYNUM = _ListGITITEMPM.First().COUNTER.ToString(),//EITAN SEE ITS ZERO
                     FORMID = "LGT_UPDATE_FCI",
                     DEBUG = "F",
                     DONEOPERATION = "A",
@@ -134,5 +156,7 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
             }
             LogMessagingUtil.Instance.AppendLine("OpenUnifreighTask:Took:" + sw.ElapsedMilliseconds);
         }
+
+
     }
 }

@@ -874,6 +874,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
                         itemCodeDetails.IsNew = true;
                     }
                 }
+                
             }
             this.GetQuantityType();
         }

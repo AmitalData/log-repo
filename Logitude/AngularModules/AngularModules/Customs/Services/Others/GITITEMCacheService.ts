@@ -50,7 +50,8 @@ export class GITITEMCacheService {
   }
 
 
-  public SaveItemCodeLocalCache() {
+    public SaveItemCodeLocalCache() {
+        let listGITITEMDto: GITITEMDto[] = [];
     if (this.ItemCode_LocalCache != null && this.ItemCode_LocalCache.length > 0) {
       for (let item of this.ItemCode_LocalCache) {
         if (item.IsNew) {
@@ -68,14 +69,29 @@ export class GITITEMCacheService {
           myGITITEMPM.ORIGINCOUNTRY = item.OriginCountryCode;
           myGITITEMPM.UNITID = item.InvoiceQuantityType;
 
-          this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe(myResult => {
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-              //this.entity = mm.Result;
-            }
-          });
+          //this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe(myResult => {
+          //  var mm: ServiceResponse = myResult;
+          //  if (!mm.HasError) {
+          //    //this.entity = mm.Result;
+          //  }
+          //});
+            listGITITEMDto.push(myGITITEMPM);
         }
-      }
+        }
+
+        let i = 0;
+        let j = 0;
+        let chunk = 50;
+        for (i = 0, j = listGITITEMDto.length; i < j; i += chunk) {
+            let chunkDtos = listGITITEMDto.slice(i, i + chunk);
+            this.GITITEMExtendedPMService.insert(chunkDtos).subscribe(myResult => {
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    var entity = mm.Result;
+                }
+            });
+        }
+
     }
   }
 
