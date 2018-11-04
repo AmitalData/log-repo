@@ -8854,22 +8854,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 List<int?> customerTenantNumbers = shipmentLists.GroupBy(d => d.CustomerTenantNumber).Select(d => d.FirstOrDefault().CustomerTenantNumber).ToList();
                 if (customerTenantNumbers.Count > 0)
                 {
-                    string stockTypeCode = "C";
-                    List<CustomerTenantAccessList> customerTenantAccessLists = customerTenantAccessQuery.GetCustomerTenantAccessListsByCustomer(customerTenantNumbers).Where(d => d.StockTypeCode == stockTypeCode).ToList();
-
-                    if (customerTenantAccessLists.Count > 0)
-                    {
-                        foreach (CustomerTenantAccessList customerTenantAccessList in customerTenantAccessLists)
-                        {
-                            List<ShipmentList> shipments = shipmentLists.Where(d => d.CustomerTenantNumber == customerTenantAccessList.CustomerTenant).ToList();
-                            if (shipments.Count() > 0)
-                            {
-                                result = result.Concat(shipments);
-                            }
-                     
-                        }
-                    }
-
+                    List<int> customerTenants = customerTenantAccessQuery.GetCustomerTenantAccessListsByCustomer(customerTenantNumbers,"A").ToList();
+                    result = shipmentLists.Where(d => customerTenants.Contains((int)d.CustomerTenantNumber));
                 }
             }
 
