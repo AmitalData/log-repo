@@ -10810,9 +10810,22 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             totalData.ResultList.OrderBy(d => d.Name);
-            var revenues = result.Where(d => d.ChartOfAcountType == "1").FirstOrDefault().LocalCloseBalance;
-            var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault().LocalCloseBalance;
-            totalData.TotalRevenueExpense = (revenues == null ? 0 : revenues) - (expenses == null ? 0 : expenses);
+
+            var revenues = result.Where(d => d.ChartOfAcountType == "1").FirstOrDefault();
+            decimal? totalRevenues = null;
+            if(revenues != null)
+            {
+                totalRevenues = revenues.LocalCloseBalance;
+            }
+            var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault();
+            decimal? totalExpenses = null;
+            if (expenses != null)
+            {
+                totalExpenses = expenses.LocalCloseBalance;
+            }
+            
+           
+            totalData.TotalRevenueExpense = (totalRevenues == null ? 0 : totalRevenues) - (totalExpenses == null ? 0 : totalExpenses);
 
 
             #endregion

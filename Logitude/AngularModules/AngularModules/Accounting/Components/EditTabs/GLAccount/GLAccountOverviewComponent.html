@@ -226,7 +226,7 @@
                                                 <div style="width: 145px;padding: 9px 5px;">
                                                     {{ GetReferencesText(transaction) }}
                                                 </div>
-                                                <div style="width: 20px;padding: 5px 0;height: 100%;" title="{{transaction['OpenAmount'] != CalculateOriginalAmount(transaction) ? 'Partial transaction' : 'Open transaction'}}">
+                                                <div style="width: 20px;padding: 5px 0;height: 100%;" title="{{GetIndicatorText(transaction)}}">
                                                     <div class="circleDraw" style="height: 7px;" [class.orangeCircle]="transaction['OpenAmount'] != CalculateOriginalAmount(transaction)"></div>
                                                 </div>
 
