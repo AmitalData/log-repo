@@ -1221,8 +1221,8 @@ namespace WebFreight.Web
             SessionPolicy sessionPolicy = sessionPolicyRepository.GetSingleSessionPolicy();
             if (sessionPolicy != null)
             {
-                data.WebTokenLifeTime = sessionPolicy.WebTokenLifeTime;
-                data.WebTokenExpirationWarning = sessionPolicy.WebTokenExpirationWarning;
+                data.WebTokenLifeTimeInMinutes = sessionPolicy.WebTokenLifeTimeInMinutes;
+                data.WebTokenExpirationWarningInMinutes = sessionPolicy.WebTokenExpirationWarningInMinutes;
 
             }
         }
@@ -1406,7 +1406,7 @@ namespace WebFreight.Web
                                 string token = AuthenticationUtil.GenerateToken();// Guid.NewGuid().ToString();
                                 AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
                                 AuthenticationToken authentication = new AuthenticationToken() { CreateDate = DateTime.Now, Email = email, Password = hashedPassword, Token = token, Tenant = user.CurrentTenant, ClientType = parameters.IsMobileLogin ? "Mobile" : parameters.ClientType };
-                                if (!user.KeepUserLoggedIn && authentication.ClientType == "Web" && user.WebTokenLifeTime != 0) authentication.ExpirationDate = DateTime.Now.AddMinutes(user.WebTokenLifeTime);
+                                if (!user.KeepUserLoggedIn && authentication.ClientType == "Web" && user.WebTokenLifeTimeInMinutes != 0) authentication.ExpirationDate = DateTime.Now.AddMinutes(user.WebTokenLifeTimeInMinutes);
 
                                 AuthenticationToken authenticationDocument = new AuthenticationToken()
                                 {
@@ -2120,6 +2120,8 @@ namespace WebFreight.Web
 
                             commonDataContext.UserLastLogins.Add(lastLogin);
                         }
+
+                        user.LastLoginDateTime = lastLogin.LoginDateTime;
 
                         lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
                         lastLogin.Tenant = tenant;

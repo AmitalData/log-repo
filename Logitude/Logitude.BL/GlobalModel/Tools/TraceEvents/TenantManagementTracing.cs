@@ -13,6 +13,8 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.Security;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
 
 namespace Logitude.BL.GlobalModel.Tools.TraceEvents
 {
@@ -49,6 +51,205 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                         loggedContact = contactRep.GetSingleContactByEmail("system@tenant0.com", 0);
                     }
 
+                    string notes = null;
+                    using (TransactionScope updateScope = TransactionFactory.GetNewTransaction())
+                    {    
+                        if (entityPM.IsRecurring != poco.IsRecurring)
+                        {
+                            notes = "Is recurring was updated";
+                        }
+
+                        if (entityPM.PackageCode != poco.PackageCode)
+                        {
+                            PackageRepository repo = new PackageRepository(0);
+                            Package entity_Pm = repo.GetSinglePackage(entityPM.PackageCode);
+
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "Package changed to " + entity_Pm.Name;
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "Package changed to " + entity_Pm.Name;
+                            }
+                        }
+
+                        if (entityPM.RecurringPeriodCode != poco.RecurringPeriodCode)
+                        {
+                            RecurringPeriodRepository repo = new RecurringPeriodRepository(0);
+                            RecurringPeriod entity_Pm = repo.GetSingleRecurringPeriod(entityPM.RecurringPeriodCode);
+
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "Recurring period changed to " + entity_Pm.Name;
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "Recurring period changed to " + entity_Pm.Name;
+                            }
+                        }
+
+                        if (entityPM.FirstPaymentDate != poco.FirstPaymentDate)
+                        {
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "First payment date changed from " + poco.FirstPaymentDate + " to " + entityPM.FirstPaymentDate;
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "First payment date changed from " + poco.FirstPaymentDate + " to " + entityPM.FirstPaymentDate;
+                            }
+                        }
+
+                        if (entityPM.PaidUntilDate != poco.PaidUntilDate)
+                        {
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "Paid until date changed from " + poco.PaidUntilDate + " to " + entityPM.PaidUntilDate;
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "Paid until date changed from " + poco.PaidUntilDate + " to " + entityPM.PaidUntilDate;
+                            }
+                        }
+
+                        if (entityPM.PaymentCurrencyCode != poco.PaymentCurrencyCode)
+                        {
+                            PaymentCurrencyRepository repo = new PaymentCurrencyRepository(0);
+                            PaymentCurrency entity_Pm = repo.GetSinglePaymentCurrency(entityPM.PaymentCurrencyCode);
+
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "Payment currency changed to " + entity_Pm.Name;
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "Payment currency changed to " + entity_Pm.Name;
+                            }
+                        }
+
+                        if (entityPM.PaymentChannelCode != poco.PaymentChannelCode)
+                        {
+                            PaymentChannelRepository repo = new PaymentChannelRepository(0);
+                            PaymentChannel entity_Pm = repo.GetSinglePaymentChannel(entityPM.PaymentChannelCode);
+
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "Payment channel changed to " + entity_Pm.Name;
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "Payment channel changed to " + entity_Pm.Name;
+                            }
+                        }
+
+                        if (entityPM.PaymentMethodCode != poco.PaymentMethodCode)
+                        {
+                            PaymentMethodRepository repo = new PaymentMethodRepository(0);
+                            PaymentMethod entity_Pm = repo.GetSinglePaymentMethod(entityPM.PaymentMethodCode);
+
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "Payment method changed to " + entity_Pm.Name;
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "Payment method changed to " + entity_Pm.Name;
+                            }
+                        }
+
+                        if (entityPM.BluesnapAccount != poco.BluesnapAccount)
+                        {
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "Bluesnap account was updated";
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "Bluesnap account was updated";
+                            }
+                        }
+
+                        if (entityPM.MainContract != poco.MainContract)
+                        {
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "Main contract was updated";
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "Main contract was updated";
+                            }
+                        }
+
+                        if (entityPM.LicensePrice != poco.LicensePrice)
+                        {
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "License price was updated";
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "License price was updated";
+                            }
+                        }
+
+                        if (entityPM.BluesnapContractCode != poco.BluesnapContractCode)
+                        {
+                            IGlobalContext context = GlobalContext.GetContext(0);
+                            BluesnapContractRepository repo = new BluesnapContractRepository(context);
+                            BluesnapContract entity_Pm = repo.GetSingleBluesnapContract(entityPM.BluesnapContractCode, 0);
+
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "Bluesnap contract changed to " + entity_Pm.Name;
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "Bluesnap contract changed to " + entity_Pm.Name;
+                            }
+                        }
+
+                        if (entityPM.BillingByLogitude != poco.BillingByLogitude)
+                        {
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "Billing by Logitude was updated";
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "Billing by Logitude was updated";
+                            }
+                        }
+
+                        if (entityPM.ResellerCommission != poco.ResellerCommission)
+                        {
+                            if (string.IsNullOrEmpty(notes))
+                            {
+                                notes = "Reseller commission was updated";
+                            }
+
+                            else
+                            {
+                                notes = notes + Environment.NewLine + "Reseller commission was updated";
+                            }
+                        }
+
+                        updateScope.Complete();
+                    }
+
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
                         Tenant = 0,
@@ -56,6 +257,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                         UserId = loggedContact.Id,
                         EntityId = poco.Id.ToString(),
                         ObjectTableName = "TenantManagement",
+                        Notes = notes,
                     });
 
                     if (entityPM.PackageCode != poco.PackageCode)
@@ -110,6 +312,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                             UserId = loggedContact.Id,
                             EntityId = poco.Id.ToString(),
                             ObjectTableName = "TenantManagement",
+                            Notes = "Trial start date changed from " + poco.TrialStartDate + " to " + entityPM.TrialStartDate,
                         });
                     }
 
@@ -122,11 +325,31 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                             UserId = loggedContact.Id,
                             EntityId = poco.Id.ToString(),
                             ObjectTableName = "TenantManagement",
+                            Notes = "Trial end date changed from " + poco.TrialEndDate + " to " + entityPM.TrialEndDate,
                         });
                     }
 
                     if (entityPM.NumberOfUsers != poco.NumberOfUsers || entityPM.FreeUsers != poco.FreeUsers)
                     {
+                        string usersNotes = null;
+                        if(entityPM.NumberOfUsers != poco.NumberOfUsers)
+                        {
+                            usersNotes = "Number of users changed from " + poco.NumberOfUsers + " to " + entityPM.NumberOfUsers;
+                        }
+
+                        if (entityPM.FreeUsers != poco.FreeUsers)
+                        {
+                            if (string.IsNullOrEmpty(usersNotes))
+                            {
+                                usersNotes = "Number of free users changed from " + poco.FreeUsers + " to " + entityPM.FreeUsers;
+                            }
+
+                            else
+                            {
+                                usersNotes = usersNotes + Environment.NewLine +  "Number of free users changed from " + poco.FreeUsers + " to " + entityPM.FreeUsers;
+                            }
+                        }
+
                         EventTracer.CreateTraceEvent(new EventTracerArgs()
                         {
                             Tenant = 0,
@@ -134,6 +357,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                             UserId = loggedContact.Id,
                             EntityId = poco.Id.ToString(),
                             ObjectTableName = "TenantManagement",
+                            Notes = usersNotes,
                         });
                     }
 

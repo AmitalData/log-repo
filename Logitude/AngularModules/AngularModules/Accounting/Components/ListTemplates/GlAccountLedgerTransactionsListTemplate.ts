@@ -1,8 +1,8 @@
-﻿import {Component,ChangeDetectorRef} from '@angular/core'; 
+﻿import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
+import {Component,ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
 import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -33,6 +33,7 @@ export class GlAccountLedgerTransactionsListTemplate {
     @Output() Changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     public isRTL: boolean = false;
+    public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;;
 
     constructor(private CD: ChangeDetectorRef) {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
@@ -48,7 +49,7 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {
-       
+
         this.rowData = rowData;
         if (this.rowData.IsChecked == true) {
             console.log("Oh Yea True");
@@ -126,7 +127,7 @@ export class GlAccountLedgerTransactionsListTemplate {
         }
         this.IconCode = iconTxt;
 
-        //#endregion 
+        //#endregion
 
         var isDestroyed: boolean = this.CD['destroyed'];
         if (!isDestroyed) {
@@ -284,6 +285,14 @@ export class GlAccountLedgerTransactionsListTemplate {
             }
 
         }
+    }
+
+    GetIndicatorText()
+    {
+        if(this.rowData['OpenAmount'] != this.CalculateOriginalAmount())
+            return this.showLocal ? 'סכום פתוח חלקית' : 'Partial transaction';
+        else
+            return this.showLocal ? 'סכום פתוח ' : 'Open transaction';
     }
 
 

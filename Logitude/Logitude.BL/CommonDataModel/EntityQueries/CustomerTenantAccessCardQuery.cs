@@ -219,5 +219,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 return true;
             }
         }
+
+
+        public List<string> GetCustomerIdsByTenant(int Tenant)
+        {
+            List<string> customerIds = (from a in repository.context.CustomerTenantAccessCards where a.Tenant == Tenant select a.CustomerId).ToList();
+
+
+            return customerIds;
+        }
+
+
+
+
+
+
     }
 }

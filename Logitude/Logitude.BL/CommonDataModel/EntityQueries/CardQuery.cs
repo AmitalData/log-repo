@@ -1760,7 +1760,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return Cards;
         }
 
-        public List<CardList> GetCardListForInventoryReportsByCardIds(List<string> CardIds, int tenant)
+        public List<CardList> GetCardListsByCardIds(List<string> CardIds, int tenant)
         {
             List<CardList> Cards = (from a in repository.context.Cards
                                     where CardIds.Contains(a.Id) && a.Tenant == tenant
@@ -1771,6 +1771,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         Tenant = a.Tenant,
                                         EnglishName = a.EnglishName,
                                         Code = a.Code,
+                                        
                                     }).ToList();
             return Cards;
         }

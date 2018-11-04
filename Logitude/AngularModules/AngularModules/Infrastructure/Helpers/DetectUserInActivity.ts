@@ -1,6 +1,13 @@
 
+
+
 declare var System: any;
 declare var window: any;
+
+import {Observable}     from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+
+
 import { SessionLocator } from '../Utilities/SessionLocator';
 import { MessageWindow } from '../../Controls/Windows/MessageWindow';
 
@@ -18,16 +25,15 @@ export class DetectUserInActivity {
 
     Start(lifeTime: any, warningTime: any = 1, timeUnit: string = "H") {
         if (lifeTime) {
-
-        
             if (timeUnit && timeUnit.toUpperCase() == "H") {
                 lifeTime = lifeTime * 60;
-                warningTime = warningTime * 60;
             }
 
+            if (!this.IsTokenExpiration) {
+                warningTime = lifeTime / 4;
+                warningTime = Math.round(warningTime);
+            }
 
-            if (lifeTime == 60 && warningTime == 60 && !this.IsTokenExpiration) warningTime = 30;
-        
                 this.LifeTimeInMiliseconds = ((lifeTime - warningTime) * 60000);
                 this.WarningTimeInMiliseconds = (warningTime * 60000);
 
@@ -62,8 +68,22 @@ export class DetectUserInActivity {
     DoInactive(viewModeil: any) {
 
         if (viewModeil.IsSignout) {
-            SessionLocator.HomeComponent.SignoutClicked();
-            viewModeil.IsSignout = false;
+            if (!SessionLocator.IsSiguOut) {
+                SessionLocator.IsSiguOut = true;
+                var messageWindow: MessageWindow = new MessageWindow();
+               // messageWindow.Title = "Logitude Message";
+                messageWindow.ShowWarningIcon = true;
+                messageWindow.IsOverAll = true;
+                var message: string = this.IsTokenExpiration ? "Your session has expired, Please login again" :"Logged out due to inactivity, you can login again to enter the system";
+                messageWindow.Show(message);
+
+                messageWindow.WindowClosed.subscribe(s => {
+                    if (s) {
+                        SessionLocator.HomeComponent.SignoutClicked();
+                        viewModeil.IsSignout = false;
+                    }
+                });
+            }
         }
         else if (SessionLocator.CurrentSession != null && SessionLocator.CurrentSession.SessionLocation != null) {
             viewModeil.ShowMessage(viewModeil);
@@ -75,31 +95,63 @@ export class DetectUserInActivity {
 
     }
 
-
+    IsShowMessageWindow: boolean = false;
+    messageWindow: MessageWindow;
     ShowMessage(viewModeil:any) {
-        var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Title = "Logitude Message";
-
+        viewModeil.messageWindow  = new MessageWindow();
+       // viewModeil.messageWindow.Title = "Logitude Message";
+        viewModeil.messageWindow.ShowWarningIcon = true;
         var minutes = viewModeil.WarningTimeInMiliseconds / 60000;
 
-       //var hours = Math.floor(minutes / 60);
-       // var minutes = minutes % 60;
-
+        viewModeil.WarningTimeInMinute = minutes;
+      
         var displayWarningTime = "";
-        if ((minutes % 60)  == 0) {
+        if ((minutes % 60) == 0) {
             displayWarningTime = (minutes / 60) + " hour";
         } else {
             displayWarningTime = minutes + " minute";
         }
 
+
+        //var displayWarningTime = "";
+        //if ((minutes % 60) == 0) {
+        //    displayWarningTime = (minutes / 60) + " hour";
+        //} else {
+
+        //    var hour: any = minutes / 60;
+        //    var minute: any = minutes % 60;
+        //    //4 Hour 40 Minute
+        //    displayWarningTime = minutes + " minute";
+        //}
+
         var warningMessage: string = !viewModeil.IsTokenExpiration ? "You will be logged out in " + displayWarningTime + " due to inactivity, unless you continue using the system" : "You will be logged out in " + displayWarningTime + " due to session expiration";
-        messageWindow.Show(warningMessage);
+        viewModeil.messageWindow.Show(warningMessage);
+
+        viewModeil.messageWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                viewModeil.messageWindow = null;
+                viewModeil.IsStopTimer = true;
+                viewModeil.IsShowMessageWindow = false;
+
+                if (!viewModeil.IsTokenExpiration) {
+                    viewModeil.IsSignout = false;
+                    window.clearTimeout(viewModeil.timeoutId)
+                    viewModeil.StartTimer(viewModeil);
+                }
+            }
+        });
+
+        viewModeil.IsShowMessageWindow = true;
+        viewModeil.IsStopTimer = false;
+        viewModeil.StartWarningTimeTimer(viewModeil);
+        
+
     }
 
 
 
     ResetTimer(viewModeil: any) {
-        if (!viewModeil.IsTokenExpiration) {
+        if (!viewModeil.IsTokenExpiration && !viewModeil.IsShowMessageWindow) {
             viewModeil.IsSignout = false;
             window.clearTimeout(viewModeil.timeoutId)
             viewModeil.StartTimer(viewModeil);
@@ -107,4 +159,32 @@ export class DetectUserInActivity {
     }
 
 
+    WarningTimeTimer() {
+        return Observable.interval(60000).timeInterval();
+       
+    }
+
+    WarningTimeInMinute: number;
+    private WarningTimesub: any = null;
+    IsStopTimer: boolean = false;
+    StartWarningTimeTimer(viewModeil:any) {
+
+        this.WarningTimesub = this.WarningTimeTimer().subscribe(res => {
+
+            if (!this.IsStopTimer) {
+                if (viewModeil.messageWindow) {
+                    viewModeil.WarningTimeInMinute = viewModeil.WarningTimeInMinute - 1;
+                    
+                    if (viewModeil.WarningTimeInMinute > 0) {
+                        var warningMessage: string = !viewModeil.IsTokenExpiration ? "You will be logged out in " + (viewModeil.WarningTimeInMinute).toString() + " minute due to inactivity, unless you continue using the system" : "You will be logged out in " + (viewModeil.WarningTimeInMinute).toString() + " minute due to session expiration";
+
+                        viewModeil.messageWindow.Message = warningMessage;
+                    } else viewModeil.IsStopTimer = true;
+                }
+            
+            }
+
+
+        });
+    }
 }

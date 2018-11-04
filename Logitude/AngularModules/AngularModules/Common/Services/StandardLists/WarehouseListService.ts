@@ -18,6 +18,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
 import {WarehouseList} from '../../EntityLists/WarehouseList';
+import {WarehouseCustomFilter} from '../../CustomFilters/WarehouseCustomFilter';
 
 @Injectable()
 
@@ -294,6 +295,9 @@ export class WarehouseListService {
                     WarehouseListService.CachedData = _mappedListsArray;
                     serviceResponse = new ServiceResponse();
                      if (!filters.GetAll) {
+					  if (addtionalFiltersValues) {
+                            _mappedListsArray = WarehouseCustomFilter.GetFilteredQuery(addtionalFiltersValues, _mappedListsArray);
+                        }
                         _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
                     }
                     serviceResponse.Result = _mappedListsArray;
@@ -330,6 +334,9 @@ export class WarehouseListService {
                             WarehouseListService.CachedData = _mappedListsArray;
                         }
                         else {
+                            if (addtionalFiltersValues) {
+								_mappedListsArray = WarehouseCustomFilter.GetFilteredQuery(addtionalFiltersValues, _mappedListsArray);
+                            }
 							
                             _mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
                         }
@@ -347,6 +354,9 @@ export class WarehouseListService {
         else {
             var filteredData = WarehouseListService.CachedData;
             if (!filters.GetAll) {
+                if (addtionalFiltersValues) {
+                    filteredData = WarehouseCustomFilter.GetFilteredQuery(addtionalFiltersValues, filteredData);
+                }
 	
                 filteredData = InfraGenericFilter.GetFilteredArray(filteredData, filters);
             }

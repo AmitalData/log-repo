@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -240,6 +240,52 @@
 
                                                 <td>
                                                     <LogCheckBox [ObjectFieldName]="'EditMainCarriage'" [Checked]="EditMainCarriage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </SectionBody>
+                                </SectionBox>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 10px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 100px;">
+                        <td>
+                            <div class="MediaFill">
+                                <SectionBox>
+                                    <SectionHead>
+                                        <table>
+                                            <tr>
+                                                <td style="width: 1px; color: #45494A; font-size: 14px;">Sale Currency</td>
+                                                <td style="padding-left: 5px;" class="Label">Quote Sale Currency Default</td>
+                                            </tr>
+                                        </table>
+                                    </SectionHead>
+                                    <SectionBody>
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 170px;">
+                                                    <LogLabel [ObjectFieldName]="'IsSaleAsCostCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 200px;">
+                                                    <ComboBox [ItemsSource]="SaleCurrencySettings" [Binding]="'Name'" [SelectedItem]="SelectedSaleCurrencySetting" (SelectedItemChanged)="SelectedSaleCurrencySetting = $event"></ComboBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
                                                 </td>
                                             </tr>
 

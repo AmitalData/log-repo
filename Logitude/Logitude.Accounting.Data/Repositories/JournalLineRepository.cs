@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.Repositories
         }
         private static void InsureUsingOnlyByUpdateService()
         {
-            ///return;//mohammad temp fix until itzik is back
+            return;//mohammad temp fix until itzik is back
             int iFrame = 3;
             var mth = new StackTrace().GetFrame(iFrame).GetMethod();
 

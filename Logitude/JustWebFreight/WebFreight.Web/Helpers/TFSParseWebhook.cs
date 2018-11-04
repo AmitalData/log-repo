@@ -144,7 +144,7 @@ namespace WebFreight.Web.Helpers
         {
             ITimeManagementContext myContext = TimeManagementContext.GetContext(Tenant);
             TMEmployeeTimeRepository tmEmployeeTimeRepository = new TMEmployeeTimeRepository(myContext);
-            TMEmployeeTimeUpdateService service = new TMEmployeeTimeUpdateService(myContext);
+            //TMEmployeeTimeUpdateService service = new TMEmployeeTimeUpdateService(myContext);
             TMProjectRepository tmProjectRepository = new TMProjectRepository(myContext);
             ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(Tenant);
             UserRepository userRepository = new UserRepository(Tenant);
@@ -187,9 +187,9 @@ namespace WebFreight.Web.Helpers
             var projectId = tmProjectRepository.GetTMProjectByNumber(Details.ProjectNumber, Tenant);
             if (assignedToUser != null && updatedByUser != null)
             {
-                if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null)
+                if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && (Details.TaskState == "In Progress" || Details.TaskState == "Committed"))
                 {
-                    var newItem = new TMEmployeeTimePM();
+                    var newItem = new TMEmployeeTime();
                     newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
                     newItem.Tenant = Tenant;
                     //newItem.TimeInMinutes = System.Convert.ToInt32(Details.RemainingWork.Value) * 60;
@@ -204,14 +204,15 @@ namespace WebFreight.Web.Helpers
                     newItem.UpdatedByUserId = updatedByUser.Id;
                     newItem.CreatedByUserId = updatedByUser.Id;
                     newItem.AnalyzeQueueId = this.AnalyzeQueueId;
+                    newItem.NeedsProrating = true;
                     var sprint = computingPartnerHelper.GetLogitudeCodeTranslation(Details.IterationPath, "G-TFS", "Sprint");
                     SprintRepository sprintRepository = new SprintRepository(Tenant);
                     var sprintPOCO = sprintRepository.GetSprintByName(sprint, Tenant);
                     newItem.SprintId = sprintPOCO != null ? sprintPOCO.Id : null;
-                    newItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                    service.Update(newItem, true);
-                    //tmEmployeeTimeRepository.Add(newItem);
-                    //tmEmployeeTimeRepository.SubmitChanges();
+                    //newItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                   // service.Update(newItem, true);
+                    tmEmployeeTimeRepository.Add(newItem);
+                    tmEmployeeTimeRepository.SubmitChanges();
                 }
             }
             else

@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy, EventEmitter, Output, AfterViewInit} from '@angular/core';
+import {Component, OnInit, OnDestroy, EventEmitter, Output, AfterViewInit} from '@angular/core';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {FilingInboxPM} from '../../../Common/EntityPMs/FilingInboxPM'; 
@@ -1010,7 +1010,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             }
             this.isMailBody = false;
             if (value != null) {
-                if (value.FileName.split('.')[1].trim() == "pdf") {
+                if (value.FileName != null && (value.FileName.split('.')[1].toUpperCase().trim() == "PDF")) {
                     this.IsPDF = true;
                     this.myCommonDomainService.GetFilingAttachPdfReport(value.DocumentId).subscribe((response: ServiceResponse) => {
                         if (!response.HasError) {

@@ -213,11 +213,33 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./Accounting/Components/Others/ReconcileComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                    this.LoadAllData();
+                    // this.LoadAllData();
+                    this.GetNonReconciledTransactionsCount();
 
                 });
 
             }
+        });
+    }
+
+    GetNonReconciledTransactionsCount() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe(myResult => {
+
+
+            if (!AppTool.IsNullOrEmpty(myResult)) {
+
+                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.ReconcilationCount = myResult;
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(($event) => {
+                    if ($event == true) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                });
+            }
+
         });
     }
     getScreenHeight() {
@@ -470,6 +492,14 @@ export class GLAccountOverviewComponent extends BaseComponent {
             }
 
         }
+    }
+    GetIndicatorText(transaction)
+    {
+        var showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        if(transaction['OpenAmount'] != this.CalculateOriginalAmount(transaction))
+            return showLocal ? 'סכום פתוח חלקית' : 'Partial transaction';
+        else
+            return showLocal ? 'סכום פתוח ' : 'Open transaction';
     }
 
 

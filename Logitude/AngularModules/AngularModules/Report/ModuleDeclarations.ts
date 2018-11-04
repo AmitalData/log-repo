@@ -38,6 +38,12 @@ import {InvoicesRoutingsFilterComponent} from './Components/FiltersComponent/Acc
 import {AgingFilterComponent} from './Components/FiltersComponent/Accounting/AgingFilterComponent';
 import { RevenueExpenseFilterComponent } from './Components/FilterReportComponent/RevenueExpenseFilterComponent';
 import { TrailBalanceFiltersComponent } from './Components/FilterReportComponent/TrailBalanceFiltersComponent';
+import { ShipmentsStocksFiltersComponent } from './Components/FilterReportComponent/ShipmentsStocksFiltersComponent';
+
+
+
+
+
 
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
@@ -109,6 +115,7 @@ export const Components =
         TrailBalanceFiltersComponent,
         UsersByTenantReportFilterComponent,
         LicenseManagementFilterComponent,
+        ShipmentsStocksFiltersComponent,
     ];
 
 export class ModuleDeclarations {
@@ -164,7 +171,9 @@ export class ModuleDeclarations {
             case "RevenueExpenseFilterComponent": { myResult = RevenueExpenseFilterComponent; break; }
             case "TrailBalanceFiltersComponent": { myResult = TrailBalanceFiltersComponent; break; }
             case "UsersByTenantReportFilterComponent": { myResult = UsersByTenantReportFilterComponent; break; }
-            case "LicenseManagementFilterComponent": { myResult = LicenseManagementFilterComponent; break; }   
+            case "LicenseManagementFilterComponent": { myResult = LicenseManagementFilterComponent; break; }  
+            case "ShipmentsStocksFiltersComponent": { myResult = ShipmentsStocksFiltersComponent; break; }  
+                
         }
 
         return myResult;
