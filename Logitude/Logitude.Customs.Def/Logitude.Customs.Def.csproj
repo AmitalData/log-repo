@@ -199,6 +199,7 @@
     <Compile Include="EntityPMs\Generated\CustomsInsuranceCompanyPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsItemDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsPartnerFtpPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsPartnersItemPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsPaymentTermPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsRequestsSheetPM.Generated.cs" />

@@ -2829,6 +2829,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<VehicleSafeAccessoryInstlType> VehicleSafeAccessoryInstlTypes { get; set; }
         public IDbSet<SupplierInvoiceItemVehicle> SupplierInvoiceItemVehicles { get; set; }
         public IDbSet<CustomsPartnersItem> CustomsPartnersItems { get; set; }
+        public IDbSet<CustomsPartnerFtp> CustomsPartnerFtps { get; set; }
         public IDbSet<SignatureType> SignatureTypes { get; set; }
         public IDbSet<CheckEssenceLookup> CheckEssenceLookups { get; set; }
         public IDbSet<Authority> Authorities { get; set; }
@@ -3569,6 +3570,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CustomsItemMap());
 
             modelBuilder.Configurations.Add(new CustomsItemDetailsHistoryMap());
+
+            modelBuilder.Configurations.Add(new CustomsPartnerFtpMap());
 
             modelBuilder.Configurations.Add(new CustomsPaymentTermMap());
 

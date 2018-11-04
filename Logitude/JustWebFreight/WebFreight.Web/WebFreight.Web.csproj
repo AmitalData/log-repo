@@ -1441,6 +1441,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsHouseTypeAdditionalController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsHouseTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsItemController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsPartnerFtpController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsPartnersItemController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsRequestsSheetController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsRequiredFieldController.Generated.cs" />
@@ -2373,6 +2374,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsAirlineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsDocumentsDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsInsuranceCompanyUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsPartnerFtpUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitCargoIdentifierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitConsItemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitConsPackDetUpdateClass.cs" />
