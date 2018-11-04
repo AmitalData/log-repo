@@ -8835,6 +8835,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                           CreateDateTime = s.CreateDateTime,
                                                           StatusName = s.EntityStatus.Name,
                                                           CustomerTenantNumber = s.CustomerTenantNumber,
+                                                          CustomerId = s.CustomerId,
                                                       });
 
             if (shipmentLists.Count() > 0)

@@ -1771,6 +1771,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         Tenant = a.Tenant,
                                         EnglishName = a.EnglishName,
                                         Code = a.Code,
+                                        
                                     }).ToList();
             return Cards;
         }
