@@ -49,6 +49,29 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                       }).ToList();
             return paymentCheques;
         }
+        public ARPaymentChequePM GetSingleByPaymentId(string paymentId, int tenant)
+        {
+            ARPaymentChequePM paymentCheques = (from a in context.ARPaymentCheques
+                                                      where a.PaymentId == paymentId && a.Tenant == tenant
+                                                      select new ARPaymentChequePM()
+                                                      {
+                                                          Id = a.Id,
+                                                          Tenant = a.Tenant,
+                                                          CurrencyCode = a.Currency.Code,
+                                                          SearchFields = a.SearchFields,
+                                                          LineNumber = a.LineNumber,
+                                                          ChequeNumber = a.ChequeNumber,
+                                                          ValueDate = a.ValueDate,
+                                                          LocalAmount = a.LocalAmount,
+                                                          ForeignAmount = a.ForeignAmount,
+                                                          BankId = a.BankId,
+                                                          BankBranch = a.BankBranch,
+                                                          BankAccount = a.BankAccount,
+                                                          StatusName = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.EnglishName : "",
+
+                                                      }).FirstOrDefault();
+            return paymentCheques;
+        }
     }
 }
 
