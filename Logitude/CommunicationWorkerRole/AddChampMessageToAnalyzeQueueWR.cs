@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.QueueService;
 
 namespace CommunicationWorkerRole
 {
@@ -42,20 +43,22 @@ namespace CommunicationWorkerRole
                                 message.Complete();
                                 LogDoneItemInMemory();
                             }
-                        }
-                       
-
+                        }                       
                     }
+
                     catch (Exception e)
                     {
                         ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "ChampMessageInWR : SaveMessageToAnalyzeQueue Method", null);
+
                         if (message != null)
                         {
                             message.Abandon();
                         }
+
                         Thread.Sleep(10000);
                     }
                 }
+
                 else
                 {
                     Thread.Sleep(60000);
@@ -68,7 +71,7 @@ namespace CommunicationWorkerRole
         {
             AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
             byte[] messageBytes = Encoding.ASCII.GetBytes(messageData);
-            
+
             AnalyzeQueue analyzeQueue = new AnalyzeQueue()
             {
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
@@ -85,10 +88,12 @@ namespace CommunicationWorkerRole
             analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
             analyzeQueueReposiory.Add(analyzeQueue);
             analyzeQueueReposiory.SubmitChanges();
+
+            DbQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ChampAnalyzer", 0);
+            queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
+            queueservice.Complete();
         }
-
-
-
 
         public override bool OnStart()
         {
