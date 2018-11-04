@@ -78,7 +78,7 @@
 
 </style>
 <div>
-    <div *ngIf="fieldName == 'Indicator' && rowData['OpenAmount'] != 0" title="{{rowData['OpenAmount'] != CalculateOriginalAmount() ? 'Partial transaction' : 'Open transaction'}}" class="circleWrapper CenterCenter">
+    <div *ngIf="fieldName == 'Indicator' && rowData['OpenAmount'] != 0" [attr.title]="GetIndicatorText()" class="circleWrapper CenterCenter">
         <div class="circleDraw"
              [class.orangeCircle]="rowData['OpenAmount'] != CalculateOriginalAmount()"></div>
     </div>

@@ -1981,6 +1981,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 if (myFirstPickup != null)
                 {
+                    shipmentPM.FirstPickupATA = myFirstPickup.ATA;
+                    shipmentPM.FirstPickupATD = myFirstPickup.ATD;
+
                     #region
                     switch (myFirstPickup.PickUpDeliveryFromTypeCode)
                     {
@@ -2028,6 +2031,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 if (myFinalDelivery != null)
                 {
+                    shipmentPM.FinalDeliveryATA = myFinalDelivery.ATA;
+                    shipmentPM.FinalDeliveryATD = myFinalDelivery.ATD;
+                    shipmentPM.FinalDeliveryETA = myFinalDelivery.ETA;
+                    shipmentPM.FinalDeliveryETD = myFinalDelivery.ETD;
+
                     #region
                     switch (myFinalDelivery.PickUpDeliveryToTypeCode)
                     {
