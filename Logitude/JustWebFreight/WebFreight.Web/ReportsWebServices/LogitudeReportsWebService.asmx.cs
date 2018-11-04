@@ -2298,6 +2298,23 @@ namespace WebFreight.Web.ReportsWebServices
                                                      PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName,
                                                  }).ToList();
 
+            double? currencyRate = 0;
+            if (!string.IsNullOrEmpty(localCurrencyCode) && !string.IsNullOrEmpty(profitCurrencyCode))
+            {
+                Currency localCurrency = commonContext.Currencies.Where(d => d.Code == localCurrencyCode && d.Tenant == tenant).FirstOrDefault();
+                Currency profictCurrency = commonContext.Currencies.Where(d => d.Code == profitCurrencyCode && d.Tenant == tenant).FirstOrDefault();
+
+                if (localCurrency != null && profictCurrency != null)
+                {
+                    LastRate rate = this.GetCurrencysExchangeRate(tenant, localCurrency, profictCurrency, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
+                    if (rate != null && rate.Rate != 0)
+                    {
+                        dataProvider.Rate = "1 " + profitCurrencyCode + " = " + rate.Rate + " " + localCurrencyCode;
+                        currencyRate = rate.Rate;
+                    }
+                }
+            }
+
             foreach (string cardId in cardIdsList)
             {
                 AgedAccountsReceivableDataProvider.AgedAccountsReceivable acountsRecored = new AgedAccountsReceivableDataProvider.AgedAccountsReceivable();
@@ -2320,24 +2337,14 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (currencyType == "profit")
                 {
-                    if (!string.IsNullOrEmpty(localCurrencyCode) && !string.IsNullOrEmpty(profitCurrencyCode))
+                    if (currencyRate != 0)
                     {
-                        Currency localCurrency = commonContext.Currencies.Where(d => d.Code == localCurrencyCode && d.Tenant == tenant).FirstOrDefault();
-                        Currency profictCurrency = commonContext.Currencies.Where(d => d.Code == profitCurrencyCode && d.Tenant == tenant).FirstOrDefault();
-
-                        if (localCurrency != null && profictCurrency != null)
-                        {
-                            LastRate rate = this.GetCurrencysExchangeRate(tenant, localCurrency, profictCurrency, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
-                            if (rate != null && rate.Rate != 0)
-                            {
-                                currentsum = (currentDueItems.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum1_30 = (Due1_30Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum31_60 = (Due31_60Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum61_90 = (Due61_90Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum91_120 = (Due91_120Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                over120 = (over120Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                            }
-                        }
+                        currentsum = (currentDueItems.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum1_30 = (Due1_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum31_60 = (Due31_60Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum61_90 = (Due61_90Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum91_120 = (Due91_120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        over120 = (over120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                     }
                 }
 
@@ -10803,9 +10810,22 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             totalData.ResultList.OrderBy(d => d.Name);
-            var revenues = result.Where(d => d.ChartOfAcountType == "1").FirstOrDefault().LocalCloseBalance;
-            var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault().LocalCloseBalance;
-            totalData.TotalRevenueExpense = (revenues == null ? 0 : revenues) - (expenses == null ? 0 : expenses);
+
+            var revenues = result.Where(d => d.ChartOfAcountType == "1").FirstOrDefault();
+            decimal? totalRevenues = null;
+            if(revenues != null)
+            {
+                totalRevenues = revenues.LocalCloseBalance;
+            }
+            var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault();
+            decimal? totalExpenses = null;
+            if (expenses != null)
+            {
+                totalExpenses = expenses.LocalCloseBalance;
+            }
+            
+           
+            totalData.TotalRevenueExpense = (totalRevenues == null ? 0 : totalRevenues) - (totalExpenses == null ? 0 : totalExpenses);
 
 
             #endregion
