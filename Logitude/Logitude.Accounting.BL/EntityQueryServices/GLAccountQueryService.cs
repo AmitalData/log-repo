@@ -19,6 +19,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityLists;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -572,12 +573,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             // 5- GetAddresses by card ids from step 3 with filter of main address.
             taxDeduction.ByVendorList = new List<ByVendorList>();
             List<APPayment> payments = (from a in invoicecontext.APPayments
+                                     
                                         where a.RegisterDate.Value.Year == reportYear && a.Tenant == tenant && a.StatusCode == "AD"
+                                        
                                         select a).ToList();
-            List<APPayment> groupedpayments = (from a in payments
+            List<APPaymentList> groupedpayments = (from a in payments
                                                group a by
                             new { a.VendorId, a.TaxDeductionPercentage } into g
-                                               select new APPayment
+                                               select new APPaymentList
                                                {
                                                    VendorId = g.Key.VendorId,
                                                    TaxDeductionPercentage = g.Key.TaxDeductionPercentage,
@@ -603,7 +606,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                       join d in commoncontext.Addresses on a.Id equals d.CardId
                                       join dt in commoncontext.AddressTypes on d.AddressTypeId equals dt.Id
 
-                                      where d.AddressTypeId == "M" && vendorIds.Contains(a.Id)
+                                      where d.AddressTypeId == "M" && vendorIds.Contains(a.Id) && a.CountryCode == "IL"
                                       select new CardList()
                                       {
                                           Id = a.Id,
@@ -617,7 +620,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                       ).ToList();
 
             List<GLAccountList> glaccounts = (from a in context.GLAccounts.Include("AccountingCompanyType").Include("TaxWithholdingAssessOffice").Include("WithholdingTaxDeductionType")
-                                        
+                                        where a.AccountTypeCode=="3" && a.IsPartOfDeductionReport==true
                                         
                                           select new GLAccountList()
                                           {
@@ -636,11 +639,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                           }
                                           ).ToList();
 
+            groupedpayments = (from a in groupedpayments
+                               join v in vendors on a.VendorId equals v.Id
+                               join g in glaccounts on v.GLAccountId equals g.Id
+                               select a).ToList();
+
             glaccounts = (from a in glaccounts
                           join v in vendors on a.Id equals v.GLAccountId
                           select a).ToList();
 
-            foreach(APPayment item in groupedpayments)
+            foreach(APPaymentList item in groupedpayments)
             {
                 ByVendorList  byVendorList= new ByVendorList()
                 {
