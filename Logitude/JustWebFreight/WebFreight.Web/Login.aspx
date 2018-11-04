@@ -1594,7 +1594,7 @@
                 return;
             }
 
-            if (userdata.UserName.toLowerCase() != "perla@amital.co.il" && userdata.CurrentTenant != 341) {
+ 
                 if (navigator.userAgent != null) {
                     if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
                         alert("IOS is currently not supported in HTML5 version");
@@ -1611,7 +1611,7 @@
                         return;
                     }
                 }
-            }
+            
 
             //if (navigator.sayswho && navigator.sayswho.toString().indexOf("Safari") > -1) {
             //    var issafari = true;
