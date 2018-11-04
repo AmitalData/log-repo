@@ -892,6 +892,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<PointerLevel> PointerLevel { get; set; }
         public IDbSet<ClientDrivingLicense> ClientDrivingLicense { get; set; }
         public IDbSet<ClientDrivingLicenseType> ClientDrivingLicenseType { get; set; }
+        public IDbSet<PendingErrorPlace> PendingErrorPlace { get; set; }
 
         #endregion
 
@@ -2829,6 +2830,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<VehicleSafeAccessoryInstlType> VehicleSafeAccessoryInstlTypes { get; set; }
         public IDbSet<SupplierInvoiceItemVehicle> SupplierInvoiceItemVehicles { get; set; }
         public IDbSet<CustomsPartnersItem> CustomsPartnersItems { get; set; }
+        public IDbSet<CustomsPartnerFtp> CustomsPartnerFtps { get; set; }
         public IDbSet<SignatureType> SignatureTypes { get; set; }
         public IDbSet<CheckEssenceLookup> CheckEssenceLookups { get; set; }
         public IDbSet<Authority> Authorities { get; set; }
@@ -3570,6 +3572,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new CustomsItemDetailsHistoryMap());
 
+            modelBuilder.Configurations.Add(new CustomsPartnerFtpMap());
+
             modelBuilder.Configurations.Add(new CustomsPaymentTermMap());
 
             modelBuilder.Configurations.Add(new CustomsRequestsSheetMap());
@@ -3884,6 +3888,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
             modelBuilder.Configurations.Add(new TPGFileTypeMap());
             modelBuilder.Configurations.Add(new DecCargoSplitCargoIdentifierMap());
+            modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
 
             #endregion
 

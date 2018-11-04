@@ -368,6 +368,7 @@
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAirlineList.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAirlinePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\CustomsPartnerFtpPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsItemPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsPackDetPM.ts" />
@@ -376,6 +377,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsAirlinePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\Others\GITITEMCacheService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsPartnerFtpPMService.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\SInvoiceClassificationTabComponent.ts" />

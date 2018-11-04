@@ -121,6 +121,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsInsuranceCompany> CustomsInsuranceCompanies { get; }
 		 IDbSet<CustomsItem> CustomsItems { get; }
 		 IDbSet<CustomsItemDetailsHistory> CustomsItemDetailsHistorys { get; }
+		 IDbSet<CustomsPartnerFtp> CustomsPartnerFtps { get; }
 		 IDbSet<CustomsPartnersItem> CustomsPartnersItems { get; }
 		 IDbSet<CustomsPaymentTerm> CustomsPaymentTerms { get; }
 		 IDbSet<CustomsRequestsSheet> CustomsRequestsSheets { get; }
@@ -215,6 +216,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<PaymentProcess> PaymentProcesses { get; }
 		 IDbSet<PaymentProtestType> PaymentProtestTypes { get; }
 		 IDbSet<PaymentType> PaymentTypes { get; }
+		 IDbSet<PendingErrorPlace> PendingErrorPlaces { get; }
 		 IDbSet<PhysicalCheck> PhysicalChecks { get; }
 		 IDbSet<PhysicalCheckOperation> PhysicalCheckOperations { get; }
 		 IDbSet<PhysicalCheckStatusMessage> PhysicalCheckStatusMessages { get; }

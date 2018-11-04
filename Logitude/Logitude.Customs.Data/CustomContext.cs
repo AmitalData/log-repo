@@ -276,6 +276,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsItemDetailsHistoryMap());
 	
+            modelBuilder.Configurations.Add(new CustomsPartnerFtpMap());
+	
             modelBuilder.Configurations.Add(new CustomsPartnersItemMap());
 	
             modelBuilder.Configurations.Add(new CustomsPaymentTermMap());
@@ -463,6 +465,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PaymentProtestTypeMap());
 	
             modelBuilder.Configurations.Add(new PaymentTypeMap());
+	
+            modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckMap());
 	
@@ -1664,6 +1668,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CustomsPartnerFtp> CustomsPartnerFtps 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomsPartnersItem> CustomsPartnersItems 
 	 {
 	      get; set;
@@ -2223,6 +2233,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PaymentType> PaymentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PendingErrorPlace> PendingErrorPlaces 
 	 {
 	      get; set;
 	 
