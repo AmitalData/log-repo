@@ -1,10 +1,12 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -27,15 +29,10 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
 
             #region Report Filters
-            if (xmlFilters != null)
-            {
+     
                 MemoryStream memorystream = new MemoryStream(xmlFilters);
                 XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
                 QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-
-
-    
-
                 //From Date
                 QueryFilterItem queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
                 if (queryFilterItem != null && queryFilterItem.FieldValue != null) fromDate = DateTime.Parse(queryFilterItem.FieldValue.ToString());
@@ -47,14 +44,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 //IncludeShipmentsDetails
                 queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeShipmentsDetails").FirstOrDefault();
                 if (queryFilterItem != null && queryFilterItem.FieldValue != null) includeShipmentsDetails = queryFilterItem.FieldValue.ToString().ToLower() == "true" ? true : false;
-            }
-            else
-            {
-                includeShipmentsDetails = true;
-                fromDate = DateTime.Now.AddYears(-1);
-                toDate = DateTime.Now;
-                tenant = 946;
-            }
+           
+
             CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
             List<string> cardIds = customerTenantAccessCardQuery.GetCustomerIdsByTenant(tenant);
             List<CardList> cardLists = null;
@@ -64,8 +55,10 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 cardLists = cardQuery.GetCardListsByCardIds(cardIds, tenant);
             }
 
+            
             if (cardLists != null)
             {
+                TenantPM tenantPm = TenantQuery.GetSingleTenantPM(tenant, true);
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 cardIds = cardLists.GroupBy(d => d.Id).Select(d => d.First().Id).ToList();
                 List<ShipmentList> shipmentLists = shipmentQuery.GetShipmentListsByCustomerIdsAndDates(cardIds, fromDate, toDate, tenant);
@@ -74,33 +67,50 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     var lastShipment = shipmentLists.Where(d => d.CustomerId == card.Id).OrderByDescending(d => d.CreateDateTime).FirstOrDefault();
                     int shipmentCount = shipmentLists.Where(d => d.CustomerId == card.Id).Count();
 
+                    string lastDate = string.Empty;
+                    if (lastShipment != null && lastShipment.CreateDateTime!=null)
+                    {
+                        if (tenantPm.DateTimeFormat != null) lastDate = lastShipment.CreateDateTime.ToString(tenantPm.DateTimeFormat, CultureInfo.CurrentCulture);
+                        else lastDate = lastShipment.CreateDateTime.ToString("d", CultureInfo.CurrentCulture);
+                       
+                    }
+
                     dataProvider.ResultList.Add(new ShipmentsStocksResult()
                     {
                         Id = card.Id,
                         CustomerName = card.EnglishName,
-                        LastShipmentDate = lastShipment!=null ?(DateTime?)lastShipment.CreateDateTime:null,
-                        TotalShipments = shipmentCount,
+                        LastShipmentDate = lastDate,
+                        TotalShipments = shipmentCount.ToString("N"),
                     });
 
                     if (includeShipmentsDetails)
                     {
                         foreach (ShipmentList shipment in shipmentLists.Where(d => d.CustomerId == card.Id))
                         {
+                           string createDate = string.Empty;
+                            if (shipment.CreateDateTime != null)
+                            {
+                                if (tenantPm.DateTimeFormat != null) createDate = shipment.CreateDateTime.ToString(tenantPm.DateTimeFormat, CultureInfo.CurrentCulture);
+                                else createDate = shipment.CreateDateTime.ToString("d", CultureInfo.CurrentCulture);
+                            }
+
                             dataProvider.ResultList.Add(new ShipmentsStocksResult()
                             {
-                                ShipmentNumber = shipment.ShipmentNumber,
-                                CreateDate = shipment.CreateDateTime,
-                                Status = shipment.StatusName,
+             
+                                Id = shipment.Id,
                                 ParentId = card.Id,
+                                CustomerName = shipment.ShipmentNumber,
+                                LastShipmentDate = createDate,
+                                Status = shipment.StatusName,
+                           
                             });
                         }
                     }
                 }
-
                 dataProvider.TotlaShipment = shipmentLists.Count();
             }
-
             #endregion
+
             return dataProvider;
         }
 
