@@ -66,42 +66,6 @@
 
                         </td>
 
-
-                        <!-- ImporterPassCountryCode -->
-                        <td class="col2Label">
-                            <LogLabel [ObjectFieldName]="'ImporterPassCountryCode'" [ObjectTableName]="'Customs.Vehicle'"
-                                      [DataContext]="DataContext"></LogLabel>
-                        </td>
-                        <td style="width: 200px;">
-                            <LogLov tabindex="1" [ObjectFieldName]="'ImporterPassCountryCode'"
-                                    [ObjectTableName]="'Customs.Vehicle'"
-                                    [DataContext]="DataContext"
-                                    [LookUpTableName]="'Customs.CustomsCountry'"
-                                    [SelectedValue]="ImporterPassCountryCode"
-                                    [HideColumns]="true">
-                            </LogLov>
-                        </td>
-
-                        <td><div></div></td>
-
-                    </tr>
-
-                    <tr class="FormFieldRow">
-                        <!-- ImporterPassportTypeCode -->
-                        <td style="width: 150px;padding-right:5px;">
-                            <LogLabel [ObjectFieldName]="'ImporterPassportTypeCode'" [ObjectTableName]="'Customs.Vehicle'"
-                                      [DataContext]="DataContext"></LogLabel>
-                        </td>
-                        <td style="width: 200px;">
-                            <LogLov [ObjectFieldName]="'ImporterPassportTypeCode'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext"
-                                    [LookUpTableName]="'Customs.PassportType'"
-                                    [SelectedValue]="ImporterPassportTypeCode"
-                                    [HideColumns]="true">
-                            </LogLov>
-                        </td>
-
                         <!-- PassportName -->
                         <td class="col2Label">
                             <LogLabel [ObjectFieldName]="'PassportName'" [ObjectTableName]="'Customs.Vehicle'"
@@ -119,6 +83,42 @@
 
                     </tr>
 
+                    <tr class="FormFieldRow">
+
+                        <!-- ImporterPassCountryCode -->
+                        <td style="width: 150px;padding-right:5px;">
+                            <LogLabel [ObjectFieldName]="'ImporterPassCountryCode'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <LogLov tabindex="1" [ObjectFieldName]="'ImporterPassCountryCode'"
+                                    [ObjectTableName]="'Customs.Vehicle'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.CustomsCountry'"
+                                    [SelectedValue]="ImporterPassCountryCode"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+
+                        <!-- ImporterPassportTypeCode -->
+                        <td class="col2Label">
+                            <LogLabel [ObjectFieldName]="'ImporterPassportTypeCode'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width: 200px;">
+                            <LogLov [ObjectFieldName]="'ImporterPassportTypeCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.PassportType'"
+                                    [SelectedValue]="ImporterPassportTypeCode"
+                                    [HideColumns]="true">
+                            </LogLov>
+                        </td>
+
+                        <td><div></div></td>
+
+                    </tr>
+
 
                     <tr class="FormFieldRow">
                         <!-- VehicleChassisNumber -->
@@ -128,7 +128,7 @@
                         </td>
                         <td style="width: 200px;">
                             <LogTextBox #VehicleChassisNumberTextBox [ObjectFieldName]="'VehicleChassisNumber'"
-                                        [ObjectTableName]="'Customs.Vehicle'" 
+                                        [ObjectTableName]="'Customs.Vehicle'"
                                         (LostFocus)="OnVehicleChassisNumberLostFocus(VehicleChassisNumberTextBox)"
                                         [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
@@ -360,7 +360,7 @@
                             <LogTextBox [ObjectFieldName]="'CommercialNickname'"
                                         [InputType]="'text'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" 
+                                        [DataContext]="DataContext"
                                         [Placeholder]="'הזן באנגלית בלבד'"
                                         [HideColumns]="true"></LogTextBox>
 
