@@ -451,6 +451,7 @@
     <Compile Include="Tasks\ITaskManager.cs" />
     <Compile Include="Tasks\PayableARPaymentChequeTask.cs" />
     <Compile Include="Tasks\TaskManagerBase.cs" />
+    <Compile Include="Tasks\UpdateTimeManagementDurations.cs" />
     <Compile Include="TaxWorkerRole.cs" />
     <Compile Include="TenantStatisticsMessageWorkerRole.cs" />
     <Compile Include="TenantStatisticsWorkerRole.cs" />
@@ -665,6 +666,14 @@
     <ProjectReference Include="..\Logitude.Social.Data\Logitude.Social.Data.csproj">
       <Project>{a00ae10e-2560-4e06-99fa-859ea7488ec3}</Project>
       <Name>Logitude.Social.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.TimeManagement.BL\Logitude.TimeManagement.BL.csproj">
+      <Project>{2b42c0df-9dd8-4ed1-8f6e-94746cfc1e63}</Project>
+      <Name>Logitude.TimeManagement.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.TimeManagement.Data\Logitude.TimeManagement.Data.csproj">
+      <Project>{68f57541-574a-4ee9-b3fe-8c535c74456a}</Project>
+      <Name>Logitude.TimeManagement.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>

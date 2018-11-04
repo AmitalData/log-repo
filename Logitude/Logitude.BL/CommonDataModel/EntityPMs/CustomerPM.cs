@@ -960,5 +960,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public int CustomerTenant { get; set; }
+
+        public string MainAddressId { get; set; }
     }
 }

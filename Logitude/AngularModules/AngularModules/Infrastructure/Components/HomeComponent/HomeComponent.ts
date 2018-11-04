@@ -65,7 +65,7 @@ export class HomeComponent {
 
             // tokenExpiration
             var tokenExpiration: DetectUserInActivity = new DetectUserInActivity(true);
-            tokenExpiration.Start(SessionInfo.WebTokenLifeTime, SessionInfo.WebTokenExpirationWarning , "M");//(3, 1, "M")
+            tokenExpiration.Start(SessionInfo.WebTokenLifeTimeInMinutes, SessionInfo.WebTokenExpirationWarningInMinutes , "M");//(3, 1, "M")
 
 
         }

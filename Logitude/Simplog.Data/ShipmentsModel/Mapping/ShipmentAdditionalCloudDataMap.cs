@@ -40,6 +40,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.Property(t => t.PaymentRequestXML).IsMaxLength().IsUnicode(true);
             this.Property(t => t.IsPaymentRequired).IsRequired();
+            this.Property(t => t.DeclarationWCOXml).IsMaxLength();
 
             // Table & Column Mappings
             this.ToTable("ShipmentAdditionalCloudDatas");
@@ -48,6 +49,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ApproveDateTime).HasColumnName("ApproveDateTime");
             this.Property(t => t.ApprovedByUserName).HasColumnName("ApprovedByUserName");
             this.Property(t => t.DeclarationXmlData).HasColumnName("DeclarationXmlData");
+            this.Property(t => t.DeclarationWCOXml).HasColumnName("DeclarationWCOXml");
             this.Property(t => t.IsImporterApprovalRequried).HasColumnName("IsImporterApprovalRequried");
             this.Property(t => t.VersionApproved).HasColumnName("VersionApproved");
             this.Property(t => t.DenyReason).HasColumnName("DenyReason");

@@ -626,7 +626,7 @@
 
         // contain series(5 letters / numbers)
         if (IsPasswordContainsSeries(password)) {
-            messageError = "Password can't contain series (5 letters/numbers)";
+            messageError = "Password can't contain series (3 letters/numbers)";
             return messageError;
 
         }
@@ -655,6 +655,7 @@
             passwordNumnberList.push(x);
         }
 
+           //Series
         var seriesNumnberCount= 0;
         var seriesNumnberList =  [];
         passwordNumnberList.forEach((item) => {
@@ -675,7 +676,7 @@
             } else IsNotSeriesNumnber = true;
 
 
-            if (seriesNumnberCount == 4) {
+            if (seriesNumnberCount == 2) {
                 result = true;
                 return;
             }
@@ -687,8 +688,84 @@
 
         });
 
+           //Same
+           if (!result) {
+               seriesNumnberCount = 0;
+               seriesNumnberList = [];
+
+                 passwordNumnberList.forEach((item) => {
+            var IsNotSeriesNumnber = false;
+            if (item <= 9 || ((item >= 65 && item <= 90))) {
+                if (seriesNumnberList.length == 0) {
+                    seriesNumnberList.push(item);
+                }
+                else {
+                    if (seriesNumnberList[seriesNumnberList.length - 1] == item) {
+                        seriesNumnberList.push(item);
+                        seriesNumnberCount += 1;
+                    } else {
+                        IsNotSeriesNumnber = true;
+                    }
+                }
+
+            } else IsNotSeriesNumnber = true;
+
+
+            if (seriesNumnberCount == 2) {
+                result = true;
+                return;
+            }
+
+            if (IsNotSeriesNumnber) {
+                seriesNumnberCount = 0;
+                seriesNumnberList = [];
+            }
+
+        });
+           }
+
+           //reverse
+            if (!result) {
+               seriesNumnberCount = 0;
+                seriesNumnberList = [];
+                    passwordNumnberList.forEach((item) => {
+            var IsNotSeriesNumnber = false;
+            if (item <= 9 || ((item >= 65 && item <= 90))) {
+                if (seriesNumnberList.length == 0) {
+                    seriesNumnberList.push(item);
+                }
+                else {
+                    if (seriesNumnberList[seriesNumnberList.length - 1] - 1 == item) {
+                        seriesNumnberList.push(item);
+                        seriesNumnberCount += 1;
+                    } else {
+                        IsNotSeriesNumnber = true;
+                    }
+                }
+
+            } else IsNotSeriesNumnber = true;
+
+
+            if (seriesNumnberCount == 2) {
+                result = true;
+                return;
+            }
+
+            if (IsNotSeriesNumnber) {
+                seriesNumnberCount = 0;
+                seriesNumnberList = [];
+            }
+
+        });
+
+           }
+
+
         return result;
     }
+
+   
+
 
         
         function changepassword(email, currentPassword, requestNumber, newPassword, isResetRequest) {

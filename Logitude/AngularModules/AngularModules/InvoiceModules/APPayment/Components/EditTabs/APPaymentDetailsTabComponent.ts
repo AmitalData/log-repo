@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy}  from '@angular/core';
+import {Component, OnInit, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {APPaymentPM} from '../../../../Invoice/EntityPMs/APPaymentPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -77,7 +77,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.IsEditExchangeRateVisible = true;
         }
 
-        this.LoadTaxPercentage();
+       // this.LoadTaxPercentage();
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
     }
 

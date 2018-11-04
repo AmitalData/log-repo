@@ -38,7 +38,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         AnalyzeQueueId, 
 	         SprintId, 
 	         ProratedDuration, 
-	         FullDuration,
+	         FullDuration, 
+	         NeedsProrating,
 	      }
 
 
@@ -67,7 +68,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         TimeInMinutes_db, 
 	         SprintId, 
 	         ProratedDuration, 
-	         FullDuration,
+	         FullDuration, 
+	         NeedsProrating,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -154,6 +156,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FullDuration))
             {
 				entityPOCO.FullDuration = entityPM.FullDuration;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NeedsProrating))
+            {
+				entityPOCO.NeedsProrating = entityPM.NeedsProrating;
 			}
 			}
 
@@ -245,6 +252,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 					entityPM.FullDuration = entityPOCO.FullDuration;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NeedsProrating))
+            {
+					entityPM.NeedsProrating = entityPOCO.NeedsProrating;
+            }
+
 		}
 
 		public void PMToOldPM(TMEmployeeTimePM entityPM, TMEmployeeTimePM oldEntityPM)
@@ -329,6 +341,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FullDuration))
             {
                 oldEntityPM.FullDuration = entityPM.FullDuration;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NeedsProrating))
+            {
+                oldEntityPM.NeedsProrating = entityPM.NeedsProrating;
             }
 			
 		}

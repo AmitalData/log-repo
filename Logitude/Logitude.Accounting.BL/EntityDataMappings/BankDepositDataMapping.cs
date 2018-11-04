@@ -55,6 +55,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
             }
 
+            string glaId;
 
             // Get Cashbook
             if (entityPOCO.CashBookId != null)
@@ -66,10 +67,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.CashBookGLAccountId = cashBook.AccountId;
                     entityPM.CashBookName = cashBook.LocalName;
                     entityPM.IsCashDeposit = cashBook.CashBookTypeCode == "1";
+
+                    glaId = cashBook.AccountId;
                 }
 
             }
-
 
             // Get Journal
             JournalQueryService journalQueryService = new JournalQueryService(entityPOCO.Tenant);
@@ -78,8 +80,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPM.JournalId = journal.Id;
                 entityPM.JournalNumber = journal.JournalNumber;
-
+                entityPM.JournalQueueId = journal.QueueId;
             }
+      
 
             // Get Currency
             if (entityPOCO.DepositCurrencyId != null)

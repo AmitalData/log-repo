@@ -216,7 +216,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
 
             List<CardList> cardLists = null;
             CardQuery cardQuery = new CardQuery(tenant);
-            if (cardIds.Count > 0) cardLists = cardQuery.GetCardListForInventoryReportsByCardIds(cardIds, tenant);
+            if (cardIds.Count > 0) cardLists = cardQuery.GetCardListsByCardIds(cardIds, tenant);
             #endregion
 
             foreach (WarehouseEntryPackageItem item in myResult)

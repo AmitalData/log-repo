@@ -41,6 +41,10 @@ namespace WarehouseDataService
                 string warehouseBuildDays = ConfigurationSettings.AppSettings["WarehouseBuildDays"];
                 string warehouseBuildHoures = ConfigurationSettings.AppSettings["WarehouseBuildHoures"];
 
+                string retryBuildWithinHours = ConfigurationSettings.AppSettings["RetryBuildWithinHours"];
+                ApplicationInfo.RetryBuildWithinHours = !string.IsNullOrEmpty(retryBuildWithinHours) ? Int32.Parse(retryBuildWithinHours) : 0;
+
+
                 List<int> buildDays = new List<int>();
                 if (!string.IsNullOrEmpty(warehouseBuildDays))
                 {

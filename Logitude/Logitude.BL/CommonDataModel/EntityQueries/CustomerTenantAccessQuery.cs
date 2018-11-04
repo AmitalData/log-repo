@@ -313,5 +313,27 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return entity;
         }
+
+
+        public IQueryable<CustomerTenantAccessList> GetCustomerTenantAccessListsByCustomer( List<int?> customertenant)
+        {
+            IQueryable<CustomerTenantAccessList> results = (from a in repository.context.CustomerTenantAccesses
+                                                      where customertenant.Contains(a.CustomerTenant)
+                                                      select new CustomerTenantAccessList()
+                                                      {
+                                                          CustomerTenant = a.CustomerTenant,
+                                                          LastShipmentDate = a.LastShipmentDate,
+                                                          StockTypeCode = a.StockTypeCode
+                                                      });
+            return results;
+
+
+        }
+
+
+
+
+
+
     }
 }

@@ -1,3 +1,19 @@
-<div *ngIf="LastLoginData" style="color:green;font-size:12PX">
-    Last successful login : <span>{{LastLoginData | DateTimeToDatePipe}} {{LastLoginData | DateTimeToTimePipe}} </span>
-</div>
+<table>
+    <tr>
+        <td>
+            <div *ngIf="LastLoginData" style="color:green;font-size:13PX;">
+                Last successful login : <span style="color:green;font-size:13PX;"> {{LastLoginData | DateTimeToDatePipe}} {{LastLoginData | DateTimeToTimePipe}} </span>
+            </div>
+        </td>
+
+        <td style="width:8px;"><div></div></td>
+    </tr>
+</table>
+
+
+
+
+
+
+
+
