@@ -1,4 +1,4 @@
-﻿import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -38,8 +38,8 @@ export class ExpectedIncomeFilterComponent extends BaseComponent  {
         var month = new Date().getMonth();
         var Year = new Date().getFullYear();
         var daysofmonth = this.DaysInMonth(new Date());
-        this.FromDate = this.SetDate(Year, month - 1, 1);
-        this.ToDate = this.SetDate(Year, month - 1, daysofmonth);
+        //this.FromDate = this.SetDate(Year, month - 1, 1);
+        //this.ToDate = this.SetDate(Year, month - 1, daysofmonth);
 
         this.BuildRecurringComboList();
     }
@@ -68,19 +68,23 @@ export class ExpectedIncomeFilterComponent extends BaseComponent  {
     RunReport() {
         this.queryFilterItems = new Array<QueryFilterItem>();
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "FromDate";
-        this.queryFilterItem.FieldValue = this.FromDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
+        if (this.FromDate != null) {
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+        }
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ToDate";
-        this.queryFilterItem.FieldValue = this.ToDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);  
+        if (this.ToDate != null) {
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ToDate";
+            this.queryFilterItem.FieldValue = this.ToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+        }
 
         this.queryFilterItem = new QueryFilterItem();
         this.queryFilterItem.DisplayInList = false;
