@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {APInvoicePM} from '../../EntityPMs/APInvoicePM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -56,16 +56,21 @@ export class APInvoiceMenuButtonsHandler {
 
                         case "CancelApproval":
                             {
-                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                    myButtonIsDisabled = true;
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    button.IsHidden = true;
                                 }
+                                else {
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        myButtonIsDisabled = true;
+                                    }
 
-                                else if (this.EntityPM.TransferStatusCode == "TR") {
-                                    myButtonIsDisabled = true;
-                                }
+                                    else if (this.EntityPM.TransferStatusCode == "TR") {
+                                        myButtonIsDisabled = true;
+                                    }
 
-                                else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA" || this.EntityPM.StatusCode == "VD") {
-                                    myButtonIsDisabled = true;
+                                    else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA" || this.EntityPM.StatusCode == "VD") {
+                                        myButtonIsDisabled = true;
+                                    }
                                 }
 
                                 break;

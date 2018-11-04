@@ -1207,6 +1207,20 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+
+                case "SHST":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ShipmentsStocksDataProvider));
+                        ShipmentsStocksDataProvider reportDataProvider = (ShipmentsStocksDataProvider)serializer.Deserialize(memorystream);
+                      //  reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "Shipments Stocks", Name = "ShipmentsStocksDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+                    
+
+
+
             }
             return urlImage;
         }
@@ -1333,6 +1347,16 @@ namespace WebFreight.Web.Helpers
             switch (reportFliter.ReportCode)
             {
                 #region
+
+
+                case "SHST":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadShipmentsStocksData(filters, reportFliter.tenant);
+                        break;
+                    }
+
+
+
                 case "UPTR":
                     {               
                         dataProvider = logitudeReportsWebService.LoadUsersByTenantData(filters, reportFliter.tenant);

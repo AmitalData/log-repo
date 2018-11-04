@@ -1594,22 +1594,24 @@
                 return;
             }
 
-            if (navigator.userAgent != null) {
-                if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
-                    alert("IOS is currently not supported in HTML5 version");
-                    return;
-                }
+ 
+                if (navigator.userAgent != null) {
+                    if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
+                        alert("IOS is currently not supported in HTML5 version");
+                        return;
+                    }
 
-                else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {
-                    alert("IOS is currently not supported in HTML5 version");
-                    return;
-                }
+                    else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {
+                        alert("IOS is currently not supported in HTML5 version");
+                        return;
+                    }
 
-                else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {
-                    alert("IOS is currently not supported in HTML5 version");
-                    return;
+                    else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {
+                        alert("IOS is currently not supported in HTML5 version");
+                        return;
+                    }
                 }
-            }
+            
 
             //if (navigator.sayswho && navigator.sayswho.toString().indexOf("Safari") > -1) {
             //    var issafari = true;

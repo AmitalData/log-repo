@@ -1406,6 +1406,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetStatusOfARPaymentCheques(string paymentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                ARPaymentChequeQueryService entityQuery = new ARPaymentChequeQueryService(tenant);
+                ARPaymentChequePM arpaymentCheque = entityQuery.GetSingleByPaymentId(paymentId, tenant);
+                string status = arpaymentCheque!= null ? arpaymentCheque.StatusName : ""; 
+                return Request.CreateResponse(HttpStatusCode.OK, status);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         private string CheckNullValue(string value)
         {
@@ -1416,5 +1434,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
             return newValue;
         }
+
+
+
     }
 }

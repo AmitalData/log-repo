@@ -40,6 +40,7 @@ export class NewLineComponent extends BaseComponent {
         this.EntityPM.UpdateDate = todayDate;
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.EmployeeUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.NeedsProrating = true;
         this.SetUIProperties();
     }
 

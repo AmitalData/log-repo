@@ -53,6 +53,8 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public IsEditExchangeRateVisible: boolean = false;
     get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetARPayments == true && this.AccountingPaymentMethodCode == "FS" ? true : false; }
     public isRTL: boolean = false;
+    public ARPaymentChequeStatus = "";
+
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
 
@@ -258,6 +260,12 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.FullAccounting && this.AccountingPaymentMethodCode == "CH") {
             this.UIProperties.SetRequired("BankBranch", this.ObjectTableName, AppTool.IsNullOrEmpty(this.BankBranch));
             this.UIProperties.SetRequired("Account", this.ObjectTableName, AppTool.IsNullOrEmpty(this.Account));
+            var service: InvoiceDomainService = new InvoiceDomainService();
+            service.GetStatusOfARPaymentCheques(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null && !myResponse.HasError) {
+                    this.ARPaymentChequeStatus = myResponse.Result;
+                }
+            });
         }
         else {
             this.UIProperties.SetRequired("BankBranch", this.ObjectTableName, false);

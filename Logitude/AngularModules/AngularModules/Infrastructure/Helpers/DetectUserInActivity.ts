@@ -74,7 +74,9 @@ export class DetectUserInActivity {
                // messageWindow.Title = "Logitude Message";
                 messageWindow.ShowWarningIcon = true;
                 messageWindow.IsOverAll = true;
-                messageWindow.Show("Your session has expired, Please login again");
+                var message: string = this.IsTokenExpiration ? "Your session has expired, Please login again" :"Logged out due to inactivity, you can login again to enter the system";
+                messageWindow.Show(message);
+
                 messageWindow.WindowClosed.subscribe(s => {
                     if (s) {
                         SessionLocator.HomeComponent.SignoutClicked();
