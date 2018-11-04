@@ -27,58 +27,76 @@ namespace CommunicationWorkerRole.Tasks
         }
         public void Run()
         {
-            //using (TransactionScope scope = TransactionFactory.GetTransaction())
-           // {
-              //  try
-               // {
+
+
+
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
                     TaskSchedulerHistoryRepository TaskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(Tenant);
                     IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
                     TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
                     TaskSchedulerHistoryPM TaskSchedulerHistory = new TaskSchedulerHistoryPM() { Tenant = Tenant, TaskId = TaskId };
                     TaskSchedulerHistoryService.Create(TaskSchedulerHistory);
                     TaskHistoryId = TaskSchedulerHistory.Id;
+                    scope.Complete();
+                }
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    TaskSchedulerHistoryRepository TaskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(Tenant);
+                    IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
+                    TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
+                    //TaskSchedulerHistoryPM TaskSchedulerHistory = new TaskSchedulerHistoryPM() { Tenant = Tenant, TaskId = TaskId };
+                    //TaskSchedulerHistoryService.Create(TaskSchedulerHistory);
+                    //TaskHistoryId = TaskSchedulerHistory.Id;
+
                     StartTask();
                     TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(TaskSchedulerHistoryRepository);
-                    TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
+                    var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
                     if (TaskSchedulerHistory != null)
                     {
                         TaskSchedulerHistory.EndDateTime = DateTime.Now;
                         TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
 
                     }
-                    ///scope.Complete();
-               // }
-              ///  catch (Exception ex)
-               // {
-                    //#region Exception handling
-                    //try
-                    //{
-                    //    TaskSchedulerHistoryRepository TaskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(Tenant);
-                    //    TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(TaskSchedulerHistoryRepository);
-                    //    TaskSchedulerHistoryPM TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
-                    //    if (TaskSchedulerHistory != null)
-                    //    {
-                    //        TaskSchedulerHistory.EndDateTime = DateTime.Now;
-                    //        TaskSchedulerHistory.IsError = true;
-                    //        TaskSchedulerHistory.RunResult = "Error " + ex.Message;
-                    //        IWebFreightContext objectContext = new WebFreightContext();
-                    //        TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
-                    //        TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                #region Exception handling
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        TaskSchedulerHistoryRepository TaskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(Tenant);
+                        TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(TaskSchedulerHistoryRepository);
+                        TaskSchedulerHistoryPM TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
+                        if (TaskSchedulerHistory != null)
+                        {
+                            TaskSchedulerHistory.EndDateTime = DateTime.Now;
+                            TaskSchedulerHistory.IsError = true;
+                            TaskSchedulerHistory.RunResult = "Error " + ex.Message;
+                            IWebFreightContext objectContext = new WebFreightContext();
+                            TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
+                            TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
 
-                    //    }
-                    //    ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "", null);
-                    //    scope.Complete();
-                    //}
-                    //catch (Exception exc)
-                    //{
-                    //    ExceptionHandler.HandleException(exc, DateTime.Now, 0, "", "WorkerRole", "", null);
-                    //    scope.Complete();
-                    //}
-                  
-                    //#endregion
-              // }
+                        }
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "", null);
+                        scope.Complete();
+                    }
+                }
+                catch (Exception exc)
+                {
+                    ExceptionHandler.HandleException(exc, DateTime.Now, 0, "", "WorkerRole", "", null);
+                    //scope.Complete();
+                }
 
-            //}
+                #endregion
+            }
+
+
 
         }
 
