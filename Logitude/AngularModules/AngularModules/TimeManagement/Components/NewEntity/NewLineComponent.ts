@@ -48,7 +48,7 @@ export class NewLineComponent extends BaseComponent {
     SetWindowArgs(args: any) {
        
         if (args != null) {
-            if (!args.IsNew) {
+            if (!args.IsNew == false) {
                 this.EntityPM = args.EntityPM;
                 this.EntityId = this.EntityPM.Id;
                 this.DateOfWorkDate.Date = this.EntityPM.DateOfWork;
