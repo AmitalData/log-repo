@@ -4897,41 +4897,32 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            DateTime myStartDate = todayDate.AddMonths(-1);
+            //DateTime myStartDate = todayDate.AddMonths(-1);
 
-            DateTime? fromDate = null;
-            DateTime? toDate = null;
+            //DateTime? fromDate = null;
+            //DateTime? toDate = null;
 
             if (filterItem_FromDate != null)
             {
-                if (filterItem_FromDate.FieldValue != null)
-                {
-                    DateTime from = new DateTime(myStartDate.Year, myStartDate.Month, 1);
-                    DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out from);
-                    fromDate = from;
+                DateTime fromDate;
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+                if (fromDate != null)
+                {                   
+                    dataProvider.FromDate = fromDate;
+                    iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.PaidUntilDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
                 }
             }
 
             if (filterItem_ToDate != null)
             {
-                if (filterItem_ToDate.FieldValue != null)
+                DateTime toDate;
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+                if (toDate != null)
                 {
-                    DateTime to = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
-                    DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out to);
-                    toDate = to;
+                    dataProvider.ToDate = toDate;
+                    iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.PaidUntilDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
                 }
             }
-
-            if (fromDate != null)
-            {
-                iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.PaidUntilDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-            }
-
-            if (toDate != null)
-            {
-                iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.PaidUntilDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-            }
-
             #endregion
 
             IQueryable<CustomersDataView> iQueryable_IsActiveCustomers = iQueryable_AllCustomers.Where(d => d.ReceivablesAccountingCard != null && d.IsCustomer == true && d.CustomerStatusCode == "ACT");
@@ -5155,9 +5146,7 @@ namespace WebFreight.Web.ReportsWebServices
                     dataProvider.RecordList.Add(item);
                 }
             }
-
-            dataProvider.FromDate = fromDate;
-            dataProvider.ToDate = toDate;
+            
             return dataProvider;
         }
         #endregion

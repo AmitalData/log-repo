@@ -87,16 +87,8 @@ namespace Logitude.BL.Validators
                     && documentType.ObjectTableName != "WarehouseEntry"
                     && documentType.ObjectTableName != "PaymentCheque"
                     && documentType.ObjectTableName != "TaxReport"
-                    && documentType.ObjectTableName != "TaxDeductionReport"
-                    && documentType.ObjectTableName != "WarehouseRelease"
-                    && documentType.ObjectTableName != "Airline"
-                    && documentType.ObjectTableName != "CustomAgent"
-                    && documentType.ObjectTableName != "Participant"
-                    && documentType.ObjectTableName != "ShippingAgent"
-                    && documentType.ObjectTableName != "ShippingLine"
-                    && documentType.ObjectTableName != "Trucker"
-                    && documentType.ObjectTableName != "Vendor"
-                    && documentType.ObjectTableName != "Warehouse")
+                     && documentType.ObjectTableName != "TaxDeductionReport"
+                    && documentType.ObjectTableName != "WarehouseRelease")
                 {
 
                 return new ValidationResult(TextCodesTranslator.TranslateText("DocumentType.M.TableNameDoesNotExist", documentType.Tenant));
