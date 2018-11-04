@@ -29,10 +29,16 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
 
 
             #region Report Filters
-     
+
+
+
+
+            if (xmlFilters != null)
+            {
                 MemoryStream memorystream = new MemoryStream(xmlFilters);
                 XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
                 QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
                 //From Date
                 QueryFilterItem queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
                 if (queryFilterItem != null && queryFilterItem.FieldValue != null) fromDate = DateTime.Parse(queryFilterItem.FieldValue.ToString());
@@ -44,7 +50,14 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 //IncludeShipmentsDetails
                 queryFilterItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeShipmentsDetails").FirstOrDefault();
                 if (queryFilterItem != null && queryFilterItem.FieldValue != null) includeShipmentsDetails = queryFilterItem.FieldValue.ToString().ToLower() == "true" ? true : false;
-           
+            }
+            else
+            {
+                includeShipmentsDetails = true;
+                fromDate = DateTime.Now.AddYears(-1);
+                toDate = DateTime.Now;
+                tenant = 946;
+            }
 
             CustomerTenantAccessCardQuery customerTenantAccessCardQuery = new CustomerTenantAccessCardQuery(tenant);
             List<string> cardIds = customerTenantAccessCardQuery.GetCustomerIdsByTenant(tenant);
@@ -61,7 +74,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 TenantPM tenantPm = TenantQuery.GetSingleTenantPM(tenant, true);
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 cardIds = cardLists.GroupBy(d => d.Id).Select(d => d.First().Id).ToList();
-                List<ShipmentList> shipmentLists = shipmentQuery.GetShipmentListsByCustomerIdsAndDates(cardIds, fromDate, toDate, tenant);
+               IQueryable<ShipmentList> shipmentLists = shipmentQuery.GetShipmentListsByCustomerIdsAndDates(cardIds, fromDate, toDate, tenant);
                 foreach (CardList card in cardLists)
                 {
                     var lastShipment = shipmentLists.Where(d => d.CustomerId == card.Id).OrderByDescending(d => d.CreateDateTime).FirstOrDefault();
@@ -72,7 +85,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     {
                         if (tenantPm.DateTimeFormat != null) lastDate = lastShipment.CreateDateTime.ToString(tenantPm.DateTimeFormat, CultureInfo.CurrentCulture);
                         else lastDate = lastShipment.CreateDateTime.ToString("d", CultureInfo.CurrentCulture);
-                       
                     }
 
                     dataProvider.ResultList.Add(new ShipmentsStocksResult()
@@ -92,6 +104,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                             {
                                 if (tenantPm.DateTimeFormat != null) createDate = shipment.CreateDateTime.ToString(tenantPm.DateTimeFormat, CultureInfo.CurrentCulture);
                                 else createDate = shipment.CreateDateTime.ToString("d", CultureInfo.CurrentCulture);
+
+                       
                             }
 
                             dataProvider.ResultList.Add(new ShipmentsStocksResult()
