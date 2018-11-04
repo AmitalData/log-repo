@@ -1,4 +1,4 @@
-﻿import {NewStackComponent} from './Components/Partners/AWBStock/NewStackComponent';
+import {NewStackComponent} from './Components/Partners/AWBStock/NewStackComponent';
 import {NewCurrencyComponent} from './Components/Maintenance/Currency/NewCurrencyComponent';
 import {NewChargesTypeComponent} from './Components/Maintenance/ChargesType/NewChargesTypeComponent';
 import {NewVatTypePercentageComponent} from './Components/Maintenance/VatType/NewVatTypePercentageComponent';
@@ -41,8 +41,6 @@ import {AccountingTab_Branch} from './Components/AccountingTab/AccountingTab_Bra
 import { AddEditCustomerFieldsUpdateSettingComponent } from './Components/Maintenance/CustomerFieldsUpdateSetting/AddEditCustomerFieldsUpdateSettingComponent';
 import {BranchGeneralTabComponent} from './Components/Maintenance/Branch/BranchGeneralTabComponent';
 import {AddEditBranchAddressComponent} from './Components/Maintenance/Branch/AddEditBranchAddressComponent';
-import {ParticipantGeneralTabComponent} from './Components/Maintenance/Participant/ParticipantGeneralTabComponent';
-import {ParticipantNotifyTabComponent} from './Components/Maintenance/Participant/ParticipantNotifyTabComponent';
 import {QuoteStageGeneralTabComponent} from './Components/Maintenance/QuoteStage/QuoteStageGeneralTabComponent';
 import {AddEditCustomerSalesNoteComponent} from './Components/Helpers/AddEditCustomerSalesNoteComponent';
 import {CustomerTenantAccessFiltersMenuComponent} from './Components/FiltersMenu/CustomerTenantAccessFiltersMenuComponent';
@@ -98,9 +96,7 @@ export const Components =
         BranchGeneralTabComponent,
         VesselGeneralTabComponent,
         AddEditBranchAddressComponent,        
-        QuoteStageGeneralTabComponent,        
-        ParticipantGeneralTabComponent,
-        ParticipantNotifyTabComponent,
+        QuoteStageGeneralTabComponent,
         AddEditCustomerSalesNoteComponent,
         CustomerTenantAccessFiltersMenuComponent,
         DocumentsFilingShortTitleComponent,
@@ -160,9 +156,7 @@ export class ModuleDeclarations {
             case "AddEditCustomerFieldsUpdateSettingComponent": { myResult = AddEditCustomerFieldsUpdateSettingComponent; break; }
             case "BranchGeneralTabComponent": { myResult = BranchGeneralTabComponent; break; }
             case "AddEditBranchAddressComponent": { myResult = AddEditBranchAddressComponent; break; }
-            case "VesselGeneralTabComponent": { myResult = VesselGeneralTabComponent; break; }            
-            case "ParticipantGeneralTabComponent": { myResult = ParticipantGeneralTabComponent; break; }
-            case "ParticipantNotifyTabComponent": { myResult = ParticipantNotifyTabComponent; break; }
+            case "VesselGeneralTabComponent": { myResult = VesselGeneralTabComponent; break; }
             case "QuoteStageGeneralTabComponent": { myResult = QuoteStageGeneralTabComponent; break; }
             case "AddEditCustomerSalesNoteComponent": { myResult = AddEditCustomerSalesNoteComponent; break; }
             case "CustomerTenantAccessFiltersMenuComponent": { myResult = CustomerTenantAccessFiltersMenuComponent; break; }
