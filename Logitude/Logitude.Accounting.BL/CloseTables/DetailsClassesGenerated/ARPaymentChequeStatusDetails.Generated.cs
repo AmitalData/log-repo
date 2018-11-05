@@ -41,6 +41,15 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new ARPaymentChequeStatusDetails()
             {    
+                Code = "3", 
+                LocalName = "הופקד- טרם נפרע", 
+                EnglishName = "In Bank Account", 
+                SearchFields = "3,In Bank Account,הופקד- טרם נפרע", 
+                Inactive = false, 
+			});
+			 
+            all.Add(new ARPaymentChequeStatusDetails()
+            {    
                 Code = "4", 
                 SearchFields = "בקופה - הוחזר מהבנק,Returned From Bank,4,", 
                 LocalName = "בקופה - הוחזר מהבנק", 
@@ -60,36 +69,9 @@ namespace Logitude.Accounting.BL
             all.Add(new ARPaymentChequeStatusDetails()
             {    
                 Code = "6", 
-                SearchFields = "קופה,Cashbooked,6,", 
-                LocalName = "קופה", 
-                Inactive = false, 
-                EnglishName = "Cashbooked", 
-			});
-			 
-            all.Add(new ARPaymentChequeStatusDetails()
-            {    
-                Code = "7", 
-                SearchFields = "קופה - הוחזר מהבנק,Cashbooked returned from the bank,7,", 
-                LocalName = "קופה - הוחזר מהבנק", 
-                Inactive = false, 
-                EnglishName = "Cashbooked returned from the bank", 
-			});
-			 
-            all.Add(new ARPaymentChequeStatusDetails()
-            {    
-                Code = "8", 
                 LocalName = "נפרע", 
                 EnglishName = "Redeemed", 
-                SearchFields = "8,Redeemed,נפרע", 
-                Inactive = false, 
-			});
-			 
-            all.Add(new ARPaymentChequeStatusDetails()
-            {    
-                Code = "3", 
-                LocalName = "הופקד- טרם נפרע", 
-                EnglishName = "In Bank Account", 
-                SearchFields = "3,In Bank Account,הופקד- טרם נפרע", 
+                SearchFields = "6,Redeemed,נפרע", 
                 Inactive = false, 
 			});
 			
