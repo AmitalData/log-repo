@@ -2298,6 +2298,23 @@ namespace WebFreight.Web.ReportsWebServices
                                                      PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName,
                                                  }).ToList();
 
+            double? currencyRate = 0;
+            if (!string.IsNullOrEmpty(localCurrencyCode) && !string.IsNullOrEmpty(profitCurrencyCode))
+            {
+                Currency localCurrency = commonContext.Currencies.Where(d => d.Code == localCurrencyCode && d.Tenant == tenant).FirstOrDefault();
+                Currency profictCurrency = commonContext.Currencies.Where(d => d.Code == profitCurrencyCode && d.Tenant == tenant).FirstOrDefault();
+
+                if (localCurrency != null && profictCurrency != null)
+                {
+                    LastRate rate = this.GetCurrencysExchangeRate(tenant, localCurrency, profictCurrency, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
+                    if (rate != null && rate.Rate != 0)
+                    {
+                        dataProvider.Rate = "1 " + profitCurrencyCode + " = " + rate.Rate + " " + localCurrencyCode;
+                        currencyRate = rate.Rate;
+                    }
+                }
+            }
+
             foreach (string cardId in cardIdsList)
             {
                 AgedAccountsReceivableDataProvider.AgedAccountsReceivable acountsRecored = new AgedAccountsReceivableDataProvider.AgedAccountsReceivable();
@@ -2320,24 +2337,14 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (currencyType == "profit")
                 {
-                    if (!string.IsNullOrEmpty(localCurrencyCode) && !string.IsNullOrEmpty(profitCurrencyCode))
+                    if (currencyRate != 0)
                     {
-                        Currency localCurrency = commonContext.Currencies.Where(d => d.Code == localCurrencyCode && d.Tenant == tenant).FirstOrDefault();
-                        Currency profictCurrency = commonContext.Currencies.Where(d => d.Code == profitCurrencyCode && d.Tenant == tenant).FirstOrDefault();
-
-                        if (localCurrency != null && profictCurrency != null)
-                        {
-                            LastRate rate = this.GetCurrencysExchangeRate(tenant, localCurrency, profictCurrency, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
-                            if (rate != null && rate.Rate != 0)
-                            {
-                                currentsum = (currentDueItems.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum1_30 = (Due1_30Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum31_60 = (Due31_60Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum61_90 = (Due61_90Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum91_120 = (Due91_120Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                over120 = (over120Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                            }
-                        }
+                        currentsum = (currentDueItems.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum1_30 = (Due1_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum31_60 = (Due31_60Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum61_90 = (Due61_90Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum91_120 = (Due91_120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        over120 = (over120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                     }
                 }
 
@@ -9560,6 +9567,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_BudgetId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BudgetId").FirstOrDefault();
+            QueryFilterItem filterItem_ExternalProjectNumber = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ExternalProjectNumber").FirstOrDefault();
 
             DateTime? fromDate = null;
             DateTime? toDate = null;
@@ -9568,7 +9576,8 @@ namespace WebFreight.Web.ReportsWebServices
             string budgetId = null;
             string projectId = null;
             string ownerId = null;
-            bool IncludeInnerProject;
+            string externalProjectNumber = null;
+            bool IncludeInnerProject = false ;
 
             if (filterItem_CustomerId != null)
             {
@@ -9610,6 +9619,14 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            if (filterItem_ExternalProjectNumber != null)
+            {
+                if (filterItem_ExternalProjectNumber.FieldValue != null)
+                {
+                    externalProjectNumber = filterItem_ExternalProjectNumber.FieldValue.ToString();
+                }
+            }
+            
             if (filterItem_ProjectId != null)
             {
                 if (filterItem_ProjectId.FieldValue != null)
@@ -9652,6 +9669,18 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            if (IncludeInnerProject == false)
+            {
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.IsInnerProject == false
+                              && myProjct.IsProrated == false
+                              select myTMEmployeeTime);
+            }
+          
             if (customerId != null)
             {
                 var customerCard = cardRep.GetSingleCard(customerId, tenant);
@@ -9666,10 +9695,10 @@ namespace WebFreight.Web.ReportsWebServices
                               where myTMEmployeeTime.Tenant == tenant
                               && myProjct.Tenant == tenant
                               && myProjct.CustomerId == customerId
-                              && myProjct.BudgetId == budgetId
                               select myTMEmployeeTime);
             }
-            else
+
+            if(budgetId != null)
             {
                 iQueryable = (from myTMEmployeeTime in iQueryable
                               join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
@@ -9677,6 +9706,17 @@ namespace WebFreight.Web.ReportsWebServices
                               where myTMEmployeeTime.Tenant == tenant
                               && myProjct.Tenant == tenant
                               && myProjct.BudgetId == budgetId
+                              select myTMEmployeeTime);
+            }
+
+            if(externalProjectNumber != null)
+            {
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.ExternalProjectNumber == externalProjectNumber
                               select myTMEmployeeTime);
             }
 
@@ -9795,9 +9835,7 @@ namespace WebFreight.Web.ReportsWebServices
                         timSheetItem_Detailed.Description = item.Description;
 
                         TMEmployeeTime myTMEmployeeTime = employeeTimeRepository.GetSingleByPrjectandEmployeeandWIandDescription(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, tenant);
-                        var wIWorkedHours_Employee = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2);
-                        var wIWorkedHours_Employee_Prorated = myTMEmployeeTime.ProratedDuration;
-                        wIWorkedHours_Employee = wIWorkedHours_Employee + wIWorkedHours_Employee_Prorated;
+                        var wIWorkedHours_Employee = Math.Round(myTMEmployeeTime.FullDuration / 60.0, 2);
                         totalWIWorkedDays_Employee += wIWorkedHours_Employee;
                         timSheetItem_Detailed.TotalWIWorkedDays_Employee = DateFormat(wIWorkedHours_Employee);
                         result.DetailedWorkHoursPerProjectList.Add(timSheetItem_Detailed);
@@ -10803,9 +10841,22 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             totalData.ResultList.OrderBy(d => d.Name);
-            var revenues = result.Where(d => d.ChartOfAcountType == "1").FirstOrDefault().LocalCloseBalance;
-            var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault().LocalCloseBalance;
-            totalData.TotalRevenueExpense = (revenues == null ? 0 : revenues) - (expenses == null ? 0 : expenses);
+
+            var revenues = result.Where(d => d.ChartOfAcountType == "1").FirstOrDefault();
+            decimal? totalRevenues = null;
+            if(revenues != null)
+            {
+                totalRevenues = revenues.LocalCloseBalance;
+            }
+            var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault();
+            decimal? totalExpenses = null;
+            if (expenses != null)
+            {
+                totalExpenses = expenses.LocalCloseBalance;
+            }
+            
+           
+            totalData.TotalRevenueExpense = (totalRevenues == null ? 0 : totalRevenues) - (totalExpenses == null ? 0 : totalExpenses);
 
 
             #endregion

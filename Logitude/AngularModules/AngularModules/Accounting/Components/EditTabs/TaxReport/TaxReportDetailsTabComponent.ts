@@ -515,8 +515,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
              filters.AdditionalFilters.push(this.searchFieldFilter);
          }
 
-        filters.PageSize = 50;
-        filters.PageIndex = 0;
+        filters.PageSize = take;
+        filters.PageIndex = skip;
         filters.GetCount = true;
 
         filters.SortBy = "Line";

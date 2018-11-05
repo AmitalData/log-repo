@@ -116,6 +116,7 @@
     <Compile Include="EntityUpdateServices\Generated\TMProjectUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TMReleaseUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\SprintUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TMBudgetUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TMEmployeeTimeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TMOfficeHourUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TMProjectCategoryUpdateService.cs" />
