@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.Helpers;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -21,7 +22,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
     public class FTPMamanService
     {
 
-        
+        const string InterfaceName = "SUBMANIFEST";
+        const string PartnerCode = "MAMAN";
+        const string TypeCode = "OUT";
+
         private string communicationSubject= "שידור פנימיים מסוכנים לממן";
         public void BuildCommunicationLog(byte[] bytearray, int tenant, string entityId, string FileName= null)
         {
@@ -43,19 +47,24 @@ namespace Logitude.Customs.BL.Messaging.Maman
             string username = "";
             string password = "";
 
+            var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
+            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, InterfaceName, PartnerCode, TypeCode);
 
-            CustomsInterfaceSettingRepository customsInterfaceSettingRepository = new CustomsInterfaceSettingRepository(tenant);
-            //('CMN', 'Maman Courier', 'CMN,Maman Courier', '0', 'IM')
-            CustomsInterfaceSetting interfaceSetting = (from d in commonContext.CustomsInterfaceSettings
-                                                        where d.Tenant == tenant && d.ImportToUSAInterfaceCode == "CMN"
-                                                        select d).FirstOrDefault();
 
-            if (interfaceSetting != null)
+            //CustomsInterfaceSettingRepository customsInterfaceSettingRepository = new CustomsInterfaceSettingRepository(tenant);
+            ////('CMN', 'Maman Courier', 'CMN,Maman Courier', '0', 'IM')
+            //CustomsInterfaceSetting interfaceSetting = (from d in commonContext.CustomsInterfaceSettings
+            //                                            where d.Tenant == tenant && d.ImportToUSAInterfaceCode == "CMN"
+            //                                            select d).FirstOrDefault();
+
+            //if (interfaceSetting != null)
+            if (pmCustomsPartnerFtp != null)
             {
-                string artemusOutSettingsId = interfaceSetting.ArtemusOutSettingsId;
+                //string artemusOutSettingsId = interfaceSetting.ArtemusOutSettingsId;
+                string FtpDetailsId = pmCustomsPartnerFtp.FtpDetailsId;
                 FTPDetailRepository fTPDetailRepository = new FTPDetailRepository(tenant);
                 FTPDetail fTPDetail = (from d in commonContext.FTPDetails
-                                       where d.Tenant == tenant && d.Id == artemusOutSettingsId
+                                       where d.Tenant == tenant && d.Id == FtpDetailsId
                                        select d).FirstOrDefault();
 
                 if (fTPDetail != null)
