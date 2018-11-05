@@ -15,27 +15,36 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class CustomsPartnerFtpListQueryService
     {
-	    private IQueryable<CustomsPartnerFtpList> GetIqueryableList(IQueryable<CustomsPartnerFtp> iQueryable)
+        private IQueryable<CustomsPartnerFtpList> GetIqueryableList(IQueryable<CustomsPartnerFtp> iQueryable)
         {
-		IQueryable<CustomsPartnerFtpList> query = (from a in iQueryable
-                                            select new CustomsPartnerFtpList()
-											{
-                     
-					                          FileExt = a.FileExt,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<CustomsPartnerFtpList> query = (from a in iQueryable
+                                                       select new CustomsPartnerFtpList()
+                                                       {
+                                                           Id = a.Id,
+                                                           InterfaceName = a.InterfaceName,
+                                                           PartnerCode = a.PartnerCode,
+                                                           FileName = a.FileName,
+                                                           FtpDetailsId = a.FtpDetailsId,
+                                                           Tenant = a.Tenant,
+                                                           TypeCode = a.TypeCode,
 
-		private IQueryable<CustomsPartnerFtp> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CustomsPartnerFtp> iQueryable, int tenant)
+
+                                                           FileExt = a.FileExt,
+
+                                                       });
+            return query;
+        }
+
+        private IQueryable<CustomsPartnerFtp> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<CustomsPartnerFtp> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-			}
+            //throw new NotImplementedException();
+            return iQueryable;
+        }
+    }
 
 
 }
