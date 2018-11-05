@@ -106,7 +106,6 @@ namespace WebFreight.Web.Helpers
                     }
                 }
             }
-            else userData.InValidMailOrPassword = true;
 
             return userData;
         }

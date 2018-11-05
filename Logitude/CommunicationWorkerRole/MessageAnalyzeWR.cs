@@ -35,32 +35,56 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using CHAMP;
 using Logitude.XSD.Analyzers.CHAMPAnalyzer;
+using Logitude.Server.Tools.QueueService;
 
 namespace CommunicationWorkerRole
 {
     class MessageAnalyzeWR : WorkerEntryPoint
     {
+        DbQueueService queueservice;
+        private string queueName;
+
         public override void Run()
         {
             while (IsRunning)
             {
                 if (!General.IsUpdating())
                 {
+                    //try
+                    //{
+                    //    AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+                    //    AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("Champ");
+                    //    LastActivity = DateTime.UtcNow;
+                    //    if (analyzeQueue != null)
+                    //    {
+                    //        CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueRepository);
+                    //        analyzer.Run();
+                    //        LogDoneItemInMemory();
+                    //    }
+
+                    //    else
+                    //    {
+                    //        Thread.Sleep(500);
+                    //    }
+                    //}
+
                     try
                     {
-                        AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-                        AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("Champ");
-                        LastActivity = DateTime.UtcNow;
-                        if (analyzeQueue != null)
-                        {
-                            CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueRepository);
-                            analyzer.Run();
-                            LogDoneItemInMemory();
-                        }
+                        queueservice = queueservice = new DbQueueService(queueName, 0);
+                        var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
 
-                        else
+                        string AnalyzeQueueId = response.MessageValues["AnalyzeQueueId"].ToString();
+                        if (!string.IsNullOrEmpty(AnalyzeQueueId))
                         {
-                            Thread.Sleep(500);
+                            queueservice.Complete();
+
+                            AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+                            AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetSingleAnalyzeQueue(AnalyzeQueueId);
+                            if (analyzeQueue != null)
+                            {
+                                CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueRepository);
+                                analyzer.Run();
+                            }
                         }
                     }
 
@@ -86,6 +110,10 @@ namespace CommunicationWorkerRole
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "MessageAnalyze";
             DoneItemsInRange = new Dictionary<DateTime, int>();
+
+            queueName = "ChampAnalyzer";
+            ConnectClient();
+
             //DiagnosticMonitor.Start("DiagnosticsConnectionString");
 
             // For information on handling configuration changes
@@ -93,6 +121,19 @@ namespace CommunicationWorkerRole
             RoleEnvironment.Changing += RoleEnvironmentChanging;
 
             return base.OnStart();
+        }
+
+        public void ConnectClient()
+        {
+            try
+            {
+                queueservice = new DbQueueService(queueName, 0);
+            }
+
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "MessageAnalyzeWR Connect client", null, null);
+            }
         }
 
         private void RoleEnvironmentChanging(object sender, RoleEnvironmentChangingEventArgs e)
