@@ -324,6 +324,7 @@
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\EditTabs\Overview\TicketOverviewTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\ChooseShipmentComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.ts" />
+    <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />
