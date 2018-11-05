@@ -243,6 +243,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         }
         args.DateOfWork = date;
         args.Father = this;
+        args.IsNew = true;
         args.WINumber = item.WINumber;
         args.ProjectId = item.ProjectId;
         args.Description = item.Description;
