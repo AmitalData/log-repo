@@ -8,6 +8,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.UnitTest.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Logitude.UnitTest.Accounting.UniTests
 {
@@ -56,7 +57,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             }, "Bank account exist");
             
         }
-
+       
         [TestMethod]
         public void ValidateBankAccountExist_BankAccountDoesntExist_DoesntThrowsException()
         {
@@ -80,17 +81,21 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant)).Returns(null);
             bool ok = true;
-            try
-            {
-                bankAccountValidateService.CheckBankAccountExists(entityPM);
-            }
-            catch (Exception ex){
-                ok = false;
-            }
-            finally
-            {
-                Assert.AreEqual(ok, true);
-            }
+            NUnit.Framework.Assert.DoesNotThrow(() => bankAccountValidateService.CheckBankAccountExists(entityPM));
+            //Exception ex =  NUnit.Framework.Assert.Throws<Exception>(() => bankAccountValidateService.CheckBankAccountExists(entityPM));
+            //NUnit.Framework.Assert.That(ex.Message, Is.EqualTo("bar"));
+
+            //try
+            //{
+            //    bankAccountValidateService.CheckBankAccountExists(entityPM);
+            //}
+            //catch (Exception ex){
+            //    ok = false;
+            //}
+            //finally
+            //{
+            //    NUnit.Framework.Assert.AreEqual(ok, true);
+            //}
         }
 
         [TestMethod]
@@ -184,7 +189,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             }
             finally
             {
-                Assert.AreEqual(ok, true);
+                NUnit.Framework.Assert.AreEqual(ok, true);
             }
 
         }
@@ -278,7 +283,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             }
             finally
             {
-                Assert.AreEqual(ok, true);
+                NUnit.Framework.Assert.AreEqual(ok, true);
             }
 
         }
@@ -442,7 +447,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 }
                 finally
                 {
-                    Assert.AreEqual(success, true);
+                    NUnit.Framework.Assert.AreEqual(success, true);
                 }
             }
 
@@ -607,7 +612,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 }
                 finally
                 {
-                    Assert.AreEqual(success, true);
+                    NUnit.Framework.Assert.AreEqual(success, true);
                 }
             }
 
@@ -747,7 +752,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 }
                 finally
                 {
-                    Assert.AreEqual(success, true);
+                    NUnit.Framework.Assert.AreEqual(success, true);
                 }
             }
 
@@ -887,7 +892,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 }
                 finally
                 {
-                    Assert.AreEqual(success, true);
+                    NUnit.Framework.Assert.AreEqual(success, true);
                 }
             }
 

@@ -19,6 +19,13 @@ using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using WebFreight.Web.Helpers.APIHelpers;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -66,6 +73,27 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
+                        if (entity.IsOperationalClosed)
+                        {
+                            //IWebFreightContext context = WebFreightContext.GetContext(authToken.Tenant);
+                            //ObjectTableRuleRepository ObjectTableRuleRepository = new ObjectTableRuleRepository(context);
+                            //ObjectTableRuleFieldRepository ObjectTableRuleFieldRepository = new ObjectTableRuleFieldRepository(context);
+
+                            //List<ObjectTableRule> allRules = ObjectTableRuleRepository.GetObjectTableRulesByTenant(authToken.Tenant);
+                            //List<ObjectTableRuleField> allFields = ObjectTableRuleFieldRepository.GetTenantRuleFields(authToken.Tenant);
+
+                            //List<ObjectTableRule> myRules = allRules.Where(r => r.RuleTypeCode == "REQ" && r.InActive == false && r.InActive == false && (r.ActiveForUpdate)).ToList();
+
+                            //List<ObjectTableRuleField> requiredFields = new List<ObjectTableRuleField>();
+
+                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_AE", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
+                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_AI", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
+                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_OE", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
+                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_OI", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
+                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_IE", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
+                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_II", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
+                        }
+
                         if (entity.Houses.Count > 0)
                         {
                             ShipmentRepository shipmentRepository = new ShipmentRepository(authToken.Tenant);
@@ -92,12 +120,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     isValid = false;
                                     throw new ApplicationException("Shipment with ShipmentNumber " + item.ShipmentNumber + " doesn't exist");
                                 }
-                                
+
                                 if (!string.IsNullOrEmpty(item.Id) && !string.IsNullOrEmpty(item.ShipmentNumber))
-                                {    
-                                    if(myDataBaseShipment != null)
+                                {
+                                    if (myDataBaseShipment != null)
                                     {
-                                        if(myDataBaseShipment.ShipmentNumber != item.ShipmentNumber)
+                                        if (myDataBaseShipment.ShipmentNumber != item.ShipmentNumber)
                                         {
                                             isValid = false;
                                             throw new ApplicationException("The sent Id and Shipment Number are not matching");
@@ -105,7 +133,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     }
                                 }
 
-                                else if(myDataBaseShipment.ShipmentLevelCode != "H")
+                                else if (myDataBaseShipment.ShipmentLevelCode != "H")
                                 {
                                     isValid = false;
                                     throw new ApplicationException("The sent shipment is not house");
@@ -159,13 +187,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     throw new ApplicationException("You can't connect operational closed house");
                                 }
 
-                                else if(!string.IsNullOrEmpty(entityPM.ShipmentTypeId))
+                                else if (!string.IsNullOrEmpty(entityPM.ShipmentTypeId))
                                 {
                                     switch (entityPM.ShipmentTypeId.ToUpper())
                                     {
                                         case "MYGO":
                                             {
-                                                if(myDataBaseShipment.ShipmentTypeId != "LCLD")
+                                                if (myDataBaseShipment.ShipmentTypeId != "LCLD")
                                                 {
                                                     isValid = false;
                                                     throw new ApplicationException("The sent shipment type should be LCL");
@@ -185,7 +213,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     }
                                 }
 
-                                if(isValid)
+                                if (isValid)
                                 {
                                     // connect to master
                                     ConsoleShipmentPM myConsole = new ConsoleShipmentPM()
@@ -208,7 +236,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                             }
                         }
-                        
+
                         if (entityPM.ShipmentPackages.Count > 0)
                         {
                             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
@@ -226,11 +254,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         scope.Complete();
                     }
 
-
                     var result = mappingService.GetMasterById(entityPM.Id, authToken.Tenant);
                     APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Master API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
-
                 }
 
                 catch (Exception ex)
@@ -253,6 +279,32 @@ namespace WebFreight.Web.ExternalAPIs.V1
             var apiExceptionResult = ApiExceptionHandler.HandleException(new Exception("Updates are not supported"));
             APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Master API");
             return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+        }
+
+        private void ExecuteRequierdFieldRule(string ruleCode, ShipmentPM entity, List<ObjectTableRuleField> requiredFields, List<ObjectTableRule> myRules, List<ObjectTableRuleField> allFields, int tenant)
+        {
+            ObjectTableRule rule = myRules.Where(a => a.RuleCode == ruleCode && (a.Tenant == tenant || a.Tenant == 0) && a.InActive == false).FirstOrDefault();
+            if (rule != null)
+            {
+                List<ObjectTableRuleField> ruleFields = allFields.Where(rf => rf.ObjectTableRuleId == rule.Id && rf.RuleNotificationTypeCode == "ERR").ToList();
+                
+                if (rule.TriggerTypeCode == "ALLW")
+                {
+                    //this.GenerateRuleErrors(ruleFields, entity, requiredFields);
+                }
+                else
+                {
+                    //if (rule.AdvancedCondition == false && rule.RuleConditionFields.length > 0)
+                    //{
+                    //    bool required = this.ValidateConditionFieldsRule(entity, rule.RuleConditionFields);
+
+                    //    if (required)
+                    //    {
+                    //        this.GenerateRuleErrors(ruleFields, entity, requiredFields);
+                    //    }
+                    //}
+                }
+            }
         }
     }
 }

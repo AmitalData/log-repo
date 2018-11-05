@@ -274,6 +274,7 @@
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
+    <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />
@@ -510,6 +511,7 @@
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.html" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DetectUserInActivity.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.html" />
+    <Content Include="Infrastructure\Components\LogitudeComponents\TimeInput.html" />
     <Content Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
