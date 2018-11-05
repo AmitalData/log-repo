@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
@@ -24,6 +24,7 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
     OwnerId: string;
     ProjectId: string;
     BudgetId: string;
+    ExternalProjectNumber: string;
 
     queryFilterItems: QueryFilterItem[];
     public AgentId = null;
@@ -138,6 +139,12 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ExternalProjectNumber";
+            this.queryFilterItem.FieldValue = this.ExternalProjectNumber;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;

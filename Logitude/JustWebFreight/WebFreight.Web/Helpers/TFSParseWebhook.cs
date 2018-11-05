@@ -144,7 +144,6 @@ namespace WebFreight.Web.Helpers
         {
             ITimeManagementContext myContext = TimeManagementContext.GetContext(Tenant);
             TMEmployeeTimeRepository tmEmployeeTimeRepository = new TMEmployeeTimeRepository(myContext);
-            //TMEmployeeTimeUpdateService service = new TMEmployeeTimeUpdateService(myContext);
             TMProjectRepository tmProjectRepository = new TMProjectRepository(myContext);
             ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(Tenant);
             UserRepository userRepository = new UserRepository(Tenant);
@@ -209,8 +208,6 @@ namespace WebFreight.Web.Helpers
                     SprintRepository sprintRepository = new SprintRepository(Tenant);
                     var sprintPOCO = sprintRepository.GetSprintByName(sprint, Tenant);
                     newItem.SprintId = sprintPOCO != null ? sprintPOCO.Id : null;
-                    //newItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                   // service.Update(newItem, true);
                     tmEmployeeTimeRepository.Add(newItem);
                     tmEmployeeTimeRepository.SubmitChanges();
                 }

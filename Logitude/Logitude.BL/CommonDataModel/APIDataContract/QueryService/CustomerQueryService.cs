@@ -22,8 +22,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 CustomerPM temp = this.MapAndValidate(MyEntity, Tenant, ComputingPartnerCode);
                 temp.Tenant = Tenant;
                 temp.PartnerTypeId = "CS";
-                temp.CustomerStatusCode = "ACT";
-                temp.IsCustomer = true;
+                temp.CustomerStatusCode = "ACT";                
                 temp.CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.UpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
 

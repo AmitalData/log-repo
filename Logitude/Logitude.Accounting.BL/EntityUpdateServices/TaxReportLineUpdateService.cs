@@ -154,9 +154,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         entityPM.StatusCode = "3";
                     }
+                    else
+                    {
+                        entityPM.StatusCode = "6";
+                    }
+
                 }
 
-                else { entityPM.StatusCode = "6"; }
+                else
+                {
+                    entityPM.StatusCode = "6";
+                }
+
 
 
             }
