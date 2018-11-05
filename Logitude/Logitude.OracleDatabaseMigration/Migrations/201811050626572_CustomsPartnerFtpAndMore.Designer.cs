@@ -7,13 +7,13 @@ namespace Logitude.OracleDatabaseMigration.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddCustomsPartnerFtp : IMigrationMetadata
+    public sealed partial class CustomsPartnerFtpAndMore : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddCustomsPartnerFtp));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CustomsPartnerFtpAndMore));
         
         string IMigrationMetadata.Id
         {
-            get { return "201811040823109_CustomsPartnerFtp"; }
+            get { return "201811050626572_CustomsPartnerFtpAndMore"; }
         }
         
         string IMigrationMetadata.Source

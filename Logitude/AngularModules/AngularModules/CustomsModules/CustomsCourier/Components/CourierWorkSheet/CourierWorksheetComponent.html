@@ -159,11 +159,10 @@
                                                     </div>
 
                                                     <div class="ToggleButtonMenu" style="width:115px; left: 0px; right: initial ;top:22px;text-align:center">
-                                                        <!--[disabled]="!IsActionButtonsEnabled"-->
                                                         <button style="text-align:right" (click)="OpenCourierMaster('General')">{{'Customs.Declaration.TH.General' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="OpenCourierMaster('ConnectedDeclarations')">{{'General.O.ConnectedDeclarations' |TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="DeclarationsStatusRequestMethod()" >{{'Customs.Declaration.O.DeclarationStatusRequest' | TextCodeTranslationPipe }}</button>
-                                                        <button style="text-align:right" (click)="SendFTPMamanRequestMethod()">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
+                                                        <button style="text-align:right" (click)="SendFTPMamanRequestMethod()" [disabled]="!IsMamanEnabled">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
                                                     </div>
 
                                                 </div>
