@@ -2,6 +2,8 @@
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.DataContract;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
@@ -410,33 +412,33 @@ namespace Logitude.Accounting.BL.CoreBL
 		//	//
 		//	// Line: [report lines]
 		//	//
-		//	foreach (TaxReportLinePM itemPM in taxReport.TaxReportLines)
+		//	foreach (TaxReportLinePM lineList in taxReport.TaxReportLines)
 		//	{
 		//		// validations
-		//		if (itemPM.ReferenceDate == null) throw new ApplicationException("Reference Date is empty! line:" + itemPM.Line);
+		//		if (lineList.ReferenceDate == null) throw new ApplicationException("Reference Date is empty! line:" + lineList.Line);
 
 		//		//create line 
 		//		string line = "";
-		//		line += itemPM.LineTypeCode;
+		//		line += lineList.LineTypeCode;
 
-		//		if (itemPM.VatNumber == null) itemPM.VatNumber = "0";
-		//		if (itemPM.VatNumber.Length > 9) itemPM.VatNumber = itemPM.VatNumber.Substring(0, 9);
-		//		line += itemPM.VatNumber.PadLeft(9, '0');
+		//		if (lineList.VatNumber == null) lineList.VatNumber = "0";
+		//		if (lineList.VatNumber.Length > 9) lineList.VatNumber = lineList.VatNumber.Substring(0, 9);
+		//		line += lineList.VatNumber.PadLeft(9, '0');
 
-		//		line += itemPM.ReferenceDate.Value.ToString("yyyyMMdd");
+		//		line += lineList.ReferenceDate.Value.ToString("yyyyMMdd");
 
-		//		if (itemPM.ReferecneGroup.Length > 4) itemPM.ReferecneGroup = itemPM.ReferecneGroup.Substring(0, 4);
-		//		line += itemPM.ReferecneGroup.PadLeft(4, '0');
+		//		if (lineList.ReferecneGroup.Length > 4) lineList.ReferecneGroup = lineList.ReferecneGroup.Substring(0, 4);
+		//		line += lineList.ReferecneGroup.PadLeft(4, '0');
 
-		//		if (itemPM.Reference.Length > 9) itemPM.Reference = itemPM.Reference.Substring(0, 9);
-		//		line += itemPM.Reference.PadLeft(9, '0');
+		//		if (lineList.Reference.Length > 9) lineList.Reference = lineList.Reference.Substring(0, 9);
+		//		line += lineList.Reference.PadLeft(9, '0');
 
 		//		//VatAmount
-		//		line += Math.Abs(Math.Truncate(itemPM.VatAmount.Value)).ToString().PadLeft(9, '0');
+		//		line += Math.Abs(Math.Truncate(lineList.VatAmount.Value)).ToString().PadLeft(9, '0');
 
 		//		//VatableInvoiceAmount
-		//		line += itemPM.VatableInvoiceAmount >= 0 ? '+' : '-';
-		//		line += Math.Abs(Math.Truncate(itemPM.VatableInvoiceAmount.Value)).ToString().PadLeft(10, '0');
+		//		line += lineList.VatableInvoiceAmount >= 0 ? '+' : '-';
+		//		line += Math.Abs(Math.Truncate(lineList.VatableInvoiceAmount.Value)).ToString().PadLeft(10, '0');
 
 
 		//		line += "000000000";
@@ -484,7 +486,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             //get tax report
             TaxReportQueryService reportQS = new TaxReportQueryService(tenant);
-            TaxReportPM taxReport = reportQS.GetSingle(taxReportId, true, false);
+            TaxReportPM taxReport = reportQS.GetSingle(taxReportId, false, false);
 
             //DECLARATIONS
             StringBuilder myStringBuilder = new StringBuilder();
@@ -559,34 +561,39 @@ namespace Logitude.Accounting.BL.CoreBL
             //
             // Line: [report lines]
             //
-            foreach (TaxReportLinePM itemPM in taxReport.TaxReportLines)
+
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            TaxReportLineListQueryService trLineQS = new TaxReportLineListQueryService(MyContext);
+            List<TaxReportLineList> lines = trLineQS.GetReportLines(taxReport.Id, tenant);
+
+            foreach (TaxReportLineList lineList in lines)
             {
                 // validations
-                if (itemPM.ReferenceDate == null) throw new ApplicationException("Reference Date is empty! line:" + itemPM.Line);
+                if (lineList.ReferenceDate == null) throw new ApplicationException("Reference Date is empty! line:" + lineList.Line);
 
                 //create line 
                 string line = "";
-                myStringBuilder.Append("Oxxxxxxx");
-                line += itemPM.LineTypeCode;
+                myStringBuilder.Append("O");
+                line += lineList.LineTypeCode;
 
-                if (itemPM.VatNumber == null) itemPM.VatNumber = "0";
-                if (itemPM.VatNumber.Length > 9) itemPM.VatNumber = itemPM.VatNumber.Substring(0, 9);
-                myStringBuilder.Append(itemPM.VatNumber.PadLeft(9, '0'));
+                if (lineList.VatNumber == null) lineList.VatNumber = "0";
+                if (lineList.VatNumber.Length > 9) lineList.VatNumber = lineList.VatNumber.Substring(0, 9);
+                myStringBuilder.Append(lineList.VatNumber.PadLeft(9, '0'));
 
-                myStringBuilder.Append(itemPM.ReferenceDate.Value.ToString("yyyyMMdd"));
+                myStringBuilder.Append(lineList.ReferenceDate.Value.ToString("yyyyMMdd"));
 
-                if (itemPM.ReferecneGroup.Length > 4) itemPM.ReferecneGroup = itemPM.ReferecneGroup.Substring(0, 4);
-                myStringBuilder.Append(itemPM.ReferecneGroup.PadLeft(4, '0'));
+                if (lineList.ReferecneGroup.Length > 4) lineList.ReferecneGroup = lineList.ReferecneGroup.Substring(0, 4);
+                myStringBuilder.Append(lineList.ReferecneGroup.PadLeft(4, '0'));
 
-                if (itemPM.Reference.Length > 9) itemPM.Reference = itemPM.Reference.Substring(0, 9);
-                myStringBuilder.Append(itemPM.Reference.PadLeft(9, '0'));
+                if (lineList.Reference.Length > 9) lineList.Reference = lineList.Reference.Substring(0, 9);
+                myStringBuilder.Append(lineList.Reference.PadLeft(9, '0'));
 
                 //VatAmount
-                myStringBuilder.Append(Math.Abs(Math.Truncate(itemPM.VatAmount.Value)).ToString().PadLeft(9, '0'));
+                myStringBuilder.Append(Math.Abs(Math.Truncate(lineList.VatAmount.Value)).ToString().PadLeft(9, '0'));
 
                 //VatableInvoiceAmount
-                myStringBuilder.Append(itemPM.VatableInvoiceAmount >= 0 ? '+' : '-');
-                myStringBuilder.Append(Math.Abs(Math.Truncate(itemPM.VatableInvoiceAmount.Value)).ToString().PadLeft(10, '0'));
+                myStringBuilder.Append(lineList.VatableInvoiceAmount >= 0 ? '+' : '-');
+                myStringBuilder.Append(Math.Abs(Math.Truncate(lineList.VatableInvoiceAmount.Value)).ToString().PadLeft(10, '0'));
 
 
                 myStringBuilder.Append("000000000");
@@ -617,7 +624,6 @@ namespace Logitude.Accounting.BL.CoreBL
             //}
 
             //update entity
-            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
             taxReport.ChangeSetOp = ChangeSetOperation.Update;
             taxReport.StatusCode = "T"; // T- Transmitted

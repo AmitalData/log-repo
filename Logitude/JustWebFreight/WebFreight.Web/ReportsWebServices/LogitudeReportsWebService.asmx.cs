@@ -9567,6 +9567,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_BudgetId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BudgetId").FirstOrDefault();
+            QueryFilterItem filterItem_ExternalProjectNumber = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ExternalProjectNumber").FirstOrDefault();
 
             DateTime? fromDate = null;
             DateTime? toDate = null;
@@ -9575,7 +9576,8 @@ namespace WebFreight.Web.ReportsWebServices
             string budgetId = null;
             string projectId = null;
             string ownerId = null;
-            bool IncludeInnerProject;
+            string externalProjectNumber = null;
+            bool IncludeInnerProject = false ;
 
             if (filterItem_CustomerId != null)
             {
@@ -9617,6 +9619,14 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            if (filterItem_ExternalProjectNumber != null)
+            {
+                if (filterItem_ExternalProjectNumber.FieldValue != null)
+                {
+                    externalProjectNumber = filterItem_ExternalProjectNumber.FieldValue.ToString();
+                }
+            }
+            
             if (filterItem_ProjectId != null)
             {
                 if (filterItem_ProjectId.FieldValue != null)
@@ -9659,6 +9669,18 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            if (IncludeInnerProject == false)
+            {
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.IsInnerProject == false
+                              && myProjct.IsProrated == false
+                              select myTMEmployeeTime);
+            }
+          
             if (customerId != null)
             {
                 var customerCard = cardRep.GetSingleCard(customerId, tenant);
@@ -9673,10 +9695,10 @@ namespace WebFreight.Web.ReportsWebServices
                               where myTMEmployeeTime.Tenant == tenant
                               && myProjct.Tenant == tenant
                               && myProjct.CustomerId == customerId
-                              && myProjct.BudgetId == budgetId
                               select myTMEmployeeTime);
             }
-            else
+
+            if(budgetId != null)
             {
                 iQueryable = (from myTMEmployeeTime in iQueryable
                               join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
@@ -9684,6 +9706,17 @@ namespace WebFreight.Web.ReportsWebServices
                               where myTMEmployeeTime.Tenant == tenant
                               && myProjct.Tenant == tenant
                               && myProjct.BudgetId == budgetId
+                              select myTMEmployeeTime);
+            }
+
+            if(externalProjectNumber != null)
+            {
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.ExternalProjectNumber == externalProjectNumber
                               select myTMEmployeeTime);
             }
 

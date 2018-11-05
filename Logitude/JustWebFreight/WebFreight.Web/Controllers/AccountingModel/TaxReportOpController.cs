@@ -174,14 +174,14 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 }
 
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-                TaxReportLineListQueryService category2Query = new TaxReportLineListQueryService(MyContext);
+                TaxReportLineListQueryService trLineQS = new TaxReportLineListQueryService(MyContext);
 
-                List<TaxReportLineList> entityLists = category2Query.GetList(queryOperations, tenant);
+                List<TaxReportLineList> entityLists = trLineQS.GetList(queryOperations, tenant);
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = category2Query.GetListCount(queryOperations, tenant);
+                    int count = trLineQS.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 
