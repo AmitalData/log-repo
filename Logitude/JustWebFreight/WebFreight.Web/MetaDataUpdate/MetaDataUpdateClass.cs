@@ -20435,7 +20435,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 1,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 0,
-
                 FullFieldLable = "LocalName",
                 FullLocalDefaultText = "שם מקומי",
                 FieldName = "LocalName",
@@ -20450,7 +20449,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ListFieldLable = "LocalNameListLable",
-
                 ListLableDefaultText = "Local Name",
                 DisplayInList = true,
                 ValidForQuerySection1 = "Customer",
@@ -20590,58 +20588,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Website",
                 PMPropertyPath = "Website"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            //{
-            //    DefaultText = "Bill To",
-            //    DisplayOnLookUp = false,
-            //    FullFieldLable = "BillToId",
-            //    FieldName = "BillToId",
-            //    FieldsDataType = "LookUp",
-            //    IsCustom = false,
-            //    Isoveridden = false,
-            //    IsRequired = false,
-            //    MaxLength = 15,
-            //    MinLength = 0,
-            //    ObjectTableId = CustomersObject.Id,
-            //    ObjectTableName = CustomersObject.Name,
-            //    Tenant = 0,
-            //    TextCodeType = "F",
-            //    LookUpTableId = CardsObject.Id,
-            //    ListFieldLable = "BillToIdListLable",
-            //    ListLableDefaultText = "Bill To",
-            //    DisplayInList = false,
-            //    CanFilter = false,
-            //    ValidForQuerySection1 = CustomersObject.Name,
-            //    Operator = "Equals",
-            //    ListPropertyPath = "BillToId",
-            //    PMPropertyPath = "BillToId",
-            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            //{
-            //    DefaultText = "Bill To",
-            //    FullFieldLable = "BillToName",
-            //    FieldName = "BillToName",
-            //    FieldsDataType = "Text",
-            //    IsCustom = false,
-            //    Isoveridden = false,
-            //    IsRequired = false,
-            //    MaxLength = 100,
-            //    MinLength = 0,
-            //    ObjectTableId = CustomersObject.Id,
-            //    ObjectTableName = CustomersObject.Name,
-            //    Tenant = 0,
-            //    TextCodeType = "F",
-            //    ListFieldLable = "BillToNameListLable",
-            //    ListLableDefaultText = "Bill To",
-            //    DisplayInList = false,
-            //    ValidForQuerySection1 = CustomersObject.Name,
-            //    Operator = "StartsWith",
-            //    ListPropertyPath = "BillToName",
-            //    PMPropertyPath = "BillToName",
-            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "VAT No.",
@@ -21022,9 +20969,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "CityNameListLable",
                 ListLableDefaultText = "City",
                 DisplayInList = true,
-                CanFilter = false,
-                ValidForQuerySection1 = CustomersObject.Name,
+                CanFilter = true,
                 Operator = "StartsWith",
+                ValidForQuerySection1 = CustomersObject.Name,                
                 ListPropertyPath = "CityName",
                 PMPropertyPath = "CityName"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
@@ -21359,57 +21306,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "IBANNumber",
                 PMPropertyPath = "IBANNumber",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            //{
-            //    DefaultText = "Country",
-            //    FullFieldLable = "MainAddressCountryId",
-            //    FieldName = "MainAddressCountryId",
-            //    FieldsDataType = "LookUp",
-            //    IsRequired = false,
-            //    MaxLength = 15,
-            //    MinLength = 0,
-            //    ObjectTableId = CustomersObject.Id,
-            //    ObjectTableName = CustomersObject.Name,
-            //    Tenant = 0,
-            //    TextCodeType = "F",
-            //    ListFieldLable = "MainAddressCountryIdListLable",
-            //    ListLableDefaultText = "Country",
-            //    DisplayInList = false,
-            //    ValidForQuerySection1 = "Customer",
-            //    LookUpTableId = CountriesObject.Id,
-            //    CanFilter = true,
-            //    IsCustomFilter = true,
-            //    Operator = "StartsWith",
-            //    ListPropertyPath = "DummyMainAddressCountryId",
-            //    PMPropertyPath = "DummyMainAddressCountryId",
-            //    DisplayInEntityVariables = false,
-            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            //{
-            //    DefaultText = "Country",
-            //    FullFieldLable = "MainAddressCountryName",
-            //    FieldName = "MainAddressCountryName",
-            //    FieldsDataType = "Text",
-            //    IsRequired = false,
-            //    MaxLength = 120,
-            //    MinLength = 0,
-            //    ObjectTableId = CustomersObject.Id,
-            //    ObjectTableName = CustomersObject.Name,
-            //    Tenant = 0,
-            //    TextCodeType = "F",
-            //    ListFieldLable = "MainAddressCountryNameListLable",
-            //    ListLableDefaultText = "Country",
-            //    DisplayInList = true,
-            //    ValidForQuerySection1 = "Customer",
-            //    CanFilter = false,
-            //    Operator = "StartsWith",
-            //    ListPropertyPath = "DummyMainAddressCountryName",
-            //    PMPropertyPath = "DummyMainAddressCountryName",
-            //    DisplayInEntityVariables = false,
-            //}, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Is Credit Limit Enabled",
@@ -21500,8 +21397,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "SAT Foreign RFC",
@@ -21523,9 +21419,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+                       
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Zip Code",
@@ -21573,8 +21467,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Address1",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Address2",
@@ -21598,9 +21491,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Address2",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+                       
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Phone",
@@ -21624,8 +21515,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Phone",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Country",
@@ -21649,32 +21539,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "CountryName",
                 ValidForQuerySection1 = "Customer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            {
-                DefaultText = "City",
-                DisplayOnLookUp = false,
-                FullFieldLable = "CityName",
-                FieldName = "CityName",
-                FieldsDataType = "Text",
-                IsCustom = false,
-                Isoveridden = false,
-                IsRequired = false,
-                MaxLength = 25,
-                MinLength = 0,
-                ObjectTableId = CustomersObject.Id,
-                ObjectTableName = CustomersObject.Name,
-                Tenant = 0,
-                TextCodeType = "F",
-                ListFieldLable = "CityName",
-                ListLableDefaultText = "City",
-                DisplayInList = true,
-                CanFilter = true,
-                ListPropertyPath = "CityName",
-                ValidForQuerySection1 = "Customer",
-            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Competitor",
@@ -21700,8 +21565,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "CompetitorFields",
                 DisplayInEntityVariables = false,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
 
             this.ObjectContext.SaveChanges();
         }
@@ -22674,9 +22537,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "Address2",
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+                       
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Phone",
@@ -22701,7 +22562,27 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
-
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = AgentObject.Id,
+                ObjectTableName = AgentObject.Name,
+                ValidForQuerySection1 = AgentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Country",
@@ -22709,10 +22590,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 FullFieldLable = "CountryName",
                 FieldName = "CountryName",
                 FieldsDataType = "Text",
-                IsCustom = false,
-                Isoveridden = false,
-                IsRequired = false,
-                MaxLength = 25,
+                MaxLength = 120,
                 MinLength = 0,
                 ObjectTableId = AgentObject.Id,
                 ObjectTableName = AgentObject.Name,
@@ -22721,7 +22599,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "CountryName",
                 ListLableDefaultText = "Country",
                 DisplayInList = true,
-                CanFilter = true,
                 ListPropertyPath = "CountryName",
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
@@ -22733,9 +22610,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 FullFieldLable = "CityName",
                 FieldName = "CityName",
                 FieldsDataType = "Text",
-                IsCustom = false,
-                Isoveridden = false,
-                IsRequired = false,
                 MaxLength = 25,
                 MinLength = 0,
                 ObjectTableId = AgentObject.Id,
@@ -22746,6 +22620,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListLableDefaultText = "City",
                 DisplayInList = true,
                 CanFilter = true,
+                Operator = "StartsWith",
                 ListPropertyPath = "CityName",
                 ValidForQuerySection1 = "Agent",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
@@ -22757,6 +22632,71 @@ namespace WebFreight.Web.MetaDataUpdate
         #region CreateCustomAgentFields()
         private void CreateCustomAgentFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = CustomAgentsObject.Id,
+                ObjectTableName = CustomAgentsObject.Name,
+                ValidForQuerySection1 = CustomAgentsObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = CustomAgentsObject.Id,
+                ObjectTableName = CustomAgentsObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = CustomAgentsObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = CustomAgentsObject.Id,
+                ObjectTableName = CustomAgentsObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = CustomAgentsObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Primary Contact Name",
@@ -23487,6 +23427,71 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShippingAgentsObject.Id,
+                ObjectTableName = ShippingAgentsObject.Name,
+                ValidForQuerySection1 = ShippingAgentsObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = ShippingAgentsObject.Id,
+                ObjectTableName = ShippingAgentsObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = ShippingAgentsObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = ShippingAgentsObject.Id,
+                ObjectTableName = ShippingAgentsObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = ShippingAgentsObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -23640,8 +23645,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -24284,6 +24288,71 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = AirlinesObject.Id,
+                ObjectTableName = AirlinesObject.Name,
+                ValidForQuerySection1 = AirlinesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = AirlinesObject.Id,
+                ObjectTableName = AirlinesObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = AirlinesObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = AirlinesObject.Id,
+                ObjectTableName = AirlinesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = AirlinesObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -24437,9 +24506,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -25792,6 +25859,71 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShippingLinesObject.Id,
+                ObjectTableName = ShippingLinesObject.Name,
+                ValidForQuerySection1 = ShippingLinesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = ShippingLinesObject.Id,
+                ObjectTableName = ShippingLinesObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = ShippingLinesObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = ShippingLinesObject.Id,
+                ObjectTableName = ShippingLinesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = ShippingLinesObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -26708,6 +26840,71 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = TruckersObject.Id,
+                ObjectTableName = TruckersObject.Name,
+                ValidForQuerySection1 = TruckersObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = TruckersObject.Id,
+                ObjectTableName = TruckersObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = TruckersObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = TruckersObject.Id,
+                ObjectTableName = TruckersObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = TruckersObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -26819,8 +27016,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "UsoCFDICode",
                 HelpTextDefaultText = "Use of Digital Fiscal Receipt through Internet"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Forma Pago",
@@ -26839,9 +27035,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+                       
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "SAT Foreign RFC",
@@ -26863,10 +27057,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
-
+                                 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -27190,30 +27381,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "InActive",
                 PMPropertyPath = "InActive"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-            //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
-            //{
-            //    DefaultText = "Inactive Trucker",
-            //    DisplayOnLookUp = false,
-            //    FieldLable = "InActive",
-            //    FieldName = "InActive",
-            //    FieldsDataType = "Boolean",
-            //    IsCustom = false,
-            //    Isoveridden = false,
-            //    IsRequired = false,
-            //    MaxLength = 15,
-            //    MinLength = 0,
-            //    ObjectTableId = TruckersObject.Id,
-            //    ObjectTableName = TruckersObject.Name,
-            //    Tenant = 0,
-            //    TextCodeType = "F",
-            //    ListFieldLable = "InActiveListLable",
-            //    ListLableDefaultText = "Inactive",
-            //    DisplayInList = true,
-            //    CanFilter = true,
-            //    Operator = "StartsWith"
-            //}, TextCodeRepository, ObjectFieldsRepository,objectFields,textCodes);
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "VAT No.",
@@ -27514,8 +27682,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "IBANNumber",
                 PMPropertyPath = "IBANNumber",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             this.ObjectContext.SaveChanges();
         }
         #endregion
@@ -27523,6 +27690,71 @@ namespace WebFreight.Web.MetaDataUpdate
         #region CreateVendorFields()
         private void CreateVendorFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = VendorObject.Id,
+                ObjectTableName = VendorObject.Name,
+                ValidForQuerySection1 = VendorObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = VendorObject.Id,
+                ObjectTableName = VendorObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = VendorObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = VendorObject.Id,
+                ObjectTableName = VendorObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = VendorObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Primary Contact Name",
@@ -27676,10 +27908,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SATForeignRFC",
                 PMPropertyPath = "SATForeignRFC"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -28254,6 +28483,71 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = WareHouseObject.Id,
+                ObjectTableName = WareHouseObject.Name,
+                ValidForQuerySection1 = WareHouseObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = WareHouseObject.Id,
+                ObjectTableName = WareHouseObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = WareHouseObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = WareHouseObject.Id,
+                ObjectTableName = WareHouseObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = WareHouseObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -28362,6 +28656,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "MetodoPagoCode",
                 HelpTextDefaultText = "Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "UsoCFDI",
@@ -28405,9 +28700,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "PaymentMethodCode",
                 HelpTextDefaultText = "Payment Method"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
-
+                       
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Business Area",
@@ -28588,7 +28881,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 LookUpTableId = null,
-
                 ValidForQuerySection1 = "Warehouse",
                 Operator = "StartsWith",
                 ListPropertyPath = "ComputedLocalName",
@@ -35478,7 +35770,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "EntityStatusId",
                 PMPropertyPath = "EntityStatusId",
-                DisplayOnly = true,
+                //DisplayOnly = true,
                 HelpTextCode = "EntityStatusId",
                 HelpTextDefaultText = "The status to which the entity should switch when this event occurs for that entity.",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
@@ -50900,6 +51192,71 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Country",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ParticipantObject.Id,
+                ObjectTableName = ParticipantObject.Name,
+                ValidForQuerySection1 = ParticipantObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                IsCustomFilter = true,
+                Operator = "Equals",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country",
+                FullFieldLable = "CountryName",
+                FieldName = "CountryName",
+                FieldsDataType = "Text",
+                ObjectTableId = ParticipantObject.Id,
+                ObjectTableName = ParticipantObject.Name,
+                Tenant = 0,
+                MaxLength = 120,
+                MinLength = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CountryNameListLabel",
+                ListLableDefaultText = "Country",
+                DisplayInList = true,
+                ValidForQuerySection1 = ParticipantObject.Name,
+                ListPropertyPath = "CountryName",
+                PMPropertyPath = "CountryName",
+                DisplayInEntityVariables = false,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "City",
+                DisplayOnLookUp = false,
+                FullFieldLable = "CityName",
+                FieldName = "CityName",
+                FieldsDataType = "Text",
+                MaxLength = 25,
+                MinLength = 0,
+                ObjectTableId = ParticipantObject.Id,
+                ObjectTableName = ParticipantObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "CityNameListLable",
+                ListLableDefaultText = "City",
+                DisplayInList = true,
+                CanFilter = true,
+                Operator = "StartsWith",
+                ValidForQuerySection1 = ParticipantObject.Name,
+                ListPropertyPath = "CityName",
+                PMPropertyPath = "CityName"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Primary Contact Name",
                 FullFieldLable = "PrimaryContactName",
                 FieldName = "PrimaryContactName",
@@ -58544,16 +58901,15 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature customeAgentADDRESSESFeature = tenantFeatures.Where(d => d.Code == "ADDRESSES" && d.ObjectTableId == CustomAgentsObject.Id).FirstOrDefault();
             Feature customeAgentCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == CustomAgentsObject.Id).FirstOrDefault();
             Feature customeAgentEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == CustomAgentsObject.Id).FirstOrDefault();
+            Feature customAgentDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == CustomAgentsObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.CustomAgentAccountingTabControl", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUAC", Tenant = 0, IndexOrder = 2, HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUCO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUEV", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-
-
-
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customAgentDOCSINFeature.Id, ControlPath = "", ObjectTableId = CustomAgentsObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "CGDI", Tenant = 0, IndexOrder = 5, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/CustomAgent/CustomAgentDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = customeAgentEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CustomAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "CustomAgent.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "CUEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region ShippingAgent
@@ -58562,12 +58918,15 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature shippingAgentADDRESSESFeature = tenantFeatures.Where(d => d.Code == "ADDRESSES" && d.ObjectTableId == ShippingAgentsObject.Id).FirstOrDefault();
             Feature shippingAgentCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == ShippingAgentsObject.Id).FirstOrDefault();
             Feature shippingAgentEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == ShippingAgentsObject.Id).FirstOrDefault();
+            Feature shippingAgentDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == ShippingAgentsObject.Id).FirstOrDefault();
+
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "SAGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "SABL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.ShippingAgentAccountingTabControl", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "SAAC", Tenant = 0, IndexOrder = 2, HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "SAAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "SACO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "SAEV", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentDOCSINFeature.Id, ControlPath = "", ObjectTableId = ShippingAgentsObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "SGDI", Tenant = 0, IndexOrder = 5, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/ShippingAgent/ShippingAgentDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingAgentEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShippingAgentTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingAgent.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "SAEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region Airlines
@@ -58580,6 +58939,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature airlineEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == AirlinesObject.Id).FirstOrDefault();
             Feature airlineCCSFeature = tenantFeatures.Where(d => d.Code == "CCSSettings" && d.ObjectTableId == AirlinesObject.Id).FirstOrDefault();
             Feature airlineAdaptationsFeature = tenantFeatures.Where(d => d.Code == "Adaptations" && d.ObjectTableId == AirlinesObject.Id).FirstOrDefault();
+            Feature airlineDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == AirlinesObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
@@ -58590,7 +58950,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineSURCHARGETARRIFFeature.Id, ControlPath = "Simplog.FreightLib.Views.TariffTabs.SurchargeTariff", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.SurchargeTariff" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALSU", Tenant = 0, IndexOrder = 6, HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AirlineSurchargeTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineCCSFeature.Id, ControlPath = "Simplog.FreightLib.Views.Tabs.AirlineCCSSettingsTabControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.CCSSettings" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALCH", Tenant = 0, IndexOrder = 7, HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AirlineCCSSettingsTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineAdaptationsFeature.Id, ControlPath = "Simplog.FreightLib.Views.Tabs.AirlineAdaptationsTabControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.Adaptations" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALDP", Tenant = 0, IndexOrder = 8, HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AirlineAdaptationsTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALEV", Tenant = 0, IndexOrder = 9 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineDOCSINFeature.Id, ControlPath = "", ObjectTableId = AirlinesObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALDI", Tenant = 0, IndexOrder = 9, HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AirlineDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = airlineEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AirlineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Airline.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "ALEV", Tenant = 0, IndexOrder = 10 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region ShippingLine
@@ -58600,6 +58961,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature shippingLineCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == ShippingLinesObject.Id).FirstOrDefault();
             Feature shippingLineEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == ShippingLinesObject.Id).FirstOrDefault();
             Feature shippingLineFeature_INTTRA = tenantFeatures.Where(d => d.Code == "INTTRA" && d.ObjectTableId == ShippingLinesObject.Id).FirstOrDefault();
+            Feature shippingLineDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == ShippingLinesObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
@@ -58607,7 +58969,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineFeature_INTTRA.Id, ControlPath = "NoTab", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.INTTRA" && d.Tenant == 0).FirstOrDefault().Id, Code = "INTT", Tenant = 0, IndexOrder = 3, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/ShippingLine/ShippingLineInttraTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLAD", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLCO", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineDOCSINFeature.Id, ControlPath = "", ObjectTableId = ShippingLinesObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLDI", Tenant = 0, IndexOrder = 6, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/ShippingLine/ShippingLineDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = shippingLineEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ShippingLineTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ShippingLine.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "SLEV", Tenant = 0, IndexOrder = 7 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region Trucker
@@ -58616,13 +58979,15 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature truckerADDRESSESFeature = tenantFeatures.Where(d => d.Code == "ADDRESSES" && d.ObjectTableId == TruckersObject.Id).FirstOrDefault();
             Feature truckerCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == TruckersObject.Id).FirstOrDefault();
             Feature truckerEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == TruckersObject.Id).FirstOrDefault();
+            Feature truckerDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == TruckersObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.TruckerAccountingTabControl", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRAC", Tenant = 0, IndexOrder = 2, HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRCO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "TREV", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerDOCSINFeature.Id, ControlPath = "", ObjectTableId = TruckersObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "TRDI", Tenant = 0, IndexOrder = 5, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Trucker/TruckerDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = truckerEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TruckerTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Trucker.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "TREV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region Vendor
@@ -58631,13 +58996,15 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature vendorADDRESSESFeature = tenantFeatures.Where(d => d.Code == "ADDRESSES" && d.ObjectTableId == VendorObject.Id).FirstOrDefault();
             Feature vendorCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == VendorObject.Id).FirstOrDefault();
             Feature vendorEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == VendorObject.Id).FirstOrDefault();
+            Feature vendorDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == VendorObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.VendorAccountingTabControl", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDAC", Tenant = 0, IndexOrder = 2, HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDCO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDEV", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorDOCSINFeature.Id, ControlPath = "", ObjectTableId = VendorObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDDI", Tenant = 0, IndexOrder = 5, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Vendor/VendorDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vendorEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = VendorTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Vendor.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "VDEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region warehouse
@@ -58646,13 +59013,15 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature warehouseADDRESSESFeature = tenantFeatures.Where(d => d.Code == "ADDRESSES" && d.ObjectTableId == WareHouseObject.Id).FirstOrDefault();
             Feature warehouseCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == WareHouseObject.Id).FirstOrDefault();
             Feature warehouseEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == WareHouseObject.Id).FirstOrDefault();
+            Feature warehouseDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == WareHouseObject.Id).FirstOrDefault();
 
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseGENERALFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHGC", Tenant = 0, IndexOrder = 0, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Warehouse/WarehouseGeneralTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.WarehouseAccountingTabControl", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHAC", Tenant = 0, IndexOrder = 2, HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Address" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHCO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHEV", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseDOCSINFeature.Id, ControlPath = "", ObjectTableId = WareHouseObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "WareHouse.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHDI", Tenant = 0, IndexOrder = 5, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Warehouse/WarehouseDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = warehouseEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WareHouseTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Warehouse.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "WHEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #region Participant
@@ -58662,14 +59031,16 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ParticipantCONTACTSFeature = tenantFeatures.Where(d => d.Code == "CONTACTS" && d.ObjectTableId == ParticipantObject.Id).FirstOrDefault();
             Feature ParticipantEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == ParticipantObject.Id).FirstOrDefault();
             Feature ParticipantNOTIFYFeature = tenantFeatures.Where(d => d.Code == "NOTIFY" && d.ObjectTableId == ParticipantObject.Id).FirstOrDefault();
+            Feature ParticipantDOCSINFeature = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == ParticipantObject.Id).FirstOrDefault();
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantGENERALFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.ParticipantGeneralTabControl", HtmlComponentUrl = "./Common/Components/Maintenance/Participant/ParticipantGeneralTabComponent", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantGENERALFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.ParticipantGeneralTabControl", HtmlComponentUrl = "./CommonPartners/Components/EditTabs/Participant//ParticipantGeneralTabComponent", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCGC", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantBILLINGFeature.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Billing" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCBL", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = generalAccountingTransfer.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.ParticipantAccountingTabControl", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCAC", Tenant = 0, IndexOrder = 2 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantADDRESSESFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Addresses" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCAD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantCONTACTSFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnerContactsTab", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Contacts" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCCO", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCEV", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantNOTIFYFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.ParticipantNotifyTabControl", HtmlComponentUrl = "./Common/Components/Maintenance/Participant/ParticipantNotifyTabComponent", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Notify" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCNO", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantDOCSINFeature.Id, ControlPath = "", ObjectTableId = ParticipantObject.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Code = "PTDI", Tenant = 0, IndexOrder = 6, HtmlComponentUrl = "./CommonModules/CommonPartners/Components/EditTabs/Participant/ParticipantDocsInTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCEV", Tenant = 0, IndexOrder = 7 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = ParticipantNOTIFYFeature.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.ParticipantNotifyTabControl", HtmlComponentUrl = "./CommonPartners/Components/EditTabs/Participant/ParticipantNotifyTabComponent", ObjectTableId = ParticipantTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Participant.TH.Notify" && d.Tenant == 0).FirstOrDefault().Id, Code = "PCNO", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #endregion
@@ -59716,6 +60087,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Addresses", DefaultText = "Addresses", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Contacts", DefaultText = "Contacts", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.Events", DefaultText = "Events", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vendor.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = VendorTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region customeAgent
@@ -59725,6 +60098,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Addresses", DefaultText = "Addresses", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Contacts", DefaultText = "Contacts", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.Events", DefaultText = "Events", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = CustomAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region shippingAgent
@@ -59734,6 +60109,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Addresses", DefaultText = "Addresses", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.Events", DefaultText = "Events", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingAgent.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = ShippingAgentTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region airlines
@@ -59748,6 +60125,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Events", DefaultText = "Events", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.CCSSettings", DefaultText = "CCS Settings", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Adaptations", DefaultText = "Adaptations", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = AirlineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region shippingLine
@@ -59758,6 +60137,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.Events", DefaultText = "Events", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.INTTRA", DefaultText = "INTTRA", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = ShippingLineTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             #endregion
 
             #region trucker
@@ -59767,6 +60147,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Addresses", DefaultText = "Addresses", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Contacts", DefaultText = "Contacts", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.Events", DefaultText = "Events", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = TruckerTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region warehouse
@@ -59776,6 +60158,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Address", DefaultText = "Address", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Contacts", DefaultText = "Contacts", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.Events", DefaultText = "Events", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = WareHouseTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region Participant
@@ -59786,6 +60170,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Contacts", DefaultText = "Contacts", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Events", DefaultText = "Events", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.Notify", DefaultText = "Notify", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Participant.TH.DocsIn", DefaultText = "Docs In", ObjectTableId = ParticipantTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+
             #endregion
             #endregion
 
@@ -64603,14 +64989,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
             Feature CustomerFeature_C12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OUTLOOKCONNETION", Packagable = true, ObjectTableId = CustomerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customer.Features.OutlookConnection", NameTextCodeDefaultText = "Outlook Connection", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CustomerFeature_C13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATEACTIVECUSTOMER", ObjectTableId = CustomerObjectTable.Id, Packagable = true, Tenant = tenant, NameTextCodeCode = "Customer.Features.CreateActiveCustomer", NameTextCodeDefaultText = "Allow creating active customers", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-
-
             Feature CustomerFeature_A23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWCUSTOMER", ObjectTableId = CustomerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customer.Features.NewCustomer", NameTextCodeDefaultText = "New Customer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-
-
-
+            
             #endregion        
 
             #region Agent Features
@@ -64640,6 +65020,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature VendorFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = VendorObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Vendor.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature VendorFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = VendorObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Vendor.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature VendorFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORS", Packagable = true, ObjectTableId = VendorObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Vendor.Features.Vendors", NameTextCodeDefaultText = "Vendors", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature VendorFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = VendorObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Vendor.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -64653,6 +65034,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature CustomAgentFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CustomAgent.Features.Events", NameTextCodeDefaultText = "Edit Custom Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CustomAgentFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = CustomAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CustomAgent.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CustomAgentFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMAGENT", Packagable = true, ObjectTableId = CustomAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CustomAgent.Features.CustomAgents", NameTextCodeDefaultText = "Custom Agents", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature CustomAgentFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = CustomAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CustomAgent.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -64673,6 +65055,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature AirlineFeature_A09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWAIRLINE", Packagable = true, ObjectTableId = AirlineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Airline.Features.NewAirline", NameTextCodeDefaultText = "New Airline", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AirlineFeature_A10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Adaptations", Packagable = true, ObjectTableId = AirlineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Airline.Features.Adaptations", NameTextCodeDefaultText = "Adaptations", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AirlineFeature_A11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RegistrationNotes", Packagable = true, ObjectTableId = AirlineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Airline.Features.RegistrationNotes", NameTextCodeDefaultText = "Registration Notes", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AirlineFeature_A12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = AirlineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Airline.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
             #endregion
 
             #region ShippingLine Features
@@ -64689,6 +65073,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             Feature ShippingLineFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPINGLINE", Packagable = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingLine.Features.Shippinglines", NameTextCodeDefaultText = "Shipping lines", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShippingLineFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWSHIPPINGLINE", Packagable = true, ObjectTableId = ShippingLineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingLine.Features.NewShippingline", NameTextCodeDefaultText = "New Shipping line", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingLineFeature_11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ShippingLineObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingLine.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -64702,19 +65087,51 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature TruckerFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = TruckerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Trucker.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature TruckerFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = TruckerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Trucker.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature TruckerFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRUCKERS", Packagable = true, ObjectTableId = TruckerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Trucker.Features.Truckers", NameTextCodeDefaultText = "Truckers", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature TruckerFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = TruckerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Trucker.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
-            #region OtherPartner Features
-            //TextCode OtherPartnerAddTextCode = new TextCode() { Code = "OtherPartner.Features.New", DefaultText = "New OtherPartner", Id = IdCounter.GetNumber().ToString(), ObjectTableId = OtherPartnerObjectTable.Id, Tenant = tenant, TextCodeTypeCode = "O" };
-            //TextCode OtherPartnerEditTextCode = new TextCode() { Code = "OtherPartner.Features.Edit", DefaultText = "Edit OtherPartner", Id = IdCounter.GetNumber().ToString(), ObjectTableId = OtherPartnerObjectTable.Id, Tenant = tenant, TextCodeTypeCode = "O" };
-            //textCodeRep.Add(OtherPartnerAddTextCode);
-            //textCodeRep.Add(OtherPartnerEditTextCode);
+            #region Warehouse Features
+            Feature WarehouseFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.New", NameTextCodeDefaultText = "New Warehouse", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Edit", NameTextCodeDefaultText = "Edit Warehouse", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Address", NameTextCodeDefaultText = "Address", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAREHOUSES", Packagable = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Warehouses", NameTextCodeDefaultText = "Warehouses", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature WarehouseFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
-            //Feature OtherPartnerNewfeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = OtherPartnerObjectTable.Id,  Tenant = tenant, NameTextCodeCode = "Trucker.Features.New", NameTextCodeDefaultText = "New Trucker" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature OtherPartnerEditfeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = OtherPartnerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Trucker.Features.Edit", NameTextCodeDefaultText = "Edit Trucker" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //FeaturesRepository.Add(OtherPartnerNewfeature1);
-            //FeaturesRepository.Add(OtherPartnerEditfeature1);
+            #endregion
+
+            #region ShippingAgent Features
+            Feature ShippingAgentFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.New", NameTextCodeDefaultText = "New ShippingAgent", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Edit", NameTextCodeDefaultText = "Edit ShippingAgent", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPINGAGENT", Packagable = true, ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Shippingagents", NameTextCodeDefaultText = "Shipping agents", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShippingAgentFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            #endregion
+
+            #region Participant Features
+            Feature ParticipantFeature01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.New", NameTextCodeDefaultText = "New Participant", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Edit", NameTextCodeDefaultText = "Edit Participant", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTICIPANTS", Packagable = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Participants", NameTextCodeDefaultText = "Participants", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFY", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Notify", NameTextCodeDefaultText = "Notify", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ParticipantFeature11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.DocsIn", NameTextCodeDefaultText = "Docs In", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
             #endregion
 
             #region Incoterm Features
@@ -64847,41 +65264,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature LogitudeLeadFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = LogitudeLeadObjectTable.Id, Tenant = tenant, NameTextCodeCode = "LogitudeLead.Features.PackageFeature", NameTextCodeDefaultText = "Logitude Leads Package Feature", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
-
-            //#region QuoteTemplateSectionFeatures
-            //Feature QuoteTemplateSectionFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = QuoteTemplateSectionObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSection.Features.New", NameTextCodeDefaultText = "New Quote Template Section", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature QuoteTemplateSectionFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = QuoteTemplateSectionObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSection.Features.Edit", NameTextCodeDefaultText = "Edit Quote Template Section", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature QuoteTemplateSectionFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = QuoteTemplateSectionObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSection.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-            //#endregion
-
-            //#region QuoteTemplateSettingFeatures
-            //Feature QuoteTemplateSettingFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = QuoteTemplateSettingObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSetting.Features.New", NameTextCodeDefaultText = "New QuoteTemplateSetting", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature QuoteTemplateSettingFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = QuoteTemplateSettingObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSetting.Features.Edit", NameTextCodeDefaultText = "Edit QuoteTemplateSetting", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature QuoteTemplateSettingFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = QuoteTemplateSettingObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateSetting.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-            //#endregion
-
-            //#region QuoteTemplateTextCodeFeatures
-
-            //Feature QuoteTemplateTextCodeFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = QuoteTemplateTextCodeObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextCode.Features.New", NameTextCodeDefaultText = "New QuoteTemplateTextCode", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature QuoteTemplateTextCodeFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = QuoteTemplateTextCodeObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextCode.Features.Edit", NameTextCodeDefaultText = "Edit QuoteTemplateTextCode", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature QuoteTemplateTextCodeFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = QuoteTemplateTextCodeObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextCode.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-            //#endregion
-
-            //#region QuoteTemplateTableDesignFeatures
-            //Feature QuoteTemplateTableDesignFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = QuoteTemplateTableDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTableDesign.Features.New", NameTextCodeDefaultText = "New QuoteTemplateTableDesign", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature QuoteTemplateTableDesignFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = QuoteTemplateTableDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTableDesign.Features.Edit", NameTextCodeDefaultText = "Edit QuoteTemplateTableDesign", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature QuoteTemplateTableDesignFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = QuoteTemplateTableDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTableDesign.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //#endregion
-
-            //#region QuoteTemplateTextDesignFeatures
-            //Feature QuoteTemplateTextDesignFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = QuoteTemplateTextDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextDesign.Features.New", NameTextCodeDefaultText = "New QuoteTemplateTextDesign", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature QuoteTemplateTextDesignFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = QuoteTemplateTextDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextDesign.Features.Edit", NameTextCodeDefaultText = "Edit QuoteTemplateTextDesign", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature QuoteTemplateTextDesignFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = QuoteTemplateTextDesignObjectTable.Id, Tenant = tenant, NameTextCodeCode = "QuoteTemplateTextDesign.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //#endregion
-
+                        
             #region Contact Features
             Feature ContactFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ContactObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Contact.Features.New", NameTextCodeDefaultText = "New Contact", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ContactFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ContactObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Contact.Features.Edit", NameTextCodeDefaultText = "Edit Contact", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -65026,38 +65409,11 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature HybridPartnerFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PERMISSIONS", ObjectTableId = HybridPartnerObjectTable.Id, Tenant = tenant, NameTextCodeCode = "HybridPartner.Features.Permissions", NameTextCodeDefaultText = "Permissions", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
-
-            #region Warehouse Features
-            Feature WarehouseFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.New", NameTextCodeDefaultText = "New Warehouse", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Edit", NameTextCodeDefaultText = "Edit Warehouse", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Address", NameTextCodeDefaultText = "Address", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature WarehouseFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAREHOUSES", Packagable = true, ObjectTableId = WarehouseObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Warehouse.Features.Warehouses", NameTextCodeDefaultText = "Warehouses", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-            #endregion
-
+                        
             #region Account Features
             //Feature AccountNewfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = AccountObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Account.Features.New", NameTextCodeDefaultText = "New Account", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             //Feature AccountEditfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = AccountObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Account.Features.Edit", NameTextCodeDefaultText = "Edit Account", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature Accountfeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLACCOUNTS", Packagable = true, ObjectTableId = AccountObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Account.Features.AllAccounts", NameTextCodeDefaultText = "All Accounts", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-            #endregion
-
-            #region ShippingAgent Features
-            Feature ShippingAgentFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.New", NameTextCodeDefaultText = "New ShippingAgent", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Edit", NameTextCodeDefaultText = "Edit ShippingAgent", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ShippingAgentFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPINGAGENT", Packagable = true, ObjectTableId = ShippingAgentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ShippingAgent.Features.Shippingagents", NameTextCodeDefaultText = "Shipping agents", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
 
             #endregion
 
@@ -65082,9 +65438,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature CommLogFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MESSAGES", ObjectTableId = CommLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CommunicationLog.Features.Messages", NameTextCodeDefaultText = "Messages", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CommLogFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLCOMMLOGS", Packagable = true, ObjectTableId = CommLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CommunicationLog.Features.AllCommunicationLogs", NameTextCodeDefaultText = "All Communication Logs", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CommLogFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STEPS", Packagable = true, ObjectTableId = CommLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CommunicationLog.Features.Steps", NameTextCodeDefaultText = "Steps", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-
-
+                       
             Feature CommLogFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MESSAGEBODY", Packagable = true, ObjectTableId = CommLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CommunicationLog.Features.MessageBody", NameTextCodeDefaultText = "Message Body", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CommLogFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ERROR", Packagable = true, ObjectTableId = CommLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "CommunicationLog.Features.Error", NameTextCodeDefaultText = "Error", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
@@ -65227,9 +65581,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ErrorLogFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCEPTION", ObjectTableId = ErrorLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ErrorLogObjectTable.Features.Exception", NameTextCodeDefaultText = "Exception", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ErrorLogFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ErrorLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ErrorLogObjectTable.Features.PackageFeature", NameTextCodeDefaultText = "Error log Package Feature", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ErrorLogFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYERRORLOG", ObjectTableId = ErrorLogObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ErrorLogObjectTable.Features.TodayErrorLog", NameTextCodeDefaultText = "Today Error Log", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
-
-
+                       
             #endregion
 
             #region Report Features
@@ -65288,6 +65640,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ReportFeature53 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRAIL", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.TrailBalance", NameTextCodeDefaultText = "Trail Balance", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature54 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "USERSBYTENANTREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.UsersbyTenantReport", NameTextCodeDefaultText = "Users by Tenant Report", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature55 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LICENSEMANAGEMENTREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.LicenseManagement", NameTextCodeDefaultText = "License Management", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ReportFeature56= AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPMENTSSTOCKS", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.ShipmentsStocks", NameTextCodeDefaultText = "Shipments Stocks", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -65374,20 +65727,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature HybridTenantThresholdFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = HybridTenantThresholdObjectTable.Id, Tenant = tenant, NameTextCodeCode = "HybridTenantThreshold.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
-
-            #region Participant Features
-            Feature ParticipantFeature01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.New", NameTextCodeDefaultText = "New Participant", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Edit", NameTextCodeDefaultText = "Edit Participant", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BILLING", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Billing", NameTextCodeDefaultText = "Billing", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDRESSES", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Addresses", NameTextCodeDefaultText = "Addresses", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PARTICIPANTS", Packagable = true, ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Participants", NameTextCodeDefaultText = "Participants", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature ParticipantFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTIFY", ObjectTableId = ParticipantObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Participant.Features.Notify", NameTextCodeDefaultText = "Notify", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            #endregion
-
+            
             #region Airline Statistics Features
 
             Feature AirlineStatisticsFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIRLINESTATISTICS", Packagable = true, ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AirlineStatistics.Features.AirlineStatistics", NameTextCodeDefaultText = "Airline Statistics", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);

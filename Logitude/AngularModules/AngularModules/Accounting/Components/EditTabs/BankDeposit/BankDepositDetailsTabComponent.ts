@@ -1,4 +1,4 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {BankDepositPM} from '../../../EntityPMs/BankDepositPM';
 import {BankDepositLinePM} from '../../../EntityPMs/BankDepositLinePM';
@@ -63,7 +63,6 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
             this.GetCashBook();
             this.BankDepositLines = this.EntityPM.BankDepositLines;
-            this.CalculateTotals();
             this.SetUIProperty();
 
             console.log("Deposit: ", this.EntityPM);
@@ -375,7 +374,10 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     //#region Get Methods
     GetCashBook() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         this._CashBookPMService.get(this.EntityPM.CashBookId).subscribe(myResult => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {
@@ -388,6 +390,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                     {
                         this.SetUIProperty();
                         this.EntityPM.IsCashDeposit = true;
+
+                        this._CashbookTotal = this.CashBookPM.TotalAmount;
 
                         //copy amount
                         //this.EntityPM.LocalDepositAmount = this.CashBookPM.TotalAmount;
@@ -454,6 +458,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 // local currecny
                 this.currencyRate = 1;
                 this.CalculateLocal(this.EntityPM.ForeignAmount);
+                this.isCurrencyRateLoaded = true;
+
             }
             else
             {
@@ -505,16 +511,22 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     CalculateTotals() {
         this.CashBookTotal = 0;
-        if (!AppTool.IsNullOrEmpty(this.CashBookLines)) {
 
-            if (this.CashBookPM.CashBookTypeCode == "1") { // 1-cash
-                this.CashBookTotal = this.CashBookPM.TotalAmount;
-            } else {
+        if (this.CashBookPM.CashBookTypeCode == "1")
+        {
+            this.CashBookTotal = this.CashBookPM.TotalAmount;
+        }
+        else
+        {
+            if (!AppTool.IsNullOrEmpty(this.CashBookLines))
+            {
                 for (let line of this.CashBookLines) {
                     this.CashBookTotal += line.ForeignAmount == null ? 0 : line.ForeignAmount;
                 }
             }
         }
+
+
 
         this.SelectedTotal = 0;
         var localSum = 0.0;

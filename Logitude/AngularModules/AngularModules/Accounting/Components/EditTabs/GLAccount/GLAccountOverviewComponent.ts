@@ -53,6 +53,46 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.chartId = "CustomerOverview_" + SessionLocator.CurrentSession.GetChartId();
 
         this.LoadAllData();
+
+        this.Listen();
+    }
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
+    Listen() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.LoadAllData();
+                    }
+                });
+            }
+
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        console.log("Entity Reloaded");
+                        this.LoadAllData();
+                    }
+                });
+            }
+
+
+            //
+            if (this.TabSelectedEvent == null) {
+                this.TabSelectedEvent = SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (tabCode == "GAOV") {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.LoadAllData();
+                    }
+                });
+            }
+        }
     }
 
     LoadAllData() {
@@ -173,11 +213,33 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./Accounting/Components/Others/ReconcileComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                    this.LoadAllData();
+                    // this.LoadAllData();
+                    this.GetNonReconciledTransactionsCount();
 
                 });
 
             }
+        });
+    }
+
+    GetNonReconciledTransactionsCount() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe(myResult => {
+
+
+            if (!AppTool.IsNullOrEmpty(myResult)) {
+
+                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.ReconcilationCount = myResult;
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(($event) => {
+                    if ($event == true) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                });
+            }
+
         });
     }
     getScreenHeight() {
@@ -430,6 +492,14 @@ export class GLAccountOverviewComponent extends BaseComponent {
             }
 
         }
+    }
+    GetIndicatorText(transaction)
+    {
+        var showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        if(transaction['OpenAmount'] != this.CalculateOriginalAmount(transaction))
+            return showLocal ? 'סכום פתוח חלקית' : 'Partial transaction';
+        else
+            return showLocal ? 'סכום פתוח ' : 'Open transaction';
     }
 
 

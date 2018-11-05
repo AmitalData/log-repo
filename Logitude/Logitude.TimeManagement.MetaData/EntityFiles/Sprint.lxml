@@ -23,6 +23,11 @@
       <ScreenField Column="0" Row="2" ObjectFieldName="&quot;ToDate&quot;" ScreenName="General Tab Screen" />
     </ScreenFields>
   </Screen>
+  <Screen Name="&quot;SprintHeaderScreen&quot;" ObjectTableName="&quot;Sprint&quot;" NumberOfColumns="1" NumberOfRows="1" IsReadOnly="true" IsHeaderScreen="true">
+    <ScreenFields>
+      <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Name&quot;" ScreenName="SprintHeaderScreen" />
+    </ScreenFields>
+  </Screen>
   <Tab TabName="&quot;General&quot;" TabLocalName="&quot;General&quot;" ObjectTableName="&quot;Sprint&quot;" Code="&quot;GESP&quot;" ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;" TextCode="&quot;Sprint.TH.General&quot;" IsPackagable="true" IndexOrder="0" IsSpellChecked="false" />
   <Tab TabName="&quot;Events&quot;" TabLocalName="&quot;Events&quot;" ObjectTableName="&quot;Sprint&quot;" Code="&quot;EVSP&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TextCode="&quot;Sprint.TH.Events&quot;" IsPackagable="true" IndexOrder="1" IsSpellChecked="false" />
   <EventTypes>

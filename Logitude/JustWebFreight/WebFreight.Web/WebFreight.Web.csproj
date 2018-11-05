@@ -111,7 +111,8 @@
       <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="evohtmltopdf, Version=7.5.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EvoHtmlToPdf_x64.7.5.0\lib\net40\evohtmltopdf.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\LogitudeWorld\2018.R4\General\Dlls\evohtmltopdf.dll</HintPath>
     </Reference>
     <Reference Include="FormulaEngineLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\FormulaEngineLib.dll</HintPath>
@@ -848,6 +849,7 @@
     <Content Include="HtmlHelpers\Kendo.2013.2.918\kendo.default.min.css" />
     <Content Include="HtmlHelpers\Kendo.2013.2.918\kendo.mobile.all.min.css" />
     <Content Include="images\primaryContact.png" />
+    <Content Include="LinksGateway.aspx" />
     <Content Include="LogBoxMailgunWebPage.aspx" />
     <Content Include="LogInUserControls\DsvLoginUC.ascx" />
     <Content Include="MailgunWebPage.aspx" />
@@ -898,6 +900,7 @@
     <Content Include="App_Code\DirectApiV1Controller.cs" />
     <Content Include="App_Code\WarehouseDataController.cs" />
     <Content Include="App_Code\ActivityMobileLogController.cs" />
+    <Content Include="App_Code\ResetPasswordController.cs" />
     <Compile Include="AtlasRegistrationPage.aspx.cs">
       <DependentUpon>AtlasRegistrationPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2083,6 +2086,7 @@
     <Compile Include="DataProviders\ShipmentAssemblyLine.Shared.cs" />
     <Compile Include="DataProviders\ShipmentInventoryDataProvider.cs" />
     <Compile Include="DataProviders\ShipmentProfitVSQuoteEstimateDataProvider.Shared.cs" />
+    <Compile Include="DataProviders\ShipmentsStocksDataProvider.cs" />
     <Compile Include="DataProviders\UsersByTenantDataProvider.cs" />
     <Compile Include="DataProviders\WorkHoursPerProjectDataProvider.cs" />
     <Compile Include="DropBoxAuth.aspx.cs">
@@ -2103,6 +2107,7 @@
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />
     <Compile Include="ExternalAPIs\V1\BlobInfoController.cs" />
+    <Compile Include="ExternalAPIs\V1\CustomerController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountController.cs" />
     <Compile Include="ExternalAPIs\V1\MasterController.cs" />
     <Compile Include="ExternalAPIs\V1\JournalController.cs" />
@@ -2127,11 +2132,13 @@
     <Compile Include="Helpers\APIHelpers\UserLicenseUpdateHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ValidateShipmentMasterArgs.cs" />
     <Compile Include="Helpers\AutomationHelper.cs" />
+    <Compile Include="Helpers\CaptchaHelper.cs" />
     <Compile Include="Helpers\ConvertTemplateHelper.cs" />
     <Compile Include="Helpers\CustomUserIdProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockReleaseDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentInventoryDataProviderHelper.cs" />
+    <Compile Include="Helpers\DataProviderHelpers\ShipmentsStocksDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\UsersByTenantDataProviderHelper.cs" />
     <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
@@ -2146,6 +2153,7 @@
     <Compile Include="Helpers\QuoteTemplateHelper.cs" />
     <Compile Include="Helpers\QuoteTemplateReportHelper.cs" />
     <Compile Include="Helpers\ReportHelper.cs" />
+    <Compile Include="Helpers\ResetPasswordHelper.cs" />
     <Compile Include="Helpers\SecurityDocumentHelper.cs" />
     <Compile Include="Helpers\SendGrid\SendGridAnalyzer.cs" />
     <Compile Include="Helpers\SharedLogisticContactHelper.cs" />
@@ -2157,6 +2165,13 @@
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.BankAccountLite.cs" />
+    <Compile Include="LinksGateway.aspx.cs">
+      <DependentUpon>LinksGateway.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinksGateway.aspx.designer.cs">
+      <DependentUpon>LinksGateway.aspx</DependentUpon>
+    </Compile>
     <Compile Include="LogBoxMailgunWebPage.aspx.cs">
       <DependentUpon>LogBoxMailgunWebPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2591,6 +2606,9 @@
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.SATPaymentMethod.cs" />
     <Compile Include="CommonDataModel\DomainServices\PartnersDomainService.WarehouseType.cs" />
     <Content Include="JustWebFreightappSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="JustWebFreightConnectionStrings.config">
       <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\PublishProfiles\main.pubxml" />

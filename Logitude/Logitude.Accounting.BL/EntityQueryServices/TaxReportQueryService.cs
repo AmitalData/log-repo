@@ -14,6 +14,8 @@ using Logitude.Accounting.BL.EntityDataMappings;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.DataContract;
+
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
     public partial class TaxReportQueryService
@@ -28,8 +30,22 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             base.GetComposition(entityKeys, entityPM);
         }
 
+        public TaxReportLinesCounter GetReportLinesCounter(string taxReportId, int tenant)
+        {
+            TaxReportLineRepository linesRepo = new TaxReportLineRepository(context);
 
+            IQueryable<TaxReportLine> lines = linesRepo.GetByReportId(taxReportId, tenant);
+
+            TaxReportLinesCounter reportCounters = new TaxReportLinesCounter();
+            reportCounters.TaxableTransactions = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Count();
+            reportCounters.ExcemptTransactions = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount == 0).Count();
+            reportCounters.InputEquipments = lines.Where(d => d.OutputOrInput == "I" && d.IsEquipment == true).Count();
+            reportCounters.InputOthers = lines.Where(d => d.OutputOrInput == "I" && d.IsEquipment == false).Count();
+
+            return reportCounters;
+        }
 
 
     }
+
 }

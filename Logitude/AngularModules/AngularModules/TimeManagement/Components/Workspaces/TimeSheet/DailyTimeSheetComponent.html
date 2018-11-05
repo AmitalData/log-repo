@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .ItemBox {
         height: 40px;
@@ -209,6 +209,7 @@
                         <td>
                             <div class="MediaFill">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemSource">
+
                                     <!-- ProjectName -->
                                     <log-column [width]="'150'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.ProjectName' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate>
@@ -278,6 +279,14 @@
                                                         <td style="width:18px;">
                                                             <div style="width: 18px; height: 18px;">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteLineClicked(item)"></IconButton>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width:2px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:18px;">
+                                                            <div style="width: 18px; height: 18px;">
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditLineClicked(item)"></IconButton>
                                                             </div>
                                                         </td>
                                                         <td>

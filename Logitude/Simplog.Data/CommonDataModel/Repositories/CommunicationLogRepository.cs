@@ -41,7 +41,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             DateTime datetime = TenantServerConfigration.GetCurrentDateTime(tenant).AddHours(-1);
             return (from a in context.CommunicationLogs
-                    where a.Tenant == tenant && a.CreateDate > datetime
+                    where a.Tenant == tenant && a.CreateDate > datetime && (string.IsNullOrEmpty(a.ExceptionMessage) || a.ExceptionMessage!= "Quota exceeded")
                     select a).Count();
         }
 

@@ -29,6 +29,7 @@
   <ItemGroup>
     <Content Include="Accounting\Components\EditTabs\BankAccount\ManageRecoTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\BankPagesTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankDeposit\BankDepositDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\AddEditTaxWithholdingLineComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountAdditionalDataTabComponent.html" />
@@ -48,11 +49,13 @@
     <Content Include="Accounting\Components\EditTabs\GLAccount\ManageReconciliationsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Journal\JournalDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Revaluation\RevaluationDetailsComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxReport\EditTaxReportLine\EditTaxReportLineComponent.html" />
     <Content Include="Accounting\Components\EditTabs\TaxReport\TaxReportDetailsTabComponent.html" />
     <Content Include="Accounting\Components\ListTemplates\ManageReconciliationListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageLineListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageListTemplate.html" />
+    <Content Include="Accounting\Components\ListTemplates\TaxReportListTemplate.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingPeriodEventComponent.html" />
     <Content Include="Accounting\Components\Maintenance\EditAccountingPeriodComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingPeriodsComponent.html" />
@@ -100,6 +103,7 @@
     <Content Include="CommonModules\CommonFlightsSchedules\Components\FlightsSchedules\FVASimulatorComponent.html" />
     <Content Include="CommonModules\CommonFlightsSchedules\Components\FlightsSchedules\XMLFlightsSimulatorComponent.html" />
     <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderComponent.html" />
+    <Content Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_Branch.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_ChargesType.html" />
     <Content Include="Common\Components\AccountingTab\AccountingTab_Currency.html" />
@@ -262,8 +266,14 @@
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\AddEditPrivateLabelsComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelLoadComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
+    <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />
@@ -458,6 +468,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\ModuleInfrastructureBusinessProcess.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomatedBackup.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationCondition.ts" />
@@ -499,6 +510,7 @@
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.html" />
     <TypeScriptCompile Include="Infrastructure\Helpers\DetectUserInActivity.ts" />
     <Content Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.html" />
+    <Content Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
     <Content Include="InvoiceModules\ARInvoice\Components\EditTabs\AddEditARGeneralInvoiceLineComponent.html" />
@@ -523,6 +535,7 @@
     <Content Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.html" />
+    <Content Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
     <Content Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.html" />
@@ -1602,6 +1615,7 @@
     <Content Include="TimeManagement\Components\Connections\ConnectToParentComponent.html" />
     <Content Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.html" />
     <Content Include="TimeManagement\Components\NewEntity\NewOfficeHourComponent.html" />
+    <Content Include="TimeManagement\Components\NewEntity\NewProjectCategoryComponent.html" />
     <Content Include="TimeManagement\Components\NewEntity\NewProjectComponent.html" />
     <Content Include="TimeManagement\Components\NewEntity\NewLineComponent.html" />
     <Content Include="Social\Components\QueryColumnsComponents\SocialContactNameLink.html" />
@@ -1745,6 +1759,8 @@
     <Content Include="_Resources\Images\Icons\All\CheckBoxIcon.png" />
     <Content Include="_Resources\Images\Icons\All\Help.png" />
     <Content Include="_Resources\Images\Icons\All\RadioButtonChecked.png" />
+    <Content Include="_Resources\Images\Icons\All\SidebarLeft.png" />
+    <Content Include="_Resources\Images\Icons\All\SidebarRight.png" />
     <Content Include="_Resources\Images\Icons\All\Tab.X.Blue.png" />
     <Content Include="_Resources\Images\Icons\All\Tab.X.Gray.png" />
     <Content Include="_Resources\Images\Icons\All\ToggleIcon.png" />
@@ -2903,6 +2919,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureComputingPartner\Components\QueryColumnsComponents\btnComponentComputingPartnerEdit.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.ts" />
@@ -5820,6 +5837,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentTabs\ModuleShipmentTabs.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\CustomReferenceListTemplate.ts" />
+    <TypeScriptCompile Include="Shipment\Components\ListTemplates\RemoveTasksButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\EditShipmentButtonListTemplate.ts" />
     <TypeScriptCompile Include="Shipment\Components\ListTemplates\ApprovePaymentButtonListTemplate.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DigitalSignDocTypeComponent.ts" />
@@ -5934,6 +5952,7 @@
     <TypeScriptCompile Include="TimeManagement\Components\Connections\ConnectToParentComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewOfficeHourComponent.ts" />
+    <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewProjectCategoryComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewProjectComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewLineComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\NewEntity\NewSprintComponent.ts" />

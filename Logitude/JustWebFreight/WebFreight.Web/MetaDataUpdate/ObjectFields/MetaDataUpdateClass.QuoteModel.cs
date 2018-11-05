@@ -4373,6 +4373,23 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Price Steps",
+                FullFieldLable = "QuoteChargePriceSteps",
+                FieldName = "QuoteChargePriceSteps",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = QuoteChargeObject.Id,
+                ObjectTableName = QuoteChargeObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "StartsWith",
+                PMPropertyPath = "QuoteChargePriceSteps",
+                IsMulti = true,
+                MultiTableId = QuotePriceStepObject.Id,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "VAT Type",
                 FullFieldLable = "VatTypeId",
                 FieldName = "VatTypeId",
@@ -8004,6 +8021,22 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 Operator = "Equals",
                 PMPropertyPath = "EditMainCarriage",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Quote Sale Currency Default",
+                FullFieldLable = "IsSaleAsCostCurrency",
+                FieldName = "IsSaleAsCostCurrency",
+                FieldsDataType = "Boolean",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = QuoteSettingObject.Id,
+                ObjectTableName = QuoteSettingObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "IsSaleAsCostCurrency",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             this.ObjectContext.SaveChanges();

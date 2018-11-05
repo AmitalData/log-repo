@@ -55,7 +55,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 if (cardIds.Count > 0)
                 {
                     CardQuery cardQuery = new CardQuery(tenant);
-                    cardLists = cardQuery.GetCardListForInventoryReportsByCardIds(cardIds, tenant);
+                    cardLists = cardQuery.GetCardListsByCardIds(cardIds, tenant);
                 }
 
                 if (!string.IsNullOrEmpty(shipmentList.WarehouseLegWarehouseId))

@@ -50,7 +50,7 @@ class LineModel extends BaseComponent {
         this.RowIndex = myRowIndex;
 
         this.OddEven = this.ColorMe();
-        
+
 
         //#region Set Icons
         var iconTxt = "";
@@ -119,7 +119,7 @@ class LineModel extends BaseComponent {
         }
         this.IconCode = iconTxt;
 
-        //#endregion 
+        //#endregion
     }
 
     get GroupHash() { return this.LedgerTransactionPM.GroupHash };
@@ -184,7 +184,7 @@ class LineModel extends BaseComponent {
             //}
 
             this.parent.CalculateTotals();
-        } 
+        }
 
     }
 
@@ -217,12 +217,12 @@ class LineModel extends BaseComponent {
     get OpenAmountCurrencyId() { return this.LedgerTransactionPM.OpenAmountCurrencyId; }
     get SourceTypeCode() { return this.LedgerTransactionPM.SourceTypeCode; }
     get SourceNumber() { return this.LedgerTransactionPM.SourceNumber; }
-    
+
     //#endregion
-    
+
 
     //#region Row Coloring
-    
+
     ColorMe() {
         if (AppTool.IsNullOrEmpty(this.parent.lastGroupNumber))
             this.parent.lastGroupNumber = this.GroupHash;
@@ -235,7 +235,7 @@ class LineModel extends BaseComponent {
                 return this.parent.lastColorOperation == true;
             }
     }
-    //#endregion 
+    //#endregion
 
     CalculatOriginalCurruncy() {
         //
@@ -258,7 +258,7 @@ class LineModel extends BaseComponent {
 
         }
     }
-    
+
 
 }
 
@@ -277,9 +277,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "LedgerTransaction"; //Reconciliation
     public TenantPM: TenantPM;
     public ValidationErrorsList: string[] = [];
-    public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter(); 
-    public ColumnsReady: EventEmitter<any> = new EventEmitter();  
-    public MarkIsChecked: EventEmitter<any> = new EventEmitter(); 
+    public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
+    public ColumnsReady: EventEmitter<any> = new EventEmitter();
+    public MarkIsChecked: EventEmitter<any> = new EventEmitter();
 
     public lastGroupNumber: number;
     public lastColorOperation: boolean = false;
@@ -353,7 +353,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.BuildColumns();
         //this.ColumnsReady.emit("");
     }
@@ -466,7 +466,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
         let TempData = [];
-       
+
         if (this.IsDraft == true) {
             this.SelectedLines.Collection.forEach((value, key) => {
                 if (value.ledgerTransaction.Mark == true) {
@@ -493,8 +493,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             //this.AdjustButton();
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 390;
-            
-            
+
+
             confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
@@ -505,13 +505,13 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                 } else if (confirmWindow.No) {
 
                 }
-            }); 
-            return; 
+            });
+            return;
         }
         //else if (!this.IsEntityValid) {
         else if (this.SelectedLines.Collection.find(d => d.isLineValid == false )) {
 
-            
+
             //errors.push("Check amount!");
             errors.push(TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
         } else {
@@ -691,7 +691,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         }
 
     }
-  
+
     CancelButtonClicked() {
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
@@ -832,7 +832,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             FieldName: 'Notes',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Notes"), // 'Notes',
-            Styles: { width: '77px' }, 
+            Styles: { width: '77px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -857,16 +857,24 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                 }
                 this.MustIgnoreItems.push({ Id: rowId, IsChecked: isChecked });
                 this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: isChecked, RowIndex: RowIndex });
-                
+
 
             }
         });
     }
+    GetIndicatorText(transaction)
+    {
+        var showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        if(transaction['OpenAmount'] != this.CalculateOriginalAmount(transaction))
+            return showLocal ? 'סכום פתוח חלקית' : 'Partial transaction';
+        else
+            return showLocal ? 'סכום פתוח ' : 'Open transaction';
+    }
     MustIgnoreItems: any[] = [];
     onDataLoaded() {
-        
+
         this.CheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
-       
+
     }
     DataSource = {
         pageSize: 30,
@@ -878,7 +886,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             return tempo;
         },
     };
-    
+
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         var filters = new ApiQueryFilters;
         //if (this.dateFilter) {
@@ -893,7 +901,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
         if (this.openAmountFilter) {
-            filters.AdditionalFilters.push(this.openAmountFilter); 
+            filters.AdditionalFilters.push(this.openAmountFilter);
         }
 
         filters.PageSize = take;
@@ -991,7 +999,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         newEntity.CreateDate = new Date();
         newEntity.CreatedByUserId = null;
         newEntity.CreatedByUserId = null;
-        
+
         newEntity.ReconciliationLines = [];
 
         for (var i = 0; i < this.SelectedLines.Length; i++) {
@@ -1018,7 +1026,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             var mm: ServiceResponse = myResult;
             var entity = mm.Result;
             if (!mm.HasError) {
-                 
+
                 //var windowArgs: any = {};
                 //windowArgs.ReconciliationPM = entity;
 
@@ -1194,9 +1202,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     openAmountCurrency: string = "";
     originalAmountCurrency: string = "";
 
-    //#region SaveAsDraft 
+    //#region SaveAsDraft
     isDraftReconciliation: boolean = false;
-    CheckBoxFilterChanged: EventEmitter<any> = new EventEmitter(); 
+    CheckBoxFilterChanged: EventEmitter<any> = new EventEmitter();
     CheckIfThereIsDraftReconcile() {
 
         this._ReconciliationExtendedPMService.getDraftReconciliations(this.GLAccountPM.Id).subscribe((response: ServiceResponse) => {
@@ -1226,7 +1234,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Width = 400;
                 confirmWindow.Show(TextCodeTranslator.Translate("Reconciliations.Q.ThereisUncompletedReconciliation"));
-                
+
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes)
                     {
@@ -1239,7 +1247,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                         // Delete draft transactions
                         this.DeleteDraftReconciliation();
                         this.IsDraft = false;
-                    
+
                     }
                 });
             }

@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .Title {
         display: inline-block;
         font-size: 14px;
@@ -101,6 +101,7 @@
         opacity: 0.5;
         pointer-events: none;
     }
+  
 </style>
 
 <div style="width:100%;height:100%;">
@@ -126,7 +127,7 @@
                     <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
                         <div style="width: 50%;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
                             <div *ngFor="let item of allFilterFieldsClass.FilterFields; let i = index">
-                                <div *ngIf="i%2 == 0" class="CheckBox" style="margin: 10px;" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true}">
+                                <div *ngIf="i%2 == 0" class="FiltersCheckBox" style="margin: 10px;" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true}">
                                     <input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();"/>
                                     <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px;','left': 'initial'} : {'left': '5px'}" *ngIf="SearchText" [attr.for]="item.ControlId" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice(0,((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice(((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length),(((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + ((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[1].length)))}}</font>{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice((((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + ((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[1].length)))}}</label>
                                     <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px;','left': 'initial'} : {'left': '5px'}" *ngIf="!SearchText" [attr.for]="item.ControlId" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe}}</label>
@@ -135,7 +136,7 @@
                         </div>
                         <div style="width: 50%;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
                             <div *ngFor="let item of allFilterFieldsClass.FilterFields; let i = index">
-                                <div *ngIf="i%2 != 0" class="CheckBox" style="margin: 10px;" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true}">
+                                <div *ngIf="i%2 != 0" class="FiltersCheckBox" style="margin: 10px;" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true}">
                                     <input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();"/>
                                     <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px;','left': 'initial'} : {'left': '5px'}" *ngIf="SearchText" [attr.for]="item.ControlId" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice(0,((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice(((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length),(((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + ((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[1].length)))}}</font>{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice((((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + ((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[1].length)))}}</label>
                                     <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px;','left': 'initial'} : {'left': '5px'}" *ngIf="!SearchText" [attr.for]="item.ControlId" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe}}</label>

@@ -56,6 +56,8 @@ namespace Logitude.TimeManagement.Data.EntityMapping
             this.Property(t => t.ProratedDuration).HasColumnName("ProratedDuration");
 
             this.Property(t => t.FullDuration).HasColumnName("FullDuration");
+
+            this.Property(t => t.NeedsProrating).HasColumnName("NeedsProrating");
         }
     }
 }

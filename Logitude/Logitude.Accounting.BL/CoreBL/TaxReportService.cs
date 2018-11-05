@@ -2,6 +2,8 @@
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.DataContract;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
@@ -73,55 +75,74 @@ namespace Logitude.Accounting.BL.CoreBL
 			TenantQuery tenantQuery = new TenantQuery(tenant);
 			TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
             string  vatNumber = null;
-			//Outputs
-			foreach (Journal a in journals)
-			{
-				string reference = null;
-				ARInvoice invoice = aRInvoiceRepository.GetSingleARInvoice(a.AccountingEntityId, a.Tenant);
-				if (invoice != null)
-				{
-					if (invoice.InvoiceNumber.Length == 9)
-					{
-						reference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
-					}
-					else
-					{
-						reference = invoice.InvoiceNumber;
-					}
-
-                    if (!string.IsNullOrEmpty(invoice.VatNumber))
+            //Outputs
+            foreach (Journal a in journals)
+            {
+                var exist = taxReport.TaxReportLines.Select(d => d.JournalId == a.Id).FirstOrDefault();
+                if (!exist)
+                {
+                    string reference = null;
+                    ARInvoice invoice = aRInvoiceRepository.GetSingleARInvoice(a.AccountingEntityId, a.Tenant);
+                    if (invoice != null)
                     {
-                        vatNumber = invoice.VatNumber;
+                        if (invoice.InvoiceNumber.Length == 9)
+                        {
+                            reference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
+                        }
+                        else
+                        {
+                            reference = invoice.InvoiceNumber;
+                        }
+
+                        if (!string.IsNullOrEmpty(invoice.VatNumber))
+                        {
+                            vatNumber = invoice.VatNumber;
+                        }
+                        TaxReportLinePM line = new TaxReportLinePM()
+                        {
+                            VatNumber = vatNumber,
+                            Reference = reference,
+                            ReferecneGroup = "0000",
+                            ReferenceDate = invoice.InvoiceDate,
+                            JournalId = a.Id,
+                            OutputOrInput = "O",
+                            VatAmount = invoice.TotalVAT,
+                            VatableInvoiceAmount = invoice.TotaVatableAmountForTaxReport,
+                            IsManuallyChanged = false,
+                            TransmitStatusCode = "1",
+                            TaxReportId = taxReport.Id,
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            LastUpdateDateTime = DateTime.Now,
+                            UpdatedByUserId = taxReport.UpdatedByUserId,
+                            Tenant = tenant,
+
+
+                        };
+                        Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(invoice.BillToId, tenant);
+                        if (line.VatNumber == null)
+                        {
+                            line.VatNumber = "999999999";
+
+                        }
+
+                        if (line.VatNumber == tenantPM.VatNumber)
+                        {
+                            line.LineTypeCode = "M";
+
+                        }
+                        else if (card != null && card.IsAutonomy)
+                        {
+                            line.LineTypeCode = "I";
+                        }
+                        else
+                        {
+                            line.LineTypeCode = "S";
+                        }
+
+                        taxReport.TaxReportLines.Add(line);
                     }
-					TaxReportLinePM line = new TaxReportLinePM()
-					{
-						VatNumber = vatNumber,
-						Reference = reference,
-						ReferecneGroup = "0000",
-						ReferenceDate = invoice.InvoiceDate,
-						JournalId = a.Id,
-						OutputOrInput = "O",
-						VatAmount = MethodHelper.Round(invoice.TotalVAT, 2),
-						VatableInvoiceAmount = MethodHelper.Round(invoice.TotaVatableAmountForTaxReport, 2),
-						IsManuallyChanged = false,
-						TransmitStatusCode = "1",
-						TaxReportId = taxReport.Id,
-						ChangeSetOp = ChangeSetOperation.Insert,
-						LastUpdateDateTime = DateTime.Now,
-						UpdatedByUserId = taxReport.UpdatedByUserId,
-						Tenant = tenant,
-
-
-					};
-                 
-                    if(line.VatNumber == null) {
-                        line.VatNumber = "999999999";
-
-                    } 
-
-					taxReport.TaxReportLines.Add(line);
-				}
-			}
+                }
+            }
 
 
 			//inputs
@@ -144,8 +165,8 @@ namespace Logitude.Accounting.BL.CoreBL
 					if (aPInvoice != null)
 					{
 						VatNumber = aPInvoice.VATNumber;
-						//   VatAmount = aPInvoice.TotalVATs.Sum(d=> d.); ;
-						//  InvoiceAmount = aPInvoice.tot
+						   VatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d=> d.LocalVATAmount);
+                        InvoiceAmount = (decimal?)aPInvoice.AmountInLocalCurrency;
 					}
 				}
 				else
@@ -197,6 +218,7 @@ namespace Logitude.Accounting.BL.CoreBL
 					LastUpdateDateTime = DateTime.Now,
 					UpdatedByUserId = taxReport.UpdatedByUserId,
 					Tenant = tenant,
+                    TransmitStatusCode ="1",
 
 
 				};
@@ -208,32 +230,31 @@ namespace Logitude.Accounting.BL.CoreBL
 				GLAccountPM account = gLAccountQueryService.GetSinglePM(CreditAccountId, tenant);
 
 
-				if (aPInvoice != null)
-				{
-					if (aPInvoice.VATNumber == tenantPM.VatNumber)
-					{
-						taxReportLine.LineTypeCode = "C";
-					}
-				}
-				else if (journal.JournalLines.Count > 0 && CreditAccountId == setting.CustomsGLAccountId)
-				{
 
-					taxReportLine.LineTypeCode = "R";
+                if (aPInvoice != null && (aPInvoice.VATNumber == tenantPM.VatNumber))
+                {
+                    taxReportLine.LineTypeCode = "C";
+                }
 
-				}
-				else if (card != null && card.IsAutonomy)
-				{
-					taxReportLine.LineTypeCode = "P";
-				}
+                else if (journal.JournalLines.Count > 0 && CreditAccountId == setting.CustomsGLAccountId)
+                {
 
-				else if (account != null && account.AccountTypeCode != "3")
-				{
-					taxReportLine.LineTypeCode = "K";
-				}
-				else
-				{
-					taxReportLine.LineTypeCode = "C";
-				}
+                    taxReportLine.LineTypeCode = "R";
+
+                }
+                else if (card != null && card.IsAutonomy)
+                {
+                    taxReportLine.LineTypeCode = "P";
+                }
+
+                else if (account != null && account.AccountTypeCode != "3")
+                {
+                    taxReportLine.LineTypeCode = "K";
+                }
+                else
+                {
+                    taxReportLine.LineTypeCode = "C";
+                }
 
                
                
@@ -319,159 +340,314 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-		public static DocumentsFilingPM CreatePNC874File(string taxReportId, int tenant)
+		//public static DocumentsFilingPM CreatePNC874File(string taxReportId, int tenant)
+  //      {
+  //          //get tax report
+  //          TaxReportQueryService reportQS = new TaxReportQueryService(tenant);
+  //          TaxReportPM taxReport = reportQS.GetSingle(taxReportId, true, false);
+
+  //          //DECLARATIONS
+  //          List<string> linesArray = new List<string>();
+		//	List<string> errors = new List<string>();
+
+
+		//	if (errors.Count > 0)
+		//	{
+		//		string errorsString = "";
+		//		foreach (var error in errors)
+		//		{
+		//			errorsString += error + ';';
+		//		}
+		//		throw new ApplicationException(errorsString.TrimEnd(';'));
+		//	}
+
+		//	//
+		//	// Line: [1] 
+		//	//
+		//	string firstLine = "";
+		//	firstLine += "O";
+
+		//	if (taxReport.VatNumber.Length > 9) taxReport.VatNumber = taxReport.VatNumber.Substring(0, 9);
+		//	firstLine += taxReport.VatNumber.PadLeft(9, '0');
+		//	firstLine += taxReport.TaxReportMonth == null ? "000000" : taxReport.TaxReportMonth.ToString("yyyyMM");
+		//	firstLine += "1";
+		//	firstLine += taxReport.CreateDate.ToString("yyyyMMdd");
+
+  //          //TotalTaxableOutputAmount
+  //          firstLine += taxReport.TaxableOutputAmount >= 0 ? '+' : '-';
+  //          firstLine += Math.Abs(Math.Truncate(taxReport.TaxableOutputAmount.Value)).ToString().PadLeft(9, '0');
+
+  //          //OutputTaxAmount
+  //          firstLine += taxReport.OutputTaxAmount >= 0 ? '+' : '-';
+  //          firstLine += Math.Abs(Math.Truncate(taxReport.OutputTaxAmount.Value)).ToString().PadLeft(9, '0');
+
+  //          //TaxableOutputsWithDiffPercent
+  //          firstLine += '+';
+  //          firstLine += Math.Abs(Math.Truncate(taxReport.TaxableOutputsWithDiffPercent.Value)).ToString().PadLeft(9, '0');
+
+  //          //OutputTaxAmountWithDiffPercent
+  //          firstLine += '+';
+  //          firstLine += Math.Abs(Math.Truncate(taxReport.OutputTaxAmountWithDiffPercent.Value)).ToString().PadLeft(11, '0');
+
+  //          //OutputLinesCount
+  //          firstLine += taxReport.OutputLinesCount == null ? "000000000" : taxReport.OutputLinesCount.Value.ToString().PadLeft(9, '0');
+
+
+  //          //ExemptTaxableOutput
+  //          firstLine += taxReport.ExemptTaxableOutput >= 0 ? '+' : '-';
+  //          firstLine += Math.Abs(Math.Truncate(taxReport.ExemptTaxableOutput.Value)).ToString().PadLeft(11, '0');
+
+  //          //OtherInputsTaxAmount
+  //          firstLine += taxReport.OtherInputsTaxAmount >= 0 ? '+' : '-';
+  //          firstLine += Math.Abs(Math.Truncate(taxReport.OtherInputsTaxAmount.Value)).ToString().PadLeft(9, '0');
+
+  //          //EquipmentInputsTaxAmount
+  //          firstLine += taxReport.EquipmentInputsTaxAmount >= 0 ? '+' : '-';
+  //          firstLine += Math.Abs(Math.Truncate(taxReport.EquipmentInputsTaxAmount.Value)).ToString().PadLeft(9, '0');
+
+  //          //InputLinesCount
+  //          firstLine += taxReport.InputLinesCount == null ? "000000000" : taxReport.InputLinesCount.Value.ToString().PadLeft(9, '0');
+
+  //          //AmountForPayRefund
+  //          firstLine += taxReport.AmountForPayRefund >= 0 ? '+' : '-';
+  //          firstLine += Math.Abs(Math.Truncate(taxReport.AmountForPayRefund.Value)).ToString().PadLeft(11, '0');
+
+  //          linesArray.Add(firstLine);
+
+		//	//
+		//	// Line: [report lines]
+		//	//
+		//	foreach (TaxReportLinePM lineList in taxReport.TaxReportLines)
+		//	{
+		//		// validations
+		//		if (lineList.ReferenceDate == null) throw new ApplicationException("Reference Date is empty! line:" + lineList.Line);
+
+		//		//create line 
+		//		string line = "";
+		//		line += lineList.LineTypeCode;
+
+		//		if (lineList.VatNumber == null) lineList.VatNumber = "0";
+		//		if (lineList.VatNumber.Length > 9) lineList.VatNumber = lineList.VatNumber.Substring(0, 9);
+		//		line += lineList.VatNumber.PadLeft(9, '0');
+
+		//		line += lineList.ReferenceDate.Value.ToString("yyyyMMdd");
+
+		//		if (lineList.ReferecneGroup.Length > 4) lineList.ReferecneGroup = lineList.ReferecneGroup.Substring(0, 4);
+		//		line += lineList.ReferecneGroup.PadLeft(4, '0');
+
+		//		if (lineList.Reference.Length > 9) lineList.Reference = lineList.Reference.Substring(0, 9);
+		//		line += lineList.Reference.PadLeft(9, '0');
+
+		//		//VatAmount
+		//		line += Math.Abs(Math.Truncate(lineList.VatAmount.Value)).ToString().PadLeft(9, '0');
+
+		//		//VatableInvoiceAmount
+		//		line += lineList.VatableInvoiceAmount >= 0 ? '+' : '-';
+		//		line += Math.Abs(Math.Truncate(lineList.VatableInvoiceAmount.Value)).ToString().PadLeft(10, '0');
+
+
+		//		line += "000000000";
+
+		//		linesArray.Add(line);
+
+		//	}
+
+
+		//	//
+		//	// Line: [last one]
+		//	//
+		//	string lastLine = "";
+		//	lastLine += "X";
+		//	lastLine += taxReport.VatNumber.PadLeft(9, '0');
+		//	linesArray.Add(lastLine);
+
+
+
+		//	//// write to a file
+		//	//using (System.IO.StreamWriter file = new System.IO.StreamWriter(FilePath))
+		//	//{
+		//	//    foreach (string line in linesArray)
+		//	//    {
+		//	//        file.WriteLine(line);
+
+		//	//    }
+		//	//}
+
+		//	//update entity
+		//	IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+		//	TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+  //          taxReport.ChangeSetOp = ChangeSetOperation.Update;
+		//	taxReport.StatusCode = "T"; // T- Transmitted
+  //          taxReport.NeedsRebulid = false;
+		//	updateService.Update(taxReport, true);
+
+		//	//DocumentsFilingPM docOut = CreateDocumnetFiling(linesArray, taxReport);
+
+		//	//return docOut;
+		//	return null;
+		//}
+
+        public static DocumentsFilingPM CreatePNC874File(string taxReportId, int tenant)
         {
             //get tax report
             TaxReportQueryService reportQS = new TaxReportQueryService(tenant);
-            TaxReportPM taxReport = reportQS.GetSingle(taxReportId, true, false);
+            TaxReportPM taxReport = reportQS.GetSingle(taxReportId, false, false);
 
             //DECLARATIONS
-            List<string> linesArray = new List<string>();
-			List<string> errors = new List<string>();
+            StringBuilder myStringBuilder = new StringBuilder();
+            List<string> errors = new List<string>();
 
 
-			if (errors.Count > 0)
-			{
-				string errorsString = "";
-				foreach (var error in errors)
-				{
-					errorsString += error + ';';
-				}
-				throw new ApplicationException(errorsString.TrimEnd(';'));
-			}
+            if (errors.Count > 0)
+            {
+                string errorsString = "";
+                foreach (var error in errors)
+                {
+                    errorsString += error + ';';
+                }
+                throw new ApplicationException(errorsString.TrimEnd(';'));
+            }
 
-			//
-			// Line: [1] 
-			//
-			string firstLine = "";
-			firstLine += "O";
+            //
+            // Line: [1] 
+            //
 
-			if (taxReport.VatNumber.Length > 9) taxReport.VatNumber = taxReport.VatNumber.Substring(0, 9);
-			firstLine += taxReport.VatNumber.PadLeft(9, '0');
-			firstLine += taxReport.TaxReportMonth == null ? "000000" : taxReport.TaxReportMonth.ToString("yyyyMM");
-			firstLine += "1";
-			firstLine += taxReport.CreateDate.ToString("yyyyMMdd");
+            string firstLine = "";
+            myStringBuilder.Append("O");
+
+            if (taxReport.VatNumber.Length > 9) taxReport.VatNumber = taxReport.VatNumber.Substring(0, 9);
+            myStringBuilder.Append(taxReport.VatNumber.PadLeft(9, '0'));
+            myStringBuilder.Append(taxReport.TaxReportMonth == null ? "000000" : taxReport.TaxReportMonth.ToString("yyyyMM"));
+            myStringBuilder.Append("1");
+            myStringBuilder.Append(taxReport.CreateDate.ToString("yyyyMMdd"));
 
             //TotalTaxableOutputAmount
-            firstLine += taxReport.TaxableOutputAmount >= 0 ? '+' : '-';
-            firstLine += Math.Abs(Math.Truncate(taxReport.TaxableOutputAmount.Value)).ToString().PadLeft(9, '0');
+            myStringBuilder.Append(taxReport.TaxableOutputAmount >= 0 ? '+' : '-');
+            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.TaxableOutputAmount.Value)).ToString().PadLeft(9, '0'));
 
             //OutputTaxAmount
-            firstLine += taxReport.OutputTaxAmount >= 0 ? '+' : '-';
-            firstLine += Math.Abs(Math.Truncate(taxReport.OutputTaxAmount.Value)).ToString().PadLeft(9, '0');
+            myStringBuilder.Append(taxReport.OutputTaxAmount >= 0 ? '+' : '-');
+            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.OutputTaxAmount.Value)).ToString().PadLeft(9, '0'));
 
             //TaxableOutputsWithDiffPercent
-            firstLine += '+';
-            firstLine += Math.Abs(Math.Truncate(taxReport.TaxableOutputsWithDiffPercent.Value)).ToString().PadLeft(9, '0');
+            myStringBuilder.Append("+");
+            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.TaxableOutputsWithDiffPercent.Value)).ToString().PadLeft(9, '0'));
 
             //OutputTaxAmountWithDiffPercent
-            firstLine += '+';
-            firstLine += Math.Abs(Math.Truncate(taxReport.OutputTaxAmountWithDiffPercent.Value)).ToString().PadLeft(11, '0');
+            myStringBuilder.Append("+");
+            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.OutputTaxAmountWithDiffPercent.Value)).ToString().PadLeft(11, '0'));
 
             //OutputLinesCount
-            firstLine += taxReport.OutputLinesCount == null ? "000000000" : taxReport.OutputLinesCount.Value.ToString().PadLeft(9, '0');
+            myStringBuilder.Append(taxReport.OutputLinesCount == null ? "000000000" : taxReport.OutputLinesCount.Value.ToString().PadLeft(9, '0'));
 
 
             //ExemptTaxableOutput
-            firstLine += taxReport.ExemptTaxableOutput >= 0 ? '+' : '-';
-            firstLine += Math.Abs(Math.Truncate(taxReport.ExemptTaxableOutput.Value)).ToString().PadLeft(11, '0');
+            myStringBuilder.Append(taxReport.ExemptTaxableOutput >= 0 ? '+' : '-');
+            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.ExemptTaxableOutput.Value)).ToString().PadLeft(11, '0'));
 
             //OtherInputsTaxAmount
-            firstLine += taxReport.OtherInputsTaxAmount >= 0 ? '+' : '-';
-            firstLine += Math.Abs(Math.Truncate(taxReport.OtherInputsTaxAmount.Value)).ToString().PadLeft(9, '0');
+            myStringBuilder.Append(taxReport.OtherInputsTaxAmount >= 0 ? '+' : '-');
+            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.OtherInputsTaxAmount.Value)).ToString().PadLeft(9, '0'));
 
             //EquipmentInputsTaxAmount
-            firstLine += taxReport.EquipmentInputsTaxAmount >= 0 ? '+' : '-';
-            firstLine += Math.Abs(Math.Truncate(taxReport.EquipmentInputsTaxAmount.Value)).ToString().PadLeft(9, '0');
+            myStringBuilder.Append(taxReport.EquipmentInputsTaxAmount >= 0 ? '+' : '-');
+            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.EquipmentInputsTaxAmount.Value)).ToString().PadLeft(9, '0'));
 
             //InputLinesCount
-            firstLine += taxReport.InputLinesCount == null ? "000000000" : taxReport.InputLinesCount.Value.ToString().PadLeft(9, '0');
+            myStringBuilder.Append(taxReport.InputLinesCount == null ? "000000000" : taxReport.InputLinesCount.Value.ToString().PadLeft(9, '0'));
 
             //AmountForPayRefund
-            firstLine += taxReport.AmountForPayRefund >= 0 ? '+' : '-';
-            firstLine += Math.Abs(Math.Truncate(taxReport.AmountForPayRefund.Value)).ToString().PadLeft(11, '0');
+            myStringBuilder.Append(taxReport.AmountForPayRefund >= 0 ? '+' : '-');
+            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.AmountForPayRefund.Value)).ToString().PadLeft(11, '0'));
 
-            linesArray.Add(firstLine);
-
-			//
-			// Line: [report lines]
-			//
-			foreach (TaxReportLinePM itemPM in taxReport.TaxReportLines)
-			{
-				// validations
-				if (itemPM.ReferenceDate == null) throw new ApplicationException("Reference Date is empty! line:" + itemPM.Line);
-
-				//create line 
-				string line = "";
-				line += itemPM.LineTypeCode;
-
-				if (itemPM.VatNumber == null) itemPM.VatNumber = "0";
-				if (itemPM.VatNumber.Length > 9) itemPM.VatNumber = itemPM.VatNumber.Substring(0, 9);
-				line += itemPM.VatNumber.PadLeft(9, '0');
-
-				line += itemPM.ReferenceDate.Value.ToString("yyyyMMdd");
-
-				if (itemPM.ReferecneGroup.Length > 4) itemPM.ReferecneGroup = itemPM.ReferecneGroup.Substring(0, 4);
-				line += itemPM.ReferecneGroup.PadLeft(4, '0');
-
-				if (itemPM.Reference.Length > 9) itemPM.Reference = itemPM.Reference.Substring(0, 9);
-				line += itemPM.Reference.PadLeft(9, '0');
-
-				//VatAmount
-				line += Math.Abs(Convert.ToInt32(itemPM.VatAmount)).ToString().PadLeft(9, '0');
-
-				//VatableInvoiceAmount
-				line += itemPM.VatableInvoiceAmount >= 0 ? '+' : '-';
-				line += Math.Abs(Convert.ToInt32(itemPM.VatableInvoiceAmount)).ToString().PadLeft(10, '0');
+            myStringBuilder.AppendLine();
 
 
-				line += "000000000";
+            //
+            // Line: [report lines]
+            //
 
-				linesArray.Add(line);
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            TaxReportLineListQueryService trLineQS = new TaxReportLineListQueryService(MyContext);
+            List<TaxReportLineList> lines = trLineQS.GetReportLines(taxReport.Id, tenant);
 
-			}
+            foreach (TaxReportLineList lineList in lines)
+            {
+                // validations
+                if (lineList.ReferenceDate == null) throw new ApplicationException("Reference Date is empty! line:" + lineList.Line);
+
+                //create line 
+                string line = "";
+                myStringBuilder.Append("O");
+                line += lineList.LineTypeCode;
+
+                if (lineList.VatNumber == null) lineList.VatNumber = "0";
+                if (lineList.VatNumber.Length > 9) lineList.VatNumber = lineList.VatNumber.Substring(0, 9);
+                myStringBuilder.Append(lineList.VatNumber.PadLeft(9, '0'));
+
+                myStringBuilder.Append(lineList.ReferenceDate.Value.ToString("yyyyMMdd"));
+
+                if (lineList.ReferecneGroup.Length > 4) lineList.ReferecneGroup = lineList.ReferecneGroup.Substring(0, 4);
+                myStringBuilder.Append(lineList.ReferecneGroup.PadLeft(4, '0'));
+
+                if (lineList.Reference.Length > 9) lineList.Reference = lineList.Reference.Substring(0, 9);
+                myStringBuilder.Append(lineList.Reference.PadLeft(9, '0'));
+
+                //VatAmount
+                myStringBuilder.Append(Math.Abs(Math.Truncate(lineList.VatAmount.Value)).ToString().PadLeft(9, '0'));
+
+                //VatableInvoiceAmount
+                myStringBuilder.Append(lineList.VatableInvoiceAmount >= 0 ? '+' : '-');
+                myStringBuilder.Append(Math.Abs(Math.Truncate(lineList.VatableInvoiceAmount.Value)).ToString().PadLeft(10, '0'));
 
 
-			//
-			// Line: [last one]
-			//
-			string lastLine = "";
-			lastLine += "X";
-			lastLine += taxReport.VatNumber.PadLeft(9, '0');
-			linesArray.Add(lastLine);
+                myStringBuilder.Append("000000000");
+
+                myStringBuilder.AppendLine();
+
+            }
+
+
+            //
+            // Line: [last one]
+            //
+            string lastLine = "";
+            lastLine += "X";
+            lastLine += taxReport.VatNumber.PadLeft(9, '0');
+            myStringBuilder.Append(lastLine);
 
 
 
-			//// write to a file
-			//using (System.IO.StreamWriter file = new System.IO.StreamWriter(FilePath))
-			//{
-			//    foreach (string line in linesArray)
-			//    {
-			//        file.WriteLine(line);
+            //// write to a file
+            //using (System.IO.StreamWriter file = new System.IO.StreamWriter(FilePath))
+            //{
+            //    foreach (string line in linesArray)
+            //    {
+            //        file.WriteLine(line);
 
-			//    }
-			//}
+            //    }
+            //}
 
-			//update entity
-			IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-			TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+            //update entity
+            TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
             taxReport.ChangeSetOp = ChangeSetOperation.Update;
-			taxReport.StatusCode = "T"; // T- Transmitted
+            taxReport.StatusCode = "T"; // T- Transmitted
             taxReport.NeedsRebulid = false;
-			updateService.Update(taxReport, true);
+            updateService.Update(taxReport, true);
 
-			DocumentsFilingPM docOut = CreateDocumnetFiling(linesArray, taxReport);
+            DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, taxReport);
 
-			return docOut;
-		}
+            return docOut;
+        }
 
-		private static DocumentsFilingPM CreateDocumnetFiling(List<string> linesArray, TaxReportPM taxReport, bool isFromWR=false)
+
+        private static DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines, TaxReportPM taxReport, bool isFromWR=false)
 		{
 			// prepare file string
-			string file = string.Join(Environment.NewLine, linesArray.Select(x => x.ToString()).ToArray());
+            string file = string.Join(Environment.NewLine, lines);
 
-			// create document
-			int tenant = taxReport.Tenant;
+            // create document
+            int tenant = taxReport.Tenant;
 			ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
 			DocumentsFilingService docService = new DocumentsFilingService(MyContext, tenant);
 			DocumentTypeRepository docTypeReposioty = new DocumentTypeRepository(MyContext);

@@ -409,10 +409,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                             {
                                                 if (Requestor.PartnerIdentifier.Value != null)
                                                 {
-                                                    INTTRASetting myINTTRASetting = this.myCommonContext.INTTRASettings.Where(d => d.INTTRAAlias == Requestor.PartnerIdentifier.Value).FirstOrDefault();
-                                                    if (myINTTRASetting != null)
+                                                    Branch iBranch = this.myCommonContext.Branches.Where(d => d.INTTRAAlias == Requestor.PartnerIdentifier.Value).FirstOrDefault();
+                                                    //INTTRASetting myINTTRASetting = this.myCommonContext.INTTRASettings.Where(d => d.INTTRAAlias == Requestor.PartnerIdentifier.Value).FirstOrDefault();
+                                                    if (iBranch != null)
                                                     {
-                                                        iMessageTenant = myINTTRASetting.Tenant;
+                                                        iMessageTenant = iBranch.Tenant;
                                                     }
 
                                                     else

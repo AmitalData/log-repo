@@ -957,6 +957,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (theEntityPm.PaymentMethodCode == "CA")
             {
+                bool useLocal = true;
+                var user = GetLoggedContact(tenant);
+                if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
                 ICashBookQueryServiceExt cashBookQuery = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;
                 CashBookPM cashBook = cashBookQuery.GetByPaymentAndCurrencyAndBranch(theEntityPm.PaymentCurrencyId, "1", theEntityPm.BranchId, theEntityPm.Tenant);
                 if (cashBook != null)
@@ -975,10 +978,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else
                     {
-                        throw new ApplicationException(TranslateTextsClass.Translate("APPayment.M.FullAccountingCashBookCheck", tenant));
+                        throw new ApplicationException(TranslateTextsClass.Translate("APPayment.M.FullAccountingCashBookCheck", tenant, useLocal));
                     }
                 }
             }
+        }
+        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        private static ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
+            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
+                AuthenticationUtil.ResolveUserIdentityName(tenant)
+                , tenant);
+            if (loggedContact == null)
+            {
+                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
+            }
+            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
+            return loggedContact;
         }
 
         private GLAccountPM getDebitGLAccount(string vendorId, int tenant)

@@ -194,7 +194,7 @@
                                                                         <td>
                                                                             <label>E-mail</label>
                                                                             <div>
-                                                                                <input autocomplete="on" size="10" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" required type="email" (keydown)="OnMouseDownEvt($event)" />
+                                                                                <input autocomplete="on" size="10" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" required type="email" (blur)="onEmailBlur($event)" (keydown)="OnMouseDownEvt($event)" />
                                                                             </div>
                                                                         </td>
                                                                     </tr>
@@ -209,7 +209,7 @@
                                                                         <td>
                                                                             <label>password</label>
                                                                             <div>
-                                                                                <input class="auto-style1" [(ngModel)]="Password" required type="password" (keydown)="OnMouseDownEvt($event)" />
+                                                                                <input class="auto-style1" [(ngModel)]="Password" required type="password"  (keydown)="OnMouseDownEvt($event)" />
                                                                             </div>
                                                                         </td>
                                                                     </tr>

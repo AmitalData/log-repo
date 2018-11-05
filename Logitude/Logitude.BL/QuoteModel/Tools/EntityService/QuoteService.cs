@@ -125,6 +125,13 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("Quote", tenant).ToString();
             this.entityPoco = new Quote() { Id = this.entityPM.Id };
 
+            QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(objectContext);
+            QuoteSetting iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(tenant);
+            if(iQuoteSetting != null)
+            {
+                this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;
+            }
+
             this.InitializeComponent();
 
             QuotetValidating.Validate(entityPM, entityPoco, isNewEntity, myCommonContext);

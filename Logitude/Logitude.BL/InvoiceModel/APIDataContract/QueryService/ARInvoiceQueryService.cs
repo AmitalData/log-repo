@@ -24,6 +24,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 foreach(ARInvoiceLinePM item in entity.InvoiceLines)
                 {
                     item.EntityId = shipmentId;
+                    
                 }
             }
         }

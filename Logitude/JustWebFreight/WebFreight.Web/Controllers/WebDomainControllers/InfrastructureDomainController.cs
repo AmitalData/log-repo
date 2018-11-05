@@ -262,16 +262,57 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     allowedPackages = inf.PackagesCodes;
                 }
 
-                FeatureQuery featureQuery = new FeatureQuery(tenant);
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+                FeatureRepository iFeatureRepository = new FeatureRepository(commonDataContext);
+
+                FeatureQuery featureQuery = new FeatureQuery(iFeatureRepository);
                 List<FeaturePM> myResult = featureQuery.GetSelectedAndUnSelectedFeatures(RoleId, allowedPackages, tenant);
+
+
+                Tenant iTenant = (from d in commonDataContext.Tenants where d.Id == tenant select d).FirstOrDefault();
+                List<string> allTextCodesIds = myResult.Where(d=> d.NameTextCodeId != null).Select(s => s.NameTextCodeId).ToList();
+                List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesIds.Contains(d.Id) select d).ToList();
+                List<Translation> allTranslations = new List<Translation>();
+
+                if (iTenant.Language != null)
+                {
+                    TranslationHeader iTranslationHeader = (from d in webFreightContext.TranslationHeaders where d.Code == iTenant.Language select d).FirstOrDefault();
+                    if(iTranslationHeader != null)
+                    {
+                        allTranslations = (from d in webFreightContext.Translations
+                                           where d.TranslationHeaderCode == iTranslationHeader.Code
+                                           && d.Tenant == tenant
+                                           && allTextCodesIds.Contains(d.TextCodeId)
+                                           select d).ToList();
+                    }
+                }
 
                 foreach (FeaturePM item in myResult)
                 {
-                    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
+                    if (!string.IsNullOrEmpty(item.NameTextCodeId))
                     {
-                        item.TranslatedName = TranslateTextsClass.Translate(item.NameTextCodeCode, tenant);
+                        TextCode iTextCode = allTextCodes.Where(d => d.Id == item.NameTextCodeId).FirstOrDefault();
+                        if (iTextCode != null)
+                        {
+                            item.TranslatedName = iTextCode.DefaultText;
+
+                            Translation iTranslation = allTranslations.Where(d => d.TextCodeId == item.NameTextCodeId).FirstOrDefault();
+                            if(iTranslation != null)
+                            {
+                                item.TranslatedName = iTranslation.TranslatedText;
+                            }
+                        }
                     }
                 }
+
+                //foreach (FeaturePM item in myResult)
+                //{
+                //    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
+                //    {
+                //        item.TranslatedName = TranslateTextsClass.Translate(item.NameTextCodeCode, tenant);
+                //    }
+                //}
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

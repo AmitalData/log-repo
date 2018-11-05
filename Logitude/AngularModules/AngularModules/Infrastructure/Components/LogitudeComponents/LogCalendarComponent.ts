@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {AppTool, DateTool} from '../../Tools';
 
 @Component({
@@ -186,7 +186,7 @@ export class LogCalendarComponent implements OnInit {
     }
 
     TodayButtonClicked() {
-        this.SelectedDate = DateTool.GetCurrentDateAsUtc(); //DateTool.GetCurrentDateTimeAsUtc();
+        this.SelectedDate = this.GetTodaysDate(); //DateTool.GetCurrentDateAsUtc(); //DateTool.GetCurrentDateTimeAsUtc();
         this.SelectedDateChanged.emit({ SelectedDate: this.SelectedDate, Suffix: null });
     }
 
