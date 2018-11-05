@@ -64,6 +64,7 @@ namespace WebFreight.Web
                     response.CreatedBy = data.resource.revision != null ? data.resource.revision.fields["System.CreatedBy"] : "";
                     response.ChangedBy = data.resource.revision != null ? data.resource.revision.fields["System.ChangedBy"] : "";
                     response.AssignedTo = data.resource.revision != null ? data.resource.revision.fields["System.AssignedTo"] : "";
+                    response.TaskState = data.resource.revision != null ? data.resource.revision.fields["System.State"] : "";
 
                     if (response.CreatedBy.Contains('<'))
                     {
