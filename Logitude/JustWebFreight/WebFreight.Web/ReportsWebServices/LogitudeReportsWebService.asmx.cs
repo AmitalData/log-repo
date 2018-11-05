@@ -9669,15 +9669,18 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            iQueryable = (from myTMEmployeeTime in iQueryable
-                          join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
-                          from myProjct in joinedData
-                          where myTMEmployeeTime.Tenant == tenant
-                          && myProjct.Tenant == tenant
-                          && myProjct.IsInnerProject == IncludeInnerProject
-                          && myProjct.IsProrated == false
-                          select myTMEmployeeTime);
-            
+            if (IncludeInnerProject == false)
+            {
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.IsInnerProject == false
+                              && myProjct.IsProrated == false
+                              select myTMEmployeeTime);
+            }
+          
             if (customerId != null)
             {
                 var customerCard = cardRep.GetSingleCard(customerId, tenant);
