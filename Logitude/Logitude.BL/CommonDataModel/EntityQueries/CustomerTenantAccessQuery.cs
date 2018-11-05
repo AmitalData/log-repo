@@ -315,16 +315,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
-        public IQueryable<CustomerTenantAccessList> GetCustomerTenantAccessListsByCustomer( List<int?> customertenant)
+        public IQueryable<int> GetCustomerTenantAccessListsByCustomer( List<int?> customertenant , string stockTypeCode)
         {
-            IQueryable<CustomerTenantAccessList> results = (from a in repository.context.CustomerTenantAccesses
-                                                      where customertenant.Contains(a.CustomerTenant)
-                                                      select new CustomerTenantAccessList()
-                                                      {
-                                                          CustomerTenant = a.CustomerTenant,
-                                                          LastShipmentDate = a.LastShipmentDate,
-                                                          StockTypeCode = a.StockTypeCode
-                                                      });
+            IQueryable<int> results = (from a in repository.context.CustomerTenantAccesses
+                                                      where customertenant.Contains(a.CustomerTenant) && a.StockTypeCode == stockTypeCode
+                                                      select a.CustomerTenant);
             return results;
 
 

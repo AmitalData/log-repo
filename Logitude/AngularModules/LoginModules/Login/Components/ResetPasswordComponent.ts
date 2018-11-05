@@ -38,7 +38,7 @@ export class ResetPasswordComponent {
     }
 
 
-
+    HasCaptchaErrors: boolean = false;
     SubmitBtnClicked() {
         this.ShowbusyIndicator = true;
         if (!this.Email) {
@@ -80,36 +80,27 @@ export class ResetPasswordComponent {
 
                     this.CaptchaKey = userdata ? userdata.CaptchaKey : "";
                     //disableForm(false);
-
-                    var errorMessage = "Submit failed! invalid email.";
+                    var errorMessage = null;
 
                     if (userdata.InValidCaptcha) {
-                        errorMessage = "Please re-enter the characters you see in the image above";
                         this.CaptchaCode = "";
                         this.IsShowAreaCaptcha = true;
                         this.CaptchaImageUrl = userdata.CaptchaImage;
+                        this.HasCaptchaErrors = true;
 
                     }
 
-                  else  if (userdata.IpRestricted) {
 
-                        errorMessage = "Trying to submit in from unauthorised station!" + "<br/>" + "(The IP address you are trying to " + "<br/>" + "submit from is restricted for this user)";//
+                    if (userdata.IpRestricted) errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
+                    if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                    if (userdata.Unlicensed) errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                    if (userdata.InValidCaptcha) errorMessage = "Please re-enter the characters you see in the image above";
+                    if (userdata.InValidMailOrPassword) {
 
+                        errorMessage = "Login failed! invalid user name or password.";
+                        this.HasCaptchaErrors = false;
                     }
 
-                    if (userdata.IsLocked) {
-
-                        errorMessage = "Your account has been locked out!" + "<br/>" + "please contact your administrator.";
-                    }
-
-
-                    if (userdata.InActive) {
-                        errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                    }
-
-                    //document.getElementById("errorsList").innerHTML = errorMessage;
-                    // $("#errorsList").text(errorMessage);
-                    //$("#errorsList").show();
                     this.HasErrors = true;
                     this.ErrorMessage = errorMessage;
 

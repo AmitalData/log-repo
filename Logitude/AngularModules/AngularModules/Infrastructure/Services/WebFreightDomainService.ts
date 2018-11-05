@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../Utilities/ServiceHelper';
@@ -271,4 +271,8 @@ export class NewTraceEventResult {
     public LastStatusLogDate: Date;
     public LogDateTime: Date;
     public StatusChanged: boolean;
+    public LastSharedEventId: string;
+    public LastSharedEventLocation: string;
+    public LastSharedEventNotes: string;
+    public LastSharedEventDate: Date;
 }
