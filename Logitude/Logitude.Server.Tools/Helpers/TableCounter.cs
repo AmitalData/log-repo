@@ -22,14 +22,20 @@ namespace Logitude.Server.Tools.Helpers
     public class TableCounter
     { 
         public static string GetNumber(int tenant ,string counterCode,string parameter1,string parameter2)
-        {           
-            CounterRepository counterRepository = new CounterRepository(tenant);
-            CounterDefinitionRepository counterDefRep = new CounterDefinitionRepository(tenant);
-            Counter counter = counterRepository.GetCounterByCode(counterCode, tenant);
-            string counterId = counter.Id;
-
-            List<CounterDefinition> tableCounters = counterDefRep.GetCounterDefinitionsByCounterId(counterId, tenant).ToList();
-            CounterDefinition counterDef = tableCounters.Where(c => c.Parameter1 == parameter1 && c.Parameter2 == parameter2).FirstOrDefault();
+        {
+            Counter counter = null;
+            CounterDefinition counterDef = null;
+            List<CounterDefinition> tableCounters = null;
+            using (TransactionScope scope1 = TransactionFactory.GetNewTransaction())
+            {
+                CounterRepository counterRepository = new CounterRepository(tenant);
+                CounterDefinitionRepository counterDefRep = new CounterDefinitionRepository(tenant);
+                counter = counterRepository.GetCounterByCode(counterCode, tenant);
+                string counterId = counter.Id;
+                tableCounters = counterDefRep.GetCounterDefinitionsByCounterId(counterId, tenant).ToList();
+                counterDef = tableCounters.Where(c => c.Parameter1 == parameter1 && c.Parameter2 == parameter2).FirstOrDefault();
+                scope1.Complete();
+            }
 
             // to be deleted
             if (counterDef == null)

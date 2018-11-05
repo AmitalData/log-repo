@@ -75,69 +75,74 @@ namespace Logitude.Accounting.BL.CoreBL
 			TenantQuery tenantQuery = new TenantQuery(tenant);
 			TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
             string  vatNumber = null;
-			//Outputs
-			foreach (Journal a in journals)
-			{
-				string reference = null;
-				ARInvoice invoice = aRInvoiceRepository.GetSingleARInvoice(a.AccountingEntityId, a.Tenant);
-				if (invoice != null)
-				{
-					if (invoice.InvoiceNumber.Length == 9)
-					{
-						reference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
-					}
-					else
-					{
-						reference = invoice.InvoiceNumber;
-					}
-
-                    if (!string.IsNullOrEmpty(invoice.VatNumber))
+            //Outputs
+            foreach (Journal a in journals)
+            {
+                var exist = taxReport.TaxReportLines.Select(d => d.JournalId == a.Id).FirstOrDefault();
+                if (!exist)
+                {
+                    string reference = null;
+                    ARInvoice invoice = aRInvoiceRepository.GetSingleARInvoice(a.AccountingEntityId, a.Tenant);
+                    if (invoice != null)
                     {
-                        vatNumber = invoice.VatNumber;
-                    }
-					TaxReportLinePM line = new TaxReportLinePM()
-					{
-						VatNumber = vatNumber,
-						Reference = reference,
-						ReferecneGroup = "0000",
-						ReferenceDate = invoice.InvoiceDate,
-						JournalId = a.Id,
-						OutputOrInput = "O",
-						VatAmount = invoice.TotalVAT,
-						VatableInvoiceAmount =invoice.TotaVatableAmountForTaxReport,
-						IsManuallyChanged = false,
-						TransmitStatusCode = "1",
-						TaxReportId = taxReport.Id,
-						ChangeSetOp = ChangeSetOperation.Insert,
-						LastUpdateDateTime = DateTime.Now,
-						UpdatedByUserId = taxReport.UpdatedByUserId,
-						Tenant = tenant,
-                        
+                        if (invoice.InvoiceNumber.Length == 9)
+                        {
+                            reference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
+                        }
+                        else
+                        {
+                            reference = invoice.InvoiceNumber;
+                        }
 
-					};
-                    Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(invoice.BillToId, tenant);
-                    if(line.VatNumber == null) {
-                        line.VatNumber = "999999999";
+                        if (!string.IsNullOrEmpty(invoice.VatNumber))
+                        {
+                            vatNumber = invoice.VatNumber;
+                        }
+                        TaxReportLinePM line = new TaxReportLinePM()
+                        {
+                            VatNumber = vatNumber,
+                            Reference = reference,
+                            ReferecneGroup = "0000",
+                            ReferenceDate = invoice.InvoiceDate,
+                            JournalId = a.Id,
+                            OutputOrInput = "O",
+                            VatAmount = invoice.TotalVAT,
+                            VatableInvoiceAmount = invoice.TotaVatableAmountForTaxReport,
+                            IsManuallyChanged = false,
+                            TransmitStatusCode = "1",
+                            TaxReportId = taxReport.Id,
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            LastUpdateDateTime = DateTime.Now,
+                            UpdatedByUserId = taxReport.UpdatedByUserId,
+                            Tenant = tenant,
 
-                    }
 
-                    if (line.VatNumber == tenantPM.VatNumber)
-                    {
-                        line.LineTypeCode = "M";
+                        };
+                        Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(invoice.BillToId, tenant);
+                        if (line.VatNumber == null)
+                        {
+                            line.VatNumber = "999999999";
 
-                    }
-                    else if (card!= null && card.IsAutonomy)
-                    {
-                        line.LineTypeCode = "I";
-                    }
-                    else
-                    {
-                        line.LineTypeCode = "S";
-                    }
+                        }
 
-                    taxReport.TaxReportLines.Add(line);
-				}
-			}
+                        if (line.VatNumber == tenantPM.VatNumber)
+                        {
+                            line.LineTypeCode = "M";
+
+                        }
+                        else if (card != null && card.IsAutonomy)
+                        {
+                            line.LineTypeCode = "I";
+                        }
+                        else
+                        {
+                            line.LineTypeCode = "S";
+                        }
+
+                        taxReport.TaxReportLines.Add(line);
+                    }
+                }
+            }
 
 
 			//inputs
