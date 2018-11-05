@@ -90,6 +90,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LogitudeModel\LogitudeMigrationContext.cs" />
+    <Compile Include="Migrations\201810161033120_AddDeclarationFields.cs" />
+    <Compile Include="Migrations\201810311122380_AddVehiclePassportName.cs" />
+    <Compile Include="Migrations\201810311122380_AddVehiclePassportName.Designer.cs">
+      <DependentUpon>201810311122380_AddVehiclePassportName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201811050626572_CustomsPartnerFtpAndMore.cs" />
     <Compile Include="Migrations\201811050626572_CustomsPartnerFtpAndMore.Designer.cs">
       <DependentUpon>201811050626572_CustomsPartnerFtpAndMore.cs</DependentUpon>
@@ -151,6 +156,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810311122380_AddVehiclePassportName.resx">
+      <DependentUpon>201810311122380_AddVehiclePassportName.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811050626572_CustomsPartnerFtpAndMore.resx">
       <DependentUpon>201811050626572_CustomsPartnerFtpAndMore.cs</DependentUpon>
     </EmbeddedResource>
