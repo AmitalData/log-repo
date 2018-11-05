@@ -1722,13 +1722,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		    AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Noautorecofoundbymethodchangemethod", DefaultText = "No automatic reconcile found by this method, Please change method or select lines manually", LocalDefaultText = "לא נמצאו תנועות מתאימות לשיטת ההתאמה שנבחרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.EditLine", DefaultText = "Edit Line Number", LocalDefaultText = "ערוך שורה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxReportErrorMsg", DefaultText = "Cannot approve report, there are #Number errors", LocalDefaultText = "קיימות #Number שגיאות - יש לתקנם לפני שידור הדוח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Inactive", DefaultText = "Inactive", LocalDefaultText = "חסום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
-                        #region MainMenu
+            #region MainMenu
 
 
-                        #endregion
-                        objectContext.SaveChanges();
+            #endregion
+            objectContext.SaveChanges();
         }
         #endregion
 

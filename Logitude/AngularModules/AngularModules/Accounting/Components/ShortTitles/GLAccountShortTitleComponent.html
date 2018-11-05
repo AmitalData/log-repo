@@ -5,7 +5,11 @@
                 <div class="ShortTitleDiv" style="padding-left: 5px; font-size: 16px; color: #333333;font-family: Arial;">
                     {{ EntityPM.LocalName }}
                 </div>
+
             </div>
+
+            <!-- Cancelled -->
+            <div *ngIf="EntityPM.Inactive" class="ShortTitleControl" [style.float]="isRTL ? 'right' : 'left'" style="padding: 0px 5px;background: #e66464;"><span style="color: white;"> {{'Accounting.O.Inactive' | TextCodeTranslationPipe}}</span></div>
         </td>
     </tr>
 </table>

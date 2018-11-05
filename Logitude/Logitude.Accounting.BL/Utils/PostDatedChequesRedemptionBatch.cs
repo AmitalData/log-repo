@@ -105,7 +105,7 @@ namespace Logitude.Accounting.BL.Utils
                         }
 
                         BankAccountListQueryService bankAccountListQueryService = new BankAccountListQueryService(context);
-                        BankAccountList bankAccount = bankAccountListQueryService.GetByDeferedGLAccount(bankDeposit.DepositBankAccountId);
+                        BankAccountList bankAccount = bankAccountListQueryService.GetSingle(bankDeposit.DepositBankAccountId);
                         if (bankAccount == null)
                         {
                             string errorMessage = "E4: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
@@ -125,7 +125,8 @@ namespace Logitude.Accounting.BL.Utils
                             DocumentDate = aRPaymentCheque.ValueDate.Date,
                             DueDate = aRPaymentCheque.ValueDate.Date,
                             LocalAmount = aRPaymentCheque.LocalAmount,
-                            CurrencyId = aRPaymentCheque.CurrencyId, 
+                            // CurrencyId = aRPaymentCheque.CurrencyId,
+                            CurrencyCode = aRPaymentCheque.CurrencyCode,
                             ForeignAmount = aRPaymentCheque.ForeignAmount, 
                             Reference1 = aRPaymentCheque.ChequeNumber,
                         };
@@ -141,7 +142,8 @@ namespace Logitude.Accounting.BL.Utils
                             DocumentDate = aRPaymentCheque.ValueDate.Date,
                             DueDate = aRPaymentCheque.ValueDate.Date,
                             LocalAmount = aRPaymentCheque.LocalAmount,
-                            CurrencyId = aRPaymentCheque.CurrencyId,
+                            // CurrencyId = aRPaymentCheque.CurrencyId,
+                            CurrencyCode = aRPaymentCheque.CurrencyCode,
                             ForeignAmount = aRPaymentCheque.ForeignAmount,
                             Reference1 = aRPaymentCheque.ChequeNumber,
                         };
@@ -236,7 +238,8 @@ namespace Logitude.Accounting.BL.Utils
                     ActionCode = line.ActionCode,
                     CreditAccountId = line.CreditAccountId,
                     CreditControlAccountId = line.CreditControlAccountId,
-                    CurrencyId = line.CurrencyId,
+                    // CurrencyId = line.CurrencyId,
+                    CurrencyCode = line.CurrencyCode,
                     DebitAccountId = line.DebitAccountId,
                     DebitControlAccountId = line.DebitControlAccountId,
                     DocumentDate = line.DocumentDate,
