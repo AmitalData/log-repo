@@ -101,8 +101,8 @@ namespace Logitude.Accounting.BL.CoreBL
 						ReferenceDate = invoice.InvoiceDate,
 						JournalId = a.Id,
 						OutputOrInput = "O",
-						VatAmount = MethodHelper.Round(invoice.TotalVAT, 2),
-						VatableInvoiceAmount = MethodHelper.Round(invoice.TotaVatableAmountForTaxReport, 2),
+						VatAmount = invoice.TotalVAT,
+						VatableInvoiceAmount =invoice.TotaVatableAmountForTaxReport,
 						IsManuallyChanged = false,
 						TransmitStatusCode = "1",
 						TaxReportId = taxReport.Id,
@@ -110,7 +110,7 @@ namespace Logitude.Accounting.BL.CoreBL
 						LastUpdateDateTime = DateTime.Now,
 						UpdatedByUserId = taxReport.UpdatedByUserId,
 						Tenant = tenant,
-
+                        
 
 					};
                     Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(invoice.BillToId, tenant);
@@ -158,8 +158,8 @@ namespace Logitude.Accounting.BL.CoreBL
 					if (aPInvoice != null)
 					{
 						VatNumber = aPInvoice.VATNumber;
-						//   VatAmount = aPInvoice.TotalVATs.Sum(d=> d.); ;
-						//  InvoiceAmount = aPInvoice.tot
+						   VatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d=> d.LocalVATAmount);
+                        InvoiceAmount = (decimal?)aPInvoice.AmountInLocalCurrency;
 					}
 				}
 				else
@@ -211,6 +211,7 @@ namespace Logitude.Accounting.BL.CoreBL
 					LastUpdateDateTime = DateTime.Now,
 					UpdatedByUserId = taxReport.UpdatedByUserId,
 					Tenant = tenant,
+                    TransmitStatusCode ="1",
 
 
 				};
@@ -222,32 +223,31 @@ namespace Logitude.Accounting.BL.CoreBL
 				GLAccountPM account = gLAccountQueryService.GetSinglePM(CreditAccountId, tenant);
 
 
-				if (aPInvoice != null)
-				{
-					if (aPInvoice.VATNumber == tenantPM.VatNumber)
-					{
-						taxReportLine.LineTypeCode = "C";
-					}
-				}
-				else if (journal.JournalLines.Count > 0 && CreditAccountId == setting.CustomsGLAccountId)
-				{
 
-					taxReportLine.LineTypeCode = "R";
+                if (aPInvoice != null && (aPInvoice.VATNumber == tenantPM.VatNumber))
+                {
+                    taxReportLine.LineTypeCode = "C";
+                }
 
-				}
-				else if (card != null && card.IsAutonomy)
-				{
-					taxReportLine.LineTypeCode = "P";
-				}
+                else if (journal.JournalLines.Count > 0 && CreditAccountId == setting.CustomsGLAccountId)
+                {
 
-				else if (account != null && account.AccountTypeCode != "3")
-				{
-					taxReportLine.LineTypeCode = "K";
-				}
-				else
-				{
-					taxReportLine.LineTypeCode = "C";
-				}
+                    taxReportLine.LineTypeCode = "R";
+
+                }
+                else if (card != null && card.IsAutonomy)
+                {
+                    taxReportLine.LineTypeCode = "P";
+                }
+
+                else if (account != null && account.AccountTypeCode != "3")
+                {
+                    taxReportLine.LineTypeCode = "K";
+                }
+                else
+                {
+                    taxReportLine.LineTypeCode = "C";
+                }
 
                
                
