@@ -25,9 +25,8 @@ import { CustomBankListService } from '../../../../Customs/Services/StandardList
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { SendPayReadyLowRequestParams } from '../../../../Customs/DataContract/RequestParams/SendPayReadyLowRequestParams';
 import { SendALLCorrectRequestParams } from '../../../../Customs/DataContract/RequestParams/SendALLCorrectRequestParams';
-
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
-
+import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
 
 
@@ -91,6 +90,7 @@ implements OnDestroy
     IsActionButtonsEnabled: boolean = false;
     IsLoaded: boolean = false;
     IsFiltered: boolean = false;
+    IsMamanEnabled: boolean = false;
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
@@ -118,7 +118,7 @@ implements OnDestroy
         //            }
         //        });
         //);
-
+        this.GetMamanPUR();
         
     }
     //PseventRowSelectEventSubscribe: any;
@@ -1364,17 +1364,29 @@ implements OnDestroy
             });
     }
 
+    private GetMamanPUR() {
+        //SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
+        var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", SessionLocator.Tenant)
+          .subscribe(response => {
+            //SessionLocator.CurrentSession.StopBusyIndicator();
+            if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+              this.IsMamanEnabled = true;
+            }
+          });
+      }
+
+
 }
 
-export class KeyValuePair {
-    constructor(public Key: string, public Value) { }
-}
 
-export class TabFilter {
-
-    constructor(public Code: string,public Header: string, public Total?: number, public Filter? :string ) {
+    export class KeyValuePair {
+        constructor(public Key: string, public Value) { }
     }
 
+    export class TabFilter {
 
-}
+        constructor(public Code: string,public Header: string, public Total?: number, public Filter? :string ) {
+        }
+    }
 
