@@ -50,40 +50,32 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 var ClientModuleName = filters.ClinetName;
                 Object TableController;
                 Type magicType;
-                if (ClientModuleName != "Infrastructure")
+
+                TableController = GetInstance("Logitude." + ClientModuleName + ".BL.EntityQueryServices." + filters.objectTableName + "QueryService," + "Logitude." + ClientModuleName + ".BL", Tenant);
+                if (TableController==null)
                 {
-
-                    if (ClientModuleName == "TimeManagement")
-                    {
-                        TableController = GetInstance("Logitude." + ClientModuleName + ".BL.EntityQueryServices." + filters.objectTableName + "QueryService," + "Logitude." + ClientModuleName + ".BL", Tenant);
-                    }
-
-                    else
-                    {
-                        TableController = GetInstance("Logitude.BL." + ClientModuleName + "DataModel.EntityQueries." + filters.objectTableName + "Query,Logitude.BL", Tenant);
-                    }
+                    TableController = GetInstance("Logitude.BL." + ClientModuleName + "DataModel.EntityQueries." + filters.objectTableName + "Query,Logitude.BL", Tenant);
 
                 }
-                else
+
+                if (TableController == null)
+                {
                     TableController = GetInstance("Logitude.BL." + ClientModuleName + "Model.EntityQueries." + filters.objectTableName + "Query,Logitude.BL", Tenant);
-                if (ClientModuleName != "Infrastructure")
-                    if (ClientModuleName == "TimeManagement")
-                    {
-                        magicType = Type.GetType("Logitude." + ClientModuleName + ".BL.EntityQueryServices." + filters.objectTableName + "QueryService," + "Logitude." + ClientModuleName + ".BL");
-                    }
 
-                    else
-                    {
-                        magicType = Type.GetType("Logitude.BL." + ClientModuleName + "DataModel.EntityQueries." + filters.objectTableName + "Query,Logitude.BL");
-                    }
-                else
-                    magicType = Type.GetType("Logitude.BL." + ClientModuleName + "Model.EntityQueries." + filters.objectTableName + "Query,Logitude.BL");
-
-                var test = false;
-                if (test)
-                {
-                    magicType = Type.GetType("WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers,WebFreight.Web");
                 }
+
+                magicType= Type.GetType("Logitude." + ClientModuleName + ".BL.EntityQueryServices." + filters.objectTableName + "QueryService," + "Logitude." + ClientModuleName + ".BL");
+                if (magicType == null)
+                {
+                    magicType = Type.GetType("Logitude.BL." + ClientModuleName + "DataModel.EntityQueries." + filters.objectTableName + "Query,Logitude.BL");
+                }
+
+                if (magicType == null)
+                {
+                    magicType = Type.GetType("Logitude.BL." + ClientModuleName + "Model.EntityQueries." + filters.objectTableName + "Query,Logitude.BL");
+                }
+
+         
 
                 MethodInfo magicMethod;
                 var myTableDataList = new List<object>();
@@ -431,6 +423,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             object[] param = new object[] { 100 };
             param[0] = Tenant;
             Type t = Type.GetType(strFullyQualifiedName);
+            if (t == null)
+                return null;
             return Activator.CreateInstance(t, param);
         }
 
