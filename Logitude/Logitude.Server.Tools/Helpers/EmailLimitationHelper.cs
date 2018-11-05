@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.Helpers
 {
-    public static class EmailLimitationHelper
+    public  class EmailLimitationHelper
     {
         public static bool CheckEmailSendingQuotaForTenant(int tenant)
         {

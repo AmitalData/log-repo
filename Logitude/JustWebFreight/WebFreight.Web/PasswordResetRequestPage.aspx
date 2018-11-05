@@ -593,9 +593,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                             if (userdata.InValidCaptcha) {
                                 if (areacaptcha.style.display == "block") {
                                     document.getElementById("captchaTextBox").value = "";
-                   
                                 }
-                                errorMessage = "Please re-enter the characters you see in the <br> image above";
+
                                 document.getElementById("BusyindicatorArea").style.width = "0px";
                                 document.getElementById("BusyindicatorArea").style.height = "0px";
 
@@ -605,34 +604,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                             }
 
 
-                            else {
-
-                                if (userdata.IpRestricted) {
-
-                                    errorMessage = "Trying to submit in from unauthorised station!" + "<br/>" + "(The IP address you are trying to " + "<br/>" + "submit from is restricted for this user)";//
-
-                                }
-
-                                if (userdata.IsLocked) {
-
-                                    errorMessage = "Your account has been locked out!" + "<br/>" + "please contact your administrator.";
-                                }
-
-
-                                if (userdata.InActive) {
-                                    errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                                }
-
-                            }
-
-                            if (errorMessage == "Submit failed! invalid email." + "<br/>") {
-                                if (areacaptcha.style.display == "block") {
-                                    $("#CaptchaImage").attr("src", userdata.CaptchaImage);
-                                    document.getElementById("captchaTextBox").value = "";
-                                    document.getElementById("BusyindicatorArea").style.width = "0px";
-                                    document.getElementById("BusyindicatorArea").style.height = "0px";
-                                }
-                            }
+                            var errorMessage = "";
+                                        if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
+                                        if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                                        if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
+                                        if (userdata.InValidMailOrPassword)  errorMessage = "Login failed! invalid user name or password." + "<br/>";
+                                        if (!errorMessage) errorMessage = "Please re-enter the characters you see in the image above";
 
                             document.getElementById("errorsList").innerHTML = errorMessage;
                             // $("#errorsList").text(errorMessage);

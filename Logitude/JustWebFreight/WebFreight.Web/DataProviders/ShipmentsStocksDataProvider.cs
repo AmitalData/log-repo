@@ -19,9 +19,9 @@ namespace WebFreight.Web.DataProviders
         [Key]
         public string Id { get; set; }
         public string CustomerName { get; set; }
-        public decimal? TotalShipments { get; set; }
+        public string TotalShipments { get; set; }
         public string ParentId { get; set; }
-        public DateTime? LastShipmentDate { get; set; }
+        public string LastShipmentDate { get; set; }
         public string ShipmentNumber { get; set; }
         public DateTime CreateDate { get; set; }
         public string Status { get; set; }

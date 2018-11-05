@@ -89,8 +89,10 @@ export class ShipmentsStocksFiltersComponent extends BaseComponent implements On
             var FIELD_IS_REQUIERD: string = null;
             FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
+            var fieldName = TextCodeTranslator.Translate("Accounting.General.O.ToDate");
+            if (!fieldName) fieldName = "To Date";
 
-            var s: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Accounting.General.O.ToDate"));
+            var s: string = FIELD_IS_REQUIERD.replace("%FieldName", fieldName);
             this.ValidationErrorsList.push(s);
         }
 
@@ -98,14 +100,16 @@ export class ShipmentsStocksFiltersComponent extends BaseComponent implements On
             var FIELD_IS_REQUIERD: string = null;
             FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-
-            var s: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Accounting.O.FromDate"));
+            var fieldName = TextCodeTranslator.Translate("Accounting.General.O.FromDate");
+            if (!fieldName) fieldName = "From Date";
+            var s: string = FIELD_IS_REQUIERD.replace("%FieldName", fieldName);
             this.ValidationErrorsList.push(s);
         }
+
         if (this.ToDate < this.FromDate) {
-
-
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+            var messageError = TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate");
+            if (!messageError) messageError = "to date must be greater than from date";
+            this.ValidationErrorsList.push(messageError);
         }
 
 

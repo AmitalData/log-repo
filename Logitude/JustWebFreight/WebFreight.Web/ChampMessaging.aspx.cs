@@ -1,4 +1,5 @@
 ﻿using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
 using Simplog.Data.Helpers;
@@ -73,6 +74,11 @@ namespace WebFreight.Web
             analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
             analyzeQueueReposiory.Add(analyzeQueue);
             analyzeQueueReposiory.SubmitChanges();
+
+            DbQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ChampAnalyzer", 0);
+            queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
+            queueservice.Complete();
         }
     }
 }

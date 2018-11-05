@@ -2298,6 +2298,23 @@ namespace WebFreight.Web.ReportsWebServices
                                                      PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName,
                                                  }).ToList();
 
+            double? currencyRate = 0;
+            if (!string.IsNullOrEmpty(localCurrencyCode) && !string.IsNullOrEmpty(profitCurrencyCode))
+            {
+                Currency localCurrency = commonContext.Currencies.Where(d => d.Code == localCurrencyCode && d.Tenant == tenant).FirstOrDefault();
+                Currency profictCurrency = commonContext.Currencies.Where(d => d.Code == profitCurrencyCode && d.Tenant == tenant).FirstOrDefault();
+
+                if (localCurrency != null && profictCurrency != null)
+                {
+                    LastRate rate = this.GetCurrencysExchangeRate(tenant, localCurrency, profictCurrency, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
+                    if (rate != null && rate.Rate != 0)
+                    {
+                        dataProvider.Rate = "1 " + profitCurrencyCode + " = " + rate.Rate + " " + localCurrencyCode;
+                        currencyRate = rate.Rate;
+                    }
+                }
+            }
+
             foreach (string cardId in cardIdsList)
             {
                 AgedAccountsReceivableDataProvider.AgedAccountsReceivable acountsRecored = new AgedAccountsReceivableDataProvider.AgedAccountsReceivable();
@@ -2320,24 +2337,14 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (currencyType == "profit")
                 {
-                    if (!string.IsNullOrEmpty(localCurrencyCode) && !string.IsNullOrEmpty(profitCurrencyCode))
+                    if (currencyRate != 0)
                     {
-                        Currency localCurrency = commonContext.Currencies.Where(d => d.Code == localCurrencyCode && d.Tenant == tenant).FirstOrDefault();
-                        Currency profictCurrency = commonContext.Currencies.Where(d => d.Code == profitCurrencyCode && d.Tenant == tenant).FirstOrDefault();
-
-                        if (localCurrency != null && profictCurrency != null)
-                        {
-                            LastRate rate = this.GetCurrencysExchangeRate(tenant, localCurrency, profictCurrency, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
-                            if (rate != null && rate.Rate != 0)
-                            {
-                                currentsum = (currentDueItems.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum1_30 = (Due1_30Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum31_60 = (Due31_60Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum61_90 = (Due61_90Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                sum91_120 = (Due91_120Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                                over120 = (over120Items.Sum(d => d.Debit + d.Credit / rate.Rate));
-                            }
-                        }
+                        currentsum = (currentDueItems.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum1_30 = (Due1_30Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum31_60 = (Due31_60Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum61_90 = (Due61_90Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        sum91_120 = (Due91_120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
+                        over120 = (over120Items.Sum(d => (d.Debit + d.Credit) / currencyRate));
                     }
                 }
 
@@ -4897,41 +4904,32 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            DateTime myStartDate = todayDate.AddMonths(-1);
+            //DateTime myStartDate = todayDate.AddMonths(-1);
 
-            DateTime? fromDate = null;
-            DateTime? toDate = null;
+            //DateTime? fromDate = null;
+            //DateTime? toDate = null;
 
             if (filterItem_FromDate != null)
             {
-                if (filterItem_FromDate.FieldValue != null)
-                {
-                    DateTime from = new DateTime(myStartDate.Year, myStartDate.Month, 1);
-                    DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out from);
-                    fromDate = from;
+                DateTime fromDate;
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+                if (fromDate != null)
+                {                   
+                    dataProvider.FromDate = fromDate;
+                    iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.PaidUntilDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
                 }
             }
 
             if (filterItem_ToDate != null)
             {
-                if (filterItem_ToDate.FieldValue != null)
+                DateTime toDate;
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+                if (toDate != null)
                 {
-                    DateTime to = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
-                    DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out to);
-                    toDate = to;
+                    dataProvider.ToDate = toDate;
+                    iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.PaidUntilDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
                 }
             }
-
-            if (fromDate != null)
-            {
-                iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.PaidUntilDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-            }
-
-            if (toDate != null)
-            {
-                iQueryable_TenantManagements = iQueryable_TenantManagements.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.PaidUntilDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-            }
-
             #endregion
 
             IQueryable<CustomersDataView> iQueryable_IsActiveCustomers = iQueryable_AllCustomers.Where(d => d.ReceivablesAccountingCard != null && d.IsCustomer == true && d.CustomerStatusCode == "ACT");
@@ -5155,9 +5153,7 @@ namespace WebFreight.Web.ReportsWebServices
                     dataProvider.RecordList.Add(item);
                 }
             }
-
-            dataProvider.FromDate = fromDate;
-            dataProvider.ToDate = toDate;
+            
             return dataProvider;
         }
         #endregion
@@ -9806,9 +9802,7 @@ namespace WebFreight.Web.ReportsWebServices
                         timSheetItem_Detailed.Description = item.Description;
 
                         TMEmployeeTime myTMEmployeeTime = employeeTimeRepository.GetSingleByPrjectandEmployeeandWIandDescription(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, tenant);
-                        var wIWorkedHours_Employee = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2);
-                        var wIWorkedHours_Employee_Prorated = myTMEmployeeTime.ProratedDuration;
-                        wIWorkedHours_Employee = wIWorkedHours_Employee + wIWorkedHours_Employee_Prorated;
+                        var wIWorkedHours_Employee = Math.Round(myTMEmployeeTime.FullDuration / 60.0, 2);
                         totalWIWorkedDays_Employee += wIWorkedHours_Employee;
                         timSheetItem_Detailed.TotalWIWorkedDays_Employee = DateFormat(wIWorkedHours_Employee);
                         result.DetailedWorkHoursPerProjectList.Add(timSheetItem_Detailed);
@@ -10814,9 +10808,22 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             totalData.ResultList.OrderBy(d => d.Name);
-            var revenues = result.Where(d => d.ChartOfAcountType == "1").FirstOrDefault().LocalCloseBalance;
-            var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault().LocalCloseBalance;
-            totalData.TotalRevenueExpense = (revenues == null ? 0 : revenues) - (expenses == null ? 0 : expenses);
+
+            var revenues = result.Where(d => d.ChartOfAcountType == "1").FirstOrDefault();
+            decimal? totalRevenues = null;
+            if(revenues != null)
+            {
+                totalRevenues = revenues.LocalCloseBalance;
+            }
+            var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault();
+            decimal? totalExpenses = null;
+            if (expenses != null)
+            {
+                totalExpenses = expenses.LocalCloseBalance;
+            }
+            
+           
+            totalData.TotalRevenueExpense = (totalRevenues == null ? 0 : totalRevenues) - (totalExpenses == null ? 0 : totalExpenses);
 
 
             #endregion

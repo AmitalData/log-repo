@@ -235,7 +235,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
            
-            DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, taxDeductionReportPM);
+            DocumentsFilingPM docOut = CreateDocumnetFiling( myStringBuilder, taxDeductionReportPM);
 
             return docOut;
         }
@@ -285,7 +285,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private static DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines, TaxDeductionReportPM taxDeductionReport, bool isFromWR = false)
+        private static DocumentsFilingPM CreateDocumnetFiling( StringBuilder lines, TaxDeductionReportPM taxDeductionReport, bool isFromWR = false)
         {
             // prepare file string
             string file = string.Join(Environment.NewLine,lines);
@@ -298,12 +298,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
             ObjectTableRepository tableRep = new ObjectTableRepository(tenant);
             ObjectTable table = tableRep.GetObjectTableByName("TaxDeductionReport", 0, true);
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
 
             // user
             User loggedUser = GetLoggedUser(tenant);
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("TDR856", tenant);
 
-            string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
+            string _code = tenantPM.VatNumber + taxDeductionReport.TaxYear.ToString().Substring(1, 3);// CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
             DocumentsFilingPM document = new DocumentsFilingPM()
             {
                 Description = "TDR856 Text File",

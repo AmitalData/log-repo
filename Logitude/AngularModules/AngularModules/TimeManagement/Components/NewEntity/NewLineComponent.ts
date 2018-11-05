@@ -40,6 +40,7 @@ export class NewLineComponent extends BaseComponent {
         this.EntityPM.UpdateDate = todayDate;
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.EmployeeUserId = SessionLocator.LoggedUserId;
+        this.EntityPM.NeedsProrating = true;
         this.SetUIProperties();
     }
 
@@ -48,7 +49,7 @@ export class NewLineComponent extends BaseComponent {
     SetWindowArgs(args: any) {
        
         if (args != null) {
-            if (!args.IsNew) {
+            if (!args.IsNew == false) {
                 this.EntityPM = args.EntityPM;
                 this.EntityId = this.EntityPM.Id;
                 this.DateOfWorkDate.Date = this.EntityPM.DateOfWork;
