@@ -32,7 +32,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
 
                 if (isAuthentication)
                 {
-                    SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
+                   // SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
                     TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(id);
                     TenantManagementPM entityPM = tenantManagementQuery.GetSinglePM(id);
 
