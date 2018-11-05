@@ -12,7 +12,23 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CustomsPartnerFtpList
    {
-          [DataMember]
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string TypeCode  { get; set; }
+       [DataMember]
+       public string PartnerCode  { get; set; }
+       [DataMember]
+       public string InterfaceName  { get; set; }
+       [DataMember]
+       public string FtpDetailsId  { get; set; }
+       [DataMember]
+       public string FileName  { get; set; }
+       [DataMember]
        public string FileExt  { get; set; }
    }
 

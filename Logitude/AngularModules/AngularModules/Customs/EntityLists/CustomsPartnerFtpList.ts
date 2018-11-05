@@ -8,6 +8,13 @@
 
 export class CustomsPartnerFtpList {
    
+	Id: string;
+	Tenant: number;
+	TypeCode: string;
+	PartnerCode: string;
+	InterfaceName: string;
+	FtpDetailsId: string;
+	FileName: string;
 	FileExt: string;
 	
 }
