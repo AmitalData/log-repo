@@ -3,7 +3,7 @@ namespace Logitude.OracleDatabaseMigration.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddCustomsPartnerFtp : DbMigration
+    public partial class CustomsPartnerFtpTk3 : DbMigration
     {
         public override void Up()
         {
@@ -23,25 +23,18 @@ namespace Logitude.OracleDatabaseMigration.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.FTPDetails", t => t.FtpDetailsId)
                 .Index(t => t.FtpDetailsId);
-            
-            //AlterColumn("dbo.JournalLines", "Reference1", c => c.String(maxLength: 30));
-            //AlterColumn("dbo.JournalLines", "Reference2", c => c.String(maxLength: 30));
-            //AlterColumn("dbo.JournalLines", "Reference3", c => c.String(maxLength: 30));
-            //AlterColumn("dbo.LedgerTransactions", "Reference1", c => c.String(maxLength: 30));
-            //AlterColumn("dbo.LedgerTransactions", "Reference2", c => c.String(maxLength: 30));
-            //AlterColumn("dbo.LedgerTransactions", "Reference3", c => c.String(maxLength: 30));
+            //Right now we didn’t manage to implement the lxml to support indexing in the db, so you must do it manually
+
+            //CREATE UNIQUE INDEX IX_CPF_PIT ON CUSTOMSPARTNERFTPS(PARTNERCODE ASC, INTERFACENAME ASC, TYPECODE ASC) 
+            CreateIndex(table: "Customs.CustomsPartnerFtps", name: "IX_CPF_PIT", unique: false, columns: new[] { "PARTNERCODE", "INTERFACENAME", "TYPECODE" });
+
         }
         
         public override void Down()
         {
+            DropIndex("Customs.CustomsPartnerFtps", columns: new[] { "PARTNERCODE", "INTERFACENAME", "TYPECODE" });
             DropForeignKey("Customs.CustomsPartnerFtps", "FtpDetailsId", "dbo.FTPDetails");
             DropIndex("Customs.CustomsPartnerFtps", new[] { "FtpDetailsId" });
-            //AlterColumn("dbo.LedgerTransactions", "Reference3", c => c.String(maxLength: 30, unicode: false));
-            //AlterColumn("dbo.LedgerTransactions", "Reference2", c => c.String(maxLength: 30, unicode: false));
-            //AlterColumn("dbo.LedgerTransactions", "Reference1", c => c.String(maxLength: 30, unicode: false));
-            //AlterColumn("dbo.JournalLines", "Reference3", c => c.String(maxLength: 30, unicode: false));
-            //AlterColumn("dbo.JournalLines", "Reference2", c => c.String(maxLength: 30, unicode: false));
-            //AlterColumn("dbo.JournalLines", "Reference1", c => c.String(maxLength: 30, unicode: false));
             DropTable("Customs.CustomsPartnerFtps");
         }
     }
