@@ -80,7 +80,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 this._DWObjectFieldPMService.getDWObjectFieldsWithChildrenByDWTableId(myResult.Result.Code).subscribe(Result => {
                     if (!Result.HasError) {
                         Result.Result.forEach((field) => {
-                            if (field.DisplayInQueryBuilder == true) {
+                            if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
                                 var view = new DWObjectFieldsDetails(field, this);
                                 view.ParentDataTypeCode = field.DataTypeCode;
                                 this.AllFieldsObsList.push(field);
