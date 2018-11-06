@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -6,6 +6,7 @@ import {ShipmentPMService} from '../../../Shipment/Services/StandardPMs/Shipment
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {DocumentsFilingExtendedPMService} from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
 
@@ -58,7 +59,10 @@ export class EditShipmentButtonListTemplate {
                 });
             }
         }
-        //this.fieldName = fieldName;
+        this.fieldName = fieldName;
+        if (AppTool.IsNullOrEmpty(this.rowData['ForwarderShipmentNumber']) && this.fieldName == "All Shipments") {
+            this.ShowButtons = false;
+        }
         //var myService: WebFreightDomainService = new WebFreightDomainService();
         //if (rowData['PartnerLogoId']){
         //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
