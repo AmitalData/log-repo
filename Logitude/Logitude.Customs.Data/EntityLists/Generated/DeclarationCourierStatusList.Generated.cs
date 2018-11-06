@@ -90,6 +90,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierSuspentionReasonName  { get; set; }
        [DataMember]
        public string AcceptanceStatusCode  { get; set; }
+       [DataMember]
+       public string MamanStatusCode  { get; set; }
    }
 
 }

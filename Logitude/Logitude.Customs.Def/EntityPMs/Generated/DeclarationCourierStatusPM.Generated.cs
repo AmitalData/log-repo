@@ -894,6 +894,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string mamanStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MamanStatusCode  
+	   {
+	    
+	     get
+		{
+		   return mamanStatusCode;
+		 }
+		 set
+		 {
+		   if(mamanStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanStatusCode",OldValue=mamanStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mamanStatusCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

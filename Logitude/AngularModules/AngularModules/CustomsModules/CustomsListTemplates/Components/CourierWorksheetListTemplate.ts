@@ -113,6 +113,7 @@ export class CourierWorksheetListTemplate {
     //  this.MySplitButtonComponent.DropdownDisplayClose();
     //}
   }
+
   setVariables(courierWorksheet: DeclarationCourierStatusList, fieldName: string)/*, AdditionalData:any)*/ {
     this._CourierWorksheet = courierWorksheet;
     this.fieldName = fieldName;
@@ -216,8 +217,8 @@ export class CourierWorksheetListTemplate {
     }
     this.SuspentionReasonText = this._CourierWorksheet.CourierCustomStatusName;
 
-        this.BuildDeclarationsCheckBox();
-        this.CD.detectChanges();
+    this.BuildDeclarationsCheckBox();
+    this.CD.detectChanges();
     }
 
     BuildDeclarationsCheckBox() {
