@@ -9695,6 +9695,7 @@ namespace WebFreight.Web.ReportsWebServices
                               where myTMEmployeeTime.Tenant == tenant
                               && myProjct.Tenant == tenant
                               && myProjct.CustomerId == customerId
+                              && myProjct.IsProrated == false
                               select myTMEmployeeTime);
             }
 
@@ -9706,6 +9707,7 @@ namespace WebFreight.Web.ReportsWebServices
                               where myTMEmployeeTime.Tenant == tenant
                               && myProjct.Tenant == tenant
                               && myProjct.BudgetId == budgetId
+                              && myProjct.IsProrated == false
                               select myTMEmployeeTime);
             }
 
@@ -9717,6 +9719,7 @@ namespace WebFreight.Web.ReportsWebServices
                               where myTMEmployeeTime.Tenant == tenant
                               && myProjct.Tenant == tenant
                               && myProjct.ExternalProjectNumber == externalProjectNumber
+                              && myProjct.IsProrated == false
                               select myTMEmployeeTime);
             }
 
