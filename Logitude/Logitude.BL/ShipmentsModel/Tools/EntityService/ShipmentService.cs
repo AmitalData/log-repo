@@ -2437,7 +2437,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentAdditionalCloudData.Tenant = entityPM.Tenant;
                 shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
                 shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
-                shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationXMLData;
+                shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
                 shipmentAdditionalCloudData.VersionApproved = entityPM.VersionApproved;
                 shipmentAdditionalCloudData.ApproveDateTime = entityPM.ApproveDateTime;
                 if (entityPM.UpdateSendUpdatesToAgentEnabledField)
@@ -2666,7 +2666,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if (entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData) && entityPM.CustomsClearanceDate == null)
                     {
                         shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
-                        shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationXMLData;
+                        shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
                         shipmentAdditionalCloudData.IsImporterApprovalRequried = true;
                         shipmentAdditionalCloudData.ApprovedByUserName = null;
                         shipmentAdditionalCloudData.ApproveDateTime = null;

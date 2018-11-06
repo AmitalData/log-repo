@@ -2199,5 +2199,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? FinalDeliveryETD { get; set; }
         public DateTime? FinalDeliveryATA { get; set; }
         public DateTime? FinalDeliveryATD { get; set; }
+
+        public string DeclarationWCOXml { get; set; }
     }
 }

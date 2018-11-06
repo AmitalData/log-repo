@@ -39,7 +39,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 ShipmentPM temp =CustomsDataMappingAndValidatin(MyEntity, Tenant);
                 temp.NewConcurrencyGUID = Guid.NewGuid().ToString();
                 temp.Tenant = Tenant;
-                temp.DeclarationXMLData = MyEntity.DeclarationXMLData;
+                temp.DeclarationWCOXml = MyEntity.DeclarationXMLData;
                 temp.DeclarationNumber = MyEntity.DeclarationNumber;
                 temp.ShipmentLevelCode = "D";
                 temp.MainCarriageFromPortId = temp.FromPortId;
