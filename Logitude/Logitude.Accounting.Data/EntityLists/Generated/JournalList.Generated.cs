@@ -68,10 +68,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime? LastActivityDate  { get; set; }
        [DataMember]
        public string StatusLocalName  { get; set; }
-       [DataMember]
-       public string TaxReportId  { get; set; }
-       [DataMember]
-       public string TaxReportStatusCode  { get; set; }
    }
 
 }

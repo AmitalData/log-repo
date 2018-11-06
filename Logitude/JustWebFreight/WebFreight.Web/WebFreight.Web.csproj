@@ -111,8 +111,7 @@
       <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="evohtmltopdf, Version=7.5.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\LogitudeWorld\2018.R4\General\Dlls\evohtmltopdf.dll</HintPath>
+      <HintPath>..\..\packages\EvoHtmlToPdf_x64.7.5.0\lib\net40\evohtmltopdf.dll</HintPath>
     </Reference>
     <Reference Include="FormulaEngineLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\FormulaEngineLib.dll</HintPath>
