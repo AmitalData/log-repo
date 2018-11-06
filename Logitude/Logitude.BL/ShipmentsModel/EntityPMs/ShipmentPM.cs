@@ -1955,6 +1955,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool DontAddToImportersQueue { get; set; }
 
+        public bool DontAddToForwarderQueue { get; set; }
+
         public string ForwarderPartnerId { get; set; }
 
         public DateTime? OperationalCloseDate { get; set; }
