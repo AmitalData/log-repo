@@ -106,8 +106,8 @@ namespace Logitude.Accounting.Data.Repositories
             {
                 AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Critical);
 
-                var checkInsureUsingOnlyByUpdateService = System.Configuration.ConfigurationManager.AppSettings.Get("InsureUsingOnlyByUpdateService");
-                if (!string.IsNullOrWhiteSpace(checkInsureUsingOnlyByUpdateService))
+                //var checkInsureUsingOnlyByUpdateService = System.Configuration.ConfigurationManager.AppSettings.Get("InsureUsingOnlyByUpdateService");
+                //if (!string.IsNullOrWhiteSpace(checkInsureUsingOnlyByUpdateService))
                 {
                     throw new Exception("InsureUsingOnlyByUpdateService");
                 }

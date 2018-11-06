@@ -114,7 +114,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             
             journalUpdate.OnUpdating(entityPM, entityPOCO, ChangeTrackingEntityPM);
         }
-
+        public JournalRepository GetJournalRepositoryPriv()
+        {
+            return (new JournalRepositoryPriv((IAccountingContext)this.MainContext) as JournalRepository);
+        }
         public virtual JournalUpdateOnUpdating GetJournalOnUpdtatingObject()
         {
             var journalUpdate = new JournalUpdateOnUpdating(this.MainContext as IAccountingContext);
