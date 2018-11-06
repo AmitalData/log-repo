@@ -214,6 +214,11 @@ export class DeclarationCourierStatusPM {
     public set AcceptanceStatusCode(newValue: string) { if (this.acceptanceStatusCode != newValue) { this.acceptanceStatusCode = newValue; this.MarkAsDirty("AcceptanceStatusCode"); } }
        
 	 
+    private mamanStatusCode: string;
+    public get MamanStatusCode() { return this.mamanStatusCode; }
+    public set MamanStatusCode(newValue: string) { if (this.mamanStatusCode != newValue) { this.mamanStatusCode = newValue; this.MarkAsDirty("MamanStatusCode"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

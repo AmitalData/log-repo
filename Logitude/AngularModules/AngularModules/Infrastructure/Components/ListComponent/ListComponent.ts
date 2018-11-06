@@ -2328,8 +2328,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                 case "Customs.DeclarationCargoSplit":
                     {
-                        logWindow.Width = 800;
-                        logWindow.Height = 550;
+                        logWindow.Width = 770;
+                        logWindow.Height = 750;
                         logWindow.ShowCloseButton = true;
                         break;
                     }

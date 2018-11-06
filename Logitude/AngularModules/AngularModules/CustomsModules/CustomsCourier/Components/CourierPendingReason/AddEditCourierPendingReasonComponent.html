@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .subTitle {
         color: #1b90cb;
         font-size: 15px;
@@ -113,6 +113,16 @@
                         <LogTextBox [ObjectFieldName]="'ErrorPlace'" [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                     </td>
+                    <!--<td>
+        <LogLov [ObjectFieldName]="'ErrorPlace'"
+                [ObjectTableName]="ObjectTableName"
+                [DataContext]="DataContext"
+                [LookUpTableName]="'Customs.PendingErrorPlace'"
+                [HideColumns]="true"
+                [FocusOnMe]="true"
+                [SelectedValue]="ErrorPlace">
+        </LogLov>
+    </td>-->
                     <td></td>
                 </tr>
 

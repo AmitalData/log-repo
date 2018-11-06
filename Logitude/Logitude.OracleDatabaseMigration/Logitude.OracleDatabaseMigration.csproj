@@ -107,6 +107,10 @@
     <Compile Include="Migrations\201811050638372_CustomsPartnerFtpTk3.Designer.cs">
       <DependentUpon>201811050638372_CustomsPartnerFtpTk3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811060542460_AddMigrationPendingErrorPlace.cs" />
+    <Compile Include="Migrations\201811060542460_AddMigrationPendingErrorPlace.Designer.cs">
+      <DependentUpon>201811060542460_AddMigrationPendingErrorPlace.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -167,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811050638372_CustomsPartnerFtpTk3.resx">
       <DependentUpon>201811050638372_CustomsPartnerFtpTk3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811060542460_AddMigrationPendingErrorPlace.resx">
+      <DependentUpon>201811060542460_AddMigrationPendingErrorPlace.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
