@@ -6,6 +6,7 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -89,15 +90,15 @@ namespace Logitude.Accounting.BL.Utils
                             string errorMessage = "E1: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
                             throw new Exception(errorMessage);
                         }
-                        BankDepositLineList bankDepositLineList = bankDepositLines.FirstOrDefault();
-                        if (bankDepositLineList == null || String.IsNullOrEmpty(bankDepositLineList.DepositId))
-                        {
-                            string errorMessage = "E2: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
-                            throw new Exception(errorMessage);
-                        }
-
+                        //BankDepositLineList bankDepositLineList = bankDepositLines.FirstOrDefault();
+                        //if (bankDepositLineList == null || String.IsNullOrEmpty(bankDepositLineList.DepositId))
+                        //{
+                        //    string errorMessage = "E2: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
+                        //    throw new Exception(errorMessage);
+                        //}
+                        List<string> depositIdList = bankDepositLines.Select(c => c.DepositId).Distinct().ToList();
                         BankDepositListQueryService bankDepositListQueryService = new BankDepositListQueryService(context);
-                        BankDepositList bankDeposit = bankDepositListQueryService.GetSingle(bankDepositLineList.DepositId);
+                        BankDepositList bankDeposit = bankDepositListQueryService.GetLastBankDepositByIdList(tenant, depositIdList);
                         if (bankDeposit == null)
                         {
                             string errorMessage = "E3: " + TranslateTextsClass.Translate("Cheques.Q.ChequeNotDeposited", tenant);
@@ -131,6 +132,8 @@ namespace Logitude.Accounting.BL.Utils
                             CurrencyCode = aRPaymentCheque.CurrencyCode,
                             ForeignAmount = aRPaymentCheque.ForeignAmount, 
                             Reference1 = aRPaymentCheque.ChequeNumber,
+                            Reference2 = bankDeposit.DepositNumber.ToString(),
+                            Reference3 = aRPaymentCheque.PaymentNumber,
                             Notes = TranslateTextsClassTranslate("Accounting.General.O.PostdatedChequeRedemption", 0, useLocal),
                     };
                         AccountingLogger.LogMe("Credit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
@@ -150,6 +153,8 @@ namespace Logitude.Accounting.BL.Utils
                             CurrencyCode = aRPaymentCheque.CurrencyCode,
                             ForeignAmount = aRPaymentCheque.ForeignAmount,
                             Reference1 = aRPaymentCheque.ChequeNumber,
+                            Reference2 = bankDeposit.DepositNumber.ToString(),
+                            Reference3 = aRPaymentCheque.PaymentNumber,
                             Notes = TranslateTextsClassTranslate("Accounting.General.O.PostdatedChequeRedemption", 0, useLocal),
                 };
                         AccountingLogger.LogMe("Debit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
