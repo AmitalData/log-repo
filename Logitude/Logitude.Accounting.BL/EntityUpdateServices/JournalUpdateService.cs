@@ -49,9 +49,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         
         string localAccountingCurrencyId;
         protected StornoOverrideM _StornoOverrideM;
-        
-        
- 
+
+        protected override void AddContext(JournalPM myTEntityPM)
+        {
+            base.AddContext(myTEntityPM);
+            //this.entityRepository.SetInsureUsingOnlyByUpdateService();
+        }
+
         protected override void OnCreating(JournalPM entityPM, EntityPM entityParentPM)
         {
             var JournalUpdateOnCreatingFactory = new JournalUpdateOnCreating.Factory();
