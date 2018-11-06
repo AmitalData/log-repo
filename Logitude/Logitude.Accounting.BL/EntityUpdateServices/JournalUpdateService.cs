@@ -46,13 +46,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 : base(mainContext, additionalContexts, tenant)
             { }
         }
-        
+
+        private class JournalRepositoryPriv : JournalRepository
+        {
+
+            public JournalRepositoryPriv(IAccountingContext mainContext)
+                : base(mainContext)
+            { }
+        }
+
         string localAccountingCurrencyId;
         protected StornoOverrideM _StornoOverrideM;
 
         protected override void AddContext(JournalPM myTEntityPM)
         {
             base.AddContext(myTEntityPM);
+            this.Repository = new JournalRepositoryPriv((IAccountingContext)this.MainContext);
             //this.entityRepository.SetInsureUsingOnlyByUpdateService();
         }
 
