@@ -62,7 +62,36 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     CustomerPM entityPM = mappingService.CustomerCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {                      
+                    {      
+                        if(SecurityUtility.CheckTableContactFeature("Customer", "CREATEACTIVECUSTOMER", authToken.Tenant))
+                        {
+                            entityPM.IsCustomer = true;
+                        }
+
+                        if(entityPM.Addresses.Count == 0)
+                        {
+                            throw new ApplicationException("Missing Main Address");
+                        }
+                        else
+                        {
+                            Tenant myTenant = MyContext.Tenants.Where(d => d.Id == authToken.Tenant).FirstOrDefault();
+                            if (myTenant.IsCustomerTelRequired)
+                            {
+                                if (string.IsNullOrEmpty(entity.MainAddress.PhoneNumber))
+                                {
+                                    throw new ApplicationException("Phone Number is required");
+                                }
+                            }
+
+                            if (myTenant.IsCustomerFaxRequired)
+                            {
+                                if (string.IsNullOrEmpty(entity.MainAddress.FaxNumber))
+                                {
+                                    throw new ApplicationException("Fax Number is required");
+                                }
+                            }
+                        }
+
                         CustomerService service = new CustomerService(MyContext, entityPM);
                         service.Create();
                         service.Submit();

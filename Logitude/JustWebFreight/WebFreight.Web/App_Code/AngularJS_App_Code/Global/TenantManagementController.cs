@@ -24,9 +24,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                if (id == authToken.Tenant || authToken.Tenant == 0)
+                bool isAuthentication = id == authToken.Tenant ? true : false;
+                if (!isAuthentication)
                 {
-                    SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
+                    isAuthentication = SecurityUtility.CheckIsUserCustomerCare(authToken.Email);
+                }
+
+                if (isAuthentication)
+                {
+                   // SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
                     TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(id);
                     TenantManagementPM entityPM = tenantManagementQuery.GetSinglePM(id);
 
