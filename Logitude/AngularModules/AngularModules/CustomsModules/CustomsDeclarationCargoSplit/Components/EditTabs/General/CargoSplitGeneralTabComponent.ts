@@ -126,6 +126,7 @@ public CargoIdentifiersList: ObservableCollection;
                                 this.Listen();
                                 //this.BuildTabs();
                                 this.GetFileData();
+                                this.RefreshEntity();
                                 });
                             });
                         });
