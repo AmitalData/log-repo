@@ -25,35 +25,40 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.TaxReportId = entityParentPM.Id;
             entityParentPM.TaxReportLineLastLine += 1;
             entityPM.Line = entityParentPM.TaxReportLineLastLine;
+            entityPM.IsManuallyChanged = true;
         }
 
         protected override void OnUpdating(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
         {
             Validate(entityPM);
             // TASK 43057
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-            {
+            //if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            //{
                 if (entityPM.IsManuallyChanged == true)
                 {
                     JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
-
+                    JournalMoreDataQueryService moreDataQueryService = new JournalMoreDataQueryService(entityPM.Tenant);
                     IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                    JournalUpdateService journalUpdateService = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    JournalMoreDataUpdateService journalMoreDataUpdateService = new JournalMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 
                     JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
+                    JournalMoreDataPM journalMoreDataPM = moreDataQueryService.GetSingleJournalMorData(journalPM.Id, entityPM.Tenant);
                     if (journalPM != null)
                     {
                         if (entityPM.TransmitStatusCode == "1") // 1- For transmit
-                            journalPM.TaxReportId = entityPM.TaxReportId;
+                            journalMoreDataPM.TaxReportId = entityPM.TaxReportId;
                         else if (entityPM.TransmitStatusCode == "3") // 3- Not for transmit at all
-                            journalPM.TaxReportId = "1111";
+                            journalMoreDataPM.TaxReportId = "1111";
 
                         //update
-                        journalPM.ChangeSetOp = ChangeSetOperation.Update;
-                        journalUpdateService.Update(journalPM, true);
+
+                        journalMoreDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                        journalMoreDataUpdateService.Update(journalMoreDataPM, true);
+                        entityPM.IsManuallyChanged = false;
+
                     }
 
-                }
+                //}
             }
 
           
@@ -154,9 +159,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         entityPM.StatusCode = "3";
                     }
+                    else
+                    {
+                        entityPM.StatusCode = "6";
+                    }
+
                 }
 
-                else { entityPM.StatusCode = "6"; }
+                else
+                {
+                    entityPM.StatusCode = "6";
+                }
+
 
 
             }

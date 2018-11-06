@@ -32,7 +32,7 @@ export class ModuleProviders {
             case "TMEmployeeTimePMService": { myResult = new TMEmployeeTimePMService(); break; }
             case "TMOfficeHourPMService": { myResult = new TMOfficeHourPMService(); break; }
             case "TMProjectPMService": { myResult = new TMProjectPMService(); break; }
-            case "TMBudgetPMService": { myResult = new TMProjectPMService(); break; }
+            case "TMBudgetPMService": { myResult = new TMBudgetPMService(); break; }
             case "TMProjectCategoryPMService": { myResult = new TMProjectCategoryPMService(); break; }
 
             case "SprintListService": { myResult = new SprintListService(); break; }

@@ -129,7 +129,7 @@ namespace CommunicationWorkerRole
                                     }
                                     else
                                     {
-                                        if (EmailLimitationHelper.CheckEmailSendingQuotaForTenant(tenant))
+                                        if (CheckEmailSendingQuotaForTenant(tenant))
                                         {
                                             SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
                                         }
@@ -967,5 +967,31 @@ namespace CommunicationWorkerRole
                 commLogrepository.SubmitChanges();
             }
         }
+
+
+        public  bool CheckEmailSendingQuotaForTenant(int tenant)
+        {
+            bool result = true;
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            int tenantEmailSendingQuota = tenantRepository.GetTenantEmailSendingQuota(tenant);
+            if (tenantEmailSendingQuota == 0) tenantEmailSendingQuota = LogitudeSettings.EmailSendingQuota;
+            if (tenantEmailSendingQuota > 0)
+            {
+                CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(tenant);
+                int communicationLogCount = communicationLogRep.GetCommunicationLogCountForTenantInLasthour(tenant);
+                if (communicationLogCount > tenantEmailSendingQuota)
+                {
+                    result = false;
+                }
+            }
+
+            return result;
+        }
+
+
+
+
+
+
     }
 }

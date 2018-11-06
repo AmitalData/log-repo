@@ -404,7 +404,7 @@
 
                             <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!_AmitalBrowserInUse">+</li>
                         </ul>
-                        <div *ngIf="IsShowLastSuccessfulLoginComponent" style="float:right;height:20px;margin-top:-23px">
+                        <div *ngIf="IsShowLastSuccessfulLoginComponent" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'"  style="height:20px;margin-top:-23px">
                             <LastSuccessfulLoginComponent></LastSuccessfulLoginComponent>
                            
                         </div>

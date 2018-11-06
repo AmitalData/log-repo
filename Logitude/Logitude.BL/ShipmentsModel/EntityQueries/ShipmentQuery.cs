@@ -33,6 +33,7 @@ using Logitude.BookingLib.Data.Repositories;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using System.Reflection;
+using Logitude.BL.CommonDataModel.EntityLists;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -1980,6 +1981,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 if (myFirstPickup != null)
                 {
+                    shipmentPM.FirstPickupATA = myFirstPickup.ATA;
+                    shipmentPM.FirstPickupATD = myFirstPickup.ATD;
+
                     #region
                     switch (myFirstPickup.PickUpDeliveryFromTypeCode)
                     {
@@ -2027,6 +2031,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 if (myFinalDelivery != null)
                 {
+                    shipmentPM.FinalDeliveryATA = myFinalDelivery.ATA;
+                    shipmentPM.FinalDeliveryATD = myFinalDelivery.ATD;
+                    shipmentPM.FinalDeliveryETA = myFinalDelivery.ETA;
+                    shipmentPM.FinalDeliveryETD = myFinalDelivery.ETD;
+
                     #region
                     switch (myFinalDelivery.PickUpDeliveryToTypeCode)
                     {
@@ -2512,15 +2521,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             #endregion
 
+
             #region Partners
-
-
-            #region Customer
+ 
             shipmentPM.CustomerId = shipment.CustomerId;
 
+           
+
+            #region FreightForwarder
+            shipmentPM.FreightForwarderId = shipment.FreightForwarderId;
+            shipmentPM.FreightForwarderAddressId = shipment.FreightForwarderAddressId;
+            shipmentPM.FreightForwarderContactId = shipment.FreightForwarderContactId;
+            shipmentPM.FreightForwarderReference = shipment.FreightForwarderReference;
+ 
             #endregion
 
-            #region Shipper
 
             shipmentPM.ShipperId = shipment.ShipperId;
 
@@ -2531,17 +2546,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ShipperReference2 = shipment.ShipperReference2;
 
 
-            #endregion
 
+        
             #region Consignee
-
             shipmentPM.ConsigneeId = shipment.ConsigneeId;
             shipmentPM.ConsigneeName = shipment.ConsigneeName;
             shipmentPM.ConsigneeAddressId = shipment.ConsigneeAddressId;
             shipmentPM.ConsigneeContactId = shipment.ConsigneeContactId;
             shipmentPM.ConsigneeReference1 = shipment.ConsigneeReference1;
             shipmentPM.ConsigneeReference2 = shipment.ConsigneeReference2;
-
+       
             #endregion
 
             #region Agent
@@ -2553,10 +2567,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             #endregion
 
+            #region IssuingCarrierAgent
+            shipmentPM.IssuingCarrierAgentId = shipment.IssuingCarrierAgentId;
+            shipmentPM.IssuingCarrierAddressId = shipment.IssuingCarrierAddressId;
+
+
+            #endregion
+
             #region CustomAgentExport
             shipmentPM.CustomAgentExportId = shipment.CustomAgentExportId;
             shipmentPM.CustomAgentExportAddressId = shipment.CustomAgentExportAddressId;
             shipmentPM.CustomAgentExportContactId = shipment.CustomAgentExportContactId;
+            shipmentPM.CustomAgentExportReference = shipment.CustomAgentExportReference;
 
             #endregion
 
@@ -2564,11 +2586,79 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.CustomAgentImportId = shipment.CustomAgentImportId;
             shipmentPM.CustomAgentImportAddressId = shipment.CustomAgentImportAddressId;
             shipmentPM.CustomAgentImportContactId = shipment.CustomAgentImportContactId;
+            shipmentPM.CustomAgentImportReference = shipment.CustomAgentImportReference;
 
+            #endregion
+
+            #region Notify1
+            shipmentPM.Notify1Id = shipment.Notify1Id;
+            shipmentPM.Notify1AddressId = shipment.Notify1AddressId;
+            shipmentPM.Notify1ContactId = shipment.Notify1ContactId;
+         
+            #endregion
+
+            #region Notify2
+            shipmentPM.Notify2Id = shipment.Notify2Id;
+            shipmentPM.Notify2AddressId = shipment.Notify2AddressId;
+            shipmentPM.Notify2ContactId = shipment.Notify2ContactId;
+      
+            #endregion
+
+            #region ShipperNotExporter
+            shipmentPM.ShipperNotExporterId = shipment.ShipperNotExporterId;
+            shipmentPM.ShipperNotExporterAddressId = shipment.ShipperNotExporterAddressId;
+            shipmentPM.ShipperNotExporterContactId = shipment.ShipperNotExporterContactId;
+ 
+            #endregion
+
+            #region ConsigneeNotImporter
+            shipmentPM.ConsigneeNotImporterId = shipment.ConsigneeNotImporterId;
+            shipmentPM.ConsigneeNotImporterAddressId = shipment.ConsigneeNotImporterAddressId;
+            shipmentPM.ConsigneeNotImporterContactId = shipment.ConsigneeNotImporterContactId;
 
             #endregion
 
+            #region CustomClearancePoint
+            shipmentPM.CustomClearancePointId = shipment.CustomClearancePointId;
+            shipmentPM.CustomClearancePointAddressId = shipment.CustomClearancePointAddressId;
+            shipmentPM.CustomClearancePointContactId = shipment.CustomClearancePointContactId;
+            shipmentPM.CustomClearancePointReference1 = shipment.CustomClearancePointReference1;
+
             #endregion
+
+            #region Coloader
+            shipmentPM.ColoaderId = shipment.ColoaderId;
+            shipmentPM.ColoaderAddressId = shipment.ColoaderAddressId;
+            shipmentPM.ColoaderContactId = shipment.ColoaderContactId;
+            shipmentPM.ColoaderReference1 = shipment.ColoaderReference1;
+
+            #endregion
+
+            #region Freelancer
+            shipmentPM.FreelancerId = shipment.FreelancerId;
+            shipmentPM.FreelancerAddressId = shipment.FreelancerAddressId;
+            shipmentPM.FreelancerContactId = shipment.FreelancerContactId;
+
+    
+            #endregion
+
+            #region Consolidator
+            shipmentPM.ConsolidatorId = shipment.ConsolidatorId;
+            shipmentPM.ConsolidatorAddressId = shipment.ConsolidatorAddressId;
+            shipmentPM.ConsolidatorContactId = shipment.ConsolidatorContactId;
+            shipmentPM.ConsolidatorReference = shipment.ConsolidatorReference;
+       
+            #endregion
+
+            #region ReleasingAgent
+            shipmentPM.ReleasingAgentId = shipment.ReleasingAgentId;
+            shipmentPM.ReleasingAgentAddressId = shipment.ReleasingAgentAddressId;
+            shipmentPM.ReleasingAgentContactId = shipment.ReleasingAgentContactId;
+            shipmentPM.ReleasingAgentReference1 = shipment.ReleasingAgentReference1;
+            shipmentPM.ReleasingAgentReference2 = shipment.ReleasingAgentReference2;
+
+            #endregion
+#endregion
 
             #region Properties
 
@@ -8741,7 +8831,39 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
+        public IQueryable<ShipmentList> GetShipmentListsByCustomerIdsAndDates(List<string>customerIds, DateTime? fromDate, DateTime? toDate, int tenant)
+        {
 
+            IQueryable<ShipmentList> result = Enumerable.Empty<ShipmentList>().AsQueryable();
+
+            IQueryable<ShipmentList> shipmentLists = (from s in repository.context.Shipments.Include("EntityStatus")
+                                                      where s.Tenant == tenant && customerIds.Contains(s.CustomerId) && !string.IsNullOrEmpty(s.CustomerShipmentNumber) && !s.IsCancelled && s.CreateDateTime >= fromDate && s.CreateDateTime <= toDate
+                                                      select new ShipmentList()
+                                                      {
+                                                          Id = s.Id,
+                                                          ShipmentNumber = s.ShipmentNumber,
+                                                          CreateDateTime = s.CreateDateTime,
+                                                          StatusName = s.EntityStatus.Name,
+                                                          CustomerTenantNumber = s.CustomerTenantNumber,
+                                                          CustomerId = s.CustomerId,
+                                                      });
+
+            if (shipmentLists.Count() > 0)
+            {
+                CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
+                List<int?> customerTenantNumbers = shipmentLists.GroupBy(d => d.CustomerTenantNumber).Select(d => d.FirstOrDefault().CustomerTenantNumber).ToList();
+                if (customerTenantNumbers.Count > 0)
+                {
+                    List<int> customerTenants = customerTenantAccessQuery.GetCustomerTenantAccessListsByCustomer(customerTenantNumbers,"A").ToList();
+                    result = shipmentLists.Where(d => customerTenants.Contains((int)d.CustomerTenantNumber));
+                }
+            }
+
+
+
+            return result;
+
+        }
     }
 
     public class DeparturesArrivalsDataItem

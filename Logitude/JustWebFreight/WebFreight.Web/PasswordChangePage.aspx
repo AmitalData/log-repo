@@ -626,7 +626,7 @@
 
         // contain series(5 letters / numbers)
         if (IsPasswordContainsSeries(password)) {
-            messageError = "Password can't contain series (5 letters/numbers)";
+            messageError = "Password can't contain series (3 letters/numbers)";
             return messageError;
 
         }
@@ -676,7 +676,7 @@
             } else IsNotSeriesNumnber = true;
 
 
-            if (seriesNumnberCount == 4) {
+            if (seriesNumnberCount == 2) {
                 result = true;
                 return;
             }
@@ -746,7 +746,7 @@
             } else IsNotSeriesNumnber = true;
 
 
-            if (seriesNumnberCount == 4) {
+            if (seriesNumnberCount == 2) {
                 result = true;
                 return;
             }

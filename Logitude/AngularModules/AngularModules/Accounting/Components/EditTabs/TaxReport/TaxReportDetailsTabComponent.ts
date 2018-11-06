@@ -515,8 +515,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
              filters.AdditionalFilters.push(this.searchFieldFilter);
          }
 
-        filters.PageSize = 50;
-        filters.PageIndex = 0;
+        filters.PageSize = take;
+        filters.PageIndex = skip;
         filters.GetCount = true;
 
         filters.SortBy = "Line";
@@ -552,8 +552,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     RefreshButtonClicked() {
         SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        this.ListFilters = new ApiQueryFilters();
-        this.FilterSelectedValue = 'All';
+        //this.ListFilters = new ApiQueryFilters();
+        //this.FilterSelectedValue = 'All';
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
     }

@@ -215,7 +215,7 @@ export class ChangePasswordComponent {
 
         // contain series(5 letters / numbers)
         if (this.IsPasswordContainsSeries(this.NewPassword)) {
-            messageError = "Password can't contain series (5 letters/numbers)";
+            messageError = "Password can't contain series (3 letters/numbers)";
             return messageError;
         }
 
@@ -263,7 +263,7 @@ export class ChangePasswordComponent {
             } else IsNotSeriesNumnber = true;
 
 
-            if (seriesNumnberCount == 4) {
+            if (seriesNumnberCount == 2) {
                 result = true;
                 return;
             }
@@ -336,7 +336,7 @@ export class ChangePasswordComponent {
                 } else IsNotSeriesNumnber = true;
 
 
-                if (seriesNumnberCount == 4) {
+                if (seriesNumnberCount == 2) {
                     result = true;
                     return;
                 }

@@ -50,6 +50,7 @@ using Logitude.SystemLogs.Repositories;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
+using WebFreight.Web.Helpers.DataProviderHelpers;
 
 namespace WebFreight.Web
 {
@@ -605,7 +606,7 @@ namespace WebFreight.Web
 
             try
             {
-                 
+
 
                 TenantManagmentPrivateLabelsPM privatelabel = null;
                 var url = SecurityUtility.getLoggedDomain();
