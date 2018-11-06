@@ -45,9 +45,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsVoided, 
 	         VoidedByJournalId, 
 	         ExternalSystem, 
-	         QueueId, 
-	         TaxReportId, 
-	         TaxReportStatusCode,
+	         QueueId,
 	      }
 
 
@@ -86,9 +84,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         VoidedByJournalId, 
 	         ExternalSystem, 
 	         QueueId, 
-	         StatusLocalName, 
-	         TaxReportId, 
-	         TaxReportStatusCode,
+	         StatusLocalName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -210,16 +206,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueId))
             {
 				entityPOCO.QueueId = entityPM.QueueId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportId))
-            {
-				entityPOCO.TaxReportId = entityPM.TaxReportId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportStatusCode))
-            {
-				entityPOCO.TaxReportStatusCode = entityPM.TaxReportStatusCode;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -348,16 +334,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.QueueId = entityPOCO.QueueId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TaxReportId))
-            {
-					entityPM.TaxReportId = entityPOCO.TaxReportId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TaxReportStatusCode))
-            {
-					entityPM.TaxReportStatusCode = entityPOCO.TaxReportStatusCode;
-            }
-
 		}
 
 		public void PMToOldPM(JournalPM entityPM, JournalPM oldEntityPM)
@@ -477,16 +453,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueId))
             {
                 oldEntityPM.QueueId = entityPM.QueueId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportId))
-            {
-                oldEntityPM.TaxReportId = entityPM.TaxReportId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportStatusCode))
-            {
-                oldEntityPM.TaxReportStatusCode = entityPM.TaxReportStatusCode;
             }
 			
 		}
