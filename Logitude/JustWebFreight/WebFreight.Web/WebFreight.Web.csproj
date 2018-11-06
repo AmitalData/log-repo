@@ -1472,6 +1472,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SupplierInvoiceController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TapagConnectionTableController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TapagController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TPGFileTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\UIMessageAdditionalController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\UIMessageController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\VehicleController.Generated.cs" />

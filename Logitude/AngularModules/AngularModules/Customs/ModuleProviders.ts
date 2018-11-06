@@ -205,7 +205,7 @@ import { CargoSplitRequestStatusListService } from './Services/StandardLists/Car
 import { TreatmentWayListService } from './Services/StandardLists/TreatmentWayListService';
 import { TPGFileTypeListService } from './Services/StandardLists/TPGFileTypeListService';
 import { CustomsAirlineListService } from './Services/StandardLists/CustomsAirlineListService';
-
+import { PendingErrorPlaceListService } from './Services/StandardLists/PendingErrorPlaceListService';
 
 //#endregion
 
@@ -535,6 +535,7 @@ export class ModuleProviders {
             case "TreatmentWayListService": { myResult = new TreatmentWayListService(); break; }
             case "TPGFileTypeListService": { myResult = new TPGFileTypeListService(); break; }  
             case "CustomsAirlineListService": { myResult = new CustomsAirlineListService(); break; }
+            case "PendingErrorPlaceListService": { myResult = new PendingErrorPlaceListService(); break; }
             //#endregion                
 
             //#region StandardPMs

@@ -16871,6 +16871,14 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
         }
 
+        public void FillPendingErrorPlaceTable()
+        {
+            PendingErrorPlaceRepository pendingErrorPlaceRepository = new PendingErrorPlaceRepository(0);
+            AddClosedTables.AddPendingErrorPlace(new PendingErrorPlace() { Code = "1", EnglishName = "Payment", LocalName = "תשלום" }, pendingErrorPlaceRepository);
+            AddClosedTables.AddPendingErrorPlace(new PendingErrorPlace() { Code = "2", EnglishName = "Distribution", LocalName = "הפצה" }, pendingErrorPlaceRepository);
+            pendingErrorPlaceRepository.SubmitChanges();
+        }
+
 
 #if false
         public void FillCustomsRequestsSheetStatusTable()
