@@ -19,7 +19,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(PendingErrorPlacePM entityPM, PendingErrorPlace entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.Code = entityPM.Code;
+            }
+            entityPM.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.Code;
         }
 
         public void CustomPOCOToPM(PendingErrorPlacePM entityPM, PendingErrorPlace entityPOCO)

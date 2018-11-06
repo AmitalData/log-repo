@@ -223,7 +223,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration>.DeSerializeObject(declarationXml);
                     UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
 
-                    _MyDeclarationPM.ManifestErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(responseError, _MyDeclarationPM, WCOTypeEnum.Manifest);
+                    _MyDeclarationPM.ManifestErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(responseError, _MyDeclarationPM, WCOTypeEnum.Manifest, false);
 
 
 

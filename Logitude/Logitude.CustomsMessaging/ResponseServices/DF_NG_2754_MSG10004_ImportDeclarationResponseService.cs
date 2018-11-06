@@ -24,6 +24,7 @@ using System.Linq;
 using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using UnifreightIIG.Common.MessageLib.Collateral;
 using Logitude.Customs.BL.TraceEvents;
+using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -465,7 +466,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             //Analyze the Errors section in the response XML 
             var swErrosXml1 = Stopwatch.StartNew();
-            this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(customResponse.Response.Error, _MyDeclarationPM);
+            this._MyDeclarationPM.ErrosXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(customResponse.Response.Error, _MyDeclarationPM, WCOTypeEnum.WCO, !_IsSubmitDeclarationResponse);
             this._MyDeclarationError = mydDclarationErrorPointerService._declarationErrorPointer;
             LogMessagingUtil.Instance.AppendLine("ErrosXml:Took:" + swErrosXml1.ElapsedMilliseconds);
 

@@ -26,11 +26,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 											{
                      
 					                          Code = a.Code,
-					
 					                          LocalName = a.LocalName,
-					
 					                          SearchFields = a.SearchFields,
-					
+					                          EnglishName = a.EnglishName,
+                                              Inactive = a.Inactive,
 		                    	            });
             return query;
 		}
