@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -39,6 +40,46 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         service.Update(entityPM, true);
 
                         scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
+
+
+        public HttpResponseMessage GetScreenOption(int tenant)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        //int tenant = authToken.Tenant;
+
+                        ICustomContext MyContext = CustomContext.GetContext(tenant);
+                        var queryService = new CustomsPartnerFtpQueryService(MyContext);
+                        var details = new CustomsPartnerFtpDetails();
+                        var entityPM = new
+                        {
+                            PartnerCodeItems = details.GetAllPartnerCode(),
+                            InterfaceNameItems = details.GetAllInterfaceName(),
+                            TypeCodeItems= details.GetAllTypeCode()
+                        };
+                        
+
+                        ///scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
                 }

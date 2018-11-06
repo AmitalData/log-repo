@@ -949,7 +949,7 @@ export class MaintenanceComponent {
                     //logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/CustomsInterfaceSettingsComponent');
                     logitudeWindow.Title = " הגדרות FTP לשותפים";
                     logitudeWindow.Width = 900;
-                    logitudeWindow.Height = 500;
+                    logitudeWindow.Height = 530;
 
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsPartnerFtpListComponent');
                     break;

@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.Helpers;
+using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -22,9 +23,6 @@ namespace Logitude.Customs.BL.Messaging.Maman
     public class FTPMamanService
     {
 
-        const string InterfaceName = "SUBMANIFEST";
-        const string PartnerCode = "MAMAN";
-        const string TypeCode = "OUT";
 
         private string communicationSubject= "שידור פנימיים מסוכנים לממן";
         public void BuildCommunicationLog(byte[] bytearray, int tenant, string entityId, string FileName= null)
@@ -48,7 +46,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             string password = "";
 
             var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
-            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, InterfaceName, PartnerCode, TypeCode);
+            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, CustomsPartnerFtpDetails.InterfaceName_SubManifest, CustomsPartnerFtpDetails.PartnerCode_Mamam, CustomsPartnerFtpDetails.TypeCode_Out);
 
 
             //CustomsInterfaceSettingRepository customsInterfaceSettingRepository = new CustomsInterfaceSettingRepository(tenant);

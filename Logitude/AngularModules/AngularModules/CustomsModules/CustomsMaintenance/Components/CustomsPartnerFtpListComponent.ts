@@ -65,26 +65,33 @@ export class CustomsPartnerFtpListComponent
         super();
         this._FetchCustomsPartnerFtpResultList = new ObservableCollection([]);
         this.myFTPService = new FTPDetailPMService();
-        this._TypeCodeItems.push({ 'Id': '', 'Name': '' });
-        this._TypeCodeItems.push({ 'Id': 'IN', 'Name': 'In' });
-        this._TypeCodeItems.push({ 'Id': 'OUT', 'Name': 'Out' });
+        //this._TypeCodeItems.push({ 'Id': '', 'Name': '' });
+        //this._TypeCodeItems.push({ 'Id': 'IN', 'Name': 'In' });
+        //this._TypeCodeItems.push({ 'Id': 'OUT', 'Name': 'Out' });
 
-        this._PartnerCodeItems =//.push({ 'Id': 'Malam', 'Name': 'Malam' });
-            [
-                { 'Id': "", 'Name': '' },
-                { 'Id': 'MAMAN', 'Name': 'Maman' },
+        //this._PartnerCodeItems =//.push({ 'Id': 'Malam', 'Name': 'Malam' });
+        //    [
+        //        { 'Id': '', 'Name': '' },
+        //        { 'Id': 'MAMAN', 'Name': 'Maman' },
 
-            ];
-        this._InterfaceNameItems =
-            [
-            { 'Id': "", 'Name': '' },
-            { 'Id': "SUBMANIFEST", 'Name': 'SubManifest' },
-        ];
+        //    ];
+        //this._InterfaceNameItems =
+        //    [
+        //    { 'Id': "", 'Name': '' },
+        //    { 'Id': "SUBMANIFEST", 'Name': 'SubManifest' },
+        //];
 
 
         SessionLocator.CurrentSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            this.ReLoadList();
+            this._CustomsPartnerFtpExtendedPMService.GetScreenOption(SessionLocator.Tenant).subscribe(res => {
+                let screenOption = res.Result;
+                this._PartnerCodeItems = screenOption.PartnerCodeItems;
+                this._InterfaceNameItems = screenOption.InterfaceNameItems;
+                this._TypeCodeItems = screenOption.TypeCodeItems;
+                this.ReLoadList();
+            })
+            
         });
     }
     ReLoadList() {

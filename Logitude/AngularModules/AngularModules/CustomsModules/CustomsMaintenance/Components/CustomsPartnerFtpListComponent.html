@@ -60,7 +60,7 @@
                                                                             <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;"
                                                                                     #selectControl
                                                                                     (change)="item.PartnerCodeChanged(selectControl)">
-                                                                                <option *ngFor="let c of _PartnerCodeItems" [value]="c.Id" [selected]="c.Id==item.PartnerCode">{{c.Name}}</option>
+                                                                                <option *ngFor="let c of _PartnerCodeItems" [value]="c.Key" [selected]="c.Key==item.PartnerCode">{{c.Value}}</option>
                                                                             </select>
                                                                         </div>-->
                                                                     </log-cell-template>
@@ -78,7 +78,7 @@
                                                                             <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;"
                                                                                     #selectControl
                                                                                     (change)="item.TypeCodeChanged(selectControl)">
-                                                                                <option *ngFor="let c of _TypeCodeItems" [value]="c.Id" [selected]="c.Id==item.TypeCode">{{c.Name}}</option>
+                                                                                <option *ngFor="let c of _TypeCodeItems" [value]="c.Key" [selected]="c.Key==item.TypeCode">{{c.Value}}</option>
                                                                             </select>
                                                                         </div>-->
                                                                     </log-cell-template>
@@ -178,7 +178,7 @@
                                                         <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
                                                                 #selectControlInterfaceName
                                                                 (change)="InterfaceNameChanged(selectControlInterfaceName)">
-                                                            <option *ngFor="let c of _InterfaceNameItems" [value]="c.Id" [selected]="c.Id==InterfaceName">{{c.Name}}</option>
+                                                            <option *ngFor="let c of _InterfaceNameItems" [value]="c.Key" [selected]="c.Key==InterfaceName">{{c.Value}}</option>
                                                         </select>
 
                                                     </td>
@@ -204,7 +204,7 @@
                                                         <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
                                                                 #selectControlPartnerCode
                                                                 (change)="PartnerCodeChanged(selectControlPartnerCode)">
-                                                            <option *ngFor="let c of _PartnerCodeItems" [value]="c.Id" [selected]="c.Id==PartnerCode">{{c.Name}}</option>
+                                                            <option *ngFor="let c of _PartnerCodeItems" [value]="c.Key" [selected]="c.Key==PartnerCode">{{c.Value}}</option>
                                                         </select>
                                                     </td>
 
@@ -219,7 +219,7 @@
                                                         <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;height: 22px;"
                                                                 #selectControl
                                                                 (change)="TypeCodeChanged(selectControl)">
-                                                            <option *ngFor="let c of _TypeCodeItems" [value]="c.Id" [selected]="c.Id==TypeCode">{{c.Name}}</option>
+                                                            <option *ngFor="let c of _TypeCodeItems" [value]="c.Key" [selected]="c.Key==TypeCode">{{c.Value}}</option>
                                                         </select>
                                                     </td>
 

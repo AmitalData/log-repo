@@ -18,33 +18,33 @@ export class CustomsPartnerFtpExtendedPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsPartnerFtpExtended';
     }
 
-    getAll(tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+    //getAll(tenant: number) {
+    //    var authHeader = new Headers();
+    //    authHeader.append('Token', SessionInfo.Token);
 
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/getAll?tenant=' + tenant, { headers: authHeader }).map(response => {
+    //    return Observable.defer(() => {
+    //        return this._http.get(this._apiUrl + '/getAll?tenant=' + tenant, { headers: authHeader }).map(response => {
 
 
-                var pmList :any[]= response.json();
+    //            var pmList :any[]= response.json();
 
-                var entityList: CustomsPartnerFtpPM[];
-                if (pmList) {
-                    pmList.forEach(pm => {
-                        entityList.push(this.MapJsonToEntityPM(pm));
-                    })
+    //            var entityList: CustomsPartnerFtpPM[];
+    //            if (pmList) {
+    //                pmList.forEach(pm => {
+    //                    entityList.push(this.MapJsonToEntityPM(pm));
+    //                })
                     
-                }
+    //            }
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entityList;
-                return serviceResponse;
+    //            var serviceResponse: ServiceResponse;
+    //            serviceResponse = new ServiceResponse();
+    //            serviceResponse.Result = entityList;
+    //            return serviceResponse;
 
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+    //        }).catch(ServiceHelper.HandleServiceError);
+    //    });
 
-    }
+    //}
     delete(Id: string) {
 
         return Observable.defer(() => {
@@ -63,6 +63,34 @@ export class CustomsPartnerFtpExtendedPMService {
                 if (pm) {
                     var mappedResult: CustomsPartnerFtpPM;
                     serviceResponse.Result = mappedResult;
+                }
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+
+        );
+
+    }
+    GetScreenOption(tenant: number) {
+
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            var mappedEntity: CustomsPartnerFtpPM;
+            return this._http.get(this._apiUrl + '/GetScreenOption/?' + 'tenant=' + tenant, { headers: authHeader }).map(response => {
+
+                var ScreenOption = response.json();
+                if (ScreenOption) {
+                    //var mappedResult: CustomsPartnerFtpPM;
+                    serviceResponse.Result = ScreenOption;
                 }
 
                 return serviceResponse;
