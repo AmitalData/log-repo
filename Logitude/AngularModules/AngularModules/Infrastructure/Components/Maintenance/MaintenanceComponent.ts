@@ -945,12 +945,15 @@ export class MaintenanceComponent {
                 }
                 case "CISE": {
                     var logitudeWindow = new LogitudeWindow();
-                    //logitudeWindow.Title = "Customs Settings";
-                    //logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/CustomsInterfaceSettingsComponent');
+                    logitudeWindow.Title = "Customs Settings";
+                    logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/CustomsInterfaceSettingsComponent');
+                    break;
+                }
+                case "CFTP": {
+                    var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = " הגדרות FTP לשותפים";
                     logitudeWindow.Width = 900;
-                    logitudeWindow.Height = 500;
-
+                    logitudeWindow.Height = 530;
                     logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsPartnerFtpListComponent');
                     break;
                 }
