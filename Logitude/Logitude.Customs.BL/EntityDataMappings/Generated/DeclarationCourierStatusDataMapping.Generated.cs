@@ -77,7 +77,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierPendingReasonName, 
 	         PendingRemarks, 
 	         CourierSuspentionReasonName, 
-	         AcceptanceStatusCode,
+	         AcceptanceStatusCode, 
+	         MamanStatusCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

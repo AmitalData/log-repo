@@ -108,6 +108,7 @@ implements OnDestroy
         this._TabFilterList.push(new TabFilter("DEC", "בעיות בהצהרה", null, null));
         this._TabFilterList.push(new TabFilter("PAY", "תשלום", null, null));
         this._TabFilterList.push(new TabFilter("HOLD", "Pending", null, null));
+        this._TabFilterList.push(new TabFilter("ACC", "מסוף", null, null));
         this._SelectedTabFilter = this._TabFilterList[0];
         //SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
         //this.PseventRowSelectEventSubscribe =
@@ -652,7 +653,7 @@ implements OnDestroy
             FieldName: 'ProcedureCurrentName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ProcedureCurrentName"),
-            Styles: { width: '200px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -701,7 +702,7 @@ implements OnDestroy
             FieldName: 'IsCourierMissingClassification',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsCourierMissingClassification"),
-            Styles: { width: '60px' },
+            Styles: { width: '55px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -712,7 +713,7 @@ implements OnDestroy
             FieldName: 'CourierManifestStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierManifestStatusCode"),
-            Styles: { width: '60px' },
+            Styles: { width: '55px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -723,7 +724,7 @@ implements OnDestroy
             FieldName: 'CourierDeclarationStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierDeclarationStatusCode"),
-            Styles: { width: '60px' },
+            Styles: { width: '55px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -734,7 +735,7 @@ implements OnDestroy
             FieldName: 'CourierPaymentStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPaymentStatusCode"),
-            Styles: { width: '60px' },
+            Styles: { width: '55px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -745,7 +746,18 @@ implements OnDestroy
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '100px' },
+            Styles: { width: '80px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+        });
+
+        this.columns.push({
+            FieldName: 'MamanStatusCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.MamanStatusCode"),
+            Styles: { width: '55px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
