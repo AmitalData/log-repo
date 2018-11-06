@@ -151,6 +151,7 @@
     <Compile Include="EntityListQueryServices\CourierStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsAirlineListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsDocumentsDefinitionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomsPartnerFtpListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitCargoIdentifierListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConsItemListQueryService.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="EntityListQueryServices\Generated\CourierStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsAirlineListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsDocumentsDefinitionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomsPartnerFtpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitCargoIdentifierListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConsItemListQueryService.Generated.cs" />
@@ -223,6 +225,7 @@
     <Compile Include="EntityLists\Generated\CourierStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsAirlineList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsDocumentsDefinitionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsPartnerFtpList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitCargoIdentifierList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConsItemList.Generated.cs" />

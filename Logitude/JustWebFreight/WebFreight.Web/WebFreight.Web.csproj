@@ -1130,6 +1130,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\CustomsDocumentPointerController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsHouseTypesController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsLoadTestController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\CustomsPartnerFtpExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsRequestSheetExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsSettingExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\DeclarartionController.cs" />
@@ -1251,6 +1252,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsInsuranceCompanyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsItemDetailsHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsItemViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsPartnerFtpViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsPartnersItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsPaymentTermViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsRequestsSheetStatusViewsController.Generated.cs" />

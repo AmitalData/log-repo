@@ -794,6 +794,7 @@
     <Compile Include="EntityQueryServices\CourierMasterQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsAirlineQueryService.cs" />
     <Compile Include="EntityQueryServices\CouriersVatQueryService.cs" />
+    <Compile Include="EntityQueryServices\CustomsPartnerFtpQueryService.cs" />
     <Compile Include="EntityQueryServices\DecCargoSplitConsItemQueryService.cs" />
     <Compile Include="EntityQueryServices\DecCargoSplitConQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationCargoSplitQueryService.cs" />
@@ -1169,6 +1170,7 @@
     <Compile Include="EntityUpdateServices\ClientDrivingLicenseUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CourierPendingReasonUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsAirlineUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CustomsPartnerFtpUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DecCargoSplitCargoIdentifierUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.Amital.cs" />
     <Compile Include="EntityUpdateServices\ClaimUpdateService.Amital.cs" />

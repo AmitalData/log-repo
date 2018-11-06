@@ -131,6 +131,7 @@
     <Content Include="CustomsModules\CustomsMaintenance\Components\ClosedTableNotExistedComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsClosedTablesComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsDocumentsDefinitionComponent.html" />
+    <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsPartnerFtpListComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsSettingsComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.html" />
@@ -319,6 +320,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\ClosedTableNotExistedComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsClosedTablesComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsDocumentsDefinitionComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsPartnerFtpListComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsSettingsComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.ts" />
@@ -367,13 +369,16 @@
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\BankAccountToRefundRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAirlineList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\CustomsPartnerFtpList.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAirlinePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsPartnerFtpPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsItemPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsPackDetPM.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAirlineListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPartnerFtpListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsAirlinePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\Others\GITITEMCacheService.ts" />
