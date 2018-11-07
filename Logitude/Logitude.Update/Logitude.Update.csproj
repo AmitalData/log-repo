@@ -301,6 +301,14 @@
       <Project>{00E5D96D-DD45-47E8-AAA3-FDBFD8ADD61A}</Project>
       <Name>Logitude.Accounting.BL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
+      <Project>{A3799525-14A2-42FC-A2DE-69ED3FD1C5D1}</Project>
+      <Name>Logitude.Accounting.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
+      <Project>{91564685-7EE1-466D-AFCD-183A1BF62259}</Project>
+      <Name>Logitude.Accounting.Def</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
       <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
       <Name>Logitude.BL</Name>

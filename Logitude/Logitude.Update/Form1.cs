@@ -55,6 +55,11 @@ using Microsoft.VisualBasic.FileIO;
 using System.Configuration;
 using System.Data.SqlClient;
 using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.BL.EntityUpdateServices;
 
 namespace Logitude.Update
 {
@@ -3322,6 +3327,29 @@ User/Pass",
 
         private void tabPage1_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void button37_Click(object sender, EventArgs e)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(0);
+            JournalQueryService journalQuery = new JournalQueryService(1);
+            List<Journal> journals = accountingContext.Journals.ToList();
+            foreach(Journal line in journals)
+            {
+                JournalMoreDataPM moreDataPM = new JournalMoreDataPM()
+                {
+                    JournalId = line.Id,
+                    Line= 1,
+                    TaxReportId = null,
+                    Tenant = 1,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    GeneralData = "empty",
+                };
+
+                JournalMoreDataUpdateService serivce = new JournalMoreDataUpdateService(accountingContext, new Dictionary<string, IContext>(), 1);
+                serivce.Update(moreDataPM, true);
+            }
 
         }
     }
