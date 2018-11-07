@@ -491,6 +491,7 @@
     <Content Include="Main Branch\2018\10 - 2018\Day 28 [Samar] fill customer status date from events.sql" />
     <Content Include="Main Branch\2018\10 - 2018\Day 29 [Ayman] Event Types Adjustments.sql" />
     <Content Include="Main Branch\2018\11 - 2018\Day 04 [Ayman] Event Types Adjustments.sql" />
+    <Content Include="Main Branch\2018\11 - 2018\Day 07 [Abdullah] Delete old TaxReport query.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />

@@ -163,7 +163,7 @@
                         <div [style.text-align]="isRTL ? 'right' : 'left'">{{ FieldValue | DateToMonthPipe  }} </div>
 
                     </div>
-                    <div *ngIf="FieldName == 'Status'">
+                    <div *ngIf="FieldName == 'StatusEnglishName'">
                         <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.color]="fontColor">{{ FieldValue  }}</div>
                         <div *ngIf="!IsHeaderScreenTemplate" style="text-align: right; padding-left: 3px;">{{ FieldValue  }}</div>
                     </div>
@@ -198,8 +198,6 @@
                         <div [style.text-align]="isRTL ? 'right' : 'left'">{{ FieldValue }}</div>
                     </div>
                 </div>
-
-
 
                 <!-- TaxDeductionReport -->
                 <div *ngIf="ObjectTableName == 'TaxDeductionReport'">

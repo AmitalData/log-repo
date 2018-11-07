@@ -1,4 +1,4 @@
-﻿import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -1041,6 +1041,14 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.ValidationErrorsList.push("Please fill Owner or Team");
             }
         }
+
+        if (this.AutomatedBackupClass.Type == "Delayed") {
+            if (!this.DelayTime ||  this.DelayTime<1) {
+                this.ValidationErrorsList.push("Delay time must be greater than 0");
+            }
+        }
+
+
 
         if (this.ValidationErrorsList.length == 0) {
             if (this.IsNewEntity) {
