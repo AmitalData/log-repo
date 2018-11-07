@@ -223,7 +223,7 @@ export class ChangePasswordComponent implements OnInit {
 
         // contain series(5 letters / numbers)
         if (this.IsPasswordContainsSeries(this.NewPassword)) {
-            this.ValidationErrorsList.push("Password can't contain series (3 letters/numbers)");
+            this.ValidationErrorsList.push("Password should not contain series (4 letters/numbers)");
         }
 
     }
@@ -358,132 +358,70 @@ export class ChangePasswordComponent implements OnInit {
         for (var i = 0; i < password.length; i++) {
             var char = password.charAt(i);
             var x = 0;
-            if ('0123456789'.indexOf(char) !== -1) {
-                x = Number(char);
-
-            } else {
-                x = char.charCodeAt(0);
-            }
-
+            if ('0123456789'.indexOf(char) !== -1) x = Number(char);
+            else x = char.charCodeAt(0);
+         
             passwordNumnberList.push(x);
         }
 
+        result = this.IsSeries(passwordNumnberList,"+");
+        if (!result) result = this.IsSeries(passwordNumnberList, "-");
+        if (!result) result = this.IsSeries(passwordNumnberList, "Same");
 
-       //Series
+        return result;
+    }
+
+    IsSeries(passwordNumnberList: any, operatorCode: string) {
+
+        var result = false;
         var seriesNumnberCount: number = 0;
         var seriesNumnberList: any = [];
         passwordNumnberList.forEach((item) => {
             var IsNotSeriesNumnber = false;
             if (item <= 9 || ((item >= 65 && item <= 90))) {
-                if (seriesNumnberList.length == 0) {
-                    seriesNumnberList.push(item);
-                }
+                if (seriesNumnberList.length == 0) seriesNumnberList.push(item);
+             
                 else {
-                    if (seriesNumnberList[seriesNumnberList.length - 1] + 1 == item) {
-                        seriesNumnberList.push(item);
-                        seriesNumnberCount += 1;
-                    } else {
-                        IsNotSeriesNumnber = true;
+
+                    if (operatorCode == "+") {
+                        if (seriesNumnberList[seriesNumnberList.length - 1] + 1 == item) {
+                            seriesNumnberList.push(item);
+                            seriesNumnberCount += 1;
+                        } else IsNotSeriesNumnber = true;
+                    }
+
+                    else if (operatorCode == "-") {
+                        if (seriesNumnberList[seriesNumnberList.length - 1] - 1 == item) {
+                            seriesNumnberList.push(item);
+                            seriesNumnberCount += 1;
+                        } else IsNotSeriesNumnber = true;
+                    }
+
+                    else if (operatorCode == "Same") {
+                        if (seriesNumnberList[seriesNumnberList.length - 1]  == item) {
+                            seriesNumnberList.push(item);
+                            seriesNumnberCount += 1;
+                        } else IsNotSeriesNumnber = true;
                     }
                 }
 
             } else IsNotSeriesNumnber = true;
 
 
-            if (seriesNumnberCount == 2) {
+            if (seriesNumnberCount == 3) {
                 result = true;
                 return;
             }
 
             if (IsNotSeriesNumnber) {
-                seriesNumnberCount = 0;
-                seriesNumnberList = [];
+                seriesNumnberList = seriesNumnberList.filter(d => d == item);
+                seriesNumnberCount = seriesNumnberList.length;
             }
 
         });
 
-
-        //Same
-        if (!result) {
-
-            seriesNumnberCount = 0;
-            seriesNumnberList = [];
-            passwordNumnberList.forEach((item) => {
-                var IsNotSeriesNumnber = false;
-                if (item <= 9 || ((item >= 65 && item <= 90))) {
-                    if (seriesNumnberList.length == 0) {
-                        seriesNumnberList.push(item);
-                    }
-                    else {
-                        if (seriesNumnberList[seriesNumnberList.length - 1] == item) {
-                            seriesNumnberList.push(item);
-                            seriesNumnberCount += 1;
-                        } else {
-                            IsNotSeriesNumnber = true;
-                        }
-                    }
-
-                } else IsNotSeriesNumnber = true;
-
-
-                if (seriesNumnberCount == 2) {
-                    result = true;
-                    return;
-                }
-
-                if (IsNotSeriesNumnber) {
-                    seriesNumnberCount = 0;
-                    seriesNumnberList = [];
-                }
-
-            });
-
-        }
-
-
-        //reverse
-        if (!result) {
-           seriesNumnberCount = 0;
-           seriesNumnberList = [];
-
-           passwordNumnberList.forEach((item) => {
-               var IsNotSeriesNumnber = false;
-               if (item <= 9 || ((item >= 65 && item <= 90))) {
-                   if (seriesNumnberList.length == 0) {
-                       seriesNumnberList.push(item);
-                   }
-                   else {
-                       if (seriesNumnberList[seriesNumnberList.length - 1] - 1 == item) {
-                           seriesNumnberList.push(item);
-                           seriesNumnberCount += 1;
-                       } else {
-                           IsNotSeriesNumnber = true;
-                       }
-                   }
-
-               } else IsNotSeriesNumnber = true;
-
-
-               if (seriesNumnberCount == 2) {
-                   result = true;
-                   return;
-               }
-
-               if (IsNotSeriesNumnber) {
-                   seriesNumnberCount = 0;
-                   seriesNumnberList = [];
-               }
-
-           });
-
-
-
-        }
-
-
         return result;
     }
-
 }
 
 
