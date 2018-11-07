@@ -25,7 +25,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
             entityPM.StatusTypeCode = "1";
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-            //entityPM.ReportNumber = TableCounter.GetNumber(entityPM.Tenant, "CNST", "CNS", null);
+            entityPM.ReportNumber =TableCounter.GetNumber(entityPM.Tenant, "TXDC", "TX", null);
 
             Validate(entityPM);
         }
