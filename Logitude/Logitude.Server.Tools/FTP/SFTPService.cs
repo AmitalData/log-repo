@@ -72,8 +72,8 @@ namespace Logitude.Server.Tools.FTP
                 //string solutionDirectory = solutionDir.FullName;
                 //string cerfFilePath = solutionDirectory + @"\Logitude.Server.Tools\FTP\private.pem";
 
-                string cerfFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"FTP\private.pem");
-                sftp.SSHCert = new Certificate(CertStoreTypes.cstPEMKeyFile, cerfFilePath, "test", "*");//@"C:\temp\private.pem"
+               // string cerfFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"FTP\private.pem");
+                //sftp.SSHCert = new Certificate(CertStoreTypes.cstPEMKeyFile, cerfFilePath, "test", "*");//@"C:\temp\private.pem"
                 
 
 

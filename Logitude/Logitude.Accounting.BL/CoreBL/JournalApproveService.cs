@@ -289,8 +289,10 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 var myReconciliation = myCreateAutoReconcileWhileStreamingService.ReconciliationList.First();
 
-                //var myJournalUpdateService = new JournalUpdateService()
-                var myJournalRepository = new JournalRepository(this._AccountingContext);
+                var myJournalUpdateService = new JournalUpdateService(this._AccountingContext,new Dictionary<string, IContext>(), this._JournalPM.Tenant);
+
+                var myJournalRepository = //new JournalRepository(this._AccountingContext);
+                    myJournalUpdateService.GetJournalRepositoryPriv();
                 myJournalRepository.UpdateWhileStreaming(this._JournalPM.Tenant, this._JournalPM.Id,
                     (poco) =>
                     {

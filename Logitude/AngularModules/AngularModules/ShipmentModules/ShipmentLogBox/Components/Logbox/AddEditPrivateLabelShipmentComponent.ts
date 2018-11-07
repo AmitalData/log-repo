@@ -1,4 +1,4 @@
-﻿import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
+import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
 import {TransportsFilter} from '../../../../Controls/TransportsFilter';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -445,6 +445,9 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
 
         if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
+        }
+        if (this.CustomerReference2.length > 30) {
+            this.ValidationErrorsList.push("My Reference can't be more than 30 characters");
         }
         if (this.ValidationErrorsList.length == 0) {
             this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe(myResult => {

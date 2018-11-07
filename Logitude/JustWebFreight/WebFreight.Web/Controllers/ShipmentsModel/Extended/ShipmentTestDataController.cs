@@ -33,9 +33,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 IGlobalContext globalContext = GlobalContext.GetContext();
 
-                GlobalTenant otherGlobalTenant = (from a in globalContext.GlobalTenants where a.Id != tenant && a.Id != 0 && a.IsActive == true select a).FirstOrDefault();
-                Tenant otherTenant = (from a in commonContext.Tenants where a.Id == otherGlobalTenant.Id select a).FirstOrDefault();
-                IShipmentsContext otherTenantShipmentsContext = ShipmentsContext.GetContext(otherTenant.Id);
+                //GlobalTenant otherGlobalTenant = (from a in globalContext.GlobalTenants where a.Id != tenant && a.Id != 0 && a.IsActive == true select a).FirstOrDefault();
+                //Tenant otherTenant = (from a in commonContext.Tenants where a.Id == otherGlobalTenant.Id select a).FirstOrDefault();
+                IShipmentsContext otherTenantShipmentsContext = ShipmentsContext.GetContext(tenant);
 
                 ShipmentTestData shipmentTenantFields = new ShipmentTestData();
                 shipmentTenantFields.CountryId = (from a in commonContext.Countries where a.Tenant == tenant && a.InActive == false select a.Id).FirstOrDefault();
@@ -93,7 +93,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 shipmentTenantFields.OceanChargesTypeId = (from a in commonContext.ChargesTypes where a.Tenant == tenant && a.IsOcean == true && a.InActive == false select a.Id).FirstOrDefault();
                 shipmentTenantFields.InlandChargesTypeId = (from a in commonContext.ChargesTypes where a.Tenant == tenant && a.IsInland == true && a.InActive == false select a.Id).FirstOrDefault();
 
-                shipmentTenantFields.OtherTenantShipmentId = (from a in otherTenantShipmentsContext.Shipments where a.Tenant == otherTenant.Id select a.Id).FirstOrDefault();
+                shipmentTenantFields.OtherTenantShipmentId = (from a in otherTenantShipmentsContext.Shipments where a.Tenant != tenant && a.Tenant != 0 select a.Id).FirstOrDefault();
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentTenantFields);
