@@ -14,6 +14,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial  class CourierMasterQueryService 
     {
+        public CourierMasterPM GetByDeclarationId(string declarationId, int tenant)
+        {
+            var courierDeclarationQueryService = new CourierDeclarationQueryService(tenant);
+            var courierDeclarationPM =courierDeclarationQueryService.GetCourierDeclarationByDeclarationId(declarationId, tenant);
+            if (courierDeclarationPM == null)
+            {
+                return null;
+            }
+            var entityPM=this.GetSingle(courierDeclarationPM.CourierMasterId, false, false);
+            return entityPM;
+        }
         public CourierMasterPM GetSingleCourier(string airlineId, string MAWB, string HAWB, int tenant)
         {
             CourierMaster poco = repository.GetSingleCourier(airlineId, HAWB, MAWB, tenant);

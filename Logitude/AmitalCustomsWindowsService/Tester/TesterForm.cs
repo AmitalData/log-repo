@@ -37,6 +37,8 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("CustomsCommandSendWSReceiveCorrelationWR");
             _CBWorkerRole.Items.Add("CustomsCommandDownloadDcaReceiveCorrelationWR");
             _CBWorkerRole.Items.Add("CustomsCommandAnalyzeResponseWR");
+            _CBWorkerRole.Items.Add("SendWebAPI2MamanGWMessageECTHRDataWR");
+            
 
             ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
         }
@@ -198,6 +200,11 @@ namespace AmitalCustomsWindowsService.Tester
                 case "CustomsCommandAnalyzeResponseWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandAnalyzeResponseWR>(
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
+                    break;
+                case "SendWebAPI2MamanGWMessageECTHRDataWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<SendWebAPI2MamanGWMessageECTHRDataWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                    { ServiceStarted = true, };
                     break;
                 default:
                     return;
@@ -665,6 +672,11 @@ namespace AmitalCustomsWindowsService.Tester
         {
             var tst = new CustomsWorkerRole.Test.clsTester();
             tst.TestAsDataSet("1306");
+
+        }
+
+        private void _CBWorkerRole_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }
