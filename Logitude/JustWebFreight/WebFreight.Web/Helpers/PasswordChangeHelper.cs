@@ -212,8 +212,9 @@ namespace WebFreight.Web.Helpers
 
                 if (IsNotSeriesNumnber)
                 {
-                    seriesNumnberCount = 1;
-                    seriesNumnberList = seriesNumnberList.Where(d => d == item).ToList();
+                    seriesNumnberCount = 0;
+                    seriesNumnberList = new List<int>();
+                    seriesNumnberList.Add(item);
                 }
 
             });

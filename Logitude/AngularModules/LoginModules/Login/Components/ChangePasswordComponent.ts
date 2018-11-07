@@ -289,10 +289,11 @@ export class ChangePasswordComponent {
                 result = true;
                 return;
             }
-
             if (IsNotSeriesNumnber) {
-                seriesNumnberList = seriesNumnberList.filter(d => d == item);
-                seriesNumnberCount = seriesNumnberList.length;
+                seriesNumnberCount = 0;
+                seriesNumnberList = [];
+                seriesNumnberList.push(item);
+
             }
 
         });

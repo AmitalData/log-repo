@@ -414,8 +414,10 @@ export class ChangePasswordComponent implements OnInit {
             }
 
             if (IsNotSeriesNumnber) {
-                seriesNumnberList = seriesNumnberList.filter(d => d == item);
-                seriesNumnberCount = seriesNumnberList.length;
+                seriesNumnberCount = 0;
+                seriesNumnberList = [];
+                seriesNumnberList.push(item);
+         
             }
 
         });
