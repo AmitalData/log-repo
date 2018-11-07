@@ -148,13 +148,13 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     }
     }
 
-    get IsPartOfDeductionReport() { return this.EntityPM.IsPartOfDeductionReport }
-    set IsPartOfDeductionReport(value: boolean) {
-        if (this.EntityPM.IsPartOfDeductionReport != value) {
-            this.EntityPM.IsPartOfDeductionReport = value;
+    //get IsPartOfDeductionReport() { return this.EntityPM.IsPartOfDeductionReport }
+    //set IsPartOfDeductionReport(value: boolean) {
+    //    if (this.EntityPM.IsPartOfDeductionReport != value) {
+    //        this.EntityPM.IsPartOfDeductionReport = value;
 
-        }
-    }
+    //    }
+    //}
 
     
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
