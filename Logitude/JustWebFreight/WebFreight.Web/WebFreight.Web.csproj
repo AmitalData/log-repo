@@ -2584,7 +2584,7 @@
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
-    <Content Include="Monitoring\EmailSendingQuotaExceeded.aspx" />
+    <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
     <Content Include="Monitoring\FailedTokenLog.aspx" />
     <Content Include="Monitoring\ForwarderShipmentDocumentQueue.aspx" />
@@ -4601,12 +4601,12 @@
     <Compile Include="Monitoring\AnalyzeQueue.aspx.designer.cs">
       <DependentUpon>AnalyzeQueue.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Monitoring\EmailSendingQuotaExceeded.aspx.cs">
-      <DependentUpon>EmailSendingQuotaExceeded.aspx</DependentUpon>
+    <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.cs">
+      <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Monitoring\EmailSendingQuotaExceeded.aspx.designer.cs">
-      <DependentUpon>EmailSendingQuotaExceeded.aspx</DependentUpon>
+    <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.designer.cs">
+      <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\FailedLoginLog.aspx.cs">
       <DependentUpon>FailedLoginLog.aspx</DependentUpon>
