@@ -226,6 +226,10 @@
     <Compile Include="Migrations\201811060740329_JournalMoreDataFieldsMigration.Designer.cs">
       <DependentUpon>201811060740329_JournalMoreDataFieldsMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811070816153_GlAccountExcludeFromDeductionReportMigration.cs" />
+    <Compile Include="Migrations\201811070816153_GlAccountExcludeFromDeductionReportMigration.Designer.cs">
+      <DependentUpon>201811070816153_GlAccountExcludeFromDeductionReportMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -339,6 +343,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811060740329_JournalMoreDataFieldsMigration.resx">
       <DependentUpon>201811060740329_JournalMoreDataFieldsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811070816153_GlAccountExcludeFromDeductionReportMigration.resx">
+      <DependentUpon>201811070816153_GlAccountExcludeFromDeductionReportMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

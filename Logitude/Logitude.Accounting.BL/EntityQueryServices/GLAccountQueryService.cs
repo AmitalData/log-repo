@@ -620,7 +620,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                       ).ToList();
 
             List<GLAccountList> glaccounts = (from a in context.GLAccounts.Include("AccountingCompanyType").Include("TaxWithholdingAssessOffice").Include("WithholdingTaxDeductionType")
-                                        where a.AccountTypeCode=="3" && a.IsPartOfDeductionReport==true
+                                        where a.AccountTypeCode=="3" && a.ExcludeFromDeductionReport==false
                                         
                                           select new GLAccountList()
                                           {

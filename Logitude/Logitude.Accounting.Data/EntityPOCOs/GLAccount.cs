@@ -154,8 +154,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ConsolidationVat { get; set; }
         [Column("IsEquipmentVendor")]
 	    public bool IsEquipmentVendor { get; set; }
-        [Column("IsPartOfDeductionReport")]
-	    public bool IsPartOfDeductionReport { get; set; }
+        [Column("ExcludeFromDeductionReport")]
+	    public bool ExcludeFromDeductionReport { get; set; }
     }
 }
 	 
