@@ -23,10 +23,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
      
             entityPM.UpdateDate = DateTime.Now;
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-
+            entityPM.StatusTypeCode = "1";
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+            //entityPM.ReportNumber = TableCounter.GetNumber(entityPM.Tenant, "CNST", "CNS", null);
 
-         
             Validate(entityPM);
         }
 

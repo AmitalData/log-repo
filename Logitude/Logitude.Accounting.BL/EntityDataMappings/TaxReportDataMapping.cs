@@ -28,6 +28,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
+
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
+            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
+            entityPOCO.SearchFields = entityPM.SearchFields;
         }
 
         public void CustomPOCOToPM(TaxReportPM entityPM, TaxReport entityPOCO)
@@ -44,6 +48,43 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.StatusLocalName = status.LocalName;
                 }
             }
+        }
+
+        private static void BuildSearchFields(TaxReportPM entityPM, TaxReport poco, bool isNewEntity)
+        {
+            string result = "";
+
+
+
+            if (!string.IsNullOrEmpty(entityPM.TaxReportNumber))
+            {
+                if (!(result.Split(',').Contains(entityPM.TaxReportNumber)))
+                {
+                    result = string.IsNullOrEmpty(result) ? entityPM.TaxReportNumber : result + "," + entityPM.TaxReportNumber;
+                }
+            }
+
+
+            if (entityPM.TaxReportMonth != null)
+            {
+             
+                    result =  (string.IsNullOrEmpty(result) ? entityPM.TaxReportMonth.ToString() : result + "," + entityPM.TaxReportMonth).ToString();
+                
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.VatNumber))
+            {
+                result = string.IsNullOrEmpty(result) ? entityPM.VatNumber : result + "," + entityPM.VatNumber;
+
+            }
+
+           
+
+         
+
+            entityPM.SearchFields = result;
+            poco.SearchFields = result;
+
         }
     }
 
