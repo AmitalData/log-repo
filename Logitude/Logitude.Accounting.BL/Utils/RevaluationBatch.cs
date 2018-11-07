@@ -216,7 +216,9 @@ namespace Logitude.Accounting.BL.Utils
                                     LocalAmount = difference,
                                     CurrencyId = item.CurrencyId, // was     ... = accountingCurrencyId,
                                     ForeignAmount = 0m, // was     ... = difference, 
-                                };
+                                    Reference1 = revaluation.RevaluationNumber.ToString(),
+                                    Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
+                            };
                                 AccountingLogger.LogMe("Credit Difference = " + difference, false, "REV");
                                 lineList.Add(journalLine_credit);
                             }
@@ -241,6 +243,8 @@ namespace Logitude.Accounting.BL.Utils
                                 LocalAmount = difference,
                                 CurrencyId = item.CurrencyId,
                                 ForeignAmount = 0m,
+                                Reference1 = revaluation.RevaluationNumber.ToString(),
+                                Notes = TranslateTextsClass.Translate("Revaluations.Q.Revaluation", gLAccountPM.Tenant),
                             };
                             AccountingLogger.LogMe("Debit Difference = " + difference, false, "REV");
                             lineList.Add(journalLine_debit);
