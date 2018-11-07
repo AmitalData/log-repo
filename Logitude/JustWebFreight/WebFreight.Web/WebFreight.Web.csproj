@@ -2637,6 +2637,7 @@
     <Content Include="SharedDocuments.aspx" />
     <Content Include="SharedDocuments\SharedDocumentsViewModel.js" />
     <Content Include="EntityExternalUpdate.aspx" />
+    <Content Include="ShipmentStatuses.aspx" />
     <Content Include="SignUp.aspx" />
     <Content Include="SignUpVerification.aspx" />
     <Content Include="Stimulsoft\css\demo.css" />
@@ -4925,6 +4926,13 @@
     </Compile>
     <Compile Include="Monitoring\ChampStatus.aspx.designer.cs">
       <DependentUpon>ChampStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentStatuses.aspx.cs">
+      <DependentUpon>ShipmentStatuses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShipmentStatuses.aspx.designer.cs">
+      <DependentUpon>ShipmentStatuses.aspx</DependentUpon>
     </Compile>
     <Compile Include="SignalRHubs\LogitudeHub.cs" />
     <Compile Include="SignalRStartup.cs" />
