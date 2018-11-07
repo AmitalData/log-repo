@@ -116,8 +116,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPOCO.IsCancelled == false && entityPM.IsCancelled == true)
             {
                 // canceled!!
-                
-
+                entityPM.StatusCode = "C"; // C- Cancelled מבוטל
             }
 
             if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
