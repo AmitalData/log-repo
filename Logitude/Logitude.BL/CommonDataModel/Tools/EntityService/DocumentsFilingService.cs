@@ -403,6 +403,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     Subject = "Document Backup",
                     FolderName = "DocumentFillingBackupQueue",
                     ByteData = logXML,
+                    LoggingEntityReference = entityPM.EntityReference,
                 };
 
                 logParams.QueueParameters = new Dictionary<string, string>() { { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } };
