@@ -13,6 +13,7 @@ using Logitude.Customs.Data;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -36,12 +37,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.EstimatedArrivalDateOnly);
             this.CustomMappedPMProperties.Add(PMPropertyNames.EstimatedArrivalTimeOnly);
 
-            AirlineRepository rep = new AirlineRepository(entityPM.Tenant);
+            CustomsAirlineRepository rep = new CustomsAirlineRepository(entityPM.Tenant);
             UserRepository userRep = new UserRepository(entityPM.Tenant);
-            Airline airline = rep.GetSingleAirline(entityPOCO.AirlineId, entityPOCO.Tenant);
-            if (airline != null)
+            CustomsAirline customsAirline = rep.GetSingle(entityPOCO.AirlineId, entityPOCO.Tenant);
+            if (customsAirline != null)
             {
-                entityPM.AirlinePrefix = airline.Prefix;
+                entityPM.AirlinePrefix = customsAirline.AirlinePrefix;
           
             }
 
@@ -79,12 +80,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 result = string.IsNullOrEmpty(result) ? entityPM.HAWB : result + "," + entityPM.HAWB;
             }
 
-            AirlineRepository rep = new AirlineRepository(entityPM.Tenant);
+            CustomsAirlineRepository rep = new CustomsAirlineRepository(entityPM.Tenant);
 
-            Airline airline = rep.GetSingleAirline(poco.AirlineId, poco.Tenant);
-            if (airline != null)
+            CustomsAirline customsAirline = rep.GetSingle(poco.AirlineId, poco.Tenant);
+            if (customsAirline != null)
             {
-                result = string.IsNullOrEmpty(result) ? airline.Prefix : result + "," + airline.Prefix;
+                result = string.IsNullOrEmpty(result) ? customsAirline.AirlinePrefix : result + "," + customsAirline.AirlinePrefix;
             }
 
            

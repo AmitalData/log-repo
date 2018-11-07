@@ -57,6 +57,7 @@
             this.debugStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reqSheetStatisticToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rePushAnalyzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fTPCommunicationWorkerRoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adHockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.send1966ByDCAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +77,7 @@
             this.loadTestAPIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreDecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.send8250ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.asDataSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uploadMultiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UploadMultiDoit = new System.Windows.Forms.ToolStripMenuItem();
             this.checkUniqueUploadTextBox1 = new System.Windows.Forms.ToolStripTextBox();
@@ -92,8 +94,6 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.fTPCommunicationWorkerRoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.asDataSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -335,6 +335,13 @@
             this.rePushAnalyzeToolStripMenuItem.Text = "ReQueue";
             this.rePushAnalyzeToolStripMenuItem.Click += new System.EventHandler(this.rePushAnalyzeToolStripMenuItem_Click);
             // 
+            // fTPCommunicationWorkerRoleToolStripMenuItem
+            // 
+            this.fTPCommunicationWorkerRoleToolStripMenuItem.Name = "fTPCommunicationWorkerRoleToolStripMenuItem";
+            this.fTPCommunicationWorkerRoleToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
+            this.fTPCommunicationWorkerRoleToolStripMenuItem.Text = "FTPCommunicationWorkerRole";
+            this.fTPCommunicationWorkerRoleToolStripMenuItem.Click += new System.EventHandler(this.fTPCommunicationWorkerRoleToolStripMenuItem_Click);
+            // 
             // adHockToolStripMenuItem
             // 
             this.adHockToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -484,7 +491,13 @@
             this.send8250ToolStripMenuItem.Name = "send8250ToolStripMenuItem";
             this.send8250ToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
             this.send8250ToolStripMenuItem.Text = "Send8373";
-            //this.send8250ToolStripMenuItem.Click += new System.EventHandler(this.send8250ToolStripMenuItem_Click);
+            // 
+            // asDataSetToolStripMenuItem
+            // 
+            this.asDataSetToolStripMenuItem.Name = "asDataSetToolStripMenuItem";
+            this.asDataSetToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.asDataSetToolStripMenuItem.Text = "AsDataSet";
+            this.asDataSetToolStripMenuItem.Click += new System.EventHandler(this.asDataSetToolStripMenuItem_Click);
             // 
             // uploadMultiToolStripMenuItem
             // 
@@ -599,6 +612,7 @@
             this._CBWorkerRole.Name = "_CBWorkerRole";
             this._CBWorkerRole.Size = new System.Drawing.Size(386, 21);
             this._CBWorkerRole.TabIndex = 4;
+            this._CBWorkerRole.SelectedIndexChanged += new System.EventHandler(this._CBWorkerRole_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -646,18 +660,6 @@
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
-            // 
-            // fTPCommunicationWorkerRoleToolStripMenuItem
-            // asDataSetToolStripMenuItem
-            // 
-            this.fTPCommunicationWorkerRoleToolStripMenuItem.Name = "fTPCommunicationWorkerRoleToolStripMenuItem";
-            this.fTPCommunicationWorkerRoleToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
-            this.fTPCommunicationWorkerRoleToolStripMenuItem.Text = "FTPCommunicationWorkerRole";
-            this.fTPCommunicationWorkerRoleToolStripMenuItem.Click += new System.EventHandler(this.fTPCommunicationWorkerRoleToolStripMenuItem_Click);
-            this.asDataSetToolStripMenuItem.Name = "asDataSetToolStripMenuItem";
-            this.asDataSetToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.asDataSetToolStripMenuItem.Text = "AsDataSet";
-            this.asDataSetToolStripMenuItem.Click += new System.EventHandler(this.asDataSetToolStripMenuItem_Click);
             // 
             // TesterForm
             // 

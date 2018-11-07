@@ -34,11 +34,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime? UpdateDateTime { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
-        [ForeignKey("Airline")]
+        [ForeignKey("CustomsAirline")]
         [Column("AirlineId")]
 	    public string AirlineId { get; set; }
 	      
-        public virtual Airline Airline { get; set; }
+        public virtual CustomsAirline CustomsAirline { get; set; }
         [Column("MAWB")]
 	    public string MAWB { get; set; }
         [Column("HAWB")]

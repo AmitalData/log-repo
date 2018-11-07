@@ -664,6 +664,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isACCTab ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsACCTab  
+	   {
+	    
+	     get
+		{
+		   return isACCTab;
+		 }
+		 set
+		 {
+		   if(isACCTab != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsACCTab",OldValue=isACCTab,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isACCTab=value;
+		   }
+			
+		 }
+	   }
 	  private string courierSearchFields ;
 	  	  
        
@@ -913,6 +936,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanStatusCode",OldValue=mamanStatusCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   mamanStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string mamanErrorXml ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MamanErrorXml  
+	   {
+	    
+	     get
+		{
+		   return mamanErrorXml;
+		 }
+		 set
+		 {
+		   if(mamanErrorXml != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanErrorXml",OldValue=mamanErrorXml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mamanErrorXml=value;
 		   }
 			
 		 }

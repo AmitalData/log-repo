@@ -125,8 +125,7 @@ public CargoIdentifiersList: ObservableCollection;
 
                                 this.Listen();
                                 //this.BuildTabs();
-                                this.GetFileData();
-                                this.RefreshEntity();
+                                
                                 });
                             });
                         });
@@ -173,6 +172,8 @@ public CargoIdentifiersList: ObservableCollection;
     Init() {
         
         this.SetDisplayFields(this.ResponseStatusCode);
+        this.GetFileData();
+        this.InitCargoIdentifiers();
         //if (this.entityArgs == null || (this.entityArgs != null && this.entityArgs.EntityPM == null)) {
         //    if (this.EntityPM != null && this.entityArgs != null) this.entityArgs.EntityPM = this.EntityPM;
         //    return;
@@ -292,7 +293,8 @@ public CargoIdentifiersList: ObservableCollection;
                 SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.RefreshEntity();
+                        //this.RefreshEntity();
+                        
                     }
                 })
             );
@@ -308,7 +310,7 @@ public CargoIdentifiersList: ObservableCollection;
                 SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.currentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEGC") {
-                            this.RefreshEntity();
+                            //this.RefreshEntity();
                             this.DisplayOnlyCheck();
                         }
                     }
@@ -912,6 +914,14 @@ public CargoIdentifiersList: ObservableCollection;
         }
     }
 
+    InitCargoIdentifiers() {
+        
+        if(!AppTool.IsNullOrEmpty(this.EntityPM) && this.EntityPM.DecCargoSplitCargoIdentifiers != null && this.EntityPM.DecCargoSplitCargoIdentifiers.length > 0)
+        {
+                this.CargoIdentifiersList.InsertCollection(this.EntityPM.DecCargoSplitCargoIdentifiers);
+        }
+    }
+
     private SaveEntityChanges(customSendOptionsArgs) {
         this.EntityPM.Tenant = SessionLocator.Tenant;
         var errors = [];
@@ -1109,7 +1119,7 @@ public CargoIdentifiersList: ObservableCollection;
                 */
             });
             //}
-            this.RefreshEntity();
+            //this.RefreshEntity();
         }
         
     }

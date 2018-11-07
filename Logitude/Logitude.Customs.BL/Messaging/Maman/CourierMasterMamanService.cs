@@ -33,7 +33,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 byte[] bytearray = Encoding.UTF8.GetBytes(messageToMaman);
                 //http://192.116.221.103:584/Courier58/api/couriermasters/getsingle?id=1-106
 
-                var myFTPMamanService = new FTPMamanService();
+                var myFTPMamanService = new FTPOutMamanSubManifestService();
                 myFTPMamanService.BuildCommunicationLog(bytearray, 1, courierMasterId);
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  

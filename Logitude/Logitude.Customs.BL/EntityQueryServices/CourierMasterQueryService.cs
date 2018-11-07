@@ -14,6 +14,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial  class CourierMasterQueryService 
     {
+        public CourierMasterPM GetByDeclarationId(string declarationId, int tenant)
+        {
+            var courierDeclarationQueryService = new CourierDeclarationQueryService(tenant);
+            var courierDeclarationPM =courierDeclarationQueryService.GetCourierDeclarationByDeclarationId(declarationId, tenant);
+            if (courierDeclarationPM == null)
+            {
+                return null;
+            }
+            var entityPM=this.GetSingle(courierDeclarationPM.CourierMasterId, false, false);
+            return entityPM;
+        }
         public CourierMasterPM GetSingleCourier(string airlineId, string MAWB, string HAWB, int tenant)
         {
             CourierMaster poco = repository.GetSingleCourier(airlineId, HAWB, MAWB, tenant);
@@ -119,6 +130,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int DECR = 0;
             int PAY_RL = 0;
             int ACC = 0;
+            int ACC_W = 0;
 
             var totQ =
             (from dStatus in q
@@ -141,7 +153,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  MNFR = g.Count(r => (r.CourierManifestStatusCode == "R" )),
                  DECR = g.Count(r => (r.CourierDeclarationStatusCode == "R" )),
                  HOLD = g.Count(r => (r.CourierPendingReasonCode != null)),
-                 ACC = g.Count(r => (r.CourierPendingReasonCode != null)), // TODO!!!
+                 ACC = g.Count(),
+                 //ACC_W = g.Count(r => (r. == "2")),
              });
 
             var tot =totQ.FirstOrDefault();
@@ -182,7 +195,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             keyValuePairList.Add(new KeyValuePair<string, int>("DECR", DECR));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNFR", MNFR));
             keyValuePairList.Add(new KeyValuePair<string, int>("PAY_RL", PAY_RL));
-            keyValuePairList.Add(new KeyValuePair<string, int>("ACC", PAY_RL));
+            keyValuePairList.Add(new KeyValuePair<string, int>("ACC", ACC));
         }
 
         public IQueryable<DeclarationPM> GetNotConnectedDeclaratins(QueryOperations queryOperations, int tenant)
