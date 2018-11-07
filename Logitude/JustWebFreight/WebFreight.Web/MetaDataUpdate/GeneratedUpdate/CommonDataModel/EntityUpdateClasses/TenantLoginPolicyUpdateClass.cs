@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class TenantLoginPolicyUpdateClass
@@ -535,7 +538,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "SessionTimeout",
 					  						ObjectTableName =  "TenantLoginPolicy",
-					  						FieldsDataType =  "Integer",
+					  						FieldsDataType = "Decimal",
 					  						Code =  "SessionTimeout",
 					  						MaxLength =  0,
 					  						IsCustom =  false,

@@ -18,7 +18,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool KeepUserLoggedIn { get; set; }
         public bool ExcludeInternalIPs { get; set; }
         public string AllowedIPs { get; set; }
-        public int SessionTimeout  { get; set; }
+        public decimal SessionTimeout  { get; set; }
         [ForeignKey("LoginPolicyCode")]
         public virtual LoginPolicy LoginPolicy { get; set; }
     }
