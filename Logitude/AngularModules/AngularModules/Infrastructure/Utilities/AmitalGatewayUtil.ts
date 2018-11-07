@@ -1,4 +1,4 @@
-﻿
+
 
 declare var window: any;
 import { UserPM } from '../../Common/EntityPMs/UserPM';
@@ -965,5 +965,33 @@ export class MapDocumentTypeCustomsData {
 
     }
   
+
+/*export class MapPendingReasonCodeData {
+    public Run(unifreightMessage: UnifreightMessageM) {
+        //"UnifreightEntity=GNDCARD·;UnifreightEntityNumber=10009065·;LogitudeEntity=Customs.Client·;LogitudeEntityNumber=049028392·;LogitudeViewModel=UnifreightMassageHandler·;LogitudeCommandId=ShowClientReturnIfExist·;formtitle=Client"
+        let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
+        //let ImporterVat = unifreightMessage.LogitudeEntityNumber;
+        let UnifaceNAME_HEB: string
+            = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.UnifaceNAME_HEB");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 250;
+        logWindow.Title = 'קשר סוג מסמך לשער עולמי';//TextCodeTranslator.Translate("Customs.Client.O.EditClient");// "Edit Client";
+        logWindow.WindowArgs = {
+            "UnifaceDOC_ID": UnifreightEntityNumber,
+            "UnifaceNAME_HEB": UnifaceNAME_HEB
+
+        };
+        logWindow.ShowCloseButton = true;
+        logWindow.Show(
+            './Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+        );
+
+        logWindow.WindowClosed.subscribe(($event1: any) => {
+            AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+            SessionLocator.CurrentSession.StopBusyIndicator();
+        });
+
+    }*/
 
 }

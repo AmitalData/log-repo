@@ -594,6 +594,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ErrorPlaceName",
+					  						OldFieldName =  "ErrorPlaceName",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -615,6 +616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ErrorPlaceName",
 					  						ListPropertyPath =  "ErrorPlaceName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -681,7 +683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllCouriersPendingQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id, IndexOrder = 2, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllCouriersPendingQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id, IndexOrder = 3, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "ErrorPlace" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllCouriersPendingQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id, IndexOrder = 3, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "ErrorPlaceName" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn AllCouriersPendingQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCouriersPendingQuery.Id, IndexOrder = 4, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "UnifreightStatusCode" && d.ObjectTableId == CourierPendingReasonObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 167 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -703,7 +705,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
          
             ScreenField CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "LocalName").FirstOrDefault().Id, ScreenId = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "ErrorPlace").FirstOrDefault().Id, ScreenId = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = CourierPendingReasonObjectFields.Where(d => d.FieldName == "ErrorPlaceName").FirstOrDefault().Id, ScreenId = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
 		    CourierPendingReasonObjectTable.HeaderScreenId = CourierPendingReasonCustomsCourierPendingReasonHeaderScreenScreen0.Id;
 	   		  
