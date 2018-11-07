@@ -10,7 +10,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Diagnostics;
-
+using Logitude.Server.Tools;
 namespace Logitude.Accounting.Data.Repositories
 {
    public partial class JournalLineRepository:IRepository<JournalLine>
@@ -43,8 +43,17 @@ namespace Logitude.Accounting.Data.Repositories
         {
             InsureUsingOnlyByUpdateService();
         }
-        private static void InsureUsingOnlyByUpdateService()
+        private void InsureUsingOnlyByUpdateService()
         {
+            var myName = this.NameOf();
+            if (myName != "JournalLineRepositoryPriv")
+            {
+                AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Critical);
+
+
+                throw new Exception("InsureUsingOnlyByUpdateService");
+
+            }
             return;//mohammad temp fix until itzik is back
             int iFrame = 3;
             var mth = new StackTrace().GetFrame(iFrame).GetMethod();
