@@ -359,7 +359,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         else {
             if ((this.SelectedFilter != "Recent" && this.isPrivateLabel) || !this.isPrivateLabel && (this.RequestedDocsLable == "Action Required" && this.SelectedFilter != this.RequestedDocsLable)) {
                 this.columns.push({
-                    FieldName: 'EditShipmentButtonListTemplate',
+                    FieldName: this.SelectedFilter,//'EditShipmentButtonListTemplate',
                     DataTypeCode: 'String',
                     Display: '',
                     Styles: { width: '100px' },
