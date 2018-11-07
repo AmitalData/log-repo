@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebFreight.Web.Monitoring
+namespace WebFreight.Web
 {
 
 
-    public partial class EmailSendingQuotaExceeded
+    public partial class ShipmentStatuses
     {
 
         /// <summary>
