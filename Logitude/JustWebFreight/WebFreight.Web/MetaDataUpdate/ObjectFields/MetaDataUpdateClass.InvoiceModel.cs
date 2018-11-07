@@ -2845,7 +2845,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayLongName = false,
                 FullFieldLable = "JournalNumber",
                 DefaultText = "Journal No.",
-                FullLocalDefaultText = "מספר פקודת יומן",
+                FullLocalDefaultText = "פקודת יומן",
                 ListFieldLable = "JournalNumberListLable",
                 ListLableDefaultText = "Journal No.",
                 ListLocalDefaultText = "מספר פקודת יומן",

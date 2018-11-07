@@ -60,9 +60,9 @@ export class TaxDeductionReportPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private reportNumber: number;
+    private reportNumber: string;
     public get ReportNumber() { return this.reportNumber; }
-    public set ReportNumber(newValue: number) { if (this.reportNumber != newValue) { this.reportNumber = newValue; this.MarkAsDirty("ReportNumber"); } }
+    public set ReportNumber(newValue: string) { if (this.reportNumber != newValue) { this.reportNumber = newValue; this.MarkAsDirty("ReportNumber"); } }
        
 	 
     private statusTypeCode: string;
