@@ -152,15 +152,15 @@ export class FieldTemplateComponent extends BaseComponent {
 
     SaveInvoiceChanges() {
         var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);  
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         if (errors.length == 0) {
             this.ShowBusyIndicator = true;
             this.BusyIndicatorMessage = "Saving...";
-            
+
             this.myService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
-                    
+
                 }
 
                 this.ShowBusyIndicator = false;
@@ -170,7 +170,7 @@ export class FieldTemplateComponent extends BaseComponent {
 
     private arPaymentId: string;
     NewPaymentClicked() {
-        if (FeatureLocator.HasFeaturePermession("APPayment", "NEW")) {            
+        if (FeatureLocator.HasFeaturePermession("APPayment", "NEW")) {
             if (this.EntityPM.StatusCode == "DR") {
                 var messageText = "Cant add payment for Draft invoice";
 
@@ -203,6 +203,18 @@ export class FieldTemplateComponent extends BaseComponent {
                     });
                 });
             }
+        }
+    }
+
+    OpenJournal(id) {
+        if (!AppTool.IsNullOrEmpty(id)){
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
         }
     }
 }
