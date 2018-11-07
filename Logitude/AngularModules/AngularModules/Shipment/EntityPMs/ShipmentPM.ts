@@ -1,4 +1,4 @@
-﻿
+
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
@@ -3633,7 +3633,10 @@ export class ShipmentPM {
     private dontAddToImportersQueue: boolean;
     public get DontAddToImportersQueue() { return this.dontAddToImportersQueue; }
     public set DontAddToImportersQueue(newValue: boolean) { if (this.dontAddToImportersQueue != newValue) { this.dontAddToImportersQueue = newValue; this.MarkAsDirty("DontAddToImportersQueue"); } }
-       
+
+    private dontAddToForwarderQueue: boolean;
+    public get DontAddToForwarderQueue() { return this.dontAddToForwarderQueue; }
+    public set DontAddToForwarderQueue(newValue: boolean) { if (this.dontAddToForwarderQueue != newValue) { this.dontAddToForwarderQueue = newValue; this.MarkAsDirty("DontAddToForwarderQueue"); } }
 	 
     private forwarderPartnerId: string;
     public get ForwarderPartnerId() { return this.forwarderPartnerId; }

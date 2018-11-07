@@ -9680,7 +9680,19 @@ namespace WebFreight.Web.ReportsWebServices
                               && myProjct.IsProrated == false
                               select myTMEmployeeTime);
             }
-          
+
+            if (ownerId != null)
+            {
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.OwnerId == ownerId
+                              && myProjct.IsProrated == false
+                              select myTMEmployeeTime);
+            }
+
             if (customerId != null)
             {
                 var customerCard = cardRep.GetSingleCard(customerId, tenant);
@@ -9695,6 +9707,7 @@ namespace WebFreight.Web.ReportsWebServices
                               where myTMEmployeeTime.Tenant == tenant
                               && myProjct.Tenant == tenant
                               && myProjct.CustomerId == customerId
+                              && myProjct.IsProrated == false
                               select myTMEmployeeTime);
             }
 
@@ -9706,6 +9719,7 @@ namespace WebFreight.Web.ReportsWebServices
                               where myTMEmployeeTime.Tenant == tenant
                               && myProjct.Tenant == tenant
                               && myProjct.BudgetId == budgetId
+                              && myProjct.IsProrated == false
                               select myTMEmployeeTime);
             }
 
@@ -9717,6 +9731,7 @@ namespace WebFreight.Web.ReportsWebServices
                               where myTMEmployeeTime.Tenant == tenant
                               && myProjct.Tenant == tenant
                               && myProjct.ExternalProjectNumber == externalProjectNumber
+                              && myProjct.IsProrated == false
                               select myTMEmployeeTime);
             }
 

@@ -65,6 +65,7 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
+                        ftpHostIP = ftpDetail.Host;
                         string p_status = "";
                         string p_message = "";
                         SFTPService sftpService = new SFTPService();
@@ -100,7 +101,7 @@ namespace CommunicationWorkerRole
 
         private static string GetFileName(DocumentsFiling documentFiling, Document document, DocumentType documentType)
         {
-            
+
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
             string filename = (!string.IsNullOrEmpty(document.FileName) ? document.FileName : document.Id) + "_" + documentFiling.Code + "." + document.Extension;
             if ((!string.IsNullOrEmpty(documentFiling.EntityNumber) || !string.IsNullOrEmpty(documentFiling.EntityId)) && !string.IsNullOrEmpty(documentFiling.ObjectTableId))
@@ -117,7 +118,7 @@ namespace CommunicationWorkerRole
                             else
                                 forwarderShipmentNumber = shipmentRepository.GetForwarderShipmentNumberByShipmentIdTenant(documentFiling.EntityId, documentFiling.Tenant);
 
-                            filename = documentFiling.Tenant + "_" + documentType.Code + "_" + documentFiling.Code + (!string.IsNullOrWhiteSpace(forwarderShipmentNumber) ? ("_" + forwarderShipmentNumber) : "");
+                            filename = documentFiling.Tenant + "_" + documentType.Code + "_" + documentFiling.Code + (!string.IsNullOrWhiteSpace(forwarderShipmentNumber) ? ("_" + forwarderShipmentNumber) : "") + (!string.IsNullOrEmpty(document.FileName) ? "_" + document.FileName : "") + "." + document.Extension;
                             break;
                         }
                     default:

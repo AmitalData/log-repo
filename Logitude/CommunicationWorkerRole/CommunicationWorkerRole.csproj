@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D5834B27-2C00-4AB3-9AA3-4266314B5ABA}</ProjectGuid>
+    <ProjectGuid>{BA2A42B8-A348-4D44-984C-1D718CB20B6F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CommunicationWorkerRole</RootNamespace>
@@ -229,17 +229,17 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="nsoftware.IPWorksSSH, Version=16.0.6588.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\SFTP3.2.0.0\lib\Net40\nsoftware.IPWorksSSH.dll</HintPath>
+    <Reference Include="nsoftware.IPWorksSSH, Version=16.0.6800.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSH.dll</HintPath>
     </Reference>
     <Reference Include="nsoftware.IPWorksSSH.System, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\SFTP3.2.0.0\lib\Net40\nsoftware.IPWorksSSH.System.dll</HintPath>
+      <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSH.System.dll</HintPath>
     </Reference>
     <Reference Include="nsoftware.IPWorksSSL, Version=9.0.5050.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\SFTP3.2.0.0\lib\Net40\nsoftware.IPWorksSSL.dll</HintPath>
+      <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSL.dll</HintPath>
     </Reference>
     <Reference Include="nsoftware.IPWorksSSL.System, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\SFTP3.2.0.0\lib\Net40\nsoftware.IPWorksSSL.System.dll</HintPath>
+      <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSL.System.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>

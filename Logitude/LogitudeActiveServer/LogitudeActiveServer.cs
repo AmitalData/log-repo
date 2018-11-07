@@ -41,14 +41,19 @@ namespace LogitudeActiveServer
             {
                 try
                 {
-
+                    string ServerName = System.Configuration.ConfigurationManager.AppSettings["ServerName"];
                     ServerManager m = new ServerManager();
                     var MyPath = m.Sites["default web site"].Applications["/"].VirtualDirectories["/"].PhysicalPath;
-                    if (!File.Exists(MyPath + "\\Green.txt"))
+                    if (!File.Exists(MyPath + "\\" + ServerName + ".txt"))
                     {
                         EventLog.WriteEntry(System.Environment.CurrentDirectory);
                         EventLog.WriteEntry(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
-                        File.Copy(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Green.txt", MyPath + "\\Green.txt");
+                        //if (!File.Exists(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\" + ServerName + ".txt"))
+                        //{
+                        //    File.Create(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\" + ServerName + ".txt");
+                        //}
+                        //File.Copy(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\" + ServerName + ".txt", MyPath + "\\" + ServerName + ".txt");
+                        File.Create(MyPath + "\\" + ServerName + ".txt");
                     }
 
                     Thread.Sleep(60000);

@@ -111,8 +111,7 @@
       <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="evohtmltopdf, Version=7.5.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\LogitudeWorld\2018.R4\General\Dlls\evohtmltopdf.dll</HintPath>
+      <HintPath>..\..\packages\EvoHtmlToPdf_x64.7.5.0\lib\net40\evohtmltopdf.dll</HintPath>
     </Reference>
     <Reference Include="FormulaEngineLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\FormulaEngineLib.dll</HintPath>
@@ -352,10 +351,6 @@
     </Reference>
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
-    </Reference>
-    <Reference Include="Simplog.Server.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Simplog.Server.Infrastructure\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\StackExchange.Redis.1.2.5\lib\net45\StackExchange.Redis.dll</HintPath>
@@ -6092,6 +6087,10 @@
     <ProjectReference Include="..\..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
       <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Unifreight.BL\Unifreight.BL.csproj">
       <Project>{0ec1bd46-2613-4227-a6d7-d345dd0978cd}</Project>

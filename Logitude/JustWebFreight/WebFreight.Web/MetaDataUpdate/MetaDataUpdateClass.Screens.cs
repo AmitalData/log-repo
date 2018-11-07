@@ -2098,6 +2098,23 @@ namespace WebFreight.Web.MetaDataUpdate
             ThisObject.HeaderScreenId = HeaderScreen.Id;
             #endregion
 
+            #region Header screen - Full Accounting
+            Screen HeaderScreen4FullAccounting = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARInvoice.FullAccHeaderScreen", Name = "Header Screen", ObjectTableId = ThisObject.Id, NumberOfColumns = 5, NumberOfRows = 1, IsReadOnly = true }, ScreensRepository, tenantScreens);
+            ObjectField FAObjectField1 = ObjectContext.ObjectFields.Where(d => d.FieldName == "MainEntityReference" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
+            ObjectField FAObjectField2 = ObjectContext.ObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
+            ObjectField FAObjectField3 = ObjectContext.ObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
+            ObjectField FAObjectField4 = ObjectContext.ObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
+            ObjectField FAObjectField5 = ObjectContext.ObjectFields.Where(d => d.FieldName == "JournalNumber" && d.ObjectTableId == ThisObject.Id).FirstOrDefault();
+
+
+            ScreenField FAScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = FAObjectField1.Id, ScreenId = HeaderScreen4FullAccounting.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField FAScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = FAObjectField4.Id, ScreenId = HeaderScreen4FullAccounting.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField FAScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ObjectFieldId = FAObjectField3.Id, ScreenId = HeaderScreen4FullAccounting.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField FAScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ObjectFieldId = FAObjectField2.Id, ScreenId = HeaderScreen4FullAccounting.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField FAScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ObjectFieldId = FAObjectField5.Id, ScreenId = HeaderScreen4FullAccounting.Id, Tenant = 0 }, ScreenFieldsRepository, tenantScreenFields);
+
+            #endregion
+
             #region General Tab Screen
             Screen generalTabScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARInvoice.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ThisObject.Id, NumberOfColumns = 2, NumberOfRows = 10 }, ScreensRepository, tenantScreens);
             ObjectField GObjectField01 = ObjectContext.ObjectFields.Where(d => d.ObjectTableId == ThisObject.Id && d.Tenant == 0 && d.FieldName == "UpdatedByUserId").FirstOrDefault();
