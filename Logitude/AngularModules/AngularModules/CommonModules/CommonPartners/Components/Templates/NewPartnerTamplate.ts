@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, FormatTool} from '../../../../Infrastructure/Tools';
@@ -433,6 +433,15 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
                 } else this.DefaultValues = "";
             }
      
+    }
+
+
+    private localName: string;
+    get LocalName() { return this.localName; }
+    set LocalName(newValue: string) {
+        if (this.localName != newValue) {
+            this.localName = newValue;           
+        }
     }
 
     get Description() { return this.Address.Description; }
