@@ -1918,25 +1918,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool isPartOfDeductionReport ;
+	  private bool excludeFromDeductionReport ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public bool IsPartOfDeductionReport  
+       public bool ExcludeFromDeductionReport  
 	   {
 	    
 	     get
 		{
-		   return isPartOfDeductionReport;
+		   return excludeFromDeductionReport;
 		 }
 		 set
 		 {
-		   if(isPartOfDeductionReport != value)
+		   if(excludeFromDeductionReport != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPartOfDeductionReport",OldValue=isPartOfDeductionReport,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExcludeFromDeductionReport",OldValue=excludeFromDeductionReport,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
-		   isPartOfDeductionReport=value;
+		   excludeFromDeductionReport=value;
 		   }
 			
 		 }

@@ -161,7 +161,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public bool IsEquipmentVendor  { get; set; }
        [DataMember]
-       public bool IsPartOfDeductionReport  { get; set; }
+       public bool ExcludeFromDeductionReport  { get; set; }
        [DataMember]
        public string DeductionTypeName  { get; set; }
        [DataMember]
