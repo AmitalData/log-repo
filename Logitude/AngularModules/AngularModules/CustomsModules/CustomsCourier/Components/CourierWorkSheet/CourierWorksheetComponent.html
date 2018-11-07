@@ -454,14 +454,14 @@
                                                                     <tr>
                                                                         <td style="width: 250px;">
                                                                             <ul class="FiltersMenu" style="float:right; padding-right: 5px;">
-                                                                                <li (click)="DOCFilterClicked('U')" style="width:90px; height: 25px;" [class.SelectedFilter]="_SelectedDOCValue === 'U'">
+                                                                                <li (click)="ACCFilterClicked('W')" style="width:90px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'W'">
                                                                                     {{'משובים שגויים'}}
                                                                                     <!--{{'Customs.CourierMaster.ACC.Wrong' | TextCodeTranslationPipe }}-->
-                                                                                    <span> {{' (' +this._DOC_U_Total + ')' }} </span>
+                                                                                    <!--<span> {{' (' +this._ACC_W_Total + ')' }} </span>-->
                                                                                 </li>
-                                                                                <li (click)="DOCFilterClicked('A')" style="width:70px; height: 25px;" [class.SelectedFilter]="_SelectedDOCValue === 'A'">
+                                                                                <li (click)="ACCFilterClicked('A')" style="width:70px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'A'">
                                                                                     {{'Customs.General.O.All' | TextCodeTranslationPipe }}
-                                                                                    <span> {{' (' +this._DOCTotal + ')' }} </span>
+                                                                                    <!--<span> {{' (' +this._DOCTotal + ')' }} </span>-->
                                                                                 </li>
                                                                             </ul>
                                                                         </td>

@@ -84,6 +84,7 @@ implements OnDestroy
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
+    _SelectedACCValue: string = 'A'; // All/Wrong
 
     public columns: any[] = null;
 
@@ -539,6 +540,7 @@ implements OnDestroy
     _DEC_C_Total = 0;
     _MNF_W_Total = 0;
     _MNF_C_Total = 0;
+    //_ACC_W_Total = 0;
 
     RefreshStatistic() {
         SessionLocator.CurrentSession.StartBusyIndicatorCreating();
@@ -855,7 +857,7 @@ implements OnDestroy
         return myout;
     }
 
-    getRowsOld(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+   /*getRowsOld(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
         if (filters == null) {
             filters = new ApiQueryFilters();
@@ -972,6 +974,13 @@ implements OnDestroy
             }
         }
 
+        switch (this._SelectedACCValue) {
+            case "W": {
+                filters.addAdditionalFilter("MamanStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
         }
@@ -980,7 +989,7 @@ implements OnDestroy
         var myout = this._EntityListService.getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
 
         return myout;
-    }
+    }*/
 
     BuildFiltersForQuery(filters: ApiQueryFilters = null) {
 
@@ -991,6 +1000,7 @@ implements OnDestroy
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
 
         switch (this._SelectedTabFilter.Code) {
+            case "ACC":
             case "ALL": {
                 break;
             }
@@ -1085,6 +1095,13 @@ implements OnDestroy
             }
         }
 
+        switch (this._SelectedACCValue) {
+            case "W": {
+                filters.addAdditionalFilter("MamanStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
         }
@@ -1121,6 +1138,14 @@ implements OnDestroy
 
         if (this._SelectedDOCValue != value) {
             this._SelectedDOCValue = value;
+            this.RefreshList();
+        }
+    }
+
+    ACCFilterClicked(value: string) {
+
+        if (this._SelectedACCValue != value) {
+            this._SelectedACCValue = value;
             this.RefreshList();
         }
     }
