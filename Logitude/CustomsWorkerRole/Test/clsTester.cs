@@ -558,7 +558,7 @@ PaymentDate  מלפני 3  ימים ");
 שלום עולם 2 " + DateTime.Now.ToLongTimeString());
                 //http://192.116.221.103:584/Courier58/api/couriermasters/getsingle?id=1-106
 
-                var myFTPMamanService = new FTPMamanService();
+                var myFTPMamanService = new FTPOutMamanSubManifestService();
                 myFTPMamanService.BuildCommunicationLog(bytearray, 1, "1-106");//020-42905645
                 scop.Complete();
                     //output  ftp://192.168.10.88/FTP_MAMAN/	

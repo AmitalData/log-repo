@@ -1622,7 +1622,7 @@
     <Compile Include="Messaging\LT2UT\ItemsTableService.cs" />
     <Compile Include="Messaging\LT2UT\ItemsTableService.Model.cs" />
     <Compile Include="Messaging\Maman\CourierMasterMamanService.cs" />
-    <Compile Include="Messaging\Maman\FTPMamanService.cs" />
+    <Compile Include="Messaging\Maman\FTPOutMamanSubManifestService.cs" />
     <Compile Include="Messaging\U2L\CellFile\CellFileUpsertService.cs" />
     <Compile Include="Messaging\U2L\CommDec\CommDecService.cs" />
     <Compile Include="Messaging\U2L\DeclarationDocuments\DeclarationDocumentsService.cs" />
