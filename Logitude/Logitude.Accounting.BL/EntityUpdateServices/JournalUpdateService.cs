@@ -46,12 +46,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 : base(mainContext, additionalContexts, tenant)
             { }
         }
-        
+
+        private class JournalRepositoryPriv : JournalRepository
+        {
+
+            public JournalRepositoryPriv(IAccountingContext mainContext)
+                : base(mainContext)
+            { }
+        }
+
         string localAccountingCurrencyId;
         protected StornoOverrideM _StornoOverrideM;
-        
-        
- 
+
+        protected override void AddContext(JournalPM myTEntityPM)
+        {
+            base.AddContext(myTEntityPM);
+            this.Repository = new JournalRepositoryPriv((IAccountingContext)this.MainContext);
+            //this.entityRepository.SetInsureUsingOnlyByUpdateService();
+        }
+
         protected override void OnCreating(JournalPM entityPM, EntityPM entityParentPM)
         {
             var JournalUpdateOnCreatingFactory = new JournalUpdateOnCreating.Factory();
@@ -101,7 +114,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             
             journalUpdate.OnUpdating(entityPM, entityPOCO, ChangeTrackingEntityPM);
         }
-
+        public JournalRepository GetJournalRepositoryPriv()
+        {
+            return (new JournalRepositoryPriv((IAccountingContext)this.MainContext) as JournalRepository);
+        }
         public virtual JournalUpdateOnUpdating GetJournalOnUpdtatingObject()
         {
             var journalUpdate = new JournalUpdateOnUpdating(this.MainContext as IAccountingContext);

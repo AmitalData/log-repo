@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmailSendingQuotaExceeded.aspx.cs" Inherits="WebFreight.Web.Monitoring.EmailSendingQuotaExceeded" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmailSendingFailedStatus.aspx.cs" Inherits="WebFreight.Web.Monitoring.EmailSendingFailedStatus" %>
 
 <!DOCTYPE html>
 
