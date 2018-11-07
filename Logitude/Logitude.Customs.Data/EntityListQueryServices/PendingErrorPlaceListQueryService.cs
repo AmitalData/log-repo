@@ -36,9 +36,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<PendingErrorPlace> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<PendingErrorPlace> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+        }
+	}
 
 
 }

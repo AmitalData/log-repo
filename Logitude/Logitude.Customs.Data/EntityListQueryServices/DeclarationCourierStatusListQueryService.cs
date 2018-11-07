@@ -21,24 +21,25 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<DeclarationCourierStatusList> GetIqueryableList(IQueryable<DeclarationCourierStatus> iQueryable)
         {
-		IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
-                                                          join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
-                                                          on a.DeclarationId equals d.Id
-                                                          join c in context.CourierDeclarations
-                                                          on a.DeclarationId equals c.DeclarationId
-                                                          select new DeclarationCourierStatusList()
-											                {
+            IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
+                                                              join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
+                                                              on a.DeclarationId equals d.Id
+                                                              join c in context.CourierDeclarations
+                                                              on a.DeclarationId equals c.DeclarationId
+                                                              select new DeclarationCourierStatusList()
+                                                              {
                                                                 DeclarationId = a.DeclarationId,
-					                                            Tenant = a.Tenant,
+                                                                Tenant = a.Tenant,
                                                                 CourierMasterId = c.CourierMasterId,
                                                                 IsDOCTab = (a.DocumentStatusCode == "M" || a.DocumentStatusCode == "X"),
                                                                 IsSVGTab = a.IsCourierMissingClassification == true,
                                                                 IsMNFRTab = (a.CourierManifestStatusCode == "R"),
                                                                 IsDECRTab = (a.CourierDeclarationStatusCode == "R"),
                                                                 IsHOLDTab = (a.CourierPendingReasonCode != null),
-                                                                IsMNFTab = (a.CourierManifestStatusCode == "M" || a.CourierManifestStatusCode =="X"),
+                                                                IsMNFTab = (a.CourierManifestStatusCode == "M" || a.CourierManifestStatusCode == "X"),
                                                                 IsPAYTab = a.CourierPaymentStatusCode == "R",
                                                                 IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
+                                                                //IsACCTab = (d.MamanStatusCode == "2"), ???
                                                                 CourierManifestStatusCode = a.CourierManifestStatusCode,
                                                                 CourierDeclarationStatusCode = a.CourierDeclarationStatusCode,
                                                                 CourierPaymentStatusCode = a.CourierPaymentStatusCode,
@@ -64,7 +65,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 CourierSuspentionReasonName = d.CourierSuspentionReasonCode != null ? d.AgentTalkBackType.LocalName : null,
                                                                 AcceptanceStatusCode = d.AcceptanceStatusCode,
                                                                 MamanStatusCode = d.MamanStatusCode,
-                                                          });
+                                                                MamanErrorXml = d.MamanErrorXml,
+                                                              });
             return query;
 		}
 

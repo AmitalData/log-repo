@@ -110,18 +110,17 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'ErrorPlace'" [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        <LogLov [ObjectFieldName]="'ErrorPlace'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.PendingErrorPlace'"
+                                [HideColumns]="true"
+                                [FocusOnMe]="true"
+                                [SelectedValue]="ErrorPlace">
+                        </LogLov>
                     </td>
                     <!--<td>
-        <LogLov [ObjectFieldName]="'ErrorPlace'"
-                [ObjectTableName]="ObjectTableName"
-                [DataContext]="DataContext"
-                [LookUpTableName]="'Customs.PendingErrorPlace'"
-                [HideColumns]="true"
-                [FocusOnMe]="true"
-                [SelectedValue]="ErrorPlace">
-        </LogLov>
+        
     </td>-->
                     <td></td>
                 </tr>
