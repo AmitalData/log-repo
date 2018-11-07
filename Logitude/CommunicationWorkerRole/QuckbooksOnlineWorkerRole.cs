@@ -326,7 +326,6 @@ namespace CommunicationWorkerRole
                         communicationLogRep.SubmitChanges();
                     }
                 }
-                    throw;
                 
                 }            
             
@@ -360,7 +359,10 @@ namespace CommunicationWorkerRole
                 {
                     if (context != null)
                     {
-                        SendingFail(cl, tenant, "Failed To Send , Check your Translations", null);
+                        StringBuilder sb = new StringBuilder();
+                        sb.AppendLine(cl.ExceptionMessage);
+                        sb.AppendLine("Failed To Send , Check your Translations");
+                        SendingFail(cl, tenant, sb.ToString(), null);
                     }
 
                 }
@@ -395,7 +397,6 @@ namespace CommunicationWorkerRole
                         communicationLogRep.SubmitChanges();
                     }
                 }
-                throw;
             }
         }
 
@@ -898,7 +899,6 @@ namespace CommunicationWorkerRole
                         communicationLogRep.SubmitChanges();
                     }
                 }
-                throw;
                 
             }
 
