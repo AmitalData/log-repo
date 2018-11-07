@@ -647,6 +647,9 @@ namespace Logitude.Accounting.BL.CoreBL
 			User loggedUser = GetLoggedUser(tenant);
 			DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("PCN874", tenant);
 
+            if (docType == null)
+                throw new ApplicationException("There is no document type for this report!");
+
 			string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
 			DocumentsFilingPM document = new DocumentsFilingPM()
 			{
