@@ -16,6 +16,8 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             CounterRepository = new CounterRepository(ObjectContext);
             List<Counter> zeroCounters = CounterRepository.GetCounters(0).ToList();
+            ObjectContext = WebFreightContext.GetContext(0);
+            ObjectTable taxDeductionReportObject = ObjectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault();
 
             #region Shipment Counters
 
@@ -621,6 +623,33 @@ namespace WebFreight.Web.MetaDataUpdate
             }
             #endregion
 
+            #region Tax Deduction Report Counters
+
+            if (!zeroCounters.Where(c => c.Code == "TXDC" && c.Tenant == 0).Any())
+            {
+                Counter taxDeductionReportCounter = new Counter()
+                {
+                    Id = IdCounter.GetNumber("Counter", 0).ToString(),
+                    ObjectTableId = taxDeductionReportObject.Id,
+                    Code = "TXDC",
+                    Tenant = 0,
+                    Name = "Tax Deduction Report",
+                };
+
+                CounterDefinition taxDeductionReportCounter_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = taxDeductionReportCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "TX",
+                };
+
+                CounterRepository.Add(taxDeductionReportCounter);
+                CounterDefinitionRepository.Add(taxDeductionReportCounter_CounterDef);
+
+            }
+            #endregion
             this.ObjectContext.SaveChanges();
         }
 
