@@ -1,489 +1,489 @@
- ,WCO  CRI ,,,,,μθεαϊ δραεϊ ξρψ χιιν μξρψ ηγω,,,v,,,,WCO  CRI ,μθεαϊ δραεϊ ξρψ χιιν μξρψ ηγω,,λμμι,,, 
-ρεγψ,ηθιαδ,ψξδ,WCOID,ξετςιν,δςψεϊ ιςχα,δςψεϊ,ωγδ αξρψ χιιν ιξι/ιαωϊι,ηεαδ/ΰετφιεπμι,δπηιεϊ δξψδ,ωγδ αξρψ χιιν ιξι/ιαωϊι,WCO DD Name,WCO XML Name,WCO-XML-NAME,λιπεο,ων ωγδ αςαψιϊ,δραψ λμμι,δςψεϊ,δξμφδ,φψικ
+ο»Ώ ,WCO  CRI ,,,,,ΧΧΧ•Χ‘Χª Χ”Χ΅Χ‘Χ•Χª ΧΧ΅Χ¨ Χ§Χ™Χ™Χ ΧΧΧ΅Χ¨ Χ—Χ“Χ©,,,v,,,,WCO  CRI ,ΧΧΧ•Χ‘Χª Χ”Χ΅Χ‘Χ•Χª ΧΧ΅Χ¨ Χ§Χ™Χ™Χ ΧΧΧ΅Χ¨ Χ—Χ“Χ©,,Χ›ΧΧΧ™,,, 
+Χ΅Χ•Χ“Χ¨,Χ—ΧΧ™Χ‘Χ”,Χ¨ΧΧ”,WCOID,ΧΧ•Χ¤ΧΆΧ™Χ,Χ”ΧΆΧ¨Χ•Χª Χ™ΧΆΧ§Χ‘,Χ”ΧΆΧ¨Χ•Χª,Χ©Χ“Χ” Χ‘ΧΧ΅Χ¨ Χ§Χ™Χ™Χ Χ™ΧΧ™/Χ™Χ‘Χ©ΧªΧ™,Χ—Χ•Χ‘Χ”/ΧΧ•Χ¤Χ¦Χ™Χ•Χ ΧΧ™,Χ”Χ Χ—Χ™Χ•Χª Χ”ΧΧ¨Χ”,Χ©Χ“Χ” Χ‘ΧΧ΅Χ¨ Χ§Χ™Χ™Χ Χ™ΧΧ™/Χ™Χ‘Χ©ΧªΧ™,WCO DD Name,WCO XML Name,WCO-XML-NAME,Χ›Χ™Χ Χ•Χ,Χ©Χ Χ©Χ“Χ” Χ‘ΧΆΧ‘Χ¨Χ™Χª,Χ”Χ΅Χ‘Χ¨ Χ›ΧΧΧ™,Χ”ΧΆΧ¨Χ•Χª,Χ”ΧΧΧ¦Χ”,Χ¦Χ¨Χ™Χ
 ,,,,,,,,,,,,,,,,,,,
-2,  declaration,1,42A,1,,,,,H,,,Declaration,Declaration,declaration,λεϊψϊ δφδψδ,,,,φψικ
-5,  declaration,2,017 ,0..1,,,,M,χαες = 2 (χεγ ςγλεο),χεγ ςγλεο,"Message function, coded",FunctionCode,   FunctionCode,Declaration.FunctionCode,χεγ τςεμδ,"δερτδ(ηγω) , ςγλεο",,χεγ τςεμδ - μξδ πγψω αψξϊ χεαυ. ΰιο με ξωξςεϊ αψξϊ χεαυ εμλο δεημθ ωΰιο αε φεψκ,μΰ φψικ
-6,  declaration,2,D014 ,0..1,,,ξρτψ ξφδψ-ψωεξδ 1-τεζ' 018-023,M,δςϊχδ ξμΰδ,ξρτψ ξφδψ,Declaration reference number,ID,   ID,Declaration.ID,ξζδδ ξφδψ,,ξρτψ ξφδψ,,φψικ
-10,  declaration,2,D013 ,0..1,,,,M,ςψκ χαες 785,,"Declaration name, coded",TypeCode,   TypeCode,Declaration.TypeCode,ρεβ ξρψ,λιεεο ωδξαπδ ξωξω μδψαδ ξρψιν πγψω μφιιο ΰϊ ρεβ δξρψ ωξγεαψ αξρψ ξφδψ,"
+2,  declaration,1,42A,1,,,,,H,,,Declaration,Declaration,declaration,Χ›Χ•ΧªΧ¨Χª Χ”Χ¦Χ”Χ¨Χ”,,,,Χ¦Χ¨Χ™Χ
+5,  declaration,2,017Β ,0..1,,,,M,Χ§Χ‘Χ•ΧΆ = 2 (Χ§Χ•Χ“ ΧΆΧ“Χ›Χ•Χ),Χ§Χ•Χ“ ΧΆΧ“Χ›Χ•Χ,"Message function, coded",FunctionCode,   FunctionCode,Declaration.FunctionCode,Χ§Χ•Χ“ Χ¤ΧΆΧ•ΧΧ”,"Χ”Χ•Χ΅Χ¤Χ”(Χ—Χ“Χ©) , ΧΆΧ“Χ›Χ•Χ",,Χ§Χ•Χ“ Χ¤ΧΆΧ•ΧΧ” - ΧΧΧ” Χ Χ“Χ¨Χ© Χ‘Χ¨ΧΧª Χ§Χ•Χ‘Χ¥. ΧΧ™Χ ΧΧ• ΧΧ©ΧΧΆΧ•Χª Χ‘Χ¨ΧΧª Χ§Χ•Χ‘Χ¥ Χ•ΧΧ›Χ Χ”Χ•Χ—ΧΧ Χ©ΧΧ™Χ Χ‘Χ• Χ¦Χ•Χ¨Χ,ΧΧ Χ¦Χ¨Χ™Χ
+6,  declaration,2,D014Β ,0..1,,,ΧΧ΅Χ¤Χ¨ ΧΧ¦Χ”Χ¨-Χ¨Χ©Χ•ΧΧ” 1-Χ¤Χ•Χ–' 018-023,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,ΧΧ΅Χ¤Χ¨ ΧΧ¦Χ”Χ¨,Declaration reference number,ID,   ID,Declaration.ID,ΧΧ–Χ”Χ” ΧΧ¦Χ”Χ¨,,ΧΧ΅Χ¤Χ¨ ΧΧ¦Χ”Χ¨,,Χ¦Χ¨Χ™Χ
+10,  declaration,2,D013Β ,0..1,,,,M,ΧΆΧ¨Χ Χ§Χ‘Χ•ΧΆ 785,,"Declaration name, coded",TypeCode,   TypeCode,Declaration.TypeCode,Χ΅Χ•Χ’ ΧΧ΅Χ¨,Χ›Χ™Χ•Χ•Χ Χ©Χ”ΧΧ‘Χ Χ” ΧΧ©ΧΧ© ΧΧ”Χ¨Χ‘Χ” ΧΧ΅Χ¨Χ™Χ Χ Χ“Χ¨Χ© ΧΧ¦Χ™Χ™Χ ΧΧª Χ΅Χ•Χ’ Χ”ΧΧ΅Χ¨ Χ©ΧΧ“Χ•Χ‘Χ¨ Χ‘ΧΧ΅Χ¨ ΧΧ¦Χ”Χ¨,"
 Cargo manifest = 785
-",,φψικ
-,  declaration,2,17B,0..1,,,,,μΰ φψικ,,,Submitter,   Submitter,,τψθι ξωγψ,,,,μΰ φψικ
-37,  declaration,3,R059 ,0..1,,,,O,μΰ φψικ,βεψν ξγεεη,"Submitter, coded",ID,      ID,Declaration.Submitter.ID,ξζδδ βεψν ξωγψ,δβεψν δθλπι ωωιγψ ΰϊ δξρψ ,"ξρτψ ξζδδ ωμ δβεψν  δξωγψ ΰϊ δπϊεπιν
+",,Χ¦Χ¨Χ™Χ
+,  declaration,2,17B,0..1,,,,,ΧΧ Χ¦Χ¨Χ™Χ,,,Submitter,   Submitter,,Χ¤Χ¨ΧΧ™ ΧΧ©Χ“Χ¨,,,,ΧΧ Χ¦Χ¨Χ™Χ
+37,  declaration,3,R059Β ,0..1,,,,O,ΧΧ Χ¦Χ¨Χ™Χ,Χ’Χ•Χ¨Χ ΧΧ“Χ•Χ•Χ—,"Submitter, coded",ID,      ID,Declaration.Submitter.ID,ΧΧ–Χ”Χ” Χ’Χ•Χ¨Χ ΧΧ©Χ“Χ¨,Χ”Χ’Χ•Χ¨Χ Χ”ΧΧ›Χ Χ™ Χ©Χ©Χ™Χ“Χ¨ ΧΧª Χ”ΧΧ΅Χ¨ ,"ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ©Χ Χ”Χ’Χ•Χ¨Χ  Χ”ΧΧ©Χ“Χ¨ ΧΧª Χ”Χ ΧªΧ•Χ Χ™Χ
 
-",δβεψν δθλπι ωωιγψ ΰϊ δξρψ . ,μΰ φψικ
-54,  declaration,2,03A,0..*,,,,,H,,,AdditionalInformation,   AdditionalInformation,Declaration.AdditionalInformation,λεϊψϊ τψθι ξιγς περσ,,,,φψικ
-57,  declaration,3,226 ,0..1,,,,M,χαες 1= ξφδψ ιξι,,"Additional statement, coded",StatementCode,      StatementCode,Declaration.AdditionalInformation.StatementCode,χεγ ςψκ πϊεο,"πϊεπιν περτιν αψξϊ ξφδψ:
-1 = ρεβ ξφδψ",,,φψικ
-59,  declaration,3,369,0..1,,,,M,ϊΰεψ χεγ 1 = ξφδψ ιξι,,Additional statement type,StatementTypeCode,      StatementTypeCode,Declaration.AdditionalInformation.StatementTypeCode,χεγ ρεβ πϊεο,,,,φψικ
-2001,  declaration,3,226,0..1,,,,M,,,"Additional statement, coded",StatementCode,      StatementCode,Declaration.AdditionalInformation.StatementCode,ςψκ ρεβ ξφδψ,"ςψλιν μρεβ ξφδψ
-1 -  ιξι
-3-  ΰεειψι
-2- ιαωϊι",ωλτεμ ωμ ρεγψ 57,,φψικ
-2002,  declaration,3,369,0..1,,,,M,,,Additional statement type,StatementTypeCode,      StatementTypeCode,Declaration.AdditionalInformation.StatementTypeCode,χεγ ρεβ ξφδψ,"1= χεγ ρεβ ξφδψ
-ManifestType",ωλτεμ ωμ ρεγψ 59,,φψικ
-79,  declaration,2,06A,0..*,,,,O,μΰ φψικ,,,Amendment,   Amendment,,τψθι γιεεη ϊιχεπιν,ηθιαϊ ϊιχεπιν,"ξιεςγ ςαεψ ϊιχεπιν εωιπειιν/αιθεμ αδφδψδ
-πωϊξω ψχ αδφαςδ ςμ ςιρχΰεϊ ωδωϊπε , περτε (μΰ ηεαδ), αεθμε . ιω μδβγιψ ΰϊ δωγεϊ ωιφαιςε ςμ δςρχδ δξϊεχπϊ. μξφεΰ τϊψεο μτιφεμ ςρχΰεϊ.",μΰ μδωϊξω,μΰ φψικ
-80,  declaration,3,099 ,0..1,,,,O,μΰ φψικ,,Amendment code, ChangeReasonCode,       ChangeReasonCode,,χεγ ριαϊ ϊιχεο,,,,μΰ φψικ
-81,  declaration,3,97A,0..*,,,,,μΰ φψικ,,, Pointer,       Pointer,Declaration.Amendment.Pointer,ξφαις ςμ ξιχεν δϊιχεο,,ξφαις ςμ δωιπει,,μΰ φψικ
-82,  declaration,4,375 ,0..1,,μΰ φψικ,,,μΰ φψικ,,"Document/message section, coded",DocumentSectionCode,         DocumentSectionCode,Declaration.Amendment.DocumentSectionCode,ηθιαϊ πϊεπιν,,ξθςο,,μΰ φψικ
-83,  declaration,4,006 ,0..1,,μΰ φψικ,,,μΰ φψικ,,Sequence number,SequenceNumeric,         SequenceNumeric,Declaration.Amendment.SequenceNumeric,ριγεψι αξφδψ,,δφαςδ μριγεψι αξφδψ,,μΰ φψικ
-84,  declaration,4,381 ,0..1,,μΰ φψικ,,,μΰ φψικ,,Tag identifier,TagID,         TagID,Declaration.Amendment.TagID,ξρτψ ξζδδ ωγδ αξρψ,,,,μΰ φψικ
-60,  declaration,2,05A,0..*,,,,C,H,,,Agent,   Agent,Declaration.Agent,λεϊψϊ τψθι ρελπιν ξωϊϊτιν,ξωξω μφεψκ γιεεη ρελπι δΰεπιδ δξωϊϊτιν αςμειεϊ λμι δϊεαμδ εψχ δν ξερξλιν μωγψ ςρχΰεϊ μμΰ ςρχΰεϊ ΰα εμωγψ τχεγεϊ ξριψδ μΰεϊν ςρχΰεϊ,ψμεεπθι ψχ μιξι,,φψικ
-61,  declaration,3,R004 ,0..1,,ξρτψ η.τ ωΰεϊε ιξμΰ δρελο δξϊτςμ αβιο ρελπιν ΰηψιν ωδαιΰε ξλεμεϊ αΰπιιδ,χεγ ρελο ΰηψ-ψωεξδ 3-τεζ' 186-188,C,ϊπΰι-ΰν ιω ρελπιν ΰηψιν αΰπιιδ -δςϊχδ ξμΰδ ωμ ξρτψ δ-η.τ,,"Agent, coded",ID,      ID,Declaration.Agent.ID,ξζδδ ρελο ,,,,φψικ
-63,  declaration,3,R005,0..1,,μΰ φψικ,,O,μΰ φψικ,,Role Code,RoleCode,      RoleCode,Declaration.Agent.RoleCode,χεγ ϊτχιγ ρελο,,,,μΰ φψικ
-103,  declaration,2,15A,0..*,,,,O,μΰ φψικ,,,BorderTransportMeans,   BorderTransportMeans,declaration.BorderTransportMeans,λεϊψϊ πϊεπι λμι δϊεαμδ εδξρς,,,,φψικ
-104,  declaration,3,172 ,0..1,,,ϊΰψικ δβςδ ξωεςψ- ψωεξδ 2-τεζ' 021-028,M,δςϊχδ ξμΰδ,ϊΰψικ δβςδ ξωεςψ,Date and time of arrival at first port of arrival in Customs territory, ArrivalDateTime,       ArrivalDateTime,Declaration.BorderTransportMeans.ArrivalDateTime,ϊΰψικ δβςδ ξωεςψ,,,,φψικ
-105,  declaration,3,156 ,0..1,,ξεςγ δδτμβδ ξδπξμδΰηψεο μπξμ δπεληι,,O,μΰ φψικ,,Departure date and time, DepartureDateTime,       DepartureDateTime,Declaration.BorderTransportMeans.DepartureDateTime,ϊΰψικ εωςϊ ιφιΰδ ξΰϊψ ιφιΰδ ΰηψεο ,,,,φψικ
-106,  declaration,3,085 ,0..1,,δπξμ ΰμιε ωεγψ δξφδψ,χεγ ΰϊψ ΰμιε πξρψ δξφδψ-ψωεξδ2 -τεζ' 016-020,M,δςϊχδ ξμΰδ,,"First port of arrival, coded", FirstArrivalLocationID,       FirstArrivalLocationID,Declaration.BorderTransportMeans.FirstArrivalLocationID,ΰϊψ τχιγδ ψΰωεο,,,,φψικ
-107,  declaration,3,T006 ,0..1,,,ξρτψ μειγ'ρ ωμ δΰπιιδ-ψωεξδ 2-τεζ' 071-078,M,δςϊχδ ξμΰδ,χεγ ΰεπιδ,"Identification of means of transport crossing the border, coded", ID,       ID,Declaration.BorderTransportMeans.ID,ξρτψ ξζδδ λμι ϊεαμδ,,"
-αιξι -ξρτψ μειγρ , αΰεειψι -ξρτψ ζπα αξθερ , αιαωϊι ξρτψ ψιωει ωμ δξωΰιϊ",,φψικ
-108,  declaration,3,149 ,0..1,,,"ξρτψ δτμβδ-ψωεξδ 2- τεζ' 037-042
+",Χ”Χ’Χ•Χ¨Χ Χ”ΧΧ›Χ Χ™ Χ©Χ©Χ™Χ“Χ¨ ΧΧª Χ”ΧΧ΅Χ¨ . ,ΧΧ Χ¦Χ¨Χ™Χ
+54,  declaration,2,03A,0..*,,,,,H,,,AdditionalInformation,   AdditionalInformation,Declaration.AdditionalInformation,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧ™Χ“ΧΆ Χ Χ•Χ΅Χ£,,,,Χ¦Χ¨Χ™Χ
+57,  declaration,3,226Β ,0..1,,,,M,Χ§Χ‘Χ•ΧΆ 1= ΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,"Additional statement, coded",StatementCode,      StatementCode,Declaration.AdditionalInformation.StatementCode,Χ§Χ•Χ“ ΧΆΧ¨Χ Χ ΧªΧ•Χ,"Χ ΧªΧ•Χ Χ™Χ Χ Χ•Χ΅Χ¤Χ™Χ Χ‘Χ¨ΧΧª ΧΧ¦Χ”Χ¨:
+1 = Χ΅Χ•Χ’ ΧΧ¦Χ”Χ¨",,,Χ¦Χ¨Χ™Χ
+59,  declaration,3,369,0..1,,,,M,ΧªΧΧ•Χ¨ Χ§Χ•Χ“ 1 = ΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,Additional statement type,StatementTypeCode,      StatementTypeCode,Declaration.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ ΧªΧ•Χ,,,,Χ¦Χ¨Χ™Χ
+2001,  declaration,3,226,0..1,,,,M,,,"Additional statement, coded",StatementCode,      StatementCode,Declaration.AdditionalInformation.StatementCode,ΧΆΧ¨Χ Χ΅Χ•Χ’ ΧΧ¦Χ”Χ¨,"ΧΆΧ¨Χ›Χ™Χ ΧΧ΅Χ•Χ’ ΧΧ¦Χ”Χ¨
+1 -  Χ™ΧΧ™
+3-  ΧΧ•Χ•Χ™Χ¨Χ™
+2- Χ™Χ‘Χ©ΧªΧ™",Χ©Χ›Χ¤Χ•Χ Χ©Χ Χ΅Χ•Χ“Χ¨ 57,,Χ¦Χ¨Χ™Χ
+2002,  declaration,3,369,0..1,,,,M,,,Additional statement type,StatementTypeCode,      StatementTypeCode,Declaration.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧ¦Χ”Χ¨,"1= Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧ¦Χ”Χ¨
+ManifestType",Χ©Χ›Χ¤Χ•Χ Χ©Χ Χ΅Χ•Χ“Χ¨ 59,,Χ¦Χ¨Χ™Χ
+79,  declaration,2,06A,0..*,,,,O,ΧΧ Χ¦Χ¨Χ™Χ,,,Amendment,   Amendment,,Χ¤Χ¨ΧΧ™ Χ“Χ™Χ•Χ•Χ— ΧªΧ™Χ§Χ•Χ Χ™Χ,Χ—ΧΧ™Χ‘Χª ΧªΧ™Χ§Χ•Χ Χ™Χ,"ΧΧ™Χ•ΧΆΧ“ ΧΆΧ‘Χ•Χ¨ ΧªΧ™Χ§Χ•Χ Χ™Χ Χ•Χ©Χ™Χ Χ•Χ™Χ™Χ/Χ‘Χ™ΧΧ•Χ Χ‘Χ”Χ¦Χ”Χ¨Χ”
+Χ Χ©ΧªΧΧ© Χ¨Χ§ Χ‘Χ”Χ¦Χ‘ΧΆΧ” ΧΆΧ ΧΆΧ™Χ΅Χ§ΧΧ•Χª Χ©Χ”Χ©ΧªΧ Χ• , Χ Χ•Χ΅Χ¤Χ• (ΧΧ Χ—Χ•Χ‘Χ”), Χ‘Χ•ΧΧΧ• . Χ™Χ© ΧΧ”Χ’Χ“Χ™Χ¨ ΧΧª Χ”Χ©Χ“Χ•Χª Χ©Χ™Χ¦Χ‘Χ™ΧΆΧ• ΧΆΧ Χ”ΧΆΧ΅Χ§Χ” Χ”ΧΧªΧ•Χ§Χ Χª. ΧΧΧ¦Χ•Χ Χ¤ΧªΧ¨Χ•Χ ΧΧ¤Χ™Χ¦Χ•Χ ΧΆΧ΅Χ§ΧΧ•Χª.",ΧΧ ΧΧ”Χ©ΧªΧΧ©,ΧΧ Χ¦Χ¨Χ™Χ
+80,  declaration,3,099Β ,0..1,,,,O,ΧΧ Χ¦Χ¨Χ™Χ,,Amendment code, ChangeReasonCode,       ChangeReasonCode,,Χ§Χ•Χ“ Χ΅Χ™Χ‘Χª ΧªΧ™Χ§Χ•Χ,,,,ΧΧ Χ¦Χ¨Χ™Χ
+81,  declaration,3,97A,0..*,,,,,ΧΧ Χ¦Χ¨Χ™Χ,,, Pointer,       Pointer,Declaration.Amendment.Pointer,ΧΧ¦Χ‘Χ™ΧΆ ΧΆΧ ΧΧ™Χ§Χ•Χ Χ”ΧªΧ™Χ§Χ•Χ,,ΧΧ¦Χ‘Χ™ΧΆ ΧΆΧ Χ”Χ©Χ™Χ Χ•Χ™,,ΧΧ Χ¦Χ¨Χ™Χ
+82,  declaration,4,375Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,"Document/message section, coded",DocumentSectionCode,         DocumentSectionCode,Declaration.Amendment.DocumentSectionCode,Χ—ΧΧ™Χ‘Χª Χ ΧªΧ•Χ Χ™Χ,,ΧΧΧΆΧ,,ΧΧ Χ¦Χ¨Χ™Χ
+83,  declaration,4,006Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Sequence number,SequenceNumeric,         SequenceNumeric,Declaration.Amendment.SequenceNumeric,Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΧ¦Χ”Χ¨,,Χ”Χ¦Χ‘ΧΆΧ” ΧΧ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΧ¦Χ”Χ¨,,ΧΧ Χ¦Χ¨Χ™Χ
+84,  declaration,4,381Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Tag identifier,TagID,         TagID,Declaration.Amendment.TagID,ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ©Χ“Χ” Χ‘ΧΧ΅Χ¨,,,,ΧΧ Χ¦Χ¨Χ™Χ
+60,  declaration,2,05A,0..*,,,,C,H,,,Agent,   Agent,Declaration.Agent,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ΅Χ•Χ›Χ Χ™Χ ΧΧ©ΧªΧªΧ¤Χ™Χ,ΧΧ©ΧΧ© ΧΧ¦Χ•Χ¨Χ Χ“Χ™Χ•Χ•Χ— Χ΅Χ•Χ›Χ Χ™ Χ”ΧΧ•Χ Χ™Χ” Χ”ΧΧ©ΧªΧªΧ¤Χ™Χ Χ‘ΧΆΧΧ•Χ™Χ•Χª Χ›ΧΧ™ Χ”ΧªΧ•Χ‘ΧΧ” Χ•Χ¨Χ§ Χ”Χ ΧΧ•Χ΅ΧΧ›Χ™Χ ΧΧ©Χ“Χ¨ ΧΆΧ΅Χ§ΧΧ•Χª ΧΧΧ ΧΆΧ΅Χ§ΧΧ•Χª ΧΧ‘ Χ•ΧΧ©Χ“Χ¨ Χ¤Χ§Χ•Χ“Χ•Χª ΧΧ΅Χ™Χ¨Χ” ΧΧΧ•ΧªΧ ΧΆΧ΅Χ§ΧΧ•Χª,Χ¨ΧΧ•Χ•Χ ΧΧ™ Χ¨Χ§ ΧΧ™ΧΧ™,,Χ¦Χ¨Χ™Χ
+61,  declaration,3,R004Β ,0..1,,ΧΧ΅Χ¤Χ¨ Χ—.Χ¤ Χ©ΧΧ•ΧªΧ• Χ™ΧΧΧ Χ”Χ΅Χ•Χ›Χ Χ”ΧΧªΧ¤ΧΆΧ Χ‘Χ’Χ™Χ Χ΅Χ•Χ›Χ Χ™Χ ΧΧ—Χ¨Χ™Χ Χ©Χ”Χ‘Χ™ΧΧ• ΧΧ›Χ•ΧΧ•Χª Χ‘ΧΧ Χ™Χ™Χ”,Χ§Χ•Χ“ Χ΅Χ•Χ›Χ ΧΧ—Χ¨-Χ¨Χ©Χ•ΧΧ” 3-Χ¤Χ•Χ–' 186-188,C,ΧªΧ ΧΧ™-ΧΧ Χ™Χ© Χ΅Χ•Χ›Χ Χ™Χ ΧΧ—Χ¨Χ™Χ Χ‘ΧΧ Χ™Χ™Χ” -Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ ΧΧ΅Χ¤Χ¨ Χ”-Χ—.Χ¤,,"Agent, coded",ID,      ID,Declaration.Agent.ID,ΧΧ–Χ”Χ” Χ΅Χ•Χ›Χ ,,,,Χ¦Χ¨Χ™Χ
+63,  declaration,3,R005,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,O,ΧΧ Χ¦Χ¨Χ™Χ,,Role Code,RoleCode,      RoleCode,Declaration.Agent.RoleCode,Χ§Χ•Χ“ ΧªΧ¤Χ§Χ™Χ“ Χ΅Χ•Χ›Χ,,,,ΧΧ Χ¦Χ¨Χ™Χ
+103,  declaration,2,15A,0..*,,,,O,ΧΧ Χ¦Χ¨Χ™Χ,,,BorderTransportMeans,   BorderTransportMeans,declaration.BorderTransportMeans,Χ›Χ•ΧªΧ¨Χª Χ ΧªΧ•Χ Χ™ Χ›ΧΧ™ Χ”ΧªΧ•Χ‘ΧΧ” Χ•Χ”ΧΧ΅ΧΆ,,,,Χ¦Χ¨Χ™Χ
+104,  declaration,3,172Β ,0..1,,,ΧªΧΧ¨Χ™Χ Χ”Χ’ΧΆΧ” ΧΧ©Χ•ΧΆΧ¨- Χ¨Χ©Χ•ΧΧ” 2-Χ¤Χ•Χ–' 021-028,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,ΧªΧΧ¨Χ™Χ Χ”Χ’ΧΆΧ” ΧΧ©Χ•ΧΆΧ¨,Date and time of arrival at first port of arrival in Customs territory, ArrivalDateTime,       ArrivalDateTime,Declaration.BorderTransportMeans.ArrivalDateTime,ΧªΧΧ¨Χ™Χ Χ”Χ’ΧΆΧ” ΧΧ©Χ•ΧΆΧ¨,,,,Χ¦Χ¨Χ™Χ
+105,  declaration,3,156Β ,0..1,,ΧΧ•ΧΆΧ“ Χ”Χ”Χ¤ΧΧ’Χ” ΧΧ”Χ ΧΧΧ”ΧΧ—Χ¨Χ•Χ ΧΧ ΧΧ Χ”Χ Χ•Χ›Χ—Χ™,,O,ΧΧ Χ¦Χ¨Χ™Χ,,Departure date and time, DepartureDateTime,       DepartureDateTime,Declaration.BorderTransportMeans.DepartureDateTime,ΧªΧΧ¨Χ™Χ Χ•Χ©ΧΆΧª Χ™Χ¦Χ™ΧΧ” ΧΧΧªΧ¨ Χ™Χ¦Χ™ΧΧ” ΧΧ—Χ¨Χ•Χ ,,,,Χ¦Χ¨Χ™Χ
+106,  declaration,3,085Β ,0..1,,Χ”Χ ΧΧ ΧΧΧ™Χ• Χ©Χ•Χ“Χ¨ Χ”ΧΧ¦Χ”Χ¨,Χ§Χ•Χ“ ΧΧªΧ¨ ΧΧΧ™Χ• Χ ΧΧ΅Χ¨ Χ”ΧΧ¦Χ”Χ¨-Χ¨Χ©Χ•ΧΧ”2 -Χ¤Χ•Χ–' 016-020,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,,"First port of arrival, coded", FirstArrivalLocationID,       FirstArrivalLocationID,Declaration.BorderTransportMeans.FirstArrivalLocationID,ΧΧªΧ¨ Χ¤Χ§Χ™Χ“Χ” Χ¨ΧΧ©Χ•Χ,,,,Χ¦Χ¨Χ™Χ
+107,  declaration,3,T006Β ,0..1,,,ΧΧ΅Χ¤Χ¨ ΧΧ•Χ™Χ“'Χ΅ Χ©Χ Χ”ΧΧ Χ™Χ™Χ”-Χ¨Χ©Χ•ΧΧ” 2-Χ¤Χ•Χ–' 071-078,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ§Χ•Χ“ ΧΧ•Χ Χ™Χ”,"Identification of means of transport crossing the border, coded", ID,       ID,Declaration.BorderTransportMeans.ID,ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ›ΧΧ™ ΧªΧ•Χ‘ΧΧ”,,"
+Χ‘Χ™ΧΧ™ -ΧΧ΅Χ¤Χ¨ ΧΧ•Χ™Χ“Χ΅ , Χ‘ΧΧ•Χ•Χ™Χ¨Χ™ -ΧΧ΅Χ¤Χ¨ Χ–Χ Χ‘ Χ‘ΧΧΧ•Χ΅ , Χ‘Χ™Χ‘Χ©ΧªΧ™ ΧΧ΅Χ¤Χ¨ Χ¨Χ™Χ©Χ•Χ™ Χ©Χ Χ”ΧΧ©ΧΧ™Χª",,Χ¦Χ¨Χ™Χ
+108,  declaration,3,149Β ,0..1,,,"ΧΧ΅Χ¤Χ¨ Χ”Χ¤ΧΧ’Χ”-Χ¨Χ©Χ•ΧΧ” 2- Χ¤Χ•Χ–' 037-042
 
-",M,δςϊχδ ξμΰδ,"ξρτψ δτμβδ
+",M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,"ΧΧ΅Χ¤Χ¨ Χ”Χ¤ΧΧ’Χ”
 
-",Conveyance reference number, JourneyID,       JourneyID,Declaration.BorderTransportMeans.JourneyID,ξρτψ ξρς,,"ξρτψ δτμβδ - αιξι
-ξρτψ θιρδ - αΰεειψι",,φψικ
-109,  declaration,3,T005 ,0..1,,,ων ΰεπιδ-ψωεξδ 2 -τεζ' 051-070,M,δςϊχδ ξμΰδ,ων ΰεπιδ,Identification of means of transport crossing the border, Name,       Name,Declaration.BorderTransportMeans.Name,ων λμι ϊεαμδ,,ψμεεπθι ψχ μξφδψ ιξι,,φψικ
-110,  declaration,3,T014 ,0..1,,,χεγ γβμ-ψωεξδ 2- τεζ' 083-084,M,δξψδ μτι θαμϊ γβμιν χδιμϊιϊ V01- λπιρδ μτι ςψκ αςξεγδ: V01_DEGEL εδλπρϊ ςψκ ξςξεγδ: ISO3166 δϊεΰξϊ,χεγ γβμ,"Nationality of means of transport crossing the border, coded", RegistrationNationalityID,       RegistrationNationalityID,Declaration.BorderTransportMeans.RegistrationNationalityID,ξγιπϊ ψιωεν,ξρτψ ξζδδ ξγιπϊ ψιωεν λμι ϊεαμδ,,"ιιϊλο ωιω θαμϊ χωψ αιο χεγι ξγιπεϊ μχεγι ζπα.
-ΰν λο μΰ πγψω αΰεειψι",φψικ
-113,  declaration,3,T010 ,0..1,,ρεβ ΰπιιδ,,M,ψχ αιφιψϊ λεϊψϊ γψκ φτι -δξψδ μτι θαμδ TBLOAD_V03_SUG_ONIYA- ιω μχηϊ ΰϊ δςψκ ξωγδ: WCO_SHIP_TYPE,,"Mode/type of means of transport crossing the border, coded", TypeCode,       TypeCode,Declaration.BorderTransportMeans.TypeCode,χεγ ρεβ λμι ϊεαμδ,,"μαγεχ θαμϊ ρεβιν ωμ ΰπιεϊ, ξθεριν, ιαωϊι",,φψικ
-135,  declaration,3,81A,0..*,,,,,H,,, Itinerary,       Itinerary,Declaration.BorderTransportMeans.Itinerary,λεϊψϊ ξρμεμ λμι ϊεαμδ,,,,φψικ
-136,  declaration,4,064 ,0..*,,ξωξω μφιεο ξγιπεϊ ωαδο ςαψ λμι δωιιθ αξρς SERVICE LANE,,M,ψχ αιφιψϊ λεϊψϊ γψκ φτι -ξγιεεη δφτι ιμχηε ψωιξεϊ δπξμιν δξγεεηιν μχε δτμβδ. ιω μχηϊ ΰϊ 2 δτεζ' δψΰωεπεϊ ξχεγ δπξμ,,"Country(ies) of routing, coded",RoutingCountryCode,         RoutingCountryCode,Declaration.BorderTransportMeans.Itinerary.RoutingCountryCode,χεγ ξγιπδ αξρμεμ,,,,φψικ
-162,  declaration,3,32B,0..*,,,,,H,,, TransportMeansOperator,       TransportMeansOperator,Declaration.BorderTransportMeans.TransportMeansOperator,λεϊψϊ ηαψδ ξϊτςμϊ λμι ϊεαμδ,,,,φψικ
-163,  declaration,4,R056 ,0..1,,,ξεαιμ - αιξι,M,η.τ ρελο ΰπιιδ ξϊτςμ ιϊχαμ ψχ αωμα ιφιψϊ λεϊψϊ ξξρψ φτι ΰπιιδ. μΰ ιξεμΰ αωμα δδξψεϊ,ξεαιμ - αιξι,"Operator of means of transport, coded",ID,         ID,Declaration.BorderTransportMeans.TransportMeansOperator.ID,ξζδδ ηαψδ ξϊτςμϊ,,,,φψικ
-181,  declaration,2,18A,0..*,,,,,H,,,Carrier,   Carrier,Declaration.Carrier,λεϊψϊ ηαψϊ ϊεαμδ,,,,φψικ
-182,  declaration,3,R012 ,0..1,,,χεγ ηαψϊ ρτπεϊ- ψωεξδ 3-τεζ' 189-191,M,δςϊχδ ξμΰδ- χεγ ηαψϊ ρτπεϊ,,Carrier identification,ID,      ID,Declaration.Carrier.ID, ξζδδ ηαψϊ ϊεαμδ,,,,φψικ
-895,  declaration,2,17B,0..1,,,,,H,,,Submitter,   Submitter,Declaration.Submitter,λεϊψϊ τψθι βεψν ξγεεη,,ξωξω μγιεεη ωμ βεψν ξγεεη,,φψικ
-896,  declaration,3,R059 ,0..1,,,,M,"αωιγεψ λεϊψϊ ς""τ δφτι ιΰελμρ α- η.τ ωμ ηπ""ι. αξχψδ ωμ δξψεϊ μξφδψ ιΰελμρ αη.τ ωμ δβεψν δξωγψ(ρ.ΰπιιδ/ξωμη)- πιϊο μςαεψ αθαμϊ ρ.ΰπιιδ εμωμεσ ςψκ αωγδ: S03_MISPAR_OSEK",,"Submitter, coded",ID,      ID,Declaration.Submitter.ID,ξζδδ βεψν ξγεεη,,"ξρτψ ξζδδ ωμ βεψν ξγεεη 
-δβεψν δξγεεη δεΰ αςμ δπϊεπιν. δεΰ ζδ ωξφδιψ ςμ δπϊεπιν",,φψικ
-199,Consignment,2,28A,0..*,,,,,H,,,Consignment,   Consignment,Declaration.Consignment,λεϊψϊ τψθι ξθςο,,λεϊψϊ τψθι ξθςο,,φψικ
-201,Consignment,3,314 ,0..1,,μΰ ψμεεπθι μξφδψ ιξι,,,μΰ φψικ,,Boarded quantity,BoardedQuantity,      BoardedQuantity,Declaration.Consignment.BoardedQuantity,λξεϊ ΰψιζεϊ ωδεθςπδ,λξεϊ ΰψιζεϊ ξεφδψϊ ωςμϊδ μλμι ϊεαμδ,ψμεεπθι ψχ μξφδψ ΰεειψι,,φψικ
-203,Consignment,3,134 ,0..1,,"πτη αξ""χ. ηεαδ μξθςπιν ωπτψχε αφιπεψ.-ξεφς μδτεκ μηεαδ μλμμ δξθςπιν","πτη αξ""χ- ψωεξδ 3-τεζ' 109-116",O,δςϊχδ ξμΰδ,,Cube,GrossVolumeMeasure,      GrossVolumeMeasure,Declaration.Consignment.GrossVolumeMeasure,πτη,"πτη αιηιγεϊ ωμ ξ""χ","λΰωψ δξθςο πτψχ μΰ αφιεγ ΰψιζδ ΰμΰ ς""ι φιπεψ ΰε ΰξφςι ΰηψ ξδΰεπιδ εδξγγιγδ ωμε διΰ ς""ι ξγγιϊ δπτη , λβεο πεζμιν μξιπδν ωπτψχιν αΰξφςεϊ φιπεψ. ",,φψικ
-204,Consignment,3,006 ,0..1,ξρτψ ριγεψι ωμ δςρχδ αωιγεψ δπεληι. ωγδ ηγω,,ψωεξδ B ξρτψ ριγεψιιν αςρχδ- τεζ' 032-035,M,δςϊχδ ξμΰδ,ριγεψι αξφδψ,Sequence number,SequenceNumeric,      SequenceNumeric,Declaration.Consignment.SequenceNumeric,ριγεψι αξφδψ,,ξρτψ ριγεψι αξφδψ. ,,φψικ
-205,Consignment,3,146 ,0..1,,"{λξεϊ ΰψιζεϊ
-(αιηιγεϊ ωμ φιεγ ΰψιζδ)",λξεϊ ΰψιζεϊ λεμμϊ- ψωεξδ B -τεζ' 044-048,M,δςϊχδ ξμΰδ,"λξεϊ ΰψιζεϊ
-(αιηιγεϊ ωμ φιεγ ΰψιζδ)",Total number of packages,TotalPackageQuantity,      TotalPackageQuantity,Declaration.Consignment.TotalPackageQuantity,λξεϊ ΰψιζεϊ (φιεγ ΰψιζδ) αξθςο,,"λξεϊ ΰψιζεϊ  (φιεγ ΰψιζδ) αωθ""ξ (ιξι εΰεειψι)/αηωαεο ρτχ(ιαωϊι)",,φψικ
-206,Consignment,3,011 ,0..1,,μΰ ψμεεπθι μιν,,,μΰ φψικ,,Carrier split consignment indicator,TransportSplitIndicator,      TransportSplitIndicator,Declaration.Consignment.TransportSplitIndicator,ΰιπγχφιδ μξθςο ξτεφμ,,"αΰεειψι - λΰωψ ξθςο ξβις αθιρεϊ ωεπεϊ.
-",,φψικ
-207,Consignment,3,110 ,0..1,,ςψκ ξθςο + χεγ ξθας. ,μΰ χιιν ξχεψ,O,μΰ μδραδ,,Consignment value,ValueAmount,      ValueAmount,Declaration.Consignment.ValueAmount,ςψκ δξθςο,,ωεει ςψκ δξθςο + ξθας,,φψικ
-208,Consignment,3,01A,0..*,"ωγδ ηγω. ξχεν χαμϊ δξθςο ς""ι ρελο ΰπιδ / ξωμη",,,,H,,,AcceptancePlace,      AcceptancePlace,Declaration.Consignment.AcceptancePlace,λεϊψϊ τψθι ξχεν χαμϊ δξθςο,,"αιξι- 
-ΰϊψ χαμϊ δξθςο ς""ι ρελο ΰεπιδ ΰε ξωμη αηε""μ
-πχψΰ ΰφμ ρελπι δΰεπιδ Place of receive
-αΰεειψι - 
-βν πχψΰ Place of receive","ωγδ ηεαδ, δωγδ ΰϊψ ξχεψ ιδιδ ΰετφιεπμι",φψικ
-209,Consignment,4,L011 ,0..1,,χεγ ξγιπϊ ξχεψ (ψωεξδ 8 ),χεγ ξγιπϊ ξχεψ -ψωεξδ 8-τεζ' 174-175,M,δςϊχδ ξμΰδ,ων ΰϊψ αε χιαμ δβεψν ΰϊ δξθςο μΰηψιεϊε,Place of acceptance,Name,         Name,Declaration.Consignment.AcceptancePlace.Name,ων ξχεν χαμϊ δξθςο ,,"αιξι- 
-ΰϊψ χαμϊ δξθςο ς""ι ρελο ΰεπιδ ΰε ξωμη αηε""μ
-πχψΰ ΰφμ ρελπι δΰεπιδ Place of receive
-αΰεειψι - 
-πχψΰ Place of receive",,φψικ
-210,Consignment,3,02A,0..*,,πεςγ μξφαιν αδν ιω μφψσ ξρξλιν περτιν. λψβς μΰ ψμεεπθι μξφδψ ιξι,,O,μΰ μδραδ,,,AdditionalDocument,      AdditionalDocument,Declaration.Consignment.AdditionalDocument,λεϊψϊ ξρξλιν ξφεψτιν,,"ξωξω μφεψκ ξρξλιν περτιν ωδν ξφεψτιν τιζιϊ μξρψ ,λβεο: ΰρξλϊΰεϊ μϊιχεπιν- ξρξκ ωχιμδ, ηωαεο δεαμδ , εβν ξρξλιν πμεειν ωμ ηεξψιν ξρελπιν",,φψικ
-213,Consignment,4,D005 ,0..1,,μΰ ψμεεπθι μξφδψ ιξι πεςγ μξφαιν αδν ιω μφψσ ξρξλιν περτιν. ,,M,μΰ μδραδ,,Additional document reference number,ID,         ID,Declaration.Consignment.AdditionalDocument.ID,ξζδδ ξρξκ,,,μδςαιψ μ- Additonal Information,φψικ
-215,Consignment,4,D001 ,0..1,,μΰ ψμεεπθι μξφδψ ιξι πεςγ μξφαιν αδν ιω μφψσ ξρξλιν περτιν. ,,O,μΰ μδραδ,,"Additional document issuer, coded",IssuingPartyID,         IssuingPartyID,Declaration.Consignment.AdditionalDocument.IssuingPartyID,ξζδδ ξτιχ ξρξκ,,ξζδδ δβεψν δξτιχ ωδεφιΰ ΰϊ δξρξκ,,φψικ 
-216,Consignment,4,D006 ,0..1,,μΰ ψμεεπθι μξφδψ ιξι πεςγ μξφαιν αδν ιω μφψσ ξρξλιν περτιν. ,,M,μΰ μδραδ,,"Additional document type, coded",TypeCode,         TypeCode,Declaration.Consignment.AdditionalDocument.TypeCode,χεγ ρεβ ξρξκ,,,μδςαιψ μ- Additonal Information,φψικ
-253,Consignment,3,11A,0..*,μρπο ΰϊ ΰμε ωμΰ φψικ. λμ δηθιαδ μΰ ψμεεπθιϊ,φψετεϊ μΰ χιιξεϊ αξρψ δχιιν,,,H,,,AssociatedTransportDocumet,      AssociatedTransportDocumet,Declaration.Consignment.AssociatedTransportDocumet,ξρξλιν ξφεψτιν,,ξρξλιν ξφεψτιν μξθςο δχωεψιν μδεαμδ,,μΰ φψικ
-254,Consignment,4,D008 ,0..1,,μτι ϊωεαϊ ξμξ ξ-7/8/11 ηεαδ ψχ μξωμη ΰκ ηθιαδ ζε μΰ αωιξεω????,,C,μΰ φψικ,,Associated transport document number,ID,         ID,Declaration.Consignment.AssociatedTransportDocumet.ID,ξζδδ ξρξκ,,,,μΰ φψικ
-255,Consignment,4,D009 ,0..1,,μτι ϊωεαϊ ξμξ ξ-7/8/11 ηεαδ ψχ μξωμη ΰκ ηθιαδ ζε μΰ αωιξεω????,,C,μΰ φψικ,,"Associated transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.AssociatedTransportDocumet.TypeCode,ρεβ ξρξκ,,,,μΰ φψικ
-274,Consignment,4,17B,0..1,,,,,H,,,Submitter,         Submitter,Declaration.Consignment.Submitter,τψθι βεψν ξγεεη ,,,,μΰ φψικ
-275,Consignment,5,R059 ,0..1,,"αιν - ξγεαψ αρελο ΰεπιδ ΰε ξωμη αιπμΰεξι ωξωγψιν ςιρχΰεϊ απτψγ
-λΰωψ δξωγψ δεΰ ρελο ξϊτςμ ΰζι δ- submitter=carrier","η.τ. δξωγψ ς""τ ξαπδ ων δξρψ αλρτϊ",O,μΰ φψικ,"
-ρελο ΰεπιδ/ξωμη αιπμΰεξι","Submitter, coded",ID,            ID,Declaration.Consignment.Submitter.ID,"ξζδδ βεψν ξγεεη
-ξγεαψ αξωμη ωξωγψ ωθψι ξθςο HOUSE δχωεψιν μωθψ ξθςο ΰα Master ωμ ηαψϊ δϊςετδ",,,,μΰ φψικ
-292,Consignment,3,18A,0..*,,,,,H,,,Carrier,      Carrier,Declaration.Consignment.Carrier,τψθι ηαψϊ ϊεαμδ,,,,μΰ φψικ
-293,Consignment,4,R012 ,0..1,,"ηετσ μωγδ 30 , μδωΰιψ ΰετφιεπμι ΰε ωμΰ φψικ αλμμ αψξϊ ξθςο.χεγ ηαψϊ ρτπεϊ- μτι θαμϊ ϊρ""χ ιν",ηαψϊ ρτπεϊ-ψωεξδ 3 -τεζ' 189-191,O,δςϊχδ ξμΰδ,ηαψϊ ρτπεϊ,Carrier identification,ID,         ID,Declaration.Consignment.Carrier.ID,ξζδδ ηαψϊ ϊεαμδ,,"δεςαψ ξψξϊ ωεψδ μψξϊ ξθςο
-αιξι - ξρτψ ηαψϊ δρτπεϊ ωξθτμϊ αξλεμδ .
-αΰεειψι - ξρτψ ηαψϊ δϊςετδ  ωξθτμϊ αξθςο.
-αιαωϊι- ξρτψ ηαψϊ δεαμδ ωξθτμϊ αξθςο.","ηετσ μωγδ 30 , μδωΰιψ ΰετφιεπμι ΰε ωμΰ φψικ αλμμ αψξϊ ξθςο",μΰ φψικ
-310,Consignment,3,27A,0..*,,,,,H,πωβψ,,Consignee,      Consignee,Declaration.Consignment.Consignee,λεϊψϊ τψθι πωβψ,,,,φψικ
-311,Consignment,4,R015 ,0..1,,"ςψκ ϊχσ μτι θαμϊ ιφεΰπιν/ιαεΰπιν ξξμ""ν",χεγ ιαεΰο-ψωεξδ 6-τεζ' 144-152,O,δςϊχδ ξμΰδ,ξρτψ ξζδδ πωβψ ,"Consignee, coded",ID,         ID,Declaration.Consignment.Consignee.ID,ξρτψ ξζδδ πωβψ ,,"αξφδψ ΰεειψι:
-α- master μΰ ηεαδ
-α- direct ηεαδ
-αξφδψ ξμΰ - μΰ ηεαδ
+",Conveyance reference number, JourneyID,       JourneyID,Declaration.BorderTransportMeans.JourneyID,ΧΧ΅Χ¤Χ¨ ΧΧ΅ΧΆ,,"ΧΧ΅Χ¤Χ¨ Χ”Χ¤ΧΧ’Χ” - Χ‘Χ™ΧΧ™
+ΧΧ΅Χ¤Χ¨ ΧΧ™Χ΅Χ” - Χ‘ΧΧ•Χ•Χ™Χ¨Χ™",,Χ¦Χ¨Χ™Χ
+109,  declaration,3,T005Β ,0..1,,,Χ©Χ ΧΧ•Χ Χ™Χ”-Χ¨Χ©Χ•ΧΧ” 2 -Χ¤Χ•Χ–' 051-070,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ©Χ ΧΧ•Χ Χ™Χ”,Identification of means of transport crossing the border, Name,       Name,Declaration.BorderTransportMeans.Name,Χ©Χ Χ›ΧΧ™ ΧªΧ•Χ‘ΧΧ”,,Χ¨ΧΧ•Χ•Χ ΧΧ™ Χ¨Χ§ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,Χ¦Χ¨Χ™Χ
+110,  declaration,3,T014Β ,0..1,,,Χ§Χ•Χ“ Χ“Χ’Χ-Χ¨Χ©Χ•ΧΧ” 2- Χ¤Χ•Χ–' 083-084,M,Χ”ΧΧ¨Χ” ΧΧ¤Χ™ ΧΧ‘ΧΧª Χ“Χ’ΧΧ™Χ Χ§Χ”Χ™ΧΧªΧ™Χª V01- Χ›Χ Χ™Χ΅Χ” ΧΧ¤Χ™ ΧΆΧ¨Χ Χ‘ΧΆΧΧ•Χ“Χ”: V01_DEGEL Χ•Χ”Χ›Χ Χ΅Χª ΧΆΧ¨Χ ΧΧΆΧΧ•Χ“Χ”: ISO3166 Χ”ΧªΧ•ΧΧΧª,Χ§Χ•Χ“ Χ“Χ’Χ,"Nationality of means of transport crossing the border, coded", RegistrationNationalityID,       RegistrationNationalityID,Declaration.BorderTransportMeans.RegistrationNationalityID,ΧΧ“Χ™Χ Χª Χ¨Χ™Χ©Χ•Χ,ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” ΧΧ“Χ™Χ Χª Χ¨Χ™Χ©Χ•Χ Χ›ΧΧ™ ΧªΧ•Χ‘ΧΧ”,,"Χ™Χ™ΧªΧ›Χ Χ©Χ™Χ© ΧΧ‘ΧΧª Χ§Χ©Χ¨ Χ‘Χ™Χ Χ§Χ•Χ“Χ™ ΧΧ“Χ™Χ Χ•Χª ΧΧ§Χ•Χ“Χ™ Χ–Χ Χ‘.
+ΧΧ Χ›Χ ΧΧ Χ Χ“Χ¨Χ© Χ‘ΧΧ•Χ•Χ™Χ¨Χ™",Χ¦Χ¨Χ™Χ
+113,  declaration,3,T010Β ,0..1,,Χ΅Χ•Χ’ ΧΧ Χ™Χ™Χ”,,M,Χ¨Χ§ Χ‘Χ™Χ¦Χ™Χ¨Χª Χ›Χ•ΧªΧ¨Χª Χ“Χ¨Χ Χ¦Χ¤Χ™ -Χ”ΧΧ¨Χ” ΧΧ¤Χ™ ΧΧ‘ΧΧ” TBLOAD_V03_SUG_ONIYA- Χ™Χ© ΧΧ§Χ—Χª ΧΧª Χ”ΧΆΧ¨Χ ΧΧ©Χ“Χ”: WCO_SHIP_TYPE,,"Mode/type of means of transport crossing the border, coded", TypeCode,       TypeCode,Declaration.BorderTransportMeans.TypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ›ΧΧ™ ΧªΧ•Χ‘ΧΧ”,,"ΧΧ‘Χ“Χ•Χ§ ΧΧ‘ΧΧª Χ΅Χ•Χ’Χ™Χ Χ©Χ ΧΧ Χ™Χ•Χª, ΧΧΧ•Χ΅Χ™Χ, Χ™Χ‘Χ©ΧªΧ™",,Χ¦Χ¨Χ™Χ
+135,  declaration,3,81A,0..*,,,,,H,,, Itinerary,       Itinerary,Declaration.BorderTransportMeans.Itinerary,Χ›Χ•ΧªΧ¨Χª ΧΧ΅ΧΧ•Χ Χ›ΧΧ™ ΧªΧ•Χ‘ΧΧ”,,,,Χ¦Χ¨Χ™Χ
+136,  declaration,4,064Β ,0..*,,ΧΧ©ΧΧ© ΧΧ¦Χ™Χ•Χ ΧΧ“Χ™Χ Χ•Χª Χ©Χ‘Χ”Χ ΧΆΧ‘Χ¨ Χ›ΧΧ™ Χ”Χ©Χ™Χ™Χ Χ‘ΧΧ΅ΧΆ SERVICE LANE,,M,Χ¨Χ§ Χ‘Χ™Χ¦Χ™Χ¨Χª Χ›Χ•ΧªΧ¨Χª Χ“Χ¨Χ Χ¦Χ¤Χ™ -ΧΧ“Χ™Χ•Χ•Χ— Χ”Χ¦Χ¤Χ™ Χ™ΧΧ§Χ—Χ• Χ¨Χ©Χ™ΧΧ•Χª Χ”Χ ΧΧΧ™Χ Χ”ΧΧ“Χ•Χ•Χ—Χ™Χ ΧΧ§Χ• Χ”Χ¤ΧΧ’Χ”. Χ™Χ© ΧΧ§Χ—Χª ΧΧª 2 Χ”Χ¤Χ•Χ–' Χ”Χ¨ΧΧ©Χ•Χ Χ•Χª ΧΧ§Χ•Χ“ Χ”Χ ΧΧ,,"Country(ies) of routing, coded",RoutingCountryCode,         RoutingCountryCode,Declaration.BorderTransportMeans.Itinerary.RoutingCountryCode,Χ§Χ•Χ“ ΧΧ“Χ™Χ Χ” Χ‘ΧΧ΅ΧΧ•Χ,,,,Χ¦Χ¨Χ™Χ
+162,  declaration,3,32B,0..*,,,,,H,,, TransportMeansOperator,       TransportMeansOperator,Declaration.BorderTransportMeans.TransportMeansOperator,Χ›Χ•ΧªΧ¨Χª Χ—Χ‘Χ¨Χ” ΧΧªΧ¤ΧΆΧΧª Χ›ΧΧ™ ΧªΧ•Χ‘ΧΧ”,,,,Χ¦Χ¨Χ™Χ
+163,  declaration,4,R056Β ,0..1,,,ΧΧ•Χ‘Χ™Χ - Χ‘Χ™ΧΧ™,M,Χ—.Χ¤ Χ΅Χ•Χ›Χ ΧΧ Χ™Χ™Χ” ΧΧªΧ¤ΧΆΧ Χ™ΧªΧ§Χ‘Χ Χ¨Χ§ Χ‘Χ©ΧΧ‘ Χ™Χ¦Χ™Χ¨Χª Χ›Χ•ΧªΧ¨Χª ΧΧΧ΅Χ¨ Χ¦Χ¤Χ™ ΧΧ Χ™Χ™Χ”. ΧΧ Χ™ΧΧ•ΧΧ Χ‘Χ©ΧΧ‘ Χ”Χ”ΧΧ¨Χ•Χª,ΧΧ•Χ‘Χ™Χ - Χ‘Χ™ΧΧ™,"Operator of means of transport, coded",ID,         ID,Declaration.BorderTransportMeans.TransportMeansOperator.ID,ΧΧ–Χ”Χ” Χ—Χ‘Χ¨Χ” ΧΧªΧ¤ΧΆΧΧª,,,,Χ¦Χ¨Χ™Χ
+181,  declaration,2,18A,0..*,,,,,H,,,Carrier,   Carrier,Declaration.Carrier,Χ›Χ•ΧªΧ¨Χª Χ—Χ‘Χ¨Χª ΧªΧ•Χ‘ΧΧ”,,,,Χ¦Χ¨Χ™Χ
+182,  declaration,3,R012Β ,0..1,,,Χ§Χ•Χ“ Χ—Χ‘Χ¨Χª Χ΅Χ¤Χ Χ•Χª- Χ¨Χ©Χ•ΧΧ” 3-Χ¤Χ•Χ–' 189-191,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”- Χ§Χ•Χ“ Χ—Χ‘Χ¨Χª Χ΅Χ¤Χ Χ•Χª,,Carrier identification,ID,      ID,Declaration.Carrier.ID, ΧΧ–Χ”Χ” Χ—Χ‘Χ¨Χª ΧªΧ•Χ‘ΧΧ”,,,,Χ¦Χ¨Χ™Χ
+895,  declaration,2,17B,0..1,,,,,H,,,Submitter,   Submitter,Declaration.Submitter,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ’Χ•Χ¨Χ ΧΧ“Χ•Χ•Χ—,,ΧΧ©ΧΧ© ΧΧ“Χ™Χ•Χ•Χ— Χ©Χ Χ’Χ•Χ¨Χ ΧΧ“Χ•Χ•Χ—,,Χ¦Χ¨Χ™Χ
+896,  declaration,3,R059Β ,0..1,,,,M,"Χ‘Χ©Χ™Χ“Χ•Χ¨ Χ›Χ•ΧªΧ¨Χª ΧΆ""Χ¤ Χ”Χ¦Χ¤Χ™ Χ™ΧΧ•Χ›ΧΧ΅ Χ‘- Χ—.Χ¤ Χ©Χ Χ—Χ ""Χ™. Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ”ΧΧ¨Χ•Χª ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ•Χ›ΧΧ΅ Χ‘Χ—.Χ¤ Χ©Χ Χ”Χ’Χ•Χ¨Χ Χ”ΧΧ©Χ“Χ¨(Χ΅.ΧΧ Χ™Χ™Χ”/ΧΧ©ΧΧ—)- Χ Χ™ΧªΧ ΧΧΆΧ‘Χ•Χ¨ Χ‘ΧΧ‘ΧΧª Χ΅.ΧΧ Χ™Χ™Χ” Χ•ΧΧ©ΧΧ•Χ£ ΧΆΧ¨Χ Χ‘Χ©Χ“Χ”: S03_MISPAR_OSEK",,"Submitter, coded",ID,      ID,Declaration.Submitter.ID,ΧΧ–Χ”Χ” Χ’Χ•Χ¨Χ ΧΧ“Χ•Χ•Χ—,,"ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ©Χ Χ’Χ•Χ¨Χ ΧΧ“Χ•Χ•Χ— 
+Χ”Χ’Χ•Χ¨Χ Χ”ΧΧ“Χ•Χ•Χ— Χ”Χ•Χ Χ‘ΧΆΧ Χ”Χ ΧªΧ•Χ Χ™Χ. Χ”Χ•Χ Χ–Χ” Χ©ΧΧ¦Χ”Χ™Χ¨ ΧΆΧ Χ”Χ ΧªΧ•Χ Χ™Χ",,Χ¦Χ¨Χ™Χ
+199,Consignment,2,28A,0..*,,,,,H,,,Consignment,   Consignment,Declaration.Consignment,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧΧΆΧ,,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧΧΆΧ,,Χ¦Χ¨Χ™Χ
+201,Consignment,3,314Β ,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,,ΧΧ Χ¦Χ¨Χ™Χ,,Boarded quantity,BoardedQuantity,      BoardedQuantity,Declaration.Consignment.BoardedQuantity,Χ›ΧΧ•Χª ΧΧ¨Χ™Χ–Χ•Χª Χ©Χ”Χ•ΧΧΆΧ Χ”,Χ›ΧΧ•Χª ΧΧ¨Χ™Χ–Χ•Χª ΧΧ•Χ¦Χ”Χ¨Χª Χ©ΧΆΧΧªΧ” ΧΧ›ΧΧ™ ΧªΧ•Χ‘ΧΧ”,Χ¨ΧΧ•Χ•Χ ΧΧ™ Χ¨Χ§ ΧΧΧ¦Χ”Χ¨ ΧΧ•Χ•Χ™Χ¨Χ™,,Χ¦Χ¨Χ™Χ
+203,Consignment,3,134Β ,0..1,,"Χ Χ¤Χ— Χ‘Χ""Χ§. Χ—Χ•Χ‘Χ” ΧΧΧΧΆΧ Χ™Χ Χ©Χ Χ¤Χ¨Χ§Χ• Χ‘Χ¦Χ™Χ Χ•Χ¨.-ΧΧ•Χ¦ΧΆ ΧΧ”Χ¤Χ•Χ ΧΧ—Χ•Χ‘Χ” ΧΧ›ΧΧ Χ”ΧΧΧΆΧ Χ™Χ","Χ Χ¤Χ— Χ‘Χ""Χ§- Χ¨Χ©Χ•ΧΧ” 3-Χ¤Χ•Χ–' 109-116",O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,,Cube,GrossVolumeMeasure,      GrossVolumeMeasure,Declaration.Consignment.GrossVolumeMeasure,Χ Χ¤Χ—,"Χ Χ¤Χ— Χ‘Χ™Χ—Χ™Χ“Χ•Χª Χ©Χ Χ""Χ§","Χ›ΧΧ©Χ¨ Χ”ΧΧΧΆΧ Χ Χ¤Χ¨Χ§ ΧΧ Χ‘Χ¦Χ™Χ•Χ“ ΧΧ¨Χ™Χ–Χ” ΧΧΧ ΧΆ""Χ™ Χ¦Χ™Χ Χ•Χ¨ ΧΧ• ΧΧΧ¦ΧΆΧ™ ΧΧ—Χ¨ ΧΧ”ΧΧ•Χ Χ™Χ” Χ•Χ”ΧΧ“Χ“Χ™Χ“Χ” Χ©ΧΧ• Χ”Χ™Χ ΧΆ""Χ™ ΧΧ“Χ“Χ™Χª Χ”Χ Χ¤Χ— , Χ›Χ’Χ•Χ Χ Χ•Χ–ΧΧ™Χ ΧΧΧ™Χ Χ”Χ Χ©Χ Χ¤Χ¨Χ§Χ™Χ Χ‘ΧΧΧ¦ΧΆΧ•Χª Χ¦Χ™Χ Χ•Χ¨. ",,Χ¦Χ¨Χ™Χ
+204,Consignment,3,006Β ,0..1,ΧΧ΅Χ¤Χ¨ Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ©Χ Χ”ΧΆΧ΅Χ§Χ” Χ‘Χ©Χ™Χ“Χ•Χ¨ Χ”Χ Χ•Χ›Χ—Χ™. Χ©Χ“Χ” Χ—Χ“Χ©,,Χ¨Χ©Χ•ΧΧ” B ΧΧ΅Χ¤Χ¨ Χ΅Χ™Χ“Χ•Χ¨Χ™Χ™Χ Χ‘ΧΆΧ΅Χ§Χ”- Χ¤Χ•Χ–' 032-035,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΧ¦Χ”Χ¨,Sequence number,SequenceNumeric,      SequenceNumeric,Declaration.Consignment.SequenceNumeric,Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΧ¦Χ”Χ¨,,ΧΧ΅Χ¤Χ¨ Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΧ¦Χ”Χ¨. ,,Χ¦Χ¨Χ™Χ
+205,Consignment,3,146Β ,0..1,,"{Χ›ΧΧ•Χª ΧΧ¨Χ™Χ–Χ•Χª
+(Χ‘Χ™Χ—Χ™Χ“Χ•Χª Χ©Χ Χ¦Χ™Χ•Χ“ ΧΧ¨Χ™Χ–Χ”)",Χ›ΧΧ•Χª ΧΧ¨Χ™Χ–Χ•Χª Χ›Χ•ΧΧΧª- Χ¨Χ©Χ•ΧΧ” B -Χ¤Χ•Χ–' 044-048,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,"Χ›ΧΧ•Χª ΧΧ¨Χ™Χ–Χ•Χª
+(Χ‘Χ™Χ—Χ™Χ“Χ•Χª Χ©Χ Χ¦Χ™Χ•Χ“ ΧΧ¨Χ™Χ–Χ”)",Total number of packages,TotalPackageQuantity,      TotalPackageQuantity,Declaration.Consignment.TotalPackageQuantity,Χ›ΧΧ•Χª ΧΧ¨Χ™Χ–Χ•Χª (Χ¦Χ™Χ•Χ“ ΧΧ¨Χ™Χ–Χ”) Χ‘ΧΧΧΆΧ,,"Χ›ΧΧ•Χª ΧΧ¨Χ™Χ–Χ•Χª  (Χ¦Χ™Χ•Χ“ ΧΧ¨Χ™Χ–Χ”) Χ‘Χ©Χ""Χ (Χ™ΧΧ™ Χ•ΧΧ•Χ•Χ™Χ¨Χ™)/Χ‘Χ—Χ©Χ‘Χ•Χ Χ΅Χ¤Χ§(Χ™Χ‘Χ©ΧªΧ™)",,Χ¦Χ¨Χ™Χ
+206,Consignment,3,011Β ,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Carrier split consignment indicator,TransportSplitIndicator,      TransportSplitIndicator,Declaration.Consignment.TransportSplitIndicator,ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” ΧΧΧΧΆΧ ΧΧ¤Χ•Χ¦Χ,,"Χ‘ΧΧ•Χ•Χ™Χ¨Χ™ - Χ›ΧΧ©Χ¨ ΧΧΧΆΧ ΧΧ’Χ™ΧΆ Χ‘ΧΧ™Χ΅Χ•Χª Χ©Χ•Χ Χ•Χª.
+",,Χ¦Χ¨Χ™Χ
+207,Consignment,3,110Β ,0..1,,ΧΆΧ¨Χ ΧΧΧΆΧ + Χ§Χ•Χ“ ΧΧΧ‘ΧΆ. ,ΧΧ Χ§Χ™Χ™Χ ΧΧ§Χ•Χ¨,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,Consignment value,ValueAmount,      ValueAmount,Declaration.Consignment.ValueAmount,ΧΆΧ¨Χ Χ”ΧΧΧΆΧ,,Χ©Χ•Χ•Χ™ ΧΆΧ¨Χ Χ”ΧΧΧΆΧ + ΧΧΧ‘ΧΆ,,Χ¦Χ¨Χ™Χ
+208,Consignment,3,01A,0..*,"Χ©Χ“Χ” Χ—Χ“Χ©. ΧΧ§Χ•Χ Χ§Χ‘ΧΧª Χ”ΧΧΧΆΧ ΧΆ""Χ™ Χ΅Χ•Χ›Χ ΧΧ Χ™Χ” / ΧΧ©ΧΧ—",,,,H,,,AcceptancePlace,      AcceptancePlace,Declaration.Consignment.AcceptancePlace,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧ§Χ•Χ Χ§Χ‘ΧΧª Χ”ΧΧΧΆΧ,,"Χ‘Χ™ΧΧ™- 
+ΧΧªΧ¨ Χ§Χ‘ΧΧª Χ”ΧΧΧΆΧ ΧΆ""Χ™ Χ΅Χ•Χ›Χ ΧΧ•Χ Χ™Χ” ΧΧ• ΧΧ©ΧΧ— Χ‘Χ—Χ•""Χ
+Χ Χ§Χ¨Χ ΧΧ¦Χ Χ΅Χ•Χ›Χ Χ™ Χ”ΧΧ•Χ Χ™Χ” Place of receive
+Χ‘ΧΧ•Χ•Χ™Χ¨Χ™ - 
+Χ’Χ Χ Χ§Χ¨Χ Place of receive","Χ©Χ“Χ” Χ—Χ•Χ‘Χ”, Χ”Χ©Χ“Χ” ΧΧªΧ¨ ΧΧ§Χ•Χ¨ Χ™Χ”Χ™Χ” ΧΧ•Χ¤Χ¦Χ™Χ•Χ ΧΧ™",Χ¦Χ¨Χ™Χ
+209,Consignment,4,L011Β ,0..1,,Χ§Χ•Χ“ ΧΧ“Χ™Χ Χª ΧΧ§Χ•Χ¨ (Χ¨Χ©Χ•ΧΧ” 8 ),Χ§Χ•Χ“ ΧΧ“Χ™Χ Χª ΧΧ§Χ•Χ¨ -Χ¨Χ©Χ•ΧΧ” 8-Χ¤Χ•Χ–' 174-175,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ©Χ ΧΧªΧ¨ Χ‘Χ• Χ§Χ™Χ‘Χ Χ”Χ’Χ•Χ¨Χ ΧΧª Χ”ΧΧΧΆΧ ΧΧΧ—Χ¨Χ™Χ•ΧªΧ•,Place of acceptance,Name,         Name,Declaration.Consignment.AcceptancePlace.Name,Χ©Χ ΧΧ§Χ•Χ Χ§Χ‘ΧΧª Χ”ΧΧΧΆΧ ,,"Χ‘Χ™ΧΧ™- 
+ΧΧªΧ¨ Χ§Χ‘ΧΧª Χ”ΧΧΧΆΧ ΧΆ""Χ™ Χ΅Χ•Χ›Χ ΧΧ•Χ Χ™Χ” ΧΧ• ΧΧ©ΧΧ— Χ‘Χ—Χ•""Χ
+Χ Χ§Χ¨Χ ΧΧ¦Χ Χ΅Χ•Χ›Χ Χ™ Χ”ΧΧ•Χ Χ™Χ” Place of receive
+Χ‘ΧΧ•Χ•Χ™Χ¨Χ™ - 
+Χ Χ§Χ¨Χ Place of receive",,Χ¦Χ¨Χ™Χ
+210,Consignment,3,02A,0..*,,Χ Χ•ΧΆΧ“ ΧΧΧ¦Χ‘Χ™Χ Χ‘Χ”Χ Χ™Χ© ΧΧ¦Χ¨Χ£ ΧΧ΅ΧΧ›Χ™Χ Χ Χ•Χ΅Χ¤Χ™Χ. Χ›Χ¨Χ’ΧΆ ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,,AdditionalDocument,      AdditionalDocument,Declaration.Consignment.AdditionalDocument,Χ›Χ•ΧªΧ¨Χª ΧΧ΅ΧΧ›Χ™Χ ΧΧ¦Χ•Χ¨Χ¤Χ™Χ,,"ΧΧ©ΧΧ© ΧΧ¦Χ•Χ¨Χ ΧΧ΅ΧΧ›Χ™Χ Χ Χ•Χ΅Χ¤Χ™Χ Χ©Χ”Χ ΧΧ¦Χ•Χ¨Χ¤Χ™Χ Χ¤Χ™Χ–Χ™Χª ΧΧΧ΅Χ¨ ,Χ›Χ’Χ•Χ: ΧΧ΅ΧΧ›ΧªΧΧ•Χª ΧΧªΧ™Χ§Χ•Χ Χ™Χ- ΧΧ΅ΧΧ Χ©Χ§Χ™ΧΧ”, Χ—Χ©Χ‘Χ•Χ Χ”Χ•Χ‘ΧΧ” , Χ•Χ’Χ ΧΧ΅ΧΧ›Χ™Χ Χ ΧΧ•Χ•Χ™Χ Χ©Χ Χ—Χ•ΧΧ¨Χ™Χ ΧΧ΅Χ•Χ›Χ Χ™Χ",,Χ¦Χ¨Χ™Χ
+213,Consignment,4,D005Β ,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™ Χ Χ•ΧΆΧ“ ΧΧΧ¦Χ‘Χ™Χ Χ‘Χ”Χ Χ™Χ© ΧΧ¦Χ¨Χ£ ΧΧ΅ΧΧ›Χ™Χ Χ Χ•Χ΅Χ¤Χ™Χ. ,,M,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,Additional document reference number,ID,         ID,Declaration.Consignment.AdditionalDocument.ID,ΧΧ–Χ”Χ” ΧΧ΅ΧΧ,,,ΧΧ”ΧΆΧ‘Χ™Χ¨ Χ- Additonal Information,Χ¦Χ¨Χ™Χ
+215,Consignment,4,D001Β ,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™ Χ Χ•ΧΆΧ“ ΧΧΧ¦Χ‘Χ™Χ Χ‘Χ”Χ Χ™Χ© ΧΧ¦Χ¨Χ£ ΧΧ΅ΧΧ›Χ™Χ Χ Χ•Χ΅Χ¤Χ™Χ. ,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,"Additional document issuer, coded",IssuingPartyID,         IssuingPartyID,Declaration.Consignment.AdditionalDocument.IssuingPartyID,ΧΧ–Χ”Χ” ΧΧ¤Χ™Χ§ ΧΧ΅ΧΧ,,ΧΧ–Χ”Χ” Χ”Χ’Χ•Χ¨Χ Χ”ΧΧ¤Χ™Χ§ Χ©Χ”Χ•Χ¦Χ™Χ ΧΧª Χ”ΧΧ΅ΧΧ,,Χ¦Χ¨Χ™Χ 
+216,Consignment,4,D006Β ,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™ Χ Χ•ΧΆΧ“ ΧΧΧ¦Χ‘Χ™Χ Χ‘Χ”Χ Χ™Χ© ΧΧ¦Χ¨Χ£ ΧΧ΅ΧΧ›Χ™Χ Χ Χ•Χ΅Χ¤Χ™Χ. ,,M,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,"Additional document type, coded",TypeCode,         TypeCode,Declaration.Consignment.AdditionalDocument.TypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧ΅ΧΧ,,,ΧΧ”ΧΆΧ‘Χ™Χ¨ Χ- Additonal Information,Χ¦Χ¨Χ™Χ
+253,Consignment,3,11A,0..*,ΧΧ΅Χ Χ ΧΧª ΧΧΧ• Χ©ΧΧ Χ¦Χ¨Χ™Χ. Χ›Χ Χ”Χ—ΧΧ™Χ‘Χ” ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™Χª,Χ¦Χ¨Χ•Χ¤Χ•Χª ΧΧ Χ§Χ™Χ™ΧΧ•Χª Χ‘ΧΧ΅Χ¨ Χ”Χ§Χ™Χ™Χ,,,H,,,AssociatedTransportDocumet,      AssociatedTransportDocumet,Declaration.Consignment.AssociatedTransportDocumet,ΧΧ΅ΧΧ›Χ™Χ ΧΧ¦Χ•Χ¨Χ¤Χ™Χ,,ΧΧ΅ΧΧ›Χ™Χ ΧΧ¦Χ•Χ¨Χ¤Χ™Χ ΧΧΧΧΆΧ Χ”Χ§Χ©Χ•Χ¨Χ™Χ ΧΧ”Χ•Χ‘ΧΧ”,,ΧΧ Χ¦Χ¨Χ™Χ
+254,Consignment,4,D008Β ,0..1,,ΧΧ¤Χ™ ΧªΧ©Χ•Χ‘Χª ΧΧΧ Χ-7/8/11 Χ—Χ•Χ‘Χ” Χ¨Χ§ ΧΧΧ©ΧΧ— ΧΧ Χ—ΧΧ™Χ‘Χ” Χ–Χ• ΧΧ Χ‘Χ©Χ™ΧΧ•Χ©????,,C,ΧΧ Χ¦Χ¨Χ™Χ,,Associated transport document number,ID,         ID,Declaration.Consignment.AssociatedTransportDocumet.ID,ΧΧ–Χ”Χ” ΧΧ΅ΧΧ,,,,ΧΧ Χ¦Χ¨Χ™Χ
+255,Consignment,4,D009Β ,0..1,,ΧΧ¤Χ™ ΧªΧ©Χ•Χ‘Χª ΧΧΧ Χ-7/8/11 Χ—Χ•Χ‘Χ” Χ¨Χ§ ΧΧΧ©ΧΧ— ΧΧ Χ—ΧΧ™Χ‘Χ” Χ–Χ• ΧΧ Χ‘Χ©Χ™ΧΧ•Χ©????,,C,ΧΧ Χ¦Χ¨Χ™Χ,,"Associated transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.AssociatedTransportDocumet.TypeCode,Χ΅Χ•Χ’ ΧΧ΅ΧΧ,,,,ΧΧ Χ¦Χ¨Χ™Χ
+274,Consignment,4,17B,0..1,,,,,H,,,Submitter,         Submitter,Declaration.Consignment.Submitter,Χ¤Χ¨ΧΧ™ Χ’Χ•Χ¨Χ ΧΧ“Χ•Χ•Χ— ,,,,ΧΧ Χ¦Χ¨Χ™Χ
+275,Consignment,5,R059Β ,0..1,,"Χ‘Χ™Χ - ΧΧ“Χ•Χ‘Χ¨ Χ‘Χ΅Χ•Χ›Χ ΧΧ•Χ Χ™Χ” ΧΧ• ΧΧ©ΧΧ— Χ‘Χ™Χ ΧΧΧ•ΧΧ™ Χ©ΧΧ©Χ“Χ¨Χ™Χ ΧΆΧ™Χ΅Χ§ΧΧ•Χª Χ‘Χ Χ¤Χ¨Χ“
+Χ›ΧΧ©Χ¨ Χ”ΧΧ©Χ“Χ¨ Χ”Χ•Χ Χ΅Χ•Χ›Χ ΧΧªΧ¤ΧΆΧ ΧΧ–Χ™ Χ”- submitter=carrier","Χ—.Χ¤. Χ”ΧΧ©Χ“Χ¨ ΧΆ""Χ¤ ΧΧ‘Χ Χ” Χ©Χ Χ”ΧΧ΅Χ¨ Χ‘Χ›Χ΅Χ¤Χª",O,ΧΧ Χ¦Χ¨Χ™Χ,"
+Χ΅Χ•Χ›Χ ΧΧ•Χ Χ™Χ”/ΧΧ©ΧΧ— Χ‘Χ™Χ ΧΧΧ•ΧΧ™","Submitter, coded",ID,            ID,Declaration.Consignment.Submitter.ID,"ΧΧ–Χ”Χ” Χ’Χ•Χ¨Χ ΧΧ“Χ•Χ•Χ—
+ΧΧ“Χ•Χ‘Χ¨ Χ‘ΧΧ©ΧΧ— Χ©ΧΧ©Χ“Χ¨ Χ©ΧΧ¨Χ™ ΧΧΧΆΧ HOUSE Χ”Χ§Χ©Χ•Χ¨Χ™Χ ΧΧ©ΧΧ¨ ΧΧΧΆΧ ΧΧ‘ Master Χ©Χ Χ—Χ‘Χ¨Χª Χ”ΧªΧΆΧ•Χ¤Χ”",,,,ΧΧ Χ¦Χ¨Χ™Χ
+292,Consignment,3,18A,0..*,,,,,H,,,Carrier,      Carrier,Declaration.Consignment.Carrier,Χ¤Χ¨ΧΧ™ Χ—Χ‘Χ¨Χª ΧªΧ•Χ‘ΧΧ”,,,,ΧΧ Χ¦Χ¨Χ™Χ
+293,Consignment,4,R012Β ,0..1,,"Χ—Χ•Χ¤Χ£ ΧΧ©Χ“Χ” 30 , ΧΧ”Χ©ΧΧ™Χ¨ ΧΧ•Χ¤Χ¦Χ™Χ•Χ ΧΧ™ ΧΧ• Χ©ΧΧ Χ¦Χ¨Χ™Χ Χ‘Χ›ΧΧ Χ‘Χ¨ΧΧª ΧΧΧΆΧ.Χ§Χ•Χ“ Χ—Χ‘Χ¨Χª Χ΅Χ¤Χ Χ•Χª- ΧΧ¤Χ™ ΧΧ‘ΧΧª ΧªΧ΅""Χ§ Χ™Χ",Χ—Χ‘Χ¨Χª Χ΅Χ¤Χ Χ•Χª-Χ¨Χ©Χ•ΧΧ” 3 -Χ¤Χ•Χ–' 189-191,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ—Χ‘Χ¨Χª Χ΅Χ¤Χ Χ•Χª,Carrier identification,ID,         ID,Declaration.Consignment.Carrier.ID,ΧΧ–Χ”Χ” Χ—Χ‘Χ¨Χª ΧªΧ•Χ‘ΧΧ”,,"Χ”Χ•ΧΆΧ‘Χ¨ ΧΧ¨ΧΧª Χ©Χ•Χ¨Χ” ΧΧ¨ΧΧª ΧΧΧΆΧ
+Χ‘Χ™ΧΧ™ - ΧΧ΅Χ¤Χ¨ Χ—Χ‘Χ¨Χª Χ”Χ΅Χ¤Χ Χ•Χª Χ©ΧΧΧ¤ΧΧª Χ‘ΧΧ›Χ•ΧΧ” .
+Χ‘ΧΧ•Χ•Χ™Χ¨Χ™ - ΧΧ΅Χ¤Χ¨ Χ—Χ‘Χ¨Χª Χ”ΧªΧΆΧ•Χ¤Χ”  Χ©ΧΧΧ¤ΧΧª Χ‘ΧΧΧΆΧ.
+Χ‘Χ™Χ‘Χ©ΧªΧ™- ΧΧ΅Χ¤Χ¨ Χ—Χ‘Χ¨Χª Χ”Χ•Χ‘ΧΧ” Χ©ΧΧΧ¤ΧΧª Χ‘ΧΧΧΆΧ.","Χ—Χ•Χ¤Χ£ ΧΧ©Χ“Χ” 30 , ΧΧ”Χ©ΧΧ™Χ¨ ΧΧ•Χ¤Χ¦Χ™Χ•Χ ΧΧ™ ΧΧ• Χ©ΧΧ Χ¦Χ¨Χ™Χ Χ‘Χ›ΧΧ Χ‘Χ¨ΧΧª ΧΧΧΆΧ",ΧΧ Χ¦Χ¨Χ™Χ
+310,Consignment,3,27A,0..*,,,,,H,Χ Χ©Χ’Χ¨,,Consignee,      Consignee,Declaration.Consignment.Consignee,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ Χ©Χ’Χ¨,,,,Χ¦Χ¨Χ™Χ
+311,Consignment,4,R015Β ,0..1,,"ΧΆΧ¨Χ ΧªΧ§Χ£ ΧΧ¤Χ™ ΧΧ‘ΧΧª Χ™Χ¦Χ•ΧΧ Χ™Χ/Χ™Χ‘Χ•ΧΧ Χ™Χ ΧΧΧ""Χ",Χ§Χ•Χ“ Χ™Χ‘Χ•ΧΧ-Χ¨Χ©Χ•ΧΧ” 6-Χ¤Χ•Χ–' 144-152,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ Χ©Χ’Χ¨ ,"Consignee, coded",ID,         ID,Declaration.Consignment.Consignee.ID,ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ Χ©Χ’Χ¨ ,,"Χ‘ΧΧ¦Χ”Χ¨ ΧΧ•Χ•Χ™Χ¨Χ™:
+Χ‘- master ΧΧ Χ—Χ•Χ‘Χ”
+Χ‘- direct Χ—Χ•Χ‘Χ”
+Χ‘ΧΧ¦Χ”Χ¨ ΧΧΧ - ΧΧ Χ—Χ•Χ‘Χ”
 
-αξφδψ ιαωϊι : 
-δπωβψ ϊξιγ διαεΰο εμλο ξρτψ διαεΰο ιεζο αωγδ ζδ. 
+Χ‘ΧΧ¦Χ”Χ¨ Χ™Χ‘Χ©ΧªΧ™ : 
+Χ”Χ Χ©Χ’Χ¨ ΧªΧΧ™Χ“ Χ”Χ™Χ‘Χ•ΧΧ Χ•ΧΧ›Χ ΧΧ΅Χ¤Χ¨ Χ”Χ™Χ‘Χ•ΧΧ Χ™Χ•Χ–Χ Χ‘Χ©Χ“Χ” Χ–Χ”. 
 
-ξρτψ ξζδδ πωβψ  ηεαδ αιαεΰ, ΰετφιεπμι αωιθςεο",,φψικ
-312,Consignment,4,R014 ,0..1,,,ων δπωβψ-ψωεξδ 6-τεζ' 016-050,M,δςϊχδ ξμΰδ ,ων δπωβψ ,Consignee name,Name,         Name,Declaration.Consignment.Consignee.Name,ων δπωβψ ,,,,φψικ
-313,Consignment,4,04A,0..*,,,,M,H,λϊεαϊ δπωβψ,,Address,         Address,Declaration.Consignment.Consignee.Address,λεϊψϊ τψθι λϊεαϊ δπωβψ,,,ιω μχμεθ,φψικ
-314,Consignment,5,241 ,0..1,,,ςιψ δπωβψ-ψωεξδ 6-τεζ' 081-100,M,δςϊχδ ξμΰδ,λϊεαϊ δπωβψ,City name,CityName,            CityName,Declaration.Consignment.Consignee.Address.CityName,ων ςιψ,,,ιω μχμεθ,φψικ
-315,Consignment,5,242 ,0..1,,,ξγιπϊ δπωβψ-ψωεξδ 6-τεζ' 107-108,M,δςϊχδ ξμΰδ,λϊεαϊ δπωβψ,"Country, coded",CountryCode,            CountryCode,Declaration.Consignment.Consignee.Address.CountryCode,χεγ ξγιπδ,,,ιω μχμεθ,φψικ
-316,Consignment,5,244 ,0..1,,,,O,μΰ μδραδ,λϊεαϊ δπωβψ,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,Declaration.Consignment.Consignee.Address.CountrySubDivisionID,χεγ ϊϊ ξγιπδ,,"αιαεΰ μΰψυ μΰ φψικ , αξφδψ ξμΰ λΰωψ δξθςο ξιεςγ μξγιπδ ςν ημεχδ μΰζεψιν ",ιω μχμεθ,φψικ
-317,Consignment,5,243 ,0..1,,,,O,μΰ μδραδ,λϊεαϊ δπωβψ,Country sub-entity name,CountrySubDivisionName,            CountrySubDivisionName,Declaration.Consignment.Consignee.Address.CountrySubDivisionName,ων ϊϊ ξγιπδ,,"αιαεΰ μΰψυ μΰ φψικ , αξφδψ ξμΰ λΰωψ δξθςο ξιεςγ μξγιπδ ςν ημεχδ μΰζεψιν ",ιω μχμεθ,φψικ
-318,Consignment,5,239 ,0..1,"αλμ πεωΰ δλϊεαεϊ ( ιαεΰο, ρτχ, ξιεγς) δδςαψδ φψιλδ μδιεϊ μωγδ ψηεα εξρτψ ωδεΰ θχρθεΰμι εηεαδ αλεμν",,ψηεα εξρ' αιϊ ΰε ϊ.γ γεΰψ- ψωεξδ 6- τεζ' 051-080,M,δςϊχδ ξμΰδ,λϊεαϊ δπωβψ,Street and number/P.O. Box,Line,            Line,Declaration.Consignment.Consignee.Address.Line,λϊεαϊ δπωβψ,αξχψδ ωδλϊεαϊ μΰ ξτεψξθϊ ιω μωγψ αωγδ ζδ ΰϊ λμ δλϊεαϊ λτι ωψωεξδ αωθεψ ξθςο,"ψηεα εξρτψ αιϊ ΰε ϊιαϊ γεΰψ.
-αξχψδ ωδλϊεαϊ μΰ ξτεψξθϊ ιω μωγψ αωγδ ζδ ΰϊ λμ δλϊεαϊ λτι ωψωεξδ αωθψ ξθςο",ιω μχμεθ,φψικ
-319,Consignment,5,245 ,0..1,,,ξιχεγ- ψωεξδ 6- τεζ' 091-096,O,δςϊχδ ξμΰδ,λϊεαϊ δπωβψ,Postcode identification,PostcodeID,            PostcodeID,Declaration.Consignment.Consignee.Address.PostcodeID,ξιχεγ,,ξιχεγ,ιω μχμεθ,φψικ
-320,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,Declaration.Consignment.Consignee.Address.Communication,λεϊψϊ ΰξφςι χωψ,,,ιω μχμεθ,φψικ
-321,Consignment,5,240 ,0..1,,,θμτεο δπωβψ-ψωεξδ 6- τεζ' 109-120,O,δςϊχδ ξμΰδ,,Communication number,ID,            ID,Declaration.Consignment.Consignee.Address.Communication.ID,ζιδει ΰξφςι χωψ,,"ξρτψ τχρ, θμτεο, γεΰ""μ ελε'",ιω μχμεθ,φψικ
-322,Consignment,5,253 ,0..1,,μΰ ψμεεπθι μξφδψ ιξι,,O,μΰ μδραδ,,Agent quality assurance indicator,TypeID,            TypeID,Declaration.Consignment.Consignee.Address.Communication.TypeID,ρεβ ΰξφςι χωψ,"χεγ ΰξφςι χωψ: TE πιιη, AL πιιγ, FX τχρ, EM γεΰ""μ, AH ΰϊψ ΰιπθψπθ","τχρ, θμτεο, γεΰ""μ ελε'",ιω μχμεθ,φψικ
-498,Consignment,3,30A,0..*,,,,,H,ρτχ,,Consignor,      Consignor,Declaration.Consignment.Consignor,λεϊψϊ τψθι ωεβψ,,"αιξι εαΰεεψι- shipper
-",,φψικ
-499,Consignment,4,R021 ,0..1,,δφςδ-ϊε ψΰωεο=ρεβ ζιδει (ςψλιν 1-3). εαδξωκ ζιδει μτι ΰηγ ξδΰτωψειεϊ ωδεβγψε αϊε δψΰωεο (ξλρ ιωψΰμ/ζιδει ξχεξι/DUNS NO ),ζιδει ρτχ -ψωεξδ 8-ρεβ ζιδει ρτχ-τεζ' 145-145 + ζιδει ρτχ τεζ' 146+165,O,δςϊχδ ξμΰδ ωμ δωγεϊ: ψωεξδ 8-ρεβ ζιδει ρτχ-τεζ' 145-145 + ζιδει ρτχ τεζ' 146+165,ζιδει ρτχ,"Consignor, coded ",ID,         ID,Declaration.Consignment.Consignor.ID,ζιδει ωεβψ,ζιδει δωεβψ/ρτχ,"ζιδει δρτχ/ωεβψ μτι ΰηϊ ξδΰτωψειεϊ δπ""μ:
-ρτχ αξλρ αιωψΰμ (9 ρτψεϊ), ΰε 
-χεγ ζιδει ξχεξι, ΰε
+ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ Χ©Χ’Χ¨  Χ—Χ•Χ‘Χ” Χ‘Χ™Χ‘Χ•Χ, ΧΧ•Χ¤Χ¦Χ™Χ•Χ ΧΧ™ Χ‘Χ©Χ™ΧΧΆΧ•Χ",,Χ¦Χ¨Χ™Χ
+312,Consignment,4,R014Β ,0..1,,,Χ©Χ Χ”Χ Χ©Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 6-Χ¤Χ•Χ–' 016-050,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” ,Χ©Χ Χ”Χ Χ©Χ’Χ¨ ,Consignee name,Name,         Name,Declaration.Consignment.Consignee.Name,Χ©Χ Χ”Χ Χ©Χ’Χ¨ ,,,,Χ¦Χ¨Χ™Χ
+313,Consignment,4,04A,0..*,,,,M,H,Χ›ΧªΧ•Χ‘Χª Χ”Χ Χ©Χ’Χ¨,,Address,         Address,Declaration.Consignment.Consignee.Address,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ›ΧªΧ•Χ‘Χª Χ”Χ Χ©Χ’Χ¨,,,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+314,Consignment,5,241Β ,0..1,,,ΧΆΧ™Χ¨ Χ”Χ Χ©Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 6-Χ¤Χ•Χ–' 081-100,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ›ΧªΧ•Χ‘Χª Χ”Χ Χ©Χ’Χ¨,City name,CityName,            CityName,Declaration.Consignment.Consignee.Address.CityName,Χ©Χ ΧΆΧ™Χ¨,,,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+315,Consignment,5,242Β ,0..1,,,ΧΧ“Χ™Χ Χª Χ”Χ Χ©Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 6-Χ¤Χ•Χ–' 107-108,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ›ΧªΧ•Χ‘Χª Χ”Χ Χ©Χ’Χ¨,"Country, coded",CountryCode,            CountryCode,Declaration.Consignment.Consignee.Address.CountryCode,Χ§Χ•Χ“ ΧΧ“Χ™Χ Χ”,,,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+316,Consignment,5,244Β ,0..1,,,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,Χ›ΧªΧ•Χ‘Χª Χ”Χ Χ©Χ’Χ¨,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,Declaration.Consignment.Consignee.Address.CountrySubDivisionID,Χ§Χ•Χ“ ΧªΧª ΧΧ“Χ™Χ Χ”,,"Χ‘Χ™Χ‘Χ•Χ ΧΧΧ¨Χ¥ ΧΧ Χ¦Χ¨Χ™Χ , Χ‘ΧΧ¦Χ”Χ¨ ΧΧΧ Χ›ΧΧ©Χ¨ Χ”ΧΧΧΆΧ ΧΧ™Χ•ΧΆΧ“ ΧΧΧ“Χ™Χ Χ” ΧΆΧ Χ—ΧΧ•Χ§Χ” ΧΧΧ–Χ•Χ¨Χ™Χ ",Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+317,Consignment,5,243Β ,0..1,,,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,Χ›ΧªΧ•Χ‘Χª Χ”Χ Χ©Χ’Χ¨,Country sub-entity name,CountrySubDivisionName,            CountrySubDivisionName,Declaration.Consignment.Consignee.Address.CountrySubDivisionName,Χ©Χ ΧªΧª ΧΧ“Χ™Χ Χ”,,"Χ‘Χ™Χ‘Χ•Χ ΧΧΧ¨Χ¥ ΧΧ Χ¦Χ¨Χ™Χ , Χ‘ΧΧ¦Χ”Χ¨ ΧΧΧ Χ›ΧΧ©Χ¨ Χ”ΧΧΧΆΧ ΧΧ™Χ•ΧΆΧ“ ΧΧΧ“Χ™Χ Χ” ΧΆΧ Χ—ΧΧ•Χ§Χ” ΧΧΧ–Χ•Χ¨Χ™Χ ",Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+318,Consignment,5,239Β ,0..1,"Χ‘Χ›Χ Χ Χ•Χ©Χ Χ”Χ›ΧªΧ•Χ‘Χ•Χª ( Χ™Χ‘Χ•ΧΧ, Χ΅Χ¤Χ§, ΧΧ™Χ•Χ“ΧΆ) Χ”Χ”ΧΆΧ‘Χ¨Χ” Χ¦Χ¨Χ™Χ›Χ” ΧΧ”Χ™Χ•Χª ΧΧ©Χ“Χ” Χ¨Χ—Χ•Χ‘ Χ•ΧΧ΅Χ¤Χ¨ Χ©Χ”Χ•Χ ΧΧ§Χ΅ΧΧ•ΧΧΧ™ Χ•Χ—Χ•Χ‘Χ” Χ‘Χ›Χ•ΧΧ",,Χ¨Χ—Χ•Χ‘ Χ•ΧΧ΅' Χ‘Χ™Χª ΧΧ• Χª.Χ“ Χ“Χ•ΧΧ¨- Χ¨Χ©Χ•ΧΧ” 6- Χ¤Χ•Χ–' 051-080,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ›ΧªΧ•Χ‘Χª Χ”Χ Χ©Χ’Χ¨,Street and number/P.O. Box,Line,            Line,Declaration.Consignment.Consignee.Address.Line,Χ›ΧªΧ•Χ‘Χª Χ”Χ Χ©Χ’Χ¨,Χ‘ΧΧ§Χ¨Χ” Χ©Χ”Χ›ΧªΧ•Χ‘Χª ΧΧ ΧΧ¤Χ•Χ¨ΧΧΧª Χ™Χ© ΧΧ©Χ“Χ¨ Χ‘Χ©Χ“Χ” Χ–Χ” ΧΧª Χ›Χ Χ”Χ›ΧªΧ•Χ‘Χª Χ›Χ¤Χ™ Χ©Χ¨Χ©Χ•ΧΧ” Χ‘Χ©ΧΧ•Χ¨ ΧΧΧΆΧ,"Χ¨Χ—Χ•Χ‘ Χ•ΧΧ΅Χ¤Χ¨ Χ‘Χ™Χª ΧΧ• ΧªΧ™Χ‘Χª Χ“Χ•ΧΧ¨.
+Χ‘ΧΧ§Χ¨Χ” Χ©Χ”Χ›ΧªΧ•Χ‘Χª ΧΧ ΧΧ¤Χ•Χ¨ΧΧΧª Χ™Χ© ΧΧ©Χ“Χ¨ Χ‘Χ©Χ“Χ” Χ–Χ” ΧΧª Χ›Χ Χ”Χ›ΧªΧ•Χ‘Χª Χ›Χ¤Χ™ Χ©Χ¨Χ©Χ•ΧΧ” Χ‘Χ©ΧΧ¨ ΧΧΧΆΧ",Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+319,Consignment,5,245Β ,0..1,,,ΧΧ™Χ§Χ•Χ“- Χ¨Χ©Χ•ΧΧ” 6- Χ¤Χ•Χ–' 091-096,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ›ΧªΧ•Χ‘Χª Χ”Χ Χ©Χ’Χ¨,Postcode identification,PostcodeID,            PostcodeID,Declaration.Consignment.Consignee.Address.PostcodeID,ΧΧ™Χ§Χ•Χ“,,ΧΧ™Χ§Χ•Χ“,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+320,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,Declaration.Consignment.Consignee.Address.Communication,Χ›Χ•ΧªΧ¨Χª ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,,,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+321,Consignment,5,240Β ,0..1,,,ΧΧΧ¤Χ•Χ Χ”Χ Χ©Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 6- Χ¤Χ•Χ–' 109-120,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,,Communication number,ID,            ID,Declaration.Consignment.Consignee.Address.Communication.ID,Χ–Χ™Χ”Χ•Χ™ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,,"ΧΧ΅Χ¤Χ¨ Χ¤Χ§Χ΅, ΧΧΧ¤Χ•Χ, Χ“Χ•Χ""Χ Χ•Χ›Χ•'",Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+322,Consignment,5,253Β ,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,Agent quality assurance indicator,TypeID,            TypeID,Declaration.Consignment.Consignee.Address.Communication.TypeID,Χ΅Χ•Χ’ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,"Χ§Χ•Χ“ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨: TE Χ Χ™Χ™Χ—, AL Χ Χ™Χ™Χ“, FX Χ¤Χ§Χ΅, EM Χ“Χ•Χ""Χ, AH ΧΧªΧ¨ ΧΧ™Χ ΧΧ¨Χ Χ","Χ¤Χ§Χ΅, ΧΧΧ¤Χ•Χ, Χ“Χ•Χ""Χ Χ•Χ›Χ•'",Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+498,Consignment,3,30A,0..*,,,,,H,Χ΅Χ¤Χ§,,Consignor,      Consignor,Declaration.Consignment.Consignor,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ©Χ•Χ’Χ¨,,"Χ‘Χ™ΧΧ™ Χ•Χ‘ΧΧ•Χ•Χ¨Χ™- shipper
+",,Χ¦Χ¨Χ™Χ
+499,Consignment,4,R021Β ,0..1,,Χ”Χ¦ΧΆΧ”-ΧªΧ• Χ¨ΧΧ©Χ•Χ=Χ΅Χ•Χ’ Χ–Χ™Χ”Χ•Χ™ (ΧΆΧ¨Χ›Χ™Χ 1-3). Χ•Χ‘Χ”ΧΧ©Χ Χ–Χ™Χ”Χ•Χ™ ΧΧ¤Χ™ ΧΧ—Χ“ ΧΧ”ΧΧ¤Χ©Χ¨Χ•Χ™Χ•Χª Χ©Χ”Χ•Χ’Χ“Χ¨Χ• Χ‘ΧªΧ• Χ”Χ¨ΧΧ©Χ•Χ (ΧΧ›Χ΅ Χ™Χ©Χ¨ΧΧ/Χ–Χ™Χ”Χ•Χ™ ΧΧ§Χ•ΧΧ™/DUNS NO ),Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§ -Χ¨Χ©Χ•ΧΧ” 8-Χ΅Χ•Χ’ Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§-Χ¤Χ•Χ–' 145-145 + Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§ Χ¤Χ•Χ–' 146+165,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ Χ”Χ©Χ“Χ•Χª: Χ¨Χ©Χ•ΧΧ” 8-Χ΅Χ•Χ’ Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§-Χ¤Χ•Χ–' 145-145 + Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§ Χ¤Χ•Χ–' 146+165,Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§,"Consignor, coded ",ID,         ID,Declaration.Consignment.Consignor.ID,Χ–Χ™Χ”Χ•Χ™ Χ©Χ•Χ’Χ¨,Χ–Χ™Χ”Χ•Χ™ Χ”Χ©Χ•Χ’Χ¨/Χ΅Χ¤Χ§,"Χ–Χ™Χ”Χ•Χ™ Χ”Χ΅Χ¤Χ§/Χ©Χ•Χ’Χ¨ ΧΧ¤Χ™ ΧΧ—Χª ΧΧ”ΧΧ¤Χ©Χ¨Χ•Χ™Χ•Χª Χ”Χ ""Χ:
+Χ΅Χ¤Χ§ Χ‘ΧΧ›Χ΅ Χ‘Χ™Χ©Χ¨ΧΧ (9 Χ΅Χ¤Χ¨Χ•Χª), ΧΧ• 
+Χ§Χ•Χ“ Χ–Χ™Χ”Χ•Χ™ ΧΧ§Χ•ΧΧ™, ΧΧ•
 D-U-N-S- NUMBER
-μτι ξδ ωπψων αρεγψ  2009
-",,φψικ
-500,Consignment,4,R020 ,0..1,,,ων ωεβψ-ψωεξδ 8- τεζ' 016-050,M,δςϊχδ ξμΰδ,ων ωεβψ,Consignor - name,Name,         Name,Declaration.Consignment.Consignor.Name,ων ωεβψ,,,,φψικ
-501,Consignment,4,04A,0..*,,,,M,H,λϊεαϊ ωεβψ,,Address,         Address,Declaration.Consignment.Consignor.Address,λεϊψϊ τψθι λϊεαϊ ωεβψ,,,ιω μχμεθ,φψικ
-502,Consignment,5,241 ,0..1,,,ςιψ δωεβψ-ψωεξδ 8 -τεζ' 081-100,C,δςϊχδ ξμΰδ-ηεαδ αξφδψ ξμΰ ,λϊεαϊ ωεβψ,City name,CityName,            CityName,Declaration.Consignment.Consignor.Address.CityName,ων ςιψ,,,ιω μχμεθ,φψικ
-503,Consignment,5,242 ,0..1,,,ξγιπϊ δωεβψ-ψωεξδ 8 -τεζ' 107-108,C,δςϊχδ ξμΰδ-ηεαδ αξφδψ ξμΰ ,λϊεαϊ ωεβψ,"Country, coded",CountryCode,            CountryCode,Declaration.Consignment.Consignor.Address.CountryCode,χεγ ξγιπδ,,,ιω μχμεθ,φψικ
-504,Consignment,5,244 ,0..1,,,,O,μΰ μδραδ,λϊεαϊ ωεβψ,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,Declaration.Consignment.Consignor.Address.CountrySubDivisionID,χεγ ϊϊ ξγιπδ,,,ιω μχμεθ,φψικ
-506,Consignment,5,239 ,0..1,"αλμ πεωΰ δλϊεαεϊ ( ιαεΰο, ρτχ, ξιεγς) δδςαψδ φψιλδ μδιεϊ μωγδ ψηεα εξρτψ ωδεΰ θχρθεΰμι εηεαδ αλεμν",ηεαδ αξφδψ ξμΰ,ψηεα εξρ' αιϊ ωμ δωεβψ-ψωεξδ 8- τεζ' 051-080,C,δςϊχδ ξμΰδ,λϊεαϊ ωεβψ,Street and number/P.O. Box,Line,            Line,Declaration.Consignment.Consignor.Address.Line,"ψηεα εξρτψ αιϊ ΰε ϊιαϊ γεΰψ.
-αξχψδ ωδλϊεαϊ μΰ ξτεψξθϊ ιω μωγψ αωγδ ζδ ΰϊ λμ δλϊεαϊ λτι ωψωεξδ αωθψ ξθςο",,ψηεα εξρτψ αιϊ ΰε ϊιαϊ γεΰψ ,ιω μχμεθ,φψικ
-507,Consignment,5,245 ,0..1,,,ξιχεγ δωεβψ-ψωεξδ 8 - τεζ' 101-106,O,δςϊχδ ξμΰδ ωμ ξιχεγ ωεβψ,λϊεαϊ ωεβψ,Postcode identification,PostcodeID,            PostcodeID,Declaration.Consignment.Consignor.Address.PostcodeID,ξιχεγ,,ξιχεγ,ιω μχμεθ,φψικ
-508,Consignment,4,25A,0..*,,,,O,H,ΰξφςι χωψ,,Communication,         Communication,Declaration.Consignment.Consignor.Address.Communication,λεϊψϊ ΰξφςι χωψ,,,ιω μχμεθ,φψικ
-509,Consignment,5,240 ,0..1,,,θμτεο δωεβψ-ψωεξδ 8- τεζ' 109-120,O,δςϊχδ ξμΰδ,ξρτψ ΰξφςι χωψ,Communication number,ID,            ID,Declaration.Consignment.Consignor.Address.Communication.ID,ξρτψ ΰξφςι χωψ,,"ξρτψ τχρ, θμτεο, γεΰ""μ ελε'",ιω μχμεθ,φψικ
-510,Consignment,5,253 ,0..1,,μΰ ψμεεπθι μξφδψ ιξι,,O,μΰ μδραδ,ρεβ ΰξφςι χωψ,Agent quality assurance indicator,TypeID,            TypeID,Declaration.Consignment.Consignor.Address.Communication.TypeID,ρεβ ΰξφςι χωψ,"χεγ ΰξφςι χωψ: TE πιιη, AL πιιγ, FX τχρ, EM γεΰ""μ, AH ΰϊψ ΰιπθψπθ", ,ιω μχμεθ,φψικ
-559,Consignment,3,62A,0..*,,,,,H,,,Freight,      Freight,Declaration.Consignment.Freight,λεϊψϊ τψθι ηωαεο ςμεϊ δεαμδ,ηωαεο μλμ ρεβ δεαμδ,"ρδ""λ δςμεϊ ωμ δδεαμδ (ξθας) = ",,φψικ
-560,Consignment,4,098 ,0..1,,μτι θαμδ EDIFACT4215,ϊπΰι ϊωμεν -ψωεξδ 6-τεζ' 154-155,M,"ιω μχηϊ ΰϊ δςψκ ξψωεξδ 6 εμδξιψ ΰεϊ λγμχξο:CO =CC(ηγω)   ,CA=CA(ηγω),  FR=NC (ηγω),       PR = PO(ηγω)     ,PA=PP (ηγω)",ϊπΰι ϊωμεν ,"Transport charges method of payment, coded",PaymentMethodCode,         PaymentMethodCode,Declaration.Consignment.Freight.PaymentMethodCode,ϊπΰι ϊωμεν ηωαεο δεαμδ,"θαμϊ ςψλιν. μτι δημθϊ δξλρ, δξςψλϊ ϊΰτωψ ωιξεω α 5 χεγιν αμαγ ξϊεκ δθαμδ edifact4215 . δχεγιν ωιεψωε μωιξεω:   CC - collect,                            CA - collect abroad,             NC - free,           PO - prepaid,              PP - prepaid abroad             ","μγεβξΰ:  PREPAID  , θαμϊ ςψλιν. μτι δημθϊ δξλρ, δξςψλϊ ϊΰτωψ ωιξεω α 5 χεγιν αμαγ ξϊεκ δθαμδ edifact4215 . δχεγιν ωιεψωε μωιξεω:   CC - collect,        CA - collect abroad,             NC - free,   PO - prepaid,   PP - prepaid abroad            ",,φψικ
-561,Consignment,4,310 ,0..1,ωγδ ηγω. ςψλι δδεαμδ,μΰ ηεαδ αξφδψ ξλεμεϊ ψιχεϊ,,C,μΰ πιϊο,,Freight rate amount,RateAmount,         RateAmount,Declaration.Consignment.Freight.RateAmount,ϊςψισ ςμεϊ δδεαμδ,,,,φψικ
-562,Consignment,4,308 ,0..1,ωγδ ηγω. ςψλι δδεαμδ,ιηιγϊ ξιγδ ΰμιδ ξϊιιηρ δϊςψισ.ηεαδ αγιεεη ξωμη ιξι,,C,μΰ πιϊο,,Freight rate quantity,RateQuantity,         RateQuantity,Declaration.Consignment.Freight.RateQuantity,ϊςψισ ιηιγϊ λξεϊ,,πϊεο ζδ ξΰτωψ μγςϊ λιφγ ηεωαδ ςμεϊ δδεαμδ - ϊςψισ δεαμδ μιηιγϊ λξεϊ,,φψικ
-563,Consignment,4,309 ,0..1,ωγδ ηγω. ςψλι δδεαμδ,χεγ ωιθϊ ηιωεα δεαμδ. ηεαδ αγιεεη ωμ ξωμη ιξι,,C,μΰ πιϊο,,Freight rate type code,RateTypeCode,         RateTypeCode,Declaration.Consignment.Freight.RateTypeCode,χεγ ρεβ ωιθϊ ηιωεα ςμεϊ δεαμδ,,πϊεο ζδ ξΰτωψ μγςϊ λιφγ ηεωαδ ςμεϊ δδεαμδ  - χεγ ρεβ ϊςψισ ηιωεα ςμεϊ δεαμδ.,,φψικ
-564,Consignment,3,63A,1,,,,,H,,,GoodsConsignedPlace,      GoodsConsignedPlace,Declaration.Consignment.GoodsConsignedPlace,λεϊψϊ τψθι ΰϊψ ξχεψ,,,,φψικ
-565,Consignment,4,L024 ,0..1,μγςϊι μΰ πξμ θςιπδ. ΰν λαψ πξμ ξχεψ. πξμ θςιπδ δεΰ ψωεξδ 134,"χεγ πξμ ξηε""μ αε δεθςο δξθςο ςμ δΰπιιδ",πξμ θςιπδ ιξι-ψωεξδ 3 - τεζ' 048-052,M,δςϊχδ ξμΰδ,πξμ ξχεψ,"Place or country whence consigned, coded",ID,         ID,Declaration.Consignment.GoodsConsignedPlace.ID,χεγ ΰϊψ ξχεψ,,,,φψικ
-569,Consignment,3,66A,0..*,,0,,,H,,,GoodsReceiptPlace,      GoodsReceiptPlace,Declaration.Consignment.GoodsReceiptPlace,λεϊψϊ τψθι ΰϊψ ξριψδ,,,,φψικ
-570,Consignment,4,L004 ,0..1,,,πξμ /ΰϊψ ξριψδ-ψωεξδ 3- τεζ' 117-121,M,δςϊχδ ξμΰδ,πξμ /ΰϊψ ξριψδ,"Goods receipt place, coded",ID,         ID,Declaration.Consignment.GoodsReceiptPlace.ID,χεγ ΰϊψ ξριψδ,,"ΰϊψ ξριψδ
+ΧΧ¤Χ™ ΧΧ” Χ©Χ Χ¨Χ©Χ Χ‘Χ΅Χ•Χ“Χ¨  2009
+",,Χ¦Χ¨Χ™Χ
+500,Consignment,4,R020Β ,0..1,,,Χ©Χ Χ©Χ•Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 8- Χ¤Χ•Χ–' 016-050,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ©Χ Χ©Χ•Χ’Χ¨,Consignor - name,Name,         Name,Declaration.Consignment.Consignor.Name,Χ©Χ Χ©Χ•Χ’Χ¨,,,,Χ¦Χ¨Χ™Χ
+501,Consignment,4,04A,0..*,,,,M,H,Χ›ΧªΧ•Χ‘Χª Χ©Χ•Χ’Χ¨,,Address,         Address,Declaration.Consignment.Consignor.Address,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ›ΧªΧ•Χ‘Χª Χ©Χ•Χ’Χ¨,,,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+502,Consignment,5,241Β ,0..1,,,ΧΆΧ™Χ¨ Χ”Χ©Χ•Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 8 -Χ¤Χ•Χ–' 081-100,C,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”-Χ—Χ•Χ‘Χ” Χ‘ΧΧ¦Χ”Χ¨ ΧΧΧ ,Χ›ΧªΧ•Χ‘Χª Χ©Χ•Χ’Χ¨,City name,CityName,            CityName,Declaration.Consignment.Consignor.Address.CityName,Χ©Χ ΧΆΧ™Χ¨,,,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+503,Consignment,5,242Β ,0..1,,,ΧΧ“Χ™Χ Χª Χ”Χ©Χ•Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 8 -Χ¤Χ•Χ–' 107-108,C,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”-Χ—Χ•Χ‘Χ” Χ‘ΧΧ¦Χ”Χ¨ ΧΧΧ ,Χ›ΧªΧ•Χ‘Χª Χ©Χ•Χ’Χ¨,"Country, coded",CountryCode,            CountryCode,Declaration.Consignment.Consignor.Address.CountryCode,Χ§Χ•Χ“ ΧΧ“Χ™Χ Χ”,,,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+504,Consignment,5,244Β ,0..1,,,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,Χ›ΧªΧ•Χ‘Χª Χ©Χ•Χ’Χ¨,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,Declaration.Consignment.Consignor.Address.CountrySubDivisionID,Χ§Χ•Χ“ ΧªΧª ΧΧ“Χ™Χ Χ”,,,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+506,Consignment,5,239Β ,0..1,"Χ‘Χ›Χ Χ Χ•Χ©Χ Χ”Χ›ΧªΧ•Χ‘Χ•Χª ( Χ™Χ‘Χ•ΧΧ, Χ΅Χ¤Χ§, ΧΧ™Χ•Χ“ΧΆ) Χ”Χ”ΧΆΧ‘Χ¨Χ” Χ¦Χ¨Χ™Χ›Χ” ΧΧ”Χ™Χ•Χª ΧΧ©Χ“Χ” Χ¨Χ—Χ•Χ‘ Χ•ΧΧ΅Χ¤Χ¨ Χ©Χ”Χ•Χ ΧΧ§Χ΅ΧΧ•ΧΧΧ™ Χ•Χ—Χ•Χ‘Χ” Χ‘Χ›Χ•ΧΧ",Χ—Χ•Χ‘Χ” Χ‘ΧΧ¦Χ”Χ¨ ΧΧΧ,Χ¨Χ—Χ•Χ‘ Χ•ΧΧ΅' Χ‘Χ™Χª Χ©Χ Χ”Χ©Χ•Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 8- Χ¤Χ•Χ–' 051-080,C,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ›ΧªΧ•Χ‘Χª Χ©Χ•Χ’Χ¨,Street and number/P.O. Box,Line,            Line,Declaration.Consignment.Consignor.Address.Line,"Χ¨Χ—Χ•Χ‘ Χ•ΧΧ΅Χ¤Χ¨ Χ‘Χ™Χª ΧΧ• ΧªΧ™Χ‘Χª Χ“Χ•ΧΧ¨.
+Χ‘ΧΧ§Χ¨Χ” Χ©Χ”Χ›ΧªΧ•Χ‘Χª ΧΧ ΧΧ¤Χ•Χ¨ΧΧΧª Χ™Χ© ΧΧ©Χ“Χ¨ Χ‘Χ©Χ“Χ” Χ–Χ” ΧΧª Χ›Χ Χ”Χ›ΧªΧ•Χ‘Χª Χ›Χ¤Χ™ Χ©Χ¨Χ©Χ•ΧΧ” Χ‘Χ©ΧΧ¨ ΧΧΧΆΧ",,Χ¨Χ—Χ•Χ‘ Χ•ΧΧ΅Χ¤Χ¨ Χ‘Χ™Χª ΧΧ• ΧªΧ™Χ‘Χª Χ“Χ•ΧΧ¨ ,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+507,Consignment,5,245Β ,0..1,,,ΧΧ™Χ§Χ•Χ“ Χ”Χ©Χ•Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 8 - Χ¤Χ•Χ–' 101-106,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ ΧΧ™Χ§Χ•Χ“ Χ©Χ•Χ’Χ¨,Χ›ΧªΧ•Χ‘Χª Χ©Χ•Χ’Χ¨,Postcode identification,PostcodeID,            PostcodeID,Declaration.Consignment.Consignor.Address.PostcodeID,ΧΧ™Χ§Χ•Χ“,,ΧΧ™Χ§Χ•Χ“,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+508,Consignment,4,25A,0..*,,,,O,H,ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,,Communication,         Communication,Declaration.Consignment.Consignor.Address.Communication,Χ›Χ•ΧªΧ¨Χª ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,,,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+509,Consignment,5,240Β ,0..1,,,ΧΧΧ¤Χ•Χ Χ”Χ©Χ•Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 8- Χ¤Χ•Χ–' 109-120,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,ΧΧ΅Χ¤Χ¨ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,Communication number,ID,            ID,Declaration.Consignment.Consignor.Address.Communication.ID,ΧΧ΅Χ¤Χ¨ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,,"ΧΧ΅Χ¤Χ¨ Χ¤Χ§Χ΅, ΧΧΧ¤Χ•Χ, Χ“Χ•Χ""Χ Χ•Χ›Χ•'",Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+510,Consignment,5,253Β ,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,Χ΅Χ•Χ’ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,Agent quality assurance indicator,TypeID,            TypeID,Declaration.Consignment.Consignor.Address.Communication.TypeID,Χ΅Χ•Χ’ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,"Χ§Χ•Χ“ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨: TE Χ Χ™Χ™Χ—, AL Χ Χ™Χ™Χ“, FX Χ¤Χ§Χ΅, EM Χ“Χ•Χ""Χ, AH ΧΧªΧ¨ ΧΧ™Χ ΧΧ¨Χ Χ", ,Χ™Χ© ΧΧ§ΧΧ•Χ,Χ¦Χ¨Χ™Χ
+559,Consignment,3,62A,0..*,,,,,H,,,Freight,      Freight,Declaration.Consignment.Freight,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ—Χ©Χ‘Χ•Χ ΧΆΧΧ•Χª Χ”Χ•Χ‘ΧΧ”,Χ—Χ©Χ‘Χ•Χ ΧΧ›Χ Χ΅Χ•Χ’ Χ”Χ•Χ‘ΧΧ”,"Χ΅Χ”""Χ› Χ”ΧΆΧΧ•Χª Χ©Χ Χ”Χ”Χ•Χ‘ΧΧ” (ΧΧΧ‘ΧΆ) = ",,Χ¦Χ¨Χ™Χ
+560,Consignment,4,098Β ,0..1,,ΧΧ¤Χ™ ΧΧ‘ΧΧ” EDIFACT4215,ΧªΧ ΧΧ™ ΧªΧ©ΧΧ•Χ -Χ¨Χ©Χ•ΧΧ” 6-Χ¤Χ•Χ–' 154-155,M,"Χ™Χ© ΧΧ§Χ—Χª ΧΧª Χ”ΧΆΧ¨Χ ΧΧ¨Χ©Χ•ΧΧ” 6 Χ•ΧΧ”ΧΧ™Χ¨ ΧΧ•Χª Χ›Χ“ΧΧ§ΧΧ:CO =CC(Χ—Χ“Χ©)   ,CA=CA(Χ—Χ“Χ©),  FR=NC (Χ—Χ“Χ©),       PR = PO(Χ—Χ“Χ©)     ,PA=PP (Χ—Χ“Χ©)",ΧªΧ ΧΧ™ ΧªΧ©ΧΧ•Χ ,"Transport charges method of payment, coded",PaymentMethodCode,         PaymentMethodCode,Declaration.Consignment.Freight.PaymentMethodCode,ΧªΧ ΧΧ™ ΧªΧ©ΧΧ•Χ Χ—Χ©Χ‘Χ•Χ Χ”Χ•Χ‘ΧΧ”,"ΧΧ‘ΧΧª ΧΆΧ¨Χ›Χ™Χ. ΧΧ¤Χ™ Χ”Χ—ΧΧΧª Χ”ΧΧ›Χ΅, Χ”ΧΧΆΧ¨Χ›Χª ΧªΧΧ¤Χ©Χ¨ Χ©Χ™ΧΧ•Χ© Χ‘ 5 Χ§Χ•Χ“Χ™Χ Χ‘ΧΧ‘Χ“ ΧΧªΧ•Χ Χ”ΧΧ‘ΧΧ” edifact4215 . Χ”Χ§Χ•Χ“Χ™Χ Χ©Χ™Χ•Χ¨Χ©Χ• ΧΧ©Χ™ΧΧ•Χ©:   CC - collect,                            CA - collect abroad,             NC - free,           PO - prepaid,              PP - prepaid abroad             ","ΧΧ“Χ•Χ’ΧΧ:  PREPAID  , ΧΧ‘ΧΧª ΧΆΧ¨Χ›Χ™Χ. ΧΧ¤Χ™ Χ”Χ—ΧΧΧª Χ”ΧΧ›Χ΅, Χ”ΧΧΆΧ¨Χ›Χª ΧªΧΧ¤Χ©Χ¨ Χ©Χ™ΧΧ•Χ© Χ‘ 5 Χ§Χ•Χ“Χ™Χ Χ‘ΧΧ‘Χ“ ΧΧªΧ•Χ Χ”ΧΧ‘ΧΧ” edifact4215 . Χ”Χ§Χ•Χ“Χ™Χ Χ©Χ™Χ•Χ¨Χ©Χ• ΧΧ©Χ™ΧΧ•Χ©:   CC - collect,        CA - collect abroad,             NC - free,   PO - prepaid,   PP - prepaid abroad            ",,Χ¦Χ¨Χ™Χ
+561,Consignment,4,310Β ,0..1,Χ©Χ“Χ” Χ—Χ“Χ©. ΧΆΧ¨Χ›Χ™ Χ”Χ”Χ•Χ‘ΧΧ”,ΧΧ Χ—Χ•Χ‘Χ” Χ‘ΧΧ¦Χ”Χ¨ ΧΧ›Χ•ΧΧ•Χª Χ¨Χ™Χ§Χ•Χª,,C,ΧΧ Χ Χ™ΧªΧ,,Freight rate amount,RateAmount,         RateAmount,Declaration.Consignment.Freight.RateAmount,ΧªΧΆΧ¨Χ™Χ£ ΧΆΧΧ•Χª Χ”Χ”Χ•Χ‘ΧΧ”,,,,Χ¦Χ¨Χ™Χ
+562,Consignment,4,308Β ,0..1,Χ©Χ“Χ” Χ—Χ“Χ©. ΧΆΧ¨Χ›Χ™ Χ”Χ”Χ•Χ‘ΧΧ”,Χ™Χ—Χ™Χ“Χª ΧΧ™Χ“Χ” ΧΧΧ™Χ” ΧΧªΧ™Χ™Χ—Χ΅ Χ”ΧªΧΆΧ¨Χ™Χ£.Χ—Χ•Χ‘Χ” Χ‘Χ“Χ™Χ•Χ•Χ— ΧΧ©ΧΧ— Χ™ΧΧ™,,C,ΧΧ Χ Χ™ΧªΧ,,Freight rate quantity,RateQuantity,         RateQuantity,Declaration.Consignment.Freight.RateQuantity,ΧªΧΆΧ¨Χ™Χ£ Χ™Χ—Χ™Χ“Χª Χ›ΧΧ•Χª,,Χ ΧªΧ•Χ Χ–Χ” ΧΧΧ¤Χ©Χ¨ ΧΧ“ΧΆΧª Χ›Χ™Χ¦Χ“ Χ—Χ•Χ©Χ‘Χ” ΧΆΧΧ•Χª Χ”Χ”Χ•Χ‘ΧΧ” - ΧªΧΆΧ¨Χ™Χ£ Χ”Χ•Χ‘ΧΧ” ΧΧ™Χ—Χ™Χ“Χª Χ›ΧΧ•Χª,,Χ¦Χ¨Χ™Χ
+563,Consignment,4,309Β ,0..1,Χ©Χ“Χ” Χ—Χ“Χ©. ΧΆΧ¨Χ›Χ™ Χ”Χ”Χ•Χ‘ΧΧ”,Χ§Χ•Χ“ Χ©Χ™ΧΧª Χ—Χ™Χ©Χ•Χ‘ Χ”Χ•Χ‘ΧΧ”. Χ—Χ•Χ‘Χ” Χ‘Χ“Χ™Χ•Χ•Χ— Χ©Χ ΧΧ©ΧΧ— Χ™ΧΧ™,,C,ΧΧ Χ Χ™ΧªΧ,,Freight rate type code,RateTypeCode,         RateTypeCode,Declaration.Consignment.Freight.RateTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ©Χ™ΧΧª Χ—Χ™Χ©Χ•Χ‘ ΧΆΧΧ•Χª Χ”Χ•Χ‘ΧΧ”,,Χ ΧªΧ•Χ Χ–Χ” ΧΧΧ¤Χ©Χ¨ ΧΧ“ΧΆΧª Χ›Χ™Χ¦Χ“ Χ—Χ•Χ©Χ‘Χ” ΧΆΧΧ•Χª Χ”Χ”Χ•Χ‘ΧΧ”  - Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧªΧΆΧ¨Χ™Χ£ Χ—Χ™Χ©Χ•Χ‘ ΧΆΧΧ•Χª Χ”Χ•Χ‘ΧΧ”.,,Χ¦Χ¨Χ™Χ
+564,Consignment,3,63A,1,,,,,H,,,GoodsConsignedPlace,      GoodsConsignedPlace,Declaration.Consignment.GoodsConsignedPlace,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧªΧ¨ ΧΧ§Χ•Χ¨,,,,Χ¦Χ¨Χ™Χ
+565,Consignment,4,L024Β ,0..1,ΧΧ“ΧΆΧªΧ™ ΧΧ Χ ΧΧ ΧΧΆΧ™Χ Χ”. ΧΧ Χ›Χ‘Χ¨ Χ ΧΧ ΧΧ§Χ•Χ¨. Χ ΧΧ ΧΧΆΧ™Χ Χ” Χ”Χ•Χ Χ¨Χ©Χ•ΧΧ” 134,"Χ§Χ•Χ“ Χ ΧΧ ΧΧ—Χ•""Χ Χ‘Χ• Χ”Χ•ΧΧΆΧ Χ”ΧΧΧΆΧ ΧΆΧ Χ”ΧΧ Χ™Χ™Χ”",Χ ΧΧ ΧΧΆΧ™Χ Χ” Χ™ΧΧ™-Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 048-052,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ ΧΧ ΧΧ§Χ•Χ¨,"Place or country whence consigned, coded",ID,         ID,Declaration.Consignment.GoodsConsignedPlace.ID,Χ§Χ•Χ“ ΧΧªΧ¨ ΧΧ§Χ•Χ¨,,,,Χ¦Χ¨Χ™Χ
+569,Consignment,3,66A,0..*,,0,,,H,,,GoodsReceiptPlace,      GoodsReceiptPlace,Declaration.Consignment.GoodsReceiptPlace,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧªΧ¨ ΧΧ΅Χ™Χ¨Χ”,,,,Χ¦Χ¨Χ™Χ
+570,Consignment,4,L004Β ,0..1,,,Χ ΧΧ /ΧΧªΧ¨ ΧΧ΅Χ™Χ¨Χ”-Χ¨Χ©Χ•ΧΧ” 3- Χ¤Χ•Χ–' 117-121,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ ΧΧ /ΧΧªΧ¨ ΧΧ΅Χ™Χ¨Χ”,"Goods receipt place, coded",ID,         ID,Declaration.Consignment.GoodsReceiptPlace.ID,Χ§Χ•Χ“ ΧΧªΧ¨ ΧΧ΅Χ™Χ¨Χ”,,"ΧΧªΧ¨ ΧΧ΅Χ™Χ¨Χ”
 
-ηεαδ λΰωψ δϊδμικ δεΰ ιαεΰ
-(αωθςεο μΰ ψμεεπθι)
-",,φψικ
-572,Consignment,3,68A,0..*,,,,M,H,,,GovernmentAgencyGoodsItem,      GovernmentAgencyGoodsItem,Declaration.Consignment.GovernmentAgencyGoodsItem,λεϊψϊ τψθι ρηεψεϊ μψωεϊ ξξωμϊιϊ,,,,φψικ
-618,Consignment,4,03A,0..*,,,,,H,,,AdditionalInformation,         AdditionalInformation,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.,λεϊψϊ ξιγς περσ,,,,φψικ
-619,Consignment,5,105,0..1,,,,O,μΰ φψικ,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,ςψκ πϊεο,,,,φψικ
-621,Consignment,5,226 ,0..1,"ιω αςιδ μδφιβ αΰχρμ ΰϊ δωιξεωιν δωεπιν ωμ δηθιαδ δζε ωξωξωϊ μδζπϊ ωγεϊ ηεαδ λβεο ζιδει ρτχ, ζιδει ιαεΰο ελε' εβν μχεγι τςεμδ λβεο αιθεμ ετιφεμ / ΰιηεγ. ξφις μψωεν ΰϊ δδϊιιηρεϊ μδξψδ ξεμ δθαμδ δξτψθϊ ΰϊ δχεγιν δωεπιν ωμ AdditionalInformation",,ψωεξδ B - τεζ' 200-200= D,O,"ϊπΰι - ιδιδ χαες=1 λΰωψ αψωεξδ B τεζ' 200 ιω ςψκ = D, ΰηψϊ πωΰψ ψιχ",,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,χεγ ςψκ πϊεο,χεγ τςεμδ,"ξωξω μγιεεη ωγεϊ πγψωιν ωΰιο μδν ωγδ ξεβγψ . ξεψλα ξρεβ πϊεο εδςψκ. (ψΰδ ωεψεϊ ληεμεϊ αδξωκ)
-",,φψικ
-623,Consignment,5,369 ,0..1,,,ψωεξδ B - τεζ' 200-200= D,C,"ϊπΰι - ιδιδ χαες=12 λΰωψ αψωεξδ B τεζ' 200 ιω ςψκ = D, ΰηψϊ πωΰψ ψιχ",,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ ρεβ πϊεο,,"ξωξω μαιθεμ ξθςο (χεγ 12 )
-ΰε μγιεεη χεγ ιαεΰο (2)
-ΰε μγιεεη χεγ ΰϊψ ιςγ ρετι αηε""μ (3)
-ΰε μγιεεη ΰιπγχφιδ μΰβγ ςρχΰεϊ (15)
-ΰε μγιεεη χεγ ρεβ ζιδει ωεβψ (5)
-ΰε μγιεεη χεγ ρεβ ξθςο (16)",,φψικ
-2045,Consignment,5,105,0..1,,,, ,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,"ϊΰψικ δχξδ ωμ ωθ""ξ αμγψ","ϊΰψικ δχξδ ωμ ωθ""ξ αμγψ","ψμαπθι μωθ""ξ αμγψ αμαγ.",,φψικ
-2046,Consignment,5,369,0..1,,,, ,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,"ρεβ πϊεο ϊΰψικ δχξδ ωμ ωθ""ξ αμγψ","χεγ τςεμδ = 20
-ϊΰψικ δχξδ ωμ ωθ""ξ αμγψ","ϊΰψικ δχξδ ωμ ωθ""ξ αμγψ",,φψικ
-2023,Consignment,5,226 ,0..1,,,, ,,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,χεγ τςεμδ,χαες:   1 ,ωλτεμ ωμ 621,,φψικ
-2024,Consignment,5,369 ,0..1,,,, ,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ τςεμδ,"χεγ τςεμδ= 12 (αιθεμ ςρχδ / ωθ""ξ)",ωλτεμ ωμ 623,,φψικ
+Χ—Χ•Χ‘Χ” Χ›ΧΧ©Χ¨ Χ”ΧªΧ”ΧΧ™Χ Χ”Χ•Χ Χ™Χ‘Χ•Χ
+(Χ‘Χ©ΧΧΆΧ•Χ ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™)
+",,Χ¦Χ¨Χ™Χ
+572,Consignment,3,68A,0..*,,,,M,H,,,GovernmentAgencyGoodsItem,      GovernmentAgencyGoodsItem,Declaration.Consignment.GovernmentAgencyGoodsItem,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ΅Χ—Χ•Χ¨Χ•Χª ΧΧ¨Χ©Χ•Χª ΧΧΧ©ΧΧªΧ™Χª,,,,Χ¦Χ¨Χ™Χ
+618,Consignment,4,03A,0..*,,,,,H,,,AdditionalInformation,         AdditionalInformation,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.,Χ›Χ•ΧªΧ¨Χª ΧΧ™Χ“ΧΆ Χ Χ•Χ΅Χ£,,,,Χ¦Χ¨Χ™Χ
+619,Consignment,5,105,0..1,,,,O,ΧΧ Χ¦Χ¨Χ™Χ,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,ΧΆΧ¨Χ Χ ΧªΧ•Χ,,,,Χ¦Χ¨Χ™Χ
+621,Consignment,5,226Β ,0..1,"Χ™Χ© Χ‘ΧΆΧ™Χ” ΧΧ”Χ¦Χ™Χ’ Χ‘ΧΧ§Χ΅Χ ΧΧª Χ”Χ©Χ™ΧΧ•Χ©Χ™Χ Χ”Χ©Χ•Χ Χ™Χ Χ©Χ Χ”Χ—ΧΧ™Χ‘Χ” Χ”Χ–Χ• Χ©ΧΧ©ΧΧ©Χª ΧΧ”Χ–Χ Χª Χ©Χ“Χ•Χª Χ—Χ•Χ‘Χ” Χ›Χ’Χ•Χ Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§, Χ–Χ™Χ”Χ•Χ™ Χ™Χ‘Χ•ΧΧ Χ•Χ›Χ•' Χ•Χ’Χ ΧΧ§Χ•Χ“Χ™ Χ¤ΧΆΧ•ΧΧ” Χ›Χ’Χ•Χ Χ‘Χ™ΧΧ•Χ Χ•Χ¤Χ™Χ¦Χ•Χ / ΧΧ™Χ—Χ•Χ“. ΧΧ¦Χ™ΧΆ ΧΧ¨Χ©Χ•Χ ΧΧª Χ”Χ”ΧªΧ™Χ™Χ—Χ΅Χ•Χª ΧΧ”ΧΧ¨Χ” ΧΧ•Χ Χ”ΧΧ‘ΧΧ” Χ”ΧΧ¤Χ¨ΧΧª ΧΧª Χ”Χ§Χ•Χ“Χ™Χ Χ”Χ©Χ•Χ Χ™Χ Χ©Χ AdditionalInformation",,Χ¨Χ©Χ•ΧΧ” B - Χ¤Χ•Χ–' 200-200= D,O,"ΧªΧ ΧΧ™ - Χ™Χ”Χ™Χ” Χ§Χ‘Χ•ΧΆ=1 Χ›ΧΧ©Χ¨ Χ‘Χ¨Χ©Χ•ΧΧ” B Χ¤Χ•Χ–' 200 Χ™Χ© ΧΆΧ¨Χ = D, ΧΧ—Χ¨Χª Χ Χ©ΧΧ¨ Χ¨Χ™Χ§",,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,Χ§Χ•Χ“ ΧΆΧ¨Χ Χ ΧªΧ•Χ,Χ§Χ•Χ“ Χ¤ΧΆΧ•ΧΧ”,"ΧΧ©ΧΧ© ΧΧ“Χ™Χ•Χ•Χ— Χ©Χ“Χ•Χª Χ Χ“Χ¨Χ©Χ™Χ Χ©ΧΧ™Χ ΧΧ”Χ Χ©Χ“Χ” ΧΧ•Χ’Χ“Χ¨ . ΧΧ•Χ¨Χ›Χ‘ ΧΧ΅Χ•Χ’ Χ ΧªΧ•Χ Χ•Χ”ΧΆΧ¨Χ. (Χ¨ΧΧ” Χ©Χ•Χ¨Χ•Χª Χ›Χ—Χ•ΧΧ•Χª Χ‘Χ”ΧΧ©Χ)
+",,Χ¦Χ¨Χ™Χ
+623,Consignment,5,369Β ,0..1,,,Χ¨Χ©Χ•ΧΧ” B - Χ¤Χ•Χ–' 200-200= D,C,"ΧªΧ ΧΧ™ - Χ™Χ”Χ™Χ” Χ§Χ‘Χ•ΧΆ=12 Χ›ΧΧ©Χ¨ Χ‘Χ¨Χ©Χ•ΧΧ” B Χ¤Χ•Χ–' 200 Χ™Χ© ΧΆΧ¨Χ = D, ΧΧ—Χ¨Χª Χ Χ©ΧΧ¨ Χ¨Χ™Χ§",,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ ΧªΧ•Χ,,"ΧΧ©ΧΧ© ΧΧ‘Χ™ΧΧ•Χ ΧΧΧΆΧ (Χ§Χ•Χ“ 12 )
+ΧΧ• ΧΧ“Χ™Χ•Χ•Χ— Χ§Χ•Χ“ Χ™Χ‘Χ•ΧΧ (2)
+ΧΧ• ΧΧ“Χ™Χ•Χ•Χ— Χ§Χ•Χ“ ΧΧªΧ¨ Χ™ΧΆΧ“ Χ΅Χ•Χ¤Χ™ Χ‘Χ—Χ•""Χ (3)
+ΧΧ• ΧΧ“Χ™Χ•Χ•Χ— ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” ΧΧΧ’Χ“ ΧΆΧ΅Χ§ΧΧ•Χª (15)
+ΧΧ• ΧΧ“Χ™Χ•Χ•Χ— Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ–Χ™Χ”Χ•Χ™ Χ©Χ•Χ’Χ¨ (5)
+ΧΧ• ΧΧ“Χ™Χ•Χ•Χ— Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧΧΆΧ (16)",,Χ¦Χ¨Χ™Χ
+2045,Consignment,5,105,0..1,,,, ,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,"ΧªΧΧ¨Χ™Χ Χ”Χ§ΧΧ” Χ©Χ Χ©Χ""Χ Χ‘ΧΧ“Χ¨","ΧªΧΧ¨Χ™Χ Χ”Χ§ΧΧ” Χ©Χ Χ©Χ""Χ Χ‘ΧΧ“Χ¨","Χ¨ΧΧ‘Χ ΧΧ™ ΧΧ©Χ""Χ Χ‘ΧΧ“Χ¨ Χ‘ΧΧ‘Χ“.",,Χ¦Χ¨Χ™Χ
+2046,Consignment,5,369,0..1,,,, ,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,"Χ΅Χ•Χ’ Χ ΧªΧ•Χ ΧªΧΧ¨Χ™Χ Χ”Χ§ΧΧ” Χ©Χ Χ©Χ""Χ Χ‘ΧΧ“Χ¨","Χ§Χ•Χ“ Χ¤ΧΆΧ•ΧΧ” = 20
+ΧªΧΧ¨Χ™Χ Χ”Χ§ΧΧ” Χ©Χ Χ©Χ""Χ Χ‘ΧΧ“Χ¨","ΧªΧΧ¨Χ™Χ Χ”Χ§ΧΧ” Χ©Χ Χ©Χ""Χ Χ‘ΧΧ“Χ¨",,Χ¦Χ¨Χ™Χ
+2023,Consignment,5,226Β ,0..1,,,, ,,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,Χ§Χ•Χ“ Χ¤ΧΆΧ•ΧΧ”,Χ§Χ‘Χ•ΧΆ:   1 ,Χ©Χ›Χ¤Χ•Χ Χ©Χ 621,,Χ¦Χ¨Χ™Χ
+2024,Consignment,5,369Β ,0..1,,,, ,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ¤ΧΆΧ•ΧΧ”,"Χ§Χ•Χ“ Χ¤ΧΆΧ•ΧΧ”= 12 (Χ‘Χ™ΧΧ•Χ ΧΆΧ΅Χ§Χ” / Χ©Χ""Χ)",Χ©Χ›Χ¤Χ•Χ Χ©Χ 623,,Χ¦Χ¨Χ™Χ
 "2003
-",Consignment,5,105,0..1,,,χεγ ιαεΰο- ψωεξδ 6-τεζ' 144-152,M,δςϊχδ ξμΰδ,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,ξρτψ διαεΰο,ImporterID,"ιω μγεεη ξρτψ ξζδδ ιωεϊ  (η.τ ΰε ϊ.ζ) 
-αξχψδ ωμ γψλεο 
-ιω μγεεη ρεβ ϊςεγδ(ϊε ΰηγ)+χεγ ξγιπδ(2 ϊειν)+ξρτψ γψλεο  λωγδ ΰηγ αφεψδ ξωεψωψϊ
-μγεβξΰ: 2IL123456789
-ωλτεμ ωμ 619",,φψικ
+",Consignment,5,105,0..1,,,Χ§Χ•Χ“ Χ™Χ‘Χ•ΧΧ- Χ¨Χ©Χ•ΧΧ” 6-Χ¤Χ•Χ–' 144-152,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,ΧΧ΅Χ¤Χ¨ Χ”Χ™Χ‘Χ•ΧΧ,ImporterID,"Χ™Χ© ΧΧ“Χ•Χ•Χ— ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ™Χ©Χ•Χª  (Χ—.Χ¤ ΧΧ• Χª.Χ–) 
+Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ“Χ¨Χ›Χ•Χ 
+Χ™Χ© ΧΧ“Χ•Χ•Χ— Χ΅Χ•Χ’ ΧªΧΆΧ•Χ“Χ”(ΧªΧ• ΧΧ—Χ“)+Χ§Χ•Χ“ ΧΧ“Χ™Χ Χ”(2 ΧªΧ•Χ™Χ)+ΧΧ΅Χ¤Χ¨ Χ“Χ¨Χ›Χ•Χ  Χ›Χ©Χ“Χ” ΧΧ—Χ“ Χ‘Χ¦Χ•Χ¨Χ” ΧΧ©Χ•Χ¨Χ©Χ¨Χª
+ΧΧ“Χ•Χ’ΧΧ: 2IL123456789
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 619",,Χ¦Χ¨Χ™Χ
 "2004
-",Consignment,5,369 ,0..1,,ϊξιγ μξμΰ 2 = χεγ δξιιφβ ξρτψ η.τ,ρεβ ξρτψ ιαεΰο-ψωεξδ 6 -τεζ' 153-153,M,ϊπΰι-ςψκ χαες= 2 αξιγδ επξφΰ ςψκ α-χεγ ιαεΰο- ψωεξδ 6-τεζ' 144-152 (ΰηψϊ ψιχ),,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ ξρτψ ιαεΰο, χεγ ξρτψ ιαεΰο = 2,"μλμ δξφδψιν - ξρτψ ιαεΰο  ηεαδ αιαεΰ, ΰετφιεπμι αωιθςεο
-ωλτεμ ωμ 623",,φψικ
+",Consignment,5,369Β ,0..1,,ΧªΧΧ™Χ“ ΧΧΧΧ 2 = Χ§Χ•Χ“ Χ”ΧΧ™Χ™Χ¦Χ’ ΧΧ΅Χ¤Χ¨ Χ—.Χ¤,Χ΅Χ•Χ’ ΧΧ΅Χ¤Χ¨ Χ™Χ‘Χ•ΧΧ-Χ¨Χ©Χ•ΧΧ” 6 -Χ¤Χ•Χ–' 153-153,M,ΧªΧ ΧΧ™-ΧΆΧ¨Χ Χ§Χ‘Χ•ΧΆ= 2 Χ‘ΧΧ™Χ“Χ” Χ•Χ ΧΧ¦Χ ΧΆΧ¨Χ Χ‘-Χ§Χ•Χ“ Χ™Χ‘Χ•ΧΧ- Χ¨Χ©Χ•ΧΧ” 6-Χ¤Χ•Χ–' 144-152 (ΧΧ—Χ¨Χª Χ¨Χ™Χ§),,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ ΧΧ΅Χ¤Χ¨ Χ™Χ‘Χ•ΧΧ, Χ§Χ•Χ“ ΧΧ΅Χ¤Χ¨ Χ™Χ‘Χ•ΧΧ = 2,"ΧΧ›Χ Χ”ΧΧ¦Χ”Χ¨Χ™Χ - ΧΧ΅Χ¤Χ¨ Χ™Χ‘Χ•ΧΧ  Χ—Χ•Χ‘Χ” Χ‘Χ™Χ‘Χ•Χ, ΧΧ•Χ¤Χ¦Χ™Χ•Χ ΧΧ™ Χ‘Χ©Χ™ΧΧΆΧ•Χ
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 623",,Χ¦Χ¨Χ™Χ
 "2005
-",Consignment,5,226 ,0..1,,δςϊχδ ξμΰδ ωμ χεγ πξμ λΰωψ: Consignment.AdditionalInformation.StatementTypeCode =3,πξμ ιςγ ρετι αωθςεο -ψωεξδ 8-τεζ'181-185,C,δςϊχδ ξμΰδ ωμ χεγ πξμ λΰωψ: Consignment.AdditionalInformation.StatementTypeCode =3,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,"ξζδδ ΰϊψ ιςγ ρετι αηε""μ",FinalDestinationLocationID,ωλτεμ ωμ 621,,φψικ
+",Consignment,5,226Β ,0..1,,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ Χ§Χ•Χ“ Χ ΧΧ Χ›ΧΧ©Χ¨: Consignment.AdditionalInformation.StatementTypeCode =3,Χ ΧΧ Χ™ΧΆΧ“ Χ΅Χ•Χ¤Χ™ Χ‘Χ©ΧΧΆΧ•Χ -Χ¨Χ©Χ•ΧΧ” 8-Χ¤Χ•Χ–'181-185,C,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ Χ§Χ•Χ“ Χ ΧΧ Χ›ΧΧ©Χ¨: Consignment.AdditionalInformation.StatementTypeCode =3,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,"ΧΧ–Χ”Χ” ΧΧªΧ¨ Χ™ΧΆΧ“ Χ΅Χ•Χ¤Χ™ Χ‘Χ—Χ•""Χ",FinalDestinationLocationID,Χ©Χ›Χ¤Χ•Χ Χ©Χ 621,,Χ¦Χ¨Χ™Χ
 "2006
-",Consignment,5,369 ,0..1,,,πξμ ιςγ ρετι αωθςεο -ψωεξδ 8-τεζ'181-185,C,ϊπΰι:ςψκ χαες = 3 - ηεαδ αξχψδ ωμ ωθςεο λΰωψ πξφΰ ςψκ αωγδ: πξμ ιςγ ρετι αωθςεο -ψωεξδ 8-τεζ'181-185,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,"χεγ ΰϊψ ιςγ ρετι αηε""μ","χεγ ΰϊψ ιςγ ρετι αηε""μ = 3",ωλτεμ ωμ 623,,φψικ
-2007,Consignment,5,226 ,0..1,,χεγ ρεβ ωιπες/τψιχδ ξδΰεπιδ (ηγω). ξθαμϊ EDIFACT4451,,O,μΰ φψικ,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,χεγ ρεβ ωιπες/τψιχδ ξδΰεπιδ (ηγω),UnloadingTypeCode,,,μΰ φψικ
-2008,Consignment,5,226,0..1,,χεγ ρεβ ωιπες/τψιχδ ξδΰεπιδ (ηγω). ξθαμϊ EDIFACT4451,,O,μΰ φψικ,,"Additional statement, coded",StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ ρεβ ωιπες/τψιχδ ξδΰεπιδ (ηγω),χεγ ρεβ ωιπες/τψιχδ = 4,ξιγς ζδ πγψω μφψλιν δϊτςεμιιν ωμ δπξμ δχωεψιν μϊδμικ δτψιχδ ωμ δΰεπιδ,,μΰ φψικ
+",Consignment,5,369Β ,0..1,,,Χ ΧΧ Χ™ΧΆΧ“ Χ΅Χ•Χ¤Χ™ Χ‘Χ©ΧΧΆΧ•Χ -Χ¨Χ©Χ•ΧΧ” 8-Χ¤Χ•Χ–'181-185,C,ΧªΧ ΧΧ™:ΧΆΧ¨Χ Χ§Χ‘Χ•ΧΆ = 3 - Χ—Χ•Χ‘Χ” Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ©ΧΧΆΧ•Χ Χ›ΧΧ©Χ¨ Χ ΧΧ¦Χ ΧΆΧ¨Χ Χ‘Χ©Χ“Χ”: Χ ΧΧ Χ™ΧΆΧ“ Χ΅Χ•Χ¤Χ™ Χ‘Χ©ΧΧΆΧ•Χ -Χ¨Χ©Χ•ΧΧ” 8-Χ¤Χ•Χ–'181-185,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,"Χ§Χ•Χ“ ΧΧªΧ¨ Χ™ΧΆΧ“ Χ΅Χ•Χ¤Χ™ Χ‘Χ—Χ•""Χ","Χ§Χ•Χ“ ΧΧªΧ¨ Χ™ΧΆΧ“ Χ΅Χ•Χ¤Χ™ Χ‘Χ—Χ•""Χ = 3",Χ©Χ›Χ¤Χ•Χ Χ©Χ 623,,Χ¦Χ¨Χ™Χ
+2007,Consignment,5,226Β ,0..1,,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ©Χ™Χ Χ•ΧΆ/Χ¤Χ¨Χ™Χ§Χ” ΧΧ”ΧΧ•Χ Χ™Χ” (Χ—Χ“Χ©). ΧΧΧ‘ΧΧª EDIFACT4451,,O,ΧΧ Χ¦Χ¨Χ™Χ,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ©Χ™Χ Χ•ΧΆ/Χ¤Χ¨Χ™Χ§Χ” ΧΧ”ΧΧ•Χ Χ™Χ” (Χ—Χ“Χ©),UnloadingTypeCode,,,ΧΧ Χ¦Χ¨Χ™Χ
+2008,Consignment,5,226,0..1,,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ©Χ™Χ Χ•ΧΆ/Χ¤Χ¨Χ™Χ§Χ” ΧΧ”ΧΧ•Χ Χ™Χ” (Χ—Χ“Χ©). ΧΧΧ‘ΧΧª EDIFACT4451,,O,ΧΧ Χ¦Χ¨Χ™Χ,,"Additional statement, coded",StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ©Χ™Χ Χ•ΧΆ/Χ¤Χ¨Χ™Χ§Χ” ΧΧ”ΧΧ•Χ Χ™Χ” (Χ—Χ“Χ©),Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ©Χ™Χ Χ•ΧΆ/Χ¤Χ¨Χ™Χ§Χ” = 4,ΧΧ™Χ“ΧΆ Χ–Χ” Χ Χ“Χ¨Χ© ΧΧ¦Χ¨Χ›Χ™Χ Χ”ΧªΧ¤ΧΆΧ•ΧΧ™Χ™Χ Χ©Χ Χ”Χ ΧΧ Χ”Χ§Χ©Χ•Χ¨Χ™Χ ΧΧªΧ”ΧΧ™Χ Χ”Χ¤Χ¨Χ™Χ§Χ” Χ©Χ Χ”ΧΧ•Χ Χ™Χ”,,ΧΧ Χ¦Χ¨Χ™Χ
 "2007
-",Consignment,5,105,0..1,,"ηεαδ λΰωψ αΰεϊδ ξλεμδ ιω δψαδ ςρχΰεϊ ωμ ΰεϊε ιαεΰο ΰε ιαεΰπιν ωεπιν εδξλεμδ μΰ ΰξεψδ μςαεψ ψιχεο 
-(λο/μΰ)- ιω μχωεψ μρεβι θιτεμ","χεγ θιτεμ, ψωεξδ 3, τεζ' 091-092",C,"ϊπΰι-ΰν ψωεξδ 3, τεζ' 091-092 =12 ΰε 28 ΰζι ςψκ χαες = 1, ΰηψϊ 2",,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,ΰιπγχφιδ ΰβγ ςρχΰεϊ,"1= Yes
+",Consignment,5,105,0..1,,"Χ—Χ•Χ‘Χ” Χ›ΧΧ©Χ¨ Χ‘ΧΧ•ΧªΧ” ΧΧ›Χ•ΧΧ” Χ™Χ© Χ”Χ¨Χ‘Χ” ΧΆΧ΅Χ§ΧΧ•Χª Χ©Χ ΧΧ•ΧªΧ• Χ™Χ‘Χ•ΧΧ ΧΧ• Χ™Χ‘Χ•ΧΧ Χ™Χ Χ©Χ•Χ Χ™Χ Χ•Χ”ΧΧ›Χ•ΧΧ” ΧΧ ΧΧΧ•Χ¨Χ” ΧΧΆΧ‘Χ•Χ¨ Χ¨Χ™Χ§Χ•Χ 
+(Χ›Χ/ΧΧ)- Χ™Χ© ΧΧ§Χ©Χ•Χ¨ ΧΧ΅Χ•Χ’Χ™ ΧΧ™Χ¤Χ•Χ","Χ§Χ•Χ“ ΧΧ™Χ¤Χ•Χ, Χ¨Χ©Χ•ΧΧ” 3, Χ¤Χ•Χ–' 091-092",C,"ΧªΧ ΧΧ™-ΧΧ Χ¨Χ©Χ•ΧΧ” 3, Χ¤Χ•Χ–' 091-092 =12 ΧΧ• 28 ΧΧ–Χ™ ΧΆΧ¨Χ Χ§Χ‘Χ•ΧΆ = 1, ΧΧ—Χ¨Χª 2",,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” ΧΧ’Χ“ ΧΆΧ΅Χ§ΧΧ•Χª,"1= Yes
 2=No
-ωλτεμ ωμ 619","1= Yes
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 619","1= Yes
 2=No
-ωλτεμ ωμ 619",,φψικ
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 619",,Χ¦Χ¨Χ™Χ
 "2008
-",Consignment,5,369 ,0..1,,ηεαδ λΰωψ αξλεμδ ιω ξρτψ ςρχΰεϊ χεγ ΰιπγχφιδ ΰβγ ςρχΰεϊ = 15- μχωψ μρεβι θιτεμ,"χεγ θιτεμ, ψωεξδ 3, τεζ' 091-092",C,"ϊπΰι-ΰν ψωεξδ 3, τεζ' 091-092 =12 ΰε 28,ςψκ χαες=15 , ΰηψϊ μδωΰιψ ψιχ",,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ ΰιπγχφιδ ΰβγ ςρχΰεϊ,χεγ ΰιπγχφιδ ΰβγ ςρχΰεϊ = 15,χεγ ΰιπγχφιδ ΰβγ ςρχΰεϊ = 15,,φψικ
+",Consignment,5,369Β ,0..1,,Χ—Χ•Χ‘Χ” Χ›ΧΧ©Χ¨ Χ‘ΧΧ›Χ•ΧΧ” Χ™Χ© ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§ΧΧ•Χª Χ§Χ•Χ“ ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” ΧΧ’Χ“ ΧΆΧ΅Χ§ΧΧ•Χª = 15- ΧΧ§Χ©Χ¨ ΧΧ΅Χ•Χ’Χ™ ΧΧ™Χ¤Χ•Χ,"Χ§Χ•Χ“ ΧΧ™Χ¤Χ•Χ, Χ¨Χ©Χ•ΧΧ” 3, Χ¤Χ•Χ–' 091-092",C,"ΧªΧ ΧΧ™-ΧΧ Χ¨Χ©Χ•ΧΧ” 3, Χ¤Χ•Χ–' 091-092 =12 ΧΧ• 28,ΧΆΧ¨Χ Χ§Χ‘Χ•ΧΆ=15 , ΧΧ—Χ¨Χª ΧΧ”Χ©ΧΧ™Χ¨ Χ¨Χ™Χ§",,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” ΧΧ’Χ“ ΧΆΧ΅Χ§ΧΧ•Χª,Χ§Χ•Χ“ ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” ΧΧ’Χ“ ΧΆΧ΅Χ§ΧΧ•Χª = 15,Χ§Χ•Χ“ ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” ΧΧ’Χ“ ΧΆΧ΅Χ§ΧΧ•Χª = 15,,Χ¦Χ¨Χ™Χ
 "2009
-",Consignment,5,226 ,0..1,,,ρεβ ζιδει δωεβψ-ψωεξδ 8- τεζ' 145,O,1.ζιδει ρτχ αξλρ ξχεξι/2.χεγ ζιδει ξχεξι/3.DUNS NO,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,χεγ ρεβ ζιδει ωεβψ,ζιδει δρτχ μτι : 1 = ζιδει δρτχ μτι θαμΰεϊ δξλρ - 9 ρτψεϊ.   2 = χεγ ζιδει ρτχ ξχεξι (αΰψφε ωμ δρτχ).  3.  DUNS NUMBER,"ηεαδ ΰν δεζο ςψκ αρεγψ 499 (ζιδει ρτχ)
-ζιδει δρτχ μτι : 1 = ζιδει δρτχ μτι θαμΰεϊ δξλρ - 9 ρτψεϊ.   2 = χεγ ζιδει ρτχ ξχεξι (αΰψφε ωμ δρτχ).  3.  DUNS NUMBER",,φψικ
+",Consignment,5,226Β ,0..1,,,Χ΅Χ•Χ’ Χ–Χ™Χ”Χ•Χ™ Χ”Χ©Χ•Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 8- Χ¤Χ•Χ–' 145,O,1.Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§ Χ‘ΧΧ›Χ΅ ΧΧ§Χ•ΧΧ™/2.Χ§Χ•Χ“ Χ–Χ™Χ”Χ•Χ™ ΧΧ§Χ•ΧΧ™/3.DUNS NO,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ–Χ™Χ”Χ•Χ™ Χ©Χ•Χ’Χ¨,Χ–Χ™Χ”Χ•Χ™ Χ”Χ΅Χ¤Χ§ ΧΧ¤Χ™ : 1 = Χ–Χ™Χ”Χ•Χ™ Χ”Χ΅Χ¤Χ§ ΧΧ¤Χ™ ΧΧ‘ΧΧΧ•Χª Χ”ΧΧ›Χ΅ - 9 Χ΅Χ¤Χ¨Χ•Χª.   2 = Χ§Χ•Χ“ Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§ ΧΧ§Χ•ΧΧ™ (Χ‘ΧΧ¨Χ¦Χ• Χ©Χ Χ”Χ΅Χ¤Χ§).  3.  DUNS NUMBER,"Χ—Χ•Χ‘Χ” ΧΧ Χ”Χ•Χ–Χ ΧΆΧ¨Χ Χ‘Χ΅Χ•Χ“Χ¨ 499 (Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§)
+Χ–Χ™Χ”Χ•Χ™ Χ”Χ΅Χ¤Χ§ ΧΧ¤Χ™ : 1 = Χ–Χ™Χ”Χ•Χ™ Χ”Χ΅Χ¤Χ§ ΧΧ¤Χ™ ΧΧ‘ΧΧΧ•Χª Χ”ΧΧ›Χ΅ - 9 Χ΅Χ¤Χ¨Χ•Χª.   2 = Χ§Χ•Χ“ Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§ ΧΧ§Χ•ΧΧ™ (Χ‘ΧΧ¨Χ¦Χ• Χ©Χ Χ”Χ΅Χ¤Χ§).  3.  DUNS NUMBER",,Χ¦Χ¨Χ™Χ
 "2010
-",Consignment,5,369,0..1,,ξρτψ δξζδδ ρτχ - δςϊχδ ξμΰδ,ζιδει ρτχ-ψωεξδ 8- τεζ' 146-165,O,δςϊχδ ξμΰδ,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ ρεβ ζιδει ωεβψ,χεγ ρεβ ζιδει ωεβψ = 5,ωλτεμ ωμ 623,ξθετμ αξρβψϊ Data Type,φψικ
+",Consignment,5,369,0..1,,ΧΧ΅Χ¤Χ¨ Χ”ΧΧ–Χ”Χ” Χ΅Χ¤Χ§ - Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ–Χ™Χ”Χ•Χ™ Χ΅Χ¤Χ§-Χ¨Χ©Χ•ΧΧ” 8- Χ¤Χ•Χ–' 146-165,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ–Χ™Χ”Χ•Χ™ Χ©Χ•Χ’Χ¨,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ–Χ™Χ”Χ•Χ™ Χ©Χ•Χ’Χ¨ = 5,Χ©Χ›Χ¤Χ•Χ Χ©Χ 623,ΧΧΧ•Χ¤Χ Χ‘ΧΧ΅Χ’Χ¨Χª Data Type,Χ¦Χ¨Χ™Χ
 "2038
-",Consignment,5,226 ,0..1,,,,,,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,ρεβ ξθςο,ςψκ ξϊεκ θαμϊ ςψλιν ωμ ρεβ ξθςο,ωλτεμ ωμ 621,,φψικ
+",Consignment,5,226Β ,0..1,,,,,,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementCode,Χ΅Χ•Χ’ ΧΧΧΆΧ,ΧΆΧ¨Χ ΧΧªΧ•Χ ΧΧ‘ΧΧª ΧΆΧ¨Χ›Χ™Χ Χ©Χ Χ΅Χ•Χ’ ΧΧΧΆΧ,Χ©Χ›Χ¤Χ•Χ Χ©Χ 621,,Χ¦Χ¨Χ™Χ
 "2039
-",Consignment,5,369,0..1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ ρεβ ξθςο,χεγ ρεβ ξθςο = 16,ωλτεμ ωμ 623,,φψικ
-2047,Consignment,5,105,0..1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content, χεγ ΰεπιιϊ ιιφεΰ,ςψκ ξϊεκ θαμϊ ΰεπιεϊ,ωλτεμ ωμ 621,,φψικ
-2048,Consignment,5,369,0..1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ πϊεο χεγ ΰεπιϊ ιιφεΰ,χεγ ρεβ πϊεο χεγ ΰεπιιϊ ιιφεΰ = 22,ωλτεμ ωμ 623,,φψικ
-627,Consignment,3,73A,0..*,"λμ ξδ ωξετις αςξεγδ S λ""μΰ φψικ"" μΰ φψικ μδετις αλμμ αβιμιεο εΰμ ϊϊιιηρε ΰμιε",,,,H,,,Handling,      Handling,Declaration.Consignment.Handling,θιτεμ αξθςο,,ωΰμδ μπξμιν ΰν πγψω χεγ θιτεμ,,μΰ φψικ
-628,Consignment,4,092 ,0..1,,μΰ φψικ,,O,μΰ φψικ,,Handling instructions,Instructions,         Instructions,Declaration.Consignment.GovernmentAgencyGoodsItem.Handling.Instructions,δεψΰεϊ θιτεμ,,,,μΰ φψικ
-629,Consignment,4,093 ,0..1,,μΰ φψικ,,O,μΰ φψικ,,"Handling instructions, coded",InstructionsCode,         InstructionsCode,Declaration.Consignment.GovernmentAgencyGoodsItem.Handling.InstructionsCode,χεγ θιτεμ ,,,,μΰ φψικ
-630,Consignment,3,76A,0..*,,μΰ φψικ,,,H,,,IntermediateCarrier,      IntermediateCarrier,Declaration.Consignment.IntermediateCarrier,,,,,μΰ φψικ
-648,Consignment,3,77A,0..*,,μΰ φψικ,,,H,,,IntermediateConsignee,      IntermediateConsignee,Declaration.Consignment.IntermediateConsignee,,,,,μΰ φψικ
-649,Consignment,4,R036 ,0..1,,μΰ φψικ,,,μΰ φψικ,,"Intermediate Consignee, coded",ID,         ID,Declaration.Consignment.IntermediateConsignee.ID,,,,,μΰ φψικ
-650,Consignment,4,04A,0..*,,μΰ φψικ,,,H,,,Address,         Address,,τψθι λϊεαϊ,,,,μΰ φψικ
-651,Consignment,5,241 ,0..1,,μΰ φψικ,,,μΰ φψικ,,City name,CityName,            CityName,,ων ςιψ,,,,μΰ φψικ
-652,Consignment,5,242 ,0..1,,μΰ φψικ,,,μΰ φψικ,,"Country, coded",CountryCode,            CountryCode,,χεγ ξγιπδ,,,,μΰ φψικ
-653,Consignment,5,244 ,0..1,,μΰ φψικ,,,μΰ φψικ,,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,,,,,,μΰ φψικ
-654,Consignment,5,243 ,0..1,,μΰ φψικ,,,μΰ φψικ,,Country sub-entity name,CountrySubDivisionName,            CountrySubDivisionName,,,,,,μΰ φψικ
-655,Consignment,5,239 ,0..1,,μΰ φψικ,,,μΰ φψικ,,Street and number/P.O. Box,Line,            Line,,,,,,μΰ φψικ
-656,Consignment,5,245 ,0..1,,μΰ φψικ,,,μΰ φψικ,,Postcode identification,PostcodeID,            PostcodeID,,,,,,μΰ φψικ
-657,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,,,,,,μΰ φψικ
-658,Consignment,5,240 ,0..1,,μΰ φψικ,,,μΰ φψικ,,Communication number,ID,            ID,,,,,,μΰ φψικ
-659,Consignment,5,253 ,0..1,,μΰ φψικ,,,μΰ φψικ,,Agent quality assurance indicator,TypeID,            TypeID,,,,,,μΰ φψικ
-660,Consignment,4,34A,0..*,,,,,H,,,Contact,         Contact,,,,,,μΰ φψικ
-661,Consignment,5,246 ,0..1,,μΰ φψικ,,,μΰ φψικ,,Department or employee  contact name,Name,            Name,,,,,,μΰ φψικ
-662,Consignment,5,25A,0..*,,,,,H,,,Communication,            Communication,,,,,,μΰ φψικ
-663,Consignment,6,240 ,0..1,,μΰ φψικ,,,μΰ φψικ,,Communication number,ID,               ID,,,,,,μΰ φψικ
-664,Consignment,6,253 ,0..1,,μΰ φψικ,,,μΰ φψικ,,Agent quality assurance indicator,TypeID,               TypeID,,,,,,μΰ φψικ
-2017,Consignment,5,105,0..1,,μΰ ψμεεπθι μξφδψ ιξι,,,μΰ φψικ,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,ηπιιϊ μιμδ/τψιχϊ μιμδ,NightParkingIndicator ,"ΰιπγχφιιϊ ηπιιϊ μιμδ (λο/μΰ)
-ωλτεμ ωμ 619",,φψικ
-2018,Consignment,5,369 ,0..1,,μΰ ψμεεπθι μξφδψ ιξι,,,μΰ φψικ,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ ηπιιϊ μιμδ/τψιχϊ μιμδ,χεγ ηπιιϊ μιμδ = 9,ωλτεμ ωμ 623,,φψικ
-2045,Consignment,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,ρεβ ξΰψζ μφεψλι ϊτςεμ μξθςο ιαωϊι,fee,ρεβ ξΰψζ μφεψλι ϊτςεμ μξθςο ιαωϊι,,φψικ
-2046,Consignment,5,369 ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ ρεβ ξΰψζ μφεψλι ϊτςεμ μξθςο ιαωϊι,ξΰτιιο ΰβψδ = 18,χεγ ρεβ ξΰψζ μφεψλι ϊτςεμ μξθςο ιαωϊι,,φψικ
-2040,Consignment,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,ξρτψ ξφδψ ιφεΰ,"ψμεεπθι μξθςπιν αϊδμικ ωθςεο , ξρτψ ξφδψ διφεΰ ","ξρτψ ξφδψ ιφεΰ
-",,φψικ
-2041,Consignment,5,369 ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ ρεβ πϊεο ξρτψ ξφδψ ιφεΰ  17,"ψμεεπθι μξθςπιν αϊδμικ ωθςεο , χεγ ξρτψ ξφδψ διφεΰ   17","ρεβ πϊεο = 17  
- ξφιιο ξρτψ ξφδψ ιφεΰ               
-",,φψικ
-2051,Consignment,3,226,0..1,,,,M,,,"Additional statement, coded",StatementCode,      StatementCode,Declaration.AdditionalInformation.StatementCode,ςψκ ρεβ βεψν ξωγψ ξφδψ,"ςψλιν μχεγ ρεβ βεψν ξωγψ
-7 -  ρελο ΰεπιδ
-6 -  ξωμη αιπμΰεξι
-","ςψλιν μχεγ ρεβ βεψν ξωγψ
-7 -  ρελο ΰεπιδ
-6 -  ξωμη αιπμΰεξι
-",,φψικ
-2052,Consignment,3,369,0..1,,,,M,,,Additional statement type,StatementTypeCode,      StatementTypeCode,Declaration.AdditionalInformation.StatementTypeCode,χεγ ρεβ πϊεο βεψν ξωγψ ξφδψ,"24= χεγ ρεβ βεψν ξωγψ
-SubimterType","24= χεγ ρεβ βεψν ξωγψ
-SubimterType",,φψικ
-665,Consignment,3,83A,0..*,,,,M,H,,,LoadingLocation,      LoadingLocation,Declaration.Consignment.LoadingLocation,λεϊψϊτψθι ΰϊψ θςιπδ,,,,φψικ
-666,Consignment,4,L010 ,0..1,,"πξμ θςιπϊ δξθςο αηε""μ μτι θαμϊ ηεαδ αξφδψ ξμΰ+ψιχεϊ",πξμ θςιπδ ιξι-ψωεξδ 3 - τεζ' 048-052,C,δςϊχδ ξμΰδ ,πξμ θςιπδ/πξμ ξεφΰ,"Place of loading, coded",ID,         ID,Declaration.Consignment.LoadingLocation.ID,πξμ θςιπδ/πξμ ξεφΰ,"δπξμ αηε""μ αε δεθςο δξθςο μΰπιδ ΰε μξθερ
+",Consignment,5,369,0..1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧΧΆΧ,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧΧΆΧ = 16,Χ©Χ›Χ¤Χ•Χ Χ©Χ 623,,Χ¦Χ¨Χ™Χ
+2047,Consignment,5,105,0..1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content, Χ§Χ•Χ“ ΧΧ•Χ Χ™Χ™Χª Χ™Χ™Χ¦Χ•Χ,ΧΆΧ¨Χ ΧΧªΧ•Χ ΧΧ‘ΧΧª ΧΧ•Χ Χ™Χ•Χª,Χ©Χ›Χ¤Χ•Χ Χ©Χ 621,,Χ¦Χ¨Χ™Χ
+2048,Consignment,5,369,0..1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ ΧªΧ•Χ Χ§Χ•Χ“ ΧΧ•Χ Χ™Χª Χ™Χ™Χ¦Χ•Χ,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ ΧªΧ•Χ Χ§Χ•Χ“ ΧΧ•Χ Χ™Χ™Χª Χ™Χ™Χ¦Χ•Χ = 22,Χ©Χ›Χ¤Χ•Χ Χ©Χ 623,,Χ¦Χ¨Χ™Χ
+627,Consignment,3,73A,0..*,"Χ›Χ ΧΧ” Χ©ΧΧ•Χ¤Χ™ΧΆ Χ‘ΧΆΧΧ•Χ“Χ” S Χ›""ΧΧ Χ¦Χ¨Χ™Χ"" ΧΧ Χ¦Χ¨Χ™Χ ΧΧ”Χ•Χ¤Χ™ΧΆ Χ‘Χ›ΧΧ Χ‘Χ’Χ™ΧΧ™Χ•Χ Χ•ΧΧ ΧªΧªΧ™Χ™Χ—Χ΅Χ• ΧΧΧ™Χ•",,,,H,,,Handling,      Handling,Declaration.Consignment.Handling,ΧΧ™Χ¤Χ•Χ Χ‘ΧΧΧΆΧ,,Χ©ΧΧΧ” ΧΧ ΧΧΧ™Χ ΧΧ Χ Χ“Χ¨Χ© Χ§Χ•Χ“ ΧΧ™Χ¤Χ•Χ,,ΧΧ Χ¦Χ¨Χ™Χ
+628,Consignment,4,092Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,O,ΧΧ Χ¦Χ¨Χ™Χ,,Handling instructions,Instructions,         Instructions,Declaration.Consignment.GovernmentAgencyGoodsItem.Handling.Instructions,Χ”Χ•Χ¨ΧΧ•Χª ΧΧ™Χ¤Χ•Χ,,,,ΧΧ Χ¦Χ¨Χ™Χ
+629,Consignment,4,093Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,O,ΧΧ Χ¦Χ¨Χ™Χ,,"Handling instructions, coded",InstructionsCode,         InstructionsCode,Declaration.Consignment.GovernmentAgencyGoodsItem.Handling.InstructionsCode,Χ§Χ•Χ“ ΧΧ™Χ¤Χ•Χ ,,,,ΧΧ Χ¦Χ¨Χ™Χ
+630,Consignment,3,76A,0..*,,ΧΧ Χ¦Χ¨Χ™Χ,,,H,,,IntermediateCarrier,      IntermediateCarrier,Declaration.Consignment.IntermediateCarrier,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+648,Consignment,3,77A,0..*,,ΧΧ Χ¦Χ¨Χ™Χ,,,H,,,IntermediateConsignee,      IntermediateConsignee,Declaration.Consignment.IntermediateConsignee,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+649,Consignment,4,R036Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,"Intermediate Consignee, coded",ID,         ID,Declaration.Consignment.IntermediateConsignee.ID,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+650,Consignment,4,04A,0..*,,ΧΧ Χ¦Χ¨Χ™Χ,,,H,,,Address,         Address,,Χ¤Χ¨ΧΧ™ Χ›ΧªΧ•Χ‘Χª,,,,ΧΧ Χ¦Χ¨Χ™Χ
+651,Consignment,5,241Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,City name,CityName,            CityName,,Χ©Χ ΧΆΧ™Χ¨,,,,ΧΧ Χ¦Χ¨Χ™Χ
+652,Consignment,5,242Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,"Country, coded",CountryCode,            CountryCode,,Χ§Χ•Χ“ ΧΧ“Χ™Χ Χ”,,,,ΧΧ Χ¦Χ¨Χ™Χ
+653,Consignment,5,244Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+654,Consignment,5,243Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Country sub-entity name,CountrySubDivisionName,            CountrySubDivisionName,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+655,Consignment,5,239Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Street and number/P.O. Box,Line,            Line,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+656,Consignment,5,245Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Postcode identification,PostcodeID,            PostcodeID,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+657,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+658,Consignment,5,240Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Communication number,ID,            ID,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+659,Consignment,5,253Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Agent quality assurance indicator,TypeID,            TypeID,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+660,Consignment,4,34A,0..*,,,,,H,,,Contact,         Contact,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+661,Consignment,5,246Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Department or employee  contact name,Name,            Name,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+662,Consignment,5,25A,0..*,,,,,H,,,Communication,            Communication,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+663,Consignment,6,240Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Communication number,ID,               ID,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+664,Consignment,6,253Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,,ΧΧ Χ¦Χ¨Χ™Χ,,Agent quality assurance indicator,TypeID,               TypeID,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+2017,Consignment,5,105,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,,ΧΧ Χ¦Χ¨Χ™Χ,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,Χ—Χ Χ™Χ™Χª ΧΧ™ΧΧ”/Χ¤Χ¨Χ™Χ§Χª ΧΧ™ΧΧ”,NightParkingIndicator ,"ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ™Χª Χ—Χ Χ™Χ™Χª ΧΧ™ΧΧ” (Χ›Χ/ΧΧ)
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 619",,Χ¦Χ¨Χ™Χ
+2018,Consignment,5,369Β ,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,,ΧΧ Χ¦Χ¨Χ™Χ,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ—Χ Χ™Χ™Χª ΧΧ™ΧΧ”/Χ¤Χ¨Χ™Χ§Χª ΧΧ™ΧΧ”,Χ§Χ•Χ“ Χ—Χ Χ™Χ™Χª ΧΧ™ΧΧ” = 9,Χ©Χ›Χ¤Χ•Χ Χ©Χ 623,,Χ¦Χ¨Χ™Χ
+2045,Consignment,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,Χ΅Χ•Χ’ ΧΧΧ¨Χ– ΧΧ¦Χ•Χ¨Χ›Χ™ ΧªΧ¤ΧΆΧ•Χ ΧΧΧΧΆΧ Χ™Χ‘Χ©ΧªΧ™,fee,Χ΅Χ•Χ’ ΧΧΧ¨Χ– ΧΧ¦Χ•Χ¨Χ›Χ™ ΧªΧ¤ΧΆΧ•Χ ΧΧΧΧΆΧ Χ™Χ‘Χ©ΧªΧ™,,Χ¦Χ¨Χ™Χ
+2046,Consignment,5,369Β ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧΧ¨Χ– ΧΧ¦Χ•Χ¨Χ›Χ™ ΧªΧ¤ΧΆΧ•Χ ΧΧΧΧΆΧ Χ™Χ‘Χ©ΧªΧ™,ΧΧΧ¤Χ™Χ™Χ ΧΧ’Χ¨Χ” = 18,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧΧ¨Χ– ΧΧ¦Χ•Χ¨Χ›Χ™ ΧªΧ¤ΧΆΧ•Χ ΧΧΧΧΆΧ Χ™Χ‘Χ©ΧªΧ™,,Χ¦Χ¨Χ™Χ
+2040,Consignment,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,ΧΧ΅Χ¤Χ¨ ΧΧ¦Χ”Χ¨ Χ™Χ¦Χ•Χ,"Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧΧΆΧ Χ™Χ Χ‘ΧªΧ”ΧΧ™Χ Χ©ΧΧΆΧ•Χ , ΧΧ΅Χ¤Χ¨ ΧΧ¦Χ”Χ¨ Χ”Χ™Χ¦Χ•Χ ","ΧΧ΅Χ¤Χ¨ ΧΧ¦Χ”Χ¨ Χ™Χ¦Χ•Χ
+",,Χ¦Χ¨Χ™Χ
+2041,Consignment,5,369Β ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ ΧªΧ•Χ ΧΧ΅Χ¤Χ¨ ΧΧ¦Χ”Χ¨ Χ™Χ¦Χ•Χ  17,"Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧΧΆΧ Χ™Χ Χ‘ΧªΧ”ΧΧ™Χ Χ©ΧΧΆΧ•Χ , Χ§Χ•Χ“ ΧΧ΅Χ¤Χ¨ ΧΧ¦Χ”Χ¨ Χ”Χ™Χ¦Χ•Χ   17","Χ΅Χ•Χ’ Χ ΧªΧ•Χ = 17  
+ ΧΧ¦Χ™Χ™Χ ΧΧ΅Χ¤Χ¨ ΧΧ¦Χ”Χ¨ Χ™Χ¦Χ•Χ               
+",,Χ¦Χ¨Χ™Χ
+2051,Consignment,3,226,0..1,,,,M,,,"Additional statement, coded",StatementCode,      StatementCode,Declaration.AdditionalInformation.StatementCode,ΧΆΧ¨Χ Χ΅Χ•Χ’ Χ’Χ•Χ¨Χ ΧΧ©Χ“Χ¨ ΧΧ¦Χ”Χ¨,"ΧΆΧ¨Χ›Χ™Χ ΧΧ§Χ•Χ“ Χ΅Χ•Χ’ Χ’Χ•Χ¨Χ ΧΧ©Χ“Χ¨
+7 -  Χ΅Χ•Χ›Χ ΧΧ•Χ Χ™Χ”
+6 -  ΧΧ©ΧΧ— Χ‘Χ™Χ ΧΧΧ•ΧΧ™
+","ΧΆΧ¨Χ›Χ™Χ ΧΧ§Χ•Χ“ Χ΅Χ•Χ’ Χ’Χ•Χ¨Χ ΧΧ©Χ“Χ¨
+7 -  Χ΅Χ•Χ›Χ ΧΧ•Χ Χ™Χ”
+6 -  ΧΧ©ΧΧ— Χ‘Χ™Χ ΧΧΧ•ΧΧ™
+",,Χ¦Χ¨Χ™Χ
+2052,Consignment,3,369,0..1,,,,M,,,Additional statement type,StatementTypeCode,      StatementTypeCode,Declaration.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ ΧªΧ•Χ Χ’Χ•Χ¨Χ ΧΧ©Χ“Χ¨ ΧΧ¦Χ”Χ¨,"24= Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ’Χ•Χ¨Χ ΧΧ©Χ“Χ¨
+SubimterType","24= Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ’Χ•Χ¨Χ ΧΧ©Χ“Χ¨
+SubimterType",,Χ¦Χ¨Χ™Χ
+665,Consignment,3,83A,0..*,,,,M,H,,,LoadingLocation,      LoadingLocation,Declaration.Consignment.LoadingLocation,Χ›Χ•ΧªΧ¨ΧªΧ¤Χ¨ΧΧ™ ΧΧªΧ¨ ΧΧΆΧ™Χ Χ”,,,,Χ¦Χ¨Χ™Χ
+666,Consignment,4,L010Β ,0..1,,"Χ ΧΧ ΧΧΆΧ™Χ Χª Χ”ΧΧΧΆΧ Χ‘Χ—Χ•""Χ ΧΧ¤Χ™ ΧΧ‘ΧΧª Χ—Χ•Χ‘Χ” Χ‘ΧΧ¦Χ”Χ¨ ΧΧΧ+Χ¨Χ™Χ§Χ•Χª",Χ ΧΧ ΧΧΆΧ™Χ Χ” Χ™ΧΧ™-Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 048-052,C,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” ,Χ ΧΧ ΧΧΆΧ™Χ Χ”/Χ ΧΧ ΧΧ•Χ¦Χ,"Place of loading, coded",ID,         ID,Declaration.Consignment.LoadingLocation.ID,Χ ΧΧ ΧΧΆΧ™Χ Χ”/Χ ΧΧ ΧΧ•Χ¦Χ,"Χ”Χ ΧΧ Χ‘Χ—Χ•""Χ Χ‘Χ• Χ”Χ•ΧΧΆΧ Χ”ΧΧΧΆΧ ΧΧΧ Χ™Χ” ΧΧ• ΧΧΧΧ•Χ΅
 port of loading
 
-ηεαδ μρελο ΰεπιδ εηαψϊ ϊςετδ, ψωεϊ μξωμη ιξι",αξχψδ ωμ ξφδψ ιαωϊι - δΰϊψ δχψεα ξθαμϊ LOCODE  αε δεθςο δξθςο μξωΰιϊ,,φψικ
-668,Consignment,3,89A,0..*,,,,,H,,,NotifyParty,      NotifyParty,Declaration.Consignment.NotifyParty,λεϊψϊ τψθι ξιεγς,,,,φψικ
-670,Consignment,4,R045 ,0..1,,,ων δξιεγς-ψωεξδ 7- τεζ' 016-050,O,δςϊχδ ξμΰδ,ων δξιεγς,Notify party,Name,         Name,Consignment.NotifyParty.Name,ων ξιεγς,,,,φψικ
-671,Consignment,4,04A,0..*,,,,,H,λϊεαϊ ξιεγς ,,Address,         Address,Declaration.Consignment.NotifyParty.Address,λεϊψϊ λϊεαϊ ξιεγς,,,,φψικ
-672,Consignment,5,241 ,0..1,,,ςιψ δξιεγς-ψωεξδ 7-τεζ' 081-100,O,δςϊχδ ξμΰδ,λϊεαϊ ξιεγς ,City name,CityName,            CityName,Declaration.Consignment.NotifyParty.Address.CityName,ων ςιψ,,,,φψικ
-673,Consignment,5,242 ,0..1,,,ξγιπϊ δξιεγς-ψωεξδ 7-τεζ' 107-108,O,δςϊχδ ξμΰδ,λϊεαϊ ξιεγς ,"Country, coded",CountryCode,            CountryCode,Declaration.Consignment.NotifyParty.Address.CountryCode,χεγ ξγιπδ,,,,φψικ
-674,Consignment,5,244 ,0..1,,χεγ ϊϊ ξγιπδ,,O,μΰ φψικ,λϊεαϊ ξιεγς ,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,Declaration.Consignment.NotifyParty.Address.CountrySubDivisionID,χεγ ϊϊ ξγιπδ,,,,φψικ
-676,Consignment,5,239 ,0..1,"αλμ πεωΰ δλϊεαεϊ ( ιαεΰο, ρτχ, ξιεγς) δδςαψδ φψιλδ μδιεϊ μωγδ ψηεα εξρτψ ωδεΰ θχρθεΰμι εηεαδ αλεμν",,ψηεα εξρτψ αιϊ ωμ δξιεγς ΰε ϊ.γ γεΰψ- ψωεξδ 7- τεζ' 051-80,O,δςϊχδ ξμΰδ,λϊεαϊ ξιεγς ,Street and number/P.O. Box,Line,            Line,Declaration.Consignment.NotifyParty.Address.Line,"ψηεα εξρτψ αιϊ ΰε ϊιαϊ γεΰψ.
-αξχψδ ωδλϊεαϊ μΰ ξτεψξθϊ ιω μωγψ αωγδ ζδ ΰϊ λμ δλϊεαϊ λτι ωψωεξδ αωθψ ξθςο",,,,φψικ
-677,Consignment,5,245 ,0..1,,,ξιχεγ δξιεγς-ψωεξδ 7- τεζ' 101-106,O,δςϊχδ ξμΰδ,λϊεαϊ ξιεγς ,Postcode identification,PostcodeID,            PostcodeID,Declaration.Consignment.NotifyParty.Address.PostcodeID,ξιχεγ,,,,φψικ
-678,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,Declaration.Consignment.NotifyParty.Address.Communication,λεϊψϊ τψθι ΰξφςι χωψ,,"θμτεο,τχρ,email",,φψικ
-679,Consignment,5,240 ,0..1,,,ξρτψ θμτεο ωμ ξιεγς-ψωεξδ 7-τεζ' 109-120,O,δςϊχδ ξμΰδ,,Communication number,ID,            ID,Declaration.Consignment.NotifyParty.Address.Communication.ID,ξρτψ ΰξφςι χωψ,,,,φψικ
-680,Consignment,5,253 ,0..1,,θαμϊ EDIFACT3155,,O,μΰ φψικ,,Agent quality assurance indicator,TypeID,            TypeID,Declaration.Consignment.NotifyParty.Address.Communication.TypeID,ρεβ ΰξφςι χωψ,"χεγ ΰξφςι χωψ: TE πιιη, AL πιιγ, FX τχρ, EM γεΰ""μ, AH ΰϊψ ΰιπθψπθ",,,φψικ
-707,Consignment,3,23B,0..*,,,,,H,,,TranshipmentLocation,      TranshipmentLocation,Declaration.Consignment.NotifyParty.TranshipmentLocation,,,,,μΰ φψικ
-708,Consignment,4,L015 ,0..1,,,πξμ ιςγ ρετι -ψωεξδ 8 -τεζ' 181-185,O,δςϊχδ ξμΰδ-ηεαδ αξχψδ ωμ ωθςεο/ω.αιπξμι/ξρεσ βαεμ ιαωϊι,,"Transshipment place, coded",ID,         ID,Declaration.Consignment.TranshipmentLocation.ID,"πξμ τψιχδ αηε""μ",μΰο ξιεςγ δξθςο δξωεθςο,χεγ ξθαμϊ LOCODE ωμ δΰϊψ ΰμιε ιφΰε δθεαιο ξδΰψυ,,φψικ
-710,Consignment,3,24B,0..*,,μΰ φψικ,,,H,,,TransitControl,      TransitControl,,,,,,μΰ φψικ
-713,Consignment,3,26B,0..*,,,,C,H,,,TransitDestination,      TransitDestination,Declaration.Consignment.TransitDestination,λεϊψϊ τψθι ιςγ δξθςο αξχψδ ωμ ωθςεο,,,,φψικ
-714,Consignment,4,L008 ,0..1,,ηεαδ αξχψδ ωμ ωθςεο/ω.αιπξμι/ξρεσ βαεμ ιαωϊι,πξμ διφιΰδ ξδΰψυ -ψωεξδ 3-τεζ' 122-126,C,δςϊχδ ξμΰδ,πξμ διφιΰδ ξδΰψυ,"Place of destination of the transit, coded",ID,         ID,Declaration.Consignment.TransitDestination.ID,χεγ ΰϊψ διφιΰδ ξδΰψυ αξχψδ ωμ ωθςεο ,,"χεγ ξθαμϊ LOCODE ωμ δΰϊψ ξξπε ιφΰε δθεαιο ξδΰψυ.
-ωγδ ηεαδ λΰωψ ρεβ ϊδμικ = ωθςεο.",,φψικ
-718,Consignment,3,30B,0..*,,,,,H,ωθψ ξθςο,,TransportContractDocument,      TransportContractDocument,Declaration.Consignment.TransportContractDocument,λεϊψϊ τψθι ξρξλι δεαμδ ,,"λεϊψϊ ξρξλι δεαμδ.
-αξχψδ ωμ γιεεη ξφδψ ςν ξθςπιν - ηεαδ ξετς ΰηγ μτηεϊ",,φψικ
-719,Consignment,4,091 ,0..1,,δςϊχδ ξμΰδ-χεγ δρλν εϊπΰι ξωμεη μτι θαμδ: EDIFACT4065,φεψϊ θιτεμΡ-ψωεξδ 6-τεζ' 156-157,M,"δξψδ:          ηγω   χιιν
+Χ—Χ•Χ‘Χ” ΧΧ΅Χ•Χ›Χ ΧΧ•Χ Χ™Χ” Χ•Χ—Χ‘Χ¨Χª ΧªΧΆΧ•Χ¤Χ”, Χ¨Χ©Χ•Χª ΧΧΧ©ΧΧ— Χ™ΧΧ™",Χ‘ΧΧ§Χ¨Χ” Χ©Χ ΧΧ¦Χ”Χ¨ Χ™Χ‘Χ©ΧªΧ™ - Χ”ΧΧªΧ¨ Χ”Χ§Χ¨Χ•Χ‘ ΧΧΧ‘ΧΧª LOCODE  Χ‘Χ• Χ”Χ•ΧΧΆΧ Χ”ΧΧΧΆΧ ΧΧΧ©ΧΧ™Χª,,Χ¦Χ¨Χ™Χ
+668,Consignment,3,89A,0..*,,,,,H,,,NotifyParty,      NotifyParty,Declaration.Consignment.NotifyParty,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧ™Χ•Χ“ΧΆ,,,,Χ¦Χ¨Χ™Χ
+670,Consignment,4,R045Β ,0..1,,,Χ©Χ Χ”ΧΧ™Χ•Χ“ΧΆ-Χ¨Χ©Χ•ΧΧ” 7- Χ¤Χ•Χ–' 016-050,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ©Χ Χ”ΧΧ™Χ•Χ“ΧΆ,Notify party,Name,         Name,Consignment.NotifyParty.Name,Χ©Χ ΧΧ™Χ•Χ“ΧΆ,,,,Χ¦Χ¨Χ™Χ
+671,Consignment,4,04A,0..*,,,,,H,Χ›ΧªΧ•Χ‘Χª ΧΧ™Χ•Χ“ΧΆ ,,Address,         Address,Declaration.Consignment.NotifyParty.Address,Χ›Χ•ΧªΧ¨Χª Χ›ΧªΧ•Χ‘Χª ΧΧ™Χ•Χ“ΧΆ,,,,Χ¦Χ¨Χ™Χ
+672,Consignment,5,241Β ,0..1,,,ΧΆΧ™Χ¨ Χ”ΧΧ™Χ•Χ“ΧΆ-Χ¨Χ©Χ•ΧΧ” 7-Χ¤Χ•Χ–' 081-100,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ›ΧªΧ•Χ‘Χª ΧΧ™Χ•Χ“ΧΆ ,City name,CityName,            CityName,Declaration.Consignment.NotifyParty.Address.CityName,Χ©Χ ΧΆΧ™Χ¨,,,,Χ¦Χ¨Χ™Χ
+673,Consignment,5,242Β ,0..1,,,ΧΧ“Χ™Χ Χª Χ”ΧΧ™Χ•Χ“ΧΆ-Χ¨Χ©Χ•ΧΧ” 7-Χ¤Χ•Χ–' 107-108,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ›ΧªΧ•Χ‘Χª ΧΧ™Χ•Χ“ΧΆ ,"Country, coded",CountryCode,            CountryCode,Declaration.Consignment.NotifyParty.Address.CountryCode,Χ§Χ•Χ“ ΧΧ“Χ™Χ Χ”,,,,Χ¦Χ¨Χ™Χ
+674,Consignment,5,244Β ,0..1,,Χ§Χ•Χ“ ΧªΧª ΧΧ“Χ™Χ Χ”,,O,ΧΧ Χ¦Χ¨Χ™Χ,Χ›ΧªΧ•Χ‘Χª ΧΧ™Χ•Χ“ΧΆ ,Country sub-entity identification,CountrySubDivisionID,            CountrySubDivisionID,Declaration.Consignment.NotifyParty.Address.CountrySubDivisionID,Χ§Χ•Χ“ ΧªΧª ΧΧ“Χ™Χ Χ”,,,,Χ¦Χ¨Χ™Χ
+676,Consignment,5,239Β ,0..1,"Χ‘Χ›Χ Χ Χ•Χ©Χ Χ”Χ›ΧªΧ•Χ‘Χ•Χª ( Χ™Χ‘Χ•ΧΧ, Χ΅Χ¤Χ§, ΧΧ™Χ•Χ“ΧΆ) Χ”Χ”ΧΆΧ‘Χ¨Χ” Χ¦Χ¨Χ™Χ›Χ” ΧΧ”Χ™Χ•Χª ΧΧ©Χ“Χ” Χ¨Χ—Χ•Χ‘ Χ•ΧΧ΅Χ¤Χ¨ Χ©Χ”Χ•Χ ΧΧ§Χ΅ΧΧ•ΧΧΧ™ Χ•Χ—Χ•Χ‘Χ” Χ‘Χ›Χ•ΧΧ",,Χ¨Χ—Χ•Χ‘ Χ•ΧΧ΅Χ¤Χ¨ Χ‘Χ™Χª Χ©Χ Χ”ΧΧ™Χ•Χ“ΧΆ ΧΧ• Χª.Χ“ Χ“Χ•ΧΧ¨- Χ¨Χ©Χ•ΧΧ” 7- Χ¤Χ•Χ–' 051-80,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ›ΧªΧ•Χ‘Χª ΧΧ™Χ•Χ“ΧΆ ,Street and number/P.O. Box,Line,            Line,Declaration.Consignment.NotifyParty.Address.Line,"Χ¨Χ—Χ•Χ‘ Χ•ΧΧ΅Χ¤Χ¨ Χ‘Χ™Χª ΧΧ• ΧªΧ™Χ‘Χª Χ“Χ•ΧΧ¨.
+Χ‘ΧΧ§Χ¨Χ” Χ©Χ”Χ›ΧªΧ•Χ‘Χª ΧΧ ΧΧ¤Χ•Χ¨ΧΧΧª Χ™Χ© ΧΧ©Χ“Χ¨ Χ‘Χ©Χ“Χ” Χ–Χ” ΧΧª Χ›Χ Χ”Χ›ΧªΧ•Χ‘Χª Χ›Χ¤Χ™ Χ©Χ¨Χ©Χ•ΧΧ” Χ‘Χ©ΧΧ¨ ΧΧΧΆΧ",,,,Χ¦Χ¨Χ™Χ
+677,Consignment,5,245Β ,0..1,,,ΧΧ™Χ§Χ•Χ“ Χ”ΧΧ™Χ•Χ“ΧΆ-Χ¨Χ©Χ•ΧΧ” 7- Χ¤Χ•Χ–' 101-106,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ›ΧªΧ•Χ‘Χª ΧΧ™Χ•Χ“ΧΆ ,Postcode identification,PostcodeID,            PostcodeID,Declaration.Consignment.NotifyParty.Address.PostcodeID,ΧΧ™Χ§Χ•Χ“,,,,Χ¦Χ¨Χ™Χ
+678,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,Declaration.Consignment.NotifyParty.Address.Communication,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,,"ΧΧΧ¤Χ•Χ,Χ¤Χ§Χ΅,email",,Χ¦Χ¨Χ™Χ
+679,Consignment,5,240Β ,0..1,,,ΧΧ΅Χ¤Χ¨ ΧΧΧ¤Χ•Χ Χ©Χ ΧΧ™Χ•Χ“ΧΆ-Χ¨Χ©Χ•ΧΧ” 7-Χ¤Χ•Χ–' 109-120,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,,Communication number,ID,            ID,Declaration.Consignment.NotifyParty.Address.Communication.ID,ΧΧ΅Χ¤Χ¨ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,,,,Χ¦Χ¨Χ™Χ
+680,Consignment,5,253Β ,0..1,,ΧΧ‘ΧΧª EDIFACT3155,,O,ΧΧ Χ¦Χ¨Χ™Χ,,Agent quality assurance indicator,TypeID,            TypeID,Declaration.Consignment.NotifyParty.Address.Communication.TypeID,Χ΅Χ•Χ’ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,"Χ§Χ•Χ“ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨: TE Χ Χ™Χ™Χ—, AL Χ Χ™Χ™Χ“, FX Χ¤Χ§Χ΅, EM Χ“Χ•Χ""Χ, AH ΧΧªΧ¨ ΧΧ™Χ ΧΧ¨Χ Χ",,,Χ¦Χ¨Χ™Χ
+707,Consignment,3,23B,0..*,,,,,H,,,TranshipmentLocation,      TranshipmentLocation,Declaration.Consignment.NotifyParty.TranshipmentLocation,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+708,Consignment,4,L015Β ,0..1,,,Χ ΧΧ Χ™ΧΆΧ“ Χ΅Χ•Χ¤Χ™ -Χ¨Χ©Χ•ΧΧ” 8 -Χ¤Χ•Χ–' 181-185,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”-Χ—Χ•Χ‘Χ” Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ©ΧΧΆΧ•Χ/Χ©.Χ‘Χ™Χ ΧΧΧ™/ΧΧ΅Χ•Χ£ Χ’Χ‘Χ•Χ Χ™Χ‘Χ©ΧªΧ™,,"Transshipment place, coded",ID,         ID,Declaration.Consignment.TranshipmentLocation.ID,"Χ ΧΧ Χ¤Χ¨Χ™Χ§Χ” Χ‘Χ—Χ•""Χ",ΧΧΧ ΧΧ™Χ•ΧΆΧ“ Χ”ΧΧΧΆΧ Χ”ΧΧ©Χ•ΧΧΆΧ,Χ§Χ•Χ“ ΧΧΧ‘ΧΧª LOCODE Χ©Χ Χ”ΧΧªΧ¨ ΧΧΧ™Χ• Χ™Χ¦ΧΧ• Χ”ΧΧ•Χ‘Χ™Χ ΧΧ”ΧΧ¨Χ¥,,Χ¦Χ¨Χ™Χ
+710,Consignment,3,24B,0..*,,ΧΧ Χ¦Χ¨Χ™Χ,,,H,,,TransitControl,      TransitControl,,,,,,ΧΧ Χ¦Χ¨Χ™Χ
+713,Consignment,3,26B,0..*,,,,C,H,,,TransitDestination,      TransitDestination,Declaration.Consignment.TransitDestination,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ™ΧΆΧ“ Χ”ΧΧΧΆΧ Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ©ΧΧΆΧ•Χ,,,,Χ¦Χ¨Χ™Χ
+714,Consignment,4,L008Β ,0..1,,Χ—Χ•Χ‘Χ” Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ©ΧΧΆΧ•Χ/Χ©.Χ‘Χ™Χ ΧΧΧ™/ΧΧ΅Χ•Χ£ Χ’Χ‘Χ•Χ Χ™Χ‘Χ©ΧªΧ™,Χ ΧΧ Χ”Χ™Χ¦Χ™ΧΧ” ΧΧ”ΧΧ¨Χ¥ -Χ¨Χ©Χ•ΧΧ” 3-Χ¤Χ•Χ–' 122-126,C,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ ΧΧ Χ”Χ™Χ¦Χ™ΧΧ” ΧΧ”ΧΧ¨Χ¥,"Place of destination of the transit, coded",ID,         ID,Declaration.Consignment.TransitDestination.ID,Χ§Χ•Χ“ ΧΧªΧ¨ Χ”Χ™Χ¦Χ™ΧΧ” ΧΧ”ΧΧ¨Χ¥ Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ©ΧΧΆΧ•Χ ,,"Χ§Χ•Χ“ ΧΧΧ‘ΧΧª LOCODE Χ©Χ Χ”ΧΧªΧ¨ ΧΧΧ Χ• Χ™Χ¦ΧΧ• Χ”ΧΧ•Χ‘Χ™Χ ΧΧ”ΧΧ¨Χ¥.
+Χ©Χ“Χ” Χ—Χ•Χ‘Χ” Χ›ΧΧ©Χ¨ Χ΅Χ•Χ’ ΧªΧ”ΧΧ™Χ = Χ©ΧΧΆΧ•Χ.",,Χ¦Χ¨Χ™Χ
+718,Consignment,3,30B,0..*,,,,,H,Χ©ΧΧ¨ ΧΧΧΆΧ,,TransportContractDocument,      TransportContractDocument,Declaration.Consignment.TransportContractDocument,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧ΅ΧΧ›Χ™ Χ”Χ•Χ‘ΧΧ” ,,"Χ›Χ•ΧªΧ¨Χª ΧΧ΅ΧΧ›Χ™ Χ”Χ•Χ‘ΧΧ”.
+Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ“Χ™Χ•Χ•Χ— ΧΧ¦Χ”Χ¨ ΧΆΧ ΧΧΧΆΧ Χ™Χ - Χ—Χ•Χ‘Χ” ΧΧ•Χ¤ΧΆ ΧΧ—Χ“ ΧΧ¤Χ—Χ•Χª",,Χ¦Χ¨Χ™Χ
+719,Consignment,4,091Β ,0..1,,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”-Χ§Χ•Χ“ Χ”Χ΅Χ›Χ Χ•ΧªΧ ΧΧ™ ΧΧ©ΧΧ•Χ— ΧΧ¤Χ™ ΧΧ‘ΧΧ”: EDIFACT4065,Χ¦Χ•Χ¨Χª ΧΧ™Χ¤Χ•ΧΧ-Χ¨Χ©Χ•ΧΧ” 6-Χ¤Χ•Χ–' 156-157,M,"Χ”ΧΧ¨Χ”:          Χ—Χ“Χ©   Χ§Χ™Χ™Χ
  
 HH =27 
 HP =28 
 PH =29 
 PP =30 
-",φεψϊ θιτεμ ,"Contract and carriage condition, coded",ConditionCode,         ConditionCode,Declaration.Consignment.TransportContractDocument.ConditionCode,φεψϊ θιτεμ ,,"αιξι - ηεαδ.
-αΰεειψι- ΰετφιεπμι αωμα ζδ.
-αιαωϊι- ηεαδ",,φψικ
-723,Consignment,4,D024 ,0..1,"μαπεϊ μτι ςψκ δωγδ μωθ""ξ , ςρχδ, ςρχϊ ΰα, ςρχδ χεγξϊ",ρεβ ωθψ ξθςο μτι θαμδ EDIFACT1001,,M,"γιεεη δχεγιν δαΰιν μτι δςψκ ωιελπρ μωγδ: Declaration.Consignment.TransportContractDocument.ID: ωθψ ξθςο  -  705
-ωθψ ξθςο ΰα (Mater)  - 704
-ξζδδ ςρχδ – IL1
-ξζδδ ςρχϊ ΰα –  IL2
-",,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,χεγ ρεβ ξρξκ δεαμδ,,"δχεγιν δξεϊψιν μωθ""ξ ιξι εΰεειψι εδχεγιν δξεϊψιν μςρχδ ιξιϊ ειαωϊιϊ - ξτεψθιν αωεψεϊ δληεμεϊ αδξωκ ",,φψικ
-720,Consignment,4,D023 ,0..1,"ζδε ωγδ ωδςψκ ωμε πχας μτι δςψκ αωγδ 159 (ρεβ ωθ""ξ). βν λΰο ξεφς μδφιβ ΰϊ δδξψδ αθαμδ πτψγϊ",,"ξρτψ ωθψ ξθςο-ξζδδ ςρχδ-ψωεξδ 3-τεζ' 148-163
-ξζδδ ςρχδ",M,δςϊχδ ξμΰδ,"ξρτψ ωθψ ξθςο
-ξζδδ ςρχδ",Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,ξρτψ ξζδδ ξρξκ δεαμδ ,,"ιωξω ςαεψ γιεεη ωμ:
-ωθψ ξθςο ,
-ωθψ ξθςο ΰα , 
-ξρτψ ςρχδ,
-ξρτψ ςρχϊ ΰα",,φψικ
-2030,Consignment,4,D023 ,0..1,,,ωθψ ξθςο-ψωεξδ 3- τεζ' 132-147,M,δςϊχδ ξμΰδ,ξρτψ ωθψ ξθςο,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,"
-ξζδδ ωθψ ξθςο","αςξεγδ U - αιθεμ ςρχδ ηεαδ μψωεν ΰϊ δξζδδ ωμ διωεϊ ωξαχωιν μαθμ. ςρχδ, ςρχϊ ΰα, ωθ""ξ ψΰωι, ΰε ωθ""ξ τπιξι. μτι ζδ ιω μαηεψ ΰϊ δζεβ ωεψεϊ δξϊΰιν",ωλτεμ ωμ 720,,φψικ
-2034,Consignment,4,D024 ,0..1,,μΰ μψεεπθι μτι ξιιμ ξιεν 7/8/11,,M,μΰ φψικ,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,"
-χεγ ρεβ ξρξκ ωθψ ξθςο","χεγιν μωθ""ξ ιξι: 705, 714, 704
-χεγιν μωθ""ξ ΰειψι: 740, 703, 741 
-χεγιν μωθ""ξ ιαωϊι: ΰιο. μΰ ψμαπθι","ωθψ ξθςο  ψβιμ, ΰε ωθψ ξθςο τπιξι
-ωλτεμ ωμ 723
-",,φψικ
-2031,Consignment,4,D023 ,0..1,,δςϊχδ ξμΰδ-ηεαδ αξχψδ ωμ ξωμη ιξι,ωθψ ξθςο ΰα- ψωεξδ B - τεζ'135-150,C,δςϊχδ ξμΰδ,ξρτψ ωθψ ξθςο ΰα,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,ξζδδ ωθψ ξθςο ΰα,,ωλτεμ ωμ 720,,φψικ
-2035,Consignment,4,D024 ,0..1,,μΰ μψεεπθι μτι ξιιμ ξιεν 7/8/11,,M,μΰ φψικ,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,χεγ ρεβ ξρξκ ωθψ ξθςο ΰα,,"ωθψ ξθςο  ΰα
-ωλτεμ ωμ 723",,φψικ
-2032,Consignment,4,D023 ,0..1,,ηεαδ αξχψδ ωμ τιφεμ/ΰιηεγ ςρχΰεϊ,ξρτψ ςρχδ ηγω- ψωεξδ C- τεζ' 036-051,C,δςϊχδ ξμΰδ,ξρτψ ςρχδ,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,ξρτψ ςρχδ,,"ξρτψ ςρχδ
+",Χ¦Χ•Χ¨Χª ΧΧ™Χ¤Χ•Χ ,"Contract and carriage condition, coded",ConditionCode,         ConditionCode,Declaration.Consignment.TransportContractDocument.ConditionCode,Χ¦Χ•Χ¨Χª ΧΧ™Χ¤Χ•Χ ,,"Χ‘Χ™ΧΧ™ - Χ—Χ•Χ‘Χ”.
+Χ‘ΧΧ•Χ•Χ™Χ¨Χ™- ΧΧ•Χ¤Χ¦Χ™Χ•Χ ΧΧ™ Χ‘Χ©ΧΧ‘ Χ–Χ”.
+Χ‘Χ™Χ‘Χ©ΧªΧ™- Χ—Χ•Χ‘Χ”",,Χ¦Χ¨Χ™Χ
+723,Consignment,4,D024Β ,0..1,"ΧΧ‘Χ Χ•Χª ΧΧ¤Χ™ ΧΆΧ¨Χ Χ”Χ©Χ“Χ” ΧΧ©Χ""Χ , ΧΆΧ΅Χ§Χ”, ΧΆΧ΅Χ§Χª ΧΧ‘, ΧΆΧ΅Χ§Χ” Χ§Χ•Χ“ΧΧª",Χ΅Χ•Χ’ Χ©ΧΧ¨ ΧΧΧΆΧ ΧΧ¤Χ™ ΧΧ‘ΧΧ” EDIFACT1001,,M,"Χ“Χ™Χ•Χ•Χ— Χ”Χ§Χ•Χ“Χ™Χ Χ”Χ‘ΧΧ™Χ ΧΧ¤Χ™ Χ”ΧΆΧ¨Χ Χ©Χ™Χ•Χ›Χ Χ΅ ΧΧ©Χ“Χ”: Declaration.Consignment.TransportContractDocument.ID: Χ©ΧΧ¨ ΧΧΧΆΧ  -  705
+Χ©ΧΧ¨ ΧΧΧΆΧ ΧΧ‘ (Mater)  - 704
+ΧΧ–Χ”Χ” ΧΆΧ΅Χ§Χ” β€“ IL1
+ΧΧ–Χ”Χ” ΧΆΧ΅Χ§Χª ΧΧ‘ β€“  IL2
+",,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧ΅ΧΧ Χ”Χ•Χ‘ΧΧ”,,"Χ”Χ§Χ•Χ“Χ™Χ Χ”ΧΧ•ΧªΧ¨Χ™Χ ΧΧ©Χ""Χ Χ™ΧΧ™ Χ•ΧΧ•Χ•Χ™Χ¨Χ™ Χ•Χ”Χ§Χ•Χ“Χ™Χ Χ”ΧΧ•ΧªΧ¨Χ™Χ ΧΧΆΧ΅Χ§Χ” Χ™ΧΧ™Χª Χ•Χ™Χ‘Χ©ΧªΧ™Χª - ΧΧ¤Χ•Χ¨ΧΧ™Χ Χ‘Χ©Χ•Χ¨Χ•Χª Χ”Χ›Χ—Χ•ΧΧ•Χª Χ‘Χ”ΧΧ©Χ ",,Χ¦Χ¨Χ™Χ
+720,Consignment,4,D023Β ,0..1,"Χ–Χ”Χ• Χ©Χ“Χ” Χ©Χ”ΧΆΧ¨Χ Χ©ΧΧ• Χ Χ§Χ‘ΧΆ ΧΧ¤Χ™ Χ”ΧΆΧ¨Χ Χ‘Χ©Χ“Χ” 159 (Χ΅Χ•Χ’ Χ©Χ""Χ). Χ’Χ Χ›ΧΧ ΧΧ•Χ¦ΧΆ ΧΧ”Χ¦Χ™Χ’ ΧΧª Χ”Χ”ΧΧ¨Χ” Χ‘ΧΧ‘ΧΧ” Χ Χ¤Χ¨Χ“Χª",,"ΧΧ΅Χ¤Χ¨ Χ©ΧΧ¨ ΧΧΧΆΧ-ΧΧ–Χ”Χ” ΧΆΧ΅Χ§Χ”-Χ¨Χ©Χ•ΧΧ” 3-Χ¤Χ•Χ–' 148-163
+ΧΧ–Χ”Χ” ΧΆΧ΅Χ§Χ”",M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,"ΧΧ΅Χ¤Χ¨ Χ©ΧΧ¨ ΧΧΧΆΧ
+ΧΧ–Χ”Χ” ΧΆΧ΅Χ§Χ”",Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” ΧΧ΅ΧΧ Χ”Χ•Χ‘ΧΧ” ,,"Χ™Χ©ΧΧ© ΧΆΧ‘Χ•Χ¨ Χ“Χ™Χ•Χ•Χ— Χ©Χ:
+Χ©ΧΧ¨ ΧΧΧΆΧ ,
+Χ©ΧΧ¨ ΧΧΧΆΧ ΧΧ‘ , 
+ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χ”,
+ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χª ΧΧ‘",,Χ¦Χ¨Χ™Χ
+2030,Consignment,4,D023Β ,0..1,,,Χ©ΧΧ¨ ΧΧΧΆΧ-Χ¨Χ©Χ•ΧΧ” 3- Χ¤Χ•Χ–' 132-147,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,ΧΧ΅Χ¤Χ¨ Χ©ΧΧ¨ ΧΧΧΆΧ,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,"
+ΧΧ–Χ”Χ” Χ©ΧΧ¨ ΧΧΧΆΧ","Χ‘ΧΆΧΧ•Χ“Χ” U - Χ‘Χ™ΧΧ•Χ ΧΆΧ΅Χ§Χ” Χ—Χ•Χ‘Χ” ΧΧ¨Χ©Χ•Χ ΧΧª Χ”ΧΧ–Χ”Χ” Χ©Χ Χ”Χ™Χ©Χ•Χª Χ©ΧΧ‘Χ§Χ©Χ™Χ ΧΧ‘ΧΧ. ΧΆΧ΅Χ§Χ”, ΧΆΧ΅Χ§Χª ΧΧ‘, Χ©Χ""Χ Χ¨ΧΧ©Χ™, ΧΧ• Χ©Χ""Χ Χ¤Χ Χ™ΧΧ™. ΧΧ¤Χ™ Χ–Χ” Χ™Χ© ΧΧ‘Χ—Χ•Χ¨ ΧΧª Χ”Χ–Χ•Χ’ Χ©Χ•Χ¨Χ•Χª Χ”ΧΧªΧΧ™Χ",Χ©Χ›Χ¤Χ•Χ Χ©Χ 720,,Χ¦Χ¨Χ™Χ
+2034,Consignment,4,D024Β ,0..1,,ΧΧ ΧΧ¨Χ•Χ•Χ ΧΧ™ ΧΧ¤Χ™ ΧΧ™Χ™Χ ΧΧ™Χ•Χ 7/8/11,,M,ΧΧ Χ¦Χ¨Χ™Χ,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,"
+Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧ΅ΧΧ Χ©ΧΧ¨ ΧΧΧΆΧ","Χ§Χ•Χ“Χ™Χ ΧΧ©Χ""Χ Χ™ΧΧ™: 705, 714, 704
+Χ§Χ•Χ“Χ™Χ ΧΧ©Χ""Χ ΧΧ•Χ™Χ¨Χ™: 740, 703, 741 
+Χ§Χ•Χ“Χ™Χ ΧΧ©Χ""Χ Χ™Χ‘Χ©ΧªΧ™: ΧΧ™Χ. ΧΧ Χ¨ΧΧ‘Χ ΧΧ™","Χ©ΧΧ¨ ΧΧΧΆΧ  Χ¨Χ’Χ™Χ, ΧΧ• Χ©ΧΧ¨ ΧΧΧΆΧ Χ¤Χ Χ™ΧΧ™
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 723
+",,Χ¦Χ¨Χ™Χ
+2031,Consignment,4,D023Β ,0..1,,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”-Χ—Χ•Χ‘Χ” Χ‘ΧΧ§Χ¨Χ” Χ©Χ ΧΧ©ΧΧ— Χ™ΧΧ™,Χ©ΧΧ¨ ΧΧΧΆΧ ΧΧ‘- Χ¨Χ©Χ•ΧΧ” B - Χ¤Χ•Χ–'135-150,C,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,ΧΧ΅Χ¤Χ¨ Χ©ΧΧ¨ ΧΧΧΆΧ ΧΧ‘,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,ΧΧ–Χ”Χ” Χ©ΧΧ¨ ΧΧΧΆΧ ΧΧ‘,,Χ©Χ›Χ¤Χ•Χ Χ©Χ 720,,Χ¦Χ¨Χ™Χ
+2035,Consignment,4,D024Β ,0..1,,ΧΧ ΧΧ¨Χ•Χ•Χ ΧΧ™ ΧΧ¤Χ™ ΧΧ™Χ™Χ ΧΧ™Χ•Χ 7/8/11,,M,ΧΧ Χ¦Χ¨Χ™Χ,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧ΅ΧΧ Χ©ΧΧ¨ ΧΧΧΆΧ ΧΧ‘,,"Χ©ΧΧ¨ ΧΧΧΆΧ  ΧΧ‘
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 723",,Χ¦Χ¨Χ™Χ
+2032,Consignment,4,D023Β ,0..1,,Χ—Χ•Χ‘Χ” Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ¤Χ™Χ¦Χ•Χ/ΧΧ™Χ—Χ•Χ“ ΧΆΧ΅Χ§ΧΧ•Χª,ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χ” Χ—Χ“Χ©- Χ¨Χ©Χ•ΧΧ” C- Χ¤Χ•Χ–' 036-051,C,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χ”,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χ”,,"ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χ”
 
-ωλτεμ ωμ 720",,φψικ
-2036,Consignment,4,D024 ,0..1,,μΰ μψεεπθι μτι ξιιμ ξιεν 7/8/11,,M,μΰ φψικ,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,χεγ ρεβ ξρξκ ξρτψ ςρχδ,,"χεγιν: IL1 αςρχδ ιξιϊ, IL3 αςρχδ ιαωϊιϊ, ILH αςρχϊ ξλεμεϊ ψιχεϊ
-ωλτεμ ωμ 723",,φψικ
-2033,Consignment,4,D023 ,0..1,,ηεαδ αξχψδ ωμ ξωμη ιξι,ξζδδ ςρχϊ ΰα- ψωεξδ B- τεζ' 135-150,O,δςϊχδ ξμΰδ,ξρτψ ςρχϊ ΰα,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,ξρτψ ςρχϊ ΰα,,"ξρτψ ςρχϊ ΰα
-ωλτεμ ωμ 720",,φψικ
-2037,Consignment,4,D024 ,0..1,,μΰ μψεεπθι μτι ξιιμ ξιεν 7/8/11,,M,μΰ φψικ,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,χεγ ρεβ ξρξκ ξρτψ ςρχϊ ΰα,,"αςρχϊ ΰα, βν ιξι εβν ιαωϊι   IL2 
-ωλτεμ ωμ 723",,φψικ
-721,Consignment,4,D021 ,0..1,,ξχεν δφΰϊ ωθψ δξθςο-θχρθ ηετωι,,O,μΰ μδραδ,, ,IssueLocation,         IssueLocation,Declaration.Consignment.TransportContractDocument.IssueLocation,λεϊψϊ ξχεν δπτχϊ δξρξκ,,,,φψικ
-724,Consignment,4,43A,0..*,,μΰ μψεεπθι μτι ξιιμ ξιεν 7/8/11,,O,μΰ φψικ,,,Deconsolidator,         Deconsolidator,,τψθι ξωμη,,ρελο ΰεπιδ ιγεεη ξι δξωμη ωΰηψΰι ςμ δξλεμδ αξχψδ ωμ χεπργιμιζφιδ,"δξωμη ιδιδ ιγες αςιρχϊ δαο εβν διΰ ςεαψϊ δςψλϊ ριλεπιν εδξωμη δεΰ δ-submiter εμλο μΰ φψικ ΰϊ δωγδ δπ""μ.",μΰ φψικ
-725,Consignment,5,R023 ,0..1,,μΰ μψεεπθι μτι ξιιμ ξιεν 7/8/11,ξρτψ ξωμη- ψωεξδ 3- τεζ' 180-182,M,αθαμϊ ρελπι ΰπιιδ ωμιτϊ η.τ ξωμη μτι χεγ ξωμη,,"Deconsolidator, coded",ID,            ID,Declaration.Consignment.TransportContractDocument.Deconsolidator.ID,ξρτψ ξζδδ ξωμη,,χεγ ξθαμϊ ξωμηιν. αξχψδ ωμ χεπρεμιγφιδ. ΰξεψ μδιεϊ δπωβψ,,φψικ
-791,Consignment,3,37B,0..*,,,,,H,,,UNDGContact,      UNDGContact,Declaration.Consignment.UNDGContact,λεϊψϊ τψθι χωψ ηεξψιν ξρελπιν,,τψθι ΰιω χωψ μθιτεμ αηεξψιν ξρελπιν,,φψικ
-792,Consignment,4,R047 ,0..1,,"ων ηαψδ αξχψδ ωμ ηεξ""ρ. ηεαδ αξχψδ ωμ ηεξ""ρ",,C,μΰ πιϊο,,Dangerous goods contact,Name,         Name,Declaration.Consignment.UNDGContact.Name,ων δηαψδ,,ων δηαψδ ωμ ΰιω χωψ μηεξψιν ξρελπιν,,φψικ
-800,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,Declaration.Consignment.UNDGContact.Communication,λεϊψϊ τψθι ΰξφςι χωψ,,τψθι χωψ ωμ δηαψδ,,φψικ
-801,Consignment,5,240 ,0..1,,ξρτψ ΰξφςι χωψ. ηεαδ αξχψδ ωμ ξθςο ξρελο,,C,μΰ πιϊο,,Communication number,ID,            ID,Declaration.Consignment.UNDGContact.Communication.ID,ξρτψ ΰξφςι χωψ, ,,,φψικ
-802,Consignment,5,253,0..1,,ρεβ ΰξφςι χωψ αξχψδ ωμ ξθςο ξρελο-θαμϊ EDIFACT3155,,C,μΰ πιϊο,,Communication number type,TypeID,            TypeID,Declaration.Consignment.UNDGContact.Communication.TypeID,χεγ ρεβ ΰξφςι χωψ,"χεγ ΰξφςι χωψ: TE πιιη, AL πιιγ, FX τχρ, EM γεΰ""μ, AH ΰϊψ ΰιπθψπθ",,,φψικ
-803,Consignment,4,34A,0..*,,,,,H,,,contact,         contact,Declaration.Consignment.UNDGContact.contact,λεϊψϊ τψθι ΰιω χωψ,,,,φψικ
-804,Consignment,5,246 ,0..1,,"ων ΰιω χωψ αξχψδ ωμ ηεξ""ρ. ηεαδ αξχψδ ωμ ηεξ""ρ",,C,μΰ φψικ,,Department or employee  contact name,Name,            Name,Declaration.Consignment.UNDGContact.contact.Name,ων ΰιω χωψ,,ων ΰιω χωψ,,φψικ
-805,Consignment,5,25A,0..*,,,,,H,,,Communication,            Communication,Declaration.Consignment.UNDGContact.contact.Communication,λεϊψϊ τψθι ΰξφςι χωψ,,θμτεο ωμ ΰιω χωψ ,,φψικ
-806,Consignment,6,240 ,0..1,,,,O,μΰ φψικ,,Communication number,ID,               ID,Declaration.Consignment.UNDGContact.Communication.ID,ξρτψ ΰξφςι χωψ,,μγεβξΰ: ξρτψ θμτεο ρμεμψι ωμ ΰιω δχωψ,,φψικ
-807,Consignment,6,253,0..1,,θαμϊ EDIFACT3155,,O,μΰ φψικ,,Communication number type,TypeID,               TypeID,Declaration.Consignment.UNDGContact.contact.Communication.TypeID,χεγ ρεβ ΰξφςι χωψ,"χεγ ΰξφςι χωψ: TE πιιη, AL πιιγ, FX τχρ, EM γεΰ""μ, AH ΰϊψ ΰιπθψπθ",μγεβξΰ: θμτεο ρμεμψι,,φψικ
-808,Consignment,3,38B,0..*,,,,,H,,,UnloadingLocation,      UnloadingLocation,Declaration.Consignment.UnloadingLocation,λεϊψϊ πϊεπι ΰϊψ τψιχδ,,χεγ ξθαμϊ LOCODE ωμ δΰϊψ αε ιτψχε δθεαιο,,φψικ
-809,Consignment,4,173 ,0..1,,ϊΰψικ δβςδ ξωεςψ ωμ δξθςο. ηεαδ λΰωψ δΰπιιδ τεψχϊ αωπι πξμιν ϊηϊ ΰεϊε ξφδψ,,C,μΰ πιϊο,,Date of arrival at place of discharge,ArrivalDateTime,         ArrivalDateTime,Declaration.Consignment.UnloadingLocation.ArrivalDateTime,ϊΰψικ δβςδ ξωεςψ (ψξϊ δξθςο),,"ϊΰψικ δβςδ ξωεςψ αψξϊ δξθςο 
-",,φψικ
-810,Consignment,4,L013 ,0..1,,,πξμ τψιχδ-ψωεξδ 3-τεζ' 053-057  ,M,δςϊχδ ξμΰδ- πξμ τψιχδ,πξμ τψιχδ  ,"Place of discharge, coded",ID,         ID,Declaration.Consignment.UnloadingLocation.ID,ΰϊψ τψιχδ,,,,φψικ
-328,ConsignmentItem,3,29A,1..*,,,,,H,,,ConsignmentItem,      ConsignmentItem,Declaration.Consignment.ConsignmentItem,λεϊψϊ τψθι ωεψδ αξθςο,,ηεαδ μτηεϊ ωεψδ ΰηϊ αξθςο,,φψικ
-329,ConsignmentItem,4,094 ,0..1,,,χεγ ριλεο-ψωεξδ 3 - τεζ' 058-058,M,δςϊχδ ξμΰδ,χεγ ριλεο,Goods status code,GoodsStatusCode,         GoodsStatusCode,Declaration.Consignment.ConsignmentItem.GoodsStatusCode,χεγ ξθςο ξρελο,ρθΰθερ δξθςο - ξωξω ςαεψ γιεεη ξθςο ξρελο,"ΰιπγχφιδ δΰν ηεξψ ξρελο ΰε μΰ
-δωγδ χεγ ριλεο - ΰιπγιχφιδ δΰν ξγεαψ αξθςο δξλιμ ηεξψιν ξρελπιν  (ξρελο/μΰ ξρελο)   
-αΰεειψι - Restricted  - R  ΰε ψιχ , αιξι - D ξρελο , N - μΰ ξρελο. ","ωγδ ηεαδ
-D- ξρελο
-N - μΰ ξρελο",φψικ
-330,ConsignmentItem,4,006 ,0..1,,μΰ ηεαδ αγιεεη ξφδψ ξμΰ εξλεμεϊ ψιχεϊ (ωεπδ μηεαδ αξφδψ ξμΰ),ριγεψι αςιρχδ-ψωεξδ 3- τεζ' 164-166,C,δςϊχδ ξμΰδ,ριγεψι αςιρχδ,Sequence number,SequenceNumeric,         SequenceNumeric,Declaration.Consignment.ConsignmentItem.SequenceNumeric,ξρ' ριγεψι αξθςο,"δωγδ ξεβγψ n..5 ,  ΰκ αωμ ΰιμεφιν ξεμ ξςψλεϊ ΰηψεϊ ξεϊψ μωμεη n..3 αμαγ ",,,φψικ
-374,ConsignmentItem,4,03A,0..*,,,,,H,,,AdditionalInformation,         AdditionalInformation,Declaration.Consignment.ConsignmentItem.AdditionalInformation,λεϊψϊ τψθι ξιγς περσ μωεψδ αξθςο,,"ξωξω μγιεεη ωγεϊ πγψωιν ωΰιο μδν ωγδ ξεβγψ . ξεψλα ξρεβ πϊεο εδςψκ.
-",,φψικ
-375,ConsignmentItem,5,105,0..1,,,,O,"ωγδ ψα ξετςι. δςϊχδ ξμΰδ ωμ ξρτψ ριγεψι αςρχδ ιωο-ψωεξδ C- τεζ' 032-035 . δςϊχδ ξμΰδ ωμ ξρτψ ςρχδ ιωο-ψωεξδ C- τεζ' 016-031 .  δςϊχδ ξμΰδ ωμ ςψκ α-χε ΰηρεο- ψωεξδ 3 - τεζ' 183-184 .δςϊχδ ξμΰδ ωμ ςψκ α-ξωχμ θψδ αχ""β - ψωεξδ 3 - τεζ' 040-047",,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ςψκ πϊεο,,,,φψικ
-377,ConsignmentItem,5,226 ,1,,,,M,ψΰδ ρεγψ 379,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementCode,χεγ ςψκ πϊεο ,,"ιωξω ςαεψ:
-ωιγεψ ξρτψ ιαεΰο
-χεγ ριαϊ ϊιχεο/αιθεμ - change reason code
-ιωξω βν ςαεψ τιφεμ εΰιηεγ ςιρχΰεϊ. τιφεμ ςιρχΰεϊ - ιωγψε λΰο πϊεπι ςιρχδ εριγεψι ξχεψιιν ωξδν πεφψδ δςιρχδ δηγωδ.
-λπ""μ αΰιηεγ 
-ξφδψ ιξι - 
-ξρτψ ριγεψι αξθςο ΰα,
-ξρτψ ξθςο/ςιρχϊ ΰα,
-χεγ ΰηρεο,
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 720",,Χ¦Χ¨Χ™Χ
+2036,Consignment,4,D024Β ,0..1,,ΧΧ ΧΧ¨Χ•Χ•Χ ΧΧ™ ΧΧ¤Χ™ ΧΧ™Χ™Χ ΧΧ™Χ•Χ 7/8/11,,M,ΧΧ Χ¦Χ¨Χ™Χ,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧ΅ΧΧ ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χ”,,"Χ§Χ•Χ“Χ™Χ: IL1 Χ‘ΧΆΧ΅Χ§Χ” Χ™ΧΧ™Χª, IL3 Χ‘ΧΆΧ΅Χ§Χ” Χ™Χ‘Χ©ΧªΧ™Χª, ILH Χ‘ΧΆΧ΅Χ§Χª ΧΧ›Χ•ΧΧ•Χª Χ¨Χ™Χ§Χ•Χª
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 723",,Χ¦Χ¨Χ™Χ
+2033,Consignment,4,D023Β ,0..1,,Χ—Χ•Χ‘Χ” Χ‘ΧΧ§Χ¨Χ” Χ©Χ ΧΧ©ΧΧ— Χ™ΧΧ™,ΧΧ–Χ”Χ” ΧΆΧ΅Χ§Χª ΧΧ‘- Χ¨Χ©Χ•ΧΧ” B- Χ¤Χ•Χ–' 135-150,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χª ΧΧ‘,Transport document number,ID,         ID,Declaration.Consignment.TransportContractDocument.ID,ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χª ΧΧ‘,,"ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χª ΧΧ‘
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 720",,Χ¦Χ¨Χ™Χ
+2037,Consignment,4,D024Β ,0..1,,ΧΧ ΧΧ¨Χ•Χ•Χ ΧΧ™ ΧΧ¤Χ™ ΧΧ™Χ™Χ ΧΧ™Χ•Χ 7/8/11,,M,ΧΧ Χ¦Χ¨Χ™Χ,,"Transport document type, coded",TypeCode,         TypeCode,Declaration.Consignment.TransportContractDocument.TypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧ΅ΧΧ ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χª ΧΧ‘,,"Χ‘ΧΆΧ΅Χ§Χª ΧΧ‘, Χ’Χ Χ™ΧΧ™ Χ•Χ’Χ Χ™Χ‘Χ©ΧªΧ™   IL2 
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 723",,Χ¦Χ¨Χ™Χ
+721,Consignment,4,D021Β ,0..1,,ΧΧ§Χ•Χ Χ”Χ¦ΧΧª Χ©ΧΧ¨ Χ”ΧΧΧΆΧ-ΧΧ§Χ΅Χ Χ—Χ•Χ¤Χ©Χ™,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,, ,IssueLocation,         IssueLocation,Declaration.Consignment.TransportContractDocument.IssueLocation,Χ›Χ•ΧªΧ¨Χª ΧΧ§Χ•Χ Χ”Χ Χ¤Χ§Χª Χ”ΧΧ΅ΧΧ,,,,Χ¦Χ¨Χ™Χ
+724,Consignment,4,43A,0..*,,ΧΧ ΧΧ¨Χ•Χ•Χ ΧΧ™ ΧΧ¤Χ™ ΧΧ™Χ™Χ ΧΧ™Χ•Χ 7/8/11,,O,ΧΧ Χ¦Χ¨Χ™Χ,,,Deconsolidator,         Deconsolidator,,Χ¤Χ¨ΧΧ™ ΧΧ©ΧΧ—,,Χ΅Χ•Χ›Χ ΧΧ•Χ Χ™Χ” Χ™Χ“Χ•Χ•Χ— ΧΧ™ Χ”ΧΧ©ΧΧ— Χ©ΧΧ—Χ¨ΧΧ™ ΧΆΧ Χ”ΧΧ›Χ•ΧΧ” Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ§Χ•Χ Χ΅Χ“Χ™ΧΧ™Χ–Χ¦Χ™Χ”,"Χ”ΧΧ©ΧΧ— Χ™Χ”Χ™Χ” Χ™Χ“Χ•ΧΆ Χ‘ΧΆΧ™Χ΅Χ§Χª Χ”Χ‘Χ Χ•Χ’Χ Χ”Χ™Χ ΧΆΧ•Χ‘Χ¨Χª Χ”ΧΆΧ¨Χ›Χª Χ΅Χ™Χ›Χ•Χ Χ™Χ Χ•Χ”ΧΧ©ΧΧ— Χ”Χ•Χ Χ”-submiter Χ•ΧΧ›Χ ΧΧ Χ¦Χ¨Χ™Χ ΧΧª Χ”Χ©Χ“Χ” Χ”Χ ""Χ.",ΧΧ Χ¦Χ¨Χ™Χ
+725,Consignment,5,R023Β ,0..1,,ΧΧ ΧΧ¨Χ•Χ•Χ ΧΧ™ ΧΧ¤Χ™ ΧΧ™Χ™Χ ΧΧ™Χ•Χ 7/8/11,ΧΧ΅Χ¤Χ¨ ΧΧ©ΧΧ—- Χ¨Χ©Χ•ΧΧ” 3- Χ¤Χ•Χ–' 180-182,M,Χ‘ΧΧ‘ΧΧª Χ΅Χ•Χ›Χ Χ™ ΧΧ Χ™Χ™Χ” Χ©ΧΧ™Χ¤Χª Χ—.Χ¤ ΧΧ©ΧΧ— ΧΧ¤Χ™ Χ§Χ•Χ“ ΧΧ©ΧΧ—,,"Deconsolidator, coded",ID,            ID,Declaration.Consignment.TransportContractDocument.Deconsolidator.ID,ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” ΧΧ©ΧΧ—,,Χ§Χ•Χ“ ΧΧΧ‘ΧΧª ΧΧ©ΧΧ—Χ™Χ. Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ§Χ•Χ Χ΅Χ•ΧΧ™Χ“Χ¦Χ™Χ”. ΧΧΧ•Χ¨ ΧΧ”Χ™Χ•Χª Χ”Χ Χ©Χ’Χ¨,,Χ¦Χ¨Χ™Χ
+791,Consignment,3,37B,0..*,,,,,H,,,UNDGContact,      UNDGContact,Declaration.Consignment.UNDGContact,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ§Χ©Χ¨ Χ—Χ•ΧΧ¨Χ™Χ ΧΧ΅Χ•Χ›Χ Χ™Χ,,Χ¤Χ¨ΧΧ™ ΧΧ™Χ© Χ§Χ©Χ¨ ΧΧΧ™Χ¤Χ•Χ Χ‘Χ—Χ•ΧΧ¨Χ™Χ ΧΧ΅Χ•Χ›Χ Χ™Χ,,Χ¦Χ¨Χ™Χ
+792,Consignment,4,R047Β ,0..1,,"Χ©Χ Χ—Χ‘Χ¨Χ” Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ—Χ•Χ""Χ΅. Χ—Χ•Χ‘Χ” Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ—Χ•Χ""Χ΅",,C,ΧΧ Χ Χ™ΧªΧ,,Dangerous goods contact,Name,         Name,Declaration.Consignment.UNDGContact.Name,Χ©Χ Χ”Χ—Χ‘Χ¨Χ”,,Χ©Χ Χ”Χ—Χ‘Χ¨Χ” Χ©Χ ΧΧ™Χ© Χ§Χ©Χ¨ ΧΧ—Χ•ΧΧ¨Χ™Χ ΧΧ΅Χ•Χ›Χ Χ™Χ,,Χ¦Χ¨Χ™Χ
+800,Consignment,4,25A,0..*,,,,,H,,,Communication,         Communication,Declaration.Consignment.UNDGContact.Communication,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,,Χ¤Χ¨ΧΧ™ Χ§Χ©Χ¨ Χ©Χ Χ”Χ—Χ‘Χ¨Χ”,,Χ¦Χ¨Χ™Χ
+801,Consignment,5,240Β ,0..1,,ΧΧ΅Χ¤Χ¨ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨. Χ—Χ•Χ‘Χ” Χ‘ΧΧ§Χ¨Χ” Χ©Χ ΧΧΧΆΧ ΧΧ΅Χ•Χ›Χ,,C,ΧΧ Χ Χ™ΧªΧ,,Communication number,ID,            ID,Declaration.Consignment.UNDGContact.Communication.ID,ΧΧ΅Χ¤Χ¨ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨, ,,,Χ¦Χ¨Χ™Χ
+802,Consignment,5,253,0..1,,Χ΅Χ•Χ’ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨ Χ‘ΧΧ§Χ¨Χ” Χ©Χ ΧΧΧΆΧ ΧΧ΅Χ•Χ›Χ-ΧΧ‘ΧΧª EDIFACT3155,,C,ΧΧ Χ Χ™ΧªΧ,,Communication number type,TypeID,            TypeID,Declaration.Consignment.UNDGContact.Communication.TypeID,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,"Χ§Χ•Χ“ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨: TE Χ Χ™Χ™Χ—, AL Χ Χ™Χ™Χ“, FX Χ¤Χ§Χ΅, EM Χ“Χ•Χ""Χ, AH ΧΧªΧ¨ ΧΧ™Χ ΧΧ¨Χ Χ",,,Χ¦Χ¨Χ™Χ
+803,Consignment,4,34A,0..*,,,,,H,,,contact,         contact,Declaration.Consignment.UNDGContact.contact,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧ™Χ© Χ§Χ©Χ¨,,,,Χ¦Χ¨Χ™Χ
+804,Consignment,5,246Β ,0..1,,"Χ©Χ ΧΧ™Χ© Χ§Χ©Χ¨ Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ—Χ•Χ""Χ΅. Χ—Χ•Χ‘Χ” Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ—Χ•Χ""Χ΅",,C,ΧΧ Χ¦Χ¨Χ™Χ,,Department or employee  contact name,Name,            Name,Declaration.Consignment.UNDGContact.contact.Name,Χ©Χ ΧΧ™Χ© Χ§Χ©Χ¨,,Χ©Χ ΧΧ™Χ© Χ§Χ©Χ¨,,Χ¦Χ¨Χ™Χ
+805,Consignment,5,25A,0..*,,,,,H,,,Communication,            Communication,Declaration.Consignment.UNDGContact.contact.Communication,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,,ΧΧΧ¤Χ•Χ Χ©Χ ΧΧ™Χ© Χ§Χ©Χ¨ ,,Χ¦Χ¨Χ™Χ
+806,Consignment,6,240Β ,0..1,,,,O,ΧΧ Χ¦Χ¨Χ™Χ,,Communication number,ID,               ID,Declaration.Consignment.UNDGContact.Communication.ID,ΧΧ΅Χ¤Χ¨ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,,ΧΧ“Χ•Χ’ΧΧ: ΧΧ΅Χ¤Χ¨ ΧΧΧ¤Χ•Χ Χ΅ΧΧ•ΧΧ¨Χ™ Χ©Χ ΧΧ™Χ© Χ”Χ§Χ©Χ¨,,Χ¦Χ¨Χ™Χ
+807,Consignment,6,253,0..1,,ΧΧ‘ΧΧª EDIFACT3155,,O,ΧΧ Χ¦Χ¨Χ™Χ,,Communication number type,TypeID,               TypeID,Declaration.Consignment.UNDGContact.contact.Communication.TypeID,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨,"Χ§Χ•Χ“ ΧΧΧ¦ΧΆΧ™ Χ§Χ©Χ¨: TE Χ Χ™Χ™Χ—, AL Χ Χ™Χ™Χ“, FX Χ¤Χ§Χ΅, EM Χ“Χ•Χ""Χ, AH ΧΧªΧ¨ ΧΧ™Χ ΧΧ¨Χ Χ",ΧΧ“Χ•Χ’ΧΧ: ΧΧΧ¤Χ•Χ Χ΅ΧΧ•ΧΧ¨Χ™,,Χ¦Χ¨Χ™Χ
+808,Consignment,3,38B,0..*,,,,,H,,,UnloadingLocation,      UnloadingLocation,Declaration.Consignment.UnloadingLocation,Χ›Χ•ΧªΧ¨Χª Χ ΧªΧ•Χ Χ™ ΧΧªΧ¨ Χ¤Χ¨Χ™Χ§Χ”,,Χ§Χ•Χ“ ΧΧΧ‘ΧΧª LOCODE Χ©Χ Χ”ΧΧªΧ¨ Χ‘Χ• Χ™Χ¤Χ¨Χ§Χ• Χ”ΧΧ•Χ‘Χ™Χ,,Χ¦Χ¨Χ™Χ
+809,Consignment,4,173Β ,0..1,,ΧªΧΧ¨Χ™Χ Χ”Χ’ΧΆΧ” ΧΧ©Χ•ΧΆΧ¨ Χ©Χ Χ”ΧΧΧΆΧ. Χ—Χ•Χ‘Χ” Χ›ΧΧ©Χ¨ Χ”ΧΧ Χ™Χ™Χ” Χ¤Χ•Χ¨Χ§Χª Χ‘Χ©Χ Χ™ Χ ΧΧΧ™Χ ΧªΧ—Χª ΧΧ•ΧªΧ• ΧΧ¦Χ”Χ¨,,C,ΧΧ Χ Χ™ΧªΧ,,Date of arrival at place of discharge,ArrivalDateTime,         ArrivalDateTime,Declaration.Consignment.UnloadingLocation.ArrivalDateTime,ΧªΧΧ¨Χ™Χ Χ”Χ’ΧΆΧ” ΧΧ©Χ•ΧΆΧ¨ (Χ¨ΧΧª Χ”ΧΧΧΆΧ),,"ΧªΧΧ¨Χ™Χ Χ”Χ’ΧΆΧ” ΧΧ©Χ•ΧΆΧ¨ Χ‘Χ¨ΧΧª Χ”ΧΧΧΆΧ 
+",,Χ¦Χ¨Χ™Χ
+810,Consignment,4,L013Β ,0..1,,,Χ ΧΧ Χ¤Χ¨Χ™Χ§Χ”-Χ¨Χ©Χ•ΧΧ” 3-Χ¤Χ•Χ–' 053-057  ,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”- Χ ΧΧ Χ¤Χ¨Χ™Χ§Χ”,Χ ΧΧ Χ¤Χ¨Χ™Χ§Χ”  ,"Place of discharge, coded",ID,         ID,Declaration.Consignment.UnloadingLocation.ID,ΧΧªΧ¨ Χ¤Χ¨Χ™Χ§Χ”,,,,Χ¦Χ¨Χ™Χ
+328,ConsignmentItem,3,29A,1..*,,,,,H,,,ConsignmentItem,      ConsignmentItem,Declaration.Consignment.ConsignmentItem,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ©Χ•Χ¨Χ” Χ‘ΧΧΧΆΧ,,Χ—Χ•Χ‘Χ” ΧΧ¤Χ—Χ•Χª Χ©Χ•Χ¨Χ” ΧΧ—Χª Χ‘ΧΧΧΆΧ,,Χ¦Χ¨Χ™Χ
+329,ConsignmentItem,4,094Β ,0..1,,,Χ§Χ•Χ“ Χ΅Χ™Χ›Χ•Χ-Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 058-058,M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ§Χ•Χ“ Χ΅Χ™Χ›Χ•Χ,Goods status code,GoodsStatusCode,         GoodsStatusCode,Declaration.Consignment.ConsignmentItem.GoodsStatusCode,Χ§Χ•Χ“ ΧΧΧΆΧ ΧΧ΅Χ•Χ›Χ,Χ΅ΧΧΧΧ•Χ΅ Χ”ΧΧΧΆΧ - ΧΧ©ΧΧ© ΧΆΧ‘Χ•Χ¨ Χ“Χ™Χ•Χ•Χ— ΧΧΧΆΧ ΧΧ΅Χ•Χ›Χ,"ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” Χ”ΧΧ Χ—Χ•ΧΧ¨ ΧΧ΅Χ•Χ›Χ ΧΧ• ΧΧ
+Χ”Χ©Χ“Χ” Χ§Χ•Χ“ Χ΅Χ™Χ›Χ•Χ - ΧΧ™Χ Χ“Χ™Χ§Χ¦Χ™Χ” Χ”ΧΧ ΧΧ“Χ•Χ‘Χ¨ Χ‘ΧΧΧΆΧ Χ”ΧΧ›Χ™Χ Χ—Χ•ΧΧ¨Χ™Χ ΧΧ΅Χ•Χ›Χ Χ™Χ  (ΧΧ΅Χ•Χ›Χ/ΧΧ ΧΧ΅Χ•Χ›Χ)   
+Χ‘ΧΧ•Χ•Χ™Χ¨Χ™ - Restricted  - R  ΧΧ• Χ¨Χ™Χ§ , Χ‘Χ™ΧΧ™ - D ΧΧ΅Χ•Χ›Χ , N - ΧΧ ΧΧ΅Χ•Χ›Χ. ","Χ©Χ“Χ” Χ—Χ•Χ‘Χ”
+D- ΧΧ΅Χ•Χ›Χ
+N - ΧΧ ΧΧ΅Χ•Χ›Χ",Χ¦Χ¨Χ™Χ
+330,ConsignmentItem,4,006Β ,0..1,,ΧΧ Χ—Χ•Χ‘Χ” Χ‘Χ“Χ™Χ•Χ•Χ— ΧΧ¦Χ”Χ¨ ΧΧΧ Χ•ΧΧ›Χ•ΧΧ•Χª Χ¨Χ™Χ§Χ•Χª (Χ©Χ•Χ Χ” ΧΧ—Χ•Χ‘Χ” Χ‘ΧΧ¦Χ”Χ¨ ΧΧΧ),Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΆΧ™Χ΅Χ§Χ”-Χ¨Χ©Χ•ΧΧ” 3- Χ¤Χ•Χ–' 164-166,C,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΆΧ™Χ΅Χ§Χ”,Sequence number,SequenceNumeric,         SequenceNumeric,Declaration.Consignment.ConsignmentItem.SequenceNumeric,ΧΧ΅' Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΧΧΆΧ,"Χ”Χ©Χ“Χ” ΧΧ•Χ’Χ“Χ¨ n..5 ,  ΧΧ Χ‘Χ©Χ ΧΧ™ΧΧ•Χ¦Χ™Χ ΧΧ•Χ ΧΧΆΧ¨Χ›Χ•Χª ΧΧ—Χ¨Χ•Χª ΧΧ•ΧªΧ¨ ΧΧ©ΧΧ•Χ— n..3 Χ‘ΧΧ‘Χ“ ",,,Χ¦Χ¨Χ™Χ
+374,ConsignmentItem,4,03A,0..*,,,,,H,,,AdditionalInformation,         AdditionalInformation,Declaration.Consignment.ConsignmentItem.AdditionalInformation,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧ™Χ“ΧΆ Χ Χ•Χ΅Χ£ ΧΧ©Χ•Χ¨Χ” Χ‘ΧΧΧΆΧ,,"ΧΧ©ΧΧ© ΧΧ“Χ™Χ•Χ•Χ— Χ©Χ“Χ•Χª Χ Χ“Χ¨Χ©Χ™Χ Χ©ΧΧ™Χ ΧΧ”Χ Χ©Χ“Χ” ΧΧ•Χ’Χ“Χ¨ . ΧΧ•Χ¨Χ›Χ‘ ΧΧ΅Χ•Χ’ Χ ΧªΧ•Χ Χ•Χ”ΧΆΧ¨Χ.
+",,Χ¦Χ¨Χ™Χ
+375,ConsignmentItem,5,105,0..1,,,,O,"Χ©Χ“Χ” Χ¨Χ‘ ΧΧ•Χ¤ΧΆΧ™. Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ ΧΧ΅Χ¤Χ¨ Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΆΧ΅Χ§Χ” Χ™Χ©Χ-Χ¨Χ©Χ•ΧΧ” C- Χ¤Χ•Χ–' 032-035 . Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χ” Χ™Χ©Χ-Χ¨Χ©Χ•ΧΧ” C- Χ¤Χ•Χ–' 016-031 .  Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ ΧΆΧ¨Χ Χ‘-Χ§Χ• ΧΧ—Χ΅Χ•Χ- Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 183-184 .Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ ΧΆΧ¨Χ Χ‘-ΧΧ©Χ§Χ ΧΧ¨Χ” Χ‘Χ§""Χ’ - Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 040-047",,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ΧΆΧ¨Χ Χ ΧªΧ•Χ,,,,Χ¦Χ¨Χ™Χ
+377,ConsignmentItem,5,226Β ,1,,,,M,Χ¨ΧΧ” Χ΅Χ•Χ“Χ¨ 379,,"Additional statement, coded",StatementCode,            StatementCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementCode,Χ§Χ•Χ“ ΧΆΧ¨Χ Χ ΧªΧ•Χ ,,"Χ™Χ©ΧΧ© ΧΆΧ‘Χ•Χ¨:
+Χ©Χ™Χ“Χ•Χ¨ ΧΧ΅Χ¤Χ¨ Χ™Χ‘Χ•ΧΧ
+Χ§Χ•Χ“ Χ΅Χ™Χ‘Χª ΧªΧ™Χ§Χ•Χ/Χ‘Χ™ΧΧ•Χ - change reason code
+Χ™Χ©ΧΧ© Χ’Χ ΧΆΧ‘Χ•Χ¨ Χ¤Χ™Χ¦Χ•Χ Χ•ΧΧ™Χ—Χ•Χ“ ΧΆΧ™Χ΅Χ§ΧΧ•Χª. Χ¤Χ™Χ¦Χ•Χ ΧΆΧ™Χ΅Χ§ΧΧ•Χª - Χ™Χ©Χ“Χ¨Χ• Χ›ΧΧ Χ ΧªΧ•Χ Χ™ ΧΆΧ™Χ΅Χ§Χ” Χ•Χ΅Χ™Χ“Χ•Χ¨Χ™ ΧΧ§Χ•Χ¨Χ™Χ™Χ Χ©ΧΧ”Χ Χ Χ•Χ¦Χ¨Χ” Χ”ΧΆΧ™Χ΅Χ§Χ” Χ”Χ—Χ“Χ©Χ”.
+Χ›Χ ""Χ Χ‘ΧΧ™Χ—Χ•Χ“ 
+ΧΧ¦Χ”Χ¨ Χ™ΧΧ™ - 
+ΧΧ΅Χ¤Χ¨ Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΧΧΆΧ ΧΧ‘,
+ΧΧ΅Χ¤Χ¨ ΧΧΧΆΧ/ΧΆΧ™Χ΅Χ§Χª ΧΧ‘,
+Χ§Χ•Χ“ ΧΧ—Χ΅Χ•Χ,
 
-ρεβ θιτεμ - ς""τ ςαεγδ ωπςωϊ ς""ι ΰιφιχ αο ςεζψ ξηπ""ι ΰιο φεψκ αωγδ δπ""μ αξρψ
+Χ΅Χ•Χ’ ΧΧ™Χ¤Χ•Χ - ΧΆ""Χ¤ ΧΆΧ‘Χ•Χ“Χ” Χ©Χ ΧΆΧ©Χª ΧΆ""Χ™ ΧΧ™Χ¦Χ™Χ§ Χ‘Χ ΧΆΧ•Χ–Χ¨ ΧΧ—Χ ""Χ™ ΧΧ™Χ Χ¦Χ•Χ¨Χ Χ‘Χ©Χ“Χ” Χ”Χ ""Χ Χ‘ΧΧ΅Χ¨
 
-ξφδψ ΰεειψι-
-ρεβ ξριψδ, - ξριψδ ιωιψδ μΰ ψμεεπθι μξφδψ ΰεειψι
+ΧΧ¦Χ”Χ¨ ΧΧ•Χ•Χ™Χ¨Χ™-
+Χ΅Χ•Χ’ ΧΧ΅Χ™Χ¨Χ”, - ΧΧ΅Χ™Χ¨Χ” Χ™Χ©Χ™Χ¨Χ” ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ ΧΧ•Χ•Χ™Χ¨Χ™
 
-ξφδψ ιαωϊι -
-ΰιπγχφιιϊ ηπιιϊ μιμδ (λο/μΰ)
-ΰιο ξριψδ ιωιψδ (αδβγψδ, βν βετδ αξςαψ βαεμ ΰιο ψωιξεο εΰιο ξριψδ ιωιψδ)",,φψικ
-379,ConsignmentItem,5,369 ,1,,,,C,"ωγδ ψα ξετςι. ΰν δϊχαμδ ψωεξδ C ιω μιφψ ψωεξδ ςν χεγ 12 . ΰν δϊχαμ ςψκ α-ξρτψ ριγεψι αςρχδ ιωο-ψωεξδ C- τεζ' 032-035 ιω μδλπιρ χαες = 6 . ΰν δϊχαμ ςψκ α-ξρτψ ςρχδ ιωο-ψωεξδ C- τεζ' 016-031 ιω μδλπιρ χαες = 7.  ΰν δϊχαμ ςψκ α-χε ΰηρεο- ψωεξδ 3 - τεζ' 183-184 ιω μδλπιρ χαες =8 .ΰν δϊχαμ ςψκ α-ξωχμ θψδ αχ""β - ψωεξδ 3 - τεζ' 040-047 ιω μδλπιρ χαες =10",,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,χεγ ρεβ δπϊεο,ρεβ ωγδ ωμ  226 = WCOID ,"ΰηγ ξδςψλιν ιδιδ:
-change reason code ",,φψικ
-2011,ConsignmentItem,5,105,1,,,,C,,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ξρτψ ριγεψι αςρχϊ ΰα/ςρχϊ ξχεψ,ParentConsignmentItemID,"ξζδδ ριγεψι ςρχϊ ξχεψ/ςρχϊ ΰα
-ωλτεμ ωμ 375",,φψικ
-2012,ConsignmentItem,5,369 ,1,,,,C,ψΰδ ρεγψ 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,χεγ ξρτψ ριγεψι αςρχϊ ΰα/ξχεψ,χεγ ξρτψ ριγεψι αςρχϊ ΰα/ξχεψ = 6,ωλτεμ ωμ 379,,φψικ
-2013,ConsignmentItem,5,105,1,,"ηεαδ αςϊ γιεεη ςμ τιφεμ/ΰιηεγ ςρχδ- λΰωψ αωγδ StatementTypeCode ιετις ςψκ=7 , ϊλεμϊ δωγδ δπ""μ διπδ ξςρχϊ ΰα",ξρτψ ςρχδ ιωο-ψωεξδ C- τεζ' 016-031,C,ψΰδ ρεγψ 375,"ςρχϊ ξχεψ
-ψωεξδ C",Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ξρτψ ςρχϊ ξχεψ,ParentConsignmentID,"ξζδδ ςρχϊ ξχεψ
-ωλτεμ ωμ 375",,φψικ
-2014,ConsignmentItem,5,369 ,1,,"ηεαδ αςϊ γιεεη ςμ τιφεμ/ΰιηεγ ςρχδ. λΰωψ ιετις ςψκ=7 , ϊλεμϊ δωγδ Content διπδ ςρχϊ ΰα",,C,ψΰδ ρεγψ 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,χεγ ξρτψ ςρχϊ ξχεψ,χεγ ξρτψ ςρχϊ ξχεψ = 7,ωλτεμ ωμ 379,,φψικ
-2015,ConsignmentItem,5,105,1,,"λΰωψ ωγδ:StatementTypeCode=8 , ηιια μδιεϊ χεγ αο 2 ϊεειν δξφιιο ΰϊ δχε ωμ ρελο δΰπιιδ. ψμεεπθι αςιχψ μξλεμεϊ ψιχεϊ εξμΰεϊ ",χε ΰηρεο- ψωεξδ 3 - τεζ' 183-184,O,ψΰδ ρεγψ 375,χε ΰηρεο,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,χε ΰηρεο,StorageLine,ωλτεμ ωμ 375,,φψικ
-2016,ConsignmentItem,5,369 ,1,,"ςψκ=8 , ΰεξψ λι ϊλεμϊ δωγδ Content διπδ χε ΰιηρεο",χε ΰηρεο- ψωεξδ 3 - τεζ' 183-184,O,ψΰδ ρεγψ 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,χεγ χε ΰηρεο,χεγ χε ΰηρεο = 8,ωλτεμ ωμ 379,,φψικ
-2017,ConsignmentItem,5,105,1,,μΰ ψμεεπθι μξφδψ ιξι,,,μΰ φψικ,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ηπιιϊ μιμδ/τψιχϊ μιμδ,NightParkingIndicator ,"ΰιπγχφιιϊ ηπιιϊ μιμδ (λο/μΰ)
-ωλτεμ ωμ 375",,μΰ φψικ
-2018,ConsignmentItem,5,369 ,1,,μΰ ψμεεπθι μξφδψ ιξι,,,μΰ φψικ,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,χεγ ηπιιϊ μιμδ/τψιχϊ μιμδ,χεγ ηπιιϊ μιμδ = 9,ωλτεμ ωμ 379,,μΰ φψικ
-2019,ConsignmentItem,5,105,1,,"δςϊχδ ξμΰδ λΰωψ ωγδ:StatementTypeCode=10 , αωγδ ζδ ιετις ξωχμ δθψδ ωμ δξλεμδ αχ""β- ηεαδ αΰψιζδ ξρεβ ξλεμδ","ξωχμ θψδ αχ""β - ψωεξδ 3 - τεζ' 040-047",C,ψΰδ ρεγψ 375,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ξωχμ θψδ,TeraWheight,"ξωχμ  θψδ (ξωχμ ωμ φιεγ δεαμδ)
+ΧΧ¦Χ”Χ¨ Χ™Χ‘Χ©ΧªΧ™ -
+ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ™Χª Χ—Χ Χ™Χ™Χª ΧΧ™ΧΧ” (Χ›Χ/ΧΧ)
+ΧΧ™Χ ΧΧ΅Χ™Χ¨Χ” Χ™Χ©Χ™Χ¨Χ” (Χ‘Χ”Χ’Χ“Χ¨Χ”, Χ’Χ Χ’Χ•Χ¤Χ” Χ‘ΧΧΆΧ‘Χ¨ Χ’Χ‘Χ•Χ ΧΧ™Χ Χ¨Χ©Χ™ΧΧ•Χ Χ•ΧΧ™Χ ΧΧ΅Χ™Χ¨Χ” Χ™Χ©Χ™Χ¨Χ”)",,Χ¦Χ¨Χ™Χ
+379,ConsignmentItem,5,369Β ,1,,,,C,"Χ©Χ“Χ” Χ¨Χ‘ ΧΧ•Χ¤ΧΆΧ™. ΧΧ Χ”ΧªΧ§Χ‘ΧΧ” Χ¨Χ©Χ•ΧΧ” C Χ™Χ© ΧΧ™Χ¦Χ¨ Χ¨Χ©Χ•ΧΧ” ΧΆΧ Χ§Χ•Χ“ 12 . ΧΧ Χ”ΧªΧ§Χ‘Χ ΧΆΧ¨Χ Χ‘-ΧΧ΅Χ¤Χ¨ Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΆΧ΅Χ§Χ” Χ™Χ©Χ-Χ¨Χ©Χ•ΧΧ” C- Χ¤Χ•Χ–' 032-035 Χ™Χ© ΧΧ”Χ›Χ Χ™Χ΅ Χ§Χ‘Χ•ΧΆ = 6 . ΧΧ Χ”ΧªΧ§Χ‘Χ ΧΆΧ¨Χ Χ‘-ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χ” Χ™Χ©Χ-Χ¨Χ©Χ•ΧΧ” C- Χ¤Χ•Χ–' 016-031 Χ™Χ© ΧΧ”Χ›Χ Χ™Χ΅ Χ§Χ‘Χ•ΧΆ = 7.  ΧΧ Χ”ΧªΧ§Χ‘Χ ΧΆΧ¨Χ Χ‘-Χ§Χ• ΧΧ—Χ΅Χ•Χ- Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 183-184 Χ™Χ© ΧΧ”Χ›Χ Χ™Χ΅ Χ§Χ‘Χ•ΧΆ =8 .ΧΧ Χ”ΧªΧ§Χ‘Χ ΧΆΧ¨Χ Χ‘-ΧΧ©Χ§Χ ΧΧ¨Χ” Χ‘Χ§""Χ’ - Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 040-047 Χ™Χ© ΧΧ”Χ›Χ Χ™Χ΅ Χ§Χ‘Χ•ΧΆ =10",,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ”Χ ΧªΧ•Χ,Χ΅Χ•Χ’ Χ©Χ“Χ” Χ©Χ  226 = WCOID ,"ΧΧ—Χ“ ΧΧ”ΧΆΧ¨Χ›Χ™Χ Χ™Χ”Χ™Χ”:
+change reason code ",,Χ¦Χ¨Χ™Χ
+2011,ConsignmentItem,5,105,1,,,,C,,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ΧΧ΅Χ¤Χ¨ Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΆΧ΅Χ§Χª ΧΧ‘/ΧΆΧ΅Χ§Χª ΧΧ§Χ•Χ¨,ParentConsignmentItemID,"ΧΧ–Χ”Χ” Χ΅Χ™Χ“Χ•Χ¨Χ™ ΧΆΧ΅Χ§Χª ΧΧ§Χ•Χ¨/ΧΆΧ΅Χ§Χª ΧΧ‘
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 375",,Χ¦Χ¨Χ™Χ
+2012,ConsignmentItem,5,369Β ,1,,,,C,Χ¨ΧΧ” Χ΅Χ•Χ“Χ¨ 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ ΧΧ΅Χ¤Χ¨ Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΆΧ΅Χ§Χª ΧΧ‘/ΧΧ§Χ•Χ¨,Χ§Χ•Χ“ ΧΧ΅Χ¤Χ¨ Χ΅Χ™Χ“Χ•Χ¨Χ™ Χ‘ΧΆΧ΅Χ§Χª ΧΧ‘/ΧΧ§Χ•Χ¨ = 6,Χ©Χ›Χ¤Χ•Χ Χ©Χ 379,,Χ¦Χ¨Χ™Χ
+2013,ConsignmentItem,5,105,1,,"Χ—Χ•Χ‘Χ” Χ‘ΧΆΧª Χ“Χ™Χ•Χ•Χ— ΧΆΧ Χ¤Χ™Χ¦Χ•Χ/ΧΧ™Χ—Χ•Χ“ ΧΆΧ΅Χ§Χ”- Χ›ΧΧ©Χ¨ Χ‘Χ©Χ“Χ” StatementTypeCode Χ™Χ•Χ¤Χ™ΧΆ ΧΆΧ¨Χ=7 , ΧªΧ›Χ•ΧΧª Χ”Χ©Χ“Χ” Χ”Χ ""Χ Χ”Χ™Χ Χ” ΧΧΆΧ΅Χ§Χª ΧΧ‘",ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χ” Χ™Χ©Χ-Χ¨Χ©Χ•ΧΧ” C- Χ¤Χ•Χ–' 016-031,C,Χ¨ΧΧ” Χ΅Χ•Χ“Χ¨ 375,"ΧΆΧ΅Χ§Χª ΧΧ§Χ•Χ¨
+Χ¨Χ©Χ•ΧΧ” C",Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χª ΧΧ§Χ•Χ¨,ParentConsignmentID,"ΧΧ–Χ”Χ” ΧΆΧ΅Χ§Χª ΧΧ§Χ•Χ¨
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 375",,Χ¦Χ¨Χ™Χ
+2014,ConsignmentItem,5,369Β ,1,,"Χ—Χ•Χ‘Χ” Χ‘ΧΆΧª Χ“Χ™Χ•Χ•Χ— ΧΆΧ Χ¤Χ™Χ¦Χ•Χ/ΧΧ™Χ—Χ•Χ“ ΧΆΧ΅Χ§Χ”. Χ›ΧΧ©Χ¨ Χ™Χ•Χ¤Χ™ΧΆ ΧΆΧ¨Χ=7 , ΧªΧ›Χ•ΧΧª Χ”Χ©Χ“Χ” Content Χ”Χ™Χ Χ” ΧΆΧ΅Χ§Χª ΧΧ‘",,C,Χ¨ΧΧ” Χ΅Χ•Χ“Χ¨ 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χª ΧΧ§Χ•Χ¨,Χ§Χ•Χ“ ΧΧ΅Χ¤Χ¨ ΧΆΧ΅Χ§Χª ΧΧ§Χ•Χ¨ = 7,Χ©Χ›Χ¤Χ•Χ Χ©Χ 379,,Χ¦Χ¨Χ™Χ
+2015,ConsignmentItem,5,105,1,,"Χ›ΧΧ©Χ¨ Χ©Χ“Χ”:StatementTypeCode=8 , Χ—Χ™Χ™Χ‘ ΧΧ”Χ™Χ•Χª Χ§Χ•Χ“ Χ‘Χ 2 ΧªΧ•Χ•Χ™Χ Χ”ΧΧ¦Χ™Χ™Χ ΧΧª Χ”Χ§Χ• Χ©Χ Χ΅Χ•Χ›Χ Χ”ΧΧ Χ™Χ™Χ”. Χ¨ΧΧ•Χ•Χ ΧΧ™ Χ‘ΧΆΧ™Χ§Χ¨ ΧΧΧ›Χ•ΧΧ•Χª Χ¨Χ™Χ§Χ•Χª Χ•ΧΧΧΧ•Χª ",Χ§Χ• ΧΧ—Χ΅Χ•Χ- Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 183-184,O,Χ¨ΧΧ” Χ΅Χ•Χ“Χ¨ 375,Χ§Χ• ΧΧ—Χ΅Χ•Χ,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,Χ§Χ• ΧΧ—Χ΅Χ•Χ,StorageLine,Χ©Χ›Χ¤Χ•Χ Χ©Χ 375,,Χ¦Χ¨Χ™Χ
+2016,ConsignmentItem,5,369Β ,1,,"ΧΆΧ¨Χ=8 , ΧΧ•ΧΧ¨ Χ›Χ™ ΧªΧ›Χ•ΧΧª Χ”Χ©Χ“Χ” Content Χ”Χ™Χ Χ” Χ§Χ• ΧΧ™Χ—Χ΅Χ•Χ",Χ§Χ• ΧΧ—Χ΅Χ•Χ- Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 183-184,O,Χ¨ΧΧ” Χ΅Χ•Χ“Χ¨ 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ§Χ• ΧΧ—Χ΅Χ•Χ,Χ§Χ•Χ“ Χ§Χ• ΧΧ—Χ΅Χ•Χ = 8,Χ©Χ›Χ¤Χ•Χ Χ©Χ 379,,Χ¦Χ¨Χ™Χ
+2017,ConsignmentItem,5,105,1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,,ΧΧ Χ¦Χ¨Χ™Χ,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,Χ—Χ Χ™Χ™Χª ΧΧ™ΧΧ”/Χ¤Χ¨Χ™Χ§Χª ΧΧ™ΧΧ”,NightParkingIndicator ,"ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ™Χª Χ—Χ Χ™Χ™Χª ΧΧ™ΧΧ” (Χ›Χ/ΧΧ)
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 375",,ΧΧ Χ¦Χ¨Χ™Χ
+2018,ConsignmentItem,5,369Β ,1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,,ΧΧ Χ¦Χ¨Χ™Χ,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ—Χ Χ™Χ™Χª ΧΧ™ΧΧ”/Χ¤Χ¨Χ™Χ§Χª ΧΧ™ΧΧ”,Χ§Χ•Χ“ Χ—Χ Χ™Χ™Χª ΧΧ™ΧΧ” = 9,Χ©Χ›Χ¤Χ•Χ Χ©Χ 379,,ΧΧ Χ¦Χ¨Χ™Χ
+2019,ConsignmentItem,5,105,1,,"Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ›ΧΧ©Χ¨ Χ©Χ“Χ”:StatementTypeCode=10 , Χ‘Χ©Χ“Χ” Χ–Χ” Χ™Χ•Χ¤Χ™ΧΆ ΧΧ©Χ§Χ Χ”ΧΧ¨Χ” Χ©Χ Χ”ΧΧ›Χ•ΧΧ” Χ‘Χ§""Χ’- Χ—Χ•Χ‘Χ” Χ‘ΧΧ¨Χ™Χ–Χ” ΧΧ΅Χ•Χ’ ΧΧ›Χ•ΧΧ”","ΧΧ©Χ§Χ ΧΧ¨Χ” Χ‘Χ§""Χ’ - Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 040-047",C,Χ¨ΧΧ” Χ΅Χ•Χ“Χ¨ 375,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ΧΧ©Χ§Χ ΧΧ¨Χ”,TeraWheight,"ΧΧ©Χ§Χ  ΧΧ¨Χ” (ΧΧ©Χ§Χ Χ©Χ Χ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ”)
 
-ιδιδ αβψρδ WCO ωμ ρτθξαψ
+Χ™Χ”Χ™Χ” Χ‘Χ’Χ¨Χ΅Χ” WCO Χ©Χ Χ΅Χ¤ΧΧΧ‘Χ¨
 
 TeraWheight
-ωλτεμ ωμ 375","μΰ ξςπιιο ΰϊ δξλρ , δξμφδ μεεϊψ ςμ δωγδ , μΰωψ ξεμ δπξμιν",φψικ
-2020,ConsignmentItem,5,369 ,1,,"λΰωψ ιετις ςψκ=10 , ϊλεμϊ δωγδ Content διπδ ξωχμ θψδ-ξωχμ φιεγ δδεαμδ- ηεαδ ψχ μξλεμεϊ",χεγ ΰψιζδ- ψωεξδ 3 - τεζ' 063-064,C,ψΰδ ρεγψ 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,χεγ ξωχμ θψδ,χεγ ξωχμ θψδ =10,ωλτεμ ωμ 379,,φψικ
-2021,ConsignmentItem,5,105,1,,"λΰωψ ωγδ:StatementTypeCode=11 , ϊετις ΰιπγ' (Y/N) μδτςμϊ φιεγ χψεψ",,O,μΰ φψικ,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ΰιπγχφιδ δΰν ξετςμ χιψεψ μφιεγ δεαμδ ωμ χιψεψ,CoolingIndicator ,"χεγ χιψεψ (λο/μΰ)  
-ψμεεπθι ΰν φιεγ δεαμδ δεΰ χιψεψ
-ωλτεμ ωμ 375
-CoolingIndicator ",,φψικ
-2022,ConsignmentItem,5,369 ,1,,"λΰωψ ιετις ςψκ=11 , ϊλεμϊ δωγδ Content διπδ ΰιπγ' μδτςμϊ φιεγ χψεψ",,O,μΰ φψικ,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,χεγ ΰιπγχφιδ δΰν ξετςμ χιψεψ μφιεγ δεαμδ ωμ χιψεψ,χεγ ΰιπγχφιδ δΰν ξετςμ χιψεψ μφιεγ δεαμδ ωμ χιψεψ= 11,ωλτεμ ωμ 379,,φψικ
-2027,ConsignmentItem,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ξΰτιιο ΰβψδ μξθςο ιξι,fee,ξΰτιιο ΰβψδ μξθςο ιξι,,φψικ
-2028,ConsignmentItem,5,369 ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,χεγ ρεβ πϊεο ξΰτιιο ΰβψδ μξθςο ιξι,ξΰτιιο ΰβψδ = 18,χεγ ρεβ πϊεο ξΰτιιο ΰβψδ μξθςο ιξι,,φψικ
-2043,ConsignmentItem,5,105,1,,"ιωιψδ / ςχιτδ
-χιιν ΰν μΰ ξγεαψ αξθςο/ξλεμϊ ωθςεο.
-D – ςαεψ ξριψδ ιωιψδ.
-I  – ςαεψδ ξριψδ ςχιτδ - ΰηρεο απξμ.",,O,φψικ,ρεβ ξριψδ ιωιψδ/ςχιτδ,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ξριψδ ιωιψδ,DirectDelivery,"ξριψδ ιωιψδ = D  ,
-ΰηψϊ I  ΰε ψιχ (ξριψδ ςχιτδ)
-ψμεεπθι ψχ μξθςπι ιαεΰ , μΰ ψμεεπθι μξθςπι ωθςεο",,φψικ
-2044,ConsignmentItem,5,369 ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,χεγ ρεβ πϊεο ξριψδ ιωιψδ  21,,,,φψικ
-2049,ConsignmentItem,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,τΰψξδ (ξλεμϊ χιψεψ ωμ ϊψετεϊ),ψμεεπθι μξφδψ ιξι αμαγ,ΰιπγχφιιϊ τΰψξδ (ξλεμϊ χιψεψ ωμ ϊψετεϊ),,φψικ
-2050,ConsignmentItem,5,369 ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,χεγ ρεβ πϊεο 23 ΰιπγχφιιϊ τΰψξδ ξλεμϊ ϊψετεϊ  ,χεγ ρεβ πϊεο 23 ΰιπγχφιιϊ τΰψξδ ξλεμϊ ϊψετεϊ  ,χεγ ρεβ πϊεο 23 ΰιπγχφιιϊ τΰψξδ ξλεμϊ ϊψετεϊ  ,,φψικ
-398,ConsignmentItem,4,23A,1,,,,,H,,,Commodity,         Commodity,Declaration.Consignment.ConsignmentItem.Commodity,λεϊψϊ τψθι ρηεψεϊ αωεψϊ ξθςο,,ηγ ξετςι,,φψικ
-399,ConsignmentItem,5,138 ,0..1,,δςϊχδ ξμΰδ-ϊΰεψ ξθςο ξχεφψ μτι ϊχο ΰψετΰι,"ϊΰεψ δξθςο- ψωεξδ 9 - τεζ' 016-157, ψωεξδ 4- τεζ' 016-190",M,δςϊχδ ξμΰδ - ωψωεψ ϊελο ωγδ αψωεξδ 9 μϊελο ωγδ αψωεξδ 4,ϊΰεψ θεαιο,Brief cargo description,CargoDescription,            CargoDescription,Declaration.Consignment.ConsignmentItem.Commodity.CargoDescription,ϊΰεψ ξθςο,,ϊιΰεψ ξχεφψ μτι ϊχο ΰιψετΰι,ηεαδ,φψικ
-400,ConsignmentItem,5,328 ,0..1,,μΰ φψικ,,O,μΰ μδραδ,,Commodity category,CategoryCode,            CategoryCode,Declaration.Consignment.ConsignmentItem.Commodity.CategoryCode,χεγ χθβεψιϊ ριεεβ,,χαεφϊ ριεεβ ςαεψ βετιν περτιν,μΰ ηεαδ,μΰ φψικ
-401,ConsignmentItem,5,329 ,0..1,,μΰ ψμεεπθι μξφδψ ιξι μτι ξιιμ ξ-7/8/11,,O,μΰ μδραδ,,Commodity category qualifier,CategoryQualifierCode,            CategoryQualifierCode,Declaration.Consignment.ConsignmentItem.Commodity.CategoryQualifierCode, ριεεβ χθβεψιιϊ ξθςο,,χαεφϊ ριεεβ ςαεψ βετιν περτιν,μΰ ηεαδ,μΰ φψικ
-405,ConsignmentItem,5,147 ,0..1,,ωγδ ηεαδ λΰωψ ρεβ δΰψιζδ διπε λμι ψλα μξιπδν.- δωγδ ιλιμ ΰϊ ξρτψ δωιμγδ ΰε ξρτψ ΰηψ ωμ λμι δψλα,,C,μΰ μδραδ,,Identity number,ID,            ID,Declaration.Consignment.ConsignmentItem.Commodity.ID,ξρτψ ξζδδ ωμ δξθςο /ρηεψδ,,"ιωξω ςαεψ ξζδδ ξθςο 
-μγβεξΰ ςαεψ ψλα ξρτψ δωιμγδ ",,φψικ
-406,ConsignmentItem,5,338 ,0..1,,μΰ ψμεεπθι μξφδψ ιξι μτι ξιιμ ξ-7/8/11,,O,μΰ φψικ,,Ballast or cargo type,IDTypeCode,            IDTypeCode,Declaration.Consignment.ConsignmentItem.Commodity.IDTypeCode,"ρεβ ξζδδ δξθςο/ρηεψδ
-ξθςο λμμι ΰε ξεξλμ",,"χωεψ μ- 257 WCOID ωιψγ ξδξρψ εμλο βν δωγδ δπ""μ ιψγ ξδξρψ",,μΰ φψικ
-407,ConsignmentItem,5,347 ,0..1,,ηεαδ λωρεβ δΰψιζδ= λμι ψλα. χεγ χαες δξζδδ λι ξγεαψ αξρτψ ωιμγδ,,C,μΰ πιϊο,,Identity number qualifier,IdentityQualifierCode,            IdentityQualifierCode,Declaration.Consignment.ConsignmentItem.Commodity.IdentityQualifierCode,χεγ ρεβ ξρτψ ξζδδ δρηεψδ. ηεαδ ΰν ξετις ωγδ WCOID= 147,,"χωεψ μ -WCOID= 147, αωμα ζδ ιω ρεβ ΰηγ ψμεεπθι ξρτψ ωιμγδ ςαεψ ψλαιν",,φψικ
-413,ConsignmentItem,5,21A,0..*,,,,,H,,,Classification,            Classification,Declaration.Consignment.ConsignmentItem.Commodity.Classification,λεϊψϊ τψθι ριεεβ ξθςο,,,,φψικ
-414,ConsignmentItem,6,145 ,0..1,,χεγ UN -ΰν αωγδ: ConsignmentItem.GoodsStatusCode ξετις δςψκ D . ΰηψϊ ιετις ξρτψ τψθ δξλρ 6 ρτψεϊ,"ΰν χεγ ΰε""ν (ψωεξδ 3 -τεζ' 059-062 ). ΰν ριεεβ θεαιο (ψωεξδ 9-τεζ' 158-163)","C μχεγ ΰε""ν λΰωψ ξθςο ξρελο  ε- M ςαεψ τψθ ξλρ","δςϊχδ ξμΰδ ωμ χεγ ΰε""ν ΰε τψθ δξλρ","χεγ ΰε""ν , ριεεβ θεαιο",Commodity classification, ID,                ID,Declaration.Consignment.ConsignmentItem.Commodity.Classification.ID,ριεεβ δρηεψδ αξθςο,"ηεαδ μγεεη  μτηεϊ ξετς ΰηγ - ςαεψ ριεεβ ωμ τψθ δξλρ.
-ωΰψ δξετςιν δν ψωεϊ ΰε ξεϊπιν λΰωψ ξγεαψ ςμ ηεξψ ξρελο
-(ςμ τι ΰιπγιχφιδ αρεγψ 329). ","μδωϊξω  αςψκ SSO  μχεγ ΰε""ν  εμχεγ HS μριεεβ ρηεψεϊ ( 4-6 ρτψεϊ )",,φψικ
-415,ConsignmentItem,6,337 ,0..1,,ρεβ δριιεβ αε ξωϊξωιν μωγδ:Classification.ID μτι θαμϊ EDIFACT7143 .μγεβξδ: SSM-χεγ UN ΰε HS μτψθ ξλρ,,"C μχεγ ΰε""ν λΰωψ ξθςο ξρελο  ε- M ςαεψ τψθ ξλρ",ςψκ χαες=SSO ΰν ιω χεγ ΰεν.   ςψκ χαες = HS μριεεβ τψθ ξλρ,"χεγ ΰε""ν , ριεεβ θεαιο",Ballast or cargo type, IdentificationTypeCode,                IdentificationTypeCode,Declaration.Consignment.ConsignmentItem.Commodity.Classification.IdentificationTypeCode,χεγ ρεβ ριεεβ,"ηεαδ ψχ αξετς ΰηγ - ςαεψ ριεεβ ωμ τψθ δξλρ. ωΰψ δπϊεπιν ξεϊπιν λΰωψ δηεξψ ξρελο 
-(ΰιπγιχφιδ αρεγψ 329).","μτι θαμδ:
-SSO  = χεγ ΰε""ν , 
-HS = χεγ μριεεβ ξλρ 
-",,φψικ
-416,ConsignmentItem,5,24A,0..*,,,,,H,,,CommodityRelatedPackaging,            CommodityRelatedPackaging,Declaration.Consignment.ConsignmentItem.Commodity.CommodityRelatedPackaging,λεϊψϊ τψθι ΰψιζεϊ μθεαιο αξθςο,,,,φψικ
-417,ConsignmentItem,6,341 ,0..1,,"δςϊχδ ξμΰδ- ηεαδ αγιεεη ηεξ""ρ. δφψεσ ωμ χα' ριλεο+ψξϊ ριλεο ηιια μδετις αθαμδ A18.",ψξϊ ριλεο - ψωεξδ 3 -(τεζ' 168 -168 ),C,δςϊχδ ξμΰδ,ψξϊ ριλεο,Commodity dangerous goods packing group code, DangerousGoodsPackingReq,                DangerousGoodsPackingReq,Declaration.Consignment.ConsignmentItem.Commodity.CommodityRelatedPackaging.DangerousGoodsPackingReq,χεγ χαεφϊ ΰψιζδ πγψωϊ μηεξψ ξρελο,,"
-χεγ χαεφϊ ΰψιζδ ωμ ηεξψ ξρελο
-47  - ψξδ   I 
-48 -  ψξδ   II 
-49  -  ψξδ  III 
-",χαεφϊ δπϊεπιν απεωΰ ηεξψιν ξρελπιν αΰεειψι δν αψξϊ δξθςο  Consignment,φψικ
-422,ConsignmentItem,5,20B,0..*,,,,,H,,,Temperature,            Temperature,Declaration.Consignment.ConsignmentItem.Commodity.Temperature,λεϊψϊ θξτψθεψδ,,,,φψικ
-423,ConsignmentItem,6,388 ,0..1,,"θξτψθεψϊ δϊμχηεϊ αξχψδ ωμ ηεξ""ρ",,O,μΰ μδραδ,,Flashpoint temperature,FlashpointMeasure,               FlashpointMeasure,Declaration.Consignment.ConsignmentItem.Commodity.Temperature.FlashpointMeasure,θξτψθεψϊ δϊμχηεϊ,,δΰν πγψω μηεξψιν ξρελπιν,,φψικ
-424,ConsignmentItem,6,321 ,0..1,,θεεη θξτ' γψεω μΰιηρεο δξθςο (ξχρ/ξιπ/ξρειιξϊ),,O,μΰ μδραδ,,Storage temperature requirement,StorageRequirementMeasure,               StorageRequirementMeasure,Declaration.Consignment.ConsignmentItem.Commodity.Temperature.StorageRequirementMeasure,θεεη ΰε θξτψθεψδ πγψω μΰηρεο δξθςο,,"πιϊο μδζιο θεεη ΰε θξτψθεψδ ΰιο χεγ
-χεγ χιψεψ ?",,φψικ
-429,ConsignmentItem,4,65A,0..*,,,,,H,,,GoodsMeasure,         GoodsMeasure,Declaration.Consignment.ConsignmentItem.GoodsMeasure,λεϊψϊ τψθι ξιγεϊ εξωχμιν μξθςο,,ηθιαδ ηγ τςξιϊ,,φψικ
-430,ConsignmentItem,5,126 ,0..1,,ξωχμ αψεθε (ξωχμ ξθςο+ΰψιζδ),ξωχμ θψδ-ψωεξδ 3-τεζ' 040-047 + ξωχμ πθε-ψωεξδ 3-τεζ' 032-039,M,ρλεν δςψλιν αψωεξδ 3 τεζ' 032-039 ςν τεζ' 040-047,ξωχμ αψεθε,Gross weight item level,GrossMassMeasure,            GrossMassMeasure,Declaration.Consignment.ConsignmentItem.GoodsMeasure.GrossMassMeasure,ξωχμ ξθςο ,,"ξωχμ δξθςο λεμμ ΰψιζδ αχ""β  εμμΰ ξωχμ φιεγ δδεαμδ",αδπηδ ω- Commodity  ιδιδ ξετς ΰηγ ,φψικ
-431,ConsignmentItem,4,70A,0..*,,,,,H,,,GovernmentProcedure,         GovernmentProcedure,Declaration.Consignment.ConsignmentItem.GovernmentProcedure,λεϊψϊ τψθι ϊδμικ ξξωμϊι,,ηγ ξετςι,,φψικ
-432,ConsignmentItem,5,166 ,0..1,,,ρεβ θιτεμ- ϊψβεν μτι ξρξκ ΰιφιχ- ψωεξδ 3 (τεζ' 091-092),M,"ϊπΰι- ΰν ψωεξδ 3 (τεζ' 091-092) < 50 εβν ωεπδ ξ-8,27,21,22,25 ΰζ χαες=4000000 (ιαεΰ), ΰηψϊ , χαες = 8000000 (ωθςεο)",ρεβ θιτεμ,#N/A,CurrentCode,            CurrentCode,Declaration.Consignment.ConsignmentItem.GovernmentProcedure.CurrentCode,χεγ ρεβ ϊδμικ,"ξαπδ ρεβ ϊδμικ
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 375","ΧΧ ΧΧΆΧ Χ™Χ™Χ ΧΧª Χ”ΧΧ›Χ΅ , Χ”ΧΧΧ¦Χ” ΧΧ•Χ•ΧªΧ¨ ΧΆΧ Χ”Χ©Χ“Χ” , ΧΧΧ©Χ¨ ΧΧ•Χ Χ”Χ ΧΧΧ™Χ",Χ¦Χ¨Χ™Χ
+2020,ConsignmentItem,5,369Β ,1,,"Χ›ΧΧ©Χ¨ Χ™Χ•Χ¤Χ™ΧΆ ΧΆΧ¨Χ=10 , ΧªΧ›Χ•ΧΧª Χ”Χ©Χ“Χ” Content Χ”Χ™Χ Χ” ΧΧ©Χ§Χ ΧΧ¨Χ”-ΧΧ©Χ§Χ Χ¦Χ™Χ•Χ“ Χ”Χ”Χ•Χ‘ΧΧ”- Χ—Χ•Χ‘Χ” Χ¨Χ§ ΧΧΧ›Χ•ΧΧ•Χª",Χ§Χ•Χ“ ΧΧ¨Χ™Χ–Χ”- Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 063-064,C,Χ¨ΧΧ” Χ΅Χ•Χ“Χ¨ 379,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ ΧΧ©Χ§Χ ΧΧ¨Χ”,Χ§Χ•Χ“ ΧΧ©Χ§Χ ΧΧ¨Χ” =10,Χ©Χ›Χ¤Χ•Χ Χ©Χ 379,,Χ¦Χ¨Χ™Χ
+2021,ConsignmentItem,5,105,1,,"Χ›ΧΧ©Χ¨ Χ©Χ“Χ”:StatementTypeCode=11 , ΧªΧ•Χ¤Χ™ΧΆ ΧΧ™Χ Χ“' (Y/N) ΧΧ”Χ¤ΧΆΧΧª Χ¦Χ™Χ•Χ“ Χ§Χ¨Χ•Χ¨",,O,ΧΧ Χ¦Χ¨Χ™Χ,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” Χ”ΧΧ ΧΧ•Χ¤ΧΆΧ Χ§Χ™Χ¨Χ•Χ¨ ΧΧ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ” Χ©Χ Χ§Χ™Χ¨Χ•Χ¨,CoolingIndicator ,"Χ§Χ•Χ“ Χ§Χ™Χ¨Χ•Χ¨ (Χ›Χ/ΧΧ)  
+Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧ Χ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ” Χ”Χ•Χ Χ§Χ™Χ¨Χ•Χ¨
+Χ©Χ›Χ¤Χ•Χ Χ©Χ 375
+CoolingIndicator ",,Χ¦Χ¨Χ™Χ
+2022,ConsignmentItem,5,369Β ,1,,"Χ›ΧΧ©Χ¨ Χ™Χ•Χ¤Χ™ΧΆ ΧΆΧ¨Χ=11 , ΧªΧ›Χ•ΧΧª Χ”Χ©Χ“Χ” Content Χ”Χ™Χ Χ” ΧΧ™Χ Χ“' ΧΧ”Χ¤ΧΆΧΧª Χ¦Χ™Χ•Χ“ Χ§Χ¨Χ•Χ¨",,O,ΧΧ Χ¦Χ¨Χ™Χ,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” Χ”ΧΧ ΧΧ•Χ¤ΧΆΧ Χ§Χ™Χ¨Χ•Χ¨ ΧΧ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ” Χ©Χ Χ§Χ™Χ¨Χ•Χ¨,Χ§Χ•Χ“ ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” Χ”ΧΧ ΧΧ•Χ¤ΧΆΧ Χ§Χ™Χ¨Χ•Χ¨ ΧΧ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ” Χ©Χ Χ§Χ™Χ¨Χ•Χ¨= 11,Χ©Χ›Χ¤Χ•Χ Χ©Χ 379,,Χ¦Χ¨Χ™Χ
+2027,ConsignmentItem,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ΧΧΧ¤Χ™Χ™Χ ΧΧ’Χ¨Χ” ΧΧΧΧΆΧ Χ™ΧΧ™,fee,ΧΧΧ¤Χ™Χ™Χ ΧΧ’Χ¨Χ” ΧΧΧΧΆΧ Χ™ΧΧ™,,Χ¦Χ¨Χ™Χ
+2028,ConsignmentItem,5,369Β ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ ΧªΧ•Χ ΧΧΧ¤Χ™Χ™Χ ΧΧ’Χ¨Χ” ΧΧΧΧΆΧ Χ™ΧΧ™,ΧΧΧ¤Χ™Χ™Χ ΧΧ’Χ¨Χ” = 18,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ ΧªΧ•Χ ΧΧΧ¤Χ™Χ™Χ ΧΧ’Χ¨Χ” ΧΧΧΧΆΧ Χ™ΧΧ™,,Χ¦Χ¨Χ™Χ
+2043,ConsignmentItem,5,105,1,,"Χ™Χ©Χ™Χ¨Χ” / ΧΆΧ§Χ™Χ¤Χ”
+Χ§Χ™Χ™Χ ΧΧ ΧΧ ΧΧ“Χ•Χ‘Χ¨ Χ‘ΧΧΧΆΧ/ΧΧ›Χ•ΧΧª Χ©ΧΧΆΧ•Χ.
+D β€“ ΧΆΧ‘Χ•Χ¨ ΧΧ΅Χ™Χ¨Χ” Χ™Χ©Χ™Χ¨Χ”.
+I  β€“ ΧΆΧ‘Χ•Χ¨Χ” ΧΧ΅Χ™Χ¨Χ” ΧΆΧ§Χ™Χ¤Χ” - ΧΧ—Χ΅Χ•Χ Χ‘Χ ΧΧ.",,O,Χ¦Χ¨Χ™Χ,Χ΅Χ•Χ’ ΧΧ΅Χ™Χ¨Χ” Χ™Χ©Χ™Χ¨Χ”/ΧΆΧ§Χ™Χ¤Χ”,Free text,Content,            Content,Declaration.Consignment.ConsignmentItem.AdditionalInformation.Content,ΧΧ΅Χ™Χ¨Χ” Χ™Χ©Χ™Χ¨Χ”,DirectDelivery,"ΧΧ΅Χ™Χ¨Χ” Χ™Χ©Χ™Χ¨Χ” = D  ,
+ΧΧ—Χ¨Χª I  ΧΧ• Χ¨Χ™Χ§ (ΧΧ΅Χ™Χ¨Χ” ΧΆΧ§Χ™Χ¤Χ”)
+Χ¨ΧΧ•Χ•Χ ΧΧ™ Χ¨Χ§ ΧΧΧΧΆΧ Χ™ Χ™Χ‘Χ•Χ , ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧΧΆΧ Χ™ Χ©ΧΧΆΧ•Χ",,Χ¦Χ¨Χ™Χ
+2044,ConsignmentItem,5,369Β ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.ConsignmentItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ ΧªΧ•Χ ΧΧ΅Χ™Χ¨Χ” Χ™Χ©Χ™Χ¨Χ”  21,,,,Χ¦Χ¨Χ™Χ
+2049,ConsignmentItem,5,105,1,,,,,,,Free text,Content,            Content,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.Content,Χ¤ΧΧ¨ΧΧ” (ΧΧ›Χ•ΧΧª Χ§Χ™Χ¨Χ•Χ¨ Χ©Χ ΧªΧ¨Χ•Χ¤Χ•Χª),Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™ Χ‘ΧΧ‘Χ“,ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ™Χª Χ¤ΧΧ¨ΧΧ” (ΧΧ›Χ•ΧΧª Χ§Χ™Χ¨Χ•Χ¨ Χ©Χ ΧªΧ¨Χ•Χ¤Χ•Χª),,Χ¦Χ¨Χ™Χ
+2050,ConsignmentItem,5,369Β ,1,,,,,,,Additional statement type,StatementTypeCode,            StatementTypeCode,Declaration.Consignment.GovernmentAgencyGoodsItem.AdditionalInformation.StatementTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ ΧªΧ•Χ 23 ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ™Χª Χ¤ΧΧ¨ΧΧ” ΧΧ›Χ•ΧΧª ΧªΧ¨Χ•Χ¤Χ•Χª  ,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ ΧªΧ•Χ 23 ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ™Χª Χ¤ΧΧ¨ΧΧ” ΧΧ›Χ•ΧΧª ΧªΧ¨Χ•Χ¤Χ•Χª  ,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ ΧªΧ•Χ 23 ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ™Χª Χ¤ΧΧ¨ΧΧ” ΧΧ›Χ•ΧΧª ΧªΧ¨Χ•Χ¤Χ•Χª  ,,Χ¦Χ¨Χ™Χ
+398,ConsignmentItem,4,23A,1,,,,,H,,,Commodity,         Commodity,Declaration.Consignment.ConsignmentItem.Commodity,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ΅Χ—Χ•Χ¨Χ•Χª Χ‘Χ©Χ•Χ¨Χª ΧΧΧΆΧ,,Χ—Χ“ ΧΧ•Χ¤ΧΆΧ™,,Χ¦Χ¨Χ™Χ
+399,ConsignmentItem,5,138Β ,0..1,,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”-ΧªΧΧ•Χ¨ ΧΧΧΆΧ ΧΧ§Χ•Χ¦Χ¨ ΧΧ¤Χ™ ΧªΧ§Χ ΧΧ¨Χ•Χ¤ΧΧ™,"ΧªΧΧ•Χ¨ Χ”ΧΧΧΆΧ- Χ¨Χ©Χ•ΧΧ” 9 - Χ¤Χ•Χ–' 016-157, Χ¨Χ©Χ•ΧΧ” 4- Χ¤Χ•Χ–' 016-190",M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” - Χ©Χ¨Χ©Χ•Χ¨ ΧªΧ•Χ›Χ Χ©Χ“Χ” Χ‘Χ¨Χ©Χ•ΧΧ” 9 ΧΧªΧ•Χ›Χ Χ©Χ“Χ” Χ‘Χ¨Χ©Χ•ΧΧ” 4,ΧªΧΧ•Χ¨ ΧΧ•Χ‘Χ™Χ,Brief cargo description,CargoDescription,            CargoDescription,Declaration.Consignment.ConsignmentItem.Commodity.CargoDescription,ΧªΧΧ•Χ¨ ΧΧΧΆΧ,,ΧªΧ™ΧΧ•Χ¨ ΧΧ§Χ•Χ¦Χ¨ ΧΧ¤Χ™ ΧªΧ§Χ ΧΧ™Χ¨Χ•Χ¤ΧΧ™,Χ—Χ•Χ‘Χ”,Χ¦Χ¨Χ™Χ
+400,ConsignmentItem,5,328Β ,0..1,,ΧΧ Χ¦Χ¨Χ™Χ,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,Commodity category,CategoryCode,            CategoryCode,Declaration.Consignment.ConsignmentItem.Commodity.CategoryCode,Χ§Χ•Χ“ Χ§ΧΧ’Χ•Χ¨Χ™Χª Χ΅Χ™Χ•Χ•Χ’,,Χ§Χ‘Χ•Χ¦Χª Χ΅Χ™Χ•Χ•Χ’ ΧΆΧ‘Χ•Χ¨ Χ’Χ•Χ¤Χ™Χ Χ Χ•Χ΅Χ¤Χ™Χ,ΧΧ Χ—Χ•Χ‘Χ”,ΧΧ Χ¦Χ¨Χ™Χ
+401,ConsignmentItem,5,329Β ,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™ ΧΧ¤Χ™ ΧΧ™Χ™Χ Χ-7/8/11,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,Commodity category qualifier,CategoryQualifierCode,            CategoryQualifierCode,Declaration.Consignment.ConsignmentItem.Commodity.CategoryQualifierCode, Χ΅Χ™Χ•Χ•Χ’ Χ§ΧΧ’Χ•Χ¨Χ™Χ™Χª ΧΧΧΆΧ,,Χ§Χ‘Χ•Χ¦Χª Χ΅Χ™Χ•Χ•Χ’ ΧΆΧ‘Χ•Χ¨ Χ’Χ•Χ¤Χ™Χ Χ Χ•Χ΅Χ¤Χ™Χ,ΧΧ Χ—Χ•Χ‘Χ”,ΧΧ Χ¦Χ¨Χ™Χ
+405,ConsignmentItem,5,147Β ,0..1,,Χ©Χ“Χ” Χ—Χ•Χ‘Χ” Χ›ΧΧ©Χ¨ Χ΅Χ•Χ’ Χ”ΧΧ¨Χ™Χ–Χ” Χ”Χ™Χ Χ• Χ›ΧΧ™ Χ¨Χ›Χ‘ ΧΧΧ™Χ Χ”Χ.- Χ”Χ©Χ“Χ” Χ™Χ›Χ™Χ ΧΧª ΧΧ΅Χ¤Χ¨ Χ”Χ©Χ™ΧΧ“Χ” ΧΧ• ΧΧ΅Χ¤Χ¨ ΧΧ—Χ¨ Χ©Χ Χ›ΧΧ™ Χ”Χ¨Χ›Χ‘,,C,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,Identity number,ID,            ID,Declaration.Consignment.ConsignmentItem.Commodity.ID,ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ©Χ Χ”ΧΧΧΆΧ /Χ΅Χ—Χ•Χ¨Χ”,,"Χ™Χ©ΧΧ© ΧΆΧ‘Χ•Χ¨ ΧΧ–Χ”Χ” ΧΧΧΆΧ 
+ΧΧ“Χ’Χ•ΧΧ ΧΆΧ‘Χ•Χ¨ Χ¨Χ›Χ‘ ΧΧ΅Χ¤Χ¨ Χ”Χ©Χ™ΧΧ“Χ” ",,Χ¦Χ¨Χ™Χ
+406,ConsignmentItem,5,338Β ,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™ ΧΧ¤Χ™ ΧΧ™Χ™Χ Χ-7/8/11,,O,ΧΧ Χ¦Χ¨Χ™Χ,,Ballast or cargo type,IDTypeCode,            IDTypeCode,Declaration.Consignment.ConsignmentItem.Commodity.IDTypeCode,"Χ΅Χ•Χ’ ΧΧ–Χ”Χ” Χ”ΧΧΧΆΧ/Χ΅Χ—Χ•Χ¨Χ”
+ΧΧΧΆΧ Χ›ΧΧΧ™ ΧΧ• ΧΧ•ΧΧ›Χ",,"Χ§Χ©Χ•Χ¨ Χ- 257 WCOID Χ©Χ™Χ¨Χ“ ΧΧ”ΧΧ΅Χ¨ Χ•ΧΧ›Χ Χ’Χ Χ”Χ©Χ“Χ” Χ”Χ ""Χ Χ™Χ¨Χ“ ΧΧ”ΧΧ΅Χ¨",,ΧΧ Χ¦Χ¨Χ™Χ
+407,ConsignmentItem,5,347Β ,0..1,,Χ—Χ•Χ‘Χ” Χ›Χ©Χ΅Χ•Χ’ Χ”ΧΧ¨Χ™Χ–Χ”= Χ›ΧΧ™ Χ¨Χ›Χ‘. Χ§Χ•Χ“ Χ§Χ‘Χ•ΧΆ Χ”ΧΧ–Χ”Χ” Χ›Χ™ ΧΧ“Χ•Χ‘Χ¨ Χ‘ΧΧ΅Χ¤Χ¨ Χ©Χ™ΧΧ“Χ”,,C,ΧΧ Χ Χ™ΧªΧ,,Identity number qualifier,IdentityQualifierCode,            IdentityQualifierCode,Declaration.Consignment.ConsignmentItem.Commodity.IdentityQualifierCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ”Χ΅Χ—Χ•Χ¨Χ”. Χ—Χ•Χ‘Χ” ΧΧ ΧΧ•Χ¤Χ™ΧΆ Χ©Χ“Χ” WCOID= 147,,"Χ§Χ©Χ•Χ¨ Χ -WCOID= 147, Χ‘Χ©ΧΧ‘ Χ–Χ” Χ™Χ© Χ΅Χ•Χ’ ΧΧ—Χ“ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧ΅Χ¤Χ¨ Χ©Χ™ΧΧ“Χ” ΧΆΧ‘Χ•Χ¨ Χ¨Χ›Χ‘Χ™Χ",,Χ¦Χ¨Χ™Χ
+413,ConsignmentItem,5,21A,0..*,,,,,H,,,Classification,            Classification,Declaration.Consignment.ConsignmentItem.Commodity.Classification,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ΅Χ™Χ•Χ•Χ’ ΧΧΧΆΧ,,,,Χ¦Χ¨Χ™Χ
+414,ConsignmentItem,6,145Β ,0..1,,Χ§Χ•Χ“ UN -ΧΧ Χ‘Χ©Χ“Χ”: ConsignmentItem.GoodsStatusCode ΧΧ•Χ¤Χ™ΧΆ Χ”ΧΆΧ¨Χ D . ΧΧ—Χ¨Χª Χ™Χ•Χ¤Χ™ΧΆ ΧΧ΅Χ¤Χ¨ Χ¤Χ¨Χ Χ”ΧΧ›Χ΅ 6 Χ΅Χ¤Χ¨Χ•Χª,"ΧΧ Χ§Χ•Χ“ ΧΧ•""Χ (Χ¨Χ©Χ•ΧΧ” 3 -Χ¤Χ•Χ–' 059-062 ). ΧΧ Χ΅Χ™Χ•Χ•Χ’ ΧΧ•Χ‘Χ™Χ (Χ¨Χ©Χ•ΧΧ” 9-Χ¤Χ•Χ–' 158-163)","C ΧΧ§Χ•Χ“ ΧΧ•""Χ Χ›ΧΧ©Χ¨ ΧΧΧΆΧ ΧΧ΅Χ•Χ›Χ  Χ•- M ΧΆΧ‘Χ•Χ¨ Χ¤Χ¨Χ ΧΧ›Χ΅","Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ Χ§Χ•Χ“ ΧΧ•""Χ ΧΧ• Χ¤Χ¨Χ Χ”ΧΧ›Χ΅","Χ§Χ•Χ“ ΧΧ•""Χ , Χ΅Χ™Χ•Χ•Χ’ ΧΧ•Χ‘Χ™Χ",Commodity classification, ID,                ID,Declaration.Consignment.ConsignmentItem.Commodity.Classification.ID,Χ΅Χ™Χ•Χ•Χ’ Χ”Χ΅Χ—Χ•Χ¨Χ” Χ‘ΧΧΧΆΧ,"Χ—Χ•Χ‘Χ” ΧΧ“Χ•Χ•Χ—  ΧΧ¤Χ—Χ•Χª ΧΧ•Χ¤ΧΆ ΧΧ—Χ“ - ΧΆΧ‘Χ•Χ¨ Χ΅Χ™Χ•Χ•Χ’ Χ©Χ Χ¤Χ¨Χ Χ”ΧΧ›Χ΅.
+Χ©ΧΧ¨ Χ”ΧΧ•Χ¤ΧΆΧ™Χ Χ”Χ Χ¨Χ©Χ•Χª ΧΧ• ΧΧ•ΧªΧ Χ™Χ Χ›ΧΧ©Χ¨ ΧΧ“Χ•Χ‘Χ¨ ΧΆΧ Χ—Χ•ΧΧ¨ ΧΧ΅Χ•Χ›Χ
+(ΧΆΧ Χ¤Χ™ ΧΧ™Χ Χ“Χ™Χ§Χ¦Χ™Χ” Χ‘Χ΅Χ•Χ“Χ¨ 329). ","ΧΧ”Χ©ΧªΧΧ©  Χ‘ΧΆΧ¨Χ SSO  ΧΧ§Χ•Χ“ ΧΧ•""Χ  Χ•ΧΧ§Χ•Χ“ HS ΧΧ΅Χ™Χ•Χ•Χ’ Χ΅Χ—Χ•Χ¨Χ•Χª ( 4-6 Χ΅Χ¤Χ¨Χ•Χª )",,Χ¦Χ¨Χ™Χ
+415,ConsignmentItem,6,337Β ,0..1,,Χ΅Χ•Χ’ Χ”Χ΅Χ™Χ™Χ•Χ’ Χ‘Χ• ΧΧ©ΧªΧΧ©Χ™Χ ΧΧ©Χ“Χ”:Classification.ID ΧΧ¤Χ™ ΧΧ‘ΧΧª EDIFACT7143 .ΧΧ“Χ•Χ’ΧΧ”: SSM-Χ§Χ•Χ“ UN ΧΧ• HS ΧΧ¤Χ¨Χ ΧΧ›Χ΅,,"C ΧΧ§Χ•Χ“ ΧΧ•""Χ Χ›ΧΧ©Χ¨ ΧΧΧΆΧ ΧΧ΅Χ•Χ›Χ  Χ•- M ΧΆΧ‘Χ•Χ¨ Χ¤Χ¨Χ ΧΧ›Χ΅",ΧΆΧ¨Χ Χ§Χ‘Χ•ΧΆ=SSO ΧΧ Χ™Χ© Χ§Χ•Χ“ ΧΧ•Χ.   ΧΆΧ¨Χ Χ§Χ‘Χ•ΧΆ = HS ΧΧ΅Χ™Χ•Χ•Χ’ Χ¤Χ¨Χ ΧΧ›Χ΅,"Χ§Χ•Χ“ ΧΧ•""Χ , Χ΅Χ™Χ•Χ•Χ’ ΧΧ•Χ‘Χ™Χ",Ballast or cargo type, IdentificationTypeCode,                IdentificationTypeCode,Declaration.Consignment.ConsignmentItem.Commodity.Classification.IdentificationTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ΅Χ™Χ•Χ•Χ’,"Χ—Χ•Χ‘Χ” Χ¨Χ§ Χ‘ΧΧ•Χ¤ΧΆ ΧΧ—Χ“ - ΧΆΧ‘Χ•Χ¨ Χ΅Χ™Χ•Χ•Χ’ Χ©Χ Χ¤Χ¨Χ Χ”ΧΧ›Χ΅. Χ©ΧΧ¨ Χ”Χ ΧªΧ•Χ Χ™Χ ΧΧ•ΧªΧ Χ™Χ Χ›ΧΧ©Χ¨ Χ”Χ—Χ•ΧΧ¨ ΧΧ΅Χ•Χ›Χ 
+(ΧΧ™Χ Χ“Χ™Χ§Χ¦Χ™Χ” Χ‘Χ΅Χ•Χ“Χ¨ 329).","ΧΧ¤Χ™ ΧΧ‘ΧΧ”:
+SSO  = Χ§Χ•Χ“ ΧΧ•""Χ , 
+HS = Χ§Χ•Χ“ ΧΧ΅Χ™Χ•Χ•Χ’ ΧΧ›Χ΅ 
+",,Χ¦Χ¨Χ™Χ
+416,ConsignmentItem,5,24A,0..*,,,,,H,,,CommodityRelatedPackaging,            CommodityRelatedPackaging,Declaration.Consignment.ConsignmentItem.Commodity.CommodityRelatedPackaging,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧ¨Χ™Χ–Χ•Χª ΧΧΧ•Χ‘Χ™Χ Χ‘ΧΧΧΆΧ,,,,Χ¦Χ¨Χ™Χ
+417,ConsignmentItem,6,341Β ,0..1,,"Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”- Χ—Χ•Χ‘Χ” Χ‘Χ“Χ™Χ•Χ•Χ— Χ—Χ•Χ""Χ΅. Χ”Χ¦Χ¨Χ•Χ£ Χ©Χ Χ§Χ‘' Χ΅Χ™Χ›Χ•Χ+Χ¨ΧΧª Χ΅Χ™Χ›Χ•Χ Χ—Χ™Χ™Χ‘ ΧΧ”Χ•Χ¤Χ™ΧΆ Χ‘ΧΧ‘ΧΧ” A18.",Χ¨ΧΧª Χ΅Χ™Χ›Χ•Χ - Χ¨Χ©Χ•ΧΧ” 3 -(Χ¤Χ•Χ–' 168 -168 ),C,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ¨ΧΧª Χ΅Χ™Χ›Χ•Χ,Commodity dangerous goods packing group code, DangerousGoodsPackingReq,                DangerousGoodsPackingReq,Declaration.Consignment.ConsignmentItem.Commodity.CommodityRelatedPackaging.DangerousGoodsPackingReq,Χ§Χ•Χ“ Χ§Χ‘Χ•Χ¦Χª ΧΧ¨Χ™Χ–Χ” Χ Χ“Χ¨Χ©Χª ΧΧ—Χ•ΧΧ¨ ΧΧ΅Χ•Χ›Χ,,"
+Χ§Χ•Χ“ Χ§Χ‘Χ•Χ¦Χª ΧΧ¨Χ™Χ–Χ” Χ©Χ Χ—Χ•ΧΧ¨ ΧΧ΅Χ•Χ›Χ
+47  - Χ¨ΧΧ”   I 
+48 -  Χ¨ΧΧ”   II 
+49  -  Χ¨ΧΧ”  III 
+",Χ§Χ‘Χ•Χ¦Χª Χ”Χ ΧªΧ•Χ Χ™Χ Χ‘Χ Χ•Χ©Χ Χ—Χ•ΧΧ¨Χ™Χ ΧΧ΅Χ•Χ›Χ Χ™Χ Χ‘ΧΧ•Χ•Χ™Χ¨Χ™ Χ”Χ Χ‘Χ¨ΧΧª Χ”ΧΧΧΆΧ  Consignment,Χ¦Χ¨Χ™Χ
+422,ConsignmentItem,5,20B,0..*,,,,,H,,,Temperature,            Temperature,Declaration.Consignment.ConsignmentItem.Commodity.Temperature,Χ›Χ•ΧªΧ¨Χª ΧΧΧ¤Χ¨ΧΧ•Χ¨Χ”,,,,Χ¦Χ¨Χ™Χ
+423,ConsignmentItem,6,388Β ,0..1,,"ΧΧΧ¤Χ¨ΧΧ•Χ¨Χª Χ”ΧªΧΧ§Χ—Χ•Χª Χ‘ΧΧ§Χ¨Χ” Χ©Χ Χ—Χ•Χ""Χ΅",,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,Flashpoint temperature,FlashpointMeasure,               FlashpointMeasure,Declaration.Consignment.ConsignmentItem.Commodity.Temperature.FlashpointMeasure,ΧΧΧ¤Χ¨ΧΧ•Χ¨Χª Χ”ΧªΧΧ§Χ—Χ•Χª,,Χ”ΧΧ Χ Χ“Χ¨Χ© ΧΧ—Χ•ΧΧ¨Χ™Χ ΧΧ΅Χ•Χ›Χ Χ™Χ,,Χ¦Χ¨Χ™Χ
+424,ConsignmentItem,6,321Β ,0..1,,ΧΧ•Χ•Χ— ΧΧΧ¤' Χ“Χ¨Χ•Χ© ΧΧΧ™Χ—Χ΅Χ•Χ Χ”ΧΧΧΆΧ (ΧΧ§Χ΅/ΧΧ™Χ /ΧΧ΅Χ•Χ™Χ™ΧΧª),,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,Storage temperature requirement,StorageRequirementMeasure,               StorageRequirementMeasure,Declaration.Consignment.ConsignmentItem.Commodity.Temperature.StorageRequirementMeasure,ΧΧ•Χ•Χ— ΧΧ• ΧΧΧ¤Χ¨ΧΧ•Χ¨Χ” Χ Χ“Χ¨Χ© ΧΧΧ—Χ΅Χ•Χ Χ”ΧΧΧΆΧ,,"Χ Χ™ΧªΧ ΧΧ”Χ–Χ™Χ ΧΧ•Χ•Χ— ΧΧ• ΧΧΧ¤Χ¨ΧΧ•Χ¨Χ” ΧΧ™Χ Χ§Χ•Χ“
+Χ§Χ•Χ“ Χ§Χ™Χ¨Χ•Χ¨ ?",,Χ¦Χ¨Χ™Χ
+429,ConsignmentItem,4,65A,0..*,,,,,H,,,GoodsMeasure,         GoodsMeasure,Declaration.Consignment.ConsignmentItem.GoodsMeasure,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧ™Χ“Χ•Χª Χ•ΧΧ©Χ§ΧΧ™Χ ΧΧΧΧΆΧ,,Χ—ΧΧ™Χ‘Χ” Χ—Χ“ Χ¤ΧΆΧΧ™Χª,,Χ¦Χ¨Χ™Χ
+430,ConsignmentItem,5,126Β ,0..1,,ΧΧ©Χ§Χ Χ‘Χ¨Χ•ΧΧ• (ΧΧ©Χ§Χ ΧΧΧΆΧ+ΧΧ¨Χ™Χ–Χ”),ΧΧ©Χ§Χ ΧΧ¨Χ”-Χ¨Χ©Χ•ΧΧ” 3-Χ¤Χ•Χ–' 040-047 + ΧΧ©Χ§Χ Χ ΧΧ•-Χ¨Χ©Χ•ΧΧ” 3-Χ¤Χ•Χ–' 032-039,M,Χ΅Χ›Χ•Χ Χ”ΧΆΧ¨Χ›Χ™Χ Χ‘Χ¨Χ©Χ•ΧΧ” 3 Χ¤Χ•Χ–' 032-039 ΧΆΧ Χ¤Χ•Χ–' 040-047,ΧΧ©Χ§Χ Χ‘Χ¨Χ•ΧΧ•,Gross weight item level,GrossMassMeasure,            GrossMassMeasure,Declaration.Consignment.ConsignmentItem.GoodsMeasure.GrossMassMeasure,ΧΧ©Χ§Χ ΧΧΧΆΧ ,,"ΧΧ©Χ§Χ Χ”ΧΧΧΆΧ Χ›Χ•ΧΧ ΧΧ¨Χ™Χ–Χ” Χ‘Χ§""Χ’  Χ•ΧΧΧ ΧΧ©Χ§Χ Χ¦Χ™Χ•Χ“ Χ”Χ”Χ•Χ‘ΧΧ”",Χ‘Χ”Χ Χ—Χ” Χ©- Commodity  Χ™Χ”Χ™Χ” ΧΧ•Χ¤ΧΆ ΧΧ—Χ“ ,Χ¦Χ¨Χ™Χ
+431,ConsignmentItem,4,70A,0..*,,,,,H,,,GovernmentProcedure,         GovernmentProcedure,Declaration.Consignment.ConsignmentItem.GovernmentProcedure,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧªΧ”ΧΧ™Χ ΧΧΧ©ΧΧªΧ™,,Χ—Χ“ ΧΧ•Χ¤ΧΆΧ™,,Χ¦Χ¨Χ™Χ
+432,ConsignmentItem,5,166Β ,0..1,,,Χ΅Χ•Χ’ ΧΧ™Χ¤Χ•Χ- ΧªΧ¨Χ’Χ•Χ ΧΧ¤Χ™ ΧΧ΅ΧΧ ΧΧ™Χ¦Χ™Χ§- Χ¨Χ©Χ•ΧΧ” 3 (Χ¤Χ•Χ–' 091-092),M,"ΧªΧ ΧΧ™- ΧΧ Χ¨Χ©Χ•ΧΧ” 3 (Χ¤Χ•Χ–' 091-092) < 50 Χ•Χ’Χ Χ©Χ•Χ Χ” Χ-8,27,21,22,25 ΧΧ– Χ§Χ‘Χ•ΧΆ=4000000 (Χ™Χ‘Χ•Χ), ΧΧ—Χ¨Χª , Χ§Χ‘Χ•ΧΆ = 8000000 (Χ©ΧΧΆΧ•Χ)",Χ΅Χ•Χ’ ΧΧ™Χ¤Χ•Χ,#N/A,CurrentCode,            CurrentCode,Declaration.Consignment.ConsignmentItem.GovernmentProcedure.CurrentCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧªΧ”ΧΧ™Χ,"ΧΧ‘Χ Χ” Χ΅Χ•Χ’ ΧªΧ”ΧΧ™Χ
 xxyyzzz
-xx - ϊδμικ πεληι
-yy - ϊδμικ χεγν
-zzz - χεγ τπιξι
-","ρεβ δϊδμικ δξλρι 
-χεγ ϊδμικ μτι ΰξπϊ 
-χιεθε
-ιαεΰ - Direct Import for Home Use = 4000000
-  ωθςεο - Transit=8000000",,φψικ
-436,ConsignmentItem,4,93A,0..*,,,,,H,,,Packaging,         Packaging,Declaration.Consignment.ConsignmentItem.Packaging,λεϊψϊ τψθι ΰψιζεϊ ξωπδ μξθςο,"αιξι ειαωϊι, ηεαδ ηθιαδ ζε ΰε ηθιαϊ   TransportEquipment  , ΰε ΰϊ ωϊιδο.
-αΰεειψι , ηεαδ ηθιαδ ζε, εηθιαδ   TransportEquipment διπδ ψωεϊ","πβψψϊ πϊεπι ΰψιζεϊ ξωπδ
-αιξι ειαωϊι, ηεαδ ηθιαδ ζε  (Packaging  ) ΰε ηθιαϊ   TransportEquipment  , ΰε ΰϊ ωϊιδο.
-αΰεειψι , ηεαδ ηθιαδ ζε (Packaging ) , εηθιαδ   TransportEquipment διπδ ψωεϊ",αδπηδ ω- Commodity  ιδιδ ξετς ΰηγ ,φψικ
-437,ConsignmentItem,5,142 ,0..1,,δςϊχδ ξμΰδ ωμ ριξπιν εξρτψιν,ριξπιν εξρτψιν- ψωεξδ 5-τεζ' 016-135,O,δςϊχδ ξμΰδ,ριξπιν εξρτψιν,Shipping marks,MarksNumbers,            MarksNumbers,Declaration.Consignment.ConsignmentItem.Packaging.MarksNumbers,ριξπιν εξρτψιν,,,,φψικ
-438,ConsignmentItem,5,144 ,0..1,,λξεϊ δΰψιζεϊ λεμμ ΰψιζεϊ αϊεκ δξλεμδ  ,λξεϊ ΰψιζεϊ-ΰψιζεϊ ξωπιεϊ-ψωεξδ 5(τεζ' 138-146),M,δςϊχδ ξμΰδ ,λξεϊ ΰψιζεϊ,Number of packages,QuantityQuantity,            QuantityQuantity,Declaration.Consignment.ConsignmentItem.Packaging.QuantityQuantity,λξεϊ ΰψιζεϊ,,"ξφιιο ΰϊ λξεϊ δΰψιζεϊ αϊεκ φιεγ δδεαμδ ΰε λξεϊ δΰψιζεϊ ωμ δξθςο ςφξε.
-μγβεξΰ τιψεθ λξεϊ δΰψιζεϊ αϊεκ δξλεμδ 
-αδϊΰν μξεβγψ α- WCO.
-δξιγς ηωεα ξΰεγ μξλρ , αςιρχΰεϊ ωμ ιαωϊι - δξιγς ΰξεψ μδιεϊ ΰφμ δξωμη.",,φψικ
-439,ConsignmentItem,5,141 ,0..1,,ρεβ ΰψιζδ μτι θαμδ UNCE21       ,χεγ ΰψιζδ- ψωεξδ 3 - τεζ' 063-064,M,δξψδ μτι θαμϊ χεγι ΰψιζδ χιιξιν (C01)μξαπδ δηγω - μτι δςψκ αςξεγδ: WCO PKG TP,ρεβ ΰψιζδ ,"Type of packages identification, coded",TypeCode,            TypeCode,Declaration.Consignment.ConsignmentItem.Packaging.TypeCode,χεγ ρεβ ΰψιζδ,,,,φψικ
-482,ConsignmentItem,4,31B,0..*,,,,,H,,,TransportEquipment,         TransportEquipment,Declaration.Consignment.ConsignmentItem.TransportEquipment,λεϊψϊ τψθι φιεγ δεαμδ,"αιξι ειαωϊι, ηεαδ ηθιαδ Packaging  ΰε ηθιαϊ   TransportEquipment  , ΰε ΰϊ ωϊιδο.
-αΰεειψι , ηεαδ ηθιαδ  Packaging εηθιαδ   TransportEquipment διπδ ψωεϊ
-αςρχϊ ψιχεο, ηθιαδ ζε διπδ ηεαδ μξωμη ιξι","χιιν αωϊι ψξεϊ αψξϊ δξθςο εαψξϊ ωεψδ αξθςο .
-δεημθ μδωϊξω αψξϊ ωεψδ αξθςο
-διλο ωηεαϊ δδζπδ ξεϊπιϊ, δϊπΰι δεΰ ωηεαδ ηθιαδ ζε ΰε ηθιαϊ Packaging",,φψικ
-483,ConsignmentItem,5,152 ,0..1,ηεαδ αλμ ξχψδ ωφιεγ δδεαμδ δεΰ ρεβ ωμ ξλεμδ,ρεβ φιεγ δδεαμδ.   ηεαδ ψχ αξφδψ ξμΰ/ξλεμεϊ ψιχεϊ/ψιχεπιν?,"ψωεξδ 3 - ρεβ ξλεμδ, τεζ' 028-029 + ΰεψκ ξλεμδ, τεζ' 030-031",C,δξψδ: ιω μωψωψ ΰϊ δπϊεπιν αψωεξδ 3 τεζ' 028-029 + 030-031. μδλπρ μθαμδ: TBLOAD_A45_HCONT_TO_WCO    εμωμεσ ΰϊ δςψκ δξϊΰιν ξςξεγδ: WCO_TYPE,"ρεβ ΰψιζδ 
-(ωμ φιεγ δεαμδ)",Equipment size and type identification,CharacteristicCode,            CharacteristicCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.CharacteristicCode,χεγ ρεβ  φιεγ δεαμδ,"ξλεμδ, θψιιμψ ελε'
-αςρχϊ ψιχεο, ωγδ ζδ  ηεαδ μξωμη ιξι","ISO 6346 μξλεμδ
-ΰε
-μτι  ULD ρεβι 
-IATA",μμλϊ μτι ϊχο ISO  αξλεμεϊ,φψικ
-484,ConsignmentItem,5,351 ,0..1,ξφδψ ξμΰ. μΰ μδραδ,χεγ ρθθερ φιεγ δεαμδ.ιωξω αξφδψ ξμΰ ςν χεγ 4 -REMAIN ON BOARD μφιεο ξλεμεϊ ωμΰ ιεψγεϊ ξΰπιιδ,,C,μΰ μδραδ,,Container status code,EventStatusCode,            EventStatusCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.EventStatusCode,χεγ ρθΰθερ φιεγ δεαμδ,,"αιξι - 
-ιωξω μξλεμεϊ ωμΰ ιεψγεϊ ξδΰεπιδ (ξφδψ ξμΰ)
-χεγ  4  (εψχ χεγ 4)   remain on board 
-πιϊο μδωϊξω μφεψκ δψηαϊ ρεβ θιτεμ αφιεγ δεαμδ  
-αΰεειψι -
-ιωξω ςαεψ ULD ωμΰ ιεψγιν ξδξθερ
-(ξφδψ ξμΰ  FROB - freight  freight remain on board )   
-χεγ 4   (εψχ χεγ 4)  remain on board 
+xx - ΧªΧ”ΧΧ™Χ Χ Χ•Χ›Χ—Χ™
+yy - ΧªΧ”ΧΧ™Χ Χ§Χ•Χ“Χ
+zzz - Χ§Χ•Χ“ Χ¤Χ Χ™ΧΧ™
+","Χ΅Χ•Χ’ Χ”ΧªΧ”ΧΧ™Χ Χ”ΧΧ›Χ΅Χ™ 
+Χ§Χ•Χ“ ΧªΧ”ΧΧ™Χ ΧΧ¤Χ™ ΧΧΧ Χª 
+Χ§Χ™Χ•ΧΧ•
+Χ™Χ‘Χ•Χ - Direct Import for Home Use = 4000000
+  Χ©ΧΧΆΧ•Χ - Transit=8000000",,Χ¦Χ¨Χ™Χ
+436,ConsignmentItem,4,93A,0..*,,,,,H,,,Packaging,         Packaging,Declaration.Consignment.ConsignmentItem.Packaging,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ ΧΧ¨Χ™Χ–Χ•Χª ΧΧ©Χ Χ” ΧΧΧΧΆΧ,"Χ‘Χ™ΧΧ™ Χ•Χ™Χ‘Χ©ΧªΧ™, Χ—Χ•Χ‘Χ” Χ—ΧΧ™Χ‘Χ” Χ–Χ• ΧΧ• Χ—ΧΧ™Χ‘Χª   TransportEquipment  , ΧΧ• ΧΧª Χ©ΧªΧ™Χ”Χ.
+Χ‘ΧΧ•Χ•Χ™Χ¨Χ™ , Χ—Χ•Χ‘Χ” Χ—ΧΧ™Χ‘Χ” Χ–Χ•, Χ•Χ—ΧΧ™Χ‘Χ”   TransportEquipment Χ”Χ™Χ Χ” Χ¨Χ©Χ•Χª","Χ Χ’Χ¨Χ¨Χª Χ ΧªΧ•Χ Χ™ ΧΧ¨Χ™Χ–Χ•Χª ΧΧ©Χ Χ”
+Χ‘Χ™ΧΧ™ Χ•Χ™Χ‘Χ©ΧªΧ™, Χ—Χ•Χ‘Χ” Χ—ΧΧ™Χ‘Χ” Χ–Χ•  (Packaging  ) ΧΧ• Χ—ΧΧ™Χ‘Χª   TransportEquipment  , ΧΧ• ΧΧª Χ©ΧªΧ™Χ”Χ.
+Χ‘ΧΧ•Χ•Χ™Χ¨Χ™ , Χ—Χ•Χ‘Χ” Χ—ΧΧ™Χ‘Χ” Χ–Χ• (Packaging ) , Χ•Χ—ΧΧ™Χ‘Χ”   TransportEquipment Χ”Χ™Χ Χ” Χ¨Χ©Χ•Χª",Χ‘Χ”Χ Χ—Χ” Χ©- Commodity  Χ™Χ”Χ™Χ” ΧΧ•Χ¤ΧΆ ΧΧ—Χ“ ,Χ¦Χ¨Χ™Χ
+437,ConsignmentItem,5,142Β ,0..1,,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ Χ΅Χ™ΧΧ Χ™Χ Χ•ΧΧ΅Χ¤Χ¨Χ™Χ,Χ΅Χ™ΧΧ Χ™Χ Χ•ΧΧ΅Χ¤Χ¨Χ™Χ- Χ¨Χ©Χ•ΧΧ” 5-Χ¤Χ•Χ–' 016-135,O,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ”,Χ΅Χ™ΧΧ Χ™Χ Χ•ΧΧ΅Χ¤Χ¨Χ™Χ,Shipping marks,MarksNumbers,            MarksNumbers,Declaration.Consignment.ConsignmentItem.Packaging.MarksNumbers,Χ΅Χ™ΧΧ Χ™Χ Χ•ΧΧ΅Χ¤Χ¨Χ™Χ,,,,Χ¦Χ¨Χ™Χ
+438,ConsignmentItem,5,144Β ,0..1,,Χ›ΧΧ•Χª Χ”ΧΧ¨Χ™Χ–Χ•Χª Χ›Χ•ΧΧ ΧΧ¨Χ™Χ–Χ•Χª Χ‘ΧªΧ•Χ Χ”ΧΧ›Χ•ΧΧ”  ,Χ›ΧΧ•Χª ΧΧ¨Χ™Χ–Χ•Χª-ΧΧ¨Χ™Χ–Χ•Χª ΧΧ©Χ Χ™Χ•Χª-Χ¨Χ©Χ•ΧΧ” 5(Χ¤Χ•Χ–' 138-146),M,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” ,Χ›ΧΧ•Χª ΧΧ¨Χ™Χ–Χ•Χª,Number of packages,QuantityQuantity,            QuantityQuantity,Declaration.Consignment.ConsignmentItem.Packaging.QuantityQuantity,Χ›ΧΧ•Χª ΧΧ¨Χ™Χ–Χ•Χª,,"ΧΧ¦Χ™Χ™Χ ΧΧª Χ›ΧΧ•Χª Χ”ΧΧ¨Χ™Χ–Χ•Χª Χ‘ΧªΧ•Χ Χ¦Χ™Χ•Χ“ Χ”Χ”Χ•Χ‘ΧΧ” ΧΧ• Χ›ΧΧ•Χª Χ”ΧΧ¨Χ™Χ–Χ•Χª Χ©Χ Χ”ΧΧΧΆΧ ΧΆΧ¦ΧΧ•.
+ΧΧ“Χ’Χ•ΧΧ Χ¤Χ™Χ¨Χ•Χ Χ›ΧΧ•Χª Χ”ΧΧ¨Χ™Χ–Χ•Χª Χ‘ΧªΧ•Χ Χ”ΧΧ›Χ•ΧΧ” 
+Χ‘Χ”ΧªΧΧ ΧΧΧ•Χ’Χ“Χ¨ Χ‘- WCO.
+Χ”ΧΧ™Χ“ΧΆ Χ—Χ©Χ•Χ‘ ΧΧΧ•Χ“ ΧΧΧ›Χ΅ , Χ‘ΧΆΧ™Χ΅Χ§ΧΧ•Χª Χ©Χ Χ™Χ‘Χ©ΧªΧ™ - Χ”ΧΧ™Χ“ΧΆ ΧΧΧ•Χ¨ ΧΧ”Χ™Χ•Χª ΧΧ¦Χ Χ”ΧΧ©ΧΧ—.",,Χ¦Χ¨Χ™Χ
+439,ConsignmentItem,5,141Β ,0..1,,Χ΅Χ•Χ’ ΧΧ¨Χ™Χ–Χ” ΧΧ¤Χ™ ΧΧ‘ΧΧ” UNCE21       ,Χ§Χ•Χ“ ΧΧ¨Χ™Χ–Χ”- Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 063-064,M,Χ”ΧΧ¨Χ” ΧΧ¤Χ™ ΧΧ‘ΧΧª Χ§Χ•Χ“Χ™ ΧΧ¨Χ™Χ–Χ” Χ§Χ™Χ™ΧΧ™Χ (C01)ΧΧΧ‘Χ Χ” Χ”Χ—Χ“Χ© - ΧΧ¤Χ™ Χ”ΧΆΧ¨Χ Χ‘ΧΆΧΧ•Χ“Χ”: WCO PKG TP,Χ΅Χ•Χ’ ΧΧ¨Χ™Χ–Χ” ,"Type of packages identification, coded",TypeCode,            TypeCode,Declaration.Consignment.ConsignmentItem.Packaging.TypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ ΧΧ¨Χ™Χ–Χ”,,,,Χ¦Χ¨Χ™Χ
+482,ConsignmentItem,4,31B,0..*,,,,,H,,,TransportEquipment,         TransportEquipment,Declaration.Consignment.ConsignmentItem.TransportEquipment,Χ›Χ•ΧªΧ¨Χª Χ¤Χ¨ΧΧ™ Χ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ”,"Χ‘Χ™ΧΧ™ Χ•Χ™Χ‘Χ©ΧªΧ™, Χ—Χ•Χ‘Χ” Χ—ΧΧ™Χ‘Χ” Packaging  ΧΧ• Χ—ΧΧ™Χ‘Χª   TransportEquipment  , ΧΧ• ΧΧª Χ©ΧªΧ™Χ”Χ.
+Χ‘ΧΧ•Χ•Χ™Χ¨Χ™ , Χ—Χ•Χ‘Χ” Χ—ΧΧ™Χ‘Χ”  Packaging Χ•Χ—ΧΧ™Χ‘Χ”   TransportEquipment Χ”Χ™Χ Χ” Χ¨Χ©Χ•Χª
+Χ‘ΧΆΧ΅Χ§Χª Χ¨Χ™Χ§Χ•Χ, Χ—ΧΧ™Χ‘Χ” Χ–Χ• Χ”Χ™Χ Χ” Χ—Χ•Χ‘Χ” ΧΧΧ©ΧΧ— Χ™ΧΧ™","Χ§Χ™Χ™Χ Χ‘Χ©ΧªΧ™ Χ¨ΧΧ•Χª Χ‘Χ¨ΧΧª Χ”ΧΧΧΆΧ Χ•Χ‘Χ¨ΧΧª Χ©Χ•Χ¨Χ” Χ‘ΧΧΧΆΧ .
+Χ”Χ•Χ—ΧΧ ΧΧ”Χ©ΧªΧΧ© Χ‘Χ¨ΧΧª Χ©Χ•Χ¨Χ” Χ‘ΧΧΧΆΧ
+Χ”Χ™Χ›Χ Χ©Χ—Χ•Χ‘Χª Χ”Χ”Χ–Χ Χ” ΧΧ•ΧªΧ Χ™Χª, Χ”ΧªΧ ΧΧ™ Χ”Χ•Χ Χ©Χ—Χ•Χ‘Χ” Χ—ΧΧ™Χ‘Χ” Χ–Χ• ΧΧ• Χ—ΧΧ™Χ‘Χª Packaging",,Χ¦Χ¨Χ™Χ
+483,ConsignmentItem,5,152Β ,0..1,Χ—Χ•Χ‘Χ” Χ‘Χ›Χ ΧΧ§Χ¨Χ” Χ©Χ¦Χ™Χ•Χ“ Χ”Χ”Χ•Χ‘ΧΧ” Χ”Χ•Χ Χ΅Χ•Χ’ Χ©Χ ΧΧ›Χ•ΧΧ”,Χ΅Χ•Χ’ Χ¦Χ™Χ•Χ“ Χ”Χ”Χ•Χ‘ΧΧ”.   Χ—Χ•Χ‘Χ” Χ¨Χ§ Χ‘ΧΧ¦Χ”Χ¨ ΧΧΧ/ΧΧ›Χ•ΧΧ•Χª Χ¨Χ™Χ§Χ•Χª/Χ¨Χ™Χ§Χ•Χ Χ™Χ?,"Χ¨Χ©Χ•ΧΧ” 3 - Χ΅Χ•Χ’ ΧΧ›Χ•ΧΧ”, Χ¤Χ•Χ–' 028-029 + ΧΧ•Χ¨Χ ΧΧ›Χ•ΧΧ”, Χ¤Χ•Χ–' 030-031",C,Χ”ΧΧ¨Χ”: Χ™Χ© ΧΧ©Χ¨Χ©Χ¨ ΧΧª Χ”Χ ΧªΧ•Χ Χ™Χ Χ‘Χ¨Χ©Χ•ΧΧ” 3 Χ¤Χ•Χ–' 028-029 + 030-031. ΧΧ”Χ›Χ Χ΅ ΧΧΧ‘ΧΧ”: TBLOAD_A45_HCONT_TO_WCO    Χ•ΧΧ©ΧΧ•Χ£ ΧΧª Χ”ΧΆΧ¨Χ Χ”ΧΧªΧΧ™Χ ΧΧΆΧΧ•Χ“Χ”: WCO_TYPE,"Χ΅Χ•Χ’ ΧΧ¨Χ™Χ–Χ” 
+(Χ©Χ Χ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ”)",Equipment size and type identification,CharacteristicCode,            CharacteristicCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.CharacteristicCode,Χ§Χ•Χ“ Χ΅Χ•Χ’  Χ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ”,"ΧΧ›Χ•ΧΧ”, ΧΧ¨Χ™Χ™ΧΧ¨ Χ•Χ›Χ•'
+Χ‘ΧΆΧ΅Χ§Χª Χ¨Χ™Χ§Χ•Χ, Χ©Χ“Χ” Χ–Χ”  Χ—Χ•Χ‘Χ” ΧΧΧ©ΧΧ— Χ™ΧΧ™","ISO 6346 ΧΧΧ›Χ•ΧΧ”
+ΧΧ•
+ΧΧ¤Χ™  ULD Χ΅Χ•Χ’Χ™ 
+IATA",ΧΧΧ›Χª ΧΧ¤Χ™ ΧªΧ§Χ ISO  Χ‘ΧΧ›Χ•ΧΧ•Χª,Χ¦Χ¨Χ™Χ
+484,ConsignmentItem,5,351Β ,0..1,ΧΧ¦Χ”Χ¨ ΧΧΧ. ΧΧ ΧΧ”Χ΅Χ‘Χ”,Χ§Χ•Χ“ Χ΅ΧΧΧ•Χ΅ Χ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ”.Χ™Χ©ΧΧ© Χ‘ΧΧ¦Χ”Χ¨ ΧΧΧ ΧΆΧ Χ§Χ•Χ“ 4 -REMAIN ON BOARD ΧΧ¦Χ™Χ•Χ ΧΧ›Χ•ΧΧ•Χª Χ©ΧΧ Χ™Χ•Χ¨Χ“Χ•Χª ΧΧΧ Χ™Χ™Χ”,,C,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,Container status code,EventStatusCode,            EventStatusCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.EventStatusCode,Χ§Χ•Χ“ Χ΅ΧΧΧΧ•Χ΅ Χ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ”,,"Χ‘Χ™ΧΧ™ - 
+Χ™Χ©ΧΧ© ΧΧΧ›Χ•ΧΧ•Χª Χ©ΧΧ Χ™Χ•Χ¨Χ“Χ•Χª ΧΧ”ΧΧ•Χ Χ™Χ” (ΧΧ¦Χ”Χ¨ ΧΧΧ)
+Χ§Χ•Χ“  4  (Χ•Χ¨Χ§ Χ§Χ•Χ“ 4)   remain on board 
+Χ Χ™ΧªΧ ΧΧ”Χ©ΧªΧΧ© ΧΧ¦Χ•Χ¨Χ Χ”Χ¨Χ—Χ‘Χª Χ΅Χ•Χ’ ΧΧ™Χ¤Χ•Χ Χ‘Χ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ”  
+Χ‘ΧΧ•Χ•Χ™Χ¨Χ™ -
+Χ™Χ©ΧΧ© ΧΆΧ‘Χ•Χ¨ ULD Χ©ΧΧ Χ™Χ•Χ¨Χ“Χ™Χ ΧΧ”ΧΧΧ•Χ΅
+(ΧΧ¦Χ”Χ¨ ΧΧΧ  FROB - freight  freight remain on board )   
+Χ§Χ•Χ“ 4   (Χ•Χ¨Χ§ Χ§Χ•Χ“ 4)  remain on board 
 
-",,φψικ
-485,ConsignmentItem,5,154 ,0..1,,ηεαδ αξλεμεϊ ψιχεϊ αμαγ-ξφιιο ξιγϊ ξιμει ωμ λμι δδεαμδ-ηεαδ αξλεμεϊ ψιχεϊ εΰιζεθπχιν ψιχιν,"χεγ θιτεμ, ψωεξδ 3, τεζ' 091-092",C,"ΰν χεγ δθιτεμ δεΰ 15 ΰε 23 ιεων μωγδ δςψκ ""4""' . ςαεψ χεγ θιτεμ 3 ιω μλϊεα ςψκ ""5"" . ΰηψϊ ιωΰψ ψιχ",χεγ ϊελο ξλεμδ ξιεηγϊ ,Transport equipment loaded status,FullnessCode,            FullnessCode,Declaration.Consignment.ConsignmentItem.TransportEquipment..FullnessCode,χεγ ξιγϊ ξιμει ωμ φιεγ δδεαμδ,"αςρχϊ ψιχεο, ΰιο μδζιο ςψκ 4 (ξλεμδ ψιχδ)","ιωξω μφεψκ γιεεη ξλεμεϊ ψιχεϊ ωΰιπο ααςμεϊ τψθιϊ.
-αψξϊ ξθςο ( Consignment )  , ΰιο μλμεμ βν ξλεμεϊ ψιχεϊ εβν ξλεμεϊ ξμΰεϊ.",,φψικ
-486,ConsignmentItem,5,159 ,0..1,,ηεαδ ψχ ςαεψ ξλεμεϊ εξθςπιν ξψεχπιν,ξρτψ ξλεμδ- ψωεξδ 3 - τεζ' 016-027,C,δςϊχδ ξμΰδ ωμ ξρτψ δξλεμδ. ,"ξζδδ ΰψιζδ
-(ξρτψ ξλεμδ/ΰηψ)",Equipment identification number,ID,            ID,Declaration.Consignment.ConsignmentItem.TransportEquipment.ID,ξρτψ ξζδδ φιεγ δεαμδ,,"αιξι - ξρτψ ξλεμδ
-αΰεειψι- ξρτψ ULD
-αιαωϊι  - ξρτψ ξλεμδ ΰν ξθςο ξβις αξλεμδ ΰε ξρτψ ξωΰιϊ ΰν ξβις μΰ αξλεμδ",,φψικ
-487,ConsignmentItem,5,157 ,0..1,,μΰ ψμεεπθι μξφδψ ιξι,,O,μΰ φψικ,,Container legal status indicator,LegalStatusIndicator,            LegalStatusIndicator,Declaration.Consignment.ConsignmentItem.Packaging.TransportEquipment.LegalStatusIndicator,ΰιπγχφιδ ΰν φιεγ δδεαμδ ϊχπι,,"1 - φιεγ ϊχπι 
-0 - φιεγ μΰ ϊχπι
-μΰ πγψω  ς""ι ηπ""ι",μδημθϊ δπξμ,μΰ φψικ
-488,ConsignmentItem,5,279 ,0..1,,χεγ ξγιπϊ δψιωει ωμ φιεγ δδεαμδ. πψΰδ μΰ ψμεεπθι μξφδψ ιξι,,O,μΰ φψικ,,Transport equipment country,LicensePlateIssuingCountry,            LicensePlateIssuingCountry,Declaration.Consignment.ConsignmentItem.TransportEquipment.LicensePlateIssuingCountry,ξζδδ ξγιπϊ ψιωει ωμ φιεγ δεαμδ,,χεγ ξγιπϊ μεηεϊ ζιδει ωμ θψιιμψ δξεαΰ αΰεπιδ,,φψικ
-492,ConsignmentItem,5,151 ,0..1,,ηεαδ ψχ αξλεμεϊ ψιχεϊ- EDIFACT8077,χεγ αςμεϊ-ψωεξδ 6- τεζ' 158,C,"δξψδ μτι δςψκ αχεγ αςμεϊ-ψωεξδ 6- τεζ' 158        ξφδψ χιιν 1 = WCO 1 ,      ξφδψ χιιν 0 =  WCO 2      ",χεγ αςμεϊ,"Equipment supplier type, coded",SupplierPartyTypeCode,            SupplierPartyTypeCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.SupplierPartyTypeCode,χεγ ρεβ δβεψν ωααςμεϊε φιεγ δδεαμδ,"ρτχ (αςμιν) ωμ φιεγ δδεαμδ, ςγιιο μΰ πεϊο τϊψεο μαςμεϊ τψθιϊ ",μαγεχ δΰν ζδδ μχεγ χε μξλεμεϊ,ιω μδερισ ςψκ αςμεϊ τψθιϊ μθαμδ,φψικ
-1000,ConsignmentItem,5,44B,0..*,,,,,H,, ,Seal,            Seal,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal,λεϊψϊ ηθιαϊ ρβψιν,,"λεϊψϊ ηθιαϊ ρβψιν 
-ηεαδ ΰν ρεβ δξλεμδ ξηιια ρβψ.
-αςρχϊ ψιχεο ηθιαδ ζε διπδ ψωεϊ μξωμη ιξι",,φψικ
-1001,ConsignmentItem,6,006 ,0..1,,,,,,,Sequence number,SequenceNumeric,               SequenceNumeric,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.SequenceNumeric ,ξρτψ ξετς,,αηθιαδ ψα ξετςιϊ ζδε ξρτψ δξετς,,φψικ
-1002,ConsignmentItem,6,165 ,0..1,,αξρψ δχιιν ιϊλπε ςγ ωπι ρβψιν. αξιγδ ειω ιεϊψ ξΰηγ  - ιω μξτεϊ βν ΰεϊε.,"ξρτψ ρβψ-ψωεξδ 3-τεζ' 101-108, εαψωεξδ 5 τεζ' 147-154 - ρβψ περσ",C,ωψωεψ δςψκ αψωεξδ 5 μςψκ δξετις αψωεξδ 3-ηεαδ ψχ αξλεμεϊ- ξρτψι ρβψιν(ψα ξετςι),ξρτψ ρβψ,Seal number,ID,               ID,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.ID,ξρτψ ρβψ,,,,φψικ
-1003,ConsignmentItem,6,407 ,0..1,,,,,,,Seal Type Code  ,TypeCode,               TypeCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.TypeCode,ρεβ ρβψ,,,,φψικ
-1004,ConsignmentItem,6,408 ,0..1,,,,,,,Seal Condition Code,ConditionCode,               ConditionCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.ConditionCode,ξφα ρβψ,,,,φψικ
-1005,ConsignmentItem,6, 53B,0..1,,,,,,,SealingParty,SealingParty,               SealingParty,,δβεψν ωδρβψ ωμε,,,,μΰ φψικ
-1006,ConsignmentItem,7,R116,0..1,,,,,,,Sealing Party Name,Name,                  Name,,ων,,,,μΰ φψικ
-1007,ConsignmentItem,7,R117,0..1,,,,,,,Sealing Party Identifier ,ID,                  ID,,ξρτψ,,,,μΰ φψικ
-490,ConsignmentItem,6,165 ,0..1,,αξρψ δχιιν ιϊλπε ςγ ωπι ρβψιν. αξιγδ ειω ιεϊψ ξΰηγ  - ιω μξτεϊ βν ΰεϊε.,"ξρτψ ρβψ-ψωεξδ 3-τεζ' 101-108, εαψωεξδ 5 τεζ' 147-154 - ρβψ περσ",C,ωψωεψ δςψκ αψωεξδ 5 μςψκ δξετις αψωεξδ 3-ηεαδ ψχ αξλεμεϊ- ξρτψι ρβψιν(ψα ξετςι),ξρτψ ρβψ,Seal number,SealID,               SealID,Declaration.Consignment.ConsignmentItem.Packaging.TransportEquipment.SealID,ξρτψ ξζδδ ρβψ,,"πξφΰ βν αψξϊ ξθςο , αδπηδ ω- Comodity ιδιδ ηγ ξετςι ΰζ δωγδ λΰο ξϊΰιν μψξϊ ωεψδ δξθςο","ξρτψ ρβψ – ξεαιμ ιξι
+",,Χ¦Χ¨Χ™Χ
+485,ConsignmentItem,5,154Β ,0..1,,Χ—Χ•Χ‘Χ” Χ‘ΧΧ›Χ•ΧΧ•Χª Χ¨Χ™Χ§Χ•Χª Χ‘ΧΧ‘Χ“-ΧΧ¦Χ™Χ™Χ ΧΧ™Χ“Χª ΧΧ™ΧΧ•Χ™ Χ©Χ Χ›ΧΧ™ Χ”Χ”Χ•Χ‘ΧΧ”-Χ—Χ•Χ‘Χ” Χ‘ΧΧ›Χ•ΧΧ•Χª Χ¨Χ™Χ§Χ•Χª Χ•ΧΧ™Χ–Χ•ΧΧ Χ§Χ™Χ Χ¨Χ™Χ§Χ™Χ,"Χ§Χ•Χ“ ΧΧ™Χ¤Χ•Χ, Χ¨Χ©Χ•ΧΧ” 3, Χ¤Χ•Χ–' 091-092",C,"ΧΧ Χ§Χ•Χ“ Χ”ΧΧ™Χ¤Χ•Χ Χ”Χ•Χ 15 ΧΧ• 23 Χ™Χ•Χ©Χ ΧΧ©Χ“Χ” Χ”ΧΆΧ¨Χ ""4""' . ΧΆΧ‘Χ•Χ¨ Χ§Χ•Χ“ ΧΧ™Χ¤Χ•Χ 3 Χ™Χ© ΧΧ›ΧªΧ•Χ‘ ΧΆΧ¨Χ ""5"" . ΧΧ—Χ¨Χª Χ™Χ©ΧΧ¨ Χ¨Χ™Χ§",Χ§Χ•Χ“ ΧªΧ•Χ›Χ ΧΧ›Χ•ΧΧ” ΧΧ™Χ•Χ—Χ“Χª ,Transport equipment loaded status,FullnessCode,            FullnessCode,Declaration.Consignment.ConsignmentItem.TransportEquipment..FullnessCode,Χ§Χ•Χ“ ΧΧ™Χ“Χª ΧΧ™ΧΧ•Χ™ Χ©Χ Χ¦Χ™Χ•Χ“ Χ”Χ”Χ•Χ‘ΧΧ”,"Χ‘ΧΆΧ΅Χ§Χª Χ¨Χ™Χ§Χ•Χ, ΧΧ™Χ ΧΧ”Χ–Χ™Χ ΧΆΧ¨Χ 4 (ΧΧ›Χ•ΧΧ” Χ¨Χ™Χ§Χ”)","Χ™Χ©ΧΧ© ΧΧ¦Χ•Χ¨Χ Χ“Χ™Χ•Χ•Χ— ΧΧ›Χ•ΧΧ•Χª Χ¨Χ™Χ§Χ•Χª Χ©ΧΧ™Χ Χ Χ‘Χ‘ΧΆΧΧ•Χª Χ¤Χ¨ΧΧ™Χª.
+Χ‘Χ¨ΧΧª ΧΧΧΆΧ ( Consignment )  , ΧΧ™Χ ΧΧ›ΧΧ•Χ Χ’Χ ΧΧ›Χ•ΧΧ•Χª Χ¨Χ™Χ§Χ•Χª Χ•Χ’Χ ΧΧ›Χ•ΧΧ•Χª ΧΧΧΧ•Χª.",,Χ¦Χ¨Χ™Χ
+486,ConsignmentItem,5,159Β ,0..1,,Χ—Χ•Χ‘Χ” Χ¨Χ§ ΧΆΧ‘Χ•Χ¨ ΧΧ›Χ•ΧΧ•Χª Χ•ΧΧΧΆΧ Χ™Χ ΧΧ¨Χ•Χ§Χ Χ™Χ,ΧΧ΅Χ¤Χ¨ ΧΧ›Χ•ΧΧ”- Χ¨Χ©Χ•ΧΧ” 3 - Χ¤Χ•Χ–' 016-027,C,Χ”ΧΆΧªΧ§Χ” ΧΧΧΧ” Χ©Χ ΧΧ΅Χ¤Χ¨ Χ”ΧΧ›Χ•ΧΧ”. ,"ΧΧ–Χ”Χ” ΧΧ¨Χ™Χ–Χ”
+(ΧΧ΅Χ¤Χ¨ ΧΧ›Χ•ΧΧ”/ΧΧ—Χ¨)",Equipment identification number,ID,            ID,Declaration.Consignment.ConsignmentItem.TransportEquipment.ID,ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ”,,"Χ‘Χ™ΧΧ™ - ΧΧ΅Χ¤Χ¨ ΧΧ›Χ•ΧΧ”
+Χ‘ΧΧ•Χ•Χ™Χ¨Χ™- ΧΧ΅Χ¤Χ¨ ULD
+Χ‘Χ™Χ‘Χ©ΧªΧ™  - ΧΧ΅Χ¤Χ¨ ΧΧ›Χ•ΧΧ” ΧΧ ΧΧΧΆΧ ΧΧ’Χ™ΧΆ Χ‘ΧΧ›Χ•ΧΧ” ΧΧ• ΧΧ΅Χ¤Χ¨ ΧΧ©ΧΧ™Χª ΧΧ ΧΧ’Χ™ΧΆ ΧΧ Χ‘ΧΧ›Χ•ΧΧ”",,Χ¦Χ¨Χ™Χ
+487,ConsignmentItem,5,157Β ,0..1,,ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,O,ΧΧ Χ¦Χ¨Χ™Χ,,Container legal status indicator,LegalStatusIndicator,            LegalStatusIndicator,Declaration.Consignment.ConsignmentItem.Packaging.TransportEquipment.LegalStatusIndicator,ΧΧ™Χ Χ“Χ§Χ¦Χ™Χ” ΧΧ Χ¦Χ™Χ•Χ“ Χ”Χ”Χ•Χ‘ΧΧ” ΧªΧ§Χ Χ™,,"1 - Χ¦Χ™Χ•Χ“ ΧªΧ§Χ Χ™ 
+0 - Χ¦Χ™Χ•Χ“ ΧΧ ΧªΧ§Χ Χ™
+ΧΧ Χ Χ“Χ¨Χ©  ΧΆ""Χ™ Χ—Χ ""Χ™",ΧΧ”Χ—ΧΧΧª Χ”Χ ΧΧ,ΧΧ Χ¦Χ¨Χ™Χ
+488,ConsignmentItem,5,279Β ,0..1,,Χ§Χ•Χ“ ΧΧ“Χ™Χ Χª Χ”Χ¨Χ™Χ©Χ•Χ™ Χ©Χ Χ¦Χ™Χ•Χ“ Χ”Χ”Χ•Χ‘ΧΧ”. Χ Χ¨ΧΧ” ΧΧ Χ¨ΧΧ•Χ•Χ ΧΧ™ ΧΧΧ¦Χ”Χ¨ Χ™ΧΧ™,,O,ΧΧ Χ¦Χ¨Χ™Χ,,Transport equipment country,LicensePlateIssuingCountry,            LicensePlateIssuingCountry,Declaration.Consignment.ConsignmentItem.TransportEquipment.LicensePlateIssuingCountry,ΧΧ–Χ”Χ” ΧΧ“Χ™Χ Χª Χ¨Χ™Χ©Χ•Χ™ Χ©Χ Χ¦Χ™Χ•Χ“ Χ”Χ•Χ‘ΧΧ”,,Χ§Χ•Χ“ ΧΧ“Χ™Χ Χª ΧΧ•Χ—Χ•Χª Χ–Χ™Χ”Χ•Χ™ Χ©Χ ΧΧ¨Χ™Χ™ΧΧ¨ Χ”ΧΧ•Χ‘Χ Χ‘ΧΧ•Χ Χ™Χ”,,Χ¦Χ¨Χ™Χ
+492,ConsignmentItem,5,151Β ,0..1,,Χ—Χ•Χ‘Χ” Χ¨Χ§ Χ‘ΧΧ›Χ•ΧΧ•Χª Χ¨Χ™Χ§Χ•Χª- EDIFACT8077,Χ§Χ•Χ“ Χ‘ΧΆΧΧ•Χª-Χ¨Χ©Χ•ΧΧ” 6- Χ¤Χ•Χ–' 158,C,"Χ”ΧΧ¨Χ” ΧΧ¤Χ™ Χ”ΧΆΧ¨Χ Χ‘Χ§Χ•Χ“ Χ‘ΧΆΧΧ•Χª-Χ¨Χ©Χ•ΧΧ” 6- Χ¤Χ•Χ–' 158        ΧΧ¦Χ”Χ¨ Χ§Χ™Χ™Χ 1 = WCO 1 ,      ΧΧ¦Χ”Χ¨ Χ§Χ™Χ™Χ 0 =  WCO 2      ",Χ§Χ•Χ“ Χ‘ΧΆΧΧ•Χª,"Equipment supplier type, coded",SupplierPartyTypeCode,            SupplierPartyTypeCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.SupplierPartyTypeCode,Χ§Χ•Χ“ Χ΅Χ•Χ’ Χ”Χ’Χ•Χ¨Χ Χ©Χ‘Χ‘ΧΆΧΧ•ΧªΧ• Χ¦Χ™Χ•Χ“ Χ”Χ”Χ•Χ‘ΧΧ”,"Χ΅Χ¤Χ§ (Χ‘ΧΆΧΧ™Χ) Χ©Χ Χ¦Χ™Χ•Χ“ Χ”Χ”Χ•Χ‘ΧΧ”, ΧΆΧ“Χ™Χ™Χ ΧΧ Χ Χ•ΧªΧ Χ¤ΧªΧ¨Χ•Χ ΧΧ‘ΧΆΧΧ•Χª Χ¤Χ¨ΧΧ™Χª ",ΧΧ‘Χ“Χ•Χ§ Χ”ΧΧ Χ–Χ”Χ” ΧΧ§Χ•Χ“ Χ§Χ• ΧΧΧ›Χ•ΧΧ•Χª,Χ™Χ© ΧΧ”Χ•Χ΅Χ™Χ£ ΧΆΧ¨Χ Χ‘ΧΆΧΧ•Χª Χ¤Χ¨ΧΧ™Χª ΧΧΧ‘ΧΧ”,Χ¦Χ¨Χ™Χ
+1000,ConsignmentItem,5,44B,0..*,,,,,H,, ,Seal,            Seal,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal,Χ›Χ•ΧªΧ¨Χª Χ—ΧΧ™Χ‘Χª Χ΅Χ’Χ¨Χ™Χ,,"Χ›Χ•ΧªΧ¨Χª Χ—ΧΧ™Χ‘Χª Χ΅Χ’Χ¨Χ™Χ 
+Χ—Χ•Χ‘Χ” ΧΧ Χ΅Χ•Χ’ Χ”ΧΧ›Χ•ΧΧ” ΧΧ—Χ™Χ™Χ‘ Χ΅Χ’Χ¨.
+Χ‘ΧΆΧ΅Χ§Χª Χ¨Χ™Χ§Χ•Χ Χ—ΧΧ™Χ‘Χ” Χ–Χ• Χ”Χ™Χ Χ” Χ¨Χ©Χ•Χª ΧΧΧ©ΧΧ— Χ™ΧΧ™",,Χ¦Χ¨Χ™Χ
+1001,ConsignmentItem,6,006Β ,0..1,,,,,,,Sequence number,SequenceNumeric,               SequenceNumeric,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.SequenceNumeric ,ΧΧ΅Χ¤Χ¨ ΧΧ•Χ¤ΧΆ,,Χ‘Χ—ΧΧ™Χ‘Χ” Χ¨Χ‘ ΧΧ•Χ¤ΧΆΧ™Χª Χ–Χ”Χ• ΧΧ΅Χ¤Χ¨ Χ”ΧΧ•Χ¤ΧΆ,,Χ¦Χ¨Χ™Χ
+1002,ConsignmentItem,6,165Β ,0..1,,Χ‘ΧΧ΅Χ¨ Χ”Χ§Χ™Χ™Χ Χ™ΧªΧ›Χ Χ• ΧΆΧ“ Χ©Χ Χ™ Χ΅Χ’Χ¨Χ™Χ. Χ‘ΧΧ™Χ“Χ” Χ•Χ™Χ© Χ™Χ•ΧªΧ¨ ΧΧΧ—Χ“  - Χ™Χ© ΧΧΧ¤Χ•Χª Χ’Χ ΧΧ•ΧªΧ•.,"ΧΧ΅Χ¤Χ¨ Χ΅Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 3-Χ¤Χ•Χ–' 101-108, Χ•Χ‘Χ¨Χ©Χ•ΧΧ” 5 Χ¤Χ•Χ–' 147-154 - Χ΅Χ’Χ¨ Χ Χ•Χ΅Χ£",C,Χ©Χ¨Χ©Χ•Χ¨ Χ”ΧΆΧ¨Χ Χ‘Χ¨Χ©Χ•ΧΧ” 5 ΧΧΆΧ¨Χ Χ”ΧΧ•Χ¤Χ™ΧΆ Χ‘Χ¨Χ©Χ•ΧΧ” 3-Χ—Χ•Χ‘Χ” Χ¨Χ§ Χ‘ΧΧ›Χ•ΧΧ•Χª- ΧΧ΅Χ¤Χ¨Χ™ Χ΅Χ’Χ¨Χ™Χ(Χ¨Χ‘ ΧΧ•Χ¤ΧΆΧ™),ΧΧ΅Χ¤Χ¨ Χ΅Χ’Χ¨,Seal number,ID,               ID,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.ID,ΧΧ΅Χ¤Χ¨ Χ΅Χ’Χ¨,,,,Χ¦Χ¨Χ™Χ
+1003,ConsignmentItem,6,407Β ,0..1,,,,,,,Seal Type Code  ,TypeCode,               TypeCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.TypeCode,Χ΅Χ•Χ’ Χ΅Χ’Χ¨,,,,Χ¦Χ¨Χ™Χ
+1004,ConsignmentItem,6,408Β ,0..1,,,,,,,Seal Condition Code,ConditionCode,               ConditionCode,Declaration.Consignment.ConsignmentItem.TransportEquipment.Seal.ConditionCode,ΧΧ¦Χ‘ Χ΅Χ’Χ¨,,,,Χ¦Χ¨Χ™Χ
+1005,ConsignmentItem,6, 53B,0..1,,,,,,,SealingParty,SealingParty,               SealingParty,,Χ”Χ’Χ•Χ¨Χ Χ©Χ”Χ΅Χ’Χ¨ Χ©ΧΧ•,,,,ΧΧ Χ¦Χ¨Χ™Χ
+1006,ConsignmentItem,7,R116,0..1,,,,,,,Sealing Party Name,Name,                  Name,,Χ©Χ,,,,ΧΧ Χ¦Χ¨Χ™Χ
+1007,ConsignmentItem,7,R117,0..1,,,,,,,Sealing Party Identifier ,ID,                  ID,,ΧΧ΅Χ¤Χ¨,,,,ΧΧ Χ¦Χ¨Χ™Χ
+490,ConsignmentItem,6,165Β ,0..1,,Χ‘ΧΧ΅Χ¨ Χ”Χ§Χ™Χ™Χ Χ™ΧªΧ›Χ Χ• ΧΆΧ“ Χ©Χ Χ™ Χ΅Χ’Χ¨Χ™Χ. Χ‘ΧΧ™Χ“Χ” Χ•Χ™Χ© Χ™Χ•ΧªΧ¨ ΧΧΧ—Χ“  - Χ™Χ© ΧΧΧ¤Χ•Χª Χ’Χ ΧΧ•ΧªΧ•.,"ΧΧ΅Χ¤Χ¨ Χ΅Χ’Χ¨-Χ¨Χ©Χ•ΧΧ” 3-Χ¤Χ•Χ–' 101-108, Χ•Χ‘Χ¨Χ©Χ•ΧΧ” 5 Χ¤Χ•Χ–' 147-154 - Χ΅Χ’Χ¨ Χ Χ•Χ΅Χ£",C,Χ©Χ¨Χ©Χ•Χ¨ Χ”ΧΆΧ¨Χ Χ‘Χ¨Χ©Χ•ΧΧ” 5 ΧΧΆΧ¨Χ Χ”ΧΧ•Χ¤Χ™ΧΆ Χ‘Χ¨Χ©Χ•ΧΧ” 3-Χ—Χ•Χ‘Χ” Χ¨Χ§ Χ‘ΧΧ›Χ•ΧΧ•Χª- ΧΧ΅Χ¤Χ¨Χ™ Χ΅Χ’Χ¨Χ™Χ(Χ¨Χ‘ ΧΧ•Χ¤ΧΆΧ™),ΧΧ΅Χ¤Χ¨ Χ΅Χ’Χ¨,Seal number,SealID,               SealID,Declaration.Consignment.ConsignmentItem.Packaging.TransportEquipment.SealID,ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” Χ΅Χ’Χ¨,,"Χ ΧΧ¦Χ Χ’Χ Χ‘Χ¨ΧΧª ΧΧΧΆΧ , Χ‘Χ”Χ Χ—Χ” Χ©- Comodity Χ™Χ”Χ™Χ” Χ—Χ“ ΧΧ•Χ¤ΧΆΧ™ ΧΧ– Χ”Χ©Χ“Χ” Χ›ΧΧ ΧΧªΧΧ™Χ ΧΧ¨ΧΧª Χ©Χ•Χ¨Χ” Χ”ΧΧΧΆΧ","ΧΧ΅Χ¤Χ¨ Χ΅Χ’Χ¨ β€“ ΧΧ•Χ‘Χ™Χ Χ™ΧΧ™
 +
-ξρτψ ρβψ περσ (O)  ΰετφιεπμι. ψχ μβαι ξλεμεϊ ωιω μδο ωπι ρβψιν. ",αεθμ
-495,ConsignmentItem,4,35B,0..*,,,,,H,,,UCR,         UCR,Declaration.Consignment.ConsignmentItem.UCR,UCR  λεϊψϊ   ,,,,φψικ
-496,ConsignmentItem,5,016 ,0..1,,ξζδδ απμΰεξι ωιμεεδ ΰϊ δξθςο μλμ ΰεψκ ωψωψϊ μεβιρθιϊ. ΰεμι ιημισ ΰϊ ωθψ δξθςο,,O,μΰ μδραδ,UCR,UCR,ID,            ID,Declaration.Consignment.ConsignmentItem.UCR.UCR.ID,ξρτψ ξζδδ ξθςο αιπμΰεξι,,λΰωψ αξωμεηιν ωμ ξθςο ωδν ημχ ξςιρχδ ΰηϊ βγεμδ ωξβιςδ αημχιν λμ ϊχετδ,,φψικ
-497,ConsignmentItem,5,009 ,0..1,,ξζδδ ωμ δρτχ μξθςο,,O,μΰ μδραδ,,Trader reference,TraderAssignedReferenceID,            TraderAssignedReferenceID,Declaration.Consignment.ConsignmentItem.UCR.TraderAssignedReferenceID,"ξζδδ ξθςο ωπιϊο ς""ι δρτχ",,ξζδδ ωμ δρτχ μξθςο. ιλεμ μωξω λψτψπρ περσ,,φψικ
+ΧΧ΅Χ¤Χ¨ Χ΅Χ’Χ¨ Χ Χ•Χ΅Χ£ (O)  ΧΧ•Χ¤Χ¦Χ™Χ•Χ ΧΧ™. Χ¨Χ§ ΧΧ’Χ‘Χ™ ΧΧ›Χ•ΧΧ•Χª Χ©Χ™Χ© ΧΧ”Χ Χ©Χ Χ™ Χ΅Χ’Χ¨Χ™Χ. ",Χ‘Χ•ΧΧ
+495,ConsignmentItem,4,35B,0..*,,,,,H,,,UCR,         UCR,Declaration.Consignment.ConsignmentItem.UCR,UCR  Χ›Χ•ΧªΧ¨Χª   ,,,,Χ¦Χ¨Χ™Χ
+496,ConsignmentItem,5,016Β ,0..1,,ΧΧ–Χ”Χ” Χ‘Χ ΧΧΧ•ΧΧ™ Χ©Χ™ΧΧ•Χ•Χ” ΧΧª Χ”ΧΧΧΆΧ ΧΧ›Χ ΧΧ•Χ¨Χ Χ©Χ¨Χ©Χ¨Χª ΧΧ•Χ’Χ™Χ΅ΧΧ™Χª. ΧΧ•ΧΧ™ Χ™Χ—ΧΧ™Χ£ ΧΧª Χ©ΧΧ¨ Χ”ΧΧΧΆΧ,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,UCR,UCR,ID,            ID,Declaration.Consignment.ConsignmentItem.UCR.UCR.ID,ΧΧ΅Χ¤Χ¨ ΧΧ–Χ”Χ” ΧΧΧΆΧ Χ‘Χ™Χ ΧΧΧ•ΧΧ™,,Χ›ΧΧ©Χ¨ Χ‘ΧΧ©ΧΧ•Χ—Χ™Χ Χ©Χ ΧΧΧΆΧ Χ©Χ”Χ Χ—ΧΧ§ ΧΧΆΧ™Χ΅Χ§Χ” ΧΧ—Χª Χ’Χ“Χ•ΧΧ” Χ©ΧΧ’Χ™ΧΆΧ” Χ‘Χ—ΧΧ§Χ™Χ Χ›Χ ΧªΧ§Χ•Χ¤Χ”,,Χ¦Χ¨Χ™Χ
+497,ConsignmentItem,5,009Β ,0..1,,ΧΧ–Χ”Χ” Χ©Χ Χ”Χ΅Χ¤Χ§ ΧΧΧΧΆΧ,,O,ΧΧ ΧΧ”Χ΅Χ‘Χ”,,Trader reference,TraderAssignedReferenceID,            TraderAssignedReferenceID,Declaration.Consignment.ConsignmentItem.UCR.TraderAssignedReferenceID,"ΧΧ–Χ”Χ” ΧΧΧΆΧ Χ©Χ Χ™ΧªΧ ΧΆ""Χ™ Χ”Χ΅Χ¤Χ§",,ΧΧ–Χ”Χ” Χ©Χ Χ”Χ΅Χ¤Χ§ ΧΧΧΧΆΧ. Χ™Χ›Χ•Χ ΧΧ©ΧΧ© Χ›Χ¨Χ¤Χ¨Χ Χ΅ Χ Χ•Χ΅Χ£,,Χ¦Χ¨Χ™Χ
