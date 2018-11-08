@@ -163,9 +163,11 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             Feature timeSheetReportFeature_1 = tenantFeatures.Where(d => d.Code == "EMPLOYEETIMESHEETREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature timeSheetReportFeature_2 = tenantFeatures.Where(d => d.Code == "WORKDAYSPERPROJECTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature timeSheetReportFeature_3 = tenantFeatures.Where(d => d.Code == "TASKSWITHNORPROJECTSREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
 
             AddReports.AddReport(new ReportDetails() { Code = "EMTS", Description = "Employees TimeSheet", Name = "Employees TimeSheet", FilterControlName = "EmployeesTimeSheetFilterControl", Tenant = 0, ReportGroupId = tfsGroup.Id, FeatureId = timeSheetReportFeature_1.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/EmployeeTimeSheetFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "WDTS", Description = "Work Days Per Project", Name = "Work Days Per Project", FilterControlName = "WorkDaysPerProjectControl", Tenant = 0, ReportGroupId = tfsGroup.Id, FeatureId = timeSheetReportFeature_2.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/WorkDaysPerProjectFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "TPTS", Description = "Tasks not Connected to Projects", Name = "Tasks not Connected to Projects", FilterControlName = "TasksOfNoProjectsControl", Tenant = 0, ReportGroupId = tfsGroup.Id, FeatureId = timeSheetReportFeature_3.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/TasksOfNoProjectsFilterComponent" }, reportRepository, tenantReports);
         }
     }
 }

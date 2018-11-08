@@ -198,10 +198,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
 
                             <tr>
                                 <td style="background:white;">
-                                    <table style="width:100%; height:226px; border-collapse:collapse; border-spacing:0; ">
+                                    <table style="width:100%; height:260px; border-collapse:collapse; border-spacing:0; ">
 
                             <tr>
-                                            <td style="background:white;">
+                                <td>
+                                    <table>
+                                        <tr style="height:245px">
+                                                 <td style="background:white;">
                                     <div style="float: left;margin-left:60px;width:300px" id="myform">
                                       
                                         <table >
@@ -255,7 +258,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                                                              <td class="column1">
                                                                   <%--<asp:Button ID="Button1" runat="server" Text="Submit" Width="94px" OnClick="btnReset_Click" />--%>
                                                                  <input class="cmdSubmit"  type="submit" value="Submit >" runat="server" id="cmdSubmit" data-bind="click: submitMethod"/>
-                                                                  <a style="margin-left:10px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central;cursor:pointer;" onclick="backToLoginClick()">Back to login page</a>
+                                                    
                                                              </td>
                                                          </tr>
 
@@ -301,6 +304,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                                                      </table>
 
                                     </div>
+                                </td>
+                                        </tr>
+                                        <tr style="height:15px;vertical-align:top">
+                                            
+                                            <td style="vertical-align:top">
+
+                                               <a style="margin-left:10px;font-size:12px;font-family:Arial;cursor:pointer;float:left;margin-left:60px;margin-top:-10px;vertical-align:top" onclick="backToLoginClick()">Back to login page</a>
+                                            </td>
+
+
+                                        </tr>
+                                    </table>
                                 </td>
 
                                             <td style=" width:2px; text-align:right;border:0;"><img src="images/LoginScreen/line.png" style="width:2px;height:260px;margin-right:-3px;border:thick"/></td>
@@ -529,7 +544,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                     return;
                 }
        
-                var heightWidthbusyIndicator = "";
+                var heightWidthbusyIndicator = "40px";
                 if (areacaptcha.style.display == "block") {
                     heightWidthbusyIndicator = "35px";
                     document.getElementById("busyIndicator").style.marginTop = "-8px";
@@ -603,18 +618,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                                  document.getElementById("captchaTextBox").value = "";
                             }
 
+                            var errorMessage = "Submit failed! invalid email." + "<br/>";
 
-                            var errorMessage = "";
-                                        if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
-                                        if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                                        if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
-                                        if (userdata.InValidMailOrPassword)  errorMessage = "Login failed! invalid user name or password." + "<br/>";
-                                        if (!errorMessage) errorMessage = "Please re-enter the characters you see in the image above";
+                            if (userdata.ExceptionMessage) alert(userdata.ExceptionMessage);
+                            else {
+                                if (userdata.InValidCaptcha) errorMessage = "Please re-enter the characters you see in the <br /> image above";
+                                if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
+                                if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                                if (userdata.InValidMailOrPassword) errorMessage = "Submit failed! invalid email." + "<br/>";
 
-                            document.getElementById("errorsList").innerHTML = errorMessage;
-                            // $("#errorsList").text(errorMessage);
-                            $("#errorsList").show();
-
+                                document.getElementById("errorsList").innerHTML = errorMessage;
+                                $("#errorsList").show();
+                            }
                         }
 
 

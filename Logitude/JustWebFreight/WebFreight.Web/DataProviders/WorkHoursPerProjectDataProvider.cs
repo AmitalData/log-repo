@@ -37,5 +37,7 @@ namespace WebFreight.Web.DataProviders
         public string TotalWIWorkedDays { get; set; }
         public string WINumber { get; set; }
         public string Description { get; set; }
+        public string ExternalProjectNumber { get; set; }
+        
     }
 }

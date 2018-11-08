@@ -61051,7 +61051,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeTypeCode = "O",
                 LocalDefaultText =
-                "חדש %Entity"
+                "חדשה %Entity"
                 //"%Entity חדש "
             }, TextCodeRepository, textcodes);
 
@@ -65645,6 +65645,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ReportFeature54 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "USERSBYTENANTREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.UsersbyTenantReport", NameTextCodeDefaultText = "Users by Tenant Report", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature55 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LICENSEMANAGEMENTREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.LicenseManagement", NameTextCodeDefaultText = "License Management", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature56= AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPMENTSSTOCKS", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.ShipmentsStocks", NameTextCodeDefaultText = "Shipments Stocks", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ReportFeature57 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKSWITHNORPROJECTSREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.TasksWithoutProjects", NameTextCodeDefaultText = "Tasks not Connected to Projects", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
