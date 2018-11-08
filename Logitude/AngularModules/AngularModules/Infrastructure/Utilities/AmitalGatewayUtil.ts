@@ -206,6 +206,15 @@ export class AmitalGatewayUtil {
                     mapDocumentTypeCustomsData .Run(myParam);
                 }
                 break;
+            case "MapPendingReasonCodeData":
+                {
+                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.SelectCustomsRequestMenu(MaintenanceMenu);
+                    
+                    let mapPendingReasonCodeData = new MapPendingReasonCodeData();
+                    mapPendingReasonCodeData.Run(myParam);
+                }
+                break;
             case "ShowDeclarationStatusQuery":
                 {
                     this.SelectCustomsRequestMenu();
@@ -964,27 +973,24 @@ export class MapDocumentTypeCustomsData {
         });
 
     }
+}
   
 
-/*export class MapPendingReasonCodeData {
+export class MapPendingReasonCodeData {
     public Run(unifreightMessage: UnifreightMessageM) {
-        //"UnifreightEntity=GNDCARD·;UnifreightEntityNumber=10009065·;LogitudeEntity=Customs.Client·;LogitudeEntityNumber=049028392·;LogitudeViewModel=UnifreightMassageHandler·;LogitudeCommandId=ShowClientReturnIfExist·;formtitle=Client"
         let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
-        //let ImporterVat = unifreightMessage.LogitudeEntityNumber;
-        let UnifaceNAME_HEB: string
-            = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.UnifaceNAME_HEB");
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 450;
-        logWindow.Height = 250;
-        logWindow.Title = 'קשר סוג מסמך לשער עולמי';//TextCodeTranslator.Translate("Customs.Client.O.EditClient");// "Edit Client";
-        logWindow.WindowArgs = {
-            "UnifaceDOC_ID": UnifreightEntityNumber,
-            "UnifaceNAME_HEB": UnifaceNAME_HEB
 
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 600;
+        logWindow.Title = 'קשר סטטוס לסיבת Pending';
+        logWindow.WindowArgs = {
+            "UnifreightStatusCode": UnifreightEntityNumber,
+            "FromUnifreight": true,
         };
         logWindow.ShowCloseButton = true;
         logWindow.Show(
-            './Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+            './CustomsModules/CustomsCourier/Components/CourierPendingReason/AddEditCourierPendingReasonComponent'
         );
 
         logWindow.WindowClosed.subscribe(($event1: any) => {
@@ -992,6 +998,6 @@ export class MapDocumentTypeCustomsData {
             SessionLocator.CurrentSession.StopBusyIndicator();
         });
 
-    }*/
+    }
 
 }

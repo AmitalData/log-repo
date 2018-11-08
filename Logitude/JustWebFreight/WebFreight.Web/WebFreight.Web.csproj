@@ -1119,6 +1119,7 @@
     <Compile Include="Controllers\CRMModel\Extended\TicketExtendedController.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\SLALineViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierMasterController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\CourierPendingReasonController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsAirlineController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomBankController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomDocumentTypesController.cs" />
