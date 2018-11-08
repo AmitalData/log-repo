@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .QuoteTemplateSettingButton:hover:not(:disabled) {
         background: #fefcea; /* Old browsers */
@@ -280,27 +280,27 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 
                         <!--<div style="margin-top:3px;margin-right:0px;border:0px;width:0px" tabindex="0" class="ToggleButton">
 
-                            <img style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:14px;width:13px" src="./Images/SimplogIcons/ArrowDown.png" />
+                <img style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:14px;width:13px" src="./Images/SimplogIcons/ArrowDown.png" />
 
 
-                            <div class="ToggleButtonMenu">
-                                <button>Send to Customer</button>
-                                <button>Send Internally</button>
-                            </div>
+                <div class="ToggleButtonMenu">
+                    <button>Send to Customer</button>
+                    <button>Send Internally</button>
+                </div>
 
-                        </div>-->
+            </div>-->
                         <!--(click)="SetTemplateAsDeflut(item)"-->
                         <!--<button style="width:100%;text-align:left" class="Button">Send</button>-->
                         <!--<div class="ToggleButtonMenu" style="width:100%">
-                            <button>Send to Customer</button>
-                            <button>Send Internally</button>
-                         </div>-->
+                <button>Send to Customer</button>
+                <button>Send Internally</button>
+             </div>-->
                     </td>
                 </tr>
                 <tr style="height:5px">
                     <td></td>
                 </tr>
-                <tr style="height:300px;min-height:150px">
+                <tr style="height:275px">
                     <td style="vertical-align:top;height:100%">
                         <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
                             <table style="border :none;">
@@ -318,8 +318,8 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
                                                     <td></td>
                                                     <td style="width:20px">
                                                         <!--<span (click)="AddSession()" style="display:inline;width:18px;margin-left:0px;float: right">
-                                                            <IconButton [Name]="'Add'" [IsSmall]="true" style="display: inline; float: right;margin-top:0px;"></IconButton>
-                                                        </span>-->
+                                                <IconButton [Name]="'Add'" [IsSmall]="true" style="display: inline; float: right;margin-top:0px;"></IconButton>
+                                            </span>-->
                                                     </td>
                                                     <td style="width:10px;"><div style="width:10px"></div></td>
                                                 </tr>
@@ -334,7 +334,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
                                 </tr>
 
 
-                                <tr class="SectionBody">
+                                <tr style="height:250px;" class="SectionBody">
                                     <td>
                                         <div class="MediaFill">
                                             <ScrollViewer>
@@ -364,14 +364,14 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 
                                                                 <td class="CellStretched" style="width:100px;position:relative">
                                                                     <!--<div *ngIf="!item.IsSection" style="vertical-align:central;margin-top:2px">
-                                                                        <button style="display:inline;width:80px" class="QuoteTemplateSettingButton" (click)="EditSessionButtonClicked(item)">
+                                                            <button style="display:inline;width:80px" class="QuoteTemplateSettingButton" (click)="EditSessionButtonClicked(item)">
 
-                                                                            <span><img src="./Images/Buttons/SettingGray.png" /></span>
-                                                                            <span>Settings</span>
+                                                                <span><img src="./Images/Buttons/SettingGray.png" /></span>
+                                                                <span>Settings</span>
 
-                                                                        </button>
+                                                            </button>
 
-                                                                    </div>-->
+                                                        </div>-->
                                                                     <div *ngIf="item.IsSection" style="vertical-align:central;margin-top:2px">
                                                                         <button style="display:inline;width:80px;margin-top:2px" class="QuoteTemplateSettingButton" (click)="OnEditSectionButtonClicked(item)" [disabled]="!IsEditEnabled">
                                                                             <table>
@@ -382,7 +382,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
                                                                                 </tr>
                                                                             </table>
                                                                             <!--<span style="margin-left:-20px;background-color:red"><img (click)="ArrowUpButtonClicked(item)" style="width:17px;height:17px;" src="./Images/Buttons/Edit.png" /></span>
-                                                                            <span style="margin-left:-10px">Edit</span>-->
+                                                                <span style="margin-left:-10px">Edit</span>-->
 
 
                                                                         </button>
@@ -420,7 +420,7 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
                     <td></td>
                 </tr>
 
-                <tr style="height:300px;min-height:70px">
+                <tr style="height:275px">
                     <td style="vertical-align:top;">
                         <div style="height:100%;width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
                             <table style="border :none;">
@@ -447,103 +447,74 @@ filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 
                                 </tr>
 
-                                <tr class="SectionBody">
+                                <tr style="height:250px" class="SectionBody">
                                     <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <div class="MediaFill">
-                                                        <ScrollViewer>
-                                                            <ul>
+                                        <div class="MediaFill">
+                                            <ScrollViewer>
+                                                <ul>
 
-                                                                <li class="SessionItem" *ngFor="let item of ReportVersions" style="height:50px;">
-                                                                    <table style="margin-top:0px">
-                                                                        <tr>
+                                                    <li class="SessionItem" *ngFor="let item of ReportVersions" style="height:50px;">
+                                                        <table style="margin-top:0px">
+                                                            <tr>
 
-                                                                            <td style="width:10px;"><div style="width:10px"></div></td>
+                                                                <td style="width:10px;"><div style="width:10px"></div></td>
 
-                                                                            <td style="vertical-align:central;width:50px">
-                                                                                <div>{{item.VersionNumber}}</div>
-                                                                            </td>
+                                                                <td style="vertical-align:central;width:50px">
+                                                                    <div>{{item.VersionNumber}}</div>
+                                                                </td>
 
-                                                                            <td style="vertical-align:central;width:65px">
-                                                                                <div style="font-size: 11px;vertical-align:central; color: #282E30;">
-                                                                                    {{item.VersionTypeName}}
-                                                                                </div>
-                                                                            </td>
+                                                                <td style="vertical-align:central;width:65px">
+                                                                    <div style="font-size: 11px;vertical-align:central; color: #282E30;">
+                                                                        {{item.VersionTypeName}}
+                                                                    </div>
+                                                                </td>
 
-                                                                            <td style="vertical-align:central;width:150px">
-                                                                                <div style="font-size: 11px;vertical-align:central; color: #282E30;width:150px">
-                                                                                    {{item.CreateDate| DateTimePipe:'DTL12'}}
-                                                                                </div>
-                                                                            </td>
+                                                                <td style="vertical-align:central;width:150px">
+                                                                    <div style="font-size: 11px;vertical-align:central; color: #282E30;width:150px">
+                                                                        {{item.CreateDate| DateTimePipe:'DTL12'}}
+                                                                    </div>
+                                                                </td>
 
-                                                                            <td style="vertical-align:central;width:37px"></td>
-                                                                        </tr>
-
-                                                                      
-                                                                        <tr style="height:3px;"><td colspan="5"></td></tr>
-                                                                        <tr>
-
-                                                                            <td style="width:10px;"><div style="width:10px"></div></td>
-
-                                                                          
-
-                                                                            <td   style="vertical-align:central;width:50px">
-                                                                               <div class="TextTrimming" style="font-size: 11px;vertical-align:central;width:50px; color: #282E30;">
-                                                                                    {{item.UpdateByUserName}}
-                                                                                </div>
-                                                                            </td>
-
-                                                                         
-                                                                            <td style="vertical-align:central;width:65px">
-                                                                                <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.IsSent" src="./Images/GreenTick.png" />
-                                                                            </td>
-
-                                                                            <td style="vertical-align:central;width:150px">
-                                                                                <div style="font-size: 11px;vertical-align:central; color: #282E30;width:150px">
-                                                                                    {{item.SendDate| DateTimePipe:'DTL12'}}
-                                                                                </div>
-                                                                            </td>
-
-                                                                            <td style="vertical-align:central;width:37px"><a href="javascript:;" (click)="OpenDocumentVersion(item)">View</a></td>
-                                                                        </tr>
-
-                                                                        <tr style="height:1px;"><td colspan="5"><div class="RowSeparator"></div></td></tr>
-                                                                    </table>
+                                                                <td style="vertical-align:central;width:37px"></td>
+                                                            </tr>
 
 
-                                                                </li>
+                                                            <tr style="height:3px;"><td colspan="5"></td></tr>
+                                                            <tr>
 
-                                                            </ul>
-                                                        </ScrollViewer>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <!--<tr style="height:20px">
-                                                <td style="width:8px"></td>
-                                                <td>
-                                                    <div class="CheckBox">
-                                                        <input [(ngModel)]="ShowLocalLanguage" class="LeftCenter" style="text-align:center" [attr.id]="ShowLocalLanguageCheckBoxKey" type="checkbox" />
-                                                        <label style="color:black" class="LeftCenter" [attr.for]="ShowLocalLanguageCheckBoxKey">Show Local Language</label>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
+                                                                <td style="width:10px;"><div style="width:10px"></div></td>
 
 
-                                            <tr style="height:20px">
-                                                <td style="width:8px"></td>
-                                                <td>
-                                                    <div class="CheckBox">
-                                                        <input [(ngModel)]="RightToLeft" class="LeftCenter" style="text-align:center" [attr.id]="ShowRightToLeftCheckBoxKey" type="checkbox" />
-                                                        <label style="color:black" class="LeftCenter" [attr.for]="ShowRightToLeftCheckBoxKey">Right-to-left</label>
-                                                    </div>
-                                                </td>
 
-                                            </tr>-->
-                                            <!--<tr style="height:10px;"><td style="height:10px" colspan="2"><div></div></td></tr>-->
-                                        </table>
+                                                                <td style="vertical-align:central;width:50px">
+                                                                    <div class="TextTrimming" style="font-size: 11px;vertical-align:central;width:50px; color: #282E30;">
+                                                                        {{item.UpdateByUserName}}
+                                                                    </div>
+                                                                </td>
+
+
+                                                                <td style="vertical-align:central;width:65px">
+                                                                    <img class="CenterCenter" style="width:20px;height:20px" *ngIf="item.IsSent" src="./Images/GreenTick.png" />
+                                                                </td>
+
+                                                                <td style="vertical-align:central;width:150px">
+                                                                    <div style="font-size: 11px;vertical-align:central; color: #282E30;width:150px">
+                                                                        {{item.SendDate| DateTimePipe:'DTL12'}}
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="vertical-align:central;width:37px"><a href="javascript:;" (click)="OpenDocumentVersion(item)">View</a></td>
+                                                            </tr>
+
+                                                            <tr style="height:1px;"><td colspan="5"><div class="RowSeparator"></div></td></tr>
+                                                        </table>
+
+
+                                                    </li>
+
+                                                </ul>
+                                            </ScrollViewer>
+                                        </div>
                                     </td>
                                 </tr>
 

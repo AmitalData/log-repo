@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .BlueTitle{
         font-size:20px;
@@ -101,42 +101,43 @@
      font-family: sans-serif;
 }
 </style>
-<table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == false">
-    <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
-        <td>
-           <div class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <table style="direction:rtl;">
-                <tr style="height:150px;border-top:1px solid #BCBEC0;">
-                    <td>
-                        <table>
-                            <tr>
-                                <td>
+<div class="MediaFillAbsolute" style="background:white;">
+    <table class="LogitudeWindow" *ngIf="ShowPaymentDetailsScreen == false">
+        <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
+            <td>
+                <div class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table style="direction:rtl;">
+                    <tr style="height:150px;border-top:1px solid #BCBEC0;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
                                         <table style="height:60px;border-bottom:1px solid #BCBEC0;">
-                                        <tr>
-                                            <td style="height: 22px;width:40%;">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">תשלום דיגיטלי למשלוח</span> 
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">{{Hawb}}</span> 
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                
-                                            </td>
-                                            <td style="height: 55px;">
-                                                <img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;" />
-                                            </td>
-                                        </tr>
-                                        </table> 
+                                            <tr>
+                                                <td style="height: 22px;width:40%;">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">תשלום דיגיטלי למשלוח</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span style="font-size:20px;color:#1B90CB;width:100%;float:left;font-family:sans-serif;padding-right:10px;">{{Hawb}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+                                                <td style="height: 55px;">
+                                                    <img [attr.src]="CompanyLogo" style="position:absolute;top:3px;left:5px;padding-left:10px;height:55px;" />
+                                                </td>
+                                            </tr>
+                                        </table>
                                         <table style="height:65px;margin-right:5px;">
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
@@ -270,80 +271,82 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-                <tr style="height:3px;">
-                    <td>
-                        <div style="width:100%;height:3px;"></div><!--border-bottom:1px solid #BCBEC0;-->
-                    </td>
-                </tr>
-                <tr style="min-height: 458px;height: 73%;">
-                    <td style="top: 255px;bottom: 8px;overflow-y: auto;overflow-x: hidden;" class="MediaFill">
-                        <div style="overflow-y:auto;overflow-x:hidden;border: 1px solid #BCBEC0;border-radius: 4px;height:100%;">
-                            <div style="padding:5px;float:right;width:100%;height:92%;">
-                                <span style="font-size:13px;border-bottom:1px solid #BCBEC0;color:#1B90CB;width:100%;float:left;font-family:sans-serif;">בחר אמצעי תשלום</span>
-                                <div style="height:99%;margin-top:21px;"> <!--class="emptyticket" style="max-width:164px;margin-top:10px;direction:ltr;float:right;">-->
-                                    <iframe  name="PaymentDetailsFrame" src="https://form.jotform.me/82453472847465" style="width:100%;height:100%;margin-bottom:5px;">Loading...</iframe>
-                                    <!--<iframe id="JotFormIFrame-82453472847465" onload="window.parent.scrollTo(0,0)" allowtransparency="true" allowfullscreen="true" allow="geolocation; microphone; camera" src="https://form.jotform.me/82453472847465" frameborder="0" style="width: 1px; min-width: 100%; height:539px; border:none;" scrolling="no"> </iframe>-->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="height:3px;">
+                        <td>
+                            <div style="width:100%;height:3px;"></div><!--border-bottom:1px solid #BCBEC0;-->
+                        </td>
+                    </tr>
+                    <tr style="min-height: 458px;height: 73%;">
+                        <td style="top: 255px;bottom: 8px;overflow-y: auto;overflow-x: hidden;" class="MediaFill">
+                            <div style="overflow-y:auto;overflow-x:hidden;border: 1px solid #BCBEC0;border-radius: 4px;height:100%;">
+                                <div style="padding:5px;float:right;width:100%;height:92%;">
+                                    <span style="font-size:13px;border-bottom:1px solid #BCBEC0;color:#1B90CB;width:100%;float:left;font-family:sans-serif;">בחר אמצעי תשלום</span>
+                                    <div style="height:99%;margin-top:21px;">
+                                        <!--class="emptyticket" style="max-width:164px;margin-top:10px;direction:ltr;float:right;">-->
+                                        <iframe name="PaymentDetailsFrame" src="https://form.jotform.me/82453472847465" style="width:100%;height:100%;margin-bottom:5px;">Loading...</iframe>
+                                        <!--<iframe id="JotFormIFrame-82453472847465" onload="window.parent.scrollTo(0,0)" allowtransparency="true" allowfullscreen="true" allow="geolocation; microphone; camera" src="https://form.jotform.me/82453472847465" frameborder="0" style="width: 1px; min-width: 100%; height:539px; border:none;" scrolling="no"> </iframe>-->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr style="height:22px;">
-        <td>
-            <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:right;padding-right: 20px;direction: rtl;">
-                <!--<LogCheckBox [Checked]="IsAccepted" (ValueChanged)="IsAcceptedChanged($event)" [ObjectFieldName]="'IsAccepted'" [DataContext]="DataContext" style="float:right;margin-top:2px;"></LogCheckBox>-->
-                <label style="margin-right:-10px;font-size:12px;font-family:sans-serif;" class="TextTrimming">לבירורים בנושא עלויות או כל מידע נוםף אודות המשלוח <span style="text-decoration: underline;color: lightskyblue;">לחץ כאן</span></label><br />
-            </div>
-            <!--<div style="float:right;width:25px;margin-right: 5px;direction: rtl;" class="tooltip">
-                <div class="tooltiptext">
-                    <table>
-                        <tr><td> I, the undersigned, hereby declare that I am aware of the</td></tr>
-                        <tr><td> goods and of the attachments submitted to Customs in </td></tr>
-                        <tr><td> the attached declaration</td></tr>
-                    </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr style="height:22px;">
+            <td>
+                <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:right;padding-right: 20px;direction: rtl;">
+                    <!--<LogCheckBox [Checked]="IsAccepted" (ValueChanged)="IsAcceptedChanged($event)" [ObjectFieldName]="'IsAccepted'" [DataContext]="DataContext" style="float:right;margin-top:2px;"></LogCheckBox>-->
+                    <label style="margin-right:-10px;font-size:12px;font-family:sans-serif;" class="TextTrimming">לבירורים בנושא עלויות או כל מידע נוםף אודות המשלוח <span style="text-decoration: underline;color: lightskyblue;">לחץ כאן</span></label><br />
                 </div>
-                <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" />
-            </div>-->
-        </td>
-    </tr>
-    <tr style="height:12px;">
-        <td>
-            <div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>
-        </td>
-    </tr>
-    <!--<tr style="height:32px;">
-        <td>
-           
-            <div style="float:left;margin-left:10px;">
-                <button class="Button" [class.Disable]="DimApproveButton == true || DimDenyButton == true" (click)="DenyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Deny Declaration">דחה הצהרה</button>
-            </div>
-            <div style="float:left;margin-left:10px;">
-                <button class="GreenButton" [class.Disable]="DimApproveButton == true || IsAccepted == false || DimDenyButton == true" (click)="ApproveButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Approve Declaration">אשר הצהרה</button>
-            </div>
-         
-           
-           
-        </td>
-    </tr>-->
-    <tr style="height:3px;">
-        <td>
-            <!--<div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>-->
-        </td>
-    </tr>
-</table>
+                <!--<div style="float:right;width:25px;margin-right: 5px;direction: rtl;" class="tooltip">
+                    <div class="tooltiptext">
+                        <table>
+                            <tr><td> I, the undersigned, hereby declare that I am aware of the</td></tr>
+                            <tr><td> goods and of the attachments submitted to Customs in </td></tr>
+                            <tr><td> the attached declaration</td></tr>
+                        </table>
+                    </div>
+                    <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" />
+                </div>-->
+            </td>
+        </tr>
+        <tr style="height:12px;">
+            <td>
+                <div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>
+            </td>
+        </tr>
+        <!--<tr style="height:32px;">
+            <td>
+
+                <div style="float:left;margin-left:10px;">
+                    <button class="Button" [class.Disable]="DimApproveButton == true || DimDenyButton == true" (click)="DenyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Deny Declaration">דחה הצהרה</button>
+                </div>
+                <div style="float:left;margin-left:10px;">
+                    <button class="GreenButton" [class.Disable]="DimApproveButton == true || IsAccepted == false || DimDenyButton == true" (click)="ApproveButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Approve Declaration">אשר הצהרה</button>
+                </div>
+
+
+
+            </td>
+        </tr>-->
+        <tr style="height:3px;">
+            <td>
+                <!--<div style="width:100%;height:1px;border-bottom:1px solid #BCBEC0;"></div>-->
+            </td>
+        </tr>
+    </table>
+</div>
 <table class="LogitudeWindow" style="direction:rtl;" *ngIf="ShowFinalMessage == true">
     <tr> 
         <td style="text-align:center;" *ngIf="ShowFinalMessage == true">

@@ -76,7 +76,7 @@ export class TaxDeductionReportMenuButtonsHandler {
 
                     break;
                 }
-            case "DNTX":
+            case "TXFL":
                 {
                     var windowTitle = TextCodeTranslator.Translate("TaxReport.B.Download");
 

@@ -156,6 +156,26 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                              Field18 = f.Field18,
                              Field19 = f.Field19,
                              Field20 = f.Field20,
+                             Field21 = f.Field21,
+                             Field22 = f.Field22,
+                             Field23 = f.Field23,
+                             Field24 = f.Field24,
+                             Field25 = f.Field25,
+                             Field26 = f.Field26,
+                             Field27 = f.Field27,
+                             Field28 = f.Field28,
+                             Field29 = f.Field29,
+                             Field30 = f.Field30,
+                             Field31 = f.Field31,
+                             Field32 = f.Field32,
+                             Field33 = f.Field33,
+                             Field34 = f.Field34,
+                             Field35 = f.Field35,
+                             Field36 = f.Field36,
+                             Field37 = f.Field37,
+                             Field38 = f.Field38,
+                             Field39 = f.Field39,
+                             Field40 = f.Field40,
                              ChargeableWeightInKG = f.ChargeableWeightInKG,
                              ChargeableWeight = f.ChargeableWeight,
                              GrossWeight = f.GrossWeight,
@@ -366,6 +386,26 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 Field18 = f.Field18,
                 Field19 = f.Field19,
                 Field20 = f.Field20,
+                Field21 = f.Field21,
+                Field22 = f.Field22,
+                Field23 = f.Field23,
+                Field24 = f.Field24,
+                Field25 = f.Field25,
+                Field26 = f.Field26,
+                Field27 = f.Field27,
+                Field28 = f.Field28,
+                Field29 = f.Field29,
+                Field30 = f.Field30,
+                Field31 = f.Field31,
+                Field32 = f.Field32,
+                Field33 = f.Field33,
+                Field34 = f.Field34,
+                Field35 = f.Field35,
+                Field36 = f.Field36,
+                Field37 = f.Field37,
+                Field38 = f.Field38,
+                Field39 = f.Field39,
+                Field40 = f.Field40,
                 ChargeableWeightInKG = f.ChargeableWeightInKG,
                 ChargeableWeight = f.ChargeableWeight,
                 GrossWeight = f.GrossWeight,
@@ -554,6 +594,26 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             shipmentPM.Field18 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field18" };
             shipmentPM.Field19 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field19" };
             shipmentPM.Field20 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field20" };
+            shipmentPM.Field21 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field21" };
+            shipmentPM.Field22 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field22" };
+            shipmentPM.Field23 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field23" };
+            shipmentPM.Field24 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field24" };
+            shipmentPM.Field25 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field25" };
+            shipmentPM.Field26 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field26" };
+            shipmentPM.Field27 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field27" };
+            shipmentPM.Field28 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field28" };
+            shipmentPM.Field29 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field29" };
+            shipmentPM.Field30 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field30" };
+            shipmentPM.Field31 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field31" };
+            shipmentPM.Field32 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field32" };
+            shipmentPM.Field33 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field33" };
+            shipmentPM.Field34 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field34" };
+            shipmentPM.Field35 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field35" };
+            shipmentPM.Field36 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field36" };
+            shipmentPM.Field37 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field37" };
+            shipmentPM.Field38 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field38" };
+            shipmentPM.Field39 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field39" };
+            shipmentPM.Field40 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field40" };
 
             shipmentPM.FHLStatusCode = "NSEN";
             shipmentPM.FWBStatusCode = "NSEN";

@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {NewPartnerTamplate} from '../../../../CommonModules/CommonPartners/Components/Templates/NewPartnerTamplate';
@@ -6,6 +6,7 @@ import {PartnersDomainService, PartnerServicePM} from '../../../../Common/Servic
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {AgentPM} from '../../../../Common/EntityPMs/AgentPM';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -93,7 +94,7 @@ export class NewAgentComponent {
         if (errors.length == 0) {
             this.EntityPM.Code = this.PartnerTamplate.CardCode;
             this.EntityPM.EnglishName = this.PartnerTamplate.Name;
-            this.EntityPM.LocalName = this.PartnerTamplate.Name;
+            this.EntityPM.LocalName = !AppTool.IsNullOrEmpty(this.PartnerTamplate.LocalName) ? this.PartnerTamplate.LocalName : this.PartnerTamplate.Name;
             this.EntityPM.VatNumber = this.PartnerTamplate.VatNumber;
             this.EntityPM.ExistedContactId = this.PartnerTamplate.ExistedContactId;
 

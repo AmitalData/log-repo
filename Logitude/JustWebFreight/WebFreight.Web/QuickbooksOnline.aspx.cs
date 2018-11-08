@@ -10,10 +10,12 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Transactions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -104,18 +106,32 @@ namespace WebFreight.Web
             IOAuthSession clientSession = CreateSession();
             if (clientSession != null)
             {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    
                 IToken accessToken = clientSession.ExchangeRequestTokenForAccessToken((IToken)HttpContext.Current.Session["requestToken"], HttpContext.Current.Session["oauthVerifyer"].ToString());
-                HttpContext.Current.Session["accessToken"] = accessToken.Token;
-                HttpContext.Current.Session["accessTokenSecret"] = accessToken.TokenSecret;
-                AccountingSettingQuery query = new AccountingSettingQuery(int.Parse((HttpContext.Current.Session["tenant"] + "")));
-                AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse((HttpContext.Current.Session["tenant"] + "")));
-                entityPM.QBOAccessToken = accessToken.Token;
-                entityPM.QBOAccessTokenSecret = accessToken.TokenSecret;
-                entityPM.QBOrealMeID = HttpContext.Current.Session["realm"].ToString();
-                ICommonDataContext MyContext = CommonDataContext.GetContext(int.Parse((HttpContext.Current.Session["tenant"] + "")));
-                AccountingSettingService service = new AccountingSettingService(MyContext, int.Parse((HttpContext.Current.Session["tenant"] + "")));
-                service.Update(entityPM);
-                DisposeSessions();
+                    HttpContext.Current.Session["accessToken"] = accessToken.Token;
+                    HttpContext.Current.Session["accessTokenSecret"] = accessToken.TokenSecret;
+                    AccountingSettingQuery query = new AccountingSettingQuery(int.Parse((HttpContext.Current.Session["tenant"] + "")));
+                    AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse((HttpContext.Current.Session["tenant"] + "")));
+                    entityPM.QBOAccessToken = accessToken.Token;
+                    entityPM.QBOAccessTokenSecret = accessToken.TokenSecret;
+                    entityPM.QBOrealMeID = HttpContext.Current.Session["realm"].ToString();
+                    List<AccountingSettingPM> LoggedEntities = query.GetAccountSettingPMs().Where(r => r.QBOrealMeID == entityPM.QBOrealMeID && r.Id!=entityPM.Id).ToList();
+                    ICommonDataContext MyContext = CommonDataContext.GetContext(int.Parse((HttpContext.Current.Session["tenant"] + "")));
+                    AccountingSettingService service = new AccountingSettingService(MyContext, int.Parse((HttpContext.Current.Session["tenant"] + "")));
+                    service.Update(entityPM);
+
+                    foreach(AccountingSettingPM Item in LoggedEntities)
+                    {
+                        Item.QBOAccessToken = accessToken.Token;
+                        Item.QBOAccessTokenSecret = accessToken.TokenSecret;
+                        Item.QBOrealMeID = HttpContext.Current.Session["realm"].ToString();
+                        service.Update(Item);
+                    }
+                    DisposeSessions();
+                    scope.Complete();
+                }
             }
         }
 

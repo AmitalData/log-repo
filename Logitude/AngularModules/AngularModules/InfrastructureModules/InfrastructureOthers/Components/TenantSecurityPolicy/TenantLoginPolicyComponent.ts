@@ -173,7 +173,7 @@ export class TenantLoginPolicyComponent extends BaseComponent {
             this.EntityPM.SessionTimeout = newValue;
             this.IsSessionTimeoutValueHasError = false;
 
-            if (newValue > 8 || newValue < 1) {
+            if (newValue > 8) {
                 this.IsSessionTimeoutValueHasError = true;
             }
    
