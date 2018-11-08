@@ -172,7 +172,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         public int Tenant { get; set; }
         
-        public string DeclarationId { get; internal set; }
+        public string DeclarationId { get;  set; }
     }
 
 }

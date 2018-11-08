@@ -177,7 +177,7 @@
                                 <span (click)="currSplitButtonComponent.DropdownDisplayClose();SendPay($event);">תשלום</span>
                             </li>
 
-                            <li>
+                            <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true" >
                                 <span (click)="currSplitButtonComponent.DropdownDisplayClose();GetSendECTHRDataMaman($event);">ש.מ.ב לממן</span>
                             </li>
                             

@@ -35,6 +35,7 @@ import {DeclarationCourierStatusPMService} from '../../../Customs/Services/Stand
 import {DeclarationCourierStatusPM} from '../../../Customs/EntityPMs/DeclarationCourierStatusPM';
 import { DeclarationCourierStatusList } from '../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
+import { retry } from 'rxjs/operator/retry';
 
 @Component({
   moduleId: module.id,
@@ -289,7 +290,7 @@ export class CourierWorksheetListTemplate {
 
   }
 
-  
+    
 
   ButtonClick(event) {
     this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = true;
@@ -300,6 +301,10 @@ export class CourierWorksheetListTemplate {
     this.DropdownDisplayClose();//this.MySplitButtonComponent.DropdownDisplayClose();//SplitButtonComponent.EnsureLastSplitButtonIsClosed();
     //DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
     }
+
+
+    get IsWebAPICourierGWMessageECTHRDataMamanEnable() { return this._CourierWorksheetSharedDataService.IsWebAPICourierGWMessageECTHRDataMamanEnable }
+
     GetSendECTHRDataMaman(event) {
         this.ButtonClick(event);
         SessionLocator.CurrentSession.StartBusyIndicatorCreating();
