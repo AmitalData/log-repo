@@ -28,6 +28,8 @@
   <EventTypes>
     <EventType Code="&quot;CREV&quot;" ObjectTableName="&quot;TMProjectCategory&quot;" EnglishName="&quot;Created&quot;" LocalName="&quot;Created&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;UPEV&quot;" ObjectTableName="&quot;TMProjectCategory&quot;" EnglishName="&quot;Updated&quot;" LocalName="&quot;Updated&quot;" IsManualEntry="false" ShortView="false" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;CAIN&quot;" ObjectTableName="&quot;TMProjectCategory&quot;" EnglishName="&quot;Set as Inactive&quot;" LocalName="&quot;Set as Inactive&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;CARA&quot;" ObjectTableName="&quot;TMProjectCategory&quot;" EnglishName="&quot;Reactivated&quot;" LocalName="&quot;Reactivated&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records />
   <DataContracts />
