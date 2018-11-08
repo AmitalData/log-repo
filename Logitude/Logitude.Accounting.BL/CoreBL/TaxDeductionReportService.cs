@@ -89,7 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-                if(item.DeductionType == "08")
+                if(item.DeductionFileTypeCode == "08")
                 {
                     if (item.EnglishName != null)
                     {
@@ -175,8 +175,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
-            myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionType == "08").Sum(d => d.SumOfAmountInLocalCurrency));
-            myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionType == "08").Sum(d => d.SumOfTaxDeductionLocalAmount));
+            myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfAmountInLocalCurrency));
+            myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfTaxDeductionLocalAmount));
 
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSingleAddressPM(tenantPM.AddressId, tenant);
