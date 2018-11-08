@@ -226,6 +226,10 @@
     <Compile Include="Migrations\201811060740329_JournalMoreDataFieldsMigration.Designer.cs">
       <DependentUpon>201811060740329_JournalMoreDataFieldsMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.cs" />
+    <Compile Include="Migrations\201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.Designer.cs">
+      <DependentUpon>201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201811070816153_GlAccountExcludeFromDeductionReportMigration.cs" />
     <Compile Include="Migrations\201811070816153_GlAccountExcludeFromDeductionReportMigration.Designer.cs">
       <DependentUpon>201811070816153_GlAccountExcludeFromDeductionReportMigration.cs</DependentUpon>
@@ -241,6 +245,10 @@
     <Compile Include="Migrations\201811071254428_TaxDeductionReportCounterMigration.cs" />
     <Compile Include="Migrations\201811071254428_TaxDeductionReportCounterMigration.Designer.cs">
       <DependentUpon>201811071254428_TaxDeductionReportCounterMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.cs" />
+    <Compile Include="Migrations\201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.Designer.cs">
+      <DependentUpon>201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -367,6 +375,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811071254428_TaxDeductionReportCounterMigration.resx">
       <DependentUpon>201811071254428_TaxDeductionReportCounterMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.resx">
+      <DependentUpon>201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.resx">
+      <DependentUpon>201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
