@@ -64,6 +64,7 @@ import {LicenseManagementFilterComponent} from './Components/FiltersComponent/Op
 // Time Sheet
 import {EmployeeTimeSheetFilterComponent} from './Components/FilterReportComponent/EmployeeTimeSheetFilterComponent';
 import {WorkDaysPerProjectFilterComponent} from './Components/FilterReportComponent/WorkDaysPerProjectFilterComponent';
+import { TasksOfNoProjectsFilterComponent } from './Components/FilterReportComponent/TasksOfNoProjectsFilterComponent';
 
 export const Components =
     [
@@ -109,6 +110,7 @@ export const Components =
         InvoicesRoutingsFilterComponent,
         EmployeeTimeSheetFilterComponent,
         WorkDaysPerProjectFilterComponent,
+        TasksOfNoProjectsFilterComponent,
         OpenShipmentsByCustomerFilterComponent,
         ParentVsChildTenantsComponent,
         RevenueExpenseFilterComponent,
@@ -165,7 +167,8 @@ export class ModuleDeclarations {
             case "InventoryReportFilterConmponent": { myResult = InventoryReportFilterConmponent; break; } 
             case "InvoicesRoutingsFilterComponent": { myResult = InvoicesRoutingsFilterComponent; break; }
             case "EmployeeTimeSheetFilterComponent": { myResult = EmployeeTimeSheetFilterComponent; break; }  
-            case "WorkDaysPerProjectFilterComponent": { myResult = WorkDaysPerProjectFilterComponent; break; } 
+            case "WorkDaysPerProjectFilterComponent": { myResult = WorkDaysPerProjectFilterComponent; break; }
+            case "TasksOfNoProjectsFilterComponent": { myResult = TasksOfNoProjectsFilterComponent; break; }
             case "OpenShipmentsByCustomerFilterComponent": { myResult = OpenShipmentsByCustomerFilterComponent; break; } 
             case "ParentVsChildTenantsComponent": { myResult = ParentVsChildTenantsComponent; break; }
             case "RevenueExpenseFilterComponent": { myResult = RevenueExpenseFilterComponent; break; }

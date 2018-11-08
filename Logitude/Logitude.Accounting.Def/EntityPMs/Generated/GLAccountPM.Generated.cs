@@ -2079,6 +2079,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? totalOpenChequesInLocalCur ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotalOpenChequesInLocalCur  
+	   {
+	    
+	     get
+		{
+		   return totalOpenChequesInLocalCur;
+		 }
+		 set
+		 {
+		   if(totalOpenChequesInLocalCur != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalOpenChequesInLocalCur",OldValue=totalOpenChequesInLocalCur,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totalOpenChequesInLocalCur=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
