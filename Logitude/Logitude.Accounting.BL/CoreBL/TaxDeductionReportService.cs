@@ -222,11 +222,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(item.Month);
                 
                 myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month== item.Month).Count());
-               myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionType != "18").Sum(d => d.SumOfAmountInLocalCurrency));
-                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionType != "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
+               myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfAmountInLocalCurrency));
+                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
                 myStringBuilder.Append('0', 12);
-                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionType == "18").Sum(d => d.SumOfAmountInLocalCurrency));
-                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionType == "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
+                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfAmountInLocalCurrency));
+                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
                 myStringBuilder.Append(' ', 131);
                 myStringBuilder.Append("a80");
                 myStringBuilder.Append("\n");
