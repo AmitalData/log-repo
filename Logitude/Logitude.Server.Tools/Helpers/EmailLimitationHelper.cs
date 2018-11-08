@@ -12,24 +12,31 @@ namespace Logitude.Server.Tools.Helpers
 {
     public  class EmailLimitationHelper
     {
-        //public static bool CheckEmailSendingQuotaForTenant(int tenant)
-        //{
-        //    bool result = true;
-        //    TenantRepository tenantRepository = new TenantRepository(tenant);
-        //    int tenantEmailSendingQuota =  tenantRepository.GetTenantEmailSendingQuota(tenant);
-        //    if (tenantEmailSendingQuota == 0) tenantEmailSendingQuota = LogitudeSettings.EmailSendingQuota;
-        //    if (tenantEmailSendingQuota > 0)
-        //    {
-        //        CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(tenant);
-        //        int communicationLogCount = communicationLogRep.GetCommunicationLogCountForTenantInLasthour(tenant);
-        //        if (communicationLogCount > tenantEmailSendingQuota)
-        //        {
-        //            result = false;
-        //        }
-        //    }
+        public static EmailLimitationResult CheckEmailSendingQuotaForTenant(int tenant)
+        {
+            EmailLimitationResult result = new EmailLimitationResult();
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            int tenantEmailSendingQuota = tenantRepository.GetTenantEmailSendingQuota(tenant);
+            if (tenantEmailSendingQuota == 0) tenantEmailSendingQuota = LogitudeSettings.EmailSendingQuota;
+            if (tenantEmailSendingQuota > 0)
+            {
+                CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(tenant);
+                int communicationLogCount = communicationLogRep.GetCommunicationLogCountForTenantInLasthour(tenant);
+                if (communicationLogCount > tenantEmailSendingQuota)
+                {
+                    result.IsQuotaExceeded = true;
+                    result.ExceptionMessage = "Quota exceeded. Can't send more than "+ tenantEmailSendingQuota+ " emails in one hour";
+                }
+            }
 
-        //    return result;
-        //}
-
+            return result;
+        }
     }
+
+    public class EmailLimitationResult
+    {
+        public string ExceptionMessage { get; set; }
+        public bool IsQuotaExceeded { get; set; }
+    }
+
 }
