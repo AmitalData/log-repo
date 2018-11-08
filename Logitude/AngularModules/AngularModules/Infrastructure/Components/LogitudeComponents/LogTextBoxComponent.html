@@ -145,7 +145,7 @@
                               (blur)="onBlur()"
                               (keydown)="OnKeyDown($event)"
                               [attr.rows]="RowsCount"
-                              [id]="InputId" style="box-shadow:none;border:1px solid transparent; font-size:12px; font-family:inherit;" ondrop="return false"></textarea>
+                              [id]="InputId" style="box-shadow:none;border:1px solid transparent; font-size:12px; font-family:inherit;" ondrop="return false" (paste)="OnPaste($event)"></textarea>
 
                 </div>
             </td>
