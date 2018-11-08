@@ -91,6 +91,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         IsVATExempt = a.IsVATExempt,
                                                         LocalBalanceInDue = md.LocalBalanceInDue,
                                                         NextDueDate = md.NextDueDate,
+                                                        TotalOpenChequesInLocalCur = md.TotalOpenChequesInLocalCur,
                                                      });
             return query;
         }
