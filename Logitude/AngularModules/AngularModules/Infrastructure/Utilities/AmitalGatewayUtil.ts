@@ -208,7 +208,6 @@ export class AmitalGatewayUtil {
                 break;
             case "MapPendingReasonCodeData":
                 {
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
                     this.SelectCustomsRequestMenu(MaintenanceMenu);
                     
                     let mapPendingReasonCodeData = new MapPendingReasonCodeData();
@@ -982,20 +981,16 @@ export class MapPendingReasonCodeData {
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
-        logWindow.Height = 600;
+        logWindow.Height = 400;
         logWindow.Title = 'קשר סטטוס לסיבת Pending';
         logWindow.WindowArgs = {
             "UnifreightStatusCode": UnifreightEntityNumber,
             "FromUnifreight": true,
         };
         logWindow.ShowCloseButton = true;
-        logWindow.Show(
-            './CustomsModules/CustomsCourier/Components/CourierPendingReason/AddEditCourierPendingReasonComponent'
-        );
-
+        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddEditCourierPendingReasonComponent');
         logWindow.WindowClosed.subscribe(($event1: any) => {
             AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
-            SessionLocator.CurrentSession.StopBusyIndicator();
         });
 
     }

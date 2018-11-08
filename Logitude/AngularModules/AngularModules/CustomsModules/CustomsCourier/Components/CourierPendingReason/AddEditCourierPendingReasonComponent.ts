@@ -126,28 +126,22 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
         } else {
             if (this.isNewRecord) {
                 this._CourierPendingReasonPMService.insert(this.EntityPM).subscribe(myResult => {
-                    var mm: ServiceResponse = myResult;
-                    if (!mm.HasError) {
-                        var entity = mm.Result;
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    if (myResult.HasError) {
+                        this.ValidationErrorsList = [];
+                        this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
+                        return;
                     }
-                    else {
-                        this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                    }
+                    this.CancelButtonClicked();
                 });
             }
             else {
                 this._CourierPendingReasonPMService.update(this.EntityPM).subscribe(myResult => {
-                    var mm: ServiceResponse = myResult;
-                    if (!mm.HasError) {
-                        var entity = mm.Result;
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    if (myResult.HasError) {
+                        this.ValidationErrorsList = [];
+                        this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
+                        return;
                     }
-                    else {
-                        this.ValidationErrorsList = mm.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                    }
+                    this.CancelButtonClicked();
                 });
             }
         }
