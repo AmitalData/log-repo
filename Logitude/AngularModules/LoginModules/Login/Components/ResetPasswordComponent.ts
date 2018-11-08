@@ -23,7 +23,7 @@ export class ResetPasswordComponent {
 
     IsShowAreaCaptcha: boolean;
     CaptchaImageUrl: string;
-    CaptchaCode: string;
+
     CaptchaKey: string;
 
 
@@ -36,6 +36,25 @@ export class ResetPasswordComponent {
         this.CaptchaCode = null;
         this.CaptchaKey = null;
     }
+
+
+
+    private captchaCode: string = "";
+    get CaptchaCode() { return this.captchaCode; }
+    set CaptchaCode(value) {
+        if (this.captchaCode != value) {
+            this.captchaCode = value;
+        }
+
+        if (this.captchaCode) {
+            if (this.HasCaptchaErrors) {
+                this.HasCaptchaErrors = false;
+                this.HasErrors = false;
+            }
+        }
+    }
+
+
 
 
     HasCaptchaErrors: boolean = false;
@@ -80,7 +99,7 @@ export class ResetPasswordComponent {
 
                     this.CaptchaKey = userdata ? userdata.CaptchaKey : "";
                     //disableForm(false);
-                    var errorMessage = null;
+           
 
                     if (userdata.InValidCaptcha) {
                         this.CaptchaCode = "";
@@ -91,17 +110,22 @@ export class ResetPasswordComponent {
                     }
 
 
-                    if (userdata.IpRestricted) errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
-                    if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                    if (userdata.Unlicensed) errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
-                    if (userdata.InValidCaptcha) errorMessage = "Please re-enter the characters you see in the image above";
-                    if (userdata.InValidMailOrPassword) {
+                    var errorMessage = "Submit failed! invalid email." + "<br/>";
 
-                        errorMessage = "Login failed! invalid user name or password.";
-                        this.HasCaptchaErrors = false;
+                    if (userdata.ExceptionMessage) alert(userdata.ExceptionMessage);
+                    else {
+                        if (userdata.InValidCaptcha) errorMessage = "Please re-enter the characters you see in the image above";
+                        if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
+                        if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "please contact your administrator.";
+                        if (userdata.InValidMailOrPassword) {
+                            errorMessage = "Submit failed! invalid email.";
+                            this.HasCaptchaErrors = false;
+                        }
+
+                        this.HasErrors = true;
+                        this.ErrorMessage = errorMessage;
                     }
 
-                    this.HasErrors = true;
                     this.ErrorMessage = errorMessage;
 
                 }
