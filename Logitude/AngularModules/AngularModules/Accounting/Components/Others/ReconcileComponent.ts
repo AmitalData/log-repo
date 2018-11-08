@@ -537,6 +537,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
+                    for (var i = 0; i < this.SelectedLines.Collection.length; i++) {
+                        var line = this.SelectedLines.Collection[i];//new LineModel(result[i], this, -1);
+                        this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: false, RowIndex: -1, ById: true });
+                    }
                     this.SelectedLines.Clear();// = [];
 
                     this.RunAutomaticReconcile();
