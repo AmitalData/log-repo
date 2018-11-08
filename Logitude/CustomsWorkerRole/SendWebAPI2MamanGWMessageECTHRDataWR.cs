@@ -80,13 +80,13 @@ namespace CustomsWorkerRole
                 if (_OnStartDone) return true;
                 _OnStartDone = true;
                 string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(SBQueueNames.SendGWMessageECTHRData2MamanQ.ToString()); //Amitalqueue
-            
-                
-                    var myClass = this.GetType().Name;
+
+
+                var myClass = this.GetType().Name;
                 _IQueueService = new DbQueueService();
                 _IQueueService.InitializeQueue(SBQueueNames.SendGWMessageECTHRData2MamanQ.ToString(), 0);
-                
-                
+
+
             }
             catch (Exception ex)
             {
@@ -105,7 +105,7 @@ namespace CustomsWorkerRole
             return base.OnStart();
         }
 
-  
+
         public override void WorkOnce()
         {
 
@@ -150,7 +150,7 @@ namespace CustomsWorkerRole
         }
 
 
-      
+
 
 
         private void ProcessMessage_Db(QueueResponse queueResponse)
@@ -235,23 +235,7 @@ namespace CustomsWorkerRole
             catch (Exception ex)
             {
 
-                //if (message.Properties.Keys.Contains("CommunicationLogId"))
-                //{
-                //    string communicationLogId = message.Properties["CommunicationLogId"].ToString();
-                //    if (communicationLogId != null)
-                //    {
-                //        message.SafeAbandon();
-                //    }
-                //    else
-                //    {
-                //        message.SafeComplete();
-                //    }
-                //}
-                //else
-                //{
-                //    message.SafeComplete();
-                //}
-                //throw;
+
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "SendWebAPI2MamanGWMessageECTHRDataWR : ProcessMessage() Method", null);
                 Thread.Sleep(10000);
             }
@@ -263,7 +247,7 @@ namespace CustomsWorkerRole
             {
                 if (cl.Retries < 5)
                 {
-                    SendWaitingCommunicationLog(cl, communicationLogRep);
+                    PostWebAPI(cl, communicationLogRep);
                 }
 
                 else
@@ -370,72 +354,139 @@ namespace CustomsWorkerRole
             cl.Logs += Environment.NewLine + "Retry #" + cl.Retries + " Next Retry: " + cl.NextTryDateTimeUTC.ToString();
         }
 
-        private async void SendWaitingCommunicationLog(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep)
+        private void PostWebAPI(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep)
         {
-            int tenant = waitingCommLog.Tenant;
-            ICommonDataContext commoncontext = CommonDataContext.GetContext(waitingCommLog.Tenant);
-            DocumentRepository documentRepository = new DocumentRepository(commoncontext);
-
-            Document document = documentRepository.GetSingleDocument(waitingCommLog.Tenant, waitingCommLog.DocumentId);
-            Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
+            try
             {
-                FileName = document.Id,
-                FolderName = document.Folder,
-                Extension = document.Extension,
-                Tenant = tenant,
-                FileSize = document.FileSize,
-            };
 
-            Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-            byte[] filedata = storageservice.Read(fileInfo);
 
-            if (filedata != null)
-            {
-                if (!string.IsNullOrEmpty(waitingCommLog.LogSettings))
+                LogMessagingUtil.Instance.Clear();
+                int tenant = waitingCommLog.Tenant;
+                ICommonDataContext commoncontext = CommonDataContext.GetContext(waitingCommLog.Tenant);
+                DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+
+                Document document = documentRepository.GetSingleDocument(waitingCommLog.Tenant, waitingCommLog.DocumentId);
+                Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
                 {
-                    var dataJson = System.Text.Encoding.UTF8.GetString(filedata.ToArray());
-                    var courierHawbMamanCommunicationLogSettings = JsonConvert.DeserializeObject<CourierHawbMamanCommunicationLogSettings>(waitingCommLog.LogSettings);
-                    if (courierHawbMamanCommunicationLogSettings != null)
-                    {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = document.FileSize,
+                };
 
-                        GWMessageECTHRData responeGWMessageECTHRData = null;
-                        using (var client = new HttpClient())
-                        {
-                            //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
+                Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                byte[] filedata = storageservice.Read(fileInfo);
 
-                            string AuthURI = courierHawbMamanCommunicationLogSettings.host;//URI + "APIAuthentication";
-
-
-                            var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                            var result = await client.PostAsync(AuthURI, content);
-                            var myResultString = result.Content.ReadAsStringAsync().Result;
-                            responeGWMessageECTHRData = JsonConvert.DeserializeObject<GWMessageECTHRData>(myResultString);
-
-                            
-
-
-                        }
-
-                        var myWebAPICourierHawbMamanService = new WebAPICourierGWMessageECTHRDataMamanService();
-                        myWebAPICourierHawbMamanService.AnalyzeResponse(courierHawbMamanCommunicationLogSettings, responeGWMessageECTHRData);
-
-                    }
+                if (filedata == null)
+                {
+                    throw new Exception("The file data was not found!");
                 }
+                if (string.IsNullOrEmpty(waitingCommLog.LogSettings))
+                {
+                    throw new Exception("string.IsNullOrEmpty(waitingCommLog.LogSettings)");
+                }
+                var dataJson = System.Text.Encoding.UTF8.GetString(filedata.ToArray());
+                var courierHawbMamanCommunicationLogSettings = JsonConvert.DeserializeObject<CourierHawbMamanCommunicationLogSettings>(waitingCommLog.LogSettings);
+                if (courierHawbMamanCommunicationLogSettings == null)
+                {
+                    throw new Exception("(courierHawbMamanCommunicationLogSettings == null)");
+                }
+                LogMessagingUtil.Instance.AppendLine("courierHawbMamanCommunication DB is valid");
+                GWMessageECTHRData responeGWMessageECTHRData = null;
+                LogMessagingUtil.Instance.AppendLine($"Post {courierHawbMamanCommunicationLogSettings.host}");
+                string webAPIResultString = null;
+                try
+                {
+                    webAPIResultString = PostIt(courierHawbMamanCommunicationLogSettings.host, dataJson);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                LogMessagingUtil.Instance.AppendLine("webAPIResultString:"+ webAPIResultString);
+                responeGWMessageECTHRData = JsonConvert.DeserializeObject<GWMessageECTHRData>(webAPIResultString);
+
+                var myWebAPICourierHawbMamanService = new WebAPICourierGWMessageECTHRDataMamanService();
+                myWebAPICourierHawbMamanService.AnalyzeResponse(courierHawbMamanCommunicationLogSettings, responeGWMessageECTHRData);
+
+
+
 
                 waitingCommLog.CommunicationStatusTypeCode = "D";
                 waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
                 waitingCommLog.DoneDateUTC = DateTime.UtcNow;
                 waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
                 waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                waitingCommLog.Logs = LogMessagingUtil.Instance.ToString();
+                //waitingCommLog.Logs
                 communicationLogRep.Update(waitingCommLog);
                 communicationLogRep.SubmitChanges();
-
             }
-            else
+            catch (Exception e)
             {
-                throw new Exception("The file data was not found!");
+                using (var scope = TransactionFactory.GetNewTransaction())
+                {
+                    waitingCommLog.Logs = e.ToString() + LogMessagingUtil.Instance.ToString();
+                    //waitingCommLog.Logs
+                    communicationLogRep.Update(waitingCommLog);
+                    communicationLogRep.SubmitChanges();
+                    scope.Complete();
+                }
+
+                throw;
             }
         }
+
+        private static string PostIt(string host, string dataJson)
+        {
+            string myResultString = "";
+
+            using (var client = new HttpClient())
+            {
+                //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
+
+                string webApiURI = host;//URI + "APIAuthentication";
+
+
+                var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
+                
+                var task = client.PostAsync(webApiURI, content);
+                Wait4Finsh(task, 1);
+                myResultString = task.Result.Content.ReadAsStringAsync().Result;
+
+            }
+
+
+
+            return myResultString;
+        }
+        private static void Wait4Finsh(Task
+          task, int TimeOutInMin)
+        {
+            var ts = Stopwatch.StartNew();
+            //task.Start();
+            while (ts.Elapsed < TimeSpan.FromMinutes(TimeOutInMin))
+            {
+                task.Wait(TimeSpan.FromSeconds(1));
+                if (task.IsCompleted)
+                {
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            if (!task.IsCompleted)
+            {
+                task.Dispose();
+                throw new Exception("Timeout SendWebAPI2MamanGWMessageECTHRDataWR 2Min ");
+
+            }
+        }
+
     }
-    
+
 }

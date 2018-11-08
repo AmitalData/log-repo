@@ -67,6 +67,7 @@ export class CourierWorksheetListTemplate {
   SuspentionReasonTip: string;
 
   _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
+    _CourierMasterService: CourierMasterService = new CourierMasterService();
 
   FirePreventSelect() {
     SessionLocator.CurrentSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
@@ -298,7 +299,17 @@ export class CourierWorksheetListTemplate {
     //this.RowSelect()
     this.DropdownDisplayClose();//this.MySplitButtonComponent.DropdownDisplayClose();//SplitButtonComponent.EnsureLastSplitButtonIsClosed();
     //DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
-  }
+    }
+    GetSendECTHRDataMaman(event) {
+        this.ButtonClick(event);
+        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this._CourierMasterService.GetSendECTHRDataMaman(this._CourierWorksheet['DeclarationId'])
+            .subscribe(res => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(res.Result);
+            });
+    }
   SendPay(event) {
     this.ButtonClick(event);
 

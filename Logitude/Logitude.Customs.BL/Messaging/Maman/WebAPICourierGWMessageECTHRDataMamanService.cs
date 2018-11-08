@@ -145,6 +145,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         public void AnalyzeResponse(CourierHawbMamanCommunicationLogSettings settings, GWMessageECTHRData  responeGWMessageECTHRData)
         {
+            LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(ResponseStatusCode={responeGWMessageECTHRData.ResponseStatusCode},{responeGWMessageECTHRData.ResponseStatusMsg})");
             var context = CustomContext.GetContext(settings.Tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
             var myCourierMasterQueryService = new CourierMasterQueryService(context);
