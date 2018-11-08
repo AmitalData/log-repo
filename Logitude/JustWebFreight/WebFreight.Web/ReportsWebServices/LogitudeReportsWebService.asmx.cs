@@ -9863,6 +9863,100 @@ namespace WebFreight.Web.ReportsWebServices
         }
         #endregion
 
+        #region Tasks Without Projects 
+        [WebMethod]
+        public byte[] LoadTasksWithoutProjectsData(byte[] xmlFilters, int tenant)
+        {
+            TasksWithoutProjectsDataProvider dataprovider = GetTasksWithoutProjectsDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(TasksWithoutProjectsDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private TasksWithoutProjectsDataProvider GetTasksWithoutProjectsDataProvider(byte[] xmlFilters, int tenant)
+        {
+            TasksWithoutProjectsDataProvider result = new TasksWithoutProjectsDataProvider();
+            result.TasksWithoutProjectsList = new List<TasksWithoutProjectsData>();
+            TMEmployeeTimeRepository employeeTimeRepository = new TMEmployeeTimeRepository(tenant);
+            IQueryable<TMEmployeeTime> iQueryable = employeeTimeRepository.GetTasksWithoutProject(tenant);
+            ContactRepository contactRepository = new ContactRepository(tenant);
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_EmployeeUserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EmployeeUserId").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+
+            DateTime? fromDate = null;
+            DateTime? toDate = null;
+            string employeeUserId = null;
+
+            if (filterItem_FromDate != null)
+            {
+                if (filterItem_FromDate.FieldValue != null)
+                {
+                    fromDate = (DateTime)filterItem_FromDate.FieldValue;
+                }
+            }
+
+            if (filterItem_ToDate != null)
+            {
+                if (filterItem_ToDate.FieldValue != null)
+                {
+                    toDate = (DateTime)filterItem_ToDate.FieldValue;
+                }
+            }
+
+            if (filterItem_EmployeeUserId != null)
+            {
+                if (filterItem_EmployeeUserId.FieldValue != null)
+                {
+                    employeeUserId = filterItem_EmployeeUserId.FieldValue.ToString();
+                }
+            }
+
+            if (fromDate != null && toDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            }
+
+            if (!string.IsNullOrEmpty(employeeUserId))
+            {
+                iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
+                Contact contact = contactRepository.GetSingleContact(employeeUserId, tenant);
+                if (contact != null)
+                {
+                    result.EmployeeUserName = contact.EnglishName;
+                }
+            }
+
+            result.FromDate = fromDate.Value;
+            result.ToDate = toDate.Value;
+            result.EmployeeUserId = employeeUserId;
+            var dateList = iQueryable.ToList();
+
+            foreach (var item in dateList)
+            {
+                var taskItem = new TasksWithoutProjectsData();
+                taskItem.EmployeeName = result.EmployeeUserName;
+                taskItem.DayOfWork = item.DateOfWork.ToString("dddd");
+                taskItem.Description = item.Description;
+                taskItem.WINumber = item.WINumber;
+                result.TasksWithoutProjectsList.Add(taskItem);
+            }
+
+            return result;
+        }
+        #endregion
+
         #region AccountingAging
         public byte[] LoadAccountingAgingDataProvider(byte[] xmlFilters, int tenant)
         {

@@ -27,6 +27,7 @@ using Microsoft.Practices.Unity;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
+using System.Xml.Serialization;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -946,6 +947,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         journalLine.ChangeSetOp = ChangeSetOperation.Insert;
                         journal.JournalLines.Add(journalLine);
                     }
+
+                    var serializer = new XmlSerializer(typeof(JournalPM));
+                    var stringwriter = new System.IO.StringWriter();
+                    serializer.Serialize(stringwriter, journal);
+                    string xmlParameters = stringwriter.ToString();
 
                     IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
                     journalUpdate.Update(journal);

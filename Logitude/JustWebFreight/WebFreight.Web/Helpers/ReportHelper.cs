@@ -1134,7 +1134,16 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(WorkDaysPerProjectDataProvider));
                         WorkDaysPerProjectDataProvider reportDataProvider = (WorkDaysPerProjectDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        CurrentBusinessObject = new StiBusinessObject() { Category = "WorkHoursPerProject", Name = "WorkHoursPerProjectDataProvider", BusinessObjectValue = reportDataProvider };
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "WorkDaysPerProject", Name = "WorkDaysPerProjectDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+                case "TPTS":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(TasksWithoutProjectsDataProvider));
+                        TasksWithoutProjectsDataProvider reportDataProvider = (TasksWithoutProjectsDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "TasksWithoutProjects", Name = "TasksWithoutProjectsDataProvider", BusinessObjectValue = reportDataProvider };
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
@@ -1593,6 +1602,12 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "TPTS":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadTasksWithoutProjectsData(filters, reportFliter.tenant);
+                        break;
+                    }
+
                 case "AGER":
                     {
                         dataProvider = logitudeReportsWebService.LoadAccountingAgingDataProvider(filters, reportFliter.tenant);
@@ -1680,6 +1695,7 @@ namespace WebFreight.Web.Helpers
                     case "INVR":
                     case "EMTS":
                     case "WDTS":
+                    case "TPTS":
                     case "AGER":
                     case "OSBC":
                     case "PTVC":
