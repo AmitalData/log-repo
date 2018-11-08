@@ -55,7 +55,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         private ObjectTableRuleRepository objectTableRuleRepository;
         private ObjectTableRuleFieldRepository objectTableRuleFieldRepository;
         private RuleConditionFieldRepository ruleConditionFieldRepository;
-
+        public CounterDefinitionRepository CounterDefinitionRepository;
         private EventTypeRepository eventTypesRepository;
         #endregion
 
@@ -1862,6 +1862,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.ReconcileMethodNameLabel", DefaultText = "Reconcile Method: ", LocalDefaultText = "שיטת התאמה: ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.InternalNumberLabel", DefaultText = "System No.: ", LocalDefaultText = "מספר מערכת: ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.FutureDateForbidden", DefaultText = "Future date is not allowed", LocalDefaultText = "לא ניתן להגדיר תאריך עתידי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.Revaluation", DefaultText = "Revaluation", LocalDefaultText = "שערוך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.RevaluationError", DefaultText = "Revaluation error: ", LocalDefaultText = "שגיאת התאמה: ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.RateNotFound", DefaultText = " exchange rate not found for ", LocalDefaultText = " שער המרה לא נמצא לתאריך ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.DiffAccountNotDefined", DefaultText = "Difference account not defined", LocalDefaultText = "לא מודגר חשבון להפרשים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
@@ -3858,5 +3859,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         #endregion
 
         #endregion
+
+
+     
+
+        public void CreateCounters(int tenant)
+        {
+            objectContext = WebFreightContext.GetContext(tenant);
+            CounterRepository CounterRepository = new CounterRepository(objectContext);
+            CounterDefinitionRepository = new CounterDefinitionRepository(objectContext);
+            List<Counter> zeroCounters = CounterRepository.GetCounters(0).ToList();
+            ObjectTable taxDeductionReportObject = objectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault();
+            #region Tax Deduction Report Counters
+
+            if (!zeroCounters.Where(c => c.Code == "TXDC" && c.Tenant == 0).Any())
+            {
+                Counter taxDeductionReportCounter = new Counter()
+                {
+                    Id = IdCounter.GetNumber("Counter", 0).ToString(),
+                    ObjectTableId = taxDeductionReportObject.Id,
+                    Code = "TXDC",
+                    Tenant = 0,
+                    Name = "Tax Deduction Report",
+                };
+
+                CounterDefinition taxDeductionReportCounter_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = taxDeductionReportCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "TX",
+                };
+
+                CounterRepository.Add(taxDeductionReportCounter);
+                CounterDefinitionRepository.Add(taxDeductionReportCounter_CounterDef);
+
+            }
+            #endregion
+
+            this.objectContext.SaveChanges();
+        }
     }
 }

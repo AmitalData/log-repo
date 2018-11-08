@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 namespace WebFreight.Web.Monitoring
 {
-    public partial class EmailSendingQuotaExceeded : System.Web.UI.Page
+    public partial class EmailSendingFailedStatus : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -58,7 +58,7 @@ namespace WebFreight.Web.Monitoring
 
                     catch (Exception errorInfo)
                     {
-                        ExceptionHandler.HandleException(errorInfo, todayDateTime, 0, "", "EmailSendingQuotaExceeded", "Bug in AnyFailedStatus Method : globaldbRep.All()", null);
+                        ExceptionHandler.HandleException(errorInfo, todayDateTime, 0, "", "EmailSendingFaild", "Bug in AnyFailedStatus Method : globaldbRep.All()", null);
                     }
 
                     scope.Complete();
@@ -74,14 +74,14 @@ namespace WebFreight.Web.Monitoring
                     try
                     {
                         isFailed = (from a in Context.CommunicationLogs
-                                    where a.CommunicationStatusTypeCode == "f" && a.CommunicationLogTypeCode == "E" && a.ExceptionMessage == "Quota exceeded"
+                                    where a.CommunicationStatusTypeCode == "f" && a.CommunicationLogTypeCode == "E" 
                                      && (a.CreateDateUTC > twoDaysBefore)
                                     select a).Any();
                     }
 
                     catch (Exception errorInfo)
                     {
-                        ExceptionHandler.HandleException(errorInfo, todayDateTime, 0, "", "EmailSendingQuotaExceeded", "Bug in AnyFailedStatus Method : IsFaild = (from a in Context.CommunicationLogs ...", null);
+                        ExceptionHandler.HandleException(errorInfo, todayDateTime, 0, "", "EmailSendingFaild", "Bug in AnyFailedStatus Method : IsFaild = (from a in Context.CommunicationLogs ...", null);
                     }
 
                     if (isFailed)

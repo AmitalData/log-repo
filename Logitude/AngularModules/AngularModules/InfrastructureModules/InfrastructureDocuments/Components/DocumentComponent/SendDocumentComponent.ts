@@ -1,4 +1,4 @@
-﻿import {Output, EventEmitter, Component, OnInit, ChangeDetectorRef, AfterViewInit}  from '@angular/core';
+import {Output, EventEmitter, Component, OnInit, ChangeDetectorRef, AfterViewInit}  from '@angular/core';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {DocumentCopiesViewModel} from './DocsOut/ViewModel/DocumentCopiesViewModel';
 import {DocumentTypeTemplateViewModel} from './DocsOut/ViewModel/DocumentTypeTemplateViewModel';
@@ -613,10 +613,11 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
+                    var selectId = this.SelectId ? this.SelectId : this.CurrentDocument.EmailTemplateId;
                     myResult.forEach((item) => {
 
                         if (item.DocumentTypeId == this.DocumentTypeId && item.TemplateType == "M") {
-                            if (!item.InActive || item.IsDefault) {
+                            if (!item.InActive || item.IsDefault || item.Id == selectId) {
                                 this.ReportTemplates.push(new DocumentTypeTemplateViewModel(item));
                             }
                             this.DocumenttypetemplateLists.push(new DocumentTypeTemplateViewModel(item));
@@ -627,26 +628,22 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
                     if (this.ReportTemplates.length > 0) {
 
-                        if (this.SelectId) {
-                            this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates.filter(r => r.Id == this.SelectId)[0];
+                        if (selectId) {
+                            this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates.filter(r => r.Id == selectId)[0];
 
                         }
-                        else this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates.filter(r => r.Id == this.CurrentDocument.EmailTemplateId)[0];
-
-
+                     
                         if (!this.SelectedDocumentTypeTemplateViewModel) {
 
                             this.SelectedDocumentTypeTemplateViewModel = this.ReportTemplates[0];
                         }
                     }
 
-                    
 
                     if (this.SelectedDocumentTypeTemplateViewModel != null) {
                         this.Subject = this.SelectedDocumentTypeTemplateViewModel.Subject;
+                        this.CurrentDocument.EmailTemplateId = this.SelectedDocumentTypeTemplateViewModel.Id;
                         this.LoadHtmlTemplateData(this.SelectedDocumentTypeTemplateViewModel.Id);
-
-
 
 
 
@@ -730,7 +727,10 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.ReportTemplates = this.DocumenttypetemplateLists;
         }
         else {
-            this.ReportTemplates = this.DocumenttypetemplateLists.filter(d=> d.InActive == false);
+    
+            this.ReportTemplates = this.DocumenttypetemplateLists.filter(d => d.InActive == false || d.IsDefault == true || (this.SelectedDocumentTypeTemplateViewModel && this.SelectedDocumentTypeTemplateViewModel.Id == d.Id));
+
+
         }
         this.Title = "Templates (" + this.ReportTemplates.length + ")";
 

@@ -64,9 +64,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 TaxReportQueryService taxReportQuery = new TaxReportQueryService(MyContext);
 				taxReportQuery.InitializeSettings();
-                TaxReportPM taxReportPM = taxReportQuery.GetSingle(id, false, false); // manually editited
+                TaxReportPM taxReportPM = taxReportQuery.GetSingle(id,false,false);
 
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             
                 return Request.CreateResponse(HttpStatusCode.OK, taxReportPM);
 			 }
