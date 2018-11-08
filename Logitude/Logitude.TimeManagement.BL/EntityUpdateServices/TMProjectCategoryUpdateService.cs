@@ -69,6 +69,31 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                     Notes = changesXml
                 });
 
+                if (entityPM.Inactive && !entityPOCO.Inactive)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "CAIN",
+                        UserId = contact.Id,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "TMProjectCategory",
+                        Notes = changesXml
+                    });
+                }
+
+                if (!entityPM.Inactive && entityPOCO.Inactive)
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "CARA",
+                        UserId = contact.Id,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "TMProjectCategory",
+                        Notes = changesXml
+                    });
+                }
             }
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
