@@ -334,8 +334,8 @@ export class CourierWorksheetListTemplate {
         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/Declarationothers/Components/Declarationpayment/DeclarationPaymentComponent');
-
+        
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
           //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
           this.RefreshData()
