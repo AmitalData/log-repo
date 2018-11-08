@@ -9815,6 +9815,7 @@ namespace WebFreight.Web.ReportsWebServices
                         TMProject project = allProjects.Where(d => d.Id == item.ProjectId).FirstOrDefault();
                         if (project != null)
                         {
+                            timSheetItem_Detailed.ExternalProjectNumber = project.ExternalProjectNumber;
                             timSheetItem_Detailed.ProjectName = project.Name;
                             timSheetItem_Detailed.ProjectNumber = project.ProjectNumber;
                             var card = cardRep.GetSingleCard(project.CustomerId, tenant);
@@ -9848,7 +9849,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         timSheetItem_Detailed.WINumber = item.WINumber;
                         timSheetItem_Detailed.Description = item.Description;
-
+         
                         TMEmployeeTime myTMEmployeeTime = employeeTimeRepository.GetSingleByPrjectandEmployeeandWIandDescription(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, tenant);
                         var wIWorkedHours_Employee = Math.Round(myTMEmployeeTime.FullDuration / 60.0, 2);
                         totalWIWorkedDays_Employee += wIWorkedHours_Employee;
