@@ -22,9 +22,9 @@ namespace WarehouseDataService.Helper
             {
                 while (true)
                 {
-                    DateTime todayDate = DateTime.Now;
+
                     DateTime? warehouseDate = null;
-                    if (!string.IsNullOrEmpty(ApplicationInfo.WarehouseBuildHours) && ApplicationInfo.WarehouseBuildDays.Count > 0) warehouseDate = GetWarehouseRunDate(todayDate);
+                    if (!string.IsNullOrEmpty(ApplicationInfo.WarehouseBuildHours) && ApplicationInfo.WarehouseBuildDays.Count > 0) warehouseDate = GetWarehouseRunDate(DateTime.Now);
 
                     #region DWNextRunTime
                     WarehouseHelper warehouseHelper = new WarehouseHelper();
@@ -34,7 +34,7 @@ namespace WarehouseDataService.Helper
 
                     DateTime? DWNextRunTime = warehouseHelper.GetDWNextRunTime(sourceConnectionString);
 
-                    if (DWNextRunTime == null)
+                    if (DWNextRunTime == null || ( DWNextRunTime > warehouseDate))
                     {
                         DWNextRunTime = warehouseDate;
                         warehouseHelper.UpdateDWNextRunTime(sourceConnectionString, DWNextRunTime);
@@ -45,8 +45,7 @@ namespace WarehouseDataService.Helper
                     {
                        if(warehouseDate!= DWNextRunTime)
                         {
-                            if (DWNextRunTime.Value.AddHours(5) > DateTime.Now) IsBuildNow = true;
-                          
+                            if (DWNextRunTime.Value.AddHours(ApplicationInfo.RetryBuildWithinHours) > DateTime.Now) IsBuildNow = true;
                         }
                     }
                     #endregion
@@ -55,7 +54,7 @@ namespace WarehouseDataService.Helper
                     {
                         if (!IsBuildNow)
                         {
-                            TimeSpan span = (DateTime)warehouseDate - todayDate;
+                            TimeSpan span = (DateTime)warehouseDate - (DateTime.Now);
                             int sleepTime = (int)span.TotalMilliseconds;
                             Thread.Sleep(sleepTime);
                         }

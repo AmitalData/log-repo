@@ -1905,15 +1905,15 @@ namespace Logitude.BL.InvoiceModel.Tools
                 if (string.IsNullOrEmpty(entityPM.CadPago))
                     throw new ApplicationException("Cad Pago is required");
 
-                Encoding encoding = Encoding.ASCII;
-                byte[] certPago = encoding.GetBytes(entityPM.CertPago);
-                byte[] selloPago = encoding.GetBytes(entityPM.SelloPago);
+                //Encoding encoding = Encoding.ASCII;
+                //byte[] certPago = encoding.GetBytes(entityPM.CertPago);
+                //byte[] selloPago = encoding.GetBytes(entityPM.SelloPago);
 
                 pagoItem.TipoCadPagoSpecified = true;
                 pagoItem.TipoCadPago = "01";
-                pagoItem.CertPago = certPago;
+                pagoItem.CertPago = entityPM.CertPago;
                 pagoItem.CadPago = entityPM.CadPago;
-                pagoItem.SelloPago = selloPago;
+                pagoItem.SelloPago = entityPM.SelloPago;
 
             }
 
