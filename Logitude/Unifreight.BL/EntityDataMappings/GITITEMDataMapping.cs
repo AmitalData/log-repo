@@ -37,6 +37,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.SEARCHENG = entityPM.SEARCHENG;
             entityPOCO.LICENCESIV = entityPM.LICENCESIV;
             entityPOCO.ORIGINCOUNTRY = entityPM.ORIGINCOUNTRY;
+            entityPOCO.UNITID = entityPM.UNITID;
         }
 
         public void POCOToPM(GITITEMPM entityPM, GITITEM entityPOCO)
@@ -60,7 +61,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.SEARCHENG = entityPOCO.SEARCHENG;
             entityPM.LICENCESIV = entityPOCO.LICENCESIV;
             entityPM.ORIGINCOUNTRY = entityPOCO.ORIGINCOUNTRY;
-            //entityPM.UNITID = entityPOCO.UNITID;
+            entityPM.UNITID = entityPOCO.UNITID;
         }
 
         public void CustomPMToPOCO(GITITEMPM entityPM, GITITEM entityPOCO)
