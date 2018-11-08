@@ -61051,7 +61051,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeTypeCode = "O",
                 LocalDefaultText =
-                "חדש %Entity"
+                "חדשה %Entity"
                 //"%Entity חדש "
             }, TextCodeRepository, textcodes);
 
