@@ -129,18 +129,16 @@ namespace CommunicationWorkerRole
                                     }
                                     else
                                     {
-                                        if (CheckEmailSendingQuotaForTenant(tenant))
-                                        {
-                                            SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
-                                        }
-                                        else
+                                        var sendingEmailQuotaResult = EmailLimitationHelper.CheckEmailSendingQuotaForTenant(tenant);
+                                        if (sendingEmailQuotaResult.IsQuotaExceeded)
                                         {
                                             cl.CommunicationStatusTypeCode = "F";
-                                            cl.ExceptionMessage = "Quota exceeded";
+                                            cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
                                             cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
                                             communicationLogRep.Update(cl);
                                             communicationLogRep.SubmitChanges();
                                         }
+                                        else SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
 
                                         queueservice.Complete();
                                         LogDoneItemInMemory();
@@ -967,30 +965,6 @@ namespace CommunicationWorkerRole
                 commLogrepository.SubmitChanges();
             }
         }
-
-
-        public  bool CheckEmailSendingQuotaForTenant(int tenant)
-        {
-            bool result = true;
-            TenantRepository tenantRepository = new TenantRepository(tenant);
-            int tenantEmailSendingQuota = tenantRepository.GetTenantEmailSendingQuota(tenant);
-            if (tenantEmailSendingQuota == 0) tenantEmailSendingQuota = LogitudeSettings.EmailSendingQuota;
-            if (tenantEmailSendingQuota > 0)
-            {
-                CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(tenant);
-                int communicationLogCount = communicationLogRep.GetCommunicationLogCountForTenantInLasthour(tenant);
-                if (communicationLogCount > tenantEmailSendingQuota)
-                {
-                    result = false;
-                }
-            }
-
-            return result;
-        }
-
-
-
-
 
 
     }
