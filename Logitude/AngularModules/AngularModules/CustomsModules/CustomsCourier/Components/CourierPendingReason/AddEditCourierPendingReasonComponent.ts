@@ -41,6 +41,7 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
             this.EntityPM = new CourierPendingReasonPM();
             this.EntityPM.Tenant = SessionLocator.Tenant;
             this.isWindowMode = true;
+            this.isNewRecord = true;
         } else {
             this.EntityPM = this.entityArgs.EntityPM;
         }
