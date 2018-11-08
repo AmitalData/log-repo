@@ -793,6 +793,7 @@
     <Compile Include="EntityQueryServices\ConsignmentQueryService.cs" />
     <Compile Include="EntityQueryServices\CourierDeclarationQueryService.cs" />
     <Compile Include="EntityQueryServices\CourierMasterQueryService.cs" />
+    <Compile Include="EntityQueryServices\CourierPendingReasonQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsAirlineQueryService.cs" />
     <Compile Include="EntityQueryServices\CouriersVatQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsPartnerFtpQueryService.cs" />

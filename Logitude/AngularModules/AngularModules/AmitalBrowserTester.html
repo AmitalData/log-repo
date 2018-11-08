@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <!--<script src="HtmlHelpers/JS/jquery-1.9.1.min.js" type="text/javascript"></script>-->
@@ -187,7 +187,7 @@
 <body style="margin:0px;padding:0px;overflow:hidden" >
 
     <!--style="visibility:hidden;"-->
-    <div class="tab" >
+    <div class="tab">
         <div id="responseDiv" class="CustomMultiLinesText"></div>
 
         <button onclick="ShowDeclarationByIdReturnCloseSave();">ShowDeclarationById</button>
@@ -195,10 +195,10 @@
         <button onclick="ShowSupplierInvoiceSelectorByDecIdReturnChosenChildren();">ShowSupplierInvoiceSelectorByDecIdReturnChosenChildren</button>
         <button onclick="ShowDeclarationCertificatesByGroupsUnifreightCallBack();">ShowDeclarationCertificatesByGroupsUnifreightCallBack</button>
         <button onclick="RaiseCheckInsuranseReturnIsNeededAmountCallBack();">RaiseCheckInsuranseReturnIsNeededAmountCallBack</button>
-        
+
         <button onclick="ShowClientReturnIfExist();">ShowClientReturnIfExist</button>
-        
-        
+
+
 
         <button onclick="RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage(true, false)">toCancell</button>
         <button onclick="RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage(false, true)">Lock</button>
@@ -209,6 +209,7 @@
 
         <button onclick="GetRihbitFromTransmissionsMessage()">GetRihbitFromTransmissionsMessage</button>
         <button onclick="MapDocumentTypeCustomsData()">MapDocumentTypeCustomsData</button>
+        <button onclick="MapPendingReasonCodeData()">MapPendingReasonCodeData</button>
     </div>
 
     <!--<div  class="tabcontent">-->
@@ -359,6 +360,14 @@
 
             //entyList[] = "true";
             //entyList["Requset.LockedMessage"] = "File 172900376 is in use on another screen() - try again later !. Locked by  (Session )";
+            RaiseUnifaceRequestEvent(objParams);
+        }
+
+        function MapPendingReasonCodeData() {
+            var json = '{ "UnifreightEntity"  :  "GTBFUSTATUS" , "UnifreightEntityNumber"  :  "FSI" , "LogitudeEntity"  :  "Customs.CourierPendingReason" , "LogitudeEntityNumber"  :  "" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "MapPendingReasonCodeData" , "formtitle"  :  "חשבונית ספק"}';
+
+            var objParams = JSON.parse(json);
+            objParams.Requset = new Array();
             RaiseUnifaceRequestEvent(objParams);
         }
 

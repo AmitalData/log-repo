@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
+import {Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -14,7 +14,9 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {CustomSendOptionsArgs, SendRequestVIA} from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {CourierPendingReasonPM} from '../../../../Customs/EntityPMs/CourierPendingReasonPM';
-import {CourierPendingReasonPMService} from '../../../../Customs/Services/StandardPMs/CourierPendingReasonPMService';
+import { CourierPendingReasonPMService } from '../../../../Customs/Services/StandardPMs/CourierPendingReasonPMService';
+import { CourierPendingReasonExtendedListService } from '../../../../Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
+import { List } from '../../../../Infrastructure/DataContracts/Dashboard/List';
 
 
 @Component({
@@ -27,8 +29,11 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.CourierPendingReason";
     public EntityPM: CourierPendingReasonPM;
     isWindowMode: boolean = false;
+    isNewRecord: boolean = false;
     ValidationErrorsList: any[] = [];
+
     _CourierPendingReasonPMService: CourierPendingReasonPMService = new CourierPendingReasonPMService();
+    _CourierPendingReasonExtendedListService: CourierPendingReasonExtendedListService = new CourierPendingReasonExtendedListService();
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -39,16 +44,43 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
         } else {
             this.EntityPM = this.entityArgs.EntityPM;
         }
+        this.UIProperties.SetEnabled("UnifreightStatusCode", this.ObjectTableName, false);
 
     }
 
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.isWindowMode = true;
+
+            if (args.FromUnifreight && !AppTool.IsNullOrEmpty(args.UnifreightStatusCode)) {
+                this.isNewRecord = true;
+                this.EntityPM = new CourierPendingReasonPM();
+                this.UnifreightStatusCode = args.UnifreightStatusCode;
+                this.EntityPM.Code = args.UnifreightStatusCode;
+                this.UIProperties.SetEnabled("UnifreightStatusCode", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("Code", this.ObjectTableName, false);
+
+                this._CourierPendingReasonExtendedListService.GetCourierPendingReasonByUnifreightStatus(this.UnifreightStatusCode).subscribe(response => {
+                    var courierPendingReasonResult: CourierPendingReasonPM[] = response.Result;
+                    if (courierPendingReasonResult != null && courierPendingReasonResult.length > 0) {
+                        this.isNewRecord = false;
+                        this.EntityPM = courierPendingReasonResult[0];
+                        if (courierPendingReasonResult.length > 1) {
+                            this.WarningMessage = "סטטוס " + this.UnifreightStatusCode + " מקושר למספר קודים. מוצגת הרשומה הראשונה בלבד";
+                        }
+                    }
+                });
+            }
         }
     }
 
+
     //#region Properties
+    private _WarningMessage: string;
+    public get WarningMessage() { return this._WarningMessage; }
+    public set WarningMessage(newValue: string) {
+        this._WarningMessage = newValue;
+    }
 
     public get Code() { return this.EntityPM.Code; }
     public set Code(newValue: string) {
@@ -91,18 +123,32 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
             this.ValidationErrorsList = [];
             this.ValidationErrorsList = errors;
         } else {
-            this._CourierPendingReasonPMService.insert(this.EntityPM).subscribe(myResult => {
-                var mm: ServiceResponse = myResult;
-                if (!mm.HasError) {
-                    var entity = mm.Result;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
-
-                }
-                else {
-                    this.ValidationErrorsList = mm.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                }
-            });
+            if (this.isNewRecord) {
+                this._CourierPendingReasonPMService.insert(this.EntityPM).subscribe(myResult => {
+                    var mm: ServiceResponse = myResult;
+                    if (!mm.HasError) {
+                        var entity = mm.Result;
+                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    }
+                    else {
+                        this.ValidationErrorsList = mm.ErrorsArray;
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                    }
+                });
+            }
+            else {
+                this._CourierPendingReasonPMService.update(this.EntityPM).subscribe(myResult => {
+                    var mm: ServiceResponse = myResult;
+                    if (!mm.HasError) {
+                        var entity = mm.Result;
+                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    }
+                    else {
+                        this.ValidationErrorsList = mm.ErrorsArray;
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                    }
+                });
+            }
         }
     }
 
