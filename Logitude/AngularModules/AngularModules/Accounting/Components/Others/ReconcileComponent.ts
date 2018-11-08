@@ -486,7 +486,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
         // Local Validate
         if (this.SelectedLines.Length == 0) {
-            errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
+            errors.push(TextCodeTranslator.Translate("Accounting.General.O.NotransactionsSelected"));//"No transactions selected
         }
         if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
             //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
@@ -537,6 +537,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
+                    for (var i = 0; i < this.SelectedLines.Collection.length; i++) {
+                        var line = this.SelectedLines.Collection[i];//new LineModel(result[i], this, -1);
+                        this.FireCheckBoxChecked.emit({ rowData: line.LedgerTransactionPM, IsChecked: false, RowIndex: -1, ById: true });
+                    }
                     this.SelectedLines.Clear();// = [];
 
                     this.RunAutomaticReconcile();

@@ -339,6 +339,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             //updateClass.FillAccountingCompanyType();
                             //updateClass.FillTaxWithholdingAssessOffice();
                             updateClass.FillWithholdingTaxDeductionTypes();
+                            
                             break;
                         }
                     case "shipment":
@@ -520,7 +521,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             accountingUpdate.LoadObjectTableHelperControls();
                             accountingUpdate.LoadMenustables();
                             accountingUpdate.LoadEventTypes();
-
+                            accountingUpdate.CreateCounters(tenant);
                             //Booking
                             BookingLibUpdateClass bookingLibUpdateClass = new BookingLibUpdateClass();
                             bookingLibUpdateClass.LoadObjectsTenantZero(context);

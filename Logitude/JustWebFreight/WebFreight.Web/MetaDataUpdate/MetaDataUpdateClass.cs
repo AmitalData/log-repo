@@ -4615,7 +4615,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 DefaultText = "Session Timeout",
                 FullFieldLable = "SessionTimeout",
                 FieldName = "SessionTimeout",
-                FieldsDataType = "Integer",
+                FieldsDataType = "Decimal",
+                DigitsAfterPoint = 2,
                 Tenant = 0,
                 TextCodeType = "F",
                 DisplayInList = true,
@@ -63207,6 +63208,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.GeneralData", DefaultText = "General Data", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.AddContact", DefaultText = "Add Contact", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.CompanyName", DefaultText = "Company Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.CompanyLocalName", DefaultText = "Local Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             TextCode tc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.TableDescription", DefaultText = "Add and manage information about your customers – shippers and consignees. Specify communication, address and billing details, and create list of contacts.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             objectTable.DescriptionTextCodeId = tc.Id;
             #endregion
@@ -63306,6 +63308,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             #region Others
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.O.CompanyName", DefaultText = "Company Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.O.CompanyLocalName", DefaultText = "Local Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             TextCode tc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.O.TableDescription", DefaultText = "Add and manage information about inland carriers you work with. Specify communication, address and billing details, and create list of contacts.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             objectTable.DescriptionTextCodeId = tc.Id;
             #endregion
@@ -63576,6 +63579,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.GeneralData", DefaultText = "General Data", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.Address", DefaultText = "Addresses", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.CompanyName", DefaultText = "Company Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.CompanyLocalName", DefaultText = "Local Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             TextCode WareHousetc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.TableDescription", DefaultText = "Add and manage information about the warehouses you work with and those of your partners.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             objectTable.DescriptionTextCodeId = WareHousetc.Id;
             #endregion

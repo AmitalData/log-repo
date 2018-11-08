@@ -60,7 +60,7 @@ namespace WebFreight.Web.DataContracts
 
         public int NumberOfRetries { get; set; }
 
-        public int SessionTimeout { get; set; }
+        public decimal SessionTimeout { get; set; }
         public int WebTokenExpirationWarningInMinutes { get; set; }
         public int WebTokenLifeTimeInMinutes { get; set; }
 

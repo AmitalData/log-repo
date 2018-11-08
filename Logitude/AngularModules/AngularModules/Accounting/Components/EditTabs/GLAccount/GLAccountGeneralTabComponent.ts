@@ -148,10 +148,10 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     }
     }
 
-    get IsPartOfDeductionReport() { return this.EntityPM.IsPartOfDeductionReport }
-    set IsPartOfDeductionReport(value: boolean) {
-        if (this.EntityPM.IsPartOfDeductionReport != value) {
-            this.EntityPM.IsPartOfDeductionReport = value;
+    get ExcludeFromDeductionReport() { return this.EntityPM.ExcludeFromDeductionReport }
+    set ExcludeFromDeductionReport(value: boolean) {
+        if (this.EntityPM.ExcludeFromDeductionReport != value) {
+            this.EntityPM.ExcludeFromDeductionReport = value;
 
         }
     }

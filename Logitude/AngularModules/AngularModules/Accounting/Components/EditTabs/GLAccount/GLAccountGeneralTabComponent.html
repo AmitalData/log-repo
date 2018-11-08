@@ -355,11 +355,11 @@
                                             <!-- IsPartOfDeductionReport -->
                                             <tr class="FormFieldRow" *ngIf="IsVendor">
                                                 <td style="width: 150px;">
-                                                    <LogLabel [ObjectFieldName]="'IsPartOfDeductionReport'" [ObjectTableName]="ObjectTableName"
+                                                    <LogLabel [ObjectFieldName]="'ExcludeFromDeductionReport'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
                                                 <td>
-                                                    <CheckBox [IsChecked]="IsPartOfDeductionReport" (Checked)="IsPartOfDeductionReport = $event"></CheckBox>
+                                                    <CheckBox [IsChecked]="ExcludeFromDeductionReport" (Checked)="ExcludeFromDeductionReport = $event"></CheckBox>
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>

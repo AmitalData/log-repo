@@ -421,15 +421,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "ReportNumber",
 					  						OldFieldName =  "ReportNumber",
 					  						ObjectTableName =  "TaxDeductionReport",
-					  						FieldsDataType =  "Integer",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  20,
 					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  20,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
@@ -982,7 +982,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "CREV",
                 EnglishName =  "Created",
-                LocalName =  "Created",
+                LocalName =  "חדש",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
@@ -1000,7 +1000,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "UPEV",
                 EnglishName =  "Updated",
-                LocalName =  "Updated",
+                LocalName =  "עודכן",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -1024,8 +1024,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
     
 			   Feature TaxDeductionReportFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TDMR", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-			   Feature TaxDeductionReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DNBD", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.DownloadBDFfile", NameTextCodeDefaultText = "Download BDF file", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature TaxDeductionReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DNTX", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.Downloadtextfile", NameTextCodeDefaultText = "Download text file", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature TaxDeductionReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DNBD", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.DownloadPDFfile", NameTextCodeDefaultText = "Download PDF file", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature TaxDeductionReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TXFL", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.DownloadTextfile", NameTextCodeDefaultText = "Download Text file", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -1059,8 +1059,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						EventCode = "DNBD",
 						Index = 0, 
 						IsActive = true,
-						LabelTextCodeCode = "TaxDeductionReport.B.DownloadBDFfile",
-						LabelTextCodeDefaultText = "Download BDF file",
+						LabelTextCodeCode = "TaxDeductionReport.B.DownloadPDFfile",
+						LabelTextCodeDefaultText = "Download PDF file",
 						Tenant = 0,
 						MenuButtonGroupId = TaxDeductionReportMenuButtonGroup.Id,
 						ParentMenuButtonId = TaxDeductionReportMenuButton0.Id,
@@ -1068,16 +1068,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  TaxDeductionReportFeature_MB00.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "PDF הורד קובץ",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 			   MenuButton TaxDeductionReportMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "DNTX",
+						EventCode = "TXFL",
 						Index = 1, 
 						IsActive = true,
-						LabelTextCodeCode = "TaxDeductionReport.B.Downloadtextfile",
-						LabelTextCodeDefaultText = "Download text file",
+						LabelTextCodeCode = "TaxDeductionReport.B.DownloadTextfile",
+						LabelTextCodeDefaultText = "Download Text file",
 						Tenant = 0,
 						MenuButtonGroupId = TaxDeductionReportMenuButtonGroup.Id,
 						ParentMenuButtonId = TaxDeductionReportMenuButton0.Id,
@@ -1085,7 +1085,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  TaxDeductionReportFeature_MB01.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "הורד קובץ טקסט",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }     

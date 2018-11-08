@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {NewPartnerTamplate} from '../Templates/NewPartnerTamplate';
@@ -99,7 +99,7 @@ export class NewTruckerComponent {
         if (errors.length == 0) {
             this.EntityPM.Code = this.PartnerTamplate.CardCode;
             this.EntityPM.EnglishName = this.PartnerTamplate.Name;
-            this.EntityPM.LocalName = this.PartnerTamplate.Name;
+            this.EntityPM.LocalName = !AppTool.IsNullOrEmpty(this.PartnerTamplate.LocalName) ? this.PartnerTamplate.LocalName : this.PartnerTamplate.Name;
             this.EntityPM.VatNumber = this.PartnerTamplate.VatNumber;
             this.EntityPM.ExistedContactId = this.PartnerTamplate.ExistedContactId;
 
