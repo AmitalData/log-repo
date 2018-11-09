@@ -1397,7 +1397,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ValidateField(emitPropertyChanged: boolean = true) {
-
+        var suppressValidation: boolean = false;
         if (this.InputType) {
             switch (this.InputType.toLowerCase()) {
                 case 'text':
@@ -1408,16 +1408,18 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                 default: {
                     if (isNaN(Number(this.TextValue))) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
+                        suppressValidation = true;
                     }
                     else {
                         this.SetValidity(true, null);
+                        suppressValidation = false;
                     }
                 }
 
             }
         }
 
-        if (!this.NoValidation && this.uiProperty != null && this.uiProperty.ValidValue) {
+        if (!this.NoValidation && this.uiProperty != null && !suppressValidation) {
             var errors = null;
             var table = window.ObjectTables.filter(d => d.Name === this.uiProperty.ObjectTableName)[0];
             if (table) {

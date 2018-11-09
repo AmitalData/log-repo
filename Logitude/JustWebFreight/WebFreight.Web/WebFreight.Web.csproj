@@ -110,9 +110,8 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="evohtmltopdf, Version=7.5.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\LogitudeWorld\2018.R4\General\Dlls\evohtmltopdf.dll</HintPath>
+    <Reference Include="evohtmltopdf, Version=5.17.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EvoHtmlToPDF5.5.1.8\lib\Net40\evohtmltopdf.dll</HintPath>
     </Reference>
     <Reference Include="FormulaEngineLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\FormulaEngineLib.dll</HintPath>
@@ -344,7 +343,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Profact3.3.1.0.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\..\packages\Profact3.3.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid.SmtpApi, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
@@ -352,10 +351,6 @@
     </Reference>
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
-    </Reference>
-    <Reference Include="Simplog.Server.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Simplog.Server.Infrastructure\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\StackExchange.Redis.1.2.5\lib\net45\StackExchange.Redis.dll</HintPath>
@@ -2087,6 +2082,7 @@
     <Compile Include="DataProviders\ShipmentInventoryDataProvider.cs" />
     <Compile Include="DataProviders\ShipmentProfitVSQuoteEstimateDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipmentsStocksDataProvider.cs" />
+    <Compile Include="DataProviders\TasksWithoutProjectsDataProvider.cs" />
     <Compile Include="DataProviders\UsersByTenantDataProvider.cs" />
     <Compile Include="DataProviders\WorkHoursPerProjectDataProvider.cs" />
     <Compile Include="DropBoxAuth.aspx.cs">
@@ -2584,7 +2580,7 @@
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
-    <Content Include="Monitoring\EmailSendingQuotaExceeded.aspx" />
+    <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
     <Content Include="Monitoring\FailedTokenLog.aspx" />
     <Content Include="Monitoring\ForwarderShipmentDocumentQueue.aspx" />
@@ -2642,6 +2638,7 @@
     <Content Include="SharedDocuments.aspx" />
     <Content Include="SharedDocuments\SharedDocumentsViewModel.js" />
     <Content Include="EntityExternalUpdate.aspx" />
+    <Content Include="ShipmentStatuses.aspx" />
     <Content Include="SignUp.aspx" />
     <Content Include="SignUpVerification.aspx" />
     <Content Include="Stimulsoft\css\demo.css" />
@@ -4601,12 +4598,12 @@
     <Compile Include="Monitoring\AnalyzeQueue.aspx.designer.cs">
       <DependentUpon>AnalyzeQueue.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Monitoring\EmailSendingQuotaExceeded.aspx.cs">
-      <DependentUpon>EmailSendingQuotaExceeded.aspx</DependentUpon>
+    <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.cs">
+      <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Monitoring\EmailSendingQuotaExceeded.aspx.designer.cs">
-      <DependentUpon>EmailSendingQuotaExceeded.aspx</DependentUpon>
+    <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.designer.cs">
+      <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\FailedLoginLog.aspx.cs">
       <DependentUpon>FailedLoginLog.aspx</DependentUpon>
@@ -4930,6 +4927,13 @@
     </Compile>
     <Compile Include="Monitoring\ChampStatus.aspx.designer.cs">
       <DependentUpon>ChampStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentStatuses.aspx.cs">
+      <DependentUpon>ShipmentStatuses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShipmentStatuses.aspx.designer.cs">
+      <DependentUpon>ShipmentStatuses.aspx</DependentUpon>
     </Compile>
     <Compile Include="SignalRHubs\LogitudeHub.cs" />
     <Compile Include="SignalRStartup.cs" />
@@ -6092,6 +6096,10 @@
     <ProjectReference Include="..\..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
       <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Unifreight.BL\Unifreight.BL.csproj">
       <Project>{0ec1bd46-2613-4227-a6d7-d345dd0978cd}</Project>

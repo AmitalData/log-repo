@@ -11,7 +11,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 @Component({
     moduleId: module.id,
     templateUrl: "./TaxReportShortTitleComponent.html",
-}) 
+})
 export class TaxReportShortTitleComponent {
     public EntityPM: TaxReportPM;
     public isRTL: boolean = false;
@@ -25,4 +25,37 @@ export class TaxReportShortTitleComponent {
         this._entityResourceService.getEntityResourceByTableName("TaxReport", 0).subscribe((response: any) => {
             this.IsVisibile = true;
         });
-    } }
+
+
+        this.Listen();
+    }
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
+    Listen() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    }
+                });
+            }
+
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        console.log("Entity Reloaded");
+                    }
+                });
+            }
+
+
+        }
+    }
+
+
+}

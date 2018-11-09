@@ -620,7 +620,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                       ).ToList();
 
             List<GLAccountList> glaccounts = (from a in context.GLAccounts.Include("AccountingCompanyType").Include("TaxWithholdingAssessOffice").Include("WithholdingTaxDeductionType")
-                                        where a.AccountTypeCode=="3" && a.IsPartOfDeductionReport==true
+                                        where a.AccountTypeCode=="3" && a.ExcludeFromDeductionReport==false
                                         
                                           select new GLAccountList()
                                           {
@@ -707,10 +707,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 {
                     Month = month.Month,
                    TotalVendors = taxDeduction.ByVendorList.Where(d => d.Month == month.Month).Count(),
-                 TotalPaymentsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionType != "18").Sum(d => d.SumOfAmountInLocalCurrency),
-                TotalDeductionsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionType != "18").Sum(d => d.SumOfTaxDeductionLocalAmount),
-                TotalDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionType == "18").Sum(d => d.SumOfAmountInLocalCurrency),
-                TotalDeductionsFromDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionType == "18").Sum(d => d.SumOfTaxDeductionLocalAmount)
+                 TotalPaymentsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfAmountInLocalCurrency),
+                TotalDeductionsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfTaxDeductionLocalAmount),
+                TotalDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfAmountInLocalCurrency),
+                TotalDeductionsFromDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfTaxDeductionLocalAmount)
 
             };
 

@@ -70,10 +70,6 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.ExternalSystem).HasColumnName("ExternalSystem").HasMaxLength(60).IsUnicode(true);
 
             this.Property(t => t.QueueId).HasColumnName("QueueId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.TaxReportId).HasColumnName("TaxReportId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.TaxReportStatusCode).HasColumnName("TaxReportStatusCode").HasMaxLength(1).IsUnicode(false);
         }
     }
 }

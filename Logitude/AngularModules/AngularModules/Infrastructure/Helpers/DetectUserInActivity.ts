@@ -24,7 +24,7 @@ export class DetectUserInActivity {
     //timeUnit // H:Hour , M:Minutes 
 
     Start(lifeTime: any, warningTime: any = 1, timeUnit: string = "H") {
-        if (lifeTime) {
+        if (lifeTime && lifeTime >0 ) {
             if (timeUnit && timeUnit.toUpperCase() == "H") {
                 lifeTime = lifeTime * 60;
             }
@@ -34,9 +34,12 @@ export class DetectUserInActivity {
                 warningTime = Math.round(warningTime);
             }
 
-                this.LifeTimeInMiliseconds = ((lifeTime - warningTime) * 60000);
-                this.WarningTimeInMiliseconds = (warningTime * 60000);
 
+            this.LifeTimeInMiliseconds = ((lifeTime - warningTime) * 60000);
+            this.WarningTimeInMiliseconds = (warningTime * 60000);
+
+            if (this.LifeTimeInMiliseconds > 2147483647) this.LifeTimeInMiliseconds = 2147483647; // 24.8 Days
+            if (this.WarningTimeInMiliseconds > 2147483647) this.WarningTimeInMiliseconds = 2147483647;
 
                 if (this.WarningTimeInMiliseconds == 0) {
                     this.ShowMessage(this);

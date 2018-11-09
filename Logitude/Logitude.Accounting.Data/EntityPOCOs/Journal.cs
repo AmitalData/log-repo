@@ -91,13 +91,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ExternalSystem { get; set; }
         [Column("QueueId")]
 	    public string QueueId { get; set; }
-        [Column("TaxReportId")]
-	    public string TaxReportId { get; set; }
-        [ForeignKey("TaxReportStatus")]
-        [Column("TaxReportStatusCode")]
-	    public string TaxReportStatusCode { get; set; }
-	      
-        public virtual TaxReportStatus TaxReportStatus { get; set; }
     }
 }
 	 

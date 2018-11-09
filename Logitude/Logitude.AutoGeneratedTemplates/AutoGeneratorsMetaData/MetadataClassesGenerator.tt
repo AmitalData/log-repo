@@ -991,8 +991,11 @@ private void WriteAddScreenMethod(XElement entity,XElement ScreenAtt,string TblN
        { 
 		   Code += ".HeaderScreen";
        }
+	   else  if (IsHeaderScreen.ToLower() == "true" && TblName != "Shipment"){
+		  Code = "HeaderScreen";
+	   }
 	   //ScreenDBCode
-		string screenCode = TblName.Trim('"').Replace(" ","") + Code.Trim('"').Replace(" ","");
+		string screenCode = TblName.Trim('"').Replace(" ","") + "." + Code.Trim('"').Replace(" ","");
 	    var ScreenDBCode = ScreenAtt.Attributes().Where(a => a.Name == "Code").FirstOrDefault();
 		if(ScreenDBCode != null)
 		   screenCode  = ScreenDBCode.Value.ToString().Trim('"');

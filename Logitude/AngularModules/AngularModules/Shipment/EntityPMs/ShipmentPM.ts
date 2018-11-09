@@ -1,4 +1,4 @@
-﻿
+
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
@@ -575,12 +575,91 @@ export class ShipmentPM {
     public get Field19() {if(!this.field19){ this.field19 = new CustomFieldClass(null, "Field19", "Shipment");} return this.field19; }
     public set Field19(newValue: CustomFieldClass) {  this.field19 = newValue; this.MarkAsDirty("Field19");  }
        
-	 
     private field20: CustomFieldClass;
     public get Field20() {if(!this.field20){ this.field20 = new CustomFieldClass(null, "Field20", "Shipment");} return this.field20; }
-    public set Field20(newValue: CustomFieldClass) {  this.field20 = newValue; this.MarkAsDirty("Field20");  }
-       
-	 
+    public set Field20(newValue: CustomFieldClass) { this.field20 = newValue; this.MarkAsDirty("Field20"); }
+
+    private field21: CustomFieldClass;
+    public get Field21() { if (!this.field21) { this.field21 = new CustomFieldClass(null, "Field21", "Shipment"); } return this.field21; }
+    public set Field21(newValue: CustomFieldClass) { this.field21 = newValue; this.MarkAsDirty("Field21"); }
+
+    private field22: CustomFieldClass;
+    public get Field22() { if (!this.field22) { this.field22 = new CustomFieldClass(null, "Field22", "Shipment"); } return this.field22; }
+    public set Field22(newValue: CustomFieldClass) { this.field22 = newValue; this.MarkAsDirty("Field22"); }
+
+    private field23: CustomFieldClass;
+    public get Field23() { if (!this.field23) { this.field23 = new CustomFieldClass(null, "Field23", "Shipment"); } return this.field23; }
+    public set Field23(newValue: CustomFieldClass) { this.field23 = newValue; this.MarkAsDirty("Field23"); }
+
+    private field24: CustomFieldClass;
+    public get Field24() { if (!this.field24) { this.field24 = new CustomFieldClass(null, "Field24", "Shipment"); } return this.field24; }
+    public set Field24(newValue: CustomFieldClass) { this.field24 = newValue; this.MarkAsDirty("Field24"); }
+
+    private field25: CustomFieldClass;
+    public get Field25() { if (!this.field25) { this.field25 = new CustomFieldClass(null, "Field25", "Shipment"); } return this.field25; }
+    public set Field25(newValue: CustomFieldClass) { this.field25 = newValue; this.MarkAsDirty("Field25"); }
+
+    private field26: CustomFieldClass;
+    public get Field26() { if (!this.field26) { this.field26 = new CustomFieldClass(null, "Field26", "Shipment"); } return this.field6; }
+    public set Field26(newValue: CustomFieldClass) { this.field26 = newValue; this.MarkAsDirty("Field26"); }
+
+    private field27: CustomFieldClass;
+    public get Field27() { if (!this.field27) { this.field27 = new CustomFieldClass(null, "Field27", "Shipment"); } return this.field27; }
+    public set Field27(newValue: CustomFieldClass) { this.field27 = newValue; this.MarkAsDirty("Field27"); }
+
+    private field28: CustomFieldClass;
+    public get Field28() { if (!this.field28) { this.field28 = new CustomFieldClass(null, "Field28", "Shipment"); } return this.field28; }
+    public set Field28(newValue: CustomFieldClass) { this.field28 = newValue; this.MarkAsDirty("Field28"); }
+
+    private field29: CustomFieldClass;
+    public get Field29() { if (!this.field29) { this.field29 = new CustomFieldClass(null, "Field29", "Shipment"); } return this.field29; }
+    public set Field29(newValue: CustomFieldClass) { this.field29 = newValue; this.MarkAsDirty("Field29"); }
+
+    private field30: CustomFieldClass;
+    public get Field30() { if (!this.field30) { this.field30 = new CustomFieldClass(null, "Field30", "Shipment"); } return this.field30; }
+    public set Field30(newValue: CustomFieldClass) { this.field30 = newValue; this.MarkAsDirty("Field30"); }
+
+    private field31: CustomFieldClass;
+    public get Field31() { if (!this.field31) { this.field31 = new CustomFieldClass(null, "Field31", "Shipment"); } return this.field31; }
+    public set Field31(newValue: CustomFieldClass) { this.field31 = newValue; this.MarkAsDirty("Field31"); }
+
+    private field32: CustomFieldClass;
+    public get Field32() { if (!this.field32) { this.field32 = new CustomFieldClass(null, "Field32", "Shipment"); } return this.field32; }
+    public set Field32(newValue: CustomFieldClass) { this.field32 = newValue; this.MarkAsDirty("Field32"); }
+
+    private field33: CustomFieldClass;
+    public get Field33() { if (!this.field33) { this.field33 = new CustomFieldClass(null, "Field33", "Shipment"); } return this.field33; }
+    public set Field33(newValue: CustomFieldClass) { this.field33 = newValue; this.MarkAsDirty("Field33"); }
+
+    private field34: CustomFieldClass;
+    public get Field34() { if (!this.field34) { this.field34 = new CustomFieldClass(null, "Field34", "Shipment"); } return this.field34; }
+    public set Field34(newValue: CustomFieldClass) { this.field34 = newValue; this.MarkAsDirty("Field34"); }
+
+    private field35: CustomFieldClass;
+    public get Field35() { if (!this.field35) { this.field35 = new CustomFieldClass(null, "Field35", "Shipment"); } return this.field35; }
+    public set Field35(newValue: CustomFieldClass) { this.field35 = newValue; this.MarkAsDirty("Field35"); }
+
+    private field36: CustomFieldClass;
+    public get Field36() { if (!this.field36) { this.field36 = new CustomFieldClass(null, "Field36", "Shipment"); } return this.field36; }
+    public set Field36(newValue: CustomFieldClass) { this.field36 = newValue; this.MarkAsDirty("Field36"); }
+
+    private field37: CustomFieldClass;
+    public get Field37() { if (!this.field37) { this.field37 = new CustomFieldClass(null, "Field37", "Shipment"); } return this.field37; }
+    public set Field37(newValue: CustomFieldClass) { this.field37 = newValue; this.MarkAsDirty("Field37"); }
+
+    private field38: CustomFieldClass;
+    public get Field38() { if (!this.field38) { this.field38 = new CustomFieldClass(null, "Field38", "Shipment"); } return this.field38; }
+    public set Field38(newValue: CustomFieldClass) { this.field38 = newValue; this.MarkAsDirty("Field38"); }
+
+    private field39: CustomFieldClass;
+    public get Field39() { if (!this.field39) { this.field39 = new CustomFieldClass(null, "Field39", "Shipment"); } return this.field39; }
+    public set Field39(newValue: CustomFieldClass) { this.field39 = newValue; this.MarkAsDirty("Field39"); }
+
+    private field40: CustomFieldClass;
+    public get Field40() { if (!this.field40) { this.field40 = new CustomFieldClass(null, "Field40", "Shipment"); } return this.field40; }
+    public set Field40(newValue: CustomFieldClass) { this.field40 = newValue; this.MarkAsDirty("Field40"); }
+
+
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
@@ -3633,7 +3712,10 @@ export class ShipmentPM {
     private dontAddToImportersQueue: boolean;
     public get DontAddToImportersQueue() { return this.dontAddToImportersQueue; }
     public set DontAddToImportersQueue(newValue: boolean) { if (this.dontAddToImportersQueue != newValue) { this.dontAddToImportersQueue = newValue; this.MarkAsDirty("DontAddToImportersQueue"); } }
-       
+
+    private dontAddToForwarderQueue: boolean;
+    public get DontAddToForwarderQueue() { return this.dontAddToForwarderQueue; }
+    public set DontAddToForwarderQueue(newValue: boolean) { if (this.dontAddToForwarderQueue != newValue) { this.dontAddToForwarderQueue = newValue; this.MarkAsDirty("DontAddToForwarderQueue"); } }
 	 
     private forwarderPartnerId: string;
     public get ForwarderPartnerId() { return this.forwarderPartnerId; }

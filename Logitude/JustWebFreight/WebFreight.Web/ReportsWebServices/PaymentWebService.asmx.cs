@@ -550,14 +550,15 @@ namespace WebFreight.Web.ReportsWebServices
                                 paymentDataProvider.SAT.TipoCadenaPago = pagoItem.TipoCadPago;
                                 paymentDataProvider.SAT.CadPago = pagoItem.CadPago;
 
-                                Encoding encoding = Encoding.UTF8;
-                                if(pagoItem.CertPago != null)
-                                    paymentDataProvider.SAT.CertPago = encoding.GetString(pagoItem.CertPago);
+                                //Encoding encoding = Encoding.UTF8;
+                               // if (pagoItem.CertPago != null)
+                                    paymentDataProvider.SAT.CertPago = pagoItem.CertPago;//encoding.GetString(pagoItem.CertPago);
 
-                                if (pagoItem.SelloPago != null)
-                                    paymentDataProvider.SAT.SelloPago = encoding.GetString(pagoItem.SelloPago);
+                               // if (pagoItem.SelloPago != null)
+                                    paymentDataProvider.SAT.SelloPago = pagoItem.SelloPago;//encoding.GetString(pagoItem.SelloPago);
 
-                                
+
+
                                 foreach (Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado doctoItem in pagoItem.DoctoRelacionado.ToList())
                                 {
 

@@ -37,7 +37,12 @@ export class MainMenuComponent {
         this.MainMenuItems = this.GetMainMenuItemsFromWindow();
         // Layout Direction
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-        this.IsMainSidebarCollapsed = SessionLocator.IsMainSidebarCollapsed;
+        var defaultStatus: string = LastFilterClass.GetFilterValue("Simplog.Infrastructure.Views.MenuView", "Sidebar");
+        if (!AppTool.IsNullOrEmpty(defaultStatus)) {
+            this.IsMainSidebarCollapsed = defaultStatus == "true" ? true : false;
+        } else {
+            this.IsMainSidebarCollapsed = SessionLocator.IsMainSidebarCollapsed;
+        }
         this.MainMenuWidth = this.IsMainSidebarCollapsed == true ? this.MainMenuWidthCollapsed : this.MainMenuWidthOpened;
     }
 
@@ -86,6 +91,8 @@ export class MainMenuComponent {
             }
 
             else {
+             
+
                 this.isLoaderReady = true;
 
                 let locs = this.AllLocations.toArray().filter(f => f.Code == 'MainMenuContainer');
@@ -116,6 +123,9 @@ export class MainMenuComponent {
     }
 
     InitSelectedMenu() {
+
+      
+        
         var mySelectedMenu = this.MainMenuItems[0];
 
         var selectedMenuTextCode: string = null;
@@ -573,6 +583,7 @@ export class MainMenuComponent {
         if (this.isMainSidebarCollapsed != value) {
             this.isMainSidebarCollapsed = value;
             SessionLocator.IsMainSidebarCollapsed = value;
+            LastFilterClass.UpdateFilter("Simplog.Infrastructure.Views.MenuView", "Sidebar", value+"");
             this.MainMenuWidth = value == true ? this.MainMenuWidthCollapsed : this.MainMenuWidthOpened;
         }
     }

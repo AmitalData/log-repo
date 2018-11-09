@@ -35,8 +35,6 @@ export class JournalList {
 	LastActivityByUserName: string;
 	LastActivityDate: Date;
 	StatusLocalName: string;
-	TaxReportId: string;
-	TaxReportStatusCode: string;
 	
 }
  

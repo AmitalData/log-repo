@@ -515,50 +515,43 @@ namespace Logitude.Accounting.BL.CoreBL
             string firstLine = "";
             myStringBuilder.Append("O");
 
-            if (taxReport.VatNumber.Length > 9) taxReport.VatNumber = taxReport.VatNumber.Substring(0, 9);
-            myStringBuilder.Append(taxReport.VatNumber.PadLeft(9, '0'));
+            myStringBuilder.Append(FormatString(taxReport.VatNumber,9,paddingDigit: '0'));
+
             myStringBuilder.Append(taxReport.TaxReportMonth == null ? "000000" : taxReport.TaxReportMonth.ToString("yyyyMM"));
             myStringBuilder.Append("1");
             myStringBuilder.Append(taxReport.CreateDate.ToString("yyyyMMdd"));
 
             //TotalTaxableOutputAmount
-            myStringBuilder.Append(taxReport.TaxableOutputAmount >= 0 ? '+' : '-');
-            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.TaxableOutputAmount.Value)).ToString().PadLeft(9, '0'));
+            myStringBuilder.Append(FormatDecimal(taxReport.TaxableOutputAmount,9,true,true));
 
             //OutputTaxAmount
-            myStringBuilder.Append(taxReport.OutputTaxAmount >= 0 ? '+' : '-');
-            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.OutputTaxAmount.Value)).ToString().PadLeft(9, '0'));
+            myStringBuilder.Append(FormatDecimal(taxReport.OutputTaxAmount, 9,true,true));
 
             //TaxableOutputsWithDiffPercent
             myStringBuilder.Append("+");
-            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.TaxableOutputsWithDiffPercent.Value)).ToString().PadLeft(9, '0'));
+            myStringBuilder.Append(FormatDecimal(taxReport.TaxableOutputsWithDiffPercent, 9, false, true));
 
             //OutputTaxAmountWithDiffPercent
             myStringBuilder.Append("+");
-            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.OutputTaxAmountWithDiffPercent.Value)).ToString().PadLeft(11, '0'));
+            myStringBuilder.Append(FormatDecimal(taxReport.OutputTaxAmountWithDiffPercent, 11, includeSign:false, truncateDecimal:true));
 
             //OutputLinesCount
-            myStringBuilder.Append(taxReport.OutputLinesCount == null ? "000000000" : taxReport.OutputLinesCount.Value.ToString().PadLeft(9, '0'));
-
+            myStringBuilder.Append(FormatInt(taxReport.OutputLinesCount, 9));
 
             //ExemptTaxableOutput
-            myStringBuilder.Append(taxReport.ExemptTaxableOutput >= 0 ? '+' : '-');
-            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.ExemptTaxableOutput.Value)).ToString().PadLeft(11, '0'));
+            myStringBuilder.Append(FormatDecimal(taxReport.ExemptTaxableOutput, 11, includeSign:true, truncateDecimal:true));
 
             //OtherInputsTaxAmount
-            myStringBuilder.Append(taxReport.OtherInputsTaxAmount >= 0 ? '+' : '-');
-            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.OtherInputsTaxAmount.Value)).ToString().PadLeft(9, '0'));
+            myStringBuilder.Append(FormatDecimal(taxReport.OtherInputsTaxAmount, 9, includeSign:true, truncateDecimal:true));
 
             //EquipmentInputsTaxAmount
-            myStringBuilder.Append(taxReport.EquipmentInputsTaxAmount >= 0 ? '+' : '-');
-            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.EquipmentInputsTaxAmount.Value)).ToString().PadLeft(9, '0'));
+            myStringBuilder.Append(FormatDecimal(taxReport.EquipmentInputsTaxAmount, 9, includeSign:true, truncateDecimal:true));
 
             //InputLinesCount
-            myStringBuilder.Append(taxReport.InputLinesCount == null ? "000000000" : taxReport.InputLinesCount.Value.ToString().PadLeft(9, '0'));
+            myStringBuilder.Append(FormatInt(taxReport.InputLinesCount, 9));
 
             //AmountForPayRefund
-            myStringBuilder.Append(taxReport.AmountForPayRefund >= 0 ? '+' : '-');
-            myStringBuilder.Append(Math.Abs(Math.Truncate(taxReport.AmountForPayRefund.Value)).ToString().PadLeft(11, '0'));
+            myStringBuilder.Append(FormatDecimal(taxReport.AmountForPayRefund, 11, includeSign:true, truncateDecimal:true));
 
             myStringBuilder.AppendLine();
 
@@ -581,24 +574,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append("O");
                 line += lineList.LineTypeCode;
 
-                if (lineList.VatNumber == null) lineList.VatNumber = "0";
-                if (lineList.VatNumber.Length > 9) lineList.VatNumber = lineList.VatNumber.Substring(0, 9);
-                myStringBuilder.Append(lineList.VatNumber.PadLeft(9, '0'));
+                myStringBuilder.Append(FormatString(lineList.VatNumber, 9, paddingDigit: '0'));
 
                 myStringBuilder.Append(lineList.ReferenceDate.Value.ToString("yyyyMMdd"));
 
-                if (lineList.ReferecneGroup.Length > 4) lineList.ReferecneGroup = lineList.ReferecneGroup.Substring(0, 4);
-                myStringBuilder.Append(lineList.ReferecneGroup.PadLeft(4, '0'));
+                myStringBuilder.Append(FormatString(lineList.ReferecneGroup, 4, paddingDigit: '0'));
 
-                if (lineList.Reference.Length > 9) lineList.Reference = lineList.Reference.Substring(0, 9);
-                myStringBuilder.Append(lineList.Reference.PadLeft(9, '0'));
+                myStringBuilder.Append(FormatString(lineList.Reference, 9, paddingDigit: '0'));
 
                 //VatAmount
-                myStringBuilder.Append(Math.Abs(Math.Truncate(lineList.VatAmount.Value)).ToString().PadLeft(9, '0'));
+                myStringBuilder.Append(FormatDecimal(lineList.VatAmount, 9, includeSign: false, truncateDecimal: true));
 
                 //VatableInvoiceAmount
-                myStringBuilder.Append(lineList.VatableInvoiceAmount >= 0 ? '+' : '-');
-                myStringBuilder.Append(Math.Abs(Math.Truncate(lineList.VatableInvoiceAmount.Value)).ToString().PadLeft(10, '0'));
+                myStringBuilder.Append(FormatDecimal(lineList.VatableInvoiceAmount, 10, includeSign: true, truncateDecimal: true));
 
 
                 myStringBuilder.Append("000000000");
@@ -658,6 +646,9 @@ namespace Logitude.Accounting.BL.CoreBL
             // user
 			User loggedUser = GetLoggedUser(tenant);
 			DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("PCN874", tenant);
+
+            if (docType == null)
+                throw new ApplicationException("There is no document type for this report!");
 
 			string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
 			DocumentsFilingPM document = new DocumentsFilingPM()
@@ -726,6 +717,89 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
             return loggedContact;
+        }
+
+        private static string FormatDecimal(decimal? number, int wordSize, bool includeSign=false, bool truncateDecimal=true)
+        {
+            string result = "";
+
+            //catch nulls
+            if (!number.HasValue)
+            {
+                number = 0;
+            }
+
+            //big size
+            if(number.ToString().Length > wordSize)
+            {
+                throw new ApplicationException("There is a number with big value!");
+            }
+
+            //sign
+            if (includeSign)
+            {
+                result += number >= 0 ? '+' : '-';
+            }
+
+            //truncate
+            if (truncateDecimal)
+            {
+                number = Math.Truncate(number.Value);
+            }
+
+            //abs
+            number = Math.Abs(number.Value);
+
+            //padding left
+            result += number.ToString().PadLeft(wordSize, '0');
+
+            return result;
+        }
+        private static string FormatInt(int? number, int wordSize)
+        {
+            string result = "";
+
+            //catch nulls
+            if (!number.HasValue)
+            {
+                number = 0;
+            }
+
+            //big size
+            if (number.ToString().Length > wordSize)
+            {
+                throw new ApplicationException("There is a number with big value!");
+            }
+
+            //abs
+            number = Math.Abs(number.Value);
+
+            //padding left
+            result += number.ToString().PadLeft(wordSize, '0');
+
+            return result;
+        }
+        private static string FormatString(string str, int wordSize, char paddingDigit = ' ')
+        {
+            string result = "";
+
+            //catch nulls
+            if (string.IsNullOrEmpty(str))
+            {
+                str = paddingDigit.ToString();
+            }
+
+            //big size
+            if (str.Length > wordSize)
+            {
+                str = str.Substring(0, wordSize);
+                //throw new ApplicationException("There is a string with big value!");
+            }
+
+            //padding left
+            result += str.PadLeft(wordSize, paddingDigit);
+
+            return result;
         }
 
     }

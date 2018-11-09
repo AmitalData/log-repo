@@ -185,7 +185,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Profact3.3.1.0.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\packages\Profact3.3.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>

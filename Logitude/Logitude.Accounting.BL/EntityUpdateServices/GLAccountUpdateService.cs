@@ -34,6 +34,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class GLAccountUpdateService : EntityUpdateService<GLAccount, GLAccountPM, EntityPM>
     {
+        private class GLAccountRepositoryPriv : GLAccountRepository
+        {
+
+            public GLAccountRepositoryPriv(IAccountingContext mainContext)
+                : base(mainContext)
+            { }
+        }
+        protected override void AddContext(GLAccountPM myTEntityPM)
+        {
+            base.AddContext(myTEntityPM);
+            this.Repository = new GLAccountRepositoryPriv((IAccountingContext)this.MainContext);
+        }
+
         protected override void OnCreating(GLAccountPM entityPM, EntityPM entityParentPM)
 
         {

@@ -464,9 +464,9 @@ export class GLAccountPM {
     public set IsEquipmentVendor(newValue: boolean) { if (this.isEquipmentVendor != newValue) { this.isEquipmentVendor = newValue; this.MarkAsDirty("IsEquipmentVendor"); } }
        
 	 
-    private isPartOfDeductionReport: boolean;
-    public get IsPartOfDeductionReport() { return this.isPartOfDeductionReport; }
-    public set IsPartOfDeductionReport(newValue: boolean) { if (this.isPartOfDeductionReport != newValue) { this.isPartOfDeductionReport = newValue; this.MarkAsDirty("IsPartOfDeductionReport"); } }
+    private excludeFromDeductionReport: boolean;
+    public get ExcludeFromDeductionReport() { return this.excludeFromDeductionReport; }
+    public set ExcludeFromDeductionReport(newValue: boolean) { if (this.excludeFromDeductionReport != newValue) { this.excludeFromDeductionReport = newValue; this.MarkAsDirty("ExcludeFromDeductionReport"); } }
        
 	 
     private parent: string;
@@ -497,6 +497,11 @@ export class GLAccountPM {
     private deductionTypeEnglishName: string;
     public get DeductionTypeEnglishName() { return this.deductionTypeEnglishName; }
     public set DeductionTypeEnglishName(newValue: string) { if (this.deductionTypeEnglishName != newValue) { this.deductionTypeEnglishName = newValue; this.MarkAsDirty("DeductionTypeEnglishName"); } }
+       
+	 
+    private totalOpenChequesInLocalCur: number;
+    public get TotalOpenChequesInLocalCur() { return this.totalOpenChequesInLocalCur; }
+    public set TotalOpenChequesInLocalCur(newValue: number) { if (this.totalOpenChequesInLocalCur != newValue) { this.totalOpenChequesInLocalCur = newValue; this.MarkAsDirty("TotalOpenChequesInLocalCur"); } }
        
 	 
 

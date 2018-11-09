@@ -313,6 +313,47 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public CustomFieldClass Field20 { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field21 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field22 { get; set; }
+         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field23 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field24 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field25 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field26 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field27 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field28 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field29 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field30 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field31 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field32 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field33 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field34 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field35 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field36 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field37 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field38 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field39 { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public CustomFieldClass Field40 { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SearchFields { get; set; }
         public bool IsSecured { get; set; }
 
@@ -1955,6 +1996,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool DontAddToImportersQueue { get; set; }
 
+        public bool DontAddToForwarderQueue { get; set; }
+
         public string ForwarderPartnerId { get; set; }
 
         public DateTime? OperationalCloseDate { get; set; }
@@ -2197,5 +2240,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? FinalDeliveryETD { get; set; }
         public DateTime? FinalDeliveryATA { get; set; }
         public DateTime? FinalDeliveryATD { get; set; }
+
+        public string DeclarationWCOXml { get; set; }
     }
 }
