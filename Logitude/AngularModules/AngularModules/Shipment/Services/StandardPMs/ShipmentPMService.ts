@@ -24,7 +24,8 @@ import {ConsoleShipmentPM} from '../../EntityPMs/ConsoleShipmentPM';
 import {ShipmentPickUpPM} from '../../EntityPMs/ShipmentPickUpPM';
 import {ShipmentDeliveryPM} from '../../EntityPMs/ShipmentDeliveryPM';
 import {ShipmentPickUpDeliveryPackagePM} from '../../EntityPMs/ShipmentPickUpDeliveryPackagePM';
-import {ShipmentPackageItemPM} from '../../EntityPMs/ShipmentPackageItemPM';
+import { ShipmentPackageItemPM } from '../../EntityPMs/ShipmentPackageItemPM';
+import { ShipmentPackageHarmonizePM } from '../../EntityPMs/ShipmentPackageHarmonizePM';
 import {ShipmentFollowUpPM} from '../../EntityPMs/ShipmentFollowUpPM';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {ShipmentValidator} from '../../Validators/ShipmentValidator';
@@ -521,9 +522,19 @@ export class ShipmentPMService {
                 var myShipmentPackage = entityPM.ShipmentPackages[item];
                 var newPackage: ShipmentPackagePM = this.clone(myShipmentPackage);
                 newPackage.InsideShipmentPackages = [];
+                newPackage.ShipmentPackageItems = [];
+                newPackage.ShipmentPackageHarmonizes = [];
 
                 for (var k in myShipmentPackage.InsideShipmentPackages) {
                     newPackage.InsideShipmentPackages.push(this.clone(myShipmentPackage.InsideShipmentPackages[k]));
+                }
+
+                for (var k1 in myShipmentPackage.ShipmentPackageItems) {
+                    newPackage.ShipmentPackageItems.push(this.clone(myShipmentPackage.ShipmentPackageItems[k1]));
+                }
+
+                for (var k3 in myShipmentPackage.ShipmentPackageHarmonizes) {
+                    newPackage.ShipmentPackageHarmonizes.push(this.clone(myShipmentPackage.ShipmentPackageHarmonizes[k3]));
                 }
 
                 entityPM.OldEntityPM.ShipmentPackages.push(newPackage);
@@ -692,20 +703,25 @@ export class ShipmentPMService {
 
                 this.MapInsideShipmentPackages(itemPM, itemJson, mapParent);
                 itemPM.OldEntityPM.InsideShipmentPackages = [];
-                for (var k in itemPM.InsideShipmentPackages) {
-                    var clonedInside = this.clone(itemPM.InsideShipmentPackages[k]);
+                for (var k1 in itemPM.InsideShipmentPackages) {
+                    var clonedInside = this.clone(itemPM.InsideShipmentPackages[k1]);
                     itemPM.OldEntityPM.InsideShipmentPackages.push(clonedInside); // clone old inside packages//
                 }
 
 
                 this.MapShipmentPackageItems(itemPM, itemJson, mapParent);
                 itemPM.OldEntityPM.ShipmentPackageItems = [];
-                for (var k in itemPM.ShipmentPackageItems) {
-                    var clonedInside = this.clone(itemPM.ShipmentPackageItems[k]);
+                for (var k2 in itemPM.ShipmentPackageItems) {
+                    var clonedInside = this.clone(itemPM.ShipmentPackageItems[k2]);
                     itemPM.OldEntityPM.ShipmentPackageItems.push(clonedInside); // clone old inside packages//
                 }
 
-               
+                this.MapShipmentPackageHarmonizes(itemPM, itemJson, mapParent);
+                itemPM.OldEntityPM.ShipmentPackageHarmonizes = [];
+                for (var k3 in itemPM.ShipmentPackageHarmonizes) {
+                    var clonedInside = this.clone(itemPM.ShipmentPackageHarmonizes[k3]);
+                    itemPM.OldEntityPM.ShipmentPackageHarmonizes.push(clonedInside);
+                }
             }
 
             else {
@@ -721,6 +737,7 @@ export class ShipmentPMService {
 
                 this.MapInsideShipmentPackages(itemPM, itemJson, mapParent);
                 this.MapShipmentPackageItems(itemPM, itemJson, mapParent);
+                this.MapShipmentPackageHarmonizes(itemPM, itemJson, mapParent);
                 itemPM.EntityParentPM = null;
                 itemPM.OldEntityPM = null;
             }
@@ -751,8 +768,11 @@ export class ShipmentPMService {
                       
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
+
                         this.MapInsideShipmentPackages(deletedPM, oldpackageJson, mapParent);
                         this.MapShipmentPackageItems(deletedPM, oldpackageJson, mapParent);
+                        this.MapShipmentPackageHarmonizes(deletedPM, oldpackageJson, mapParent);
+
                         deletedPM.OldEntityPM = null;
                         entityPM.ShipmentPackages.push(deletedPM);
 
@@ -1871,6 +1891,89 @@ export class ShipmentPMService {
 
 
     }
+    MapShipmentPackageHarmonizes(entityPM: ShipmentPackagePM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldCollection: ShipmentPackageHarmonizePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldCollection = entityPM.OldEntityPM.ShipmentPackageHarmonizes;
+        }
+
+        entityPM.ShipmentPackageHarmonizes = new Array<ShipmentPackageHarmonizePM>();
+
+        for (var pack in jsonPM.ShipmentPackageHarmonizes) {
+
+            var itemJson = jsonPM.ShipmentPackageHarmonizes[pack];
+            if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
+                continue;
+            }
+
+            var itemPM: ShipmentPackageHarmonizePM;
+            if (mapParent) { // get mapping
+                itemPM = new ShipmentPackageHarmonizePM(entityPM);
+            }
+
+            else {// update mapping             
+                itemPM = new ShipmentPackageHarmonizePM(null);
+            }
+
+            var pmKeys = Object.keys(itemJson);
+            for (var key in pmKeys) {
+
+                if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties") {
+                    continue;
+                }
+
+                var property = pmKeys[key];
+                itemPM[property] = itemJson[property];
+            }
+
+
+            if (mapParent) {
+                itemPM.UniqueKey = Guid.newGuid();
+                itemPM.ChangeSetOp = "None";
+                itemJson.ChangeSetOp = "None";
+                itemPM.OldEntityPM = this.clone(itemPM);
+
+            }
+
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    itemPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (itemPM.UniqueKey) {
+                        if (itemJson.IsDirty) {
+                            itemPM.ChangeSetOp = "Update";
+                        }
+                    }
+
+                    else {
+                        itemPM.ChangeSetOp = "Insert";
+                    }
+                }
+
+                itemPM.OldEntityPM = null;
+                itemPM.EntityParentPM = null;
+            }
+            itemPM.IsDirty = false;
+            entityPM.ShipmentPackageHarmonizes.push(itemPM);
+        }
+
+        if (oldCollection) {
+
+            for (var pack in oldCollection) {
+                if (entityPM.ShipmentPackageHarmonizes.filter(p => p.UniqueKey === oldCollection[pack].UniqueKey).length === 0) {
+                    if (oldCollection[pack]) {
+                        oldCollection[pack].ChangeSetOp = "Delete";
+                        oldCollection[pack].OldEntityPM = null;
+                        entityPM.ShipmentPackageHarmonizes.push(oldCollection[pack]);
+                    }
+                }
+            }
+        }
+
+
+    }
 
     ArchiveShipments(Ids: string[]) {
 
@@ -1912,7 +2015,6 @@ export class ShipmentPMService {
         );
 
     }
-
     ArchiveAllShipments(filters: ApiQueryFilters) {
         
         var urlparameters = '/GetArchiveAllShipments?';
@@ -1957,7 +2059,6 @@ export class ShipmentPMService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
     GetTop100ShipmentIds(filters: ApiQueryFilters) {
 
         var urlparameters = '/GetTop100ShipmentIds?';
@@ -2003,7 +2104,6 @@ export class ShipmentPMService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
     RemoveShipmentTasks(id: string) {
 
         var authHeader = new Headers();
@@ -2046,5 +2146,4 @@ export class ShipmentPMService {
             })
         */
     }
-
 }

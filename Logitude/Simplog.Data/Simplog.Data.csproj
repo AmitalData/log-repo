@@ -550,6 +550,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentContainerStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsMessageType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRADocumentTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRASIStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\INTTRAStatusMap.cs" />
@@ -560,6 +561,7 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentContainerStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsMessageTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsTransmissionMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ShipmentPackageHarmonizeMap.cs" />
     <Compile Include="ShipmentsModel\Repositories\FBLStockRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\FeaturePackageTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HybridTenantStateRepository.cs" />
@@ -970,6 +972,7 @@
     <Compile Include="ShipmentsModel\Repositories\ShipmentContainerStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsMessageTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentCustomsTransmissionRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ShipmentPackageHarmonizeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\SpecialServicesTypeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\StateRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TarrifChargeRepository.cs" />

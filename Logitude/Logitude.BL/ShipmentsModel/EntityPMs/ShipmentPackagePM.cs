@@ -210,6 +210,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? OnCarriageATA { get; set; }
 
+
         // public string CustomerId { get; set; }
         //public string DirectionId { get; set; }
         //public string MainCarriageCarrierNumber { get; set; }
@@ -339,5 +340,45 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ECRTransportModeCode { get; set; }
+
+        public bool IsMultiHarmonize { get; set; }
+
+        private List<ShipmentPackageHarmonizePM> shipmentPackageHarmonizes;
+        [Composition]
+        [Include]
+        [Association("ShipmentPackageShipmentPackageHarmonize", "Id", "PackageId")]
+        public virtual List<ShipmentPackageHarmonizePM> ShipmentPackageHarmonizes
+        {
+            get
+            {
+                if (shipmentPackageHarmonizes == null)
+                {
+                    shipmentPackageHarmonizes = new List<ShipmentPackageHarmonizePM>();
+                }
+
+                return shipmentPackageHarmonizes;
+            }
+
+            set { shipmentPackageHarmonizes = value; }
+        }
+
+        private List<ShipmentPackageHarmonizePM> shipmentPackageHarmonizesChangeSet;
+        public List<ShipmentPackageHarmonizePM> ShipmentPackageHarmonizesChangeSet
+        {
+            get
+            {
+                if (shipmentPackageHarmonizesChangeSet == null)
+                {
+                    shipmentPackageHarmonizesChangeSet = new List<ShipmentPackageHarmonizePM>();
+                }
+
+                return shipmentPackageHarmonizesChangeSet;
+            }
+
+            set
+            {
+                shipmentPackageHarmonizesChangeSet = value;
+            }
+        }
     }
 }

@@ -438,7 +438,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                 case "Status":
                     {
-                        #region
                         iMessageTenantError = "Unknown message tenant";
 
                         if (this.iMessage_Status != null)
@@ -452,6 +451,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 if (iMessageDetails != null)
                                 {
                                     INTTRA_Status.EquipmentDetailsType equipmentDetails = iMessageDetails.EquipmentDetails;
+
                                     if (equipmentDetails != null)
                                     {
                                         if (equipmentDetails.EquipmentIdentifier != null)
@@ -462,17 +462,65 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                                                 if (!string.IsNullOrEmpty(iContainerNumber))
                                                 {
-                                                    List<Shipment> iShipments = (from d in myShipmentContext.Shipments where d.ShipmentNumber == this.ShipmentNumber select d).ToList();
-
-                                                    foreach (Shipment item in iShipments)
+                                                    if (!string.IsNullOrEmpty(this.ShipmentNumber))
                                                     {
-                                                        ShipmentPackage iPackage = (from d in myShipmentContext.ShipmentPackages where d.ShipmentId == item.Id && d.ContainerNumber == iContainerNumber select d).FirstOrDefault();
+                                                        #region By Shipment number
+                                                        List<Shipment> iShipments = (from d in myShipmentContext.Shipments where d.ShipmentNumber == this.ShipmentNumber select d).ToList();
 
-                                                        if (iPackage != null)
+                                                        foreach (Shipment item in iShipments)
                                                         {
-                                                            iMessageTenant = item.Tenant;
-                                                            break;
+                                                            ShipmentPackage iPackage = (from d in myShipmentContext.ShipmentPackages where d.ShipmentId == item.Id && d.ContainerNumber == iContainerNumber select d).FirstOrDefault();
+
+                                                            if (iPackage != null)
+                                                            {
+                                                                iMessageTenant = item.Tenant;
+                                                                break;
+                                                            }
                                                         }
+                                                        #endregion
+                                                    }
+
+                                                    else
+                                                    {
+                                                        #region By Booking number
+                                                        INTTRA_Status.MessagePropertiesType iMessageProperties = iMessageBody.MessageProperties;
+
+                                                        if (iMessageProperties != null)
+                                                        {
+                                                            if (iMessageProperties.ReferenceInformation != null)
+                                                            {
+                                                                INTTRA_Status.MessagePropertiesTypeReferenceInformation iReferenceInformation = iMessageProperties.ReferenceInformation.Where(d => d.ReferenceType == INTTRA_Status.ReferenceInformationTypeReferenceType.BookingNumber).FirstOrDefault();
+                                                                if (iReferenceInformation != null)
+                                                                {
+                                                                    string iBookingNumber = iReferenceInformation.Value;
+
+                                                                    if (!string.IsNullOrEmpty(iBookingNumber))
+                                                                    {
+                                                                        List<ShipmentMasterData> iShipmentMasterDatas = (from d in myShipmentContext.ShipmentMasterDatas where d.BookingConfirmationNumber == iBookingNumber select d).ToList();
+
+                                                                        foreach (ShipmentMasterData item in iShipmentMasterDatas)
+                                                                        {
+                                                                            ShipmentPackage iPackage = (from d in myShipmentContext.ShipmentPackages where d.ShipmentId == item.Id && d.ContainerNumber == iContainerNumber select d).FirstOrDefault();
+
+                                                                            if (iPackage != null)
+                                                                            {
+                                                                                iMessageTenant = item.Tenant;
+
+                                                                                Shipment iShipment = (from d in myShipmentContext.Shipments where d.Id == item.Id select d).FirstOrDefault();
+
+                                                                                if (iShipment != null)
+                                                                                {
+                                                                                    this.ShipmentNumber = iShipment.ShipmentNumber;
+                                                                                }
+
+                                                                                break;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        #endregion
                                                     }
                                                 }
                                             }
@@ -481,7 +529,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 }
                             }
                         }
-                        #endregion
+
                         break;
                     }
 

@@ -124,6 +124,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DeliveryTransportModeCode).HasColumnName("DeliveryTransportModeCode");
             this.Property(t => t.ECRTransportModeCode).HasColumnName("ECRTransportModeCode");
             this.Property(t => t.FlashPointTemperatureUnitCode).HasColumnName("FlashPointTemperatureUnitCode");
+            this.Property(t => t.IsMultiHarmonize).HasColumnName("IsMultiHarmonize");
 
             this.HasOptional(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
             this.HasOptional(t => t.PackageType).WithMany().HasForeignKey(d => d.PackageTypeId);

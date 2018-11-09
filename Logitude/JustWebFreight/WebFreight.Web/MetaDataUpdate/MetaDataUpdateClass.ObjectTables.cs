@@ -323,6 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate
         ObjectTable DWHSettingObject;
         ObjectTable DWObjectTableObject;
         ObjectTable DWObjectFieldObject;
+        ObjectTable ShipmentPackageHarmonizeObject;
         #endregion
 
         #region Create All Object Tables
@@ -6525,7 +6526,6 @@ namespace WebFreight.Web.MetaDataUpdate
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
             #endregion
 
-
             #region DocumentFilingBackupBatchObject
             DocumentFilingBackupBatchObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -6540,11 +6540,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 EnableSecurity = true,
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
             #endregion
-
-
-        
-
-
+      
             #region DocumentFilingBackupSetting
             DocumentFilingBackupSettingObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -6680,8 +6676,23 @@ namespace WebFreight.Web.MetaDataUpdate
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 
             #endregion
-   
 
+            #region ShipmentPackageHarmonize
+            ShipmentPackageHarmonizeObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
+            {
+                DefaultText = "Shipment Package Harmonize",
+                ObjectTableName = "ShipmentPackageHarmonize",
+                ObjectTablePlural = "Shipment Package Harmonizes",
+                ObjectTableSingular = "Shipment Package Harmonize",
+                DBTableName = "ShipmentPackageHarmonizes",
+                Tenant = 0,
+                KeyPropertyPath = "Id",
+                IsMain = false,
+                IsComposition = true,
+                EnableSecurity = true,
+                ObjectTableTypeCode = "BR",
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
+            #endregion
 
             this.ObjectContext.SaveChanges();
         }
