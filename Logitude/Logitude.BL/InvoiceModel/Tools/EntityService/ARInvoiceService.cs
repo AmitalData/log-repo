@@ -1838,21 +1838,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
 
                             /* Minimum */
-                            if (myReceivable.QuoteSaleMinPrice != null)
-                            {
-                                if (TotalAmount == null)
-                                {
-                                    TotalAmount = myReceivable.QuoteSaleMinPrice;
-                                }
+                            //if (myReceivable.QuoteSaleMinPrice != null)
+                            //{
+                            //    if (TotalAmount == null)
+                            //    {
+                            //        TotalAmount = myReceivable.QuoteSaleMinPrice;
+                            //    }
 
-                                else
-                                {
-                                    if (TotalAmount < myReceivable.QuoteSaleMinPrice)
-                                    {
-                                        TotalAmount = myReceivable.QuoteSaleMinPrice;
-                                    }
-                                }
-                            }
+                            //    else
+                            //    {
+                            //        if (TotalAmount < myReceivable.QuoteSaleMinPrice)
+                            //        {
+                            //            TotalAmount = myReceivable.QuoteSaleMinPrice;
+                            //        }
+                            //    }
+                            //}
                         }
 
                         myReceivable.TotalAmount = MethodHelper.Round(TotalAmount, 2);

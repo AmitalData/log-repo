@@ -1598,7 +1598,6 @@
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Groupage\GroupageComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Groupage\GroupageContainerComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Payables\PayablesComponent.html" />
-    <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Payables\PayablesComponent.js" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Profit\ProfitComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Quotes\QuotesComponent.html" />
     <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Tariffs\TariffsComponent.html" />
@@ -6107,7 +6106,6 @@
     <Content Include="tsconfig.spec.json" />
     <Content Include="tsconfig.app-Cust.json" />
     <Content Include="Infrastructure\Components\StimulsoftComponent\IDAutomationCMC7n10.ttf" />
-    <Content Include="ShipmentModules\ShipmentTabs\Components\Windows\Payables\PayablesComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleGeneralComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleMoreDetailsTabComponent.js.map" />

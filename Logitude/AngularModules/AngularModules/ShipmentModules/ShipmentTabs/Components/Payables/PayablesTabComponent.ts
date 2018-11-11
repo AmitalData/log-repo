@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, OnDestroy}  from '@angular/core';
+import {Component, OnInit, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentPayablePM} from '../../../../Shipment/EntityPMs/ShipmentPayablePM';
@@ -24,7 +24,6 @@ import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
 import {UserListService} from '../../../../Common/Services/StandardLists/UserListService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
@@ -34,7 +33,6 @@ import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
 import {QuotePMService} from '../../../../Quote/Services/StandardPMs/QuotePMService';
 import {CardList} from '../../../../Common/EntityLists/CardList';
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
-import {NewAPInvoiceComponent} from '../../../../InvoiceModules/APInvoice/Components/NewEntity/NewAPInvoiceComponent'; 
 
 @Component({
     moduleId: module.id,
@@ -1263,9 +1261,9 @@ export class ShipmentPayableItem extends BaseComponent {
             culculatedAmount = AppTool.Round(this.EntityPM.Quantity * this.EntityPM.UnitPrice, 2);
         }
 
-        if (this.EntityPM.QuoteCostMinPrice != null) {
+        if (this.EntityPM.QuoteCostMinAmount != null) {
 
-            if (culculatedAmount == null || culculatedAmount < this.EntityPM.QuoteCostMinPrice) {
+            if (culculatedAmount == null || culculatedAmount < this.EntityPM.QuoteCostMinAmount) {
                 isVisible = true;
             }   
         }
@@ -2010,14 +2008,14 @@ export class ShipmentPayableItem extends BaseComponent {
         }
 
         /* Minimum From Quote */
-        if (this.EntityPM.QuoteCostMinPrice != null) {
+        if (this.EntityPM.QuoteCostMinAmount != null) {
             if (myResult == null) {
-                myResult = this.EntityPM.QuoteCostMinPrice;
+                myResult = this.EntityPM.QuoteCostMinAmount;
             }
 
             else {
-                if (myResult < this.EntityPM.QuoteCostMinPrice) {
-                    myResult = this.EntityPM.QuoteCostMinPrice;
+                if (myResult < this.EntityPM.QuoteCostMinAmount) {
+                    myResult = this.EntityPM.QuoteCostMinAmount;
                 }
             }
         }
@@ -2716,14 +2714,14 @@ export class InsidePayableViewModel {
         }
 
         /* Minimum From Quote */
-        if (this.EntityPM.QuoteCostMinPrice != null) {
+        if (this.EntityPM.QuoteCostMinAmount != null) {
             if (myResult == null) {
-                myResult = this.EntityPM.QuoteCostMinPrice;
+                myResult = this.EntityPM.QuoteCostMinAmount;
             }
 
             else {
-                if (myResult < this.EntityPM.QuoteCostMinPrice) {
-                    myResult = this.EntityPM.QuoteCostMinPrice;
+                if (myResult < this.EntityPM.QuoteCostMinAmount) {
+                    myResult = this.EntityPM.QuoteCostMinAmount;
                 }
             }
         }

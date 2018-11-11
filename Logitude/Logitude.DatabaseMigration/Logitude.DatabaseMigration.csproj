@@ -262,6 +262,14 @@
     <Compile Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.Designer.cs">
       <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811110910092_AddMinMaxModofication.cs" />
+    <Compile Include="Migrations\201811110910092_AddMinMaxModofication.Designer.cs">
+      <DependentUpon>201811110910092_AddMinMaxModofication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811111132436_AddMinMaxModofication2.cs" />
+    <Compile Include="Migrations\201811111132436_AddMinMaxModofication2.Designer.cs">
+      <DependentUpon>201811111132436_AddMinMaxModofication2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -402,6 +410,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.resx">
       <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811110910092_AddMinMaxModofication.resx">
+      <DependentUpon>201811110910092_AddMinMaxModofication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811111132436_AddMinMaxModofication2.resx">
+      <DependentUpon>201811111132436_AddMinMaxModofication2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -500,21 +500,21 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                         myTotalAmount = item.CostQuantity * item.CostUnitPrice;
                     }
                 }
-            }
 
-            /* From Tarrifs */
-            if (this.isLCLQuote)
-            {
-                if (item.CostMinAmount != null || item.CostMaxAmount != null)
+                /* MinMax */
+                if (myTotalAmount != null)
                 {
-                    if (myTotalAmount != null)
+                    if (item.CostMinAmount != null)
                     {
                         if (myTotalAmount < item.CostMinAmount)
                         {
                             myTotalAmount = item.CostMinAmount;
                         }
+                    }
 
-                        else if (myTotalAmount > item.CostMaxAmount)
+                    if (item.CostMaxAmount != null)
+                    {
+                        if (myTotalAmount > item.CostMaxAmount)
                         {
                             myTotalAmount = item.CostMaxAmount;
                         }
@@ -599,6 +599,26 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     else
                     {
                         myTotalAmount = item.SaleQuantity * item.SaleUnitPrice;
+                    }
+                }
+
+                /* MinMax */
+                if (myTotalAmount != null)
+                {
+                    if (item.SaleMinAmount != null)
+                    {
+                        if (myTotalAmount < item.SaleMinAmount)
+                        {
+                            myTotalAmount = item.SaleMinAmount;
+                        }
+                    }
+
+                    if (item.SaleMaxAmount != null)
+                    {
+                        if (myTotalAmount > item.SaleMaxAmount)
+                        {
+                            myTotalAmount = item.SaleMaxAmount;
+                        }
                     }
                 }
             }
