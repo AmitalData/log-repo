@@ -54,5 +54,9 @@ namespace WebFreight.Web.DataProviders
         public string ContainersNumbersAndTypesArray { get; set; }
         public DateTime? LastSharedEventDate { get; set; }
         public string LastSharedEventNote { get; set; }
+        public string BookingNumber { get; set; }
+        public string Consignee { get; set; }
+        public int? PackagesCount { get; set; }
+        public int? InsidePackagesCount { get; set; }
     }
 }
