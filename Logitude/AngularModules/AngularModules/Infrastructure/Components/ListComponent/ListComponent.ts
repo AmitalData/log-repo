@@ -487,6 +487,10 @@ export class ListComponent implements OnInit, AfterViewInit {
             TommorowDate.setUTCHours(0, 0, 0, 0);
             var TodayDate = new Date();
             TodayDate.setUTCHours(0, 0, 0, 0);
+            var TodayCustomDate = new Date();
+            TodayCustomDate.setHours(0, 0, 0, 0);
+            var TodayEndDate = new Date();
+            TodayEndDate.setHours(23, 59, 59, 0);
             var YesterdayDate = DateTool.AddDays((new Date()), -1);
             YesterdayDate.setUTCHours(0, 0, 0, 0);
             var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
@@ -503,8 +507,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             LastYearToDate.setUTCHours(0, 0, 0, 0);
 
             if (filters.TextValue == "Today") {
-                filters.TextValue = TodayDate;
-                filters.TextValue1 = TommorowDate;
+                filters.TextValue = TodayCustomDate;
+                filters.TextValue1 = TodayEndDate;
                 filters.MyName = "Today";
             }
             else if (filters.TextValue == "Yesterday") {
