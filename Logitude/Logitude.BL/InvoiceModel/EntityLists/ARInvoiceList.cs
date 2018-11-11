@@ -129,6 +129,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public Decimal? TotalAmountForTaxReport { get; set; }
         public Decimal? TotaVatableAmountForTaxReport { get; set; }
         public Decimal? TotalVAT { get; set; }
+        public DateTime? SATApprovalDate { get; set; }
 
 
         #region Ayman: it is a very bad code to add properties this way

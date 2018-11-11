@@ -262,6 +262,10 @@
     <Compile Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.Designer.cs">
       <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs" />
+    <Compile Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.Designer.cs">
+      <DependentUpon>201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201811111058568_AddCategory1and2toDWObjectFields_Rabaia.cs" />
     <Compile Include="Migrations\201811111058568_AddCategory1and2toDWObjectFields_Rabaia.Designer.cs">
       <DependentUpon>201811111058568_AddCategory1and2toDWObjectFields_Rabaia.cs</DependentUpon>
@@ -406,6 +410,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.resx">
       <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.resx">
+      <DependentUpon>201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811111058568_AddCategory1and2toDWObjectFields_Rabaia.resx">
       <DependentUpon>201811111058568_AddCategory1and2toDWObjectFields_Rabaia.cs</DependentUpon>

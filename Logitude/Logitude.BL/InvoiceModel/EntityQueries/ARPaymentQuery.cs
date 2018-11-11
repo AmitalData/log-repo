@@ -103,6 +103,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        CadPago = a.CadPago,
                                        CertPago = a.CertPago,
                                        SelloPago = a.SelloPago,
+                                       SATApprovalDate = a.SATApprovalDate,
                                    }).FirstOrDefault();
 
 
@@ -198,7 +199,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        CadPago = a.CadPago,
                                        CertPago = a.CertPago,
                                        SelloPago = a.SelloPago,
-
+                                       SATApprovalDate = a.SATApprovalDate,
                                    }).FirstOrDefault();
 
             Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
@@ -292,6 +293,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    CadPago = entity.CadPago,
                                                    CertPago = entity.CertPago,
                                                    SelloPago = entity.SelloPago,
+                                                   SATApprovalDate = entity.SATApprovalDate,
 
                                                };
             return query2;
@@ -368,6 +370,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             CadPago = entity.CadPago,
                             CertPago = entity.CertPago,
                             SelloPago = entity.SelloPago,
+                            SATApprovalDate = entity.SATApprovalDate,
 
                         };
 
@@ -445,6 +448,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             CadPago = entity.CadPago,
                             CertPago = entity.CertPago,
                             SelloPago = entity.SelloPago,
+                            SATApprovalDate = entity.SATApprovalDate,
                         };
 
             return query;
@@ -507,6 +511,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          CadPago = a.CadPago,
                                          CertPago = a.CertPago,
                                          SelloPago = a.SelloPago,
+                                         SATApprovalDate = a.SATApprovalDate,
 
                                      }).FirstOrDefault();
 
