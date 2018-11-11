@@ -102,7 +102,8 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
         new XElement("itemNo", c.ITEMNO),
         new XElement("itemName", c.NAMEENG),
         new XElement("pratCode", c.PRATID),
-        new XElement("originCountryCode", c.ORIGINCOUNTRY)
+        new XElement("originCountryCode", c.ORIGINCOUNTRY),
+        new XElement("unitId", c.UNITID)
    )
    )
 ));

@@ -1402,11 +1402,10 @@ implements OnDestroy
     }
 
     private GetMamanPUR() {
-        //SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", SessionLocator.Tenant)
             .subscribe(response => {
-                //SessionLocator.CurrentSession.StopBusyIndicator();
+                this.IsMamanEnabled = false;
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
                     this.IsMamanEnabled = true;
                 }
