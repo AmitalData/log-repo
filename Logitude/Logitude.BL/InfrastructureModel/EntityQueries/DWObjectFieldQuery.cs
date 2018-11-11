@@ -47,7 +47,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
-                        DisplayInQueryBuilder = a.DisplayInQueryBuilder
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2
                     }).FirstOrDefault();
         }
 
@@ -71,7 +73,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
-                        DisplayInQueryBuilder = a.DisplayInQueryBuilder
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2
                     }
                   );
         }
@@ -95,7 +99,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
-                        DisplayInQueryBuilder = a.DisplayInQueryBuilder
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2
                     }
                   );
         }
@@ -121,6 +127,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 AggregationTypeCode = a.AggregationTypeCode,
                                 DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                                 DisplayName = a.Name,
+                                Category1 = a.Category1,
+                                Category2 = a.Category2
 
                             }
                   );
@@ -147,6 +155,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          AggregationTypeCode = a.AggregationTypeCode,
                                          DisplayInQueryBuilder = a.DisplayInQueryBuilder,
                                          DisplayName = a.DWObjectTableCode.Replace("DIM_","") + "." + a.Name,
+                                         Category1 = a.Category1,
+                                         Category2 = a.Category2
                                      }
                   ).ToList();
                 FinalList = FinalList.Concat(TempInnerList).ToList();
@@ -171,7 +181,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         MaxLength = a.MaxLength,
                         MinLength = a.MinLength,
                         IsPrimaryKey = a.IsPrimaryKey,
-                        DisplayInQueryBuilder = a.DisplayInQueryBuilder
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2
                     }).FirstOrDefault();
         }
 
@@ -194,7 +206,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
-                        DisplayInQueryBuilder = a.DisplayInQueryBuilder
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2
                     });
         }
 
@@ -215,7 +229,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        MinLength = a.MinLength,
                                                        IsMeasurement = a.IsMeasurement,
                                                        AggregationTypeCode = a.AggregationTypeCode,
-                                                       DisplayInQueryBuilder = a.DisplayInQueryBuilder
+                                                       DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                                                       Category1 = a.Category1,
+                                                       Category2 = a.Category2
                                                    };
 
             return result;

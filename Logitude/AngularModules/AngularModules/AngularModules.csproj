@@ -553,6 +553,7 @@
     <Content Include="InvoiceModules\ARPayment\Components\EditTabs\EditMultiCurrency.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\ARPaymentTransferTemplate.html" />
     <Content Include="InvoiceModules\ARPayment\Components\NewEntity\NewARPaymentComponent.html" />
+    <Content Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
@@ -1421,12 +1422,14 @@
     <TypeScriptCompile Include="InvoiceModules\Transfer\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="InvoiceModules\Transfer\ModuleTransfer.ts" />
     <TypeScriptCompile Include="Invoice\EntityLists\AccountingPaymentMethodList.ts" />
+    <TypeScriptCompile Include="Invoice\EntityLists\APPaymentTransferStatusList.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMCustomCode\APInvoicePMCustomCode.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMCustomCode\ARPaymentPMCustomCode.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\ARPaymentPMInitService.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\BankAccountLitePMInitService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\AccountingPaymentMethodListService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.ts" />
+    <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentTransferStatusListService.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditFCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditLCLChargeComponent.ts" />
     <TypeScriptCompile Include="QuoteModules\QuoteCharges\Components\AddEditPriceStepComponent.ts" />
@@ -2938,6 +2941,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureComputingPartner\Components\QueryColumnsComponents\btnComponentComputingPartnerEdit.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />

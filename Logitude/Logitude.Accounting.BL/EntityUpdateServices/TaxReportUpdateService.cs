@@ -27,7 +27,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.Id = IdCounter.GetNumber("TaxReport", entityPM.Tenant);
             entityPM.CreateDate = DateTime.Now;
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-            entityPM.LastUpdateDate = DateTime.Now;
+            DateTime date = entityPM.TaxReportMonth.AddMonths(1);
+          
+        
+            entityPM.LastUpdateDate = new DateTime(date.Year, date.Month, 15);
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
@@ -37,6 +40,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.StatusCode = "P";
             entityPM.ProcessStartDate = DateTime.Now;
             entityPM.TaxReportNumber = entityPM.TaxReportMonth.Month.ToString() + entityPM.Year.ToString();
+            entityPM.IsNew = true;
             Validate(entityPM);
         }
 
@@ -131,7 +135,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 entityPM.EquipmentInputsTaxAmount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
 
                 //updates
-                entityPM.LastUpdateDate = DateTime.Now;
+                if (!entityPM.IsNew)
+                {
+                    entityPM.LastUpdateDate = DateTime.Now;
+                }
                 entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
 
             }
