@@ -393,7 +393,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "Equals",
                 ListPropertyPath = "LastSharedEventNotes",
                 PMPropertyPath = "LastSharedEventNotes",
-                DisplayInEntityVariables = false,
+                DisplayInEntityVariables = true,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()

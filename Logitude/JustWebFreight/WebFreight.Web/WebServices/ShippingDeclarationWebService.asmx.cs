@@ -2596,7 +2596,6 @@ namespace WebFreight.Web.WebServices
                     packageline.MethodUsed = package.MethodUsed;
                     packageline.ContainerNumber = package.ContainerNumber;
                     packageline.SealNumber = package.ShipperSeal;
-                    packageline.HSCode = package.Harmonize;
                     packageline.CeficClass = package.CeficClass;
                     packageline.IMDGCode = package.IMDGCode;
                     packageline.KemlerCode = package.KelmerCode;
@@ -2610,6 +2609,30 @@ namespace WebFreight.Web.WebServices
                     packageline.NetWeight = package.Weight - package.Tare;
                     packageline.Description = package.Description;
                     packageline.PackageTare = package.Tare != null ? String.Format("{0:0,0.00}", package.Tare.Value) : null;
+
+                    #region Harmonize
+                    if (package.IsMultiHarmonize)
+                    {
+                        List<ShipmentPackageHarmonize> allHarmonizes = shipmentsContext.ShipmentPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                        foreach (ShipmentPackageHarmonize itemHarmonize in allHarmonizes)
+                        {
+                            if (string.IsNullOrEmpty(packageline.HSCode))
+                            {
+                                packageline.HSCode = package.Harmonize;
+                            }
+
+                            else
+                            {
+                                packageline.HSCode += "," + package.Harmonize;
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        packageline.HSCode = package.Harmonize;
+                    }
+                    #endregion
 
                     if (package.Length != null && package.Width != null && package.Height != null)
                     {
