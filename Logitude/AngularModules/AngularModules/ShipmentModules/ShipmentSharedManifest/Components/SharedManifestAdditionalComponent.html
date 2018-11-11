@@ -936,6 +936,807 @@
                                                             <td style="vertical-align:top"></td>
                                                         </tr>
 
+
+
+
+                                                        <!--PickUp-- Area-->
+
+                                                        <tr style="height:30px">
+                                                            <td style="vertical-align:top;">
+                                                                <div style="width:100%;border-right:1px solid #E4E3E1;border-left:1px solid #E4E3E1;border-bottom:1px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                                                    <table style="border :none;">
+
+
+                                                                        <tr style="height:25px">
+                                                                            <td>
+
+
+                                                                                <div style="background-color:#EDEDED;height:25px;border-top:1px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black;vertical-align:central">
+
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width:5px;"><div style="width:5px"></div></td>
+
+                                                                                            <td style="width:20px">
+                                                                                                <img style="height:20px;width:20px;margin-left:5px;" class="LeftCenter" src="./Images/ArrowDown.png" [hidden]="!HidePickupDetailsArea" (click)="imgHidePickupDetailsAreaClicked()" />
+                                                                                                <img style="height:20px;width:20px;margin-left:5px;" class="LeftCenter" src="./Images/ArrowUp.png" [hidden]="HidePickupDetailsArea" (click)="imgHidePickupDetailsAreaClicked()" />
+                                                                                            </td>
+
+                                                                                            <td style="width:100px;"><div style="color:#1B90CB;font-size:13px;text-indent:10px">Pickup Details</div></td>
+                                                                                            <td><div></div></td>
+                                                                                        </tr>
+                                                                                    </table>
+
+                                                                                </div>
+
+                                                                            </td>
+
+
+
+                                                                        </tr>
+
+                                                                   
+                                                                        <!--[hidden]="HideGeneralDetailsArea"-->
+                                                                        <tr [hidden]="HidePickupDetailsArea" style="height:180px" class="SectionBody">
+                                                                            <td *ngIf="!IsNoPickupDetailsFound">
+
+                                                                                <table *ngIf="ManifestSL.ShipmentPickUp">
+
+                                                                                    <tr style="height:5px;"><td colspan="2"><div style="height:5px"></div></td></tr>
+                                                                                    <tr class="ScrollViewer">
+                                                                                        <td style="width:5px;"><div style="width:5px"></div></td>
+
+                                                                                        <td class="ScrollContent">
+                                                                                            <div>
+
+                                                                                                <table>
+
+                                                                                                    <tr>
+
+                                                                                                        <!--Agent Side-->
+
+                                                                                                        <td style="width:50%">
+
+                                                                                                            <table>
+
+                                                                                                                <tr style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+                                                                                                                <tr style="height:20px">
+                                                                                                                    <td colspan="3">
+                                                                                                                        <div style="text-align:center;font-size:12px;margin-left:45px">Agent's Side</div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.FromPartner" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+                                                                                                                <!--FromPartner-->
+                                                                                                                <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.FromPartner">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">From Partner</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+
+                                                                                                                        <div class="MediaFill" style="border:1px solid #AAAAAA;vertical-align:central;border-radius:3px;height:22px;text-indent:5px">
+                                                                                                                            <div class="TextTrimming" style="vertical-align:central;margin-top:2px;margin-right:5px;font-size:11px;color:#45494A">{{ManifestSL.ShipmentPickUp.FromPartner.EnglishName}}</div>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+
+                                                                                                                <!--From Address-->
+
+                                                                                                                <!--FromZipCode-->
+
+
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.FromAddressZipCode" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+
+                                                                                                                <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.FromAddressZipCode">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">From Zip Code</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+
+                                                                                                                        <div class="MediaFill" style="border:1px solid #AAAAAA;vertical-align:central;border-radius:3px;height:22px;text-indent:5px">
+                                                                                                                            <div class="TextTrimming" style="vertical-align:central;margin-top:2px;margin-right:5px;font-size:11px;color:#45494A">{{ManifestSL.ShipmentPickUp.FromAddressZipCode}}</div>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+
+                                                                                                                <!--FromCity-->
+
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.FromAddressCity" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+
+                                                                                                                <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.FromAddressCity">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">From City</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+
+                                                                                                                        <div class="MediaFill" style="border:1px solid #AAAAAA;vertical-align:central;border-radius:3px;height:22px;text-indent:5px">
+                                                                                                                            <div class="TextTrimming" style="vertical-align:central;margin-top:2px;margin-right:5px;font-size:11px;color:#45494A">{{ManifestSL.ShipmentPickUp.FromAddressCity}}</div>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+                                                                                                                <!--FromCountry-->
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.FromAddressCountryName" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+
+                                                                                                           
+                                                                                                                <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.FromAddressCountryName">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">From Country</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+
+                                                                                                                        <div class="MediaFill" style="border:1px solid #AAAAAA;vertical-align:central;border-radius:3px;height:22px;text-indent:5px">
+                                                                                                                            <div class="TextTrimming" style="vertical-align:central;margin-top:2px;margin-right:5px;font-size:11px;color:#45494A">{{ManifestSL.ShipmentPickUp.FromAddressCountryName}}</div>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+
+
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.ToPartner" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+                                                                                                                <!--ToPartner-->
+                                                                                                                <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.ToPartner">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">To Partner</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+
+                                                                                                                        <div class="MediaFill" style="border:1px solid #AAAAAA;vertical-align:central;border-radius:3px;height:22px;text-indent:5px">
+                                                                                                                            <div class="TextTrimming" style="vertical-align:central;margin-top:2px;margin-right:5px;font-size:11px;color:#45494A">{{ManifestSL.ShipmentPickUp.ToPartner.EnglishName}}</div>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+
+                                                                                                                <!--To Address-->
+                                                                                                                <!--ToZipCode-->
+
+
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.ToAddressZipCode" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+
+                                                                                                                <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.ToAddressZipCode">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">To Zip Code</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+
+                                                                                                                        <div class="MediaFill" style="border:1px solid #AAAAAA;vertical-align:central;border-radius:3px;height:22px;text-indent:5px">
+                                                                                                                            <div class="TextTrimming" style="vertical-align:central;margin-top:2px;margin-right:5px;font-size:11px;color:#45494A">{{ManifestSL.ShipmentPickUp.ToAddressZipCode}}</div>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+
+                                                                                                                <!--ToCity-->
+
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.ToAddressCity" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+
+                                                                                                                <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.ToAddressCity">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">To City</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+
+                                                                                                                        <div class="MediaFill" style="border:1px solid #AAAAAA;vertical-align:central;border-radius:3px;height:22px;text-indent:5px">
+                                                                                                                            <div class="TextTrimming" style="vertical-align:central;margin-top:2px;margin-right:5px;font-size:11px;color:#45494A">{{ManifestSL.ShipmentPickUp.ToAddressCity}}</div>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+                                                                                                                <!--ToCountry-->
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.ToAddressCountryName" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+
+
+                                                                                                                <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.ToAddressCountryName">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">To Country</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+
+                                                                                                                        <div class="MediaFill" style="border:1px solid #AAAAAA;vertical-align:central;border-radius:3px;height:22px;text-indent:5px">
+                                                                                                                            <div class="TextTrimming" style="vertical-align:central;margin-top:2px;margin-right:5px;font-size:11px;color:#45494A">{{ManifestSL.ShipmentPickUp.ToAddressCountryName}}</div>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+
+
+                                                                                                                <!--ETD Date-->
+
+
+
+
+                                                                                                                <tr *ngIf="AgentShipmentPickUpMainCarriageETD" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+
+
+
+                                                                                                                <tr *ngIf="AgentShipmentPickUpMainCarriageETD" class="FormFieldRow">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">ETD</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+                                                                                                                        <div style="pointer-events:none">
+                                                                                                                            <table>
+                                                                                                                                <tr>
+                                                                                                                                    <td style="width: 117px;">
+
+                                                                                                                                        <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'AgentShipmentPickUpMainCarriageETD'" [DataContext]="DataContext"></LogDatePicker>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 5px;">
+                                                                                                                                        <div></div>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 117px;">
+                                                                                                                                        <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'AgentShipmentPickUpMainCarriageETD'" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                                                                                                    </td>
+                                                                                                                                    <td><div></div></td>
+                                                                                                                                </tr>
+                                                                                                                            </table>
+                                                                                                                        </div>
+
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+
+                                                                                                                <!--ETA Date-->
+
+
+
+                                                                                                                <tr *ngIf="AgentShipmentPickUpMainCarriageETA" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+                                                                                                                <tr *ngIf="AgentShipmentPickUpMainCarriageETA" class="FormFieldRow">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">ETA</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+                                                                                                                        <div style="pointer-events:none">
+                                                                                                                            <table>
+                                                                                                                                <tr>
+                                                                                                                                    <td style="width: 117px;">
+                                                                                                                                        <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'AgentShipmentPickUpMainCarriageETA'" [DataContext]="DataContext"></LogDatePicker>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 5px;">
+                                                                                                                                        <div></div>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 117px;">
+                                                                                                                                        <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'AgentShipmentPickUpMainCarriageETA'" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                                                                                                                    </td>
+                                                                                                                                    <td><div></div></td>
+                                                                                                                                </tr>
+                                                                                                                            </table>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+
+                                                                                                                <!--ATA Date-->
+
+                                                                                                                <tr *ngIf="AgentShipmentPickUpMainCarriageATA" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+                                                                                                                <tr  *ngIf="AgentShipmentPickUpMainCarriageATA" class="FormFieldRow">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">ATA</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+                                                                                                                        <div style="pointer-events:none">
+                                                                                                                            <table>
+                                                                                                                                <tr>
+                                                                                                                                    <td style="width: 117px;">
+
+                                                                                                                                        <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'AgentShipmentPickUpMainCarriageATA'" [DataContext]="DataContext"></LogDatePicker>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 5px;">
+                                                                                                                                        <div></div>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 117px;">
+
+                                                                                                                                        <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'AgentShipmentPickUpMainCarriageATA'" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+
+                                                                                                                                    </td>
+                                                                                                                                    <td><div></div></td>
+                                                                                                                                </tr>
+                                                                                                                            </table>
+                                                                                                                            </div>
+
+</td>
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+
+                                                                                                                <!--ATD Date-->
+
+
+                                                                                                                <tr *ngIf="AgentShipmentPickUpMainCarriageATD" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+                                                                                                                <tr *ngIf="AgentShipmentPickUpMainCarriageATD" class="FormFieldRow">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">ATD</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+                                                                                                                        <div style="pointer-events:none">
+                                                                                                                            <table>
+                                                                                                                                <tr>
+                                                                                                                                    <td style="width: 117px;">
+
+                                                                                                                                        <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'AgentShipmentPickUpMainCarriageATD'" [DataContext]="DataContext"></LogDatePicker>
+
+
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 5px;">
+                                                                                                                                        <div></div>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 117px;">
+
+                                                                                                                                        <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'AgentShipmentPickUpMainCarriageATD'" [DataContext]="DataContext" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+
+
+                                                                                                                                    </td>
+
+                                                                                                                                    <td><div></div></td>
+                                                                                                                                </tr>
+                                                                                                                            </table>
+                                                                                                                        </div>
+
+                                                                                                                    </td>
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+
+                                                                                                                <tr style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+
+                                                                                                                <!--Transport Mode-->
+                                                                                                                <tr class="FormFieldRow">
+
+                                                                                                                    <td style="width:10px"></td>
+
+
+                                                                                                                    <td style="width:152px;">
+                                                                                                                        <div style="width:152px;float:left">Transport Mode</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="height:22px">
+
+                                                                                                                        <div class="MediaFill" style="border:1px solid #AAAAAA;vertical-align:central;border-radius:3px;height:22px;text-indent:5px">
+                                                                                                                            <div class="TextTrimming" style="vertical-align:central;margin-top:2px;margin-right:5px;font-size:11px;color:#45494A">{{ManifestSL.ShipmentPickUp.TransportModeName}}</div>
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+
+                                                                                                                    <td style="width:25px;text-align:center">   </td>
+
+                                                                                                                </tr>
+
+
+                                                                                                                <tr style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+                                                                                                                <tr><td colspan="4"></td></tr>
+
+                                                                                                            </table>
+
+                                                                                                        </td>
+
+                                                                                                        <td style="width:20px"><div style="width:20px;"></div></td>
+
+
+                                                                                                        <!--OurSide-->
+                                                                                                        <td style="width:50%;">
+
+                                                                                                            <table *ngIf="OurSideShipmentPickUp">
+
+                                                                                                                <tr style="height:5px">
+                                                                                                                    <td colspan="5"></td>
+                                                                                                                </tr>
+
+                                                                                                                <tr style="height:20px">
+                                                                                                                    <td colspan="5">
+                                                                                                                        <div style="text-align:center;font-size:12px;margin-left:45px">Our Side</div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <!--FromPartner-->
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.FromPartner" style="height:5px">
+                                                                                                                    <td colspan="5"></td>
+                                                                                                                </tr>
+
+                                                                                                                <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.FromPartner">
+
+                                                                                                                    <td style="width:10px"></td>
+                                                                                                                    <td style="width:20px">
+                                                                                                                        <span *ngIf="OurSideShipmentPickUp.FromPartnerCardId" style="width:20px;height:20px">
+                                                                                                                            <img style="margin-top:-2px;float:right" src="./Images/CheckBoxIcon.png" />
+                                                                                                                        </span>
+
+                                                                                                                        <div *ngIf="!OurSideShipmentPickUp.FromPartnerCardId" style="width: 20px;">
+                                                                                                                            <div style="width: 7px; height: 7px;margin-top:-2px;margin-left:7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                                                                                                        </div>
+
+
+                                                                                                                    </td>
+                                                                                                                    <td style="width:100px;">
+                                                                                                                        <div style="width:100px;float:right">From Partner</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width:215px;">
+                                                                                                                        <div class="MediaFill FormFieldRow">
+
+                                                                                                                            <LogLov [ObjectFieldName]="'FromPartnerCardId'"
+                                                                                                                                    [SelectedValue]="OurSideShipmentPickUp.FromPartnerCardId"
+                                                                                                                                    [ObjectTableName]="'ShipmentPickUpDelivery'"
+                                                                                                                                    [DataContext]="OurSideShipmentPickUp"
+                                                                                                                                    [LookUpTableName]="'Card'"
+                                                                                                                                    [DisplayMemberPath]="'EnglishName'"
+                                                                                                                                    [DependencyFilter1Value]="'CS,CG,AG,WH'"
+                                                                                                                                    [HideLastColumn]="true"
+                                                                                                                                    [DependencyFilter1IsList]="true">
+                                                                                                                            </LogLov>
+
+
+
+
+
+                                                                                                                        </div>
+
+
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width:40px;text-align:center">
+                                                                                                                 
+                                                                                                                        <div tabindex="0" class="ToggleButton" style="width:34px;float:right;">
+                                                                                                                            <table>
+                                                                                                                                <tr>
+                                                                                                                                    <td style="width: 2px;">
+                                                                                                                                        <div></div>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td class="TextTrimming" style="text-shadow: 1px 1px white; color: #3a3d58; padding: 0px 2px;">
+                                                                                                                                        <img src="./Images/Buttons/Add.png" />
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 3px;">
+                                                                                                                                        <div></div>
+                                                                                                                                    </td>
+
+                                                                                                                                    <td style="width: 10px;">
+                                                                                                                                        <img class="LeftCenter" src="Images/ToggleIcon.png" />
+                                                                                                                                    </td>
+                                                                                                                                </tr>
+                                                                                                                            </table>
+
+                                                                                                                            <div class="ToggleButtonMenu" style="top:22px;">
+                                                                                                                                <div> <button (click)="AddShipmentPickUpDeliveryPartnerClicked('Agent','F','Pickup')">Agent</button>     </div>
+                                                                                                                                <div> <button (click)="AddShipmentPickUpDeliveryPartnerClicked('CustomAgent','F','Pickup')">CustomAgent</button>     </div>
+                                                                                                                                <div> <button (click)="AddShipmentPickUpDeliveryPartnerClicked('Customer','F','Pickup')">Customer</button>     </div>
+                                                                                                                                <div> <button (click)="AddShipmentPickUpDeliveryPartnerClicked('Warehouse','F','Pickup')">Warehouse</button>     </div>
+
+                                                                                                                              
+                                                                                                                            </div>
+
+                                                                                                                     
+                                                                                                                        </div>
+                                                                                                                 
+
+                                                                                                                    </td>
+
+                                                                                                                   
+
+                                                                                                                    
+
+
+                                                                                                                </tr>
+
+                                                                                                                <!--From Address-->
+                                                                                                                <!--FromZipCode-->
+
+
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.FromAddressZipCode" style="height:5px">
+                                                                                                                    <td colspan="5"></td>
+                                                                                                                </tr>
+
+
+                                                                                                                <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.FromAddressZipCode">
+                                                                                                                    <td style="width:10px"></td>
+                                                                                                                    <td style="width:20px">
+                                                                         
+                                                                                                                    </td>
+                                                                                                                    <td style="width:100px;">
+                                                                                                                        <div style="width:100px;float:right">From Zip Code</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width:215px;">
+                                                                                                                        <div class="MediaFill FormFieldRow">
+
+                                                                                                                            <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'FromAddressZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="OurSideShipmentPickUp" [HideColumns]="true"></LogTextBox>
+
+                                                                                                                        </div>
+
+
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width:40px;text-align:center">      </td>
+
+                                                                                                                </tr>
+
+
+                                                                                                                <!--FromCity-->
+
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.FromAddressCity" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+                                                                                                                 <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.FromAddressCity">
+
+                                                                                                                    <td style="width:10px"></td>
+                                                                                                                     <td style="width:20px">
+                                                                                                                         <span *ngIf="OurSideShipmentPickUp.FromAddressCity" style="width:20px;height:20px">
+                                                                                                                             <img style="margin-top:-2px;float:right" src="./Images/CheckBoxIcon.png" />
+                                                                                                                         </span>
+
+                                                                                                                         <div *ngIf="!OurSideShipmentPickUp.FromAddressCity" style="width: 20px;">
+                                                                                                                             <div style="width: 7px; height: 7px;margin-top:-2px;margin-left:7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                                                                                                         </div>
+
+
+                                                                                                                     </td>
+                                                                                                                    <td style="width:100px;">
+                                                                                                                        <div style="width:100px;float:right">From City</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width:215px;">
+                                                                                                                        <div class="MediaFill FormFieldRow">
+                                                                                                                            <LogTextBox   [NoObjectField]="true" [ObjectFieldName]="'FromAddressCity'" [Text]="OurSideShipmentPickUp.FromAddressCity"[DataContext]="OurSideShipmentPickUp" [HideColumns]="true"></LogTextBox>
+                          
+                                                                                                                        </div>
+
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width:40px;text-align:center">
+                                                                                                                        <Hyperlink (click)="SelectCityCommand('F' , 'Pickup')">Select</Hyperlink>
+                                                                                                                         
+                                                                                                                    </td>
+
+                                                                                                                </tr>
+
+
+                                                                                                                         <!--FromCountry-->
+                                                                                                                <tr *ngIf="ManifestSL.ShipmentPickUp.FromAddressCountryName" style="height:5px">
+                                                                                                                    <td colspan="4"></td>
+                                                                                                                </tr>
+
+
+                                                                                                           
+                                                                                                                <tr class="FormFieldRow" *ngIf="ManifestSL.ShipmentPickUp.FromAddressCountryName">
+                                                                                                                    <td style="width:10px"></td>
+                                                                                                                    <td style="width:20px">
+                                                                                                                        <span *ngIf="OurSideShipmentPickUp.FromAddressCountryId" style="width:20px;height:20px">
+                                                                                                                            <img style="margin-top:-2px;float:right" src="./Images/CheckBoxIcon.png" />
+                                                                                                                        </span>
+
+                                                                                                                        <div *ngIf="!OurSideShipmentPickUp.FromAddressCountryId" style="width: 20px;">
+                                                                                                                            <div style="width: 7px; height: 7px;margin-top:-2px;margin-left:7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                                                                                                        </div>
+
+
+                                                                                                                    </td>
+                                                                                                                    <td style="width:100px;">
+                                                                                                                        <div style="width:100px;float:right">From Country</div>
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width:215px;">
+                                                                                                                        <div class="MediaFill FormFieldRow">
+                                                                                                                            <LogLov [ObjectFieldName]="'FromAddressCountryId'"
+                                                                                                                                    [SelectedValue]="OurSideShipmentPickUp.FromAddressCountryId"
+                                                                                                                                    [DataContext]="OurSideShipmentPickUp"
+                                                                                                                                    [NoObjectField]="true"
+                                                                                                                                    [HideLastColumn]="true"
+                                                                                                                                    [LookUpTableName]="'Country'">
+                                                                                                                            </LogLov>
+
+                                                                                                                        </div>
+
+                                                                                                                    </td>
+
+                                                                                                                    <td style="width:40px;text-align:center">
+                                                                                                                        <div class="GreenAddButton" (mousedown)="AddCountryClick('F','Pickup')"></div>
+
+                                                                                                                    </td>
+                                                                                                                </tr>
+
+
+
+                                                                                                                <tr style="height:5px">
+                                                                                                                    <td colspan="5"></td>
+                                                                                                                </tr>
+
+                                                                                                                <tr><td colspan="5"></td></tr>
+
+                                                                                                            </table>
+
+                                                                                                        </td>
+                                                                                                    </tr>
+
+
+
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </td>
+
+
+                                                                                        <td style="width:5px;"><div style="width:5px"></div></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                            <td style="vertical-align:top" *ngIf="IsNoPickupDetailsFound"><div class="NoDataTextStyle" style="text-align:center;margin-top:15px;vertical-align:top">No Shipment Pickup Details Found</div></td>
+                                                                        </tr>
+
+
+                                                                    </table>
+
+
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+
+
+                                                        <tr style="height:20px;">
+                                                            <td style="vertical-align:top"></td>
+                                                        </tr>
+
+
+
                                                         <!--General Details  Area-->
                                                         <tr style="height:30px">
                                                             <td style="vertical-align:top;">

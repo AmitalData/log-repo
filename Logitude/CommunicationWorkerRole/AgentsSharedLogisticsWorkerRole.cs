@@ -112,11 +112,8 @@ namespace CommunicationWorkerRole
                                                     Contact systemContact = contactRepository.GetSingleContactByEmail("system@tenant" + manifestSL.DestinationAgentTenant + ".com", manifestSL.DestinationAgentTenant, false);
 
 
-                                                    //if (manifestSL.FromPort != null)
-                                                    //{
+                                               
                                                     Port fromPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.MainCarriageFromPort.CountryCode + manifestSL.MainCarriageFromPort.Code, manifestSL.DestinationAgentTenant, portRepository);
-                                                    //}
-
                                                     Port toPort = null;
                                                     if (manifestSL.FinalDistenationPort != null)
                                                     {
@@ -125,6 +122,33 @@ namespace CommunicationWorkerRole
                                                     else
                                                     {
                                                         toPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.MainCarriageToPort.CountryCode + manifestSL.MainCarriageToPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                    }
+
+                                                    if (manifestSL.ShipmentPickUp != null)
+                                                    {
+                                                        if (manifestSL.ShipmentPickUp.FromPort != null)
+                                                        {
+                                                            Port pickUpFromPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentPickUp.FromPort.CountryCode + manifestSL.ShipmentPickUp.FromPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                            manifestSL.ShipmentPickUp.FromPortId = pickUpFromPort!=null ? pickUpFromPort.Id:null;
+                                                        }
+                                                        if (manifestSL.ShipmentPickUp.ToPort != null)
+                                                        {
+                                                            Port pickUpToPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentPickUp.ToPort.CountryCode + manifestSL.ShipmentPickUp.ToPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                            manifestSL.ShipmentPickUp.ToPortId = pickUpToPort != null ? pickUpToPort.Id : null;
+                                                        }
+                                                    }
+                                                    if (manifestSL.ShipmentDelivery != null)
+                                                    {
+                                                        if (manifestSL.ShipmentDelivery.FromPort != null)
+                                                        {
+                                                            Port pickUpFromPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentDelivery.FromPort.CountryCode + manifestSL.ShipmentDelivery.FromPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                            manifestSL.ShipmentDelivery.FromPortId = pickUpFromPort != null ? pickUpFromPort.Id : null;
+                                                        }
+                                                        if (manifestSL.ShipmentDelivery.ToPort != null)
+                                                        {
+                                                            Port pickUpToPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.ShipmentDelivery.ToPort.CountryCode + manifestSL.ShipmentDelivery.ToPort.Code, manifestSL.DestinationAgentTenant, portRepository);
+                                                            manifestSL.ShipmentDelivery.ToPortId = pickUpToPort != null ? pickUpToPort.Id : null;
+                                                        }
                                                     }
 
                                                     AgentSharedManifestService service = new AgentSharedManifestService(agentContext, manifestSL.DestinationAgentTenant);
