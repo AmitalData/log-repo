@@ -437,7 +437,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 int tenant = authToken.Tenant;
 
                 var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanService();
-                var response = courierGWMessageECTHRDataMamanService.SendWebAPI(declarationId, tenant);
+                var response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)

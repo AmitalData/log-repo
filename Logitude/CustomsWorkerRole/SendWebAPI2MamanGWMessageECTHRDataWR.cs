@@ -70,8 +70,14 @@ namespace CustomsWorkerRole
 
         }
         bool _OnStartDone = false;
-        private IQueueService _IQueueService;
+        private DbQueueService _IQueueService;
         private ICommonDataContext _ICommonDataContext;
+        private ICommonDataContext _Context;
+        private CommunicationLogRepository _CommunicationLogRep;
+        private int _Tenant;
+        private string _CommunicationLogId;
+        private CommunicationLog _WaitingCommLog;
+        private QueueResponse _ReceivedBrokeredMessage;
 
         public override bool OnStart()
         {
@@ -79,7 +85,7 @@ namespace CustomsWorkerRole
             {
                 if (_OnStartDone) return true;
                 _OnStartDone = true;
-                string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment(SBQueueNames.SendGWMessageECTHRData2MamanQ.ToString()); //Amitalqueue
+                
 
 
                 var myClass = this.GetType().Name;
@@ -133,17 +139,17 @@ namespace CustomsWorkerRole
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    var receivedMessage = _IQueueService.Receive();
+                    _ReceivedBrokeredMessage = _IQueueService.Receive();
 
-                    if (receivedMessage == null || String.IsNullOrWhiteSpace(receivedMessage.MessageId))
+                    if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
                     {
                         //Thread.Sleep(TimeSpan.FromSeconds(5));
                         Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
                         break;
                     }
 
-
-                    ProcessMessage_Db(receivedMessage);
+                    
+                    ProccessReceivedMessage();
                     scope.Complete();
                 }
             }
@@ -152,220 +158,93 @@ namespace CustomsWorkerRole
 
 
 
-
-        private void ProcessMessage_Db(QueueResponse queueResponse)
+        public void ProccessReceivedMessage()
         {
-            int tenant = 0;
+
+            LogMessagingUtil.Instance.Clear();
+
+            _CommunicationLogId = _ReceivedBrokeredMessage.MessageValues["CommunicationLogId"].ToString();
+            int.TryParse(_ReceivedBrokeredMessage.MessageValues["Tenant"].ToString(), out _Tenant);
+
+            LogMessagingUtil.Instance
+                .AppendLine("ProccessReceivedMessage()")
+                .AppendLine("QUEUEMessageId:"+_ReceivedBrokeredMessage.MessageId)
+                .AppendLine("RetryNumber:" + _ReceivedBrokeredMessage.RetryNumber)
+                .AppendLine("CommunicationLogId:"+_CommunicationLogId)
+                .AppendLine(",Tenant"+_Tenant);
+
+            _Context = CommonDataContext.GetContext(_Tenant);
+            _CommunicationLogRep = new CommunicationLogRepository(_Context);
+            
+            
+            _WaitingCommLog = _CommunicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
+            if (_WaitingCommLog == null)
+            {
+
+                var myEx = new Exception("GetSingleCommunicationLog(_CommunicationLogId:" + _CommunicationLogId + " , _Tenant:" + _Tenant.ToString() + ") == null");
+                ExceptionHandler.HandleException(myEx, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
+                _IQueueService.Complete(); //Stop Try !!
+                return;
+            }
+
+            
+            
             try
             {
-
-                if (queueResponse.MessageId != null)
+                if (_ReceivedBrokeredMessage.RetryNumber < 5)
                 {
 
-                    string communicationLogId = queueResponse.MessageValues["CommunicationLogId"].ToString();
-                    int.TryParse(queueResponse.MessageValues["Tenant"].ToString(), out tenant);
-                    _ICommonDataContext = CommonDataContext.GetContext(tenant);
-                    CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(_ICommonDataContext);
-                    CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
+                    LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
+                    
+                    PostWebAPIAnalyzeAndSaveCommDone();//if failed throw exception
 
-                    bool processEnebled = true;
-
-                    if (processEnebled)
-                    {
-                        if (cl != null)
-                        {
-                            if (cl.CommunicationStatusTypeCode == "D")
-                            {
-                                _IQueueService.Complete();
-                            }
-                            else
-                            {
-                                SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
-                                _IQueueService.Complete();
-
-                                LogDoneItemInMemory();
-
-                            }
-                        }
-                        else
-                        {
-                            if (queueResponse.RetryNumber <= 11)
-                            {
-                                if (queueResponse.RetryNumber < 3)
-                                {
-                                    _IQueueService.Delay(new TimeSpan(0, 0, 0, 1));
-                                }
-
-                                if (queueResponse.RetryNumber >= 3 && queueResponse.RetryNumber <= 5)
-                                {
-                                    _IQueueService.Delay(new TimeSpan(0, 0, 0, 5));
-                                }
-
-                                if (queueResponse.RetryNumber > 5 && queueResponse.RetryNumber <= 10)
-                                {
-
-                                    _IQueueService.Delay(new TimeSpan(0, 0, 0, 10));
-                                    AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + queueResponse.RetryNumber
-                                        + ",at utc time:" + DateTime.UtcNow + ",at FTPCommunicationLogQueue worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                                    Thread.Sleep(3000);
-                                }
-                                if (queueResponse.RetryNumber == 11)
-                                {
-
-                                    _IQueueService.Delay(new TimeSpan(0, 0, 2, 0));
-                                    AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + queueResponse.RetryNumber
-                                    + ",at utc time:" + DateTime.UtcNow + ",at FTPCommunicationLog worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                                    Thread.Sleep(10000);
-
-                                }
-                            }
-                            else
-                            {
-                                _IQueueService.Complete();
-                                AzureLog.SaveLogsInStorage("couldn't find communication log and the message is completed: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + queueResponse.RetryNumber
-                                    + ",at utc time:" + DateTime.UtcNow + ",at FTPCommunicationLog worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                            }
-                        }
-                    }
+                    _IQueueService.Complete();
+                    this.LogDoneItemInMemory();
                 }
-
-
-
-            }
-            catch (Exception ex)
-            {
-
-
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "SendWebAPI2MamanGWMessageECTHRDataWR : ProcessMessage() Method", null);
-                Thread.Sleep(10000);
-            }
-        }
-
-        private void SendCommunicationLog(string communicationLogId, int tenant, CommunicationLog cl, CommunicationLogRepository communicationLogRep)
-        {
-            try
-            {
-                if (cl.Retries < 5)
-                {
-                    PostWebAPI(cl, communicationLogRep);
-                }
-
                 else
                 {
-                    if (_ICommonDataContext != null)
-                    {
-                        cl.CommunicationStatusTypeCode = "F";
-                        cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
-                        communicationLogRep.Update(cl);
-                        communicationLogRep.SubmitChanges();
-                    }
-
+                    LogMessagingUtil.Instance.AppendLine("RetryNumber >= 5>>> Failed ");
+                    _WaitingCommLog.CommunicationStatusTypeCode = "F";
+                    _IQueueService.Complete();
                 }
-            }
+                LogMessagingUtil.Instance.AppendLine(":" + _WaitingCommLog.CommunicationStatusTypeCode);
+                _CommunicationLogRep.Update(_WaitingCommLog);
+                _CommunicationLogRep.SubmitChanges();
+                                
 
+                
+            }
             catch (Exception exc)
             {
-                ExceptionHandler.HandleException(exc, DateTime.Now, tenant, "", "WorkerRole", "", null);
+                ExceptionHandler.HandleException(exc, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
+                _WaitingCommLog.Retries++;
+                
 
-                //Change number of retries
-
-                cl.Retries++;
-                cl.ExceptionMessage = exc.Message;
-                if (exc.InnerException != null)
-                {
-                    cl.ExceptionMessage = cl.ExceptionMessage + Environment.NewLine + exc.InnerException;
-                }
-                if (exc.StackTrace != null)
-                {
-                    cl.ExceptionMessage = cl.ExceptionMessage + Environment.NewLine + "Stack trace: " + exc.StackTrace;
-                }
-                SetNextTryDateTime(cl);
-                if (_ICommonDataContext != null)
-                {
-                    communicationLogRep.Update(cl);
-                    communicationLogRep.SubmitChanges();
-                }
-                throw;
+                
+                var s = "ProccessReceivedMessage()Exception:" + exc.Message;
+                _WaitingCommLog.ExceptionMessage = s.Substring(0, Math.Min(7999, s.Length));
+                _CommunicationLogRep.Update(_WaitingCommLog);
+                _CommunicationLogRep.SubmitChanges();
+                _IQueueService.Delay(TimeSpan.FromMinutes(1));
+                //throw;
 
             }
         }
-        private void SetNextTryDateTime(CommunicationLog cl)
-        {
-            string newLog = null;
-            DateTime date = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
-            DateTime dateUtc = DateTime.UtcNow;
-            switch (cl.Retries)
-            {
-                case 1:
-                case 2:
-                    {
-                        cl.NextTryDateTime = date.AddSeconds(1);
-                        cl.NextTryDateTimeUTC = dateUtc.AddSeconds(1);
-                        _IQueueService.Delay(new TimeSpan(0, 0, 0, 1));
 
-                        break;
-                    }
-                case 3:
-                case 4:
-                    {
-                        cl.NextTryDateTime = date.AddSeconds(5);
-                        cl.NextTryDateTimeUTC = dateUtc.AddSeconds(5);
-                        _IQueueService.Delay(new TimeSpan(0, 0, 0, 5));
-                        break;
-                    }
-                case 5:
-                    {
-                        cl.NextTryDateTime = date.AddMinutes(1);
-                        cl.NextTryDateTimeUTC = dateUtc.AddMinutes(1);
-                        _IQueueService.Delay(new TimeSpan(0, 0, 1));
-                        break;
-                    }
-                case 6:
-                case 7:
-                case 8:
-                    {
-                        cl.NextTryDateTime = date.AddMinutes(2);
-                        cl.NextTryDateTimeUTC = dateUtc.AddMinutes(2);
-                        _IQueueService.Delay(new TimeSpan(0, 0, 2));
-                        break;
-                    }
-                case 9:
-                    {
-                        cl.NextTryDateTime = date.AddMinutes(5);
-                        cl.NextTryDateTimeUTC = dateUtc.AddMinutes(5);
-                        _IQueueService.Delay(new TimeSpan(0, 0, 5));
-                        break;
-                    }
-                case 10:
-                    {
-                        cl.NextTryDateTime = date.AddMinutes(10);
-                        cl.NextTryDateTimeUTC = dateUtc.AddMinutes(10);
-                        _IQueueService.Delay(new TimeSpan(0, 0, 10));
-                        break;
-                    }
-                default:
-                    {
-                        cl.NextTryDateTime = date.AddMinutes(20);
-                        cl.NextTryDateTimeUTC = dateUtc.AddMinutes(20);
-                        _IQueueService.Delay(new TimeSpan(0, 0, 20));
-                        break;
-                    }
-            }
-            cl.Logs += Environment.NewLine + "Retry #" + cl.Retries + " Next Retry: " + cl.NextTryDateTimeUTC.ToString();
-        }
+       
 
-        private void PostWebAPI(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep)
+        private bool PostWebAPIAnalyzeAndSaveCommDone( )
         {
             try
             {
 
 
-                LogMessagingUtil.Instance.Clear();
-                int tenant = waitingCommLog.Tenant;
-                ICommonDataContext commoncontext = CommonDataContext.GetContext(waitingCommLog.Tenant);
+                //LogMessagingUtil.Instance.Clear();
+                int tenant = _WaitingCommLog.Tenant;
+                ICommonDataContext commoncontext = CommonDataContext.GetContext(_WaitingCommLog.Tenant);
                 DocumentRepository documentRepository = new DocumentRepository(commoncontext);
 
-                Document document = documentRepository.GetSingleDocument(waitingCommLog.Tenant, waitingCommLog.DocumentId);
+                Document document = documentRepository.GetSingleDocument(_WaitingCommLog.Tenant, _WaitingCommLog.DocumentId);
                 Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
                 {
                     FileName = document.Id,
@@ -382,12 +261,12 @@ namespace CustomsWorkerRole
                 {
                     throw new Exception("The file data was not found!");
                 }
-                if (string.IsNullOrEmpty(waitingCommLog.LogSettings))
+                if (string.IsNullOrEmpty(_WaitingCommLog.LogSettings))
                 {
                     throw new Exception("string.IsNullOrEmpty(waitingCommLog.LogSettings)");
                 }
                 var dataJson = System.Text.Encoding.UTF8.GetString(filedata.ToArray());
-                var courierHawbMamanCommunicationLogSettings = JsonConvert.DeserializeObject<CourierHawbMamanCommunicationLogSettings>(waitingCommLog.LogSettings);
+                var courierHawbMamanCommunicationLogSettings = JsonConvert.DeserializeObject<CourierHawbMamanCommunicationLogSettings>(_WaitingCommLog.LogSettings);
                 if (courierHawbMamanCommunicationLogSettings == null)
                 {
                     throw new Exception("(courierHawbMamanCommunicationLogSettings == null)");
@@ -398,7 +277,7 @@ namespace CustomsWorkerRole
                 string webAPIResultString = null;
                 try
                 {
-                    webAPIResultString = PostIt(courierHawbMamanCommunicationLogSettings.host, dataJson);
+                    webAPIResultString = PostIt(courierHawbMamanCommunicationLogSettings.host,"","", dataJson);
                 }
                 catch (Exception)
                 {
@@ -414,44 +293,62 @@ namespace CustomsWorkerRole
 
 
 
-                waitingCommLog.CommunicationStatusTypeCode = "D";
-                waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-                waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-                waitingCommLog.Logs = LogMessagingUtil.Instance.ToString();
+                _WaitingCommLog.CommunicationStatusTypeCode = "D";
+                _WaitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(_WaitingCommLog.Tenant);
+                _WaitingCommLog.DoneDateUTC = DateTime.UtcNow;
+                _WaitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_WaitingCommLog.Tenant);
+                _WaitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                _WaitingCommLog.Logs = LogMessagingUtil.Instance.ToString();
                 //waitingCommLog.Logs
-                communicationLogRep.Update(waitingCommLog);
-                communicationLogRep.SubmitChanges();
+                _CommunicationLogRep.Update(_WaitingCommLog);
+                _CommunicationLogRep.SubmitChanges();
             }
             catch (Exception e)
             {
-                using (var scope = TransactionFactory.GetNewTransaction())
-                {
-                    waitingCommLog.Logs = e.ToString() + LogMessagingUtil.Instance.ToString();
-                    //waitingCommLog.Logs
-                    communicationLogRep.Update(waitingCommLog);
-                    communicationLogRep.SubmitChanges();
-                    scope.Complete();
-                }
+               
 
                 throw;
             }
+            return true;
         }
-
-        private static string PostIt(string host, string dataJson)
+        const string relativeUriToken = "Token";
+        const string BEARER_TOKEN = "Bearer";
+        public string PostIt(string host,string user,string pass, string dataJson)
         {
             string myResultString = "";
+            
+
+            using (var client = new HttpClient())
+            {
+                //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
+
+
+                string webApiURI = host;//POST 
+                //var tokenUri = new Uri(new Uri(host), relativeUriToken);
+                webApiURI = @"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
+
+                var content = new StringContent("grant_type=password&username=f_moshe&Password=******", Encoding.UTF8, "application/x-www-form-urlencoded");
+
+                var task = client.PostAsync(webApiURI, content);
+                Wait4Finsh(task, 1);
+                myResultString = task.Result.Content.ReadAsStringAsync().Result;
+
+            }
 
             using (var client = new HttpClient())
             {
                 //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
 
                 string webApiURI = host;//URI + "APIAuthentication";
-
+                webApiURI = "https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";
 
                 var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
+                //Authorization: <type> <credentials>
                 
+                string credentials = "";
+                //Authorization: Bearer O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY
+                credentials = "O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY";
+                client.DefaultRequestHeaders.Add("Authorization", $"{BEARER_TOKEN} {credentials}");
                 var task = client.PostAsync(webApiURI, content);
                 Wait4Finsh(task, 1);
                 myResultString = task.Result.Content.ReadAsStringAsync().Result;

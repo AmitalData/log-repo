@@ -62,7 +62,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             var settings = new CourierHawbMamanCommunicationLogSettings()
             {
                 host = "https://maman.wsfreeze.co.il/api/baldar/CreateECTHRMessgae",
-                
+
                 username = "",
                 password = "",
 
@@ -84,6 +84,13 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
+            string loggedContactId = "";
+            if (loggedContact != null)
+            {
+                loggedContactId = loggedContact.Id;
+            }
 
             CommunicationLog commLog = new CommunicationLog()
             {
@@ -101,6 +108,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 CommunicationStatusTypeCode = "W",
                 DocumentId = document.Id,
                 CreateDateUTC = DateTime.UtcNow,
+                CreatedByUserId = loggedContactId,
                 LogSettings = settingsData,
                 QueueName = SBQueueNames.SendGWMessageECTHRData2MamanQ.ToString() ///using  by SendWebAPI2MamanGWMessageECTHRDataWR
             };
