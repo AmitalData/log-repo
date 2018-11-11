@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList,ViewEncapsulation} from '@angular/core';
+import {Component, ViewChildren, QueryList,ViewEncapsulation} from '@angular/core';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -429,8 +429,9 @@ export class ByCreateDateComponent extends BaseComponent {
                 LastFilterClass.UpdateFilter(this.filterControlNameSpace, "ByCreateFromDate", (value == null ? null : ServiceHelper.GetDateString(this.FromDate)));
                 LastFilterClass.UpdateFilter(this.filterControlNameSpace, "ByCreateToDate", (value == null ? null : ServiceHelper.GetDateString(this.ToDate)));
             }
-            this.LoadFilteredQueries();
         }
+        this.LoadFilteredQueries();
+
 
 
     }

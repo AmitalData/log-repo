@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef, OnInit, AfterViewInit,Output,EventEmitter,ViewEncapsulation} from '@angular/core';
+import {Component, ChangeDetectorRef, OnInit, AfterViewInit,Output,EventEmitter,ViewEncapsulation} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -162,8 +162,9 @@ export class CustomerOverviewTabDetailsComponent extends BaseComponent implement
                 LastFilterClass.UpdateFilter(this.filterControlNameSpace, "ActivityFromDate", (value == null ? null : ServiceHelper.GetDateString(this.ActivityFromDate)));
                 LastFilterClass.UpdateFilter(this.filterControlNameSpace, "ActivityToDate", (value == null ? null : ServiceHelper.GetDateString(this.ActivityToDate)));
             }
-            this.LoadQuires();
         }
+        this.LoadQuires();
+
     }
 
   
