@@ -45,7 +45,7 @@ export class SendPaymentWindowComponent {
         this.IsPaymentValid = false;
         this.IsPaymentError = true;
         this.PaymentErrorText = "Invalid";
-        this.ValidationErrorsList.push("You can't proceed with this operation. You are allowed to send to SAT only when the Metodo Pago value is PPD");
+          this.ValidationErrorsList.push("You can only send payments to SAT when the Metodo Pago value is PPD");
         return;
       }
 

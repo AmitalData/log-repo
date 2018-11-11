@@ -523,6 +523,8 @@ export class AddEditRecoExPageComponent extends BaseComponent{
             var line = this.ReconcileExternalPagePM.ReconcileExternalPageLines[i];
             line.LineNumber = i + 1;
         }
+
+        this.CalculateTotals();
     }
 
     OnRowEnded($event) {

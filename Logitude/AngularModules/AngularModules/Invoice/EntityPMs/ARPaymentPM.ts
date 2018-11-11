@@ -448,7 +448,10 @@ export class ARPaymentPM {
     public get BranchName() { return this.branchName; }
     public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
-	 
+    private sATApprovalDate: Date;
+    public get SATApprovalDate() { return this.sATApprovalDate; }
+    public set SATApprovalDate(newValue: Date) { if (this.sATApprovalDate != newValue) { this.sATApprovalDate = newValue; this.MarkAsDirty("SATApprovalDate"); } }
+
 
     public OldEntityPM: ARPaymentPM;
 		
