@@ -89,8 +89,8 @@ namespace CustomsWorkerRole
 
 
                 var myClass = this.GetType().Name;
-                _IQueueService = new DbQueueService();
-                _IQueueService.InitializeQueue(SBQueueNames.SendGWMessageECTHRData2MamanQ.ToString(), 0);
+
+                
 
 
             }
@@ -139,6 +139,9 @@ namespace CustomsWorkerRole
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
+                    _IQueueService = new DbQueueService();
+                    _IQueueService.InitializeQueue(SBQueueNames.SendGWMessageECTHRData2MamanQ.ToString(), 0);
+
                     _ReceivedBrokeredMessage = _IQueueService.Receive();
 
                     if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
