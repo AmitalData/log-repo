@@ -9,7 +9,7 @@
   </EventTypes>
   <Records>
     <Record Code="&quot;4&quot;" LocalName="&quot;חשבונית ספק&quot;" EnglishName="&quot;APInvoice&quot;" />
-    <Record Code="&quot;5&quot;" LocalName="&quot;קבלה ספק&quot;" EnglishName="&quot;APPayment&quot;" />
+    <Record Code="&quot;5&quot;" LocalName="&quot;תשלום לספק&quot;" EnglishName="&quot;APPayment&quot;" />
     <Record Code="&quot;2&quot;" LocalName="&quot;חשבונית לקוח&quot;" EnglishName="&quot;ARInvoice&quot;" />
     <Record Code="&quot;3&quot;" LocalName="&quot;קבלה לקוח&quot;" EnglishName="&quot;ARPayment&quot;" />
     <Record Code="&quot;7&quot;" LocalName="&quot;הפקדת מזומן&quot;" EnglishName="&quot;Cash Deposit&quot;" />

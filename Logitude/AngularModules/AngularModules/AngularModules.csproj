@@ -544,6 +544,7 @@
     <Content Include="SharedLogistics\Components\SharedLogisticsPartnersPermissiosComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.html" />
+    <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\DeliveryTabs\DeliveryPackagesConnectComponent.html" />
     <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestHeaderComponent.html" />
     <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestsWorkSpaces.html" />
@@ -2928,6 +2929,7 @@
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsPartnersPermissiosComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\DeliveryTabs\DeliveryPackagesConnectComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestHeaderComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestsWorkSpaces.ts" />
@@ -5868,6 +5870,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\FBLStockPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentAssemblyPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentCustomsTransmissionPM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentPackageHarmonizePM.ts" />
     <TypeScriptCompile Include="Shipment\Services\ContainersFUDomainService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\AWBSpecialHandlingCodeExtendedPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\ExtendedPMs\FBLStockExtenedPMService.ts" />

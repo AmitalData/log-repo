@@ -2301,6 +2301,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentLevelPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentMobilePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentOrderPackagePM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ShipmentPackageHarmonizePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPackageItemPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPackagePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPartnerPM.cs" />
@@ -2352,6 +2353,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCustomsTransmissionQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentLevelQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentOrderPackageQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentPackageHarmonizeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPackageItemQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPackageQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPayableAmountTypeQuery.cs" />

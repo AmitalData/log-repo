@@ -1430,6 +1430,7 @@ export class ShipmentPackageItem extends BaseComponent {
         this.SetUIProperties_Container();
         this.SetUIProperties_Dangerous();
         this.SetUIProperties_BuildButton();
+        this.SetUIProperties_Harmonize();
     }
     SetUIProperties_Package() {
         if (this.ShipmentPM.TransportModeId == "A") {
@@ -1507,7 +1508,6 @@ export class ShipmentPackageItem extends BaseComponent {
             this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
             this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Tare", this.ObjectTableName, this.IsEditingFieldsEnabled);
-            this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("MarksAndNumbers", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Reference1", this.ObjectTableName, this.IsEditingFieldsEnabled);
@@ -1631,6 +1631,20 @@ export class ShipmentPackageItem extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("NonActiveContainer", this.ObjectTableName, isFieldEnabled);
+    }
+    SetUIProperties_Harmonize() {
+
+        var isFieldEnabled: boolean = true;
+        if (this.IsEditingEnabled) {
+
+            isFieldEnabled = true;
+
+            if (this.IsMultiHarmonize == true) {
+                isFieldEnabled = false;
+            }
+        }
+
+        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
     }
 
     public PackageTypeList: PackageTypeList;
@@ -1985,6 +1999,13 @@ export class ShipmentPackageItem extends BaseComponent {
     set Harmonize(newValue: string) {
         if (this.EntityPM.Harmonize != newValue) {
             this.EntityPM.Harmonize = newValue;
+        }
+    }
+
+    get IsMultiHarmonize() { return this.EntityPM.IsMultiHarmonize }
+    set IsMultiHarmonize(newValue: boolean) {
+        if (this.EntityPM.IsMultiHarmonize != newValue) {
+            this.EntityPM.IsMultiHarmonize = newValue;
         }
     }
 

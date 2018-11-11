@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, FormatTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -9,6 +9,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: module.id,
@@ -46,6 +47,18 @@ export class AddEditOceanPackageComponent {
         this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Dimensions').replace('%UnitCode', this.DataContext.ShipmentPM.DimensionsUnitCode);
         this.GrossWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Weight').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
         this.VolumetricWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.VolumetricWeight').replace('%WeightCode', this.DataContext.ShipmentPM.ChargeableWeightUnitCode);
+    }
+
+    MultiHarmonizeClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { PackagePM: this.EntityPM, IsEditingEnabled: this.DataContext.IsEditingEnabled };
+        logWindow.Title = "Container Multi-Harmonize";
+        logWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/AddEditPackageHarmonizeComponent");
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                this.DataContext.SetUIProperties_Harmonize();                
+            }
+        });
     }
 
     CancelButtonClicked() {
