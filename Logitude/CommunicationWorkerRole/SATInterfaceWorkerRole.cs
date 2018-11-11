@@ -391,6 +391,17 @@ namespace CommunicationWorkerRole
                             additional.QRImage = Convert.ToBase64String(resultadoTimbre.CodigoBidimensional);//imagedetail.Id;//
                         }
 
+                        Profact.TimbraCFDI33.Comprobante resultComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoTimbre.Xml);
+                        if (comprobante.Complemento.Any != null)
+                        {
+                            List<System.Xml.XmlElement> myLXmlComplementos = resultComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                            var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                            if (timbreFiscalDigitalElement != null)
+                            {
+                                Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                                payment.SATApprovalDate = digitalTi.FechaTimbrado;
+                            }
+                        }
                         payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
                         payment.SATXML = resultadoTimbre.Xml;
                         payment.SATTransferStatusCode = "TD";
@@ -428,6 +439,18 @@ namespace CommunicationWorkerRole
                         if (resultadoTimbre.CodigoBidimensional != null)
                         {
                             additional.QRImage = Convert.ToBase64String(resultadoTimbre.CodigoBidimensional);//imagedetail.Id;//
+                        }
+
+                        Profact.TimbraCFDI33.Comprobante resultComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoTimbre.Xml);
+                        if (resultComprobante.Complemento.Any != null)
+                        {
+                            List<System.Xml.XmlElement> myLXmlComplementos = resultComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                            var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                            if (timbreFiscalDigitalElement != null)
+                            {
+                                Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                                invoice.SATApprovalDate = digitalTi.FechaTimbrado;
+                            }
                         }
 
                         invoice.SATXML = resultadoTimbre.Xml;
@@ -643,7 +666,16 @@ namespace CommunicationWorkerRole
                         {
                             additional.QRImage = Convert.ToBase64String(resultadoConsulta.CodigoBidimensional);//imagedetail.Id;//
                         }
-                         
+                        if (paymentComprobante.Complemento.Any != null)
+                        {
+                            List<System.Xml.XmlElement> myLXmlComplementos = paymentComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                            var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                            if (timbreFiscalDigitalElement != null)
+                            {
+                                Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                                payment.SATApprovalDate = digitalTi.FechaTimbrado;
+                            }
+                        }
                         payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
                         payment.SATXML = resultadoConsulta.Xml;
                         payment.SATTransferStatusCode = "TD";
@@ -697,6 +729,18 @@ namespace CommunicationWorkerRole
                             additional.QRImage = Convert.ToBase64String(resultadoConsulta.CodigoBidimensional);//imagedetail.Id;//
                         }
 
+                        Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoConsulta.Xml);
+
+                        if (invoiceComprobante.Complemento.Any != null)
+                        {
+                            List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                            var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                            if (timbreFiscalDigitalElement != null)
+                            {
+                                Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                                invoice.SATApprovalDate = digitalTi.FechaTimbrado;
+                            }
+                        }
 
                         string SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString<SATAdditionalFields>(additional);
 

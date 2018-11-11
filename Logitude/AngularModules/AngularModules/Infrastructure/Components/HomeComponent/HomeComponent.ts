@@ -964,9 +964,19 @@ export class HomeComponent {
         }
     }
     ManageBluesnapAccountClicked() {
-        var link = "https://cp.bluesnap.com/jsp/account_login.jsp";
-        var win = window.open(link, '_blank');
-        win.focus();
+
+
+        var myService: CommonDomainService = new CommonDomainService();
+        myService.GetBlueSnapToken(SessionLocator.TenantManagementPM.BluesnapAccount).subscribe((myResult) => {
+            var temp = myResult.Result;
+            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+            var link = "https://cp.bluesnap.com/jsp/account_login.jsp";
+            if (!AppTool.IsNullOrEmpty(temp)) {         
+                link = "https://www.bluesnap.com/jsp/entrance.jsp?target=cp&token=" + temp + "&pageToShow=my_account.jsp"
+            }
+            var win = window.open(link, '_blank');
+            win.focus();
+        });        
     }
     HelpButtonClicked() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "Help Icon");
