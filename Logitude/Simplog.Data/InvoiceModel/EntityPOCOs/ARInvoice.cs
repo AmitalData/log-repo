@@ -95,6 +95,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public Decimal? TotaVatableAmountForTaxReport { get; set; }
         public Decimal? TotalVAT { get; set; }
 
+        public DateTime? SATApprovalDate { get; set; }
 
         [ForeignKey("SalesmanUserId")]
         public virtual User SalesmanUser { get; set; }

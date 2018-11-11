@@ -23,7 +23,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string AggregationTypeCode { get; set; }
         public bool DisplayInQueryBuilder { get; set; }
         public string DisplayName { get; set; }
-
+        public string Category1 { get; set; }
+        public string Category2 { get; set; }
     }
 
 }

@@ -164,6 +164,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SATTransferStatusName { get; set; }
         public string SATInvoiceStatusName { get; set; }
         public bool Intercompany { get; set; }
+        public DateTime? SATApprovalDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BankAccountLiteId { get; set; }

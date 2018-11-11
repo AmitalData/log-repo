@@ -9,6 +9,7 @@ import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Servi
 import { DWQueryBuilderService } from '../../../../Infrastructure/Services/ExtendedPMs/DWQueryBuilderService';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { GroupByPipe } from '../../../../Infrastructure/Pipes/GroupByPipe';
 
 @Component({
     moduleId: module.id,
@@ -68,11 +69,14 @@ export class DWQueryBuilderComponent extends BaseComponent {
                             if (field.DisplayInQueryBuilder == true) {
                                 var view = new DWObjectFieldsDetails(field, this);
                                 view.ParentDataTypeCode = field.DataTypeCode;
+                                view.Category1 = field.Category1;
+                                view.Category2 = field.Category2;
                                 this.ObsList.push(view);
                                 this.ObsListAll.push(view);
                             }
                         });
                         this.DataSource = this.ObsList;
+                        var temp = new GroupByPipe().transform(this.ObsList, "DocumentCategoryName");
                         this.AllFieldsDataSource = this.ObsList;
                     }
 
@@ -719,12 +723,16 @@ export class DWQueryBuilderComponent extends BaseComponent {
         });
         //if (this.InnerTables.length == 0) {
             if (this.SelectedFiltersDataSource.length > 0) {
-                this.Notes = SelectStmt + this.WhereStmt + (HasMeasurement ? GroupByStmt : "");
-                this.PreviewData(StopPreview);
+                this.Notes = SelectStmt + this.WhereStmt + (HasMeasurement && GroupByStmt != " group by" ? GroupByStmt : "");
+                if (GroupByStmt != " group by") {
+                    this.PreviewData(StopPreview);
+                }
             }
             else {
-                this.Notes = SelectStmt + (HasMeasurement ? GroupByStmt : "");
-                this.PreviewData(StopPreview);
+                this.Notes = SelectStmt + (HasMeasurement && GroupByStmt != " group by" ? GroupByStmt : "");
+                if (GroupByStmt != " group by") {
+                    this.PreviewData(StopPreview);
+                }
             }
         //}
 
@@ -832,6 +840,15 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     Items: any[] = [];
     FilterItems: DWObjectFieldsDetails[] = [];
+
+    private category1: string;
+    public get Category1() { return this.category1; }
+    public set Category1(newValue: string) { this.category1 = newValue; }
+
+
+    private category2: string;
+    public get Category2() { return this.category2; }
+    public set Category2(newValue: string) { this.category2 = newValue; }
 
     private indexOrder: number;
     public get IndexOrder() { return this.indexOrder; }
