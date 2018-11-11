@@ -17,7 +17,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         private DeclarationPM _DeclarationPM;
         private CourierMasterPM _CourierMasterPM;
 
-        public string SendWebAPI(string declarationId, int tenant, CourierMasterPM courierMasterPM = null)
+        public string BuildQueueSendWebAPI(string declarationId, int tenant, CourierMasterPM courierMasterPM = null)
         {
             
             var context = CustomContext.GetContext(tenant);
