@@ -1,4 +1,4 @@
-﻿import {NewAirlineComponent} from './Components/NewEntity/NewAirlineComponent';
+import {NewAirlineComponent} from './Components/NewEntity/NewAirlineComponent';
 import {AirlineAdaptationsTabComponent} from './Components/EditTabs/AirlineAdaptationsTabComponent';
 import {AirlineAWBStockTabComponent} from './Components/EditTabs/AirlineAWBStockTabComponent';
 import {AirlineCCSSettingsTabComponent} from './Components/EditTabs/AirlineCCSSettingsTabComponent';
@@ -7,6 +7,7 @@ import {AddEditAirlineAdaptationItemComponent} from './Components/AddEdit/AddEdi
 import {AddEditAirlineMessagingRuleComponent} from './Components/AddEdit/AddEditAirlineMessagingRuleComponent';
 import {AddEditTarrifHeaderComponent} from './Components/AddEdit/AddEditTarrifHeaderComponent';
 import {AddEditTariffChargeComponent} from './Components/AddEdit/AddEditTariffChargeComponent';
+import { AirlineDocsInTabComponent } from './Components/EditTabs/AirlineDocsInTabComponent';
 
 export const Components =
     [
@@ -19,6 +20,7 @@ export const Components =
         AddEditAirlineMessagingRuleComponent,
         AddEditTarrifHeaderComponent,
         AddEditTariffChargeComponent,
+        AirlineDocsInTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -36,6 +38,7 @@ export class ModuleDeclarations {
             case "AddEditAirlineMessagingRuleComponent": { myResult = AddEditAirlineMessagingRuleComponent; break; }
             case "AddEditTarrifHeaderComponent": { myResult = AddEditTarrifHeaderComponent; break; }
             case "AddEditTariffChargeComponent": { myResult = AddEditTariffChargeComponent; break; }
+            case "AirlineDocsInTabComponent": { myResult = AirlineDocsInTabComponent; break; }
         }
 
         return myResult;
