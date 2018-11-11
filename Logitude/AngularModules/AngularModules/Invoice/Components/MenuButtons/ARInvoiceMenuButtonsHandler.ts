@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ARInvoicePM} from '../../EntityPMs/ARInvoicePM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -185,6 +185,22 @@ export class ARInvoiceMenuButtonsHandler {
 
                                 break;
                             }
+
+                        case "CheckSATStatus":
+                            {
+                                if (this.EntityPM.SATTransferStatusCode == "CS") {
+                                    myButtonIsDisabled = false;
+                                }
+                                else {
+                                    myButtonIsDisabled = true;
+                                }
+                                if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
+                                    button.IsHidden = true;
+                                }
+
+
+                                break;
+                            }
                     }
 
                     button.IsDisabled = myButtonIsDisabled;
@@ -247,8 +263,17 @@ export class ARInvoiceMenuButtonsHandler {
                         this.ReTransferClicked();
                         break;
                     }
+                case "CheckSATStatus":
+                    {
+                        this.CheckSATStatus();
+                        break;
+                    }
             }
         }
+    }
+
+    CheckSATStatus() {
+
     }
 
     isValid: boolean = false;

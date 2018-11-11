@@ -66,6 +66,11 @@ import {EmployeeTimeSheetFilterComponent} from './Components/FilterReportCompone
 import {WorkDaysPerProjectFilterComponent} from './Components/FilterReportComponent/WorkDaysPerProjectFilterComponent';
 import { TasksOfNoProjectsFilterComponent } from './Components/FilterReportComponent/TasksOfNoProjectsFilterComponent';
 
+
+//Shipment Details
+import { ShipmentDetailsFilterComponent } from './Components/FilterReportComponent/ShipmentDetailsFilterComponent';
+
+
 export const Components =
     [
         ReportComponent,
@@ -118,6 +123,7 @@ export const Components =
         UsersByTenantReportFilterComponent,
         LicenseManagementFilterComponent,
         ShipmentsStocksFiltersComponent,
+        ShipmentDetailsFilterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -176,6 +182,8 @@ export class ModuleDeclarations {
             case "UsersByTenantReportFilterComponent": { myResult = UsersByTenantReportFilterComponent; break; }
             case "LicenseManagementFilterComponent": { myResult = LicenseManagementFilterComponent; break; }  
             case "ShipmentsStocksFiltersComponent": { myResult = ShipmentsStocksFiltersComponent; break; }  
+            case "ShipmentDetailsFilterComponent": { myResult = ShipmentDetailsFilterComponent; break; }  
+
                 
         }
 

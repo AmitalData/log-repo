@@ -11844,6 +11844,302 @@ namespace WebFreight.Web.ReportsWebServices
         }
         #endregion
 
+
+        #region Shipment Details
+        public byte[] LoadShipmentDetailsDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ShipmentDetailsDataProvider dataprovider = GetShipmentDetailsDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ShipmentDetailsDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private ShipmentDetailsDataProvider GetShipmentDetailsDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ShipmentDetailsDataProvider totalData = new DataProviders.ShipmentDetailsDataProvider();
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            AddressRepository addressRepository = new AddressRepository(commonContext);
+
+            #region Report Filters
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+
+            QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            //ToDate
+            DateTime? toDate = null;
+            if (filterItem_tODate != null)
+            {
+                if (filterItem_tODate.FieldValue != null)
+                {
+                    toDate = (DateTime)filterItem_tODate.FieldValue;
+                }
+            }
+
+            //FromDate
+            DateTime? FromDate = null;
+            if (filterItem_FromDate != null)
+            {
+                if (filterItem_FromDate.FieldValue != null)
+                {
+                    FromDate = (DateTime)filterItem_FromDate.FieldValue;
+                }
+            }
+
+            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+
+
+            shipments = shipments.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H");
+            if (FromDate != null)
+            {
+                shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) >= System.Data.Entity.DbFunctions.TruncateTime(FromDate));
+            }
+
+            if (toDate != null)
+            {
+                shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+            }
+
+            List<ShipmentDataView> Shipments = shipments.ToList();
+
+            if (Shipments.Count > 0)
+            {
+                totalData.Shipments = new List<ShipmentDetals>();
+                foreach (ShipmentDataView Item in Shipments)
+                {
+                    Currency ValueOfgoodsCurrency = (from d in commonContext.Currencies where d.Id == Item.ValueOfGoodsCurrencyId select d).FirstOrDefault();
+                    Department ShipmentDepartment = (from d in commonContext.Departments where d.Id == Item.DepartmentId select d).FirstOrDefault();
+
+                    ShipmentPickUpDelivery myLastPickup =
+                    (from d in shipmentsContext.ShipmentPickUpDeliveries
+                     where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK"
+                     select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                    ShipmentPickUpDelivery myLastDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
+                                                             where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "DELV"
+                                                             select d).OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                    ShipmentPickUpDelivery myFirstPickup =
+                     (from d in shipmentsContext.ShipmentPickUpDeliveries
+                      where d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "PICK"
+                      select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+                    ShipmentDetals shipment = new ShipmentDetals();
+
+                    if (myLastPickup != null)
+                    {
+
+                        switch (myLastPickup.PickUpDeliveryFromTypeCode)
+                        {
+                            case "PART":
+                                {
+                                    if (!string.IsNullOrEmpty(myLastPickup.FromPartnerCardId))
+                                    {
+                                        Address myPartnerAddress = addressRepository.GetMainAddressByCardId(myLastPickup.FromPartnerCardId, tenant);
+                                        if (myPartnerAddress != null)
+                                        {
+                                            shipment.PickupCity = myPartnerAddress.City;
+                                            shipment.PickupCountry = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                            case "PORT":
+                                {
+                                    if (!string.IsNullOrEmpty(myLastPickup.FromPortId))
+                                    {
+                                        PortPM myPort = PortQuery.GetSinglePort(tenant, myLastPickup.FromPortId, true);
+                                        if (myPort != null)
+                                        {
+                                            shipment.PickupCity = myPort.StateName;
+                                            shipment.PickupCountry = myPort.CountryName;
+
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                            case "CASL":
+                                {
+                                    shipment.PickupCity = myLastPickup.FromAddressCity;
+                                    CountryRepository countryRepository = new CountryRepository(tenant);
+                                    Country country = countryRepository.GetSingleCountry(myLastPickup.FromAddressCountryId, tenant);
+                                    if (country != null)
+                                    {
+                                        shipment.PickupCountry = country.EnglishName;
+                                    }
+                                    break;
+                                }
+                        }
+
+                    }
+
+                    if (myLastDelivery != null)
+                    {
+                        switch (myLastDelivery.PickUpDeliveryToTypeCode)
+                        {
+                            case "PART":
+                                {
+                                    if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
+                                    {
+                                        Card myPartner = CardRepository.GetSingleCard(myLastDelivery.ToPartnerCardId, tenant, true);
+                                        if (myPartner != null)
+                                        {
+                                            shipment.DeliveryToName = myPartner.EnglishName;
+
+                                            Address myPartnerAddress = addressRepository.GetMainAddressByCardId(myLastDelivery.ToPartnerCardId, tenant);
+                                            if (myPartnerAddress != null)
+                                            {
+                                                shipment.DeliveryTocity = myPartnerAddress.City;
+                                            }
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                            case "PORT":
+                                {
+                                    if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
+                                    {
+                                        PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.ToPortId, true);
+                                        if (myPort != null)
+                                        {
+                                            shipment.DeliveryToName = myPort.EnglishName;
+                                            shipment.DeliveryTocity = myPort.StateName;
+
+                                        }
+                                    }
+
+                                    break;
+                                }
+
+                            case "CASL":
+                                {
+                                    string myCity = myLastDelivery.ToAddressCity;
+                                    if (!string.IsNullOrEmpty(myCity))
+                                    {
+                                        shipment.DeliveryToName = myCity;
+                                        shipment.DeliveryTocity = myCity;
+                                    }
+
+                                    break;
+                                }
+                        }
+                    }
+                    shipment.Direction = Item.DirectionName;
+                    shipment.ShipmentId = Item.ShipmentNumber;
+                    shipment.Shipper = Item.Shipper;
+                    shipment.BUShipper = Item.ShipperNotExporterName;
+                    shipment.ShipperRef1 = Item.ShipperReference1;
+                    shipment.ShipperRef2 = Item.ShipperReference2;
+                    shipment.CountOfInvoices = Item.MainHarmonize;
+                    shipment.ShipperInvoiceNumber = Item.Field10;
+                    shipment.BUImporte = Item.ConsigneeNotImporterName;
+                    shipment.Consignee = Item.ConsigneeName;
+                    shipment.ConsigneeRef1 = Item.ConsigneeReference1;
+                    shipment.ConsigneeRef2 = Item.ConsigneeReference2;
+                    shipment.Agent = Item.AgentName;
+                    shipment.AgentRef1 = Item.AgentReference1;
+                    shipment.AgentRef2 = Item.AgentReference2;
+                    shipment.Incoterm = Item.IncotermCode;
+                    shipment.FreightPC = Item.FreightPrepaidCollectId;
+                    shipment.OtherPC = Item.OtherPrepaidCollectId;
+                    shipment.ModeofTransport = Item.TransportModeName;
+                    shipment.Type = Item.ShipmentTypeName;
+                    shipment.FreightForwarder = Item.FreightForwarderName;
+                    shipment.ClearingAgentimport = Item.CustomAgentImportName;
+                    shipment.MainCarriageCarrier = Item.MainCarriageCarrierName;
+                    shipment.Vessel = Item.MainCarriageVesselName;
+                    shipment.CarrierNumber = Item.CarrierNumber;
+                    shipment.BookingConf = Item.BookingConfirmationNumber;
+                    shipment.ConfirmedBy = Item.BookingConfirmedBy;
+                    shipment.Cutoffdate = Item.CutoffDate;
+                    shipment.CutoffTime = String.Format("{0:t}", Item.CutoffDate);
+                    shipment.ConfirmationNotes = Item.BookingConfirmationNotes;
+                    shipment.MAWBMBL = Item.Master;
+                    shipment.HAWBHBL = Item.House;
+                    shipment.HAWBDate = Item.HAWBDate;
+                    shipment.GrossWeightKgs = Item.GrossWeightInKG;
+                    shipment.Volumem3 = Item.VolumeInCBM;
+                    shipment.ChargeableWeightKgs = Item.ChargeableWeightInKG;
+                    shipment.TotalPackagesReceived = Item.NumberOfPackages;
+                    shipment.CountofTEU = Item.TEU;
+                    shipment.DGR = Item.IsDangerous;
+                    shipment.DescriptionofGoods = Item.DescriptionOfGoods;
+                    shipment.Routing = Item.Routing;
+                    shipment.Numberofpickups = Item.Field7;
+                    shipment.PortofDeparture = Item.MainCarriageFromPortCode;
+                    shipment.CountryofDeparture = Item.MainCarriageFromPortCountryName;
+                    shipment.ViaCity = Item.Transshipment1FromPortCode;
+                    shipment.CountryofDestination = Item.MainCarriageToPortCountryName;
+                    shipment.PortofDestination = Item.MainCarriageToPortCode;
+                    shipment.CreateDate = Item.CreateDateTime;
+                    shipment.NotificationDate = Item.Field1;
+                    shipment.GoodsReadinessDate = Item.Field5;
+                    shipment.DocumentsReadinessDate = Item.Field6;
+                    shipment.PickupFromDate = myLastPickup != null ? myLastPickup.ATD : null;
+                    shipment.GroupageDate = Item.CutoffDate;
+                    shipment.DateonboardOrigin = Item.MainCarriageATD != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageATD) : (Item.MainCarriageETD != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageETD) + " (estimated)" : "");
+                    shipment.Dateofarrivaltoport = Item.MainCarriageATA != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageATA) : (Item.MainCarriageETA != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageETA) + " (estimated)" : "");
+                    shipment.ImportDeclarationDate = Item.DeclarationDate;
+                    shipment.CustomsClearanceDate = Item.CustomsClearanceDate;
+                    shipment.DeliveryDate = myLastDelivery != null ? (myLastDelivery.ATA != null ? String.Format("{0:dd.MMM.yy}", myLastDelivery.ATA) : (myLastDelivery.ETA != null ? String.Format("{0:dd.MMM.yy}", myLastDelivery.ETA) + " (Estimated)" : "")) : "";
+                    shipment.ClosedDate = Item.OperationalCloseDate;
+                    shipment.IncludeCustoms = Item.IncludesCustoms;
+                    shipment.ImportDeclarationNumber = Item.DeclarationNumber;
+                    shipment.CustomsDeclaration = Item.Field2;
+                    shipment.CustomsInspection = Item.Field3;
+                    shipment.ExportDeclarationNumber = Item.Field15;
+                    shipment.ExportDeclarationdate = Item.Field16;
+                    shipment.CountsofCITES = Item.Field8;
+                    shipment.CountLocalAuthorityApproval = Item.Field4;
+                    shipment.LocalInspection = Item.SalesmanUserName;
+                    shipment.CountofUndertakingLetter = Item.Field18;
+                    shipment.CountofCertificateofOrigin = Item.Field19;
+                    shipment.CountofCertificateofConformity = Item.Field20;
+                    shipment.CountofLegalisedDocuments = Item.AMSBL;
+                    shipment.ShipperInvoiceValue = Item.ValueOfGoods;
+                    shipment.CurrencyofShipperInvoice = ValueOfgoodsCurrency != null ? ValueOfgoodsCurrency.Code : null;
+                    shipment.RefundInvno = Item.Field17;
+                    shipment.InsuranceClaimNumber = Item.Field11;
+                    shipment.InsuranceClaimCurrency = Item.Field12;
+                    shipment.InsuranceClaimAmount = Item.Field13;
+                    shipment.InsuranceClaimDate = Item.Field14;
+                    shipment.Status = Item.ShipmentStatusName;
+                    shipment.Dept = ShipmentDepartment != null ? ShipmentDepartment.EnglishName : null;
+                    shipment.Branch = Item.BranchName;
+                    totalData.Shipments.Add(shipment);
+
+                }
+
+                totalData.FromDate = FromDate;
+                totalData.ToDate = toDate;
+
+            }
+
+
+            #endregion
+
+            return totalData;
+        }
+
+
+        #endregion
+
+
         #region License Management
         public byte[] LoadLicenseManagementDataProvider(byte[] xmlFilters, int tenant)
         {
