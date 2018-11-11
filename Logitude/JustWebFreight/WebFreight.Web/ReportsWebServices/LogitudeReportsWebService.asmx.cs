@@ -10361,12 +10361,12 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.IsCancelled = a.IsCancelled;
                     myRecord.LastSharedEventDate = a.LastSharedEventDate;
                     myRecord.LastSharedEventNote = a.LastSharedEventNotes;
-
                     myRecord.PortOfLoading = a.MainCarriageFromPortCode;
                     myRecord.PortOfDischarge = a.MainCarriageFinalDestinationPortCode;
-
                     myRecord.PortOfLoadingName = a.MainCarriageFromPortName;
                     myRecord.PortOfDischargeName = a.MainCarriageFinalDestinationPortName;
+                    myRecord.Consignee = a.ConsigneeName;
+                    myRecord.BookingNumber = a.BookingConfirmationNumber;
 
                     if (!string.IsNullOrEmpty(a.ShipmentTypeId))
                     {
@@ -10415,9 +10415,13 @@ namespace WebFreight.Web.ReportsWebServices
                     StringBuilder str2 = new StringBuilder();
                     List<ShipmentPackage> packages = shipmentsContext.ShipmentPackages.Where(d => d.ShipmentId == a.Id && d.Tenant == tenant).ToList();
 
+                    myRecord.PackagesCount = packages.Count;
+
+                    int insideCount = 0;
                     foreach (ShipmentPackage package in packages)
                     {
                         List<InsideShipmentPackage> insidePackages = shipmentsContext.InsideShipmentPackages.Where(d => d.ShipmentPackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                        insideCount += insidePackages.Count;
 
                         PackageType packagetype = (from pa in commonContext.PackageTypes
                                                    where pa.Id == package.PackageTypeId
@@ -10440,6 +10444,8 @@ namespace WebFreight.Web.ReportsWebServices
                             }
                         }
                     }
+
+                    myRecord.InsidePackagesCount = insideCount;
 
                     string str_String = str.ToString();
                     if (!string.IsNullOrEmpty(str_String))
