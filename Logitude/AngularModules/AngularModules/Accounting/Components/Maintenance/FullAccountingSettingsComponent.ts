@@ -24,6 +24,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 //import {AutomaticExternalRconcilMthodsPM}  '../../Services/StandardPMs/AutomaticExternalRconcilMthodsPM';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import {ObjectsUpdater} from '../../../Infrastructure/Locators/ObjectsUpdater';
 
 @Component({
     moduleId: module.id,
@@ -33,6 +34,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 })
 
 export class FullAccountingSettingsComponent extends BaseComponent implements OnInit, AfterViewInit {
+
 
     public DataContext: FullAccountingSettingsComponent = this;
     //public myForm: ControlGroup;
@@ -78,7 +80,12 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     ngAfterViewInit() {
         //this.SetUIProperties();
     }
+    ReloadTenantPM(): any {
 
+        this.TenantPM.AccountingActivated = this.AccountingActivated;
+        ObjectsUpdater.UpdateTenantPM(this.TenantPM);
+
+    }
     SetUIProperties() {
 
         var enableAllFields = false;
@@ -121,6 +128,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             } else if (value == false) {
                 this.AccountingActivationDate = null;
             }
+            this.ReloadTenantPM();
             this.SetUIProperties();
         }
     }
@@ -348,7 +356,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     }
     //#endregion
 
-    //Commands 
+    //Commands
     CancelButtonClicked() {
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
