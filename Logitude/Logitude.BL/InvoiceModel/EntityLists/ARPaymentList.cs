@@ -76,6 +76,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string CadPago { get; set; }
         public string SelloPago { get; set; }
         public string BranchName { get; set; }
+        public DateTime? SATApprovalDate { get; set; }
 
     }
 }

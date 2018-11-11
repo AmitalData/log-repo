@@ -1351,6 +1351,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             TotalAmountForTaxReport = a.TotalAmountForTaxReport,
                             TotalVAT =a.TotalVAT,
                             TotaVatableAmountForTaxReport =a.TotaVatableAmountForTaxReport,
+                            SATApprovalDate = a.SATApprovalDate,
                         };
 
             return query;
@@ -1481,7 +1482,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              TotalAmountForTaxReport = entity.TotalAmountForTaxReport,
                              TotalVAT = entity.TotalVAT,
                              TotaVatableAmountForTaxReport = entity.TotaVatableAmountForTaxReport,
-                             
+                             SATApprovalDate = entity.SATApprovalDate,
+
                          };
 
             return result;
@@ -1586,6 +1588,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               TotalAmountForTaxReport = a.TotalAmountForTaxReport,
                                               TotalVAT = a.TotalVAT,
                                               TotaVatableAmountForTaxReport = a.TotaVatableAmountForTaxReport,
+                                              SATApprovalDate = a.SATApprovalDate,
                                           }).ToList();
             return invoices;
         }
@@ -1693,6 +1696,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     TotalAmountForTaxReport = entityPOCO.TotalAmountForTaxReport,
                     TotalVAT = entityPOCO.TotalVAT,
                     TotaVatableAmountForTaxReport = entityPOCO.TotaVatableAmountForTaxReport,
+                    SATApprovalDate = entityPOCO.SATApprovalDate,
                 };
 
                 ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
@@ -2004,7 +2008,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              TotalAmountForTaxReport = entity.TotalAmountForTaxReport,
                              TotalVAT = entity.TotalVAT,
                              TotaVatableAmountForTaxReport = entity.TotaVatableAmountForTaxReport,
-                             
+                             SATApprovalDate = entity.SATApprovalDate,
+
                          };
 
             return result;
