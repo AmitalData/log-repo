@@ -197,6 +197,11 @@ export class JournalLinePM {
     public set IsDebitAccountMulti(newValue: boolean) { if (this.isDebitAccountMulti != newValue) { this.isDebitAccountMulti = newValue; this.MarkAsDirty("IsDebitAccountMulti"); } }
        
 	 
+    private externalReconcileNumber: string;
+    public get ExternalReconcileNumber() { return this.externalReconcileNumber; }
+    public set ExternalReconcileNumber(newValue: string) { if (this.externalReconcileNumber != newValue) { this.externalReconcileNumber = newValue; this.MarkAsDirty("ExternalReconcileNumber"); } }
+       
+	 
 
     public OldEntityPM: JournalLinePM;
 	

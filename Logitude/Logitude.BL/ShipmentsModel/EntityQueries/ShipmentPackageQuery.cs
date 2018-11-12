@@ -71,6 +71,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPackageItemRepository shipmentPackageItemRepository = new ShipmentPackageItemRepository(repository.context);
             ShipmentPackageItemQuery shipmentPackageItemQuery = new ShipmentPackageItemQuery(shipmentPackageItemRepository);
 
+            ShipmentPackageHarmonizeRepository shipmentPackageHarmonizeRepository = new ShipmentPackageHarmonizeRepository(repository.context);
+            ShipmentPackageHarmonizeQuery shipmentPackageHarmonizeQuery = new ShipmentPackageHarmonizeQuery(shipmentPackageHarmonizeRepository);
+
             ShipmentPackagePM myResult
                 = (from a in repository.context.ShipmentPackages.Include("PackageType").Include("LastStatus")
                    where a.ShipmentId == shipmentId && a.Tenant == tenant
@@ -165,11 +168,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
                        DeliveryTransportModeCode = a.DeliveryTransportModeCode,
                        ECRTransportModeCode=a.ECRTransportModeCode,
+                       IsMultiHarmonize = a.IsMultiHarmonize,
                    }).FirstOrDefault();
 
 
             myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult.Id, tenant);
             myResult.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(myResult.Id, tenant);
+            myResult.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(myResult.Id, tenant);
 
             return myResult;
         }
@@ -180,6 +185,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             ShipmentPackageItemRepository shipmentPackageItemRepository = new ShipmentPackageItemRepository(repository.context);
             ShipmentPackageItemQuery shipmentPackageItemQuery = new ShipmentPackageItemQuery(shipmentPackageItemRepository);
+
+            ShipmentPackageHarmonizeRepository shipmentPackageHarmonizeRepository = new ShipmentPackageHarmonizeRepository(repository.context);
+            ShipmentPackageHarmonizeQuery shipmentPackageHarmonizeQuery = new ShipmentPackageHarmonizeQuery(shipmentPackageHarmonizeRepository);
 
             List<ShipmentPackagePM> shipmentPackages
                 = (from a in repository.context.ShipmentPackages.Include("PackageType").Include("LastStatus")
@@ -276,13 +284,14 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
                        DeliveryTransportModeCode = a.DeliveryTransportModeCode,
                        ECRTransportModeCode = a.ECRTransportModeCode,
+                       IsMultiHarmonize = a.IsMultiHarmonize,
                    }).ToList();
 
             foreach (ShipmentPackagePM package in shipmentPackages)
             {
                 package.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(package.Id, package.Tenant);
                 package.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(package.Id, package.Tenant);
-                // Statuses
+                package.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(package.Id, package.Tenant);
             }
 
             return shipmentPackages;
@@ -386,6 +395,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 LastStatusName = a.LastStatus == null ? null : a.LastStatus.Name,
                                 DeliveryTransportModeCode = a.DeliveryTransportModeCode,
                                 ECRTransportModeCode = a.ECRTransportModeCode,
+                                IsMultiHarmonize = a.IsMultiHarmonize,
                             }).ToList();
             }
 

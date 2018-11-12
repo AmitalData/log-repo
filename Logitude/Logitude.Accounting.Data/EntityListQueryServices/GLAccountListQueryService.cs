@@ -66,9 +66,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         AutomaticReconcileName = a.AutomaticReconcile != null ?
                                                             !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile2) ?
                                                                 !String.IsNullOrEmpty(a.AutomaticReconcile.AutomaticReconcile3) ?
-                                                                    a.AutomaticReconcile.AutomaticReconcile1 + "+" + a.AutomaticReconcile.AutomaticReconcile2 + "+" + a.AutomaticReconcile.AutomaticReconcile3
-                                                                    : a.AutomaticReconcile.AutomaticReconcile1 + "+" + a.AutomaticReconcile.AutomaticReconcile2
-                                                                : a.AutomaticReconcile.AutomaticReconcile1 
+                                                                    a.AutomaticReconcile.AutomaticReconcileField1.EnglishName 
+                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
+                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField3.EnglishName
+                                                                    : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName
+                                                                    + "+" + a.AutomaticReconcile.AutomaticReconcileField2.EnglishName
+                                                                : a.AutomaticReconcile.AutomaticReconcileField1.EnglishName 
                                                             : null,
                                                         PreviousEnglishName = a.PreviousEnglishName,
                                                         PreviousEnglishNameChangeDate = a.PreviousEnglishNameChangeDate,
@@ -91,6 +94,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         IsVATExempt = a.IsVATExempt,
                                                         LocalBalanceInDue = md.LocalBalanceInDue,
                                                         NextDueDate = md.NextDueDate,
+                                                        TotalOpenChequesInLocalCur = md.TotalOpenChequesInLocalCur,
                                                      });
             return query;
         }

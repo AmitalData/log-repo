@@ -1601,6 +1601,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ShipmentContainerStatus> ShipmentContainerStatuses { get; }
         public IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; }
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; }
+        public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
+
         #endregion
 
         #region Invoice Context
@@ -4702,6 +4704,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWQueryMap());
             modelBuilder.Configurations.Add(new DWQueryColumnMap());
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
+            modelBuilder.Configurations.Add(new ShipmentPackageHarmonizeMap());
+            modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
 
             base.OnModelCreating(modelBuilder);
         }

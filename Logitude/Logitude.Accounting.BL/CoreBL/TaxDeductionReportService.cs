@@ -89,7 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
 
-                if(item.DeductionType == "08")
+                if(item.DeductionFileTypeCode == "08")
                 {
                     if (item.EnglishName != null)
                     {
@@ -175,8 +175,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
-            myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionType == "08").Sum(d => d.SumOfAmountInLocalCurrency));
-            myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionType == "08").Sum(d => d.SumOfTaxDeductionLocalAmount));
+            myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfAmountInLocalCurrency));
+            myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfTaxDeductionLocalAmount));
 
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSingleAddressPM(tenantPM.AddressId, tenant);
@@ -222,11 +222,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(item.Month);
                 
                 myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month== item.Month).Count());
-               myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionType != "18").Sum(d => d.SumOfAmountInLocalCurrency));
-                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionType != "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
+               myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfAmountInLocalCurrency));
+                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
                 myStringBuilder.Append('0', 12);
-                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionType == "18").Sum(d => d.SumOfAmountInLocalCurrency));
-                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionType == "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
+                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfAmountInLocalCurrency));
+                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
                 myStringBuilder.Append(' ', 131);
                 myStringBuilder.Append("a80");
                 myStringBuilder.Append("\n");
@@ -313,7 +313,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 Tenant = tenant,
                 DirectionCode = "I",
                 EntityId = taxDeductionReport.Id,
-                EntityNumber = taxDeductionReport.ReportNumber.ToString(),
+                EntityNumber = taxDeductionReport.ReportNumber!= null? taxDeductionReport.ReportNumber.ToString() : null,
                 ObjectTableId = table.Id,
                 Code = _code,
                 CreatedByUserId = loggedUser.Id,

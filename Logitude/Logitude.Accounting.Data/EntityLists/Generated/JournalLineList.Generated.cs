@@ -84,6 +84,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool? IsCreditAccountMulti  { get; set; }
        [DataMember]
        public bool? IsDebitAccountMulti  { get; set; }
+       [DataMember]
+       public string ExternalReconcileNumber  { get; set; }
    }
 
 }

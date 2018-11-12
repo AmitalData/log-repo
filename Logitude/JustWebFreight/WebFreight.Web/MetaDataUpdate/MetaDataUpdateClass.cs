@@ -11426,7 +11426,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidARI",
                 PMPropertyPath = "AllowVoidARI",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidARI",
+                HelpTextDefaultText = "To activate VOID action for AR Invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11447,7 +11449,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidARP",
                 PMPropertyPath = "AllowVoidARP",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidARP",
+                HelpTextDefaultText = "To activate VOID action for AR Payment",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11468,7 +11472,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidAPI",
                 PMPropertyPath = "AllowVoidAPI",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidAPI",
+                HelpTextDefaultText = "To activate VOID option in AP invoices",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11489,7 +11495,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidAPP",
                 PMPropertyPath = "AllowVoidAPP",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidAPP",
+                HelpTextDefaultText = "To activate VOID option in AP Payments",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11510,7 +11518,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowManualInvoiceNumber",
                 PMPropertyPath = "AllowManualInvoiceNumber",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowManualInvoiceNumber",
+                HelpTextDefaultText = "To manage an external invoice number to be entered manually in the Invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11531,7 +11541,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAR",
                 PMPropertyPath = "IsVatNumberMandatoryInAR",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsVatNumberMandatoryInAR",
+                HelpTextDefaultText = "Mandatory Bill to VAT number in AR Invoice & AR Payment",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11552,7 +11564,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAP",
                 PMPropertyPath = "IsVatNumberMandatoryInAP",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsVatNumberMandatoryInAP",
+                HelpTextDefaultText = "Mandatory Bill to VAT number in AP Invoices and AP Payments",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11573,7 +11587,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsChronologicalDates",
                 PMPropertyPath = "IsChronologicalDates",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsChronologicalDates",
+                HelpTextDefaultText = "Avoid issuing an invoice with date less than the date of the previous issued invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11594,7 +11610,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowMinusInvoicelines",
                 PMPropertyPath = "AllowMinusInvoicelines",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowMinusInvoicelines",
+                HelpTextDefaultText = "Allow invoices including negative charges amounts",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11612,7 +11630,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowPositiveAmountsInTheCreditNote",
                 PMPropertyPath = "AllowPositiveAmountsInTheCreditNote",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowPositiveAmountsInTheCreditNote",
+                HelpTextDefaultText = "Allow credit notes including positive charges amounts",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11633,7 +11653,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowClosureWithoutPayables",
                 PMPropertyPath = "AllowClosureWithoutPayables",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowClosureWithoutPayables",
+                HelpTextDefaultText = "Allows to accounting close shipments with open payables lines",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11720,7 +11742,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsSingleTaxPerInvoice",
                 PMPropertyPath = "IsSingleTaxPerInvoice",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsSingleTaxPerInvoice",
+                HelpTextDefaultText = "You are limited to use one VAT type per invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11885,7 +11909,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiPercentageVATTypes",
                 PMPropertyPath = "EnableMultiPercentageVATTypes",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiPercentageVATTypes",
+                HelpTextDefaultText = "Allows creating combined VAT types from two or more VAT Types with different percentages",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11903,7 +11929,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "NotifyPastDateOnInvoiceEdit",
                 PMPropertyPath = "NotifyPastDateOnInvoiceEdit",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "NotifyPastDateOnInvoiceEdit",
+                HelpTextDefaultText = "Alert in draft or open constituent invoice if the date should be updated to the current day",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11921,7 +11949,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiRateAPInvoices",
                 PMPropertyPath = "EnableMultiRateAPInvoices",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiRateAPInvoices",
+                HelpTextDefaultText = "Allows recording AP invoice with different exchange rates",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11957,7 +11987,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiCurrencyARPayments",
                 PMPropertyPath = "EnableMultiCurrencyARPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiCurrencyARPayments",
+                HelpTextDefaultText = "Allows closing AR invoices in foreign currency with AR Payment in local currency or vice versa",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11975,7 +12007,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiCurrencyAPPayments",
                 PMPropertyPath = "EnableMultiCurrencyAPPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiCurrencyAPPayments",
+                HelpTextDefaultText = "Allows closing AP invoices in foreign currencies with payment in local currency or vice versa",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11993,7 +12027,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableNegativeOffsetARPayments",
                 PMPropertyPath = "EnableNegativeOffsetARPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableNegativeOffsetARPayments",
+                HelpTextDefaultText = "Allows recording AR Payments in negative amounts using payment method \"Offset\"",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -12011,7 +12047,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableNegativeOffsetAPPayments",
                 PMPropertyPath = "EnableNegativeOffsetAPPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableNegativeOffsetAPPayments",
+                HelpTextDefaultText = "Allows recording payables payments in negative amounts using payment method is Offset",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             this.ObjectContext.SaveChanges();
@@ -61051,7 +61089,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeTypeCode = "O",
                 LocalDefaultText =
-                "חדש %Entity"
+                "חדשה %Entity"
                 //"%Entity חדש "
             }, TextCodeRepository, textcodes);
 
@@ -65645,6 +65683,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ReportFeature54 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "USERSBYTENANTREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.UsersbyTenantReport", NameTextCodeDefaultText = "Users by Tenant Report", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature55 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LICENSEMANAGEMENTREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.LicenseManagement", NameTextCodeDefaultText = "License Management", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature56= AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPMENTSSTOCKS", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.ShipmentsStocks", NameTextCodeDefaultText = "Shipments Stocks", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ReportFeature57 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKSWITHNORPROJECTSREPORT", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.TasksWithoutProjects", NameTextCodeDefaultText = "Tasks not Connected to Projects", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ReportFeature58 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPMENTDETAILS", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.ShipmentDetails", NameTextCodeDefaultText = "Shipment Details", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -66156,6 +66196,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARInvoiceFeature_Q09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPROVALGENERALINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.ApprovalGeneralInvoice", NameTextCodeDefaultText = "Aproval General Invoice", FullLocalDefaultText = "אישור חשבונית כללית" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q010 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLGENERALINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.AllGeneralInvoice", NameTextCodeDefaultText = "All General Invoice", FullLocalDefaultText = "כל החשבוניות הכלליות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATFAILEDINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.SATFailedInvoices", NameTextCodeDefaultText = "Invoices Failed to Open in SAT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ARInvoiceFeature_Q12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKSATSTATUS", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.CheckSATStatus", NameTextCodeDefaultText = "Check SAT Status", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -66212,6 +66253,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARPaymentFeature_C06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDToSAT", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.SendToSAT", NameTextCodeDefaultText = "Send to SAT", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_C07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiCurrency", Packagable = true, FeatureTypeCode = "ACT", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.EnableMultiCurrency", NameTextCodeDefaultText = "Enable multi-currency", FullLocalDefaultText = "לאפשר ריבוי מטבעות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_C08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentEditExchangeRate", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.EditExchangeRate", NameTextCodeDefaultText = "Edit Exchange Rate", FullLocalDefaultText = "ערוך שער חליפין", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ARPaymentFeature_C09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKSATSTATUS", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.CheckSATStatus", NameTextCodeDefaultText = "Check SAT Status", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature ARPaymentFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLPAYMENTS", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.AllPayments", NameTextCodeDefaultText = "All Payments", FullLocalDefaultText = "כל הקבלות", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENPAYMENTS", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.OpenPayments", NameTextCodeDefaultText = "Open Payments", FullLocalDefaultText = "קבלות פתוחות", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);

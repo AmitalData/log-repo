@@ -1,4 +1,4 @@
-﻿import {RoutingsTabComponent} from './Components/Routings/RoutingsTabComponent';
+import {RoutingsTabComponent} from './Components/Routings/RoutingsTabComponent';
 import {AddEditPreCarriageComponent} from './Components/Routings/AddEditPreCarriageComponent';
 import {AddEditOnCarriageComponent} from './Components/Routings/AddEditOnCarriageComponent';
 import {AddEditHouseRoutingComponent} from './Components/Routings/AddEditHouseRoutingComponent';
@@ -20,6 +20,7 @@ import {DeliveryPackagesAddEditComponent} from './Components/Routings/DeliveryTa
 import {DeliveryPackagesChooseComponent} from './Components/Routings/DeliveryTabs/DeliveryPackagesChooseComponent';
 import {DeliveryPackagesConnectComponent} from './Components/Routings/DeliveryTabs/DeliveryPackagesConnectComponent';
 import {OnCarriageDateComponent} from './Components/Routings/OnCarriageDateComponent';
+import { AddEditPackageHarmonizeComponent } from './Components/Routings/AddEditPackageHarmonizeComponent';
 
 export const Components =
     [
@@ -43,7 +44,8 @@ export const Components =
         DeliveryDocsInTabComponent,
         DeliveryPackagesAddEditComponent,
         DeliveryPackagesChooseComponent,       
-        DeliveryPackagesConnectComponent, 
+        DeliveryPackagesConnectComponent,
+        AddEditPackageHarmonizeComponent,
     ];
 
 export const ControlsComponents =
@@ -79,6 +81,7 @@ export class ModuleDeclarations {
             case "DeliveryPackagesAddEditComponent": { myResult = DeliveryPackagesAddEditComponent; break; }
             case "DeliveryPackagesChooseComponent": { myResult = DeliveryPackagesChooseComponent; break; }
             case "DeliveryPackagesConnectComponent": { myResult = DeliveryPackagesConnectComponent; break; }
+            case "AddEditPackageHarmonizeComponent": { myResult = AddEditPackageHarmonizeComponent; break; }
         }
 
         return myResult;

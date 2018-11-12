@@ -41,6 +41,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +49,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using System.Xml;
 using WebFreight.Web.AccountingModel.DomainServices;
 using WebFreight.Web.BookingModel.DomainServices;
 using WebFreight.Web.CommonDataModel.DomainServices;
@@ -152,6 +154,101 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     CommonDataDomainService commonDomain = new CommonDataDomainService();
                     CurrencyList myResult = commonDomain.CopyCurrencyToTenant(CurrencyId, tenant, CurrencyRate, RateDate);
                     //CurrencyList myResult = new CurrencyList();
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetBlueSnapToken(string VaultedShopperId)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    if (VaultedShopperId == "undefined")
+                        VaultedShopperId = null;
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    string loggedUserEmail = authToken.Email;
+                    int tenant = authToken.Tenant;
+                    string myResult=null;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    if(!String.IsNullOrEmpty(VaultedShopperId))
+                    {                 
+                        HttpClient client = new HttpClient();
+                        client.BaseAddress = new Uri("https://ws.bluesnap.com/services/2/tools/auth-token");
+                        ServicePointManager.Expect100Continue = true;
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                        client.DefaultRequestHeaders.Accept.Add(
+                        new MediaTypeWithQualityHeaderValue("application/xml"));
+
+                        string authInfo = "API_15408257301181065689979" + ":" + "BlueSand123";
+                        authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+
+                        var request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15408257301181065689979:BlueSand123"));
+                        try
+                        {
+                            var response2 = request.GetResponse();
+
+                            string strResponse = "";
+                            using (var sr = new StreamReader(response2.GetResponseStream()))
+                            {
+                                strResponse = sr.ReadToEnd();
+
+                            }
+
+                            XmlDocument doc = new XmlDocument();
+                            doc.LoadXml(strResponse);
+
+
+                            myResult = doc.InnerText;
+
+                        }
+                        catch (Exception EX1)
+                        {
+
+                             authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
+                            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+
+                            //like this:
+                             request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
+                            request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:BlueSand123"));
+                            try
+                            {
+                                var response2 = request.GetResponse();
+
+                                string strResponse = "";
+                                using (var sr = new StreamReader(response2.GetResponseStream()))
+                                {
+                                    strResponse = sr.ReadToEnd();
+
+                                }
+
+                                XmlDocument doc = new XmlDocument();
+                                doc.LoadXml(strResponse);
+
+
+                               myResult = doc.InnerText;
+
+                            }
+                            catch (Exception EX2)
+                            {
+                                myResult = null;
+                            }
+
+                        }
+
+                    }
+
+
 
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);

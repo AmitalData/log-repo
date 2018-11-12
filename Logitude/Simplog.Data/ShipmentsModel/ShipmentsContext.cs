@@ -319,6 +319,8 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentContainerStatusMap());
             modelBuilder.Configurations.Add(new PickUpDeliveryTransportModeMap());
             modelBuilder.Configurations.Add(new INTTRADocumentTypeMap());
+            modelBuilder.Configurations.Add(new ShipmentPackageHarmonizeMap());
+            modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -377,6 +379,8 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentContainerStatus> ShipmentContainerStatuses { get; set; }
         public IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; set; }
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; set; }
+        public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; set; }
+        public IDbSet<PickUpDeliveryPackageHarmonize> PickUpDeliveryPackageHarmonizes { get; set; }
 
         [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
         public IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields)

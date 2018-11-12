@@ -67,6 +67,8 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentContainerStatus> ShipmentContainerStatuses { get; }
         IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; }
         IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; }
+        IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
+        IDbSet<PickUpDeliveryPackageHarmonize> PickUpDeliveryPackageHarmonizes { get; }
 
         IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters);
         IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields);

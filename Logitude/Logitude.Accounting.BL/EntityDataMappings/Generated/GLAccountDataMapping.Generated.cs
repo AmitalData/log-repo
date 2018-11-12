@@ -158,7 +158,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DeductionFileTypeCode, 
 	         DeductionFileTypeName, 
 	         AssessingOfficeName, 
-	         DeductionTypeEnglishName,
+	         DeductionTypeEnglishName, 
+	         TotalOpenChequesInLocalCur,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

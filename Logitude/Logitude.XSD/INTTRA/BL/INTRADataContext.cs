@@ -70,6 +70,7 @@ namespace Logitude.XSD.INTTRA.BL
         private ShippingLine MainShippingLine;
         private List<ShipmentPackage> ShipmentPackages = new List<ShipmentPackage>();
         private List<InsideShipmentPackage> InsidePackages = new List<InsideShipmentPackage>();
+        private List<ShipmentPackageHarmonize> AllHarmonizes = new List<ShipmentPackageHarmonize>();
         private IShipmentsContext shipmentContext;
         public ShipmentRepository shipmentRepository;
         private ShipmentMasterDataRepository shipmentMasterDataRepository;
@@ -477,15 +478,34 @@ namespace Logitude.XSD.INTTRA.BL
                                        && ShipmentPackagesIds.Contains(d.ShipmentPackageId)
                                        select d).ToList();
 
+                this.AllHarmonizes = (from d in shipmentContext.ShipmentPackageHarmonizes
+                                      where d.Tenant == this.Tenant
+                                      && ShipmentPackagesIds.Contains(d.PackageId)
+                                      select d).ToList();
+
                 bool allContainersHasInsides = true;
 
                 foreach (ShipmentPackage item in this.ShipmentPackages)
                 {
-                    if (!string.IsNullOrEmpty(item.Harmonize))
+                    if (item.IsMultiHarmonize)
                     {
-                        if (item.Harmonize.Length > 35)
+                        foreach (ShipmentPackageHarmonize itemHarmonize in this.AllHarmonizes)
                         {
-                            this.Errors.Add("Harmonize Field max length must be 35");
+                            if (itemHarmonize.Harmonize.Length > 35)
+                            {
+                                this.Errors.Add("Harmonize Field max length must be 35");
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(item.Harmonize))
+                        {
+                            if (item.Harmonize.Length > 35)
+                            {
+                                this.Errors.Add("Harmonize Field max length must be 35");
+                            }
                         }
                     }
 
@@ -1815,19 +1835,43 @@ namespace Logitude.XSD.INTTRA.BL
 
                         #endregion
                     }
-                    
-                    if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
+
+                    if (myShipmentPackage.IsMultiHarmonize)
                     {
-                        INTTRA_Out.ProductId itemProductId = new INTTRA_Out.ProductId()
+                        List<ShipmentPackageHarmonize> iHarmonizes = this.AllHarmonizes.Where(d => d.PackageId == myShipmentPackage.Id).ToList();
+
+                        if (iHarmonizes.Count > 0)
                         {
-                            ItemTypeIdCode = INTTRA_Out.ProductIdItemTypeIdCode.HarmonizedSystem,
-                            Value = myShipmentPackage.Harmonize
-                        };
+                            List<INTTRA_Out.ProductId> list = new List<INTTRA_Out.ProductId>();
 
-                        List<INTTRA_Out.ProductId> list = new List<INTTRA_Out.ProductId>();
-                        list.Add(itemProductId);
+                            foreach (ShipmentPackageHarmonize itemHarmonize in iHarmonizes)
+                            {
+                                list.Add(new INTTRA_Out.ProductId()
+                                {
+                                    ItemTypeIdCode = INTTRA_Out.ProductIdItemTypeIdCode.HarmonizedSystem,
+                                    Value = itemHarmonize.Harmonize,
+                                });
+                            }
 
-                        itemGoodsDetails.ProductId = list.ToArray<INTTRA_Out.ProductId>();
+                            itemGoodsDetails.ProductId = list.ToArray<INTTRA_Out.ProductId>();
+                        }
+                    }
+
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
+                        {
+                            INTTRA_Out.ProductId itemProductId = new INTTRA_Out.ProductId()
+                            {
+                                ItemTypeIdCode = INTTRA_Out.ProductIdItemTypeIdCode.HarmonizedSystem,
+                                Value = myShipmentPackage.Harmonize
+                            };
+
+                            List<INTTRA_Out.ProductId> list = new List<INTTRA_Out.ProductId>();
+                            list.Add(itemProductId);
+
+                            itemGoodsDetails.ProductId = list.ToArray<INTTRA_Out.ProductId>();
+                        }
                     }
 
                     if (!string.IsNullOrEmpty(myShipmentPackage.MarksAndNumbers))

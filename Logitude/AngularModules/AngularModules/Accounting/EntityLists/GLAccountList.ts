@@ -87,6 +87,7 @@ export class GLAccountList {
 	DeductionFileTypeName: string;
 	AssessingOfficeName: string;
 	DeductionTypeEnglishName: string;
+	TotalOpenChequesInLocalCur: number;
 	
 }
  

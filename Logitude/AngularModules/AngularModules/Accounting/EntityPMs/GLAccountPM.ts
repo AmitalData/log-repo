@@ -499,6 +499,11 @@ export class GLAccountPM {
     public set DeductionTypeEnglishName(newValue: string) { if (this.deductionTypeEnglishName != newValue) { this.deductionTypeEnglishName = newValue; this.MarkAsDirty("DeductionTypeEnglishName"); } }
        
 	 
+    private totalOpenChequesInLocalCur: number;
+    public get TotalOpenChequesInLocalCur() { return this.totalOpenChequesInLocalCur; }
+    public set TotalOpenChequesInLocalCur(newValue: number) { if (this.totalOpenChequesInLocalCur != newValue) { this.totalOpenChequesInLocalCur = newValue; this.MarkAsDirty("TotalOpenChequesInLocalCur"); } }
+       
+	 
 
     public OldEntityPM: GLAccountPM;
 		

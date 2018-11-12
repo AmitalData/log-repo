@@ -250,6 +250,38 @@
     <Compile Include="Migrations\201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.Designer.cs">
       <DependentUpon>201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.cs" />
+    <Compile Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.Designer.cs">
+      <DependentUpon>201811081200180_JournalLineExternalReconcileNumberMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811071326248_AddShipmentPackageHarmonize.cs" />
+    <Compile Include="Migrations\201811071326248_AddShipmentPackageHarmonize.Designer.cs">
+      <DependentUpon>201811071326248_AddShipmentPackageHarmonize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.cs" />
+    <Compile Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.Designer.cs">
+      <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.cs" />
+    <Compile Include="Migrations\201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.Designer.cs">
+      <DependentUpon>201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs" />
+    <Compile Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.Designer.cs">
+      <DependentUpon>201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811111058568_AddCategory1and2toDWObjectFields_Rabaia.cs" />
+    <Compile Include="Migrations\201811111058568_AddCategory1and2toDWObjectFields_Rabaia.Designer.cs">
+      <DependentUpon>201811111058568_AddCategory1and2toDWObjectFields_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811111329021_DeletePDFMenuButtonMigration.cs" />
+    <Compile Include="Migrations\201811111329021_DeletePDFMenuButtonMigration.Designer.cs">
+      <DependentUpon>201811111329021_DeletePDFMenuButtonMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811111357332_TaxReportSearchFieldMigration.cs" />
+    <Compile Include="Migrations\201811111357332_TaxReportSearchFieldMigration.Designer.cs">
+      <DependentUpon>201811111357332_TaxReportSearchFieldMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -381,6 +413,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.resx">
       <DependentUpon>201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.resx">
+      <DependentUpon>201811081200180_JournalLineExternalReconcileNumberMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071326248_AddShipmentPackageHarmonize.resx">
+      <DependentUpon>201811071326248_AddShipmentPackageHarmonize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.resx">
+      <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.resx">
+      <DependentUpon>201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811111058568_AddCategory1and2toDWObjectFields_Rabaia.resx">
+      <DependentUpon>201811111058568_AddCategory1and2toDWObjectFields_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811111329021_DeletePDFMenuButtonMigration.resx">
+      <DependentUpon>201811111329021_DeletePDFMenuButtonMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811111357332_TaxReportSearchFieldMigration.resx">
+      <DependentUpon>201811111357332_TaxReportSearchFieldMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.resx">
+      <DependentUpon>201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -58,8 +58,8 @@ import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImp
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
-
-
+import { ShipmentPickUpDeliverySL } from '../../../Common/DataContracts/ShipmentPickUpDeliverySL';
+import {CitySelectionArgs} from '../../../Common/Args';
 
 @Component({
     moduleId: module.id,
@@ -81,7 +81,6 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
     private myVesselListService: VesselListService;
     private myMoveTypeListService: MoveTypeListService;
     private myCurrencyListService: CurrencyListService;
-    
     IsRemovePackageAreaFromScreen: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     ConsigneeDefaultValues: string;
@@ -201,7 +200,19 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
     IsLoadedPortsTranslation: boolean = false;
     IsLoadedPackageTranslation: boolean = false;
 
+
+    HidePickupDetailsArea: boolean = false;
+    HideDeliveyDetailsArea: boolean = false;
+    
+    IsNoPickupDetailsFound: boolean = false;
+    IsNoDeliveyDetailsFound: boolean = false;
     myPackageTypeService: PackageTypeListService;
+    IsLoadedToPickUpTranslation: boolean = false;
+    IsLoadedFromPickUpTranslation: boolean = false;
+
+
+    OurSideShipmentPickUp: ShipmentPickUpDeliverySL;
+    OurSideShipmentDelivery: ShipmentPickUpDeliverySL;
     constructor(public _sharedAgentManifestService: SharedAgentManifestService, public _agentSharedManifestPMService: AgentSharedManifestPMService, public entityPMService:EntityPMService) {
         super();
         this.myPackageTypeService = new PackageTypeListService();
@@ -1358,6 +1369,11 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
     SharedManifestStatus: string;
     IsInlandDomestic: boolean;
+    
+
+
+
+
     SetWindowArgs(args: any) {
 
         this.CurrentEntity = args.CurrentEntity;
@@ -1365,18 +1381,62 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
         this.HouseEntity = args.HouseEntity;
         this.AgentSharedManifestList = args.AgentSharedManifestList;
         this.SharedManifestStatus = args.SharedManifestStatus;
-        
+
+
         if (this.ManifestSL && this.CurrentEntity) {
             SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+
             this.RunComponent();
             this.FullShipmentProperites();
             this.BuildAgentSide();
+            this.BuildAgentShipmentPickUpDelivey();
             this.BuildOurSide();
             //this.BuildAdditionalFields();//islam
            
             this.StopBusyIndicator();
         }
 
+    }
+
+
+    AgentShipmentPickUpMainCarriageETD: Date;
+    AgentShipmentPickUpMainCarriageETA: Date;
+    AgentShipmentPickUpMainCarriageATD: Date;
+    AgentShipmentPickUpMainCarriageATA: Date;
+
+    AgentShipmentDeliveryMainCarriageETD: Date;
+    AgentShipmentDeliveryMainCarriageETA: Date;
+
+    AgentShipmentDeliveryMainCarriageATD: Date;
+    AgentShipmentDeliveryMainCarriageATA: Date;
+
+
+
+    BuildAgentShipmentPickUpDelivey() {
+     
+        if (this.ManifestSL.ShipmentPickUp) {
+            this.AgentShipmentPickUpMainCarriageETD = this.ManifestSL.ShipmentPickUp.MainCarriageETD;
+            this.AgentShipmentPickUpMainCarriageETA = this.ManifestSL.ShipmentPickUp.MainCarriageETA;
+            this.AgentShipmentPickUpMainCarriageATD = this.ManifestSL.ShipmentPickUp.MainCarriageATD;
+            this.AgentShipmentPickUpMainCarriageATA = this.ManifestSL.ShipmentPickUp.MainCarriageATA;
+
+        } else {
+
+            this.IsNoPickupDetailsFound = true;
+            this.HidePickupDetailsArea = true;
+        }
+
+        if (this.ManifestSL.ShipmentDelivery) {
+            this.AgentShipmentDeliveryMainCarriageETD = this.ManifestSL.ShipmentDelivery.MainCarriageETD;
+            this.AgentShipmentDeliveryMainCarriageETA = this.ManifestSL.ShipmentDelivery.MainCarriageETA;
+            this.AgentShipmentDeliveryMainCarriageATD = this.ManifestSL.ShipmentDelivery.MainCarriageATD;
+            this.AgentShipmentDeliveryMainCarriageATA = this.ManifestSL.ShipmentDelivery.MainCarriageATA;
+
+        } else {
+            this.IsNoDeliveyDetailsFound = true;
+
+            this.HideDeliveyDetailsArea = true;
+        }
     }
 
     FullShipmentProperites() {
@@ -1909,7 +1969,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                 this.myIncotermListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: IncotermList[] = myResponse.Result;
-                        var IncotermList: IncotermList = list.filter(d => d.Code == incotermTranslation.MyCode)[0];
+                        var IncotermList: IncotermList = list.filter(d => d.Code == incotermTranslation.MyCode && !d.InActive)[0];
                         if (IncotermList) this.IncotermId = IncotermList.Id;
 
                     }
@@ -1948,7 +2008,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                 this.myMoveTypeListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: MoveTypeList[] = myResponse.Result;
-                        var MoveTypeList: MoveTypeList = list.filter(d => d.Code == moveTypeTranslation.MyCode)[0];
+                        var MoveTypeList: MoveTypeList = list.filter(d => d.Code == moveTypeTranslation.MyCode && !d.InActive)[0];
                         if (MoveTypeList) this.MoveTypeId = MoveTypeList.Id;
                     }
 
@@ -1977,7 +2037,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                 this.myCurrencyListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: CurrencyList[] = myResponse.Result;
-                        var currencyList: CurrencyList = list.filter(d => d.Code == valueOfGoodsCurrencyCodeTranslation.MyCode)[0];
+                        var currencyList: CurrencyList = list.filter(d => d.Code == valueOfGoodsCurrencyCodeTranslation.MyCode && !d.InActive)[0];
                         if (currencyList) this.ValueOfGoodsCurrencyId = currencyList.Id;
                     }
 
@@ -2113,7 +2173,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
    
                     if (!myResponse.HasError) {
                         var list: VesselList[] = myResponse.Result;
-                        var VesselList: VesselList = list.filter(d => d.Code == mainCarriageVesselTranslation.MyCode)[0];
+                        var VesselList: VesselList = list.filter(d => d.Code == mainCarriageVesselTranslation.MyCode && !d.InActive)[0];
                         if (VesselList) {
                             this.MainCarriageVesselId = VesselList.Id;
                         }
@@ -2144,7 +2204,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
                     if (!myResponse.HasError) {
                         var list: VesselList[] = myResponse.Result;
-                        var VesselList: VesselList = list.filter(d => d.Code == transshipment1VesselTranslation.MyCode)[0];
+                        var VesselList: VesselList = list.filter(d => d.Code == transshipment1VesselTranslation.MyCode && !d.InActive)[0];
                         if (VesselList) {
                             this.Transshipment1VesselId = VesselList.Id;
                         }
@@ -2174,7 +2234,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                 myService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: VesselList[] = myResponse.Result;
-                        var VesselList: VesselList = list.filter(d => d.Code == transshipment2VesselTranslation.MyCode)[0];
+                        var VesselList: VesselList = list.filter(d => d.Code == transshipment2VesselTranslation.MyCode && !d.InActive)[0];
                         if (VesselList) {
                             this.Transshipment2VesselId = VesselList.Id;
                         }
@@ -2206,7 +2266,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                 myService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         var list: VesselList[] = myResponse.Result;
-                        var VesselList: VesselList = list.filter(d => d.Code == transshipment3VesselTranslation.MyCode)[0];
+                        var VesselList: VesselList = list.filter(d => d.Code == transshipment3VesselTranslation.MyCode && !d.InActive)[0];
                         if (VesselList) {
                             this.Transshipment3VesselId = VesselList.Id;
                         }
@@ -2238,7 +2298,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                
                         if (!myResponse.HasError) {
                             var list: AirlineList[] = myResponse.Result;
-                            var airlineList: AirlineList = list.filter(d => d.Code == MainCarriageInterlineTranslation.MyCode)[0];
+                            var airlineList: AirlineList = list.filter(d => d.Code == MainCarriageInterlineTranslation.MyCode && !d.InActive)[0];
                             if (airlineList) this.InterlineId = airlineList.Id;
 
                         }
@@ -2277,7 +2337,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                         var packageitem = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == item.Code && f.ObjectTableName == "Package")[0];
                         if (packageitem) {
                             if (this.AllPackageTypes) {
-                                var packageTranslate: PackageTypeList = this.AllPackageTypes.filter(d => d.Code == packageitem.MyCode)[0];
+                                var packageTranslate: PackageTypeList = this.AllPackageTypes.filter(d => d.Code == packageitem.MyCode && !d.InActive)[0];
                                 if (packageTranslate) {
                                     packageTypePM.Id = packageTranslate.Id;
                                     packageTypePM.Code = packageTranslate.Code;
@@ -2351,12 +2411,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                         });
 
                     } else this.IsLoadedNotify1IdTranslation = true;
-
-
-
-
-
-
+                    
 
                     var englishName = !AppTool.IsNullOrEmpty(this.AgentSideData.Notify1.EnglishName) ? this.AgentSideData.Notify1.EnglishName : "";
                     var Address1 = !AppTool.IsNullOrEmpty(this.AgentSideData.Notify1.Address1) ? this.AgentSideData.Notify1.Address1 : "";
@@ -2367,6 +2422,8 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                     this.Notify1DefaultValues += (Address1 + "^");
                     this.Notify1DefaultValues += (Address2 + "^");
                     this.Notify1DefaultValues += (city + "^");
+
+
                     var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
                     apiQueryFilters.GetAll = true;
                     apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
@@ -2374,7 +2431,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                     this.countryListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             var list: any[] = myResponse.Result;
-                            var CountryList: any = list.filter(d => d.Code == this.AgentSideData.Notify1.CountryCode)[0];
+                            var CountryList: any = list.filter(d => d.Code == this.AgentSideData.Notify1.CountryCode && !d.InActive)[0];
                             if (CountryList) {
                                 this.Notify1DefaultValues += (CountryList.Id);
                             }
@@ -2408,6 +2465,180 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
             this.HideGeneralDetailsArea = true;
         } 
 
+
+
+
+        if (this.ManifestSL && this.ManifestSL.ShipmentPickUp) {
+
+            this.OurSideShipmentPickUp = new ShipmentPickUpDeliverySL();
+
+            this.OurSideShipmentPickUp.MainCarriageATA = this.ManifestSL.ShipmentPickUp.MainCarriageATA;
+            this.OurSideShipmentPickUp.MainCarriageATD = this.ManifestSL.ShipmentPickUp.MainCarriageATD;
+            this.OurSideShipmentPickUp.MainCarriageETA = this.ManifestSL.ShipmentPickUp.MainCarriageETA;
+            this.OurSideShipmentPickUp.MainCarriageETD = this.ManifestSL.ShipmentPickUp.MainCarriageETD;
+            this.OurSideShipmentPickUp.TransportModeCode = this.ManifestSL.ShipmentPickUp.TransportModeCode;
+            this.OurSideShipmentPickUp.TransportModeName = this.ManifestSL.ShipmentPickUp.TransportModeName;
+
+            //From
+            if (this.ManifestSL.ShipmentPickUp.FromPort) {
+                var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+                apiQueryFilters.GetAll = true;
+                apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+                this.myPortListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: PortList[] = myResponse.Result;
+                        if (this.ManifestSL.MainCarriageFromPort != null) {
+                            var fromPort: PortList = list.filter(d => d.Code == this.ManifestSL.ShipmentPickUp.FromPort.Code)[0];
+                            if (fromPort) {
+                                this.OurSideShipmentPickUp.FromPortId = fromPort.Id;
+                            }
+                        }
+                    }
+                    this.IsLoadedFromPickUpTranslation = true;
+                });
+
+            }
+            else if (this.ManifestSL.ShipmentPickUp.FromPartner) {
+                // Shipper Translation
+                var shipmentPickUpFromPartnerTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.ManifestSL.ShipmentPickUp.FromPartner.Code && f.ObjectTableName == "ShipmentPickUpFromPartner")[0];
+                if (shipmentPickUpFromPartnerTranslation) {
+                    this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipmentPickUpFromPartnerTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
+                        var pmResponse: ServiceResponse = res;
+
+                        if (!pmResponse.HasError) {
+                            var myResult = pmResponse.Result;
+                            if (myResult) {
+
+                                this.OurSideShipmentPickUp.FromPartnerCardId = myResult;
+                            }
+                        }
+
+                        this.IsLoadedFromPickUpTranslation = true;
+                        this.StopBusyIndicator();
+
+
+                    });
+
+                } else this.IsLoadedFromPickUpTranslation = true;
+
+            }
+            else if (this.ManifestSL.ShipmentPickUp.PickUpDeliveryFromTypeCode == "CASL") {
+
+                if (this.ManifestSL.ShipmentPickUp.FromAddressCountryCode) {
+
+                    var shipmentPickUpFromCountryTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.ManifestSL.ShipmentPickUp.FromAddressCountryCode && f.ObjectTableName == "ShipmentPickUpFromCountry")[0];
+                    if (shipmentPickUpFromCountryTranslation) {
+                        var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+                        apiQueryFilters.GetAll = true;
+                        apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+                        apiQueryFilters.addAdditionalFilter("Code", shipmentPickUpFromCountryTranslation.MyCode, null, null, "Equals", true, true, true, "Text");
+                        this.countryListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var list: any[] = myResponse.Result;
+                                var CountryList: any = list.filter(d => d.Code == this.AgentSideData.Notify1.CountryCode && !d.InActive)[0];
+                                if (CountryList) {
+                                    this.OurSideShipmentPickUp.FromAddressCountryId = CountryList.Id;
+                                    this.OurSideShipmentPickUp.FromAddressCountryName = CountryList.EnglishName;
+
+                                }
+                            }
+
+                            this.IsLoadedFromPickUpTranslation = true;
+                            this.StopBusyIndicator();
+                        });
+
+                    } else this.IsLoadedFromPickUpTranslation = true;
+
+                }
+
+                this.OurSideShipmentPickUp.FromAddressZipCode = this.ManifestSL.ShipmentPickUp.FromAddressZipCode;
+                this.OurSideShipmentPickUp.FromAddressCity = this.ManifestSL.ShipmentPickUp.FromAddressCity;
+
+            }
+            else this.IsLoadedFromPickUpTranslation = true;
+
+            //To
+            if (this.ManifestSL.ShipmentPickUp.ToPort) {
+                var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+                apiQueryFilters.GetAll = true;
+                apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+                this.myPortListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: PortList[] = myResponse.Result;
+                        if (this.ManifestSL.MainCarriageToPort != null) {
+                            var ToPort: PortList = list.filter(d => d.Code == this.ManifestSL.ShipmentPickUp.ToPort.Code)[0];
+                            if (ToPort) {
+                                this.OurSideShipmentPickUp.ToPortId = ToPort.Id;
+                            }
+                        }
+                    }
+                    this.IsLoadedToPickUpTranslation = true;
+                });
+
+            }
+            else if (this.ManifestSL.ShipmentPickUp.ToPartner) {
+                // Shipper Translation
+                var shipmentPickUpToPartnerTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.ManifestSL.ShipmentPickUp.ToPartner.Code && f.ObjectTableName == "ShipmentPickUpToPartner")[0];
+                if (shipmentPickUpToPartnerTranslation) {
+                    this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipmentPickUpToPartnerTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
+                        var pmResponse: ServiceResponse = res;
+
+                        if (!pmResponse.HasError) {
+                            var myResult = pmResponse.Result;
+                            if (myResult) {
+
+                                this.OurSideShipmentPickUp.ToPartnerCardId = myResult;
+                            }
+                        }
+
+                        this.IsLoadedToPickUpTranslation = true;
+                        this.StopBusyIndicator();
+
+
+                    });
+
+                } else this.IsLoadedToPickUpTranslation = true;
+
+            }
+            else if (this.ManifestSL.ShipmentPickUp.PickUpDeliveryToTypeCode == "CASL") {
+
+                if (this.ManifestSL.ShipmentPickUp.ToAddressCountryCode) {
+
+                    var shipmentPickUpToCountryTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.ManifestSL.ShipmentPickUp.ToAddressCountryCode && f.ObjectTableName == "ShipmentPickUpToCountry")[0];
+                    if (shipmentPickUpToCountryTranslation) {
+                        var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+                        apiQueryFilters.GetAll = true;
+                        apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+                        apiQueryFilters.addAdditionalFilter("Code", shipmentPickUpToCountryTranslation.MyCode, null, null, "Equals", true, true, true, "Text");
+                        this.countryListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var list: any[] = myResponse.Result;
+                                var CountryList: any = list.filter(d => d.Code == this.AgentSideData.Notify1.CountryCode && !d.InActive)[0];
+                                if (CountryList) {
+                                    this.OurSideShipmentPickUp.ToAddressCountryId = CountryList.Id;
+                                    this.OurSideShipmentPickUp.ToAddressCountryName = CountryList.EnglishName;
+
+                                }
+                            }
+
+                            this.IsLoadedToPickUpTranslation = true;
+                            this.StopBusyIndicator();
+                        });
+
+                    } else this.IsLoadedToPickUpTranslation = true;
+
+                }
+
+                this.OurSideShipmentPickUp.ToAddressZipCode = this.ManifestSL.ShipmentPickUp.ToAddressZipCode;
+                this.OurSideShipmentPickUp.ToAddressCity = this.ManifestSL.ShipmentPickUp.ToAddressCity;
+
+            }
+            else this.IsLoadedToPickUpTranslation = true;
+
+        } else {
+            this.IsLoadedToPickUpTranslation = true;
+            this.IsLoadedFromPickUpTranslation = true;
+        }
         
         this.ComputeHeightAgentDataTransLationArea();
 
@@ -2417,6 +2648,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
     }
 
+    
     HeightAgentDataTransLationArea: string = "335px";
     ComputeHeightAgentDataTransLationArea() {
 
@@ -2518,83 +2750,232 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
         }
     }
 
+
+
+
     AddPartnerClicked(myPartnerCode: string) {
 
         var args = new NewEntityArgs();
         var logeWindow = new LogitudeWindow();
         var pathComponent = "./CommonModules/CommonCustomer/Components/NewEntity/NewCustomerComponent";
 
-        if (myPartnerCode == "C") {
+      
+            if (myPartnerCode == "C") {
 
-            args.DefaultValues = this.ConsigneeDefaultValues;
-            logeWindow.Title = "New Consignee";
-            logeWindow.ComponentLoaded.subscribe(comp => {
-                logeWindow.WindowClosed.subscribe(s => {
-                    if (s) {
-                        this.ConsigneeId = comp.EntityPM.Id;
-                        this.ConsigneeName = comp.EntityPM.EnglishName;
-                        this.myConsigneeSalesmanId = comp.EntityPM.SalesmanUserId;
-                    }
+                args.DefaultValues = this.ConsigneeDefaultValues;
+                logeWindow.Title = "New Consignee";
+                logeWindow.ComponentLoaded.subscribe(comp => {
+                    logeWindow.WindowClosed.subscribe(s => {
+                        if (s) {
+                            this.ConsigneeId = comp.EntityPM.Id;
+                            this.ConsigneeName = comp.EntityPM.EnglishName;
+                            this.myConsigneeSalesmanId = comp.EntityPM.SalesmanUserId;
+                        }
+                    });
+
                 });
 
-            });
 
+            }
+            else if (myPartnerCode == "Notify1") {
 
-        }
+                args.DefaultValues = this.Notify1DefaultValues;
+                logeWindow.Title = "New Notify 1";
+                logeWindow.ComponentLoaded.subscribe(comp => {
+                    logeWindow.WindowClosed.subscribe(s => {
+                        if (s) {
+                            this.Notify1Id = comp.EntityPM.Id;
+                        }
+                    });
 
-        else if (myPartnerCode == "Notify1") {
-
-            args.DefaultValues = this.Notify1DefaultValues;
-            logeWindow.Title = "New Notify 1";
-            logeWindow.ComponentLoaded.subscribe(comp => {
-                logeWindow.WindowClosed.subscribe(s => {
-                    if (s) {
-                        this.Notify1Id = comp.EntityPM.Id;
-                    }
                 });
 
-            });
+
+            }
+            else {
+                args.DefaultValues = this.ShiperDefaultValues;
+                logeWindow.Title = "New Shipper";
 
 
-        }
+                logeWindow.ComponentLoaded.subscribe(comp => {
+                    logeWindow.WindowClosed.subscribe(s => {
+                        if (s) {
+                            this.ShipperId = comp.EntityPM.Id;
+                            this.myShipperSalesmanId = comp.EntityPM.SalesmanUserId;
+                        }
+                    });
 
-        else {
-            args.DefaultValues = this.ShiperDefaultValues;
-            logeWindow.Title = "New Shipper";
-
-            //if (this.EntityPM.ShipmentLevelCode == "C") {
-            //    pathComponent = "./Common/Components/Partners/NewEntity/NewAgentComponent";
-            //}
-
-            logeWindow.ComponentLoaded.subscribe(comp => {
-                logeWindow.WindowClosed.subscribe(s => {
-                    if (s) {
-                        this.ShipperId = comp.EntityPM.Id;
-                        this.myShipperSalesmanId = comp.EntityPM.SalesmanUserId;
-
-                        //if (this.IsConsolShipment) {
-                        //    this.AgentId = comp.EntityPM.Id;
-                        //    this.AgentName = comp.EntityPM.EnglishName;
-                        //}
-                        //else {
-                        //    this.ShipperId = comp.EntityPM.Id;
-                        
-                        //    this.myShipperSalesmanId = comp.EntityPM.SalesmanUserId;
-                        //}
-                    }
                 });
 
-            });
+            }
 
-        }
+            logeWindow.Width = 960;
+            logeWindow.Height = 600;
+            logeWindow.WindowArgs = args;
+            logeWindow.Show(pathComponent);
 
 
-        logeWindow.Width = 960;
-        logeWindow.Height = 600;
-        logeWindow.WindowArgs = args;
-        logeWindow.Show(pathComponent);
 
+    
+      
     }
+
+    AddShipmentPickUpDeliveryPartnerClicked(tableName: string, code: string, entityName:string) {
+        var objectTable: any = window.ObjectTables.filter(d => d.Name.toLowerCase() === tableName.toLocaleLowerCase())[0];
+        if (objectTable.IsNewWizard) {
+            this.RunNewEntityWizard(objectTable.NewWizardComponentPath, objectTable.Name, code, entityName);
+        }
+    }
+
+
+
+
+
+
+    private RunNewEntityWizard(newWizardComponentPath: string, originalTableName: string, code: string, entityName:string) {
+
+        var componentPath: string = newWizardComponentPath;
+
+        if (componentPath != null) {
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 960;
+            logWindow.Height = 570;
+
+            var windowTitle = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(originalTableName));
+            logWindow.Title = windowTitle;
+
+            logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event, code, entityName));
+            logWindow.Show(componentPath);
+        }
+
+       
+    }
+
+    private OnNewEntityWindowClosed($event: any, code: string, entity: string) {
+        console.log($event);
+        if ($event && $event != "event") {
+            var ourSideShipmentPickUpDelivery: any = entity == "Pickup" ? this.OurSideShipmentPickUp : this.OurSideShipmentDelivery;
+            if (ourSideShipmentPickUpDelivery) {
+                if (code == "F") ourSideShipmentPickUpDelivery.FromPartnerCardId = $event;
+                else ourSideShipmentPickUpDelivery.ToPartnerCardId = $event;
+            }
+
+        }
+    }
+
+
+
+
+
+    SelectCityCommand(code: string, entity: string ) {
+
+        var mySourceCountryId: string;
+        var ourSideShipmentPickUpDelivery: any = entity == "Pickup" ? this.OurSideShipmentPickUp : this.OurSideShipmentDelivery;
+        if (ourSideShipmentPickUpDelivery) {
+            if (code == "F") mySourceCountryId = ourSideShipmentPickUpDelivery.FromAddressCountryId;
+            else mySourceCountryId = ourSideShipmentPickUpDelivery.ToAddressCountryId;
+
+        }
+
+
+        var args = new CitySelectionArgs(mySourceCountryId);
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Select City";
+        logWindow.WindowArgs = args;
+        logWindow.Show("./CommonModules/CommonOthers/Components/CitySelection/CitySelectionComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if (args.IsCitySelected) {
+                if (code == "F") {
+                    ourSideShipmentPickUpDelivery.FromAddressCity = args.CityName;
+                    ourSideShipmentPickUpDelivery.FromAddressCountryId = args.CountryId;
+                } else{
+
+                    ourSideShipmentPickUpDelivery.ToAddressCity = args.CityName;
+                    ourSideShipmentPickUpDelivery.ToAddressCountryId = args.CountryId;
+                }
+
+            }
+        });
+    }
+
+
+    AddCountryClick(code: string , entity:string) {
+        var countryCode: string;
+        var countryName: string;
+
+        var shipmentPickUpDelivery: any = entity == "Pickup" ? this.ManifestSL.ShipmentPickUp : this.ManifestSL.ShipmentDelivery;
+        if (shipmentPickUpDelivery) {
+            if (code == "F") {
+                countryCode = shipmentPickUpDelivery.FromAddressCountryCode;
+                countryName = shipmentPickUpDelivery.FromAddressCountryName;
+            } else {
+                countryCode = shipmentPickUpDelivery.ToAddressCountryCode;
+                countryName = shipmentPickUpDelivery.ToAddressCountryName;
+            }
+
+        }
+            var componentPath = "./Infrastructure/GenericComponents/NewEntityComponent";
+            this.entityPMService.getNewEntity("Country").then(response => {
+              
+                var args = new EntityArgs();
+                args.EntityPM = response;
+                args.EntityPM.Code = countryCode;
+                args.EntityPM.EnglishName = countryName;
+                args.ObjectTableName = "Country";
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 960;
+                logWindow.Height = 570;
+                var windowTitle = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate("Country"));
+                logWindow.WindowArgs = args;
+                logWindow.Title = windowTitle;
+                logWindow.Show(componentPath);
+
+                logWindow.WindowClosed.subscribe($event => {
+                    if ($event) {
+                        var filters = new ApiQueryFilters();
+                        filters.Tenant = SessionInfo.LoggedUserTenant;
+                        filters.GetAll = true;
+                        filters.ForceCacheRefresh = true;
+                        var entityListService = new EntityListService();
+                        entityListService.getAllFromCache("Country", filters).then((res: any) => {
+                            res.subscribe((myResponse: ServiceResponse) => {
+                                if (!myResponse.HasError && myResponse.Result) {
+                                    var country = myResponse.Result.filter(d => d.Id == $event)[0];
+                                    if (country) {
+
+                                        var ourSideShipmentPickUpDelivery: any = entity == "Pickup" ? this.OurSideShipmentPickUp : this.OurSideShipmentDelivery;
+                                        if (ourSideShipmentPickUpDelivery) {
+                                            if (code == "F") {
+                                                ourSideShipmentPickUpDelivery.FromAddressCountryCode = country.Code;
+                                                ourSideShipmentPickUpDelivery.FromAddressCountryName = country.EnglishName;
+                                                ourSideShipmentPickUpDelivery.FromAddressCountryId = country.Id;
+                                                
+                                            } else {
+                                                ourSideShipmentPickUpDelivery.ToAddressCountryCode = country.Code;
+                                                ourSideShipmentPickUpDelivery.ToAddressCountryName = country.EnglishName;
+                                                ourSideShipmentPickUpDelivery.ToAddressCountryId = country.Id;
+                                            }
+                                        }
+                                    }
+                                }
+
+                            });
+
+
+                        });
+                    }
+                });
+
+
+            });
+      
+    }
+
+
+
+
+
 
     CreateButtonClicked() {
         this.OnCreate();
@@ -2940,7 +3321,12 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
         this.HideOtherPartnersArea = !this.HideOtherPartnersArea;
     }
-    
+
+
+    imgHidePickupDetailsAreaClicked() {
+        this.HidePickupDetailsArea = !this.HidePickupDetailsArea;
+    }
+
 
     imgHideGeneralDetailsAreaClicked() {
         this.HideGeneralDetailsArea = !this.HideGeneralDetailsArea;
@@ -3408,7 +3794,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
 
-        if (this.IsLoadedCarrierTranslation && this.IsLoadedIncotermTranslation && this.IsLoadedShipperTranslation && this.IsLoadedConsigneeTranslation && this.IsLoadedShiperDefaultValues && this.IsLoadedConsigneeDefaultValues && this.IsLoadedTransshipment1CarrierTranslation && this.IsLoadedTransshipment2CarrierTranslation && this.IsLoadedTransshipment3CarrierTranslation && this.IsLoadedMainCarriageVesselTranslation && this.IsLoadedTransshipment1VesselTranslation && this.IsLoadedTransshipment2VesselTranslation && this.IsLoadedTransshipment3VesselTranslation && this.IsLoadedMainCarriageInterlineTranslation && this.IsLoadedNotify1IdTranslation && this.IsLoadedNotify1DefaultValuesTranslation && this.IsLoadedPortsTranslation && this.IsLoadedPackageTranslation && this.IsLoadedMoveTypeTranslation && this.IsLoadedValueOfGoodsCurrencyTranslation) {
+        if (this.IsLoadedCarrierTranslation && this.IsLoadedIncotermTranslation && this.IsLoadedShipperTranslation && this.IsLoadedConsigneeTranslation && this.IsLoadedShiperDefaultValues && this.IsLoadedConsigneeDefaultValues && this.IsLoadedTransshipment1CarrierTranslation && this.IsLoadedTransshipment2CarrierTranslation && this.IsLoadedTransshipment3CarrierTranslation && this.IsLoadedMainCarriageVesselTranslation && this.IsLoadedTransshipment1VesselTranslation && this.IsLoadedTransshipment2VesselTranslation && this.IsLoadedTransshipment3VesselTranslation && this.IsLoadedMainCarriageInterlineTranslation && this.IsLoadedNotify1IdTranslation && this.IsLoadedNotify1DefaultValuesTranslation && this.IsLoadedPortsTranslation && this.IsLoadedPackageTranslation && this.IsLoadedMoveTypeTranslation && this.IsLoadedValueOfGoodsCurrencyTranslation && this.IsLoadedFromPickUpTranslation && this.IsLoadedToPickUpTranslation) {
             SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             if ((!AppTool.IsNullOrEmpty(this.IncotermId) || this.IsHideIncoterm) && (!AppTool.IsNullOrEmpty(this.MoveTypeId) || this.IsHideMoveType) && (!AppTool.IsNullOrEmpty(this.ValueOfGoodsCurrencyId) || this.IsHideValueOfGoodsCurrency)) {
@@ -3545,7 +3931,10 @@ export class AgentSide extends BaseComponent {
         this.MoveTypeTransportModeId = houseSL != null ? houseSL.MoveTypeTransportModeId : manifestSL.MoveTypeTransportModeId;
 
         this.MainHarmonize = houseSL != null ? houseSL.MainHarmonize : manifestSL.MainHarmonize;
-        
+
+
+
+
         if (shipmentPackagePM && shipmentPackagePM.length > 0) {
             this.PackageTypes = [];
             shipmentPackagePM.forEach((shipmentPackage) => {

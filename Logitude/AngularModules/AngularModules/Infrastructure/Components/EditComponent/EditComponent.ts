@@ -897,7 +897,9 @@ export class EditComponent implements OnDestroy {
         else if (!this.EntityPM.IsDirty) {
             this.Close();
         }
-
+        else if (this.ObjectTableName == "TaxReport") {
+            this.Close();
+        }
         else {
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 450;

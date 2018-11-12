@@ -74,6 +74,13 @@ namespace Logitude.Accounting.BL.CoreBL
 			CardRepository cardRepository = new CardRepository(tenant);
 			TenantQuery tenantQuery = new TenantQuery(tenant);
 			TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+            List<string> AccountingEntiyIds = journals.Select(d => d.AccountingEntityId).ToList();
+          
+            List<ARInvoice> invoices = aRInvoiceRepository.GetARInvoicesByIds(taxReport.Tenant, AccountingEntiyIds);
+            List<string> cardIds = invoices.Select(d => d.BillToId).ToList();
+
+            List<Simplog.Data.CommonDataModel.EntityPOCOs.Card> cards = cardRepository.GetCardsByIds(cardIds, tenant).ToList();
+            
             string  vatNumber = null;
             //Outputs
             foreach (Journal a in journals)
@@ -82,7 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (!exist)
                 {
                     string reference = null;
-                    ARInvoice invoice = aRInvoiceRepository.GetSingleARInvoice(a.AccountingEntityId, a.Tenant);
+                    ARInvoice invoice = invoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
                     if (invoice != null)
                     {
                         if (invoice.InvoiceNumber.Length == 9)
@@ -118,12 +125,15 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                         };
-                        Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(invoice.BillToId, tenant);
-                        if (line.VatNumber == null)
-                        {
-                            line.VatNumber = "999999999";
+                        Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
 
-                        }
+
+
+                        //if (line.VatNumber == null)
+                        //{
+                        //  //  line.VatNumber = "999999999";
+
+                        //}
 
                         if (line.VatNumber == tenantPM.VatNumber)
                         {
@@ -151,17 +161,33 @@ namespace Logitude.Accounting.BL.CoreBL
 			GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
 			FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(tenant);
 			FullAccountingSetting setting = fullAccountingSettingRepository.GetSingleFullAccountingSetting(tenant);
+           JournalQueryService journalQueryService = new JournalQueryService(tenant);
 			string VatNumber = null;
 			decimal? VatAmount = null;
 			decimal? InvoiceAmount = null;
 			bool isEquipment = false;
 			APInvoicePM aPInvoice = null;
-			foreach (TaxReportData a in ledgerTransactons)
+
+            List<string> glAccountIds = ledgerTransactons.Select(d => d.OppositGLAccount).ToList();
+            List<GLAccountPM> glAccounts = gLAccountQueryService.GetByGLAccountsIdList(glAccountIds, tenant);
+             cards = cardRepository.GetCardsByGLAccountIds(glAccountIds, tenant).ToList();
+
+            List<string> apInvoiceIds = ledgerTransactons.Where(d=> d.AccountingEntity == "4").Select(d => d.AccountingEntityId ).ToList();
+             List<APInvoicePM> aPInvoices=  aPInvoiceQueryService.GetAPInvoicesByIds(apInvoiceIds, tenant);
+
+            List<string> JournalIds = ledgerTransactons.Where(d => d.JournalId != null).Select(d => d.JournalId).ToList();
+            List<JournalPM> journalPMs = journalQueryService.GetJournalsByIds(JournalIds, tenant);
+
+      
+
+            foreach (TaxReportData a in ledgerTransactons)
 			{
-				Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetCardByGLAccountId(a.OppositGLAccount, tenant);
+                Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault(); 
+                
 				if (a.AccountingEntity == "4")
 				{
-					aPInvoice = aPInvoiceQueryService.GetSinglePM(a.AccountingEntityId, tenant);
+				
+                    aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
 					if (aPInvoice != null)
 					{
 						VatNumber = aPInvoice.VATNumber;
@@ -186,12 +212,12 @@ namespace Logitude.Accounting.BL.CoreBL
 					InvoiceAmount = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
 				}
 
-                if(VatNumber == null)
-                {
-                    VatNumber = "999999999";
-                }
+                //if(VatNumber == null)
+                //{
+                //    VatNumber = "999999999";
+                //}
 
-				GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(a.OppositGLAccount, tenant);
+                GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();
 				if (gLAccountPM != null)
 				{
 					if (gLAccountPM.IsEquipmentVendor)
@@ -224,10 +250,14 @@ namespace Logitude.Accounting.BL.CoreBL
 				};
 
 
-				JournalQueryService journalQueryService = new JournalQueryService(tenant);
-				JournalPM journal = journalQueryService.GetSingle(a.JournalId, true, false);
+
+
+                JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId).FirstOrDefault(); 
+
 				string CreditAccountId = journal.JournalLines.FirstOrDefault().CreditAccountId;
-				GLAccountPM account = gLAccountQueryService.GetSinglePM(CreditAccountId, tenant);
+
+
+				GLAccountPM account =  gLAccountQueryService.GetSingle(CreditAccountId, false, false);
 
 
 
@@ -255,11 +285,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     taxReportLine.LineTypeCode = "C";
                 }
-
-               
-               
-
-               
+                
 
 
 

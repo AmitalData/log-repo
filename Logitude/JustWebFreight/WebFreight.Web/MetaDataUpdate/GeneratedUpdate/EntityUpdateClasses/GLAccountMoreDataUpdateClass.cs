@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "טבלת מצטברים ",
 			      				    DefaultText =  "GLAccountMoreData",
-			      				    Code =  "b0f7",
+			      				    Code =  "63c7",
 			      				    Name =  "GLAccountMoreData Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",

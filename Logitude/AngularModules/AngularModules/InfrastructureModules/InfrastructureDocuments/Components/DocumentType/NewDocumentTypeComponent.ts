@@ -105,8 +105,15 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
                 case "WarehouseRelease":
                 case "TaxReport":
                 case"TaxDeductionReport":
-                {
-                        
+                case "Airline":
+                case "CustomAgent":
+                case "Participant":
+                case "ShippingAgent":
+                case "ShippingLine":
+                case "Trucker":
+                case "Vendor":
+                case "Warehouse":
+                {                        
                     if (tempList.filter(f => f.Name == item.Name).length == 0) {
                         tempList.push(item);
                     }

@@ -9,6 +9,7 @@ import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Servi
 import { DWQueryBuilderService } from '../../../../Infrastructure/Services/ExtendedPMs/DWQueryBuilderService';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { GroupByPipe } from '../../../../Infrastructure/Pipes/GroupByPipe';
 
 @Component({
     moduleId: module.id,
@@ -28,8 +29,9 @@ export class DWQueryBuilderComponent extends BaseComponent {
     @Output() onUnSelectedDataLoadedEvent = new EventEmitter();
     @Output() onDataSourceChangedEvent = new EventEmitter();
     @Output() onUnselectedDataSourceChangedEvent = new EventEmitter();
-    DataSource: DWObjectFieldsDetails[];
+    DataSource: any[];
     AllFieldsDataSource: DWObjectFieldsDetails[];
+    AllGroupsDataSource: DWFieldsGroup[];
     SelectedFieldsDataSource: DWObjectFieldsDetails[] = [];
     SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
     AllFieldsWithChildrenDataSource: DWObjectFieldsDetails[];
@@ -62,17 +64,58 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
             if (!myResult.HasError) {
-                this._DWObjectFieldPMService.getDWObjectFieldsByDWTableId(myResult.Result.Code).subscribe(Result => {
+                this._DWObjectFieldPMService.GetDWObjectFieldsByDWTableIdGroupedByCategory(myResult.Result.Code).subscribe(Result => {//getDWObjectFieldsByDWTableId
                     if (!Result.HasError) {
-                        Result.Result.forEach((field) => {
-                            if (field.DisplayInQueryBuilder == true) {
-                                var view = new DWObjectFieldsDetails(field, this);
-                                view.ParentDataTypeCode = field.DataTypeCode;
-                                this.ObsList.push(view);
-                                this.ObsListAll.push(view);
-                            }
+                        var MyGroups = [];
+                        var MyAllGroups = [];
+                        Result.Result.forEach((Group) => {
+
+                            var view = new DWFieldsGroup(Group.Key, Group.FieldsList);
+                            var MyInnerList = [];
+                            view.FieldsList.forEach((field) => {
+                                if (field.DisplayInQueryBuilder == true) {
+                                    var MyItem = new DWObjectFieldsDetails(field, this);
+                                    MyItem.ParentDataTypeCode = field.DataTypeCode;
+                                    MyItem.Category1 = field.Category1;
+                                    MyItem.Category2 = field.Category2;
+                                    MyInnerList.push(MyItem);
+                                    this.ObsList.push(MyItem);
+                                    this.ObsListAll.push(MyItem);
+                                }
+                            });
+
+                            var view1 = new DWFieldsGroup(Group.Key, Group.FieldsList);
+                            var MyInnerList1 = [];
+                            view1.FieldsList.forEach((field) => {
+                                if (field.DisplayInQueryBuilder == true) {
+                                    var MyItem = new DWObjectFieldsDetails(field, this);
+                                    MyItem.ParentDataTypeCode = field.DataTypeCode;
+                                    MyItem.Category1 = field.Category1;
+                                    MyItem.Category2 = field.Category2;
+                                    MyInnerList1.push(MyItem);
+                                    this.ObsList.push(MyItem);
+                                    this.ObsListAll.push(MyItem);
+                                }
+                            });
+
+                            view.FieldsList = MyInnerList;
+                            view1.FieldsList = MyInnerList1;
+                            MyGroups.push(view);
+                            MyAllGroups.push(view1);
+
                         });
-                        this.DataSource = this.ObsList;
+                        //Result.Result.forEach((field) => {
+                        //    if (field.DisplayInQueryBuilder == true) {
+                        //        var view = new DWObjectFieldsDetails(field, this);
+                        //        view.ParentDataTypeCode = field.DataTypeCode;
+                        //        view.Category1 = field.Category1;
+                        //        view.Category2 = field.Category2;
+                        //        this.ObsList.push(view);
+                        //        this.ObsListAll.push(view);
+                        //    }
+                        //});
+                        this.DataSource = MyGroups;//this.ObsList;
+                        this.AllGroupsDataSource = MyAllGroups;
                         this.AllFieldsDataSource = this.ObsList;
                     }
 
@@ -259,11 +302,37 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public set SearchText(newValue: string) {
         this.searchText = newValue;
         if (newValue != null && newValue != "") {
-            this.DataSource = this.AllFieldsDataSource.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
+            //var myAll = this.AllGroupsDataSource;
+            this.AllGroupsDataSource.forEach((Group) => {
+                var temp = Group.FieldsList.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
+                this.DataSource.filter(a => a.Key == Group.Key)[0].FieldsList = temp;//Group.FieldsList.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
+                //var view = new DWFieldsGroup(Group.Key, Group.FieldsList);
+                //var MyInnerList = [];
+                //view.FieldsList.forEach((field) => {
+                //    if (field.DisplayInQueryBuilder == true) {
+                //        var MyItem = new DWObjectFieldsDetails(field, this);
+                //        MyItem.ParentDataTypeCode = field.DataTypeCode;
+                //        MyItem.Category1 = field.Category1;
+                //        MyItem.Category2 = field.Category2;
+                //        MyInnerList.push(MyItem);
+                //        this.ObsList.push(MyItem);
+                //        this.ObsListAll.push(MyItem);
+                //    }
+                //});
+                //view.FieldsList = MyInnerList;
+                //MyGroups.push(view);
+
+            }); 
+            //this.DataSource = this.AllFieldsDataSource.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
         }
         else {
-            this.DataSource = this.AllFieldsDataSource;
+            //this.DataSource = this.AllFieldsDataSource;
+            this.AllGroupsDataSource.forEach((Group) => {
+                this.DataSource.filter(a => a.Key == Group.Key)[0].FieldsList = Group.FieldsList; 
+
+            });
         }
+        //this.AllGroupsDataSource = myAll;
         //this.onUnselectedDataSourceChangedEvent.emit(this.unSelectedList);
         //this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
 
@@ -458,7 +527,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             view.ParentDimTabelName = item.BaseDWObjectField.DWObjectTableCode;
         }
         else {
-            view.ParentDataTypeCode = item.BaseDWObjectField.DataTypeCode; 
+            view.ParentDataTypeCode = item.BaseDWObjectField.DataTypeCode;
         }
         this.SelectedItem = view;
         if (this.SelectedItem && this.SelectedItem.DataTypeCode != "LookUp" && this.SelectedItem.DataTypeCode != "Dimension" && this.SelectedFiltersDataSource.indexOf(this.SelectedItem) == -1) {
@@ -718,14 +787,18 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
         });
         //if (this.InnerTables.length == 0) {
-            if (this.SelectedFiltersDataSource.length > 0) {
-                this.Notes = SelectStmt + this.WhereStmt + (HasMeasurement ? GroupByStmt : "");
+        if (this.SelectedFiltersDataSource.length > 0) {
+            this.Notes = SelectStmt + this.WhereStmt + (HasMeasurement && GroupByStmt != " group by" ? GroupByStmt : "");
+            if (GroupByStmt != " group by") {
                 this.PreviewData(StopPreview);
             }
-            else {
-                this.Notes = SelectStmt + (HasMeasurement ? GroupByStmt : "");
+        }
+        else {
+            this.Notes = SelectStmt + (HasMeasurement && GroupByStmt != " group by" ? GroupByStmt : "");
+            if (GroupByStmt != " group by") {
                 this.PreviewData(StopPreview);
             }
+        }
         //}
 
         //this.SelectedFiltersDataSource.forEach((filter) => {
@@ -832,6 +905,15 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     Items: any[] = [];
     FilterItems: DWObjectFieldsDetails[] = [];
+
+    private category1: string;
+    public get Category1() { return this.category1; }
+    public set Category1(newValue: string) { this.category1 = newValue; }
+
+
+    private category2: string;
+    public get Category2() { return this.category2; }
+    public set Category2(newValue: string) { this.category2 = newValue; }
 
     private indexOrder: number;
     public get IndexOrder() { return this.indexOrder; }
@@ -1086,7 +1168,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     FieldValueChanged(DWObjectField: DWObjectFieldsDetails) {
         //this.MyParentClass = ParentClass;
-        this.TextValue = ""; 
+        this.TextValue = "";
         this.Name = DWObjectField.Name;
         this.Code = DWObjectField.Code;
         this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
@@ -1095,7 +1177,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.DisplayName = DWObjectField.Code;
         this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
         this.IsMeasurement = DWObjectField.IsMeasurement;
-        this.AggregationTypeCode = DWObjectField.AggregationTypeCode; 
+        this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
         if (this.DWObjectTableCode.indexOf("DIM_") != -1) {
             this.ParentDataTypeCode = "LookUp";
             this.ParentDimTabelName = DWObjectField.DWObjectTableCode;
@@ -1105,7 +1187,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.ParentDimTabelName = DWObjectField.ParentDimTabelName;
         }
         //this.ParentDataTypeCode = DWObjectField.DataTypeCode;
-     
+
         this.Operators = this.GetFieldOperators(this);
         if ((this.ParentDataTypeCode == "Text" || this.ParentDataTypeCode == "nText")) {
             this.Operation = new ObjectFieldOperator("StartsWith", "Starts With");
@@ -1204,6 +1286,39 @@ export class ObjectFieldOperator {
 
 }
 
+export class DWFieldsGroup {
+
+    constructor(Key: string, FieldsList: any[]) {
+        this.Key = Key;
+        this.FieldsList = FieldsList;
+    }
+
+    private key: string;
+    public get Key() { return this.key; }
+    public set Key(newValue: string) { this.key = newValue; }
+
+    private fieldsList: any[];
+    public get FieldsList() { return this.fieldsList; }
+    public set FieldsList(newValue: any[]) { this.fieldsList = newValue; }
+
+    private detailsIcon: string = "./Images/CellIcons/Arrowup.png";
+    public get DetailsIcon() { return this.detailsIcon; }
+    public set DetailsIcon(newValue: string) { this.detailsIcon = newValue; }
+
+    private isDetailesOpened: boolean = true;
+    public get IsDetailesOpened() { return this.isDetailesOpened; }
+    public set IsDetailesOpened(newValue: boolean) { this.isDetailesOpened = newValue; }
+
+    GroupClicked() {
+        this.IsDetailesOpened = !this.IsDetailesOpened;
+        if (!this.IsDetailesOpened) {
+            this.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
+        }
+        else {
+            this.DetailsIcon = "./Images/CellIcons/Arrowup.png";
+        }
+    }
+}
 //export class GroupItem {
 
 //    FilterItems: DWObjectFieldsDetails[] = [];

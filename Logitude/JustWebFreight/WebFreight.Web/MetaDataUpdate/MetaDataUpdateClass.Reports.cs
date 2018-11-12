@@ -77,6 +77,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature inventoryReportFeature = tenantFeatures.Where(d => d.Code == "INVENTORYREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature openShipmentByCustomerReportFeature = tenantFeatures.Where(d => d.Code == "OPENSHIPMENTBYCUSTOMER" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature licenseManagementFeature = tenantFeatures.Where(d => d.Code == "LICENSEMANAGEMENTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature ShipmentDetailsReportFeature = tenantFeatures.Where(d => d.Code == "SHIPMENTDETAILS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
 
             AddReports.AddReport(new ReportDetails() { Code = "CASS", Description = "CASS Report", Name = "CASS Report", FilterControlName = "CASSReportFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = cassReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/CASSReportFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "CODT", Description = "Container Details by Voyage", Name = "Container Details by Voyage", FilterControlName = "ContainerDetailsVoyageFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = containerDetailsVoyageReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ContainerDetailsVoyageFilterComponent" }, reportRepository, tenantReports);
@@ -87,6 +88,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddReports.AddReport(new ReportDetails() { Code = "INVN", Description = "Inventory Report", Name = "Inventory Report", FilterControlName = "InventoryReportFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = inventoryReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/InventoryReportFilterConmponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "OSBC", Description = "Open Shipments by Customer", Name = "Open Shipments by Customer", FilterControlName = "OpenShipmentsByCustomerFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = openShipmentByCustomerReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/OpenShipmentsByCustomerFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "LICM", Description = "License Management", Name = "License Managements", FilterControlName = "LicenseManagementFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = licenseManagementFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Operational/LicenseManagementFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "SHID", Description = "Shipment Details", Name = "Shipment Details", FilterControlName = "ShipmentDetailsFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = ShipmentDetailsReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ShipmentDetailsFilterComponent" }, reportRepository, tenantReports);
+
         }
         private void LoadReports_Accounting(ReportGroup accountingGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
         {
@@ -163,9 +166,11 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             Feature timeSheetReportFeature_1 = tenantFeatures.Where(d => d.Code == "EMPLOYEETIMESHEETREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature timeSheetReportFeature_2 = tenantFeatures.Where(d => d.Code == "WORKDAYSPERPROJECTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature timeSheetReportFeature_3 = tenantFeatures.Where(d => d.Code == "TASKSWITHNORPROJECTSREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
 
             AddReports.AddReport(new ReportDetails() { Code = "EMTS", Description = "Employees TimeSheet", Name = "Employees TimeSheet", FilterControlName = "EmployeesTimeSheetFilterControl", Tenant = 0, ReportGroupId = tfsGroup.Id, FeatureId = timeSheetReportFeature_1.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/EmployeeTimeSheetFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "WDTS", Description = "Work Days Per Project", Name = "Work Days Per Project", FilterControlName = "WorkDaysPerProjectControl", Tenant = 0, ReportGroupId = tfsGroup.Id, FeatureId = timeSheetReportFeature_2.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/WorkDaysPerProjectFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "TPTS", Description = "Tasks not Connected to Projects", Name = "Tasks not Connected to Projects", FilterControlName = "TasksOfNoProjectsControl", Tenant = 0, ReportGroupId = tfsGroup.Id, FeatureId = timeSheetReportFeature_3.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/TasksOfNoProjectsFilterComponent" }, reportRepository, tenantReports);
         }
     }
 }
