@@ -4520,10 +4520,26 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableName = QuoteChargeObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
-
                 Operator = "Equals",
                 PMPropertyPath = "SaleMinAmount",
                 ListPropertyPath = "SaleMinAmount",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Sale Max Amount",
+                FullFieldLable = "SaleMaxAmount",
+                FieldName = "SaleMaxAmount",
+                FieldsDataType = "Double",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = QuoteChargeObject.Id,
+                ObjectTableName = QuoteChargeObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "SaleMaxAmount",
+                ListPropertyPath = "SaleMaxAmount",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()

@@ -1608,8 +1608,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             item.IsFromQuote = false;
                             item.QuoteChargeId = null;
-                            item.QuoteSaleMinPrice = null;
-
+                            item.QuoteSaleMinAmount = null;
+                            item.QuoteSaleMaxAmount = null;
                             receivableRepository.Update(item);
                         }                        
                     }
@@ -1620,7 +1620,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             item.IsFromQuote = false;
                             item.QuoteChargeId = null;
-                            item.QuoteCostMinPrice = null;
+                            item.QuoteCostMinAmount = null;
+                            item.QuoteCostMaxAmount = null;
 
                             payableRepository.Update(item);
                         }

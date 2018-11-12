@@ -74,7 +74,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        CreatedByUserId = a.CreatedByUserId,
                                                        ShipmentId = a.ShipmentId,
                                                        ARInvoiceId = a.ARInvoiceId,
-                                                       QuoteSaleMinPrice = a.QuoteSaleMinPrice,
                                                        QuoteChargeId = a.QuoteChargeId,
                                                        IsChargeBySteps = a.IsChargeBySteps,
                                                        ChargesTypeId = a.ChargesTypeId,
@@ -97,6 +96,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        IsExpense = a.IsExpense,
                                                        ShipmentReceivableParentId = a.ShipmentReceivableParentId,
                                                        ShipmentNumber = a.Shipment == null ? null : a.Shipment.ShipmentNumber,
+                                                       QuoteSaleMinAmount = a.QuoteSaleMinAmount,
+                                                       QuoteSaleMaxAmount = a.QuoteSaleMaxAmount,
                                                    }).ToList();
             return myResult;
         }
