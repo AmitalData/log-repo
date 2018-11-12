@@ -324,6 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate
         ObjectTable DWObjectTableObject;
         ObjectTable DWObjectFieldObject;
         ObjectTable ShipmentPackageHarmonizeObject;
+        ObjectTable PickUpDeliveryPackageHarmonizeObject;
         #endregion
 
         #region Create All Object Tables
@@ -6685,6 +6686,23 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTablePlural = "Shipment Package Harmonizes",
                 ObjectTableSingular = "Shipment Package Harmonize",
                 DBTableName = "ShipmentPackageHarmonizes",
+                Tenant = 0,
+                KeyPropertyPath = "Id",
+                IsMain = false,
+                IsComposition = true,
+                EnableSecurity = true,
+                ObjectTableTypeCode = "BR",
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
+            #endregion
+
+            #region PickUpDeliveryPackageHarmonizeObject
+            PickUpDeliveryPackageHarmonizeObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
+            {
+                DefaultText = "PickUp Delivery Package Harmonize",
+                ObjectTableName = "PickUpDeliveryPackageHarmonize",
+                ObjectTablePlural = "PickUp Delivery Package Harmonizes",
+                ObjectTableSingular = "PickUp Delivery Package Harmonize",
+                DBTableName = "PickUpDeliveryPackageHarmonizes",
                 Tenant = 0,
                 KeyPropertyPath = "Id",
                 IsMain = false,

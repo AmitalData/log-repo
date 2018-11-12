@@ -580,6 +580,28 @@ namespace WebFreight.Web.ReportsWebServices
                             packageline.IsContainer = packtype.IsContainer;
                         }
 
+                        #region Harmonize
+                        if (package.IsMultiHarmonize)
+                        {
+                            List<PickUpDeliveryPackageHarmonize> allHarmonizes = shipmentsContext.PickUpDeliveryPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                            foreach (PickUpDeliveryPackageHarmonize itemHarmonize in allHarmonizes)
+                            {
+                                if (string.IsNullOrEmpty(packageline.HSCode))
+                                {
+                                    packageline.HSCode = package.Harmonize;
+                                }
+                                else
+                                {
+                                    packageline.HSCode += "," + package.Harmonize;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            packageline.HSCode = package.Harmonize;
+                        }
+                        #endregion
+
                         deliveryNotedataprovider.PackagesLines.Add(packageline);
                     }
                     #endregion
@@ -1340,6 +1362,28 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         packageline.ContainerNumber = package.ContainerNumber;
+
+                        #region Harmonize
+                        if (package.IsMultiHarmonize)
+                        {
+                            List<PickUpDeliveryPackageHarmonize> allHarmonizes = shipmentsContext.PickUpDeliveryPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                            foreach (PickUpDeliveryPackageHarmonize itemHarmonize in allHarmonizes)
+                            {
+                                if (string.IsNullOrEmpty(packageline.HSCode))
+                                {
+                                    packageline.HSCode = package.Harmonize;
+                                }
+                                else
+                                {
+                                    packageline.HSCode += "," + package.Harmonize;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            packageline.HSCode = package.Harmonize;
+                        }
+                        #endregion
 
                         PackageType packtype = (from pa in commonContext.PackageTypes
                                                 where pa.Id == package.PackageTypeId

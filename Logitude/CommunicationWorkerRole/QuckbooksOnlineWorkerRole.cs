@@ -666,7 +666,10 @@ namespace CommunicationWorkerRole
                     ARInvoiceHelper  APService = new ARInvoiceHelper();
                     List<Intuit.Ipp.Data.Vendor> vendor = APService.GetQuickBooksOnlineVendorByText("Select * from Vendor where Id='" + final.VendorRef.Value + "'", tenant + "");
                     if (vendor.Count != 0)
-                        ExternalTableIdCustomerCurrencyRef = vendor[0].CurrencyRef.Value;
+                    {
+                        if (vendor[0].CurrencyRef != null)
+                            ExternalTableIdCustomerCurrencyRef = vendor[0].CurrencyRef.Value;
+                    }
                     else
                     {
                         ErrorMessage = "The Vendor Reference doesn't exists in your Quickbooks online company ";

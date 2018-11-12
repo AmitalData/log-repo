@@ -319,6 +319,7 @@
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
+    <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />
     <Compile Include="CommonDataModel\DataContracts\UsersByTenantData.cs" />
     <Compile Include="CommonDataModel\EntityLists\DocumentFilingBackupBatchList.cs" />
     <Compile Include="CommonDataModel\EntityLists\DocumentFilingBackupSettingList.cs" />
@@ -1821,6 +1822,7 @@
     <Compile Include="InvoiceModel\EntityLists\APPaymentList.cs" />
     <Compile Include="InvoiceModel\EntityLists\APPaymentMethodList.cs" />
     <Compile Include="InvoiceModel\EntityLists\APPaymentStatusList.cs" />
+    <Compile Include="InvoiceModel\EntityLists\APPaymentTransferStatusList.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARInvoiceEntityList.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARInvoiceLineActionList.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARInvoiceList.cs" />
@@ -1871,6 +1873,7 @@
     <Compile Include="InvoiceModel\EntityPMs\APPaymentMethodPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\APPaymentPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\APPaymentStatusPM.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\APPaymentTransferStatusPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARInvoiceChargePM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARInvoiceEntityPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARInvoiceLinePM.cs" />
@@ -1915,6 +1918,7 @@
     <Compile Include="InvoiceModel\EntityQueries\APPaymentMethodQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\APPaymentQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\APPaymentStatusQuery.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\APPaymentTransferStatusQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARInvoiceEntityQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARInvoiceLineActionQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARInvoiceLineQuery.cs" />
@@ -2286,6 +2290,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusesPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OtherParticipantIdPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\PickUpDeliveryFromToTypePM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\PickUpDeliveryPackageHarmonizePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\PickUpDeliveryTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentAPInvoicePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentARInvoiceMoneyPM.cs" />
@@ -2341,6 +2346,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\NextLegQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\OtherParticipantIdQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryFromToTypeQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryPackageHarmonizeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryTransportModeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentAssemblyQuery.cs" />

@@ -65,7 +65,7 @@ export class TaxDeductionReportMenuButtonsHandler {
     public MenuButtonClick(menuButton: MenuButtonPM) {
 
         switch (menuButton.EventCode) {
-            case "DNBD": 
+            case "DNPD": 
                 {
 
                     var myPrintHelper = new GeneralPrintHelper("TaxDeductionReport", "TDDP", this.EntityPM.Id, null, this.EntityPM.Email, null);

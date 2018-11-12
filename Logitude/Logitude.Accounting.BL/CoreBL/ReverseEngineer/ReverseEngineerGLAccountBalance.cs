@@ -120,7 +120,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     );
 
                 var q = qNotInTot.Union(qNotInGLAcc).Union(qDiff);
-                var l = q.ToList();
+                bool UnionreturnsDistinctvalues = true;
+                if (UnionreturnsDistinctvalues)
+                {
+                    q = qNotInTot.Concat(qNotInGLAcc).Concat(qDiff);
+                }
+                    var l = q.ToList();
                 CompareReport = new CompareReportM()
                 {
                     CompareReportName = "ReverseEngineerGLAccountBalance",

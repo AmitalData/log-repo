@@ -220,8 +220,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //var qJLVat_260_3 = qJLVat.First(r => r.JournalId == "1-260" && r.JournalLineNumber == 3);
 
             var qJLAll = qJLCredit.Union(qJLDebit).Union(qJLDebitVat).Union(qJLVat);
-            //qJLAll.ToList();
-            return qJLAll;
+            bool UnionreturnsDistinctvalues = true;
+            if (UnionreturnsDistinctvalues)
+            {
+                qJLAll = qJLCredit.Concat(qJLDebit).Concat(qJLDebitVat).Concat(qJLVat);
+            }
+                //qJLAll.ToList();
+                return qJLAll;
         }
 
         //public IQueryable<JournalLineLedgerDTO> GetJournalLineAsLedgerTransactionByAccId(string glAccountId, int tenant)

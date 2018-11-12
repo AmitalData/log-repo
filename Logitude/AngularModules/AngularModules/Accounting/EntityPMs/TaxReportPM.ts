@@ -199,6 +199,11 @@ export class TaxReportPM {
     public set NeedsRebulid(newValue: boolean) { if (this.needsRebulid != newValue) { this.needsRebulid = newValue; this.MarkAsDirty("NeedsRebulid"); } }
        
 	 
+    private isNew: boolean;
+    public get IsNew() { return this.isNew; }
+    public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty("IsNew"); } }
+       
+	 
 
     public OldEntityPM: TaxReportPM;
 		
