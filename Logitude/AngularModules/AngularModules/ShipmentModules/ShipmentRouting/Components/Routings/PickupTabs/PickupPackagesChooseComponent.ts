@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -8,6 +8,8 @@ import {InsideShipmentPackagePM} from '../../../../../Shipment/EntityPMs/InsideS
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import {PickupPackagesTabComponent} from './PickupPackagesTabComponent';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { PickUpDeliveryPackageHarmonizePM } from '../../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
+import { ShipmentPackageHarmonizePM } from '../../../../../Shipment/EntityPMs/ShipmentPackageHarmonizePM';
 
 @Component({
     moduleId: module.id,
@@ -108,6 +110,16 @@ export class PickupPackagesChooseComponent {
             newPickUpPackPM.Height = item.Height;
             newPickUpPackPM.Length = item.Length;
             newPickUpPackPM.ShipmentPickUpDeliveryId = this.EntityPM.Id;
+            newPickUpPackPM.IsMultiHarmonize = item.IsMultiHarmonize;
+
+            item.HarmonizeList.forEach(harmonizeItem => {
+                var newHarmonizePM = new PickUpDeliveryPackageHarmonizePM(this.EntityPM);
+                newHarmonizePM.Tenant = harmonizeItem.Tenant;
+                newHarmonizePM.Harmonize = harmonizeItem.Harmonize;
+
+                newPickUpPackPM.AddPickUpDeliveryPackageHarmonizePM(newHarmonizePM);
+            });
+
             this.EntityPM.AddPackage(newPickUpPackPM);
         });
 
@@ -119,6 +131,7 @@ export class PickupPackagesChooseItem {
     public EntityPM: ShipmentPackagePM;
     public InsideEntityPM: InsideShipmentPackagePM;
     public IsContainer: boolean = false;
+    public HarmonizeList: ShipmentPackageHarmonizePM[];
     constructor(entity: ShipmentPackagePM, InsideEntityPM: InsideShipmentPackagePM, private fatherComponent: PickupPackagesChooseComponent) {
         this.EntityPM = entity;
         this.InsideEntityPM = InsideEntityPM;
@@ -130,6 +143,8 @@ export class PickupPackagesChooseItem {
         else if (!AppTool.IsNullOrEmpty(this.EntityPM.PackageTypeId)) {
             this.IsContainer = this.EntityPM.IsContainer;
         }
+
+        this.HarmonizeList = entity.ShipmentPackageHarmonizes;
     }
 
     private isChecked: boolean = false;
@@ -152,6 +167,7 @@ export class PickupPackagesChooseItem {
     get Width() { return this.InsideEntityPM != null ? this.InsideEntityPM.Width : this.EntityPM.Width; }
     get Height() { return this.InsideEntityPM != null ? this.InsideEntityPM.Height : this.EntityPM.Height; }
     get ShipperSeal() { return this.EntityPM.ShipperSeal; }
+    get IsMultiHarmonize() { return this.EntityPM.IsMultiHarmonize; }
 
     get Dimensions() {
         var myDimensions: string;
