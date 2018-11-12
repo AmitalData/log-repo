@@ -80,6 +80,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string ShipmentNumber { get; set; }
         public string TransmissionError { get; set; }
         public string SATTransferStatusName { get; set; }
+        public DateTime? SATApprovalDate { get; set; }
 
         private List<ARPaymentInvoicePM> paymentInvoices;
         [Include]

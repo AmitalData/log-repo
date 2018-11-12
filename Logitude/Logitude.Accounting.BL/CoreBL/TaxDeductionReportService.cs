@@ -313,7 +313,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 Tenant = tenant,
                 DirectionCode = "I",
                 EntityId = taxDeductionReport.Id,
-                EntityNumber = taxDeductionReport.ReportNumber.ToString(),
+                EntityNumber = taxDeductionReport.ReportNumber!= null? taxDeductionReport.ReportNumber.ToString() : null,
                 ObjectTableId = table.Id,
                 Code = _code,
                 CreatedByUserId = loggedUser.Id,

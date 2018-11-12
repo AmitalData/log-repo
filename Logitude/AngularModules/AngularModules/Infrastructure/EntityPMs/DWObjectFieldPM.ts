@@ -97,8 +97,16 @@ export class DWObjectFieldPM {
     private displayInQueryBuilder: boolean;
     public get DisplayInQueryBuilder() { return this.displayInQueryBuilder; }
     public set DisplayInQueryBuilder(newValue: boolean) { if (this.displayInQueryBuilder != newValue) { this.displayInQueryBuilder = newValue; this.MarkAsDirty("DisplayInQueryBuilder"); } }
-       
-	 
+
+
+    private category1: string;
+    public get Category1() { return this.category1; }
+    public set Category1(newValue: string) { if (this.category1 != newValue) { this.category1 = newValue; this.MarkAsDirty("Category1"); } }
+
+
+    private category2: string;
+    public get Category2() { return this.category2; }
+    public set Category2(newValue: string) { if (this.category2 != newValue) { this.category2 = newValue; this.MarkAsDirty("Category2"); } }
 
     public OldEntityPM: DWObjectFieldPM;
 		

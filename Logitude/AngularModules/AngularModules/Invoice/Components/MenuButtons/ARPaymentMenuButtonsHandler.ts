@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -134,7 +134,7 @@ export class ARPaymentMenuButtonsHandler {
                         case "CancelApproval":
                             {
                                 if (SessionLocator.TenantPM.AccountingActivated) {
-                                    button.IsHidden = true; 
+                                    button.IsHidden = true;
                                 }
                                 else {
                                     if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD" || (this.EntityPM.StatusCode == "AD" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG"))) {
@@ -209,6 +209,22 @@ export class ARPaymentMenuButtonsHandler {
                                 // }
                                 break;
                             }
+
+                        case "CheckSATStatus":
+                            {
+                                if (this.EntityPM.SATTransferStatusCode == "CS") {
+                                    button.IsDisabled = false;
+                                }
+                                else {
+                                    button.IsDisabled = true;
+                                }
+                                if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
+                                    button.IsHidden = true;
+                                }
+
+
+                                break;
+                            }
                     }
                 }
             }
@@ -250,7 +266,16 @@ export class ARPaymentMenuButtonsHandler {
                     this.SaveSendToSAT();
                     break;
                 }
+            case "CheckSATStatus":
+                {
+                    this.CheckSATStatus();
+                    break;
+                }
         }
+    }
+
+    CheckSATStatus() {
+
     }
 
     RunSendToSAT() {

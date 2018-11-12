@@ -246,7 +246,7 @@ export class ChangePasswordComponent {
 
 
 
-        return result;
+        //return result;
     }
     IsSeries(passwordNumnberList: any, operatorCode: string) {
 

@@ -103,6 +103,15 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         protected global::System.Web.UI.WebControls.Button _ButtonReverseDueDate;
         
         /// <summary>
+        /// _ButtonDueLocalBalance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button _ButtonDueLocalBalance;
+        
+        /// <summary>
         /// _ButtonReverseTotalFIX control.
         /// </summary>
         /// <remarks>
@@ -182,15 +191,6 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button _ButtonTreeMapCOA;
-        
-        /// <summary>
-        /// _ButtonDueLocalBalance control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button _ButtonDueLocalBalance;
         
         /// <summary>
         /// _ButtonCheckBalance control.

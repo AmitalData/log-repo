@@ -1639,7 +1639,30 @@ namespace WebFreight.Web.WebServices
                         packageline.Length = package.Length.ToString();
                         packageline.Width = package.Width.ToString();
                         packageline.Height = package.Height.ToString();
-                        packageline.HSCode = package.Harmonize;
+
+                        #region Harmonize
+                        if (package.IsMultiHarmonize)
+                        {
+                            List<ShipmentPackageHarmonize> allHarmonizes = shipmentsContext.ShipmentPackageHarmonizes.Where(d => d.PackageId == package.Id && d.Tenant == package.Tenant).ToList();
+                            foreach(ShipmentPackageHarmonize itemHarmonize in allHarmonizes)
+                            {
+                                if (string.IsNullOrEmpty(packageline.HSCode))
+                                {
+                                    packageline.HSCode = package.Harmonize;
+                                }
+
+                                else
+                                {
+                                    packageline.HSCode += "," + package.Harmonize;
+                                }
+                            }
+                        }
+
+                        else
+                        {
+                            packageline.HSCode = package.Harmonize;
+                        }
+                        #endregion
 
                         if (package.Length != null && package.Width != null && package.Height != null)
                         {

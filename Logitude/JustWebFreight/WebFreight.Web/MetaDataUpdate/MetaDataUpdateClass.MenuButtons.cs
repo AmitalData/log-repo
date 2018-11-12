@@ -96,6 +96,7 @@ namespace WebFreight.Web.MetaDataUpdate
             FeaturePM APInvoiceFeature_Approve = features.Where(d => d.Code == "APPROVE" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
             FeaturePM APInvoiceFeature_ReTransfer = features.Where(d => d.Code == "EnableReTransfer" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
             FeaturePM APInvoiceFeature_Print = features.Where(d => d.Code == "PRINT" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
+            FeaturePM ARInvoiceFeature_CHECKSATStatus = features.Where(d => d.Code == "CHECKSATSTATUS" && d.ObjectTableId == ARInvoiceTableId).FirstOrDefault();
 
             FeaturePM ARPaymentFeature_CancelApproval = features.Where(d => d.Code == "CANCELAPPROVAL" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
             FeaturePM ARPaymentFeature_Void = features.Where(d => d.Code == "VOID" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
@@ -103,7 +104,8 @@ namespace WebFreight.Web.MetaDataUpdate
             FeaturePM ARPaymentFeature_ReTransfer = features.Where(d => d.Code == "EnableReTransfer" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
             FeaturePM ARPaymentFeature_Print = features.Where(d => d.Code == "PRINT" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
             FeaturePM ARPaymentFeature_SendToSAT = features.Where(d => d.Code == "SENDToSAT" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
-            
+            FeaturePM ARPaymentFeature_CHECKSATStatus = features.Where(d => d.Code == "CHECKSATSTATUS" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
+
 
             FeaturePM APPaymentFeature_CancelApproval = features.Where(d => d.Code == "CANCELAPPROVAL" && d.ObjectTableId == APPaymentTableId).FirstOrDefault();
             FeaturePM APPaymentFeature_Void = features.Where(d => d.Code == "VOID" && d.ObjectTableId == APPaymentTableId).FirstOrDefault();
@@ -1243,6 +1245,21 @@ namespace WebFreight.Web.MetaDataUpdate
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
 
+            MenuButton InvoiceCheckSATStatusStatusButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "CheckSATStatus",
+                Index = 13,
+                IsActive = true,
+                LabelTextCodeCode = "ARPayment.B.CheckSATStatus",
+                LabelTextCodeDefaultText = "Check SAT Status",
+                ObjectTableId = invoiceObject.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = InvoiceMenuButtonGroup.Id,
+                MenuButtonType = "button",
+                FeatureId = ARInvoiceFeature_CHECKSATStatus.Id,
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+
+
             #endregion
 
             #region AP invoice
@@ -1392,6 +1409,9 @@ namespace WebFreight.Web.MetaDataUpdate
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
 
+
+       
+
             #endregion
 
             #region AR Payment
@@ -1527,6 +1547,20 @@ namespace WebFreight.Web.MetaDataUpdate
                 ParentMenuButtonId = ARPaymentActionButton.Id,
                 MenuButtonType = "button",
                 FeatureId = ARPaymentFeature_SendToSAT.Id,
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+
+            MenuButton ARPaymentCheckSATStatusStatusButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "CheckSATStatus",
+                Index = 9,
+                IsActive = true,
+                LabelTextCodeCode = "ARPayment.B.CheckSATStatus",
+                LabelTextCodeDefaultText = "Check SAT Status",
+                ObjectTableId = theARPaymentObject.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
+                MenuButtonType = "button",
+                FeatureId = ARPaymentFeature_CHECKSATStatus.Id,
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
 
 
