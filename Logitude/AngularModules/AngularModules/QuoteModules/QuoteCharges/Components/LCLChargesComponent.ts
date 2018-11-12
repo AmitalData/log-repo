@@ -1784,49 +1784,49 @@ export class QuoteChargeItem extends BaseComponent {
         this.CostQuantity = myResult;
     }
     ComputeCostAmounts() {
-        var myTotalAmount = null;
+        var iAmount: number = null;
 
         if (!AppTool.IsNullOrEmpty(this.CostQuantity) && !AppTool.IsNullOrEmpty(this.CostUnitPrice)) {
             if (this.CostMeasurementCode == "PRVL" || this.CostMeasurementCode == "PRFR") {
-                myTotalAmount = this.CostQuantity * this.CostUnitPrice / 100;
+                iAmount = this.CostQuantity * this.CostUnitPrice / 100;
             }
 
             else {
-                myTotalAmount = this.CostQuantity * this.CostUnitPrice;
+                iAmount = this.CostQuantity * this.CostUnitPrice;
             }
         }
 
         /* MinMax */
-        if (myTotalAmount != null) {
+        if (iAmount != null) {
             if (this.CostMinAmount != null) {
-                if (myTotalAmount < this.CostMinAmount) {
-                    myTotalAmount = this.CostMinAmount;
+                if (iAmount < this.CostMinAmount) {
+                    iAmount = this.CostMinAmount;
                 }
             }
 
             if (this.CostMaxAmount != null) {
-                if (myTotalAmount > this.CostMaxAmount) {
-                    myTotalAmount = this.CostMaxAmount;
+                if (iAmount > this.CostMaxAmount) {
+                    iAmount = this.CostMaxAmount;
                 }
             }
         }
 
         // Amounts
-        if (AppTool.IsNullOrEmpty(myTotalAmount)) {
+        if (AppTool.IsNullOrEmpty(iAmount)) {
             this.CostTotalAmount = null;
             this.CostTotalAmountLocal = null;
             this.CostAmountInSaleCurrency = null;
         }
 
         else {
-            this.CostTotalAmount = myTotalAmount;
+            this.CostTotalAmount = iAmount;
 
             if (AppTool.IsNullOrEmpty(this.CostExchangeRate)) {
                 this.CostTotalAmountLocal = null;
             }
 
             else {
-                this.CostTotalAmountLocal = myTotalAmount * this.CostExchangeRate;
+                this.CostTotalAmountLocal = iAmount * this.CostExchangeRate;
             }
 
             this.ComputeCostInSaleAmount();
@@ -1963,7 +1963,7 @@ export class QuoteChargeItem extends BaseComponent {
     get SaleTotalAmount() { return this.EntityPM.SaleTotalAmount; }
     set SaleTotalAmount(ivalue: number) {
 
-        var value = ivalue;
+        var value = AppTool.Round(ivalue, 2);
 
         if (value) {
             if (this.SaleMinAmount != null) {
@@ -2009,10 +2009,10 @@ export class QuoteChargeItem extends BaseComponent {
 
         if (value) {
             var iTotalAmount = null;
+
             if (!AppTool.IsNullOrEmpty(value)) {
                 if (!AppTool.IsNullOrZero(this.SaleExchangeRate)) {
                     iTotalAmount = value / this.SaleExchangeRate;
-                    iTotalAmount = AppTool.Round(iTotalAmount, 2);
                 }
             }
 
@@ -2029,6 +2029,8 @@ export class QuoteChargeItem extends BaseComponent {
                     }
                 }
             }
+
+            value = AppTool.Round(value, 2);
         }
 
         if (this.EntityPM.SaleTotalAmountLocal != value) {
