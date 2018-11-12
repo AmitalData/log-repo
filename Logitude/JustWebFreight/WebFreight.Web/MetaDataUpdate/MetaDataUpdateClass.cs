@@ -11426,7 +11426,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidARI",
                 PMPropertyPath = "AllowVoidARI",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidARI",
+                HelpTextDefaultText = "To activate VOID action for AR Invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11447,7 +11449,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidARP",
                 PMPropertyPath = "AllowVoidARP",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidARP",
+                HelpTextDefaultText = "To activate VOID action for AR Payment",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11468,7 +11472,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidAPI",
                 PMPropertyPath = "AllowVoidAPI",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidAPI",
+                HelpTextDefaultText = "To activate VOID option in AP invoices",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11489,7 +11495,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidAPP",
                 PMPropertyPath = "AllowVoidAPP",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidAPP",
+                HelpTextDefaultText = "To activate VOID option in AP Payments",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11510,7 +11518,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowManualInvoiceNumber",
                 PMPropertyPath = "AllowManualInvoiceNumber",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowManualInvoiceNumber",
+                HelpTextDefaultText = "To manage an external invoice number to be entered manually in the Invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11531,7 +11541,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAR",
                 PMPropertyPath = "IsVatNumberMandatoryInAR",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsVatNumberMandatoryInAR",
+                HelpTextDefaultText = "Mandatory Bill to VAT number in AR Invoice & AR Payment",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11552,7 +11564,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAP",
                 PMPropertyPath = "IsVatNumberMandatoryInAP",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsVatNumberMandatoryInAP",
+                HelpTextDefaultText = "Mandatory Bill to VAT number in AP Invoices and AP Payments",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11573,7 +11587,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsChronologicalDates",
                 PMPropertyPath = "IsChronologicalDates",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsChronologicalDates",
+                HelpTextDefaultText = "Avoid issuing an invoice with date less than the date of the previous issued invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11594,7 +11610,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowMinusInvoicelines",
                 PMPropertyPath = "AllowMinusInvoicelines",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowMinusInvoicelines",
+                HelpTextDefaultText = "Allow invoices including negative charges amounts",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11612,7 +11630,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowPositiveAmountsInTheCreditNote",
                 PMPropertyPath = "AllowPositiveAmountsInTheCreditNote",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowPositiveAmountsInTheCreditNote",
+                HelpTextDefaultText = "Allow credit notes including positive charges amounts",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11633,7 +11653,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowClosureWithoutPayables",
                 PMPropertyPath = "AllowClosureWithoutPayables",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowClosureWithoutPayables",
+                HelpTextDefaultText = "Allows to accounting close shipments with open payables lines",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11720,7 +11742,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsSingleTaxPerInvoice",
                 PMPropertyPath = "IsSingleTaxPerInvoice",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsSingleTaxPerInvoice",
+                HelpTextDefaultText = "You are limited to use one VAT type per invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11885,7 +11909,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiPercentageVATTypes",
                 PMPropertyPath = "EnableMultiPercentageVATTypes",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiPercentageVATTypes",
+                HelpTextDefaultText = "Allows creating combined VAT types from two or more VAT Types with different percentages",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11903,7 +11929,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "NotifyPastDateOnInvoiceEdit",
                 PMPropertyPath = "NotifyPastDateOnInvoiceEdit",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "NotifyPastDateOnInvoiceEdit",
+                HelpTextDefaultText = "Alert in draft or open constituent invoice if the date should be updated to the current day",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11921,7 +11949,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiRateAPInvoices",
                 PMPropertyPath = "EnableMultiRateAPInvoices",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiRateAPInvoices",
+                HelpTextDefaultText = "Allows recording AP invoice with different exchange rates",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11957,7 +11987,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiCurrencyARPayments",
                 PMPropertyPath = "EnableMultiCurrencyARPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiCurrencyARPayments",
+                HelpTextDefaultText = "Allows closing AR invoices in foreign currency with AR Payment in local currency or vice versa",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11975,7 +12007,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiCurrencyAPPayments",
                 PMPropertyPath = "EnableMultiCurrencyAPPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiCurrencyAPPayments",
+                HelpTextDefaultText = "Allows closing AP invoices in foreign currencies with payment in local currency or vice versa",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11993,7 +12027,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableNegativeOffsetARPayments",
                 PMPropertyPath = "EnableNegativeOffsetARPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableNegativeOffsetARPayments",
+                HelpTextDefaultText = "Allows recording AR Payments in negative amounts using payment method \"Offset\"",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -12011,7 +12047,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableNegativeOffsetAPPayments",
                 PMPropertyPath = "EnableNegativeOffsetAPPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableNegativeOffsetAPPayments",
+                HelpTextDefaultText = "Allows recording payables payments in negative amounts using payment method is Offset",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             this.ObjectContext.SaveChanges();
