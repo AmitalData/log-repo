@@ -277,25 +277,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        private void FullAccountingAutoCreditUpdate(ARInvoicePM entityPM)
-        {
-            TenantRepository tenantRepository = new TenantRepository(tenant);
-            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
-            {
-                IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-                JournalPM journalPM = journalQuery.GetJournalIdByAccountingEntityId(entityPM.Id, entityPM.Tenant);
-                if (journalPM != null)
-                {
-                    journalPM.AccountingEntityReference = entityPM.InvoiceNumber;
-                    journalPM.AccountingEntityCode = "2";
-                    journalPM.StatusCode = "3";
-                    journalPM.ChangeSetOp = ChangeSetOperation.Update;
-                    IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
-                    journalUpdate.Update(journalPM);
-                }
-            }
-        }
 
         private void ValidateInvoiceConnected()
         {
@@ -885,8 +866,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 this.Create(newInvoicePM);
-
-                this.FullAccountingAutoCreditUpdate(oldEntityPM);
 
                 entityPOCO.IsCancelled = true;
                 entityPOCO.CancelledByARInvoiceId = newInvoicePM.Id;

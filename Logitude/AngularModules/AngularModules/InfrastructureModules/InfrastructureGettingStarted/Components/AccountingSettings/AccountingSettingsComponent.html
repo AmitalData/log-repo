@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SystemDefaultsBox {
         width: 100%;
@@ -73,8 +73,8 @@
                                                                         <LogLabel [ObjectFieldName]="'AllowVoidARI'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td style="width: 16px;">
-                                                                        <LogCheckBox [ObjectFieldName]="'AllowVoidARI'" [Checked]="AllowVoidARI" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                    <td style="width: 35px;">
+                                                                        <LogCheckBox [ObjectFieldName]="'AllowVoidARI'" [Checked]="AllowVoidARI" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                     </td>
                                                                 </tr>
 
@@ -85,7 +85,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogCheckBox [ObjectFieldName]="'AllowVoidARP'" [Checked]="AllowVoidARP" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        <LogCheckBox [ObjectFieldName]="'AllowVoidARP'" [Checked]="AllowVoidARP" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                     </td>
                                                                 </tr>
 
@@ -96,7 +96,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogCheckBox [ObjectFieldName]="'IsVatNumberMandatoryInAR'" [Checked]="IsVatNumberMandatoryInAR" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        <LogCheckBox [ObjectFieldName]="'IsVatNumberMandatoryInAR'" [Checked]="IsVatNumberMandatoryInAR" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                     </td>
                                                                 </tr>
 
@@ -107,7 +107,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogCheckBox [ObjectFieldName]="'AllowMinusInvoicelines'" [Checked]="AllowMinusInvoicelines" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        <LogCheckBox [ObjectFieldName]="'AllowMinusInvoicelines'" [Checked]="AllowMinusInvoicelines" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                     </td>
                                                                 </tr>
 
@@ -118,7 +118,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogCheckBox [ObjectFieldName]="'AllowPositiveAmountsInTheCreditNote'" [Checked]="AllowPositiveAmountsInTheCreditNote" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        <LogCheckBox [ObjectFieldName]="'AllowPositiveAmountsInTheCreditNote'" [Checked]="AllowPositiveAmountsInTheCreditNote" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                     </td>
                                                                 </tr>
 
@@ -129,7 +129,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogCheckBox [ObjectFieldName]="'AllowManualInvoiceNumber'" [Checked]="AllowManualInvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        <LogCheckBox [ObjectFieldName]="'AllowManualInvoiceNumber'" [Checked]="AllowManualInvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                     </td>
                                                                 </tr>
 
@@ -140,7 +140,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogCheckBox [ObjectFieldName]="'IsChronologicalDates'" [Checked]="IsChronologicalDates" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        <LogCheckBox [ObjectFieldName]="'IsChronologicalDates'" [Checked]="IsChronologicalDates" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                     </td>
                                                                 </tr>
 
@@ -151,7 +151,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogCheckBox [ObjectFieldName]="'IsARInvoicesTransferEnabled'" [Checked]="IsARInvoicesTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                        <LogCheckBox [ObjectFieldName]="'IsARInvoicesTransferEnabled'" [Checked]="IsARInvoicesTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                     </td>
                                                                 </tr>-->
                                                                 <!-- IsSingleTaxPerInvoice -->
@@ -161,8 +161,19 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogCheckBox *ngIf="ShowRealSingleTaxCheckBox" [ObjectFieldName]="'IsSingleTaxPerInvoice'" [Checked]="IsSingleTaxPerInvoice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                                                                        <CheckBox *ngIf="ShowDummySingleTaxCheckBox" [IsChecked]="true" [IsEnabled]="false"></CheckBox>
+                                                                        <LogCheckBox *ngIf="ShowRealSingleTaxCheckBox" [ObjectFieldName]="'IsSingleTaxPerInvoice'" [Checked]="IsSingleTaxPerInvoice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+                                                                        <table *ngIf="ShowDummySingleTaxCheckBox">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <CheckBox [IsChecked]="true" [IsEnabled]="false"></CheckBox>
+                                                                                </td>
+
+                                                                                <td style="width:18px;">
+                                                                                    <HelpIcon [HideHeader]="true" [Text]="'You are limited to use one VAT type per invoice'"></HelpIcon>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>                                                                        
                                                                     </td>
                                                                 </tr>
 
@@ -293,8 +304,8 @@
                                                                                     <LogLabel [ObjectFieldName]="'AllowVoidAPI'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                                 </td>
 
-                                                                                <td style="width: 16px;">
-                                                                                    <LogCheckBox [ObjectFieldName]="'AllowVoidAPI'" [Checked]="AllowVoidAPI" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                                <td style="width: 35px;">
+                                                                                    <LogCheckBox [ObjectFieldName]="'AllowVoidAPI'" [Checked]="AllowVoidAPI" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                                 </td>
                                                                             </tr>
 
@@ -305,7 +316,7 @@
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <LogCheckBox [ObjectFieldName]="'AllowVoidAPP'" [Checked]="AllowVoidAPP" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                                    <LogCheckBox [ObjectFieldName]="'AllowVoidAPP'" [Checked]="AllowVoidAPP" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                                 </td>
                                                                             </tr>
 
@@ -316,7 +327,7 @@
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <LogCheckBox [ObjectFieldName]="'IsVatNumberMandatoryInAP'" [Checked]="IsVatNumberMandatoryInAP" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                                    <LogCheckBox [ObjectFieldName]="'IsVatNumberMandatoryInAP'" [Checked]="IsVatNumberMandatoryInAP" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                                 </td>
                                                                             </tr>
 
@@ -327,7 +338,7 @@
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <LogCheckBox [ObjectFieldName]="'AllowClosureWithoutPayables'" [Checked]="AllowClosureWithoutPayables" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                                    <LogCheckBox [ObjectFieldName]="'AllowClosureWithoutPayables'" [Checked]="AllowClosureWithoutPayables" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                                 </td>
                                                                             </tr>
 
@@ -338,7 +349,7 @@
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <LogCheckBox [ObjectFieldName]="'EnableMultiRateAPInvoices'" [Checked]="EnableMultiRateAPInvoices" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                                    <LogCheckBox [ObjectFieldName]="'EnableMultiRateAPInvoices'" [Checked]="EnableMultiRateAPInvoices" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                                 </td>
                                                                             </tr>
 
@@ -349,7 +360,7 @@
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <LogCheckBox [ObjectFieldName]="'EnableNegativeOffsetAPPayments'" [Checked]="EnableNegativeOffsetAPPayments" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                                    <LogCheckBox [ObjectFieldName]="'EnableNegativeOffsetAPPayments'" [Checked]="EnableNegativeOffsetAPPayments" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                                 </td>
                                                                             </tr>
 
@@ -360,7 +371,7 @@
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <LogCheckBox [ObjectFieldName]="'EnableMultiCurrencyAPPayments'" [Checked]="EnableMultiCurrencyAPPayments" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                                                    <LogCheckBox [ObjectFieldName]="'EnableMultiCurrencyAPPayments'" [Checked]="EnableMultiCurrencyAPPayments" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
