@@ -366,7 +366,7 @@ namespace Simplog.Server.Infrastructure.Azure
             switch (enviroment)
             {
                 case "Simplog" :
-                    result = "Endpoint=sb://logitudeeu1.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=t3IPjGhc6MOE5FZfKqKv5R6JNwsC/RPkW5axmdp+RUY=";
+                    result = "Endpoint=sb://logitudeeu1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=l4gltH9kzHBZSaedncIYYu5tb6YTS4UZftIGUPYHHFw=";//"Endpoint=sb://logitudeeu1.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=t3IPjGhc6MOE5FZfKqKv5R6JNwsC/RPkW5axmdp+RUY=";
                     break;
 
                 case "amitalstorage":
