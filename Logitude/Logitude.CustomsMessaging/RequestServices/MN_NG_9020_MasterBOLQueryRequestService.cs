@@ -21,7 +21,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             myMN_NG_9020_MasterBOLQuery_Message.MasterBillOfLading = requestParams.MasterBillOfLading;
             if(!String.IsNullOrEmpty(requestParams.InternalIdentifier))//task 43644 21.10.18
             {
-                myMN_NG_9020_MasterBOLQuery_Message.InternalIdentifier = "=" + requestParams.InternalIdentifier;
+                if (requestParams.ExactMatch)//Task 44705
+                {
+                    myMN_NG_9020_MasterBOLQuery_Message.InternalIdentifier = "=" + requestParams.InternalIdentifier;
+                }
+                else
+                {
+                    myMN_NG_9020_MasterBOLQuery_Message.InternalIdentifier = requestParams.InternalIdentifier;
+                }
             }
             //myMN_NG_9020_MasterBOLQuery_Message.InternalIdentifier = requestParams.InternalIdentifier;
             myMN_NG_9020_MasterBOLQuery_Message.ReturnAllinternalCargos = requestParams.ReturnAllInernalCargos;
