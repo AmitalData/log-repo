@@ -390,7 +390,16 @@ namespace Logitude.Accounting.BL.CoreBL
                  ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.ForeignAmountDebit),
 
              });
-            GLAccountTotalByMonths = GLAccountTotalAccountingdate.Union(GLAccountTotalDueDate).Union(GLAccountTotalDocumentDate).ToList();
+            bool UnionreturnsDistinctvalues = true;
+            if (UnionreturnsDistinctvalues)
+            {
+                GLAccountTotalByMonths = GLAccountTotalAccountingdate.Concat(GLAccountTotalDueDate).Concat(GLAccountTotalDocumentDate).ToList();
+            }
+            else
+            {
+                GLAccountTotalByMonths = GLAccountTotalAccountingdate.Union(GLAccountTotalDueDate).Union(GLAccountTotalDocumentDate).ToList();
+            }
+                
         }
 
 
@@ -479,7 +488,16 @@ namespace Logitude.Accounting.BL.CoreBL
                  ForeignAmountDebit = groupByAccountCurrency.Sum(x => x.ForeignAmountDebit),
 
              });
-            ControlGLAccountTotalByMonths = GLAccountTotalAccountingdate.Union(GLAccountTotalDueDate).Union(GLAccountTotalDocumentDate).ToList();
+            bool UnionreturnsDistinctvalues = true;
+            if (UnionreturnsDistinctvalues)
+            {
+                ControlGLAccountTotalByMonths = GLAccountTotalAccountingdate.Concat(GLAccountTotalDueDate).Concat(GLAccountTotalDocumentDate).ToList();
+            }
+            else
+            {
+                ControlGLAccountTotalByMonths = GLAccountTotalAccountingdate.Union(GLAccountTotalDueDate).Union(GLAccountTotalDocumentDate).ToList();
+            }
+                
         }
 
         void CheckControlGLAccountTotalByMonths()

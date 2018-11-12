@@ -319,6 +319,7 @@
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
+    <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />
     <Compile Include="CommonDataModel\DataContracts\UsersByTenantData.cs" />
     <Compile Include="CommonDataModel\EntityLists\DocumentFilingBackupBatchList.cs" />
     <Compile Include="CommonDataModel\EntityLists\DocumentFilingBackupSettingList.cs" />
@@ -2289,6 +2290,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusesPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OtherParticipantIdPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\PickUpDeliveryFromToTypePM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\PickUpDeliveryPackageHarmonizePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\PickUpDeliveryTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentAPInvoicePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentARInvoiceMoneyPM.cs" />
@@ -2344,6 +2346,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\NextLegQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\OtherParticipantIdQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryFromToTypeQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryPackageHarmonizeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryTransportModeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentAssemblyQuery.cs" />

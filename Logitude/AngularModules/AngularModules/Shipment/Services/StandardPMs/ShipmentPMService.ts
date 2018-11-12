@@ -38,6 +38,7 @@ import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFiel
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 import {ShipmentAssemblyPM} from '../../EntityPMs/ShipmentAssemblyPM';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { PickUpDeliveryPackageHarmonizePM } from '../../EntityPMs/PickUpDeliveryPackageHarmonizePM';
 
 @Injectable()
 
@@ -548,7 +549,15 @@ export class ShipmentPMService {
                 newPickup.ShipmentPickUpDeliveryPackages = [];
 
                 for (var r in myShipmentPickup.ShipmentPickUpDeliveryPackages) {
-                    newPickup.ShipmentPickUpDeliveryPackages.push(this.clone(myShipmentPickup.ShipmentPickUpDeliveryPackages[r]));
+                    var myPickUpPackage = myShipmentPickup.ShipmentPickUpDeliveryPackages[r];
+                    var newPickUpPackage: ShipmentPickUpDeliveryPackagePM = this.clone(myPickUpPackage);
+                    newPickUpPackage.PickUpDeliveryPackageHarmonizes = [];
+
+                    for (var kk3 in myPickUpPackage.PickUpDeliveryPackageHarmonizes) {
+                        newPickUpPackage.PickUpDeliveryPackageHarmonizes.push(this.clone(myPickUpPackage.PickUpDeliveryPackageHarmonizes[kk3]));
+                    }
+
+                    newPickup.ShipmentPickUpDeliveryPackages.push(myPickUpPackage);
                 }
 
                 entityPM.OldEntityPM.ShipmentPickUps.push(newPickup);
@@ -562,7 +571,15 @@ export class ShipmentPMService {
                 newDelivery.ShipmentPickUpDeliveryPackages = [];
 
                 for (var k in myShipmentDelivery.ShipmentPickUpDeliveryPackages) {
-                    newDelivery.ShipmentPickUpDeliveryPackages.push(this.clone(myShipmentDelivery.ShipmentPickUpDeliveryPackages[k]));
+                    var myDeliveryPackage = myShipmentDelivery.ShipmentPickUpDeliveryPackages[r];
+                    var newDeliveryPackage: ShipmentPickUpDeliveryPackagePM = this.clone(myDeliveryPackage);
+                    newDeliveryPackage.PickUpDeliveryPackageHarmonizes = [];
+
+                    for (var kkk3 in myDeliveryPackage.PickUpDeliveryPackageHarmonizes) {
+                        newDeliveryPackage.PickUpDeliveryPackageHarmonizes.push(this.clone(myDeliveryPackage.PickUpDeliveryPackageHarmonizes[kkk3]));
+                    }
+
+                    newDelivery.ShipmentPickUpDeliveryPackages.push(myDeliveryPackage);
                 }
 
                 entityPM.OldEntityPM.ShipmentDeliveries.push(newDelivery);
@@ -1682,13 +1699,19 @@ export class ShipmentPMService {
                 itemPM[property] = itemJson[property];
             }
 
-            
+
             if (mapParent) {
                 itemPM.UniqueKey = Guid.newGuid();
                 itemPM.ChangeSetOp = "None";
                 itemJson.ChangeSetOp = "None";
                 itemPM.OldEntityPM = this.clone(itemPM);
 
+                this.MapPickUpDeliveryPackageHarmonizes(itemPM, itemJson, mapParent);
+                itemPM.OldEntityPM.PickUpDeliveryPackageHarmonizes = [];
+                for (var kk3 in itemPM.PickUpDeliveryPackageHarmonizes) {
+                    var clonedInside = this.clone(itemPM.PickUpDeliveryPackageHarmonizes[kk3]);
+                    itemPM.OldEntityPM.PickUpDeliveryPackageHarmonizes.push(clonedInside);
+                }
             }
 
             else {
@@ -1696,16 +1719,18 @@ export class ShipmentPMService {
                     itemPM.ChangeSetOp = "Delete";
                 }
                 else {
-                if (itemPM.UniqueKey) {
-                    if (itemJson.IsDirty) {
-                        itemPM.ChangeSetOp = "Update";
+                    if (itemPM.UniqueKey) {
+                        if (itemJson.IsDirty) {
+                            itemPM.ChangeSetOp = "Update";
+                        }
+                    }
+
+                    else {
+                        itemPM.ChangeSetOp = "Insert";
                     }
                 }
 
-                else {
-                    itemPM.ChangeSetOp = "Insert";
-                }
-                }
+                this.MapPickUpDeliveryPackageHarmonizes(itemPM, itemJson, mapParent);
 
                 itemPM.OldEntityPM = null;
                 itemPM.EntityParentPM = null;
@@ -1715,19 +1740,34 @@ export class ShipmentPMService {
         }
 
         if (oldCollection) {
-
             for (var pack in oldCollection) {
                 if (entityPM.ShipmentPickUpDeliveryPackages.filter(p => p.UniqueKey === oldCollection[pack].UniqueKey).length === 0) {
                     if (oldCollection[pack]) {
-                        oldCollection[pack].ChangeSetOp = "Delete";
-                        oldCollection[pack].OldEntityPM = null;
-                        entityPM.ShipmentPickUpDeliveryPackages.push(oldCollection[pack]);
+                        var oldpackageJson = oldCollection[pack];
+                        var deletedPM: ShipmentPickUpDeliveryPackagePM = new ShipmentPickUpDeliveryPackagePM(null);
+                        var pmKeys = Object.keys(oldpackageJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldpackageJson[property];
+                        }
+
+
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        this.MapPickUpDeliveryPackageHarmonizes(deletedPM, oldpackageJson, mapParent);
+
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ShipmentPickUpDeliveryPackages.push(deletedPM);
                     }
                 }
             }
         }
-
-
     }
     MapDeliveryPackages(entityPM: ShipmentDeliveryPM, jsonPM: any, mapParent: boolean = true) {
 
@@ -1771,6 +1811,13 @@ export class ShipmentPMService {
                 itemPM.ChangeSetOp = "None";
                 itemJson.ChangeSetOp = "None";
                 itemPM.OldEntityPM = this.clone(itemPM);
+
+                this.MapPickUpDeliveryPackageHarmonizes(itemPM, itemJson, mapParent);
+                itemPM.OldEntityPM.PickUpDeliveryPackageHarmonizes = [];
+                for (var kk3 in itemPM.PickUpDeliveryPackageHarmonizes) {
+                    var clonedInside = this.clone(itemPM.PickUpDeliveryPackageHarmonizes[kk3]);
+                    itemPM.OldEntityPM.PickUpDeliveryPackageHarmonizes.push(clonedInside);
+                }
             }
 
             else {
@@ -1778,16 +1825,18 @@ export class ShipmentPMService {
                     itemPM.ChangeSetOp = "Delete";
                 }
                 else {
-                if (itemPM.UniqueKey) {
-                    if (itemJson.IsDirty) {
-                        itemPM.ChangeSetOp = "Update";
+                    if (itemPM.UniqueKey) {
+                        if (itemJson.IsDirty) {
+                            itemPM.ChangeSetOp = "Update";
+                        }
+                    }
+
+                    else {
+                        itemPM.ChangeSetOp = "Insert";
                     }
                 }
 
-                else {
-                    itemPM.ChangeSetOp = "Insert";
-                }
-                }
+                this.MapPickUpDeliveryPackageHarmonizes(itemPM, itemJson, mapParent);
 
                 itemPM.OldEntityPM = null;
                 itemPM.EntityParentPM = null;
@@ -1800,9 +1849,27 @@ export class ShipmentPMService {
             for (var pack in oldCollection) {
                 if (entityPM.ShipmentPickUpDeliveryPackages.filter(p => p.UniqueKey === oldCollection[pack].UniqueKey).length === 0) {
                     if (oldCollection[pack]) {
-                        oldCollection[pack].ChangeSetOp = "Delete";
-                        oldCollection[pack].OldEntityPM = null;
-                        entityPM.ShipmentPickUpDeliveryPackages.push(oldCollection[pack]);
+                        var oldpackageJson = oldCollection[pack];
+                        var deletedPM: ShipmentPickUpDeliveryPackagePM = new ShipmentPickUpDeliveryPackagePM(null);
+                        var pmKeys = Object.keys(oldpackageJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldpackageJson[property];
+                        }
+
+
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+
+                        this.MapPickUpDeliveryPackageHarmonizes(deletedPM, oldpackageJson, mapParent);
+
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ShipmentPickUpDeliveryPackages.push(deletedPM);
                     }
                 }
             }
@@ -1967,6 +2034,90 @@ export class ShipmentPMService {
                         oldCollection[pack].ChangeSetOp = "Delete";
                         oldCollection[pack].OldEntityPM = null;
                         entityPM.ShipmentPackageHarmonizes.push(oldCollection[pack]);
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    MapPickUpDeliveryPackageHarmonizes(entityPM: ShipmentPickUpDeliveryPackagePM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldCollection: PickUpDeliveryPackageHarmonizePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldCollection = entityPM.OldEntityPM.PickUpDeliveryPackageHarmonizes;
+        }
+
+        entityPM.PickUpDeliveryPackageHarmonizes = new Array<PickUpDeliveryPackageHarmonizePM>();
+
+        for (var pack in jsonPM.PickUpDeliveryPackageHarmonizes) {
+
+            var itemJson = jsonPM.PickUpDeliveryPackageHarmonizes[pack];
+            if (mapParent && (itemJson.ChangeSetOp == "Delete" || itemJson.ChangeSetOp == 3)) {
+                continue;
+            }
+
+            var itemPM: PickUpDeliveryPackageHarmonizePM;
+            if (mapParent) { // get mapping
+                itemPM = new PickUpDeliveryPackageHarmonizePM(entityPM);
+            }
+
+            else {// update mapping             
+                itemPM = new PickUpDeliveryPackageHarmonizePM(null);
+            }
+
+            var pmKeys = Object.keys(itemJson);
+            for (var key in pmKeys) {
+
+                if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties") {
+                    continue;
+                }
+
+                var property = pmKeys[key];
+                itemPM[property] = itemJson[property];
+            }
+
+
+            if (mapParent) {
+                itemPM.UniqueKey = Guid.newGuid();
+                itemPM.ChangeSetOp = "None";
+                itemJson.ChangeSetOp = "None";
+                itemPM.OldEntityPM = this.clone(itemPM);
+
+            }
+
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    itemPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (itemPM.UniqueKey) {
+                        if (itemJson.IsDirty) {
+                            itemPM.ChangeSetOp = "Update";
+                        }
+                    }
+
+                    else {
+                        itemPM.ChangeSetOp = "Insert";
+                    }
+                }
+
+                itemPM.OldEntityPM = null;
+                itemPM.EntityParentPM = null;
+            }
+            itemPM.IsDirty = false;
+            entityPM.PickUpDeliveryPackageHarmonizes.push(itemPM);
+        }
+
+        if (oldCollection) {
+
+            for (var pack in oldCollection) {
+                if (entityPM.PickUpDeliveryPackageHarmonizes.filter(p => p.UniqueKey === oldCollection[pack].UniqueKey).length === 0) {
+                    if (oldCollection[pack]) {
+                        oldCollection[pack].ChangeSetOp = "Delete";
+                        oldCollection[pack].OldEntityPM = null;
+                        entityPM.PickUpDeliveryPackageHarmonizes.push(oldCollection[pack]);
                     }
                 }
             }

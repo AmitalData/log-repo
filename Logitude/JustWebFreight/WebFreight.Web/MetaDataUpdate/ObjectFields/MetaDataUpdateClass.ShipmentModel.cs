@@ -46,6 +46,30 @@ namespace WebFreight.Web.MetaDataUpdate
             CreateShipmentCustomsTransmissionObjectFields(objectFields, textCodes);
             CreatePickUpDeliveryTransportModeObject(objectFields, textCodes);
             CreateShipmentPackageHarmonizeFields(objectFields, textCodes);
+            CreatePickUpDeliveryPackageHarmonizeFields(objectFields, textCodes);
+        }
+
+        private void CreatePickUpDeliveryPackageHarmonizeFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
+        {
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Harmonize",
+                FullFieldLable = "Harmonize",
+                FieldName = "Harmonize",
+                FieldsDataType = "Text",
+                IsRequired = true,
+                MaxLength = 60,
+                MinLength = 0,
+                ObjectTableId = PickUpDeliveryPackageHarmonizeObject.Id,
+                ObjectTableName = PickUpDeliveryPackageHarmonizeObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "StartsWith",
+                PMPropertyPath = "Harmonize",
+                ListPropertyPath = "Harmonize",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            this.ObjectContext.SaveChanges();
         }
 
         private void CreateShipmentPackageHarmonizeFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)

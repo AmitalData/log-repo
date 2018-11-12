@@ -198,7 +198,8 @@ namespace Logitude.BL.CommonDataModel.DataContracts
         public string ValueOfGoodsCurrencyCode { get; set; }
         public bool   ValueOfGoodsCurrencyAddedManually { get; set; }
 
-
+        public ShipmentPickUpDeliverySL ShipmentPickUp { get; set; }
+        public ShipmentPickUpDeliverySL ShipmentDelivery { get; set; }
 
         public string LongMaster { get; set; }
         public List<HouseSL> Houses
@@ -245,4 +246,11 @@ namespace Logitude.BL.CommonDataModel.DataContracts
 
 
     }
+
+    
+
+
+
+
+
 }
