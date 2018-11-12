@@ -325,12 +325,14 @@ namespace CustomsWorkerRole
             {
                 //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
 
-
+                var ADD = "User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
+                client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36");
                 string webApiURI = host;//POST 
                 //var tokenUri = new Uri(new Uri(host), relativeUriToken);
                 webApiURI = @"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
-
-                var content = new StringContent("grant_type=password&username=f_moshe&Password=******", Encoding.UTF8, "application/x-www-form-urlencoded");
+                string tokenReq = "grant_type=password&username=f_moshe&Password=******";
+                tokenReq = $"grant_type=password&username={user}&Password={pass}";
+                var content = new StringContent(tokenReq, Encoding.UTF8, "application/x-www-form-urlencoded");
 
                 var task = client.PostAsync(webApiURI, content);
                 Wait4Finsh(task, 1);
