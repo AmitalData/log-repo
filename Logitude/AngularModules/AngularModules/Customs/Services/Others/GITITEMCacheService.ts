@@ -20,13 +20,15 @@ export class GITITEMCacheService {
   private static _instance: GITITEMCacheService;
   private constructor() {
     this._ItemCode_LocalCache = [];
-    this.GetCountryPURForItems();
+      this.GetCountryPURForItems();
+      this.GetUnitPURForItems();
   }
 
   GITITEMExtendedPMService: GITITEMExtendedPMService = new GITITEMExtendedPMService();
 
 
-  public IsCountryPURForItems: boolean = false;
+    public IsCountryPURForItems: boolean = false;
+    public IsUnitPURForItems: boolean = false;
 
   private _ItemCode_LocalCache: ItemCodeComponent[];
   public get ItemCode_LocalCache(): ItemCodeComponent[] {
@@ -49,6 +51,16 @@ export class GITITEMCacheService {
       });
   }
 
+
+    private GetUnitPURForItems() {
+        var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_UNIT", "NON", "NON", SessionLocator.Tenant)
+            .subscribe(response => {
+                if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+                    this.IsUnitPURForItems = true;
+                }
+            });
+    }
 
     public SaveItemCodeLocalCache() {
         let listGITITEMDto: GITITEMDto[] = [];

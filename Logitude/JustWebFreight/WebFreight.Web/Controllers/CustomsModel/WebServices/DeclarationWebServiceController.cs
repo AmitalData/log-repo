@@ -662,7 +662,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         VendorId = rec.SAPAKID,
                         SearchFields = rec.SEARCHENG,
                         OriginCountryCode = rec.ORIGINCOUNTRY,
-                        //InvoiceQuantityType = rec.UNITID,
+                        InvoiceQuantityType = rec.UNITID,
                     })
                 select new { itm };
                 if (!string.IsNullOrWhiteSpace(customerCode))
@@ -757,7 +757,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         VendorId = rec.SAPAKID,
                         SearchFields = rec.SEARCHENG,
                         OriginCountryCode = rec.ORIGINCOUNTRY,
-                        //InvoiceQuantityType = rec.UNITID,
+                        InvoiceQuantityType = rec.UNITID,
                     })
                 select new { itm };
                 if (!string.IsNullOrWhiteSpace(customerCode))
@@ -846,7 +846,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         VendorId = rec.SAPAKID,
                         SearchFields = rec.SEARCHENG,
                         OriginCountryCode = rec.ORIGINCOUNTRY,
-                        //InvoiceQuantityType = rec.UNITID,
+                        InvoiceQuantityType = rec.UNITID,
                     })
                 select new { itm };
                 if (!string.IsNullOrWhiteSpace(customerCode))
