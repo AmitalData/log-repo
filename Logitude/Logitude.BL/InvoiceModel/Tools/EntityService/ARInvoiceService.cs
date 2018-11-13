@@ -1798,7 +1798,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                                  && d.Tenant == tenant
                                                                  select d).FirstOrDefault();
 
-                                    if(myMeasurement != null)
+                                    if (myMeasurement != null)
                                     {
                                         item.MeasurementCode = myMeasurement.Code;
                                     }
@@ -1816,19 +1816,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 TotalAmount = item.Quantity * item.UnitPrice;
                             }
 
-                            /* Minimum */
-                            if (myReceivable.QuoteSaleMinPrice != null)
+                            /* MinMax Quote */
+                            if (TotalAmount != null)
                             {
-                                if (TotalAmount == null)
+                                if (myReceivable.QuoteSaleMinAmount != null)
                                 {
-                                    TotalAmount = myReceivable.QuoteSaleMinPrice;
+                                    if (TotalAmount < myReceivable.QuoteSaleMinAmount)
+                                    {
+                                        TotalAmount = myReceivable.QuoteSaleMinAmount;
+                                    }
                                 }
 
-                                else
+                                if (myReceivable.QuoteSaleMaxAmount != null)
                                 {
-                                    if (TotalAmount < myReceivable.QuoteSaleMinPrice)
+                                    if (TotalAmount > myReceivable.QuoteSaleMaxAmount)
                                     {
-                                        TotalAmount = myReceivable.QuoteSaleMinPrice;
+                                        TotalAmount = myReceivable.QuoteSaleMaxAmount;
                                     }
                                 }
                             }

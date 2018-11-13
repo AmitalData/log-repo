@@ -23,23 +23,23 @@ using Simplog.Data.CommonDataModel;
 
  namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 { 
-   public partial class CountryQueryService
+   public partial class VesselQueryService
    {
    
 		ICommonDataContext  context;
-		//CountryService service; 
+		//VesselService service; 
 		
-		CountryQuery query; 
+		VesselQuery query; 
 
-        public CountryQueryService(int tenant)
+        public VesselQueryService(int tenant)
         {
 				    context = CommonDataContext.GetContext(tenant); 
-			//service = new CountryService(context, tenant); 
-			query = new CountryQuery(tenant);
+			//service = new VesselService(context, tenant); 
+			query = new VesselQuery(tenant);
         }
 
 		
-		public Country GetCountryById(string Id,int Tenant)
+		public Vessel GetVesselById(string Id,int Tenant)
         { 
 		    try
             {
@@ -47,9 +47,9 @@ using Simplog.Data.CommonDataModel;
 				
 				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
-                    throw new ApplicationException("Country with Id " + Id + " doesn't exist");
+                    throw new ApplicationException("Vessel with Id " + Id + " doesn't exist");
 
-				return CountryDataMapping(temp,Tenant);
+				return VesselDataMapping(temp,Tenant);
 			}
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Country GetCountryByCode(string Code,int Tenant)
+		public Vessel GetVesselByCode(string Code,int Tenant)
         { 
 		    try
             {
@@ -66,9 +66,9 @@ using Simplog.Data.CommonDataModel;
 				
 				var temp = query.GetSinglePMByCode(Code,Tenant);				
 				 if (temp == null)
-                    throw new ApplicationException("Country with Code " + Code + " doesn't exist");
+                    throw new ApplicationException("Vessel with Code " + Code + " doesn't exist");
 
-				return CountryDataMapping(temp,Tenant);
+				return VesselDataMapping(temp,Tenant);
 			}
             catch (Exception ex)
             {
@@ -77,16 +77,17 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Country CountryDataMapping(CountryPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		public Vessel VesselDataMapping(VesselPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				   var temp = new Country(); 
+				   var temp = new Vessel(); 
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
 				   temp.EnglishName = MyEntityPM.EnglishName;
-				   temp.LocalName = MyEntityPM.LocalName;					
+				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Vessel");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -96,11 +97,11 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public CountryPM CountryDataMappingAndValidatin(Country MyEntity,int Tenant,string ComputingPartnerName = "")
+		public VesselPM VesselDataMappingAndValidatin(Vessel MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
-				   					var temp = new CountryPM();								  
+				   					var temp = new VesselPM();								  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
@@ -109,10 +110,24 @@ using Simplog.Data.CommonDataModel;
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
 						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
-					} 					   
+					} 
+					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{
+						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"Vessel");
+					    if(string.IsNullOrEmpty(MyCode))
+						{
+						  throw new ApplicationException("Vessel with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+						}
+						temp = query.GetSinglePMByCode(MyCode, Tenant);
+						
+						
+					}
+					
+					   					   
 					if(temp == null)
 					{
-					    throw new ApplicationException("Country with Code " + MyEntity.Code + " doesn't exist");
+					    throw new ApplicationException("Vessel with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -123,7 +138,10 @@ using Simplog.Data.CommonDataModel;
 						temp.Code = MyEntity.Code;
 					}
 					temp.EnglishName = MyEntity.EnglishName;
-					temp.LocalName = MyEntity.LocalName;					   
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+						temp.Code = MyEntity.PartnerCode;
+					}					   
 					   return temp;
 		    }
             catch (Exception ex)
