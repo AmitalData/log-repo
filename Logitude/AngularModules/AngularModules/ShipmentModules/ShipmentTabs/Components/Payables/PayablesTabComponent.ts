@@ -1310,8 +1310,8 @@ export class ShipmentPayableItem extends BaseComponent {
         }
 
         if (culculatedAmount != null) {
-            if (this.MinAmount != null) {
-                if (culculatedAmount > this.MinAmount) {
+            if (this.MaxAmount != null) {
+                if (culculatedAmount > this.MaxAmount) {
                     isVisible = true;
                 }
             }
@@ -1796,9 +1796,40 @@ export class ShipmentPayableItem extends BaseComponent {
     }
 
     get ExpectedAmount() { return this.EntityPM.ExpectedAmount; }
-    set ExpectedAmount(newVaule: number) {
-        if (this.EntityPM.ExpectedAmount != newVaule) {
-            this.EntityPM.ExpectedAmount = AppTool.Round(newVaule, 2);
+    set ExpectedAmount(ivalue: number) {
+
+        var value = ivalue;
+        if (value) {
+
+            /* MinMax Tariff */
+            if (this.MinAmount != null) {
+                if (value < this.MinAmount) {
+                    value = this.MinAmount;
+                }
+            }
+
+            if (this.MaxAmount != null) {
+                if (value > this.MaxAmount) {
+                    value = this.MaxAmount;
+                }
+            }
+
+            /* MinMax Quote */
+            if (this.QuoteCostMinAmount != null) {
+                if (value < this.QuoteCostMinAmount) {
+                    value = this.QuoteCostMinAmount;
+                }
+            }
+
+            if (this.QuoteCostMaxAmount != null) {
+                if (value > this.QuoteCostMaxAmount) {
+                    value = this.QuoteCostMaxAmount;
+                }
+            }
+        }
+
+        if (this.EntityPM.ExpectedAmount != value) {
+            this.EntityPM.ExpectedAmount = AppTool.Round(value, 2);
             this.SetLineStatus();
             this.SetLineCells();
             this.ComputeUnitPrice();
@@ -2689,6 +2720,36 @@ export class InsidePayableViewModel {
         }
     }
 
+    get MinAmount() { return this.EntityPM.MinAmount; }
+    set MinAmount(newVaule: number) {
+        if (this.EntityPM.MinAmount != newVaule) {
+            this.EntityPM.MinAmount = AppTool.Round(newVaule, 2);
+            this.ComputeTotalAmount();
+        }
+    }
+
+    get MaxAmount() { return this.EntityPM.MaxAmount; }
+    set MaxAmount(newVaule: number) {
+        if (this.EntityPM.MaxAmount != newVaule) {
+            this.EntityPM.MaxAmount = AppTool.Round(newVaule, 2);
+            this.ComputeTotalAmount();
+        }
+    }
+
+    get QuoteCostMinAmount() { return this.EntityPM.QuoteCostMinAmount; }
+    set QuoteCostMinAmount(newVaule: number) {
+        if (this.EntityPM.QuoteCostMinAmount != newVaule) {
+            this.EntityPM.QuoteCostMinAmount = AppTool.Round(newVaule, 2);
+        }
+    }
+
+    get QuoteCostMaxAmount() { return this.EntityPM.QuoteCostMaxAmount; }
+    set QuoteCostMaxAmount(newVaule: number) {
+        if (this.EntityPM.QuoteCostMaxAmount != newVaule) {
+            this.EntityPM.QuoteCostMaxAmount = AppTool.Round(newVaule, 2);
+        }
+    }
+
     SetLineStatus() {
         ShipmentTool.SetPayableLineStatus(this.EntityPM);
         this.SetSatusTypeToolTip();
@@ -2719,45 +2780,49 @@ export class InsidePayableViewModel {
     }
     ComputeTotalAmount() {
 
-        var myResult: number = null;
+        var iAmount: number = null;
 
         this.SetLineStatus();
 
         if (this.Quantity != null && this.UnitPrice != null) {
-            myResult = this.Quantity * this.UnitPrice;
+            iAmount = this.Quantity * this.UnitPrice;
 
             if (this.MeasurementCode == "PRVL" || this.MeasurementCode == "PRFR") {
-                myResult = this.Quantity * this.UnitPrice / 100;
+                iAmount = this.Quantity * this.UnitPrice / 100;
             }
         }
 
-        /* From Tariff */
-        if (this.EntityPM.MinAmount != null || this.EntityPM.MaxAmount != null) {
-            if (myResult != null) {
-                if (myResult < this.EntityPM.MinAmount) {
-                    myResult = this.EntityPM.MinAmount;
-                }
-
-                else if (myResult > this.EntityPM.MaxAmount) {
-                    myResult = this.EntityPM.MaxAmount;
+        /* MinMax Tariff */
+        if (iAmount != null) {
+            if (this.MinAmount != null) {
+                if (iAmount < this.MinAmount) {
+                    iAmount = this.MinAmount;
                 }
             }
-        }
 
-        /* Minimum From Quote */
-        if (this.EntityPM.QuoteCostMinAmount != null) {
-            if (myResult == null) {
-                myResult = this.EntityPM.QuoteCostMinAmount;
-            }
-
-            else {
-                if (myResult < this.EntityPM.QuoteCostMinAmount) {
-                    myResult = this.EntityPM.QuoteCostMinAmount;
+            if (this.MaxAmount != null) {
+                if (iAmount > this.MaxAmount) {
+                    iAmount = this.MaxAmount;
                 }
             }
         }
 
-        this.EntityPM.ExpectedAmount = AppTool.Round(myResult, 2);
+        /* MinMax Quote */
+        if (iAmount != null) {
+            if (this.QuoteCostMinAmount != null) {
+                if (iAmount < this.QuoteCostMinAmount) {
+                    iAmount = this.QuoteCostMinAmount;
+                }
+            }
+
+            if (this.QuoteCostMaxAmount != null) {
+                if (iAmount > this.QuoteCostMaxAmount) {
+                    iAmount = this.QuoteCostMaxAmount;
+                }
+            }
+        }
+
+        this.EntityPM.ExpectedAmount = AppTool.Round(iAmount, 2);
         this.ComputeTotalAmountLocal();
     }
     ComputeTotalAmountLocal() {
