@@ -88,7 +88,7 @@ SELECT        dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNumb
 						 dbo.Shipments.Notify2Reference,
 						 dbo.Shipments.ShipperNotExporterReference,
 						 dbo.Shipments.ConsigneeNotImporterReference,
-
+						 dbo.Shipments.ProjectNumber,
 						 dbo.Shipments.INTTRALastStatusDate,
 						 dbo.Shipments.INTTRASIError,
 						 dbo.Shipments.INTTRASIStatusCode,
