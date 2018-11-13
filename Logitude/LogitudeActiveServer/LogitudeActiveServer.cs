@@ -53,7 +53,7 @@ namespace LogitudeActiveServer
                         //    File.Create(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\" + ServerName + ".txt");
                         //}
                         //File.Copy(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\" + ServerName + ".txt", MyPath + "\\" + ServerName + ".txt");
-                        File.Create(MyPath + "\\" + ServerName + ".txt");
+                        File.Create(MyPath + "\\" + ServerName + ".txt").Dispose(); ;
                     }
 
                     Thread.Sleep(60000);
