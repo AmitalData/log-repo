@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../Customs/Args';
@@ -143,12 +143,18 @@ export class MasterBOLQueryComponent
         if (this.RequestParams.ReturnAllInernalCargos != value) {
             this.RequestParams.ReturnAllInernalCargos = value;
         }
+        if (this.RequestParams.ReturnAllInernalCargos == true) {
+            this.ExactMatch = false;
+        }
     }
 
     get ExactMatch() { return this.RequestParams.ExactMatch; }
     set ExactMatch(value: boolean) {
         if (this.RequestParams.ExactMatch != value) {
             this.RequestParams.ExactMatch = value;
+        }
+        if (this.RequestParams.ExactMatch == true) {
+            this.ReturnAllInernalCargos = false;
         }
     }
 

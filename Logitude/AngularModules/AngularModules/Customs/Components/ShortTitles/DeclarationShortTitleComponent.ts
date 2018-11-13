@@ -1,5 +1,5 @@
-﻿
-import {Component} from '@angular/core';
+
+import { Component, ChangeDetectorRef } from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {DeclarationPM} from '../../EntityPMs/DeclarationPM';
 import {AmitalGatewayUtil} from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
@@ -14,8 +14,9 @@ import {DeclarationEditComponentController} from '../../Controller/DeclarationEd
 //C: \LW\Customs\AngularModules\AngularModules\Infrastructure\Utilities\AmitalGatewayUtil.ts
 export class DeclarationShortTitleComponent {
     public EntityPM: DeclarationPM;
-    constructor(public entityArgs: EntityArgs) {
+    constructor(private cd: ChangeDetectorRef,public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
+        this.Listen();
 
         if (this.EntityPM != null) {
             this.BuildComponent();
@@ -26,6 +27,25 @@ export class DeclarationShortTitleComponent {
     public _EntityNumber: string = null;
     _ShowEntityNumberClick: boolean = false;
     _CourierImporterName: string = null;
+    private Listen() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+
+     
+            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess && SessionLocator.CurrentSession.CurrentEditComponent) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.BuildComponent();
+                        this.cd.detectChanges();
+                    }
+                })
+            );
+
+   
+        }
+    }
+    
+    
 
     public get CourierImporterName() {
         if (this.EntityPM.ImporterCode) {

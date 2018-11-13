@@ -685,7 +685,7 @@ namespace AmitalCustomsWindowsService.Tester
             var wr = new SendWebAPI2MamanGWMessageECTHRDataWR();
             string data =
                 @"{""BaldarCode"":""2026"",""BaldarAwb"":""baldarAWb35"",""AirlineAwbPref"":""001"",""Master"":22222211,""Awb8"":88888888,""HawbExtnd"":""abcd1234 update"",""AirlineCode"":""1X"",""FltNo"":null,""FltDate"":null,""LandTime"":null,""DecNoOfPackags"":1,""DecWeight"":100.1,""DolarValue"":200.12345,""StoreTypeReq"":""67"",""Description"":""Description1 - 2026 update"",""CustomerName"":""Miriam"",""CustomerAddress"":""Ein Gedi"",""CustomerPhone"":""026765544"",""DestLineDesc"":""DestLineDesc"",""BaldarMessageTime"":""2018 - 10 - 16T17: 38:33.1365366 + 03:00"",""BaldarHp"":""2323231"",""OpenBaldarAwbDate"":""2018 - 10 - 15T17: 38:33.1365366 + 03:00"",""ResponseStatusCode"":null,""ResponseStatusMsg"":null}";
-            wr.PostIt("", "", "", data);
+            wr.PostIt("", "ftp-uti", "Pariz2019+", data);
 
         }
     }
