@@ -1,4 +1,5 @@
-﻿using Logitude.CRM.BL.EntityPMs;
+﻿
+using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
@@ -24,24 +25,18 @@ using Logitude.BL.GlobalModel.Tools.EntityService;
 using System.Web;
 using WebFreight.Web.Helpers;
 
-namespace WebFreight.Web.App_Code
+namespace WebFreight.Web.Controllers.GlobalModel.Extended
 {
-    public class LogitudeLeadsController : ApiController
+    public class AerolineaseAtlasRegistrationLeadsController : ApiController
     {
         public string PostLogitudeLead(LogitudeLeadPM leadPM)
         {
             LogitudeLeadHelper logitudeLeadHelper = new LogitudeLeadHelper();
             if (leadPM != null)
             {
-                if (string.IsNullOrEmpty(leadPM.Id))
-                {
-                    string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                    if (currentIP == "160.153.153.150")
-                    {
-                        logitudeLeadHelper.CreateLogitudeLead(leadPM);
-                    }
-                }
+                if (string.IsNullOrEmpty(leadPM.Id)) logitudeLeadHelper.CreateLogitudeLead(leadPM);
             }
+            
 
             return null;
 

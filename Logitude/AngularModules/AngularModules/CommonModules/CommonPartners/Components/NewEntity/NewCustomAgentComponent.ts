@@ -30,6 +30,15 @@ export class NewCustomAgentComponent {
         this.RunComponent();
     }
 
+
+    DefaultValues: string;
+    SetWindowArgs(args: any) {
+        if (args != null) {
+            this.DefaultValues = args.DefaultValues;
+        }
+    }
+
+
     RunComponent() {
         if (this.viewContainerRef) {
             this.LoadChildComponent();
@@ -64,6 +73,7 @@ export class NewCustomAgentComponent {
                         this.PartnerTamplate.CardTableName = this.ObjectTableName;
                         this.PartnerTamplate.PartnerTypeId = this.PartnerTypeId;
                         this.PartnerTamplate.DomainService = this.DomainService;
+                        this.PartnerTamplate.DefaultValues = this.DefaultValues;
                         this.PartnerTamplate.InitTemplate();
                     });
             });
