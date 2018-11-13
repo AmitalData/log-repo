@@ -33,7 +33,7 @@ export class AddEditPackageHarmonizeComponent {
             if (args) {
                 this.IsEditingEnabled = args['IsEditingEnabled'];
                 this.EntityPM = args['PackagePM'];
-                this.ShipmentPM = this.EntityPM.EntityParentPM;
+                this.ShipmentPM = args['ShipmentPM'];
 
                 this.isPackageDirty = this.EntityPM.IsDirty;
                 this.isShipmentDirty = this.ShipmentPM.IsDirty;
