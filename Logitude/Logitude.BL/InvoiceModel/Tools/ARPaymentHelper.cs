@@ -505,13 +505,15 @@ namespace Logitude.BL.InvoiceModel.Tools
                 List<Line> lineList = new List<Line>();
                 var invoicesData = (from d in objectContext.ARInvoicePayments.Include("ARInvoice")
                                     where d.Tenant == tenant
-                                    && d.ARPaymentId == ARPayment.Id
+                                    && d.ARPaymentId == ARPayment.Id  && d.ARInvoice.TransferStatusCode=="TR"
                                     select new
                                     {
                                         InvoiceId = d.ARInvoiceId,
                                         ForeignAmount = d.ForeignAmount,
                                         ExternalAccountingEntityId = d.ARInvoice.ExternalAccountingEntityId,
                                     }).ToList();
+
+                
 
                 if (invoicesData.Count > 0)
                 {
