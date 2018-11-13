@@ -322,7 +322,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
 
                             );
-                    dbGLaccount.ToList();
+                    //dbGLaccount.ToList();
                         
                     var qDiff =
                         (
