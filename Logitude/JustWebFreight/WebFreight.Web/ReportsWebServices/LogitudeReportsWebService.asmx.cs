@@ -11213,16 +11213,16 @@ namespace WebFreight.Web.ReportsWebServices
                             Name = item.ChartOfAcountType + "-" + typeName,
 
                             ParentId = null,
-                            LocalCloseBalance = item.LocalCloseBalance,
-                            LocalCredit = item.LocalCredit,
-                            LocalDebit = item.LocalDebit,
-                            LocalOpenBalance = item.LocalOpenBalance,
+                            LocalCloseBalance = item.LocalCloseBalance != null? item.LocalCloseBalance :0 ,
+                            LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                            LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                            LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
 
-                            ForeignCloseBalance = item.ForeignCloseBalance,
-                            ForeignCredit = item.ForeignCredit,
-                            ForeignDebit = item.ForeignDebit,
-                            ForeignOpenBalance = item.ForeignOpenBalance,
+                            ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                            ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                            ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                            ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
 
 
                         };
@@ -11268,16 +11268,18 @@ namespace WebFreight.Web.ReportsWebServices
                             Name = item.ChartOfAcountCode5 + "-" + item.ChartOfAcountName5,
                             Number = null,
                             ParentId = item.ChartOfAcount4,
-                            LocalCloseBalance = item.LocalCloseBalance,
-                            LocalOpenBalance = item.LocalOpenBalance,
-                            LocalDebit = item.LocalDebit,
-                            LocalCredit = item.LocalCredit,
+                            LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                            LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                            LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                            LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                            ForeignOpenBalance = item.ForeignOpenBalance,
-                            ForeignDebit = item.ForeignDebit,
-                            ForeignCredit = item.ForeignCredit,
-                            ForeignCloseBalance = item.ForeignCloseBalance,
-                            Type="ChartOfAccount"
+
+                            ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                            ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                            ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                            ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
+                            Type = "ChartOfAccount"
                         };
 
                         ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
@@ -11297,15 +11299,17 @@ namespace WebFreight.Web.ReportsWebServices
                                     Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
 
                                     ParentId = item.ChartOfAcount3,
-                                    LocalCloseBalance = item.LocalCloseBalance,
-                                    LocalOpenBalance = item.LocalOpenBalance,
-                                    LocalDebit = item.LocalDebit,
-                                    LocalCredit = item.LocalCredit,
+                                    LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                                    LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                                    LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                                    LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                                    ForeignOpenBalance = item.ForeignOpenBalance,
-                                    ForeignDebit = item.ForeignDebit,
-                                    ForeignCredit = item.ForeignCredit,
-                                    ForeignCloseBalance = item.ForeignCloseBalance,
+
+                                    ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                                    ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                                    ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                                    ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
                                     Type = "ChartOfAccount",
                                     Error = true,
 
@@ -11339,15 +11343,17 @@ namespace WebFreight.Web.ReportsWebServices
                             Name = item.ChartOfAcountCode4 + "-" + item.ChartOfAcountName4,
                             Number = null,
                             ParentId = item.ChartOfAcount3,
-                            LocalCloseBalance = item.LocalCloseBalance,
-                            LocalCredit = item.LocalCredit,
-                            LocalDebit = item.LocalDebit,
-                            LocalOpenBalance = item.LocalOpenBalance,
+                            LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                            LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                            LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                            LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                            ForeignCloseBalance = item.ForeignCloseBalance,
-                            ForeignCredit = item.ForeignCredit,
-                            ForeignDebit = item.ForeignDebit,
-                            ForeignOpenBalance = item.ForeignOpenBalance,
+
+                            ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                            ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                            ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                            ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
                             Type = "ChartOfAccount"
 
                         };
@@ -11369,15 +11375,17 @@ namespace WebFreight.Web.ReportsWebServices
                                     Name =  chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
 
                                     ParentId = item.ChartOfAcount2,
-                                    LocalCloseBalance = item.LocalCloseBalance,
-                                    LocalOpenBalance = item.LocalOpenBalance,
-                                    LocalDebit = item.LocalDebit,
-                                    LocalCredit = item.LocalCredit,
+                                    LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                                    LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                                    LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                                    LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                                    ForeignOpenBalance = item.ForeignOpenBalance,
-                                    ForeignDebit = item.ForeignDebit,
-                                    ForeignCredit = item.ForeignCredit,
-                                    ForeignCloseBalance = item.ForeignCloseBalance,
+
+                                    ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                                    ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                                    ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                                    ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
                                     Type = "ChartOfAccount",
                                     Error = true,
 
@@ -11421,15 +11429,17 @@ namespace WebFreight.Web.ReportsWebServices
                             Name = item.ChartOfAcountCode3 + "-" + item.ChartOfAcountName3,
                             Number = null,
                             ParentId = item.ChartOfAcount2,
-                            LocalCloseBalance = item.LocalCloseBalance,
-                            LocalOpenBalance = item.LocalOpenBalance,
-                            LocalDebit = item.LocalDebit,
-                            LocalCredit = item.LocalCredit,
+                            LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                            LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                            LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                            LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                            ForeignOpenBalance = item.ForeignOpenBalance,
-                            ForeignDebit = item.ForeignDebit,
-                            ForeignCredit = item.ForeignCredit,
-                            ForeignCloseBalance = item.ForeignCloseBalance,
+
+                            ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                            ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                            ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                            ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
                             Type = "ChartOfAccount"
                         };
 
@@ -11450,15 +11460,17 @@ namespace WebFreight.Web.ReportsWebServices
                                     Name =  chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
 
                                     ParentId = item.ChartOfAcount1,
-                                    LocalCloseBalance = item.LocalCloseBalance,
-                                    LocalOpenBalance = item.LocalOpenBalance,
-                                    LocalDebit = item.LocalDebit,
-                                    LocalCredit = item.LocalCredit,
+                                    LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                                    LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                                    LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                                    LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                                    ForeignOpenBalance = item.ForeignOpenBalance,
-                                    ForeignDebit = item.ForeignDebit,
-                                    ForeignCredit = item.ForeignCredit,
-                                    ForeignCloseBalance = item.ForeignCloseBalance,
+
+                                    ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                                    ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                                    ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                                    ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
                                     Error = true,
                                     Type = "ChartOfAccount"
 
@@ -11504,15 +11516,17 @@ namespace WebFreight.Web.ReportsWebServices
                             Name = item.ChartOfAcountCode2 + "-" + item.ChartOfAcountName2,
                             Number = null,
                             ParentId = item.ChartOfAcount1,
-                            LocalCloseBalance = item.LocalCloseBalance,
-                            LocalCredit = item.LocalCredit,
-                            LocalDebit = item.LocalDebit,
-                            LocalOpenBalance = item.LocalOpenBalance,
+                            LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                            LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                            LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                            LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                            ForeignCloseBalance = item.ForeignCloseBalance,
-                            ForeignCredit = item.ForeignCredit,
-                            ForeignDebit = item.ForeignDebit,
-                            ForeignOpenBalance = item.ForeignOpenBalance,
+
+                            ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                            ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                            ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                            ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
                             Type = "ChartOfAccount"
                         };
                         ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
@@ -11532,15 +11546,17 @@ namespace WebFreight.Web.ReportsWebServices
                                     Name = chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
 
                                     ParentId = item.ChartOfAcountType,
-                                    LocalCloseBalance = item.LocalCloseBalance,
-                                    LocalOpenBalance = item.LocalOpenBalance,
-                                    LocalDebit = item.LocalDebit,
-                                    LocalCredit = item.LocalCredit,
+                                    LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                                    LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                                    LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                                    LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                                    ForeignOpenBalance = item.ForeignOpenBalance,
-                                    ForeignDebit = item.ForeignDebit,
-                                    ForeignCredit = item.ForeignCredit,
-                                    ForeignCloseBalance = item.ForeignCloseBalance,
+
+                                    ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                                    ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                                    ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                                    ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
                                     Error = true,
 
                                     Type = "ChartOfAccount"
@@ -11585,15 +11601,17 @@ namespace WebFreight.Web.ReportsWebServices
                             Name = item.ChartOfAcountCode1 + "-" + item.ChartOfAcountName1,
                             Number = null,
                             ParentId = item.ChartOfAcountType,
-                            LocalCloseBalance = item.LocalCloseBalance,
-                            LocalOpenBalance = item.LocalOpenBalance,
-                            LocalDebit = item.LocalDebit,
-                            LocalCredit = item.LocalCredit,
+                            LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                            LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                            LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                            LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                            ForeignOpenBalance = item.ForeignOpenBalance,
-                            ForeignDebit = item.ForeignDebit,
-                            ForeignCredit = item.ForeignCredit,
-                            ForeignCloseBalance = item.ForeignCloseBalance,
+
+                            ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                            ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                            ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                            ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
                             Type = "ChartOfAccount"
                         };
 
@@ -11618,15 +11636,17 @@ namespace WebFreight.Web.ReportsWebServices
                                     Name =chartOfAccountType.Code + "-" + chartOfAccountType.LocalName + " ERROR",
 
                                     ParentId = null,
-                                    LocalCloseBalance = item.LocalCloseBalance,
+                                    LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                                    LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                                    LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                                    LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                                    LocalCredit = item.LocalCredit,
-                                    LocalDebit = item.LocalDebit,
-                                    LocalOpenBalance = item.LocalOpenBalance,
-                                    ForeignCloseBalance = item.ForeignCloseBalance,
-                                    ForeignCredit = item.ForeignCredit,
-                                    ForeignDebit = item.ForeignDebit,
-                                    ForeignOpenBalance = item.ForeignOpenBalance,
+
+                                    ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                                    ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                                    ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                                    ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
                                     Error = true,
                                   
 
@@ -11695,15 +11715,17 @@ namespace WebFreight.Web.ReportsWebServices
                             Name =  item.GLAccountNumber + "-" + item.GLAccountName,
 
                             ParentId = item.ChartOfAccountId,
-                            LocalCloseBalance = item.LocalCloseBalance,
+                            LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                            LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                            LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                            LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                            LocalCredit = item.LocalCredit,
-                            LocalDebit = item.LocalDebit,
-                            LocalOpenBalance = item.LocalOpenBalance,
-                            ForeignCloseBalance = item.ForeignCloseBalance,
-                            ForeignCredit = item.ForeignCredit,
-                            ForeignDebit = item.ForeignDebit,
-                            ForeignOpenBalance = item.ForeignOpenBalance,
+
+                            ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                            ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                            ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                            ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
 
 
 
@@ -11731,16 +11753,18 @@ namespace WebFreight.Web.ReportsWebServices
                                         Name =  chartOfAccount.Code + "-" + chartOfAccount.LocalName + " ERROR",
 
                                         ParentId = item.ChartOfAcountType,
-                                        LocalCloseBalance = item.LocalCloseBalance,
-                                        LocalOpenBalance = item.LocalOpenBalance,
-                                        LocalDebit = item.LocalDebit,
-                                        LocalCredit = item.LocalCredit,
+                                        LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
+                                        LocalCredit = item.LocalCredit != null ? item.LocalCredit : 0,
+                                        LocalDebit = item.LocalDebit != null ? item.LocalDebit : 0,
+                                        LocalOpenBalance = item.LocalOpenBalance != null ? item.LocalOpenBalance : 0,
 
-                                        ForeignOpenBalance = item.ForeignOpenBalance,
-                                        ForeignDebit = item.ForeignDebit,
-                                        ForeignCredit = item.ForeignCredit,
-                                        ForeignCloseBalance = item.ForeignCloseBalance,
-                                        Error= true,
+
+                                        ForeignCloseBalance = item.ForeignCloseBalance != null ? item.ForeignCloseBalance : 0,
+                                        ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
+                                        ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
+                                        ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
+                                        Error = true,
 
 
                                     };

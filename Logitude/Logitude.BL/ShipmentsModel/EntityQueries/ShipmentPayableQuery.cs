@@ -97,7 +97,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     CorrectionByUserId = a.CorrectionByUserId,
                                                     CorrectionDate = a.CorrectionDate,
                                                     CorrectionNote = a.CorrectionNote,
-                                                    QuoteCostMinPrice = a.QuoteCostMinPrice,
                                                     QuoteChargeId = a.QuoteChargeId,
                                                     IsChargeBySteps = a.IsChargeBySteps,
                                                     ChargesTypeId = a.ChargesTypeId,
@@ -124,6 +123,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     UOMPercentage = a.Measurement == null ? "" : (a.Measurement.Code == "PRVL" || a.Measurement.Code == "PRFR" ? "%" : ""),
                                                     IsBackToBack = a.IsBackToBack,
                                                     ReceivableId = a.ReceivableId,
+                                                    QuoteCostMinAmount = a.QuoteCostMinAmount,
+                                                    QuoteCostMaxAmount = a.QuoteCostMaxAmount,
                                                 }).ToList();
 
             return myResult;
