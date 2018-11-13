@@ -17,7 +17,7 @@ namespace WebFreight.Web.InfrastructureModel
         public string PackageCode { get; set; }
         public string CountryName { get; set; }
         public string CountryCode { get; set; }
-        public bool IsWithOutValidation { get; set; }
+        public string ObjecttableName { get; set; }
 
     }
 }

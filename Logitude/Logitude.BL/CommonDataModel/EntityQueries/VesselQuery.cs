@@ -120,6 +120,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return vesselPM;
         }
 
+        public VesselPM GetSinglePMByCode(string code, int tenant)
+        {
+            VesselPM vesselPM = (from a in repository.context.Vessels
+                                 where a.Tenant == tenant && a.Code == code
+                                 select new VesselPM()
+                                 {
+                                     AddedManually = a.AddedManually,
+                                     Code = a.Code,
+                                     EnglishName = a.EnglishName,
+                                     Id = a.Id,
+                                     IMOCode = a.IMOCode,
+                                     CountryId = a.CountryId,
+                                 }).FirstOrDefault();
+
+            return vesselPM;
+        }
+
         public IQueryable<VesselPM> GetVesselPMsByTenant(int tenant)
         {
             IQueryable<VesselPM> ports = (from a in repository.context.Vessels

@@ -2189,6 +2189,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Notify2Reference = shipment.Notify2Reference;
             shipmentPM.ShipperNotExporterReference = shipment.ShipperNotExporterReference;
             shipmentPM.ConsigneeNotImporterReference = shipment.ConsigneeNotImporterReference;
+            shipmentPM.ProjectNumber = shipment.ProjectNumber;
 
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
@@ -8217,6 +8218,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Notify2Reference = f.Notify2Reference,
                                ShipperNotExporterReference = f.ShipperNotExporterReference,
                                ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
+                               ProjectNumber = f.ProjectNumber,
                            };
             return myResult;
         }
@@ -8547,6 +8549,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Notify2Reference = f.Notify2Reference,
                     ShipperNotExporterReference = f.ShipperNotExporterReference,
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
+                    ProjectNumber = f.ProjectNumber,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -8792,6 +8795,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Notify2Reference = f.Notify2Reference,
                     ShipperNotExporterReference = f.ShipperNotExporterReference,
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
+                    ProjectNumber = f.ProjectNumber,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

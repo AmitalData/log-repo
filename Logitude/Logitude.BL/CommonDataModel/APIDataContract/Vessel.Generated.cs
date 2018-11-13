@@ -16,31 +16,19 @@ using System.Xml.Serialization;
 namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
    
-    public class Address
+    public class Vessel
     {
 
 	    
+	[XmlAttribute]
     public string Id { get; set; }
     
-    public string Name { get; set; }
+	[XmlAttribute]
+    public string Code { get; set; }
     
-    public string Address1 { get; set; }
-    
-    public string Address2 { get; set; }
-    
-    public Country Country { get; set; }
-    
-    public City City { get; set; }
-    
-    public string ZipCode { get; set; }
-    
-    public string PhoneNumber { get; set; }
-    
-    public string FaxNumber { get; set; }
-    
-    public State State { get; set; }
+    public string EnglishName { get; set; }
     
 	[XmlAttribute]
-    public string ExternalId { get; set; }
+    public string PartnerCode { get; set; }
     }
 } 

@@ -462,7 +462,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
 
 
                                       var logitudeLoadpm = new LogitudeLoadPM();
-                                      var url = "api/LogitudeLeads";
+                                      var url = "api/AerolineaseAtlasRegistrationLeads";
 
                                       $.ajax({
                                           url: url,

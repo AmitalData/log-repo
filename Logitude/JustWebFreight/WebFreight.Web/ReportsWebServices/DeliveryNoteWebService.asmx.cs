@@ -588,11 +588,11 @@ namespace WebFreight.Web.ReportsWebServices
                             {
                                 if (string.IsNullOrEmpty(packageline.HSCode))
                                 {
-                                    packageline.HSCode = package.Harmonize;
+                                    packageline.HSCode = itemHarmonize.Harmonize;
                                 }
                                 else
                                 {
-                                    packageline.HSCode += "," + package.Harmonize;
+                                    packageline.HSCode += "," + itemHarmonize.Harmonize;
                                 }
                             }
                         }
@@ -1371,11 +1371,11 @@ namespace WebFreight.Web.ReportsWebServices
                             {
                                 if (string.IsNullOrEmpty(packageline.HSCode))
                                 {
-                                    packageline.HSCode = package.Harmonize;
+                                    packageline.HSCode = itemHarmonize.Harmonize;
                                 }
                                 else
                                 {
-                                    packageline.HSCode += "," + package.Harmonize;
+                                    packageline.HSCode += "," + itemHarmonize.Harmonize;
                                 }
                             }
                         }

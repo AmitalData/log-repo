@@ -429,7 +429,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
            IsEmailVerified = true;
 
            var logitudeLoadpm = new LogitudeLoadPM();
-           var url = "api/LogitudeLeads";
+           var url = "api/LogitudeLeadVerification";
 
            $.ajax({
                url: url,
@@ -485,7 +485,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
        jQuery.LoadLead = (function (id) {
 
            $("#busyIndicator").show();
-           var url = "api/LogitudeLeads?id=" + id;
+           var url = "api/LogitudeLeadVerification?id=" + id;
            $.ajax({
                url: url,
                type: 'Get',
