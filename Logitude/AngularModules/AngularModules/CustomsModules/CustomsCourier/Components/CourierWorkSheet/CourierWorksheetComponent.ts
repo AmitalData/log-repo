@@ -1402,16 +1402,21 @@ implements OnDestroy
     }
 
     private GetMamanPUR() {
-        //SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", SessionLocator.Tenant)
-          .subscribe(response => {
-            //SessionLocator.CurrentSession.StopBusyIndicator();
-            if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
-              this.IsMamanEnabled = true;
-            }
-          });
-      }
+            .subscribe(response => {
+                this.IsMamanEnabled = false;
+                if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+                    this.IsMamanEnabled = true;
+                }
+                myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_HWBBMMN", "NON", "NON", SessionLocator.Tenant)
+                    .subscribe(res => {
+                        if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
+                            this._CourierWorksheetSharedDataService.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
+                        }
+                    });
+            });
+    }
 
 
 }

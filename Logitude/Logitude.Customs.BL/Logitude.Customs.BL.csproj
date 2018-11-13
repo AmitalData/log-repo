@@ -793,6 +793,7 @@
     <Compile Include="EntityQueryServices\ConsignmentQueryService.cs" />
     <Compile Include="EntityQueryServices\CourierDeclarationQueryService.cs" />
     <Compile Include="EntityQueryServices\CourierMasterQueryService.cs" />
+    <Compile Include="EntityQueryServices\CourierPendingReasonQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsAirlineQueryService.cs" />
     <Compile Include="EntityQueryServices\CouriersVatQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsPartnerFtpQueryService.cs" />
@@ -1621,8 +1622,10 @@
     <Compile Include="Messaging\Amital\UServerQService.cs" />
     <Compile Include="Messaging\LT2UT\ItemsTableService.cs" />
     <Compile Include="Messaging\LT2UT\ItemsTableService.Model.cs" />
+    <Compile Include="Messaging\Maman\CourierGWMessageECTHRDataMamanService.cs" />
     <Compile Include="Messaging\Maman\CourierMasterMamanService.cs" />
-    <Compile Include="Messaging\Maman\FTPMamanService.cs" />
+    <Compile Include="Messaging\Maman\FTPOutMamanSubManifestService.cs" />
+    <Compile Include="Messaging\Maman\WebAPICourierGWMessageECTHRDataMamanService.cs" />
     <Compile Include="Messaging\U2L\CellFile\CellFileUpsertService.cs" />
     <Compile Include="Messaging\U2L\CommDec\CommDecService.cs" />
     <Compile Include="Messaging\U2L\DeclarationDocuments\DeclarationDocumentsService.cs" />

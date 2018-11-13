@@ -677,7 +677,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             windowArgs.Type = "Importer";
             this.Type = "Importer";
             logWindow.Width = 550;
-            logWindow.Height = 350;
+        logWindow.Height = this.EntityPM.IsCourierDeclaration ? 550 : 350;
+        
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = true;
             logWindow.WindowArgs = windowArgs;

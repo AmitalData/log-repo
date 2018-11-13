@@ -20,12 +20,12 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.Messaging.Maman
 {
-    public class FTPMamanService
+    public class FTPOutMamanSubManifestService///using  by FTPCommunicationWorkerRole
     {
 
 
         private string communicationSubject= "שידור פנימיים מסוכנים לממן";
-        public void BuildCommunicationLog(byte[] bytearray, int tenant, string entityId, string FileName= null)
+        public void BuildCommunicationLog(byte[] bytearray, int tenant, string entityId, string FileName= null)///using  by FTPCommunicationWorkerRole
         {
             if (String.IsNullOrWhiteSpace(FileName))
             {
@@ -112,7 +112,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     DocumentId = document.Id,
                     CreateDateUTC = DateTime.UtcNow,
                     LogSettings = settingsData,
-                    QueueName = "FTPCommunicationLogQueue"
+                    QueueName = "FTPCommunicationLogQueue" ///using  by FTPCommunicationWorkerRole
                 };
 
                 communicationLogRepository.Add(commLog);

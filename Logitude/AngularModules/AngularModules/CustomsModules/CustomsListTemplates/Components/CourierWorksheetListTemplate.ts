@@ -35,6 +35,7 @@ import {DeclarationCourierStatusPMService} from '../../../Customs/Services/Stand
 import {DeclarationCourierStatusPM} from '../../../Customs/EntityPMs/DeclarationCourierStatusPM';
 import { DeclarationCourierStatusList } from '../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
+import { retry } from 'rxjs/operator/retry';
 
 @Component({
   moduleId: module.id,
@@ -67,6 +68,7 @@ export class CourierWorksheetListTemplate {
   SuspentionReasonTip: string;
 
   _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
+    _CourierMasterService: CourierMasterService = new CourierMasterService();
 
   FirePreventSelect() {
     SessionLocator.CurrentSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
@@ -288,7 +290,7 @@ export class CourierWorksheetListTemplate {
 
   }
 
-  
+    
 
   ButtonClick(event) {
     this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = true;
@@ -298,7 +300,21 @@ export class CourierWorksheetListTemplate {
     //this.RowSelect()
     this.DropdownDisplayClose();//this.MySplitButtonComponent.DropdownDisplayClose();//SplitButtonComponent.EnsureLastSplitButtonIsClosed();
     //DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
-  }
+    }
+
+
+    get IsWebAPICourierGWMessageECTHRDataMamanEnable() { return this._CourierWorksheetSharedDataService.IsWebAPICourierGWMessageECTHRDataMamanEnable }
+
+    GetSendECTHRDataMaman(event) {
+        this.ButtonClick(event);
+        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this._CourierMasterService.GetSendECTHRDataMaman(this._CourierWorksheet['DeclarationId'])
+            .subscribe(res => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(res.Result);
+            });
+    }
   SendPay(event) {
     this.ButtonClick(event);
 
@@ -318,8 +334,8 @@ export class CourierWorksheetListTemplate {
         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/Declarationothers/Components/Declarationpayment/DeclarationPaymentComponent');
-
+        
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
           //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
           this.RefreshData()

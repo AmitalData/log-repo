@@ -147,6 +147,11 @@ namespace AmitalCustomsWindowsService
                 }
 
                 AddWorkerFromAppSetting<CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService>();
+                bool courierFeaturePackageExist = true;
+                if (courierFeaturePackageExist)
+                {
+                    AddWorkerFromAppSetting<SendWebAPI2MamanGWMessageECTHRDataWR>();
+                }
                 if (!AmitalProxy.Have_UnfConnectionString())
                 {
                     /// itzik+ihab  - AddWorkerFromAppSetting<CommunicationWorkerRole.CommunicationLogWorkerRoleWinService>();// Email change Pass ?!?!?    

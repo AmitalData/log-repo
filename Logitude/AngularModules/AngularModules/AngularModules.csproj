@@ -379,6 +379,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsItemPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsPackDetPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
+    <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierPaymentStatusListService.ts" />
@@ -3100,7 +3101,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\EditTabs\DeclarationCargoSplitEditComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\NewEntity\NewDeclarationCargoSplitComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\DropdownMenuFilterComponent.ts" />
-    <TypeScriptCompile Include="Customs\Components\Declaration\DeclarationPayment\DeclarationPaymentComponent.ts" />
+    <!-- <TypeScriptCompile Include="Customs\Components\Declaration\DeclarationPayment\DeclarationPaymentComponent.ts" /> -->
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\CourierWorkSheet\GetInternalBankComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\Components\DeclarationRequests\ReleaseGoodsComponent.ts" />
     <TypeScriptCompile Include="Customs\Components\Declaration\DocumentsPanel\DocumentsPanelComponent.ts" />

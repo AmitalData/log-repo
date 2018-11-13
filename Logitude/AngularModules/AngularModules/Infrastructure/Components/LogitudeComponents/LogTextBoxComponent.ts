@@ -1398,23 +1398,25 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ValidateField(emitPropertyChanged: boolean = true) {
         var suppressValidateion: boolean = false;
-        switch (this.InputType && this.InputType.toLowerCase()) {
-            case 'text':
-            case 'ntext':
-                {
-                    break;
+        if (this.InputType) {
+            switch (this.InputType.toLowerCase()) {
+                case 'text':
+                case 'ntext':
+                    {
+                        break;
+                    }
+                default: {
+                    if (isNaN(Number(this.TextValue))) {
+                        this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
+                        suppressValidateion = true;
+                    }
+                    else {
+                        this.SetValidity(true, null);
+                        suppressValidateion = false;
+                    }
                 }
-            default: {
-                if (isNaN(Number(this.TextValue))) {
-                    this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
-                    suppressValidateion = true;
-                }
-                else {
-                    this.SetValidity(true, null);
-                    suppressValidateion = false;
-                }
-            }
 
+            }
         }
 
         if (!this.NoValidation && this.uiProperty != null && !suppressValidateion) {
