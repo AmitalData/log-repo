@@ -23,23 +23,23 @@ using Simplog.Data.CommonDataModel;
 
  namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 { 
-   public partial class CountryQueryService
+   public partial class CityQueryService
    {
    
 		ICommonDataContext  context;
-		//CountryService service; 
+		//CountryCityService service; 
 		
-		CountryQuery query; 
+		CountryCityQuery query; 
 
-        public CountryQueryService(int tenant)
+        public CityQueryService(int tenant)
         {
 				    context = CommonDataContext.GetContext(tenant); 
-			//service = new CountryService(context, tenant); 
-			query = new CountryQuery(tenant);
+			//service = new CountryCityService(context, tenant); 
+			query = new CountryCityQuery(tenant);
         }
 
 		
-		public Country GetCountryById(string Id,int Tenant)
+		public City GetCityById(string Id,int Tenant)
         { 
 		    try
             {
@@ -47,9 +47,9 @@ using Simplog.Data.CommonDataModel;
 				
 				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
-                    throw new ApplicationException("Country with Id " + Id + " doesn't exist");
+                    throw new ApplicationException("CountryCity with Id " + Id + " doesn't exist");
 
-				return CountryDataMapping(temp,Tenant);
+				return CityDataMapping(temp,Tenant);
 			}
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Country GetCountryByCode(string Code,int Tenant)
+		public City GetCityByCode(string Code,int Tenant)
         { 
 		    try
             {
@@ -66,9 +66,9 @@ using Simplog.Data.CommonDataModel;
 				
 				var temp = query.GetSinglePMByCode(Code,Tenant);				
 				 if (temp == null)
-                    throw new ApplicationException("Country with Code " + Code + " doesn't exist");
+                    throw new ApplicationException("CountryCity with Code " + Code + " doesn't exist");
 
-				return CountryDataMapping(temp,Tenant);
+				return CityDataMapping(temp,Tenant);
 			}
             catch (Exception ex)
             {
@@ -77,16 +77,15 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
-		public Country CountryDataMapping(CountryPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		public City CityDataMapping(CountryCityPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				   var temp = new Country(); 
+				   var temp = new City(); 
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
-				   temp.EnglishName = MyEntityPM.EnglishName;
-				   temp.LocalName = MyEntityPM.LocalName;					
+				   temp.EnglishName = MyEntityPM.EnglishName;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -96,11 +95,11 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public CountryPM CountryDataMappingAndValidatin(Country MyEntity,int Tenant,string ComputingPartnerName = "")
+		public CountryCityPM CityDataMappingAndValidatin(City MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
-				   					var temp = new CountryPM();								  
+				   					var temp = new CountryCityPM();								  
 					if (!string.IsNullOrEmpty(MyEntity.Id))
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
@@ -112,7 +111,7 @@ using Simplog.Data.CommonDataModel;
 					} 					   
 					if(temp == null)
 					{
-					    throw new ApplicationException("Country with Code " + MyEntity.Code + " doesn't exist");
+					    throw new ApplicationException("CountryCity with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -122,8 +121,7 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp.Code = MyEntity.Code;
 					}
-					temp.EnglishName = MyEntity.EnglishName;
-					temp.LocalName = MyEntity.LocalName;					   
+					temp.EnglishName = MyEntity.EnglishName;					   
 					   return temp;
 		    }
             catch (Exception ex)
