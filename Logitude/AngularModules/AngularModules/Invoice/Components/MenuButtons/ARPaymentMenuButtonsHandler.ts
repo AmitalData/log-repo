@@ -356,18 +356,45 @@ export class ARPaymentMenuButtonsHandler {
 
     // [Approval]
     ApprovalMethod() {
-        if (this.EntityPM.AccountingPaymentMethodCode == "FS" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Show("This payments with payment method Offsetting will not be transfered to quickbooks online , transfer it manually");
-            messageWindow.WindowClosed.subscribe(a => {
-                this.ApprovingLogic();
-            });
-        }
-        else {
-            this.ApprovingLogic();
-        }        
+        
+            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+                var FlagNotTransfered: boolean = false;
+                this.EntityPM.PaymentInvoices.forEach(item => {
+                    if (item.ARInvoiceTransferStatusCode != "TR") {
+                        FlagNotTransfered = true;
+                    }
+                });
+
+                if (FlagNotTransfered) {
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("Invoices that were not transferred to QBO will not be connected to the payment at QBO");
+                    window.WindowClosed.subscribe((event: any) => {
+                        this.CompleteApprove();
+                    });
+                }
+                else {
+                    this.CompleteApprove();
+                }
+
+            }
+            else {
+                this.CompleteApprove();
+            }
+        
     }
 
+private CompleteApprove(){
+    if (this.EntityPM.AccountingPaymentMethodCode == "FS" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
+        var messageWindow = new MessageWindow();
+        messageWindow.Show("This payments with payment method Offsetting will not be transfered to quickbooks online , transfer it manually");
+        messageWindow.WindowClosed.subscribe(a => {
+            this.ApprovingLogic();
+        });
+    }
+    else {
+        this.ApprovingLogic();
+    }        
+}
     private ApprovingLogic() {
         var message = "";
         if (!FeatureLocator.HasEntityPermessions("ARPayment", "UPDT",true)) {

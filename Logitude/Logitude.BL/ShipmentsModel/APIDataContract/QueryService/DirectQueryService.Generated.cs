@@ -224,7 +224,16 @@ using Simplog.Data.ShipmentsModel;
 				temp.CustomFields = customFieldService.CustomFieldCustomDataMapping(MyEntityPM, Tenant);
 				 
 				   
-				   temp.IsOperationalClosed = MyEntityPM.IsOperationalClosed;					
+				   temp.IsOperationalClosed = MyEntityPM.IsOperationalClosed;			  
+				   if(MyEntityPM.MainCarriageVesselId != null)
+				   {
+					   VesselQueryService VesselService16 = new VesselQueryService(Tenant);
+					   					   temp.Vessel = VesselService16.GetVesselById(MyEntityPM.MainCarriageVesselId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.MainCarriageATA = MyEntityPM.MainCarriageATA;
+				   temp.MainCarriageATD = MyEntityPM.MainCarriageATD;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -391,22 +400,22 @@ using Simplog.Data.ShipmentsModel;
 					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService16 = new AirPackageQueryService(Tenant);
-						temp.ShipmentPackages = AirPackageService16.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+						AirPackageQueryService AirPackageService17 = new AirPackageQueryService(Tenant);
+						temp.ShipmentPackages = AirPackageService17.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService16 = new OceanOrInlandPackageQueryService(Tenant);
-						temp.ShipmentPackages = OceanOrInlandPackageService16.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService17 = new OceanOrInlandPackageQueryService(Tenant);
+						temp.ShipmentPackages = OceanOrInlandPackageService17.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService16 = new ContainerQueryService(Tenant);
-						temp.ShipmentPackages = ContainerService16.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+						ContainerQueryService ContainerService17 = new ContainerQueryService(Tenant);
+						temp.ShipmentPackages = ContainerService17.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -455,15 +464,15 @@ using Simplog.Data.ShipmentsModel;
 					
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService16 = new DeliveryQueryService(Tenant);
-						temp.ShipmentDeliveries = DeliveryService16.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
+						DeliveryQueryService DeliveryService17 = new DeliveryQueryService(Tenant);
+						temp.ShipmentDeliveries = DeliveryService17.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService16 = new PickUpQueryService(Tenant);
-						temp.ShipmentPickUps = PickUpService16.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
+						PickUpQueryService PickUpService17 = new PickUpQueryService(Tenant);
+						temp.ShipmentPickUps = PickUpService17.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -474,7 +483,20 @@ using Simplog.Data.ShipmentsModel;
 				}		
 			
 					
-					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;					   
+					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;					VesselQueryService VesselVesselService = new VesselQueryService(Tenant);
+					if(MyEntity.Vessel != null)
+					{
+						var myVesselPM = VesselVesselService.VesselDataMappingAndValidatin(MyEntity.Vessel,Tenant,ComputingPartnerName);
+												if(myVesselPM != null)
+						{
+							temp.MainCarriageVesselId = myVesselPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.MainCarriageATA = MyEntity.MainCarriageATA;
+					temp.MainCarriageATD = MyEntity.MainCarriageATD;					   
 					   return temp;
 		    }
             catch (Exception ex)

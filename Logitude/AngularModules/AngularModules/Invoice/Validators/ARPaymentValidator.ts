@@ -4,7 +4,8 @@ import {Validator} from '../../Infrastructure/Validators/Validator';
 import {ARPaymentPM} from '../EntityPMs/ARPaymentPM';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-
+import { forEach } from '@angular/router/src/utils/collection';
+import { MessageWindow } from '../../controls/Windows/MessageWindow';
 export class ARPaymentValidator {
     public Validate(entityPm: ARPaymentPM) {
 
@@ -13,6 +14,8 @@ export class ARPaymentValidator {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         Validator.TryValidateObject(entityPm, null, validationResults);
+
+      
 
         var isNegativeAmountEnabled: boolean = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments && entityPm.AccountingPaymentMethodCode == "FS" ? true : false;
 
@@ -109,8 +112,9 @@ export class ARPaymentValidator {
                   validationResults.push(msg.replace("%FieldName", "Sello Pago"));
           }
           
-      }
-        return validationResults;
+        }
+
+        return validationResults;    
     }
 
     public static ValidateCurrenctEntity(entityPm: ARPaymentPM) {
@@ -221,6 +225,7 @@ export class ARPaymentValidator {
         if (errors != null && errors.length > 0) {
             isValid = false;
         }
+
         return errors;
     }
 }

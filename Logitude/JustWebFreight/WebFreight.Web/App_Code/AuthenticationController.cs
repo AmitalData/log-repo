@@ -540,29 +540,29 @@ namespace WebFreight.Web
         //    return data;
         //}
 
-        public string PostSignUpContactData(string name, string email, string company)
-        {
-            IGlobalContext globalContext = GlobalContext.GetContext();
-            LogitudeLeadRepository leadRepository = new LogitudeLeadRepository(globalContext);
-            email = email.ToLower();
-            LogitudeLead lead = new LogitudeLead()
-            {
-                Id = Guid.NewGuid().ToString(),
-                ContactName = name,
-                CompanyName = company,
-                Email = email,
-                CreateDate = DateTime.Now,
-                Country = "Palestine",
-                LastUpdateDate = DateTime.Now
+        //public string PostSignUpContactData(string name, string email, string company)
+        //{
+        //    IGlobalContext globalContext = GlobalContext.GetContext();
+        //    LogitudeLeadRepository leadRepository = new LogitudeLeadRepository(globalContext);
+        //    email = email.ToLower();
+        //    LogitudeLead lead = new LogitudeLead()
+        //    {
+        //        Id = Guid.NewGuid().ToString(),
+        //        ContactName = name,
+        //        CompanyName = company,
+        //        Email = email,
+        //        CreateDate = DateTime.Now,
+        //        Country = "Palestine",
+        //        LastUpdateDate = DateTime.Now
 
-            };
+        //    };
 
-            globalContext.LogitudeLeads.Add(lead);
+        //    globalContext.LogitudeLeads.Add(lead);
 
-            globalContext.SaveChanges();
+        //    globalContext.SaveChanges();
 
-            return lead.Id;
-        }
+        //    return lead.Id;
+        //}
 
         public bool GetLogOutData(string userEmail)
         {

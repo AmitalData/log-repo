@@ -2339,7 +2339,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.ShipmentPayableStatusCode = "NOPA";
 
                 entityPM.INTTRASIStatusCode = "NSEN";
-                entityPM.INTTRASIStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
                 if (entityPM.ProfitExchangeRate == null)
                 {
