@@ -774,6 +774,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1,
                         IsExpense = item.IsExpense,
                         AutoCreditDummyReceivableId = item.ReceivableId,
+                        GLAccountId = item.GLAccountId,
                     };
 
                     newInvoicePM.InvoiceLines.Add(newInvoiceLine);
@@ -866,6 +867,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 this.Create(newInvoicePM);
+                this.AddARInvoiceJournalAndJournalLines(newInvoicePM, true);
 
                 entityPOCO.IsCancelled = true;
                 entityPOCO.CancelledByARInvoiceId = newInvoicePM.Id;

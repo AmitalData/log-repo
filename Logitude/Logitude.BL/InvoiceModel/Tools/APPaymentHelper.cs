@@ -413,7 +413,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 List<Line> lineList = new List<Line>();
                 var invoicesData = (from d in objectContext.APInvoicePayments.Include("APInvoice")
                                     where d.Tenant == tenant
-                                    && d.APPaymentId == APPayment.Id
+                                    && d.APPaymentId == APPayment.Id &&  d.APInvoice.TransferStatusCode == "TR"
                                     select new
                                     {
                                         InvoiceId = d.APInvoiceId,
