@@ -335,6 +335,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ConsigneeNotImporterName { get; set; }
         public string ConsigneeNotImporterNote { get; set; }
         public string ConsigneeNotImporterReference { get; set; }
+        public string ProjectNumber { get; set; }
 
         public string ConsolidatorId { get; set; }
         public string ConsolidatorAddressId { get; set; }

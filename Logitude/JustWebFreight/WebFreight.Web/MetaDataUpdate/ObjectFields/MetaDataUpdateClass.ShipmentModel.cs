@@ -99,6 +99,27 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Project #",
+                FullFieldLable = "ProjectNumber",
+                FieldName = "ProjectNumber",
+                FieldsDataType = "Text",
+                MaxLength = 100,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                ListFieldLable = "ProjectNumberListLable",
+                Operator = "Equals",
+                ListPropertyPath = "ProjectNumber",
+                PMPropertyPath = "ProjectNumber"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "First Pickup ATA",
                 FullFieldLable = "FirstPickupATA",
                 FieldName = "FirstPickupATA",

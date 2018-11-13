@@ -1,4 +1,4 @@
-﻿import { ShipmentPM } from '../EntityPMs/ShipmentPM';
+import { ShipmentPM } from '../EntityPMs/ShipmentPM';
 import { IncotermListService } from '../../Common/Services/StandardLists/IncotermListService';
 import { IncotermList } from '../../Common/EntityLists/IncotermList';
 export class ShipmentPMCustomCode {
@@ -16,6 +16,7 @@ export class ShipmentPMCustomCode {
             
         //}
 
+        entityPM.UIProperties.SetVisibility("ProjectNumber", "Shipment", entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C");
     }
 
 }
