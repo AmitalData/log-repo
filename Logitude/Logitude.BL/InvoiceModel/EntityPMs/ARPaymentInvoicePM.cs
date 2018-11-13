@@ -20,5 +20,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string ExternalAccountingEntityId { get; set; }
         public string ARInvoiceMetodoPagoCode { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+        public string ARInvoiceTransferStatusCode { get; set; }
+
     }
 }
