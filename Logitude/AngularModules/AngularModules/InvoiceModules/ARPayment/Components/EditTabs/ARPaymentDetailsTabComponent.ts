@@ -66,7 +66,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.FullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
-
+       
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EnableMultiCurrency")) {
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyARPayments) {
                 this.IsMultiCurrency = true;

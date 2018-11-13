@@ -1191,11 +1191,11 @@ namespace WebFreight.Web.WebServices
                                 {
                                     if (string.IsNullOrEmpty(newPackage.HSCode))
                                     {
-                                        newPackage.HSCode = package.Harmonize;
+                                        newPackage.HSCode = itemHarmonize.Harmonize;
                                     }
                                     else
                                     {
-                                        newPackage.HSCode += "," + package.Harmonize;
+                                        newPackage.HSCode += "," + itemHarmonize.Harmonize;
                                     }
                                 }
                             }
@@ -1256,11 +1256,11 @@ namespace WebFreight.Web.WebServices
                                 {
                                     if (string.IsNullOrEmpty(newPackage.HSCode))
                                     {
-                                        newPackage.HSCode = package.Harmonize;
+                                        newPackage.HSCode = itemHarmonize.Harmonize;
                                     }
                                     else
                                     {
-                                        newPackage.HSCode += "," + package.Harmonize;
+                                        newPackage.HSCode += "," + itemHarmonize.Harmonize;
                                     }
                                 }
                             }
@@ -1648,12 +1648,12 @@ namespace WebFreight.Web.WebServices
                             {
                                 if (string.IsNullOrEmpty(packageline.HSCode))
                                 {
-                                    packageline.HSCode = package.Harmonize;
+                                    packageline.HSCode = itemHarmonize.Harmonize;
                                 }
 
                                 else
                                 {
-                                    packageline.HSCode += "," + package.Harmonize;
+                                    packageline.HSCode += "," + itemHarmonize.Harmonize;
                                 }
                             }
                         }

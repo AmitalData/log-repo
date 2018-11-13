@@ -33,7 +33,7 @@ export class AddEditPackageHarmonizeComponent {
             if (args) {
                 this.IsEditingEnabled = args['IsEditingEnabled'];
                 this.EntityPM = args['PackagePM'];
-                this.ShipmentPM = this.EntityPM.EntityParentPM;
+                this.ShipmentPM = args['ShipmentPM'];
 
                 this.isPackageDirty = this.EntityPM.IsDirty;
                 this.isShipmentDirty = this.ShipmentPM.IsDirty;
@@ -110,15 +110,24 @@ export class AddEditPackageHarmonizeComponent {
                 allItemsPM.push(item.EntityPM);
             });
 
+            for (var i = this.EntityPM.ShipmentPackageHarmonizes.length - 1; i >= 0; i--) {
 
-            this.EntityPM.ShipmentPackageHarmonizes.forEach(item => {
-
-                var index = allItemsPM.indexOf(item);
+                var index = allItemsPM.indexOf(this.EntityPM.ShipmentPackageHarmonizes[i]);
 
                 if (index == -1) {
+                    var item = this.EntityPM.ShipmentPackageHarmonizes[i];
                     this.EntityPM.RemoveShipmentPackageHarmonizePM(item);
-                }                
-            });
+                } 
+            }
+
+            //this.EntityPM.ShipmentPackageHarmonizes.forEach(item => {
+
+            //    var index = allItemsPM.indexOf(item);
+
+            //    if (index == -1) {
+            //        this.EntityPM.RemoveShipmentPackageHarmonizePM(item);
+            //    }                
+            //});
 
             this.EntityPM.IsMultiHarmonize = this.EntityPM.ShipmentPackageHarmonizes.length > 0 ? true : false;
             if (this.EntityPM.IsMultiHarmonize) {

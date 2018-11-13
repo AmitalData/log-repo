@@ -2242,5 +2242,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? FinalDeliveryATD { get; set; }
 
         public string DeclarationWCOXml { get; set; }
+
+        public string ProjectNumber { get; set; }
     }
 }

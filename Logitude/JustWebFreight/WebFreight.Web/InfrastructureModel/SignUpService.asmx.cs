@@ -22,14 +22,14 @@ namespace WebFreight.Web.InfrastructureModel
         [WebMethod]
         public void SendMessageToQueue(byte[] msg)
         {
-            var storageaccount = StorageAcountDetails.StorageAccount;
-            var queueclient = storageaccount.CreateCloudQueueClient();
+            //var storageaccount = StorageAcountDetails.StorageAccount;
+            //var queueclient = storageaccount.CreateCloudQueueClient();
 
-            var queue = queueclient.GetQueueReference("signupqueue");
-            queue.CreateIfNotExists();
+            //var queue = queueclient.GetQueueReference("signupqueue");
+            //queue.CreateIfNotExists();
 
-            var message = new CloudQueueMessage(msg);
-            queue.AddMessage(message);
+            //var message = new CloudQueueMessage(msg);
+            //queue.AddMessage(message);
 
 
 
