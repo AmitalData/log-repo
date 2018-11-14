@@ -897,7 +897,7 @@ export class EditComponent implements OnDestroy {
         else if (!this.EntityPM.IsDirty) {
             this.Close();
         }
-        else if (this.ObjectTableName == "TaxReport") {
+        else if (this.ObjectTableName == "TaxReport"||this.ObjectTableName == "BankDeposit") {
             this.Close();
         }
         else {
