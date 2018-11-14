@@ -84,7 +84,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (item.DisplayNumber != null)
                 {
                     if (item.DisplayNumber.Length > 14) item.DisplayNumber = item.DisplayNumber.Substring(0, 14);
-                    myStringBuilder.Append("a"+item.DisplayNumber.PadLeft(9, '0'));
+                    myStringBuilder.Append("a"+item.DisplayNumber.PadLeft(14, '0'));
 
                 }
 
