@@ -19,7 +19,7 @@ export class SignUpService {
     private _serviceArgs: ServiceArgs;
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SignUp';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/';
 
     }
 

@@ -27,6 +27,7 @@ namespace Logitude.Accounting.BL.DataContract
     public class ByMonthList
     {
         public int Month { get; set; }
+        public string ReportMonth { get; set; }
         public double? TotalAmountInLocalCurrency { get; set; }
         public decimal? TotalTaxDeductionLocalAmount { get; set; }
         public int TotalVendors { get; set; }

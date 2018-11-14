@@ -438,8 +438,12 @@ namespace Logitude.Accounting.BL.CoreBL
                      });
 
                 var all = qTotalLocalAmountLastMonthDue.Union(qLedgerTrans).Union(nextStep);
-
-                var theDueLocalBalanceListToUpdate =
+                bool UnionreturnsDistinctvalues = true;
+                if (UnionreturnsDistinctvalues)
+                {
+                    all = qTotalLocalAmountLastMonthDue.Concat(qLedgerTrans).Concat(nextStep);
+                }
+                    var theDueLocalBalanceListToUpdate =
                     (from m in all
                      group m by m.AccountId into g
                      select new DueLocalBalanceM

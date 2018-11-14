@@ -76,17 +76,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     transactionPM.ChangeSetOp = ChangeSetOperation.Update;
                     transactionPM.IsExternalReconcile = true;
-                    //if (transactionPM.SourceTypeCode == "3")
-                    //{
-                    //    List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
+                    if (transactionPM.SourceTypeCode == "3")
+                    {
+                        List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
 
-                    //    foreach (ARPaymentChequePM item in aRPaymentChequePMs)
-                    //    {
-                    //        item.StatusCode = "8";
-                    //        ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                    //        aRPaymentChequeUpdateService.Update(item, true);
-                    //    }
-                    //}
+                        foreach (ARPaymentChequePM item in aRPaymentChequePMs)
+                        {
+                            item.StatusCode = "6";
+                            item.ChangeSetOp = ChangeSetOperation.Update;
+                            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+                            aRPaymentChequeUpdateService.Update(item, true);
+                        }
+                    }
                     transactionService.Update(transactionPM, false);
                 }
 

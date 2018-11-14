@@ -51,7 +51,7 @@ export class AddEditOceanPackageComponent {
 
     MultiHarmonizeClicked() {
         var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = { PackagePM: this.EntityPM, IsEditingEnabled: this.DataContext.IsEditingEnabled };
+        logWindow.WindowArgs = { PackagePM: this.EntityPM, ShipmentPM: this.DataContext.ShipmentPM ,IsEditingEnabled: this.DataContext.IsEditingEnabled };
         logWindow.Title = "Container Multi-Harmonize";
         logWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/AddEditPackageHarmonizeComponent");
         logWindow.WindowClosed.subscribe(s => {

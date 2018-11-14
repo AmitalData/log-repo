@@ -262,6 +262,10 @@
     <Compile Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.Designer.cs">
       <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.cs" />
+    <Compile Include="Migrations\201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.Designer.cs">
+      <DependentUpon>201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs" />
     <Compile Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.Designer.cs">
       <DependentUpon>201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs</DependentUpon>
@@ -273,6 +277,22 @@
     <Compile Include="Migrations\201811111329021_DeletePDFMenuButtonMigration.cs" />
     <Compile Include="Migrations\201811111329021_DeletePDFMenuButtonMigration.Designer.cs">
       <DependentUpon>201811111329021_DeletePDFMenuButtonMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811111357332_TaxReportSearchFieldMigration.cs" />
+    <Compile Include="Migrations\201811111357332_TaxReportSearchFieldMigration.Designer.cs">
+      <DependentUpon>201811111357332_TaxReportSearchFieldMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811110910092_AddMinMaxModofication.cs" />
+    <Compile Include="Migrations\201811110910092_AddMinMaxModofication.Designer.cs">
+      <DependentUpon>201811110910092_AddMinMaxModofication.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811111132436_AddMinMaxModofication2.cs" />
+    <Compile Include="Migrations\201811111132436_AddMinMaxModofication2.Designer.cs">
+      <DependentUpon>201811111132436_AddMinMaxModofication2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811120753156_AddProjectNumberToShipment_Maheera.cs" />
+    <Compile Include="Migrations\201811120753156_AddProjectNumberToShipment_Maheera.Designer.cs">
+      <DependentUpon>201811120753156_AddProjectNumberToShipment_Maheera.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -423,6 +443,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811111329021_DeletePDFMenuButtonMigration.resx">
       <DependentUpon>201811111329021_DeletePDFMenuButtonMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811111357332_TaxReportSearchFieldMigration.resx">
+      <DependentUpon>201811111357332_TaxReportSearchFieldMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.resx">
+      <DependentUpon>201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811110910092_AddMinMaxModofication.resx">
+      <DependentUpon>201811110910092_AddMinMaxModofication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811111132436_AddMinMaxModofication2.resx">
+      <DependentUpon>201811111132436_AddMinMaxModofication2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811120753156_AddProjectNumberToShipment_Maheera.resx">
+      <DependentUpon>201811120753156_AddProjectNumberToShipment_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

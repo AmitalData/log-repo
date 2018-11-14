@@ -261,7 +261,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             bool fast_butShowDiffDueRoundISBad = false;
             if (fast_butShowDiffDueRoundISBad)
             {
-                var qReport = qNotinJournalLine.Union(qNotinLedgerTrans).Union(qDiff);
+                var qReport =
+                    //qNotinJournalLine.Union(qNotinLedgerTrans).Union(qDiff);
+                    qNotinJournalLine.Concat(qNotinLedgerTrans).Concat(qDiff);
                 return qReport.ToList();
             }
             else
@@ -269,7 +271,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 var rqNotinJournalLine = qNotinJournalLine.ToList();
                 var rqNotinLedgerTrans = qNotinLedgerTrans.ToList();
                 var rqDiff = qDiff.ToList();
-                return rqNotinJournalLine.Union(rqNotinLedgerTrans).Union(rqDiff).ToList();
+                return //rqNotinJournalLine.Union(rqNotinLedgerTrans).Union(rqDiff).ToList();
+                rqNotinJournalLine.Concat(rqNotinLedgerTrans).Concat(rqDiff).ToList();
             }
         }
 

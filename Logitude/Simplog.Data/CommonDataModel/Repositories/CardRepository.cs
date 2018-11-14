@@ -442,6 +442,24 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return entityId;
         }
 
+
+
+        public string GetActiveCardIdByCode(string code, int tenant)
+        {
+        
+            string entityId = (from a in context.Cards
+                        where a.Tenant == tenant && a.Code == code && !a.InActive
+                        select a.Id).FirstOrDefault();
+
+            return entityId;
+        }
+
+
+
+
+
+
+
         public IQueryable<Card> GetCards(List<string> allCardsId, int tenant)
         {
             IQueryable<Card> myResult = null;

@@ -143,7 +143,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsFromQuote { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? QuoteCostMinPrice { get; set; }
+        public double? QuoteCostMinAmount { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? QuoteCostMaxAmount { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteChargeId { get; set; }

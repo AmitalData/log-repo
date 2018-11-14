@@ -277,25 +277,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
-        private void FullAccountingAutoCreditUpdate(ARInvoicePM entityPM)
-        {
-            TenantRepository tenantRepository = new TenantRepository(tenant);
-            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
-            {
-                IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-                JournalPM journalPM = journalQuery.GetJournalIdByAccountingEntityId(entityPM.Id, entityPM.Tenant);
-                if (journalPM != null)
-                {
-                    journalPM.AccountingEntityReference = entityPM.InvoiceNumber;
-                    journalPM.AccountingEntityCode = "2";
-                    journalPM.StatusCode = "3";
-                    journalPM.ChangeSetOp = ChangeSetOperation.Update;
-                    IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
-                    journalUpdate.Update(journalPM);
-                }
-            }
-        }
 
         private void ValidateInvoiceConnected()
         {
@@ -793,6 +774,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1,
                         IsExpense = item.IsExpense,
                         AutoCreditDummyReceivableId = item.ReceivableId,
+                        GLAccountId = item.GLAccountId,
                     };
 
                     newInvoicePM.InvoiceLines.Add(newInvoiceLine);
@@ -885,8 +867,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 this.Create(newInvoicePM);
-
-                this.FullAccountingAutoCreditUpdate(oldEntityPM);
+                this.AddARInvoiceJournalAndJournalLines(newInvoicePM, true);
 
                 entityPOCO.IsCancelled = true;
                 entityPOCO.CancelledByARInvoiceId = newInvoicePM.Id;
@@ -1819,7 +1800,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                                  && d.Tenant == tenant
                                                                  select d).FirstOrDefault();
 
-                                    if(myMeasurement != null)
+                                    if (myMeasurement != null)
                                     {
                                         item.MeasurementCode = myMeasurement.Code;
                                     }
@@ -1837,19 +1818,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 TotalAmount = item.Quantity * item.UnitPrice;
                             }
 
-                            /* Minimum */
-                            if (myReceivable.QuoteSaleMinPrice != null)
+                            /* MinMax Quote */
+                            if (TotalAmount != null)
                             {
-                                if (TotalAmount == null)
+                                if (myReceivable.QuoteSaleMinAmount != null)
                                 {
-                                    TotalAmount = myReceivable.QuoteSaleMinPrice;
+                                    if (TotalAmount < myReceivable.QuoteSaleMinAmount)
+                                    {
+                                        TotalAmount = myReceivable.QuoteSaleMinAmount;
+                                    }
                                 }
 
-                                else
+                                if (myReceivable.QuoteSaleMaxAmount != null)
                                 {
-                                    if (TotalAmount < myReceivable.QuoteSaleMinPrice)
+                                    if (TotalAmount > myReceivable.QuoteSaleMaxAmount)
                                     {
-                                        TotalAmount = myReceivable.QuoteSaleMinPrice;
+                                        TotalAmount = myReceivable.QuoteSaleMaxAmount;
                                     }
                                 }
                             }

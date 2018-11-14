@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //Outputs
             foreach (Journal a in journals)
             {
-                var exist = taxReport.TaxReportLines.Select(d => d.JournalId == a.Id).FirstOrDefault();
+                var exist = taxReport.TaxReportLines.Where(d => d.JournalId == a.Id).Any();
                 if (!exist)
                 {
                     string reference = null;
@@ -129,11 +129,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                        if (line.VatNumber == null)
-                        {
-                            line.VatNumber = "999999999";
+                        //if (line.VatNumber == null)
+                        //{
+                        //  //  line.VatNumber = "999999999";
 
-                        }
+                        //}
 
                         if (line.VatNumber == tenantPM.VatNumber)
                         {
@@ -212,10 +212,10 @@ namespace Logitude.Accounting.BL.CoreBL
 					InvoiceAmount = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
 				}
 
-                if(VatNumber == null)
-                {
-                    VatNumber = "999999999";
-                }
+                //if(VatNumber == null)
+                //{
+                //    VatNumber = "999999999";
+                //}
 
                 GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();
 				if (gLAccountPM != null)

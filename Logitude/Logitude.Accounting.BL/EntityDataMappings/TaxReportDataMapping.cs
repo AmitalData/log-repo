@@ -65,18 +65,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
 
-            if (entityPM.TaxReportMonth != null)
-            {
+            //if (entityPM.TaxReportMonth != null)
+            //{
              
-                    result =  (string.IsNullOrEmpty(result) ? entityPM.TaxReportMonth.ToString() : result + "," + entityPM.TaxReportMonth).ToString();
+            //        result =  (string.IsNullOrEmpty(result) ? entityPM.TaxReportMonth.ToString() : result + "," + entityPM.TaxReportMonth).ToString();
                 
-            }
+            //}
 
-            if (!string.IsNullOrEmpty(entityPM.VatNumber))
-            {
-                result = string.IsNullOrEmpty(result) ? entityPM.VatNumber : result + "," + entityPM.VatNumber;
+            //if (!string.IsNullOrEmpty(entityPM.VatNumber))
+            //{
+            //    result = string.IsNullOrEmpty(result) ? entityPM.VatNumber : result + "," + entityPM.VatNumber;
 
-            }
+            //}
 
            
 
