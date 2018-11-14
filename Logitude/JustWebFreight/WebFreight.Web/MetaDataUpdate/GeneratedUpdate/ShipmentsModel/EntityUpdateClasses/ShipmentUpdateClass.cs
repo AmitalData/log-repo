@@ -1621,6 +1621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "ShipmentTypeId",
 					  						ListPropertyPath =  "ShipmentTypeId",
+                                            
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1641,7 +1642,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -7807,9 +7808,64 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HelpTextCode =  "IsDangerous",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
 
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+
+                FieldName = "ShipmentContanisDangerousGoods",
+                ObjectTableName = "Shipment",
+                FieldsDataType = "Boolean",
+                Code = "ShipmentContanisDangerousGoods",
+                MaxLength = 15,
+                IsCustom = false,
+                MinLength = 0,
+                DisplayOnLookUp = false,
+                DisplayOnly = false,
+                SystemRequired = false,
+                SystemMaxLength = 0,
+                DisplayInList = false,
+                IsCustomFilter = false,
+                Operator = "Equals",
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                DisplayInSearchWindowFilters = false,
+                PMPropertyPath = "ShipmentContanisDangerousGoods",
+                ListPropertyPath = "ShipmentContanisDangerousGoods",
+                DisplayInLookUpIndex = 0,
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                DisplayInSearchWindowFiltersIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                
+                IsRestrictable = false,
+                DisplayInEntityVariables = true,
+                DigitsAfterPoint = 0,
+                InActive = false,
+                DisplayLongName = false,
+                NumberOfDigits = 0,
+                IsMaxLength = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInDocumentReferences = false,
+                CopyToDW = false,
+                HasTemplate = false,
+                IsRequired = false,
+                FullFieldLable = "ShipmentContanisDangerousGoods",
+                DefaultText = "Shipment Contanis Dangerous Goods",
+                HelpTextCode = "ShipmentContanisDangerousGoods",
+
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
 					 						FieldName =  "VolumeUnitCode",
