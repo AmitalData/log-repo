@@ -82,8 +82,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     }
     ReloadTenantPM(): any {
 
-        this.TenantPM.AccountingActivated = this.AccountingActivated;
-        ObjectsUpdater.UpdateTenantPM(this.TenantPM);
+        SessionLocator.TenantPM.AccountingActivated = this.AccountingActivated;
 
     }
     SetUIProperties() {

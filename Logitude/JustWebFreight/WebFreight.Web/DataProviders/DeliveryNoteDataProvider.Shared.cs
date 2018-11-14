@@ -154,5 +154,7 @@ namespace WebFreight.Web.DataProviders
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
         public string Reference4 { get; set; }
+
+        public string OnCarriageCarrier { get; set; }
     }
 }
