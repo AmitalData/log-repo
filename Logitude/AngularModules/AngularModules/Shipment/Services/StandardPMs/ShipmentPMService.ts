@@ -423,17 +423,24 @@ export class ShipmentPMService {
         var entityPM: any;
         entityPM = {};
 
-        var jsonPMKeys = Object.keys(jsonPM);
-        for (var key in jsonPMKeys) {
+        try {
+            var jsonPMKeys = Object.keys(jsonPM);
+            for (var key in jsonPMKeys) {
 
-            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM") {
-                continue;
+                if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM") {
+                    continue;
+                }
+
+                var property = jsonPMKeys[key];
+                entityPM[property] = jsonPM[property];
+
             }
-
-            var property = jsonPMKeys[key];
-            entityPM[property] = jsonPM[property];
-
         }
+
+        catch (e) {
+            var d = jsonPM;
+        }
+
         return entityPM;
     }
 
@@ -571,7 +578,7 @@ export class ShipmentPMService {
                 newDelivery.ShipmentPickUpDeliveryPackages = [];
 
                 for (var k in myShipmentDelivery.ShipmentPickUpDeliveryPackages) {
-                    var myDeliveryPackage = myShipmentDelivery.ShipmentPickUpDeliveryPackages[r];
+                    var myDeliveryPackage = myShipmentDelivery.ShipmentPickUpDeliveryPackages[k];
                     var newDeliveryPackage: ShipmentPickUpDeliveryPackagePM = this.clone(myDeliveryPackage);
                     newDeliveryPackage.PickUpDeliveryPackageHarmonizes = [];
 

@@ -1963,7 +1963,7 @@ export class QuoteChargeItem extends BaseComponent {
     get SaleTotalAmount() { return this.EntityPM.SaleTotalAmount; }
     set SaleTotalAmount(ivalue: number) {
 
-        var value = AppTool.Round(ivalue, 2);
+        var value = ivalue;
 
         if (value) {
             if (this.SaleMinAmount != null) {
@@ -2029,8 +2029,6 @@ export class QuoteChargeItem extends BaseComponent {
                     }
                 }
             }
-
-            value = AppTool.Round(value, 2);
         }
 
         if (this.EntityPM.SaleTotalAmountLocal != value) {

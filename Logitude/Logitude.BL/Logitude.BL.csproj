@@ -233,6 +233,7 @@
     <Compile Include="CommonDataModel\APIDataContract\Branch.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Card.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\ChargesType.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\City.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Contact.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Country.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Currency.Generated.cs" />
@@ -249,6 +250,8 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\BranchQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CardQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\ChargesTypeQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CityQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CityQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\ContactQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CurrencyQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.cs" />
@@ -258,6 +261,8 @@
     <Compile Include="CommonDataModel\APIDataContract\QueryService\PaymentTermQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\UserQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\VesselQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\Vessel.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AccountingSystemDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CommunicationLogTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CommunicationStatusTypeDetails.Generated.cs" />

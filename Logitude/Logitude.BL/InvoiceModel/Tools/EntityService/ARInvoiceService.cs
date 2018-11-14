@@ -774,6 +774,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1,
                         IsExpense = item.IsExpense,
                         AutoCreditDummyReceivableId = item.ReceivableId,
+                        GLAccountId = item.GLAccountId,
                     };
 
                     newInvoicePM.InvoiceLines.Add(newInvoiceLine);
@@ -866,6 +867,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 this.Create(newInvoicePM);
+                this.AddARInvoiceJournalAndJournalLines(newInvoicePM, true);
 
                 entityPOCO.IsCancelled = true;
                 entityPOCO.CancelledByARInvoiceId = newInvoicePM.Id;
@@ -1798,7 +1800,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                                  && d.Tenant == tenant
                                                                  select d).FirstOrDefault();
 
-                                    if(myMeasurement != null)
+                                    if (myMeasurement != null)
                                     {
                                         item.MeasurementCode = myMeasurement.Code;
                                     }
@@ -1816,22 +1818,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 TotalAmount = item.Quantity * item.UnitPrice;
                             }
 
-                            /* Minimum */
-                            //if (myReceivable.QuoteSaleMinPrice != null)
-                            //{
-                            //    if (TotalAmount == null)
-                            //    {
-                            //        TotalAmount = myReceivable.QuoteSaleMinPrice;
-                            //    }
+                            /* MinMax Quote */
+                            if (TotalAmount != null)
+                            {
+                                if (myReceivable.QuoteSaleMinAmount != null)
+                                {
+                                    if (TotalAmount < myReceivable.QuoteSaleMinAmount)
+                                    {
+                                        TotalAmount = myReceivable.QuoteSaleMinAmount;
+                                    }
+                                }
 
-                            //    else
-                            //    {
-                            //        if (TotalAmount < myReceivable.QuoteSaleMinPrice)
-                            //        {
-                            //            TotalAmount = myReceivable.QuoteSaleMinPrice;
-                            //        }
-                            //    }
-                            //}
+                                if (myReceivable.QuoteSaleMaxAmount != null)
+                                {
+                                    if (TotalAmount > myReceivable.QuoteSaleMaxAmount)
+                                    {
+                                        TotalAmount = myReceivable.QuoteSaleMaxAmount;
+                                    }
+                                }
+                            }
                         }
 
                         myReceivable.TotalAmount = MethodHelper.Round(TotalAmount, 2);

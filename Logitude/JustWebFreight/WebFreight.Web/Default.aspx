@@ -209,23 +209,6 @@
             font-size: 13px;
         }
 
-          .auto-style2 {
-            background: #dbdbdb; /* Old browsers */
-            /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RiZGJkYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjI4JSIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQxJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-            background: -moz-linear-gradient(top, #dbdbdb 0%, #f2f2f2 28%, #ffffff 41%, #ffffff 100%); /* FF3.6+ */
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdbdb), color-stop(28%,#f2f2f2), color-stop(41%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
-            background: -webkit-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-            background: -o-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Opera 11.10+ */
-            background: -ms-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* IE10+ */
-            background: linear-gradient(to bottom, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* W3C */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
-            font-family: tahoma, arial, sans-serif;
-            width: 200px;
-            height: 15px;
-            font-size: 13px;
-        }
-
         .column1 {
             text-align: left;
             width: 300px;
@@ -365,70 +348,6 @@
                                                  
                                     <div style="float: left;margin-left:60px;width:300px;" id="myform">
                                       
-                                          <table id="signupform" style="display:none">
-                                                 <tr>
-                                            <td class="column1">E-mail: 
-                                                </td>
-                                                <td>
-                                                                <input autocomplete="on"  size="10"  class="auto-style2" id="txtEmail" type="email" name="Email" runat="server"  placeholder="e.g. myname@example.net"  required data-email-msg="Email format is not valid"  onblur="onEmailBlur()"/>
-                                                     
-                                            </td>
-                                               
-                                            
-                                        </tr>
-                                        
-
-                                        <tr>
-
-                                                            <td class="column1">Name: 
-                                                                 </td>
-                                                <td><input class="auto-style2" id="txtFstEnglishName" type="text" autocomplete="off" runat="server" />
-                                                            </td>                    
-                                        </tr>
-
-                                                <tr>
-                                                            <td class="column1">Phone:
-                                                                 </td>
-                                                <td> <input class="auto-style2" id="txtPhone" type="text" autocomplete="off" runat="server" />
-                                                            </td>                    
-                                        </tr>
-
-
-                                                <tr>
-                                                            <td class="column1">Company:
-                                                                 </td>
-                                                <td><input class="auto-style2" id="txtCompany" type="text" autocomplete="off" runat="server" />
-                                                            </td>                    
-                                        </tr>
-
-
-                                                <tr>
-                                                            <td class="column1">Employees:
-                                                                 </td>
-                                                <td>
-                                                   <select name="cars" id="combo"  class="auto-style2" style="height:25px;width:100%" >
-                                                      
-                                                        <%
-                                                           foreach(string item in employees)
-                                                           {
-                                                                Response.Write("<option value="+item+">"+item+"</option>");
-                                                           }
-                                                            %>
-    
-  </select>
-
-                                                            </td>                    
-                                        </tr>
-                                              <tr>
-                                                  <td class="column1" colspan="2">
-                                                       <input class="loginButton" type="submit" value="Submit >" runat="server" id="Submit4" data-bind="click: validateMethod" formmethod="post"/>
-
-                                                    
-                                                   <a id="BackToLogin2" style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;text-align:right" href="login.aspx" >Back to login page</a>
-                                                  </td>
-                                              </tr>
-                                            </table> 
-
                                           <table id="loginForm" style="display:normal">
 
                                          <tr>
@@ -444,7 +363,7 @@
                                         
 
                                         <tr>
-                                                            <td class="column1">Password: <br /><input class="auto-style1" id="Password1" type="password" autocomplete="off" runat="server" oninput="onPasswordChanged()" required data-email-msg="password is required!" onkeypress="capLock(event)"/>
+                                                            <td class="column1">Password: <br /><input class="auto-style1" id="Password" type="password" autocomplete="off" runat="server" oninput="onPasswordChanged()" required data-email-msg="password is required!" onkeypress="capLock(event)"/>
                                                             </td>                    
                                         </tr>
 
@@ -457,33 +376,28 @@
                                                 
                                             </div> 
                                             </td>
+
                                             </tr>
+                                              <%--Start Areacaptcha--%>
+                                                 <tr id="Areacaptcha" style ="height:30px;margin-top:5px;display:none;">
+                                                 <td>
+                                               <img id="CaptchaImage" style="height:auto;width:auto;float:left"  /> 
+                                                <input oninput="onCaptchaInPutChanged()" style="height:19px;width:260px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="captchaTextBox"/>
+                                                
+
+
+                                            </td>
+                                            </tr>
+
+                                             <%--End Areacaptcha--%>
                                                 
                                               <tr>
                                             <td  class="column1"> 
-                                                <input class="loginButton" type="submit" value="Login >" runat="server" id="Submit3" data-bind="click: validateMethod" formmethod="post"/>
+                                                <input class="loginButton" type="submit" value="Login >" runat="server" id="cmdLogin" data-bind="click: validateMethod" formmethod="post"/>
                                                 <a style="margin-left:15px;color:#4B4A4A;font-size:12px;font-family:Arial; cursor:pointer;" onclick="resetpasswordclick()">Forgot your password?</a>
                                             </td>
                                         </tr>
-                                               <tr>
-                                                <td >
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-
-                                               <tr>
-                                                <td class="column1">
-                                                      <span style="background-color:transparent">
-                                                                                                                       <a style="color:black;display:none;text-align:right;background-color:transparent;width:268px;float:right; cursor:pointer;color:#4B4A4A;font-size:12px;font-family:Arial;" onclick="SignUpClick()" id="SignUp">Sign Up</a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-
+                                              
                                               <tr>
                                                 <td class="column1">
                                                       <span style="background-color:transparent">
@@ -493,7 +407,7 @@
                                                 </td>
                                             </tr>
                                             
-                                              <tr style="height:50px;width:50px">
+                                         <tr id="BusyindicatorArea" style="height:50px;width:50px">
                                                   <td>
                                                          <div id="loginBusyindicator" style="display:none"><img width="50" height="50" src="images/LoginScreen/indicator.gif" alt='loading' /></div>
                                                   </td>
@@ -505,6 +419,7 @@
 
                                             </table> 
 
+                                      
                                         <table id="comboForm" style="display:none;margin-right:20px">
                                              
                                              <tr>
@@ -535,18 +450,13 @@
 
                                                      <input style="width:120px;height:35px;margin-left:0px;" class="cmdSubmit"  type="submit" value="Continue >" runat="server" id="cmdContinue" data-bind="click: continueMethod"/>
                                                  
+                                                   <a id="BackToLogin" style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central" href="login.aspx" >Back to login page</a>
                                            
                                                   
                                                </td>
                                              
 
                                           </tr>
-                                            <tr>
-                                                <td class="column1">
-                                                                                                       <a id="BackToLogin" style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central" href="login.aspx" >Back to login page</a>
-
-                                                </td>
-                                            </tr>
 
                                               <tr>
                                                 <td class="column1">
@@ -717,10 +627,52 @@
 
                                                         </td>
 
+                                                       <%-- <td style="background:url(images/LoginScreen/Layer.png) center center no-repeat; background-size: 100% 100%;">
+                                                            <div></div>
+                                                        </td>--%>
                                                     </tr>
                                                 </table>
 
 
+                                            <%--   <table id="verificationForm" style="display:none;margin-right:20px">
+                                             
+                                             <tr>
+                                            <td  style="text-align:left;width:300px;font-family:Myriad Pro;font-size:14px;color:teal;">
+                                                You have more than one account, please choose which one you want to log in.
+                                            </td>
+                                               
+                                             
+                                        </tr>
+                                             <tr>
+                                                            <td class="column1"> 
+                                                                <div style="margin-top:5px"><input class="k-dropdown" id="Text1" runat="server" style="display:normal;width:250px;margin-top:0px"/></div>
+                                                            </td>                    
+                                      
+                                               
+                                                   </tr>
+                                            <tr>
+                                               <td></td>
+                                            </tr>
+                                             <tr>
+                                               <td></td>
+                                            </tr>
+                                             <tr>
+                                               <td></td>
+                                            </tr>
+                                          <tr>
+                                              <td class="column1">
+
+                                                     <input style="width:120px;height:35px;margin-left:0px;" class="cmdSubmit"  type="submit" value="Continue >" runat="server" id="Submit1" data-bind="click: continueMethod"/>
+                                                 
+                                                   <a id="BackToLogin" style="margin-left:15px;margin-top:50px;color:#4B4A4A;font-size:12px;font-family:Arial;vertical-align:central" href="login.aspx" >Back to login page</a>
+                                           
+                                                  
+                                               </td>
+                                             
+
+                                          </tr>
+                                       
+                                             </table>--%>
 
                                     </div>
 
@@ -728,10 +680,7 @@
                                     <div id="PromptView" style="float: left;display:none;width:300px;background-color:white;height:100%;vertical-align:central;">
                                       
                
-                                        <form runat="server">
-                                        
 
-                                        </form>
              <div style="font-size:17px;color:SteelBlue;margin-top:40px;height:40px"><b>Please select user interface</b></div>
              
                    <div id="DivMargin" style="font-size:16px;color:black;margin-top:60px"></div>
@@ -941,11 +890,16 @@
 
     </div>
           
-  
+
+
+
+
 
 
 
     <script type="text/javascript">
+
+        
         function getTwoFactorKeys() {
             var allKeys = [];
             for (var key in window.localStorage) {
@@ -1129,45 +1083,11 @@
 
         window.history.forward();
         var url = window.location.href;
-        var isDSV = url.toLowerCase().indexOf("dsv.co.il") > -1 ? true : false;
-        var myDomain = url.split('/')[2];
-        if (isDSV == true) {
-            var myLogoMethodUrl = "api/PrivateLable/getisprivatelableurl/?url=" + myDomain;
-            $.ajax({
-                url: myLogoMethodUrl,
-                type: 'GET',
-                contentType: 'application/json',
-
-                success: function (result) {
-                    if (result) IsPrivateLabel = result.EnablePrivateLable;
-                    if (IsPrivateLabel == true) {
-                        window.sessionStorage.setItem("ContactEmail", result.ContactUsEmail);
-                        window.sessionStorage.setItem("IsPrivateLabel", IsPrivateLabel);
-                        window.sessionStorage.setItem("SmallLogoURL", result.SmallLogoURL);
-                        window.sessionStorage.setItem("LogoURL", result.LogoURL);
-                        window.sessionStorage.setItem("PrivateLabelUrl", result.PrivateLabelUrl);
-                        window.sessionStorage.setItem("PrivateLabelShortName", result.PrivateLabelShortName);
-
-                        //$("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
-
-                    }
-                    document.location.href = "AngularLogin" + "/index.html";
-                },
-            });
-
-            //var version = "";
-            //if (userdata.HtmlVersion) version = userdata.HtmlVersion;
-            //document.location.href = "Angular" + version + "/index.html";
-        }
-        else {
-            var Containerelem = document.getElementById("Container");
-            if (Containerelem) {
-                Containerelem.style.display = 'block';
-            }
-        }
+   
 
         var companyList;
         var password;
+       var captchaKey
         var email;
         var currentTenant;
         var Technology = null;//"Angular";
@@ -1221,24 +1141,30 @@
             }
         }
 
-
-
-        function SignUpClick() {
-            $("#loginForm").hide();
-            $("#signupform").show();
-        }
-
-
-
-
         function setCaretToPos(id, cursorPosition) {
             document.getElementById(id).selectionStart = cursorPosition;
             document.getElementById(id).selectionEnd = cursorPosition;
         }
-        //data-bind="event: {blur: getContacts}"
-        onPasswordChanged = function () {
 
-            $("#errorsList").hide();
+
+
+        onCaptchaInPutChanged = function () {
+
+            if ( document.getElementById("errorsList").innerHTML == "Please re-enter the characters you see in the image above") {
+                if ($("#captchaTextBox").val())
+                    $("#errorsList").hide();
+            }
+        }
+   
+
+        //data-bind="event: {blur: getContacts}"
+
+        onPasswordChanged = function () {
+    
+            if (document.getElementById("errorsList").innerHTML !="Please re-enter the characters you see in the image above") {
+                  $("#errorsList").hide();
+            }
+ 
             var emailstring = $("#Password").val();
             if (emailstring) {
 
@@ -1262,25 +1188,21 @@
         function onEmailBlur() {
             $("#errorsList").hide();
             var emailstring = $("#Email").val();
-            if (emailstring == "signup") {
-
-                document.getElementById("SignUp").style.display = "block";
-
-            }
-            else {
-                document.getElementById("SignUp").style.display = "none";
-
-            }
-
             if (emailstring) {
+                  $("#Email").val($.trim(emailstring));
 
-                // var cursorPosition = document.getElementById("Email").selectionStart;
-                $("#Email").val($.trim(emailstring));
+                if (email != $("#Email").val()) {
 
-                //setCaretToPos("Email", cursorPosition);
-                //$("#Email").sele
-                //setCaretToPos($("#Email"), cursorPosition);
+                    var areacaptcha = document.getElementById("Areacaptcha");
+                    if (areacaptcha && areacaptcha.style.display == "block") {
+                        document.getElementById("captchaTextBox").value = "";
+                        areacaptcha.style.display = "none";
+                        captchaKey = "";
+                    }
 
+       
+                }
+              
 
             }
             //$("#cmbTenants").hide();
@@ -1368,81 +1290,169 @@
                 //$("#busyIndicator").hide();
             }
 
-
-
+      
             this.validateMethod = function () {
 
+                password = $("#Password").val();
+                email = $("#Email").val();
+                $("#errorsList").hide();
 
 
-
-                var email = $("#txtEmail").val();
-                var name = $("#txtFstEnglishName").val();
-                var company = $("#txtCompany").val();
-                var phone = $("#txtPhone").val();
-
-                if (email == "" || name == "" || company == "") {
-                    alert('Please fill the email, name, company and phone fields.');
-                }
-                else if (name.length > 60) {
-                    alert('Name field max length is 60');
+                var areacaptcha = document.getElementById("Areacaptcha");
+                if (areacaptcha.style.display == "block") {
+                    document.getElementById("BusyindicatorArea").style.width = "0px";
+                    document.getElementById("BusyindicatorArea").style.height = "0px";
                 }
 
-                else if (company.length > 60) {
-                    alert('Company field max length is 60');
-                }
-
-                else {
                 
-                    $("#loginBusyindicator").show();//bool isUser,string cardId,string cardType
-                    var url = "api/SignUp";
-                    function SignUpInfoClass() {
-                        this.Email =  $("#txtEmail").val();
-                        this.Company =  $("#txtCompany").val();
-                        this.Name =$("#txtFstEnglishName").val();
-                        this.Phone = $("#txtPhone").val();
-                        this.IsWithOutValidation = true;
-                   
-                    };
-                    var signUpInfoClassParam = new SignUpInfoClass();
-                    $.ajax({
-                        url: url,
-                        type: 'PUT',
-                        data: JSON.stringify(signUpInfoClassParam),
-                        contentType: 'application/json',
+                var persist = false;
+                
 
-                        success: function (userdata) {
+                var validatable = $("#myform").kendoValidator().data("kendoValidator");
 
-                            disableForm(false);
-                            $("#loginBusyindicator").hide();
-
-                            if (!userdata.HasError) {
-                                alert('Logitude is submting your information an email will be sent as soon as submit completes.');
-                            }
-                           
-
-
-                        },
-
-                        error: function (jqXHR, textStatus, errorThrown) {
-
-                            disableForm(false);
-                            $("#error").text("errror");
-                            $("#error").show();
-                            $("#loginBusyindicator").hide();
-                            var errorMessage = '';
-                        }
+                if (validatable.validate() === false) {
+                    document.getElementById("errorsList").innerHTML = "Login failed! invalid user name or password.";
+                    $("#errorsList").show();
+                    var errors = validatable.errors();
+                    $(errors).each(function () {
+                        $("#errors").html(this);
                     });
-
-
-
-
-
+                    return;
                 }
 
 
+          
 
-            };
+                var BusyindicatorAreawidthHeight = "50px";
 
+                if (areacaptcha.style.display == "block") {
+                    if (!document.getElementById("captchaTextBox").value) {
+                        document.getElementById("errorsList").innerHTML = "Please re-enter the characters you see in the image above";
+                        $("#errorsList").show();
+                        return;
+                    }
+                    BusyindicatorAreawidthHeight = "40px";
+                    document.getElementById("loginBusyindicator").style.marginTop = "-7px";
+                }
+
+
+                document.getElementById("BusyindicatorArea").style.width = BusyindicatorAreawidthHeight;
+                document.getElementById("BusyindicatorArea").style.height = BusyindicatorAreawidthHeight;
+
+                save_data_to_cookie();
+                disableForm(true);
+
+                $("#loginBusyindicator").show();
+
+                var url = "api/authentication";//?email=" + email + "&password=" + password;//+ "&persistCookie=" + persist;
+                function LoginParameters() {
+
+                    this.Email = $.trim(email.toLowerCase());
+                    this.Password = password;
+                    this.GetToken = true;
+                    this.ClientType = "Web";
+                    this.CaptchaKey = captchaKey;
+                    this.CaptchaCode = document.getElementById("captchaTextBox").value;
+                };
+
+                
+                var param = new LoginParameters();
+                LoginParametersData = param;
+
+                var twoFactorKey = getTwoFactorKeys();
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'TwoFactorkey': twoFactorKey },
+                    data: JSON.stringify(param),
+                    contentType: 'application/json',
+
+                    success: function (userdata) {
+
+                        disableForm(false);
+                        UserDataPrompt = userdata;
+
+                        if (!userdata.HasError) {
+                            areacaptcha.style.display = "none";
+                            ComplateProcessLogin(userdata);
+                        }
+                        else {
+
+                            $("#loginBusyindicator").hide();
+                            if (userdata.ExceptionMessage) {
+
+                                alert(userdata.ExceptionMessage);
+                            }
+                            else {
+
+                                captchaKey = userdata.CaptchaKey;
+                           
+                           
+                                if (userdata.MustChangePassword) {
+
+                                    document.location.href = "PasswordChangePage.aspx?email=" + email
+                                }
+
+                                else if (userdata.PasswordExpirationDateMessage) {
+                                    document.getElementById("myform").style.display = "none";
+                                    document.getElementById("verificationForm").style.display = "none";
+                                    document.getElementById("PromptView").style.display = "none";
+                                    document.getElementById("DivPasswordExpiration").innerHTML = userdata.PasswordExpirationDateMessage;
+                                    document.getElementById("PasswordExpirationDateView").style.display = "block";
+                                }
+
+
+                                else {
+
+                                  
+
+                                    if (userdata.InValidCaptcha) {
+                                        if (areacaptcha.style.display == "block") {
+                                            document.getElementById("captchaTextBox").value = "";
+                                        }
+                                    
+                                        areacaptcha.style.display = "block";
+                                        $("#CaptchaImage").attr("src", userdata.CaptchaImage);
+                                        document.getElementById("divMayus").style.display = "none";
+                                        document.getElementById("BusyindicatorArea").style.width = "0px";
+                                        document.getElementById("BusyindicatorArea").style.height = "0px";
+                                    }
+
+
+                                    var errorMessage = "";
+
+                                        if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
+                                        if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                                        if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
+                                        if (userdata.InValidMailOrPassword)  errorMessage = "Login failed! invalid user name or password." + "<br/>";
+
+                                    if (!errorMessage) errorMessage = "Please re-enter the characters you see in the image above";
+                              
+                                
+
+                                   
+                                    document.getElementById("errorsList").innerHTML = errorMessage;
+                                    // $("#errorsList").text(errorMessage);
+                                    $("#errorsList").show();
+                                }
+                            }
+                        }
+
+
+                    },
+
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        document.getElementById("errorsList").innerHTML = "Login failed.Server error.";
+                        $("#errorsList").show();
+
+                        disableForm(false);
+                        $("#error").text("errror");
+                        $("#error").show();
+                        $("#loginBusyindicator").hide();
+                        var errorMessage = '';
+                    }
+                });
+            }
 
 
             this.promptButtonYes = function () {
@@ -1563,100 +1573,76 @@
 
 
         LoginToAngular = function (userdata) {
+            if (navigator.sayswho && navigator.sayswho.toString().indexOf("IE") > -1) {
+                alert("Internet explorer is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
+                return;
+            }
 
-            var url = "api/LogitudeApplication"
-            $.ajax({
-                url: url,
-                type: 'GET',
-                contentType: 'application/json',
+            if (navigator.sayswho && navigator.sayswho.toString().indexOf("Edge") > -1) {
+                alert("Edge is currently not supported in HTML5 version, please use Chrome, Firefox or Opera.");
+                return;
+            }
 
-                success: function (result) {
-                    if (result == true) {
-                        document.location.href = "WebPages/UpgradeScreen.aspx";
+ 
+                if (navigator.userAgent != null) {
+                    if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
+                        alert("IOS is currently not supported in HTML5 version");
+                        return;
                     }
-                    else {
 
-                        if (navigator.sayswho && navigator.sayswho.toString().indexOf("IE") > -1) {
-                            alert("Internet explorer is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
-                            return;
-                        }
-
-                        if (navigator.sayswho && navigator.sayswho.toString().indexOf("Edge") > -1) {
-                            alert("Edge is currently not supported in HTML5 version, please use Chrome, Firefox or Opera.");
-                            return;
-                        }
-
-                        if (navigator.userAgent != null) {
-                            if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
-                                alert("IOS is currently not supported in HTML5 version");
-                                return;
-                            }
-
-                            else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {
-                                alert("IOS is currently not supported in HTML5 version");
-                                return;
-                            }
-
-                            else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {
-                                alert("IOS is currently not supported in HTML5 version");
-                                return;
-                            }
-                        }
-
-                        //if (navigator.sayswho && navigator.sayswho.toString().indexOf("Safari") > -1) {
-                        //    var issafari = true;
-                        //    if (navigator.userAgent && (navigator.userAgent.toString().indexOf("Chrome") > -1 || navigator.userAgent.toString().indexOf("Firefox") > -1 || navigator.userAgent.toString().indexOf("FxiOS") > -1 || navigator.userAgent.toString().indexOf("ChiOS") > -1)) issafari = false;
-                        //    if (issafari == true) {
-                        //        alert("Safari is currently not supported in HTML5 version, please use Chrome, Firefox or Opera.");
-                        //        return;
-                        //    }
-                        //}
-
-
-                        var pageUrl = document.URL;
-                        var urlLogBox = "";
-                        if (pageUrl && pageUrl.indexOf("Menu=LogBox") > -1) {
-                            urlLogBox = pageUrl.split("Menu=")[1];
-                        }
-                        var data = JSON.stringify(userdata);
-                        window.sessionStorage.setItem("userdata", data);
-
-                        if (userdata.KeepUserLoggedIn == true && userdata.Token) {
-                            window.localStorage.setItem("Token_" + userdata.CurrentTenant, userdata.Token);
-                            window.localStorage.setItem("Token", userdata.Token);
-
-                            window.localStorage.setItem("CardId", "");
-                            window.localStorage.setItem("CardId_" + userdata.CurrentTenant, "");
-                        }
-
-
-                        var version = "";
-                        if (userdata.HtmlVersion) version = userdata.HtmlVersion;
-                        var angularUrl = "Angular" + version + "/index.html";
-                        if (urlLogBox) {
-                            angularUrl += ("?Menu=" + urlLogBox);
-                            if (ExternalTenant) {
-                                angularUrl =  angularUrl.replace("&Tenant=" + ExternalTenant, "");
-                            }
-                            
-                        }
-
-
-
-                        document.location.href = angularUrl;
-
-                        $("#loginBusyindicator").hide();
-
+                    else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {
+                        alert("IOS is currently not supported in HTML5 version");
+                        return;
                     }
-                },
 
-                error: function (jqXHR, textStatus, errorThrown) {
-
+                    else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {
+                        alert("IOS is currently not supported in HTML5 version");
+                        return;
+                    }
                 }
-            });
+            
 
+            //if (navigator.sayswho && navigator.sayswho.toString().indexOf("Safari") > -1) {
+            //    var issafari = true;
+            //    if (navigator.userAgent && (navigator.userAgent.toString().indexOf("Chrome") > -1 || navigator.userAgent.toString().indexOf("Firefox") > -1 || navigator.userAgent.toString().indexOf("FxiOS") > -1 || navigator.userAgent.toString().indexOf("ChiOS") > -1)) issafari = false;
+            //    if (issafari == true) {
+            //        alert("Safari is currently not supported in HTML5 version, please use Chrome, Firefox or Opera.");
+            //        return;
+            //    }
+            //}
 
+            var pageUrl = document.URL;
+            var additionalParturl = "";
 
+            if (pageUrl && pageUrl.indexOf("Menu=") > -1) {
+                additionalParturl = pageUrl.split("Menu=")[1];
+            }
+            var data = JSON.stringify(userdata);
+            window.sessionStorage.setItem("userdata", data);
+
+            if (userdata.KeepUserLoggedIn == true && userdata.Token) {
+                window.localStorage.setItem("Token_" + userdata.CurrentTenant, userdata.Token);
+                window.localStorage.setItem("Token", userdata.Token);
+
+                window.localStorage.setItem("CardId", "");
+                window.localStorage.setItem("CardId_" + userdata.CurrentTenant, "");
+            }
+
+            var version = "";
+            if (userdata.HtmlVersion) version = userdata.HtmlVersion;
+            var angularUrl = "Angular" + version + "/index.html";
+            if (additionalParturl) {
+                angularUrl += ("?Menu=" + additionalParturl);
+                if (ExternalTenant) {
+                    angularUrl = angularUrl.replace("&Tenant=" + ExternalTenant, "");
+                }
+
+            }
+
+            document.location.href = angularUrl;
+
+            $("#loginBusyindicator").hide();
+          
         };
 
 
@@ -1681,16 +1667,7 @@
         }
 
 
-
-       
-
-
-
-
-
-
-
-
+        
         function RunLogin(userdata) {
 
             if (!Technology) Technology = userdata.Technology;
@@ -1737,6 +1714,9 @@
                 this.CardType = companyLogin.CardType;
                 this.GetToken = true;
                 this.ClientType = "Web";
+                this.CaptchaKey = captchaKey;
+                this.CaptchaCode = document.getElementById("captchaTextBox").value;
+
             };
 
 
@@ -1799,24 +1779,19 @@
 
                             alert(userdata.ExceptionMessage);
                         }
-
                         else if (userdata.MustChangePassword) {
 
                             document.location.href = "PasswordChangePage.aspx?email=" + email
                         }
                         else {
                             var errorMessage = "Login failed! invalid user name or password." + "<br/>";
+                            if (userdata.InValidCaptcha) {
 
-
-                            if (userdata.IpRestricted) {
-
-                                errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
-
+                                errorMessage = "Please re-enter the characters you see in the image above";
                             }
-
-                            if (userdata.IsLocked) {
-
-                                errorMessage = "Your account has been locked out!" + "<br/>" + "please try again after 30 minutes.";
+                            else {
+                                if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
+                                if (userdata.IsLocked) errorMessage = "Your account has been locked out!" + "<br/>" + "please try again after 30 minutes.";
                             }
 
                             document.getElementById("comboFormErrorsList").innerHTML = errorMessage;
@@ -1843,84 +1818,7 @@
 
         var _LoginViewModel;//itzik need it !!
 
-        $(document).ready(function () {
-            window.sessionStorage.setItem("IsBranding", false);
-            window.sessionStorage.setItem("IsPrivateLabel", false);
-            window.sessionStorage.setItem("ContactEmail", "");
-            window.sessionStorage.setItem("loginlogo", "");
-            var hash = $(location).attr('href');
-            var domain = hash.split('/')[2];
-            //alert(hash.split('/')[2]);
-            if (hash) {
-                var hashSplit = hash.toLowerCase().split("tenant");
-                if (hashSplit) {
-                    var Key = hashSplit[1];
-                    if (hashSplit[1]) {
-                        BrandingTenant = hashSplit[1].split('=')[1];
-                    }
 
-                }
-
-            }
-            if (BrandingTenant) {
-
-                var myLogoMethodUrl = "api/branding/getisbrandingtenant/?tenant=" + BrandingTenant;
-                $.ajax({
-                    url: myLogoMethodUrl,
-                    type: 'GET',
-                    contentType: 'application/json',
-
-                    success: function (result) {
-                        if (result) IsBranding = result.EnableBranding;
-                        if (IsBranding == true) {
-                            window.sessionStorage.setItem("ContactEmail", result.ContactEmail);
-                            window.sessionStorage.setItem("IsBranding", IsBranding);
-                            window.sessionStorage.setItem("Tenant", BrandingTenant);
-
-                            $("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
-
-                        }
-                        LoadLogo();
-                    },
-                });
-
-            }
-            else {
-                var myLogoMethodUrl = "api/PrivateLable/getisprivatelableurl/?url=" + domain;
-                $.ajax({
-                    url: myLogoMethodUrl,
-                    type: 'GET',
-                    contentType: 'application/json',
-
-                    success: function (result) {
-                        if (result) IsPrivateLabel = result.EnablePrivateLable;
-                        if (IsPrivateLabel == true) {
-                            window.sessionStorage.setItem("ContactEmail", result.ContactUsEmail);
-                            window.sessionStorage.setItem("IsPrivateLabel", IsPrivateLabel);
-                            window.sessionStorage.setItem("SmallLogoURL", result.SmallLogoURL);
-                            window.sessionStorage.setItem("LogoURL", result.LogoURL);
-                            window.sessionStorage.setItem("PrivateLabelUrl", result.PrivateLabelUrl);
-                            window.sessionStorage.setItem("PrivateLabelShortName", result.PrivateLabelShortName);
-
-                            //$("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
-
-                        }
-                        LoadLogo();
-                    },
-                });
-            }
-            //else LoadLogo();
-
-
-            _LoginViewModel = new LoginViewModel();
-            ko.applyBindings(_LoginViewModel);
-
-            $("#Password").keyup(function (e) {
-                if (e.which == 13) {
-                    _LoginViewModel.validateMethod();
-                }
-            });
-        });
 
 
         navigator.sayswho = (function () {
@@ -1963,7 +1861,13 @@
                         $("#loginlogo1").attr("src", GetApplicationLogoSource(myLogoCode));
 
                         document.title = GetApplicationTitle(myLogoCode);
-                    },
+
+                        if (IsShowUpgradeScreen) ShowUpgradeScreen();
+
+                    }, error: function (jqXHR, textStatus, errorThrown) {
+
+                        if (IsShowUpgradeScreen) ShowUpgradeScreen();
+                    }
                 });
 
 
@@ -1983,7 +1887,11 @@
                         $("#loginlogo").css("height", "114px");
 
                         window.sessionStorage.setItem("loginlogo", result);
-                    },
+                        if (IsShowUpgradeScreen) ShowUpgradeScreen();
+                    }, error: function (jqXHR, textStatus, errorThrown) {
+                        if (IsShowUpgradeScreen) ShowUpgradeScreen();
+
+                    }
                 });
             }
             else {
@@ -2000,11 +1908,20 @@
                         $("#loginlogo").css("height", "114px");
 
                         window.sessionStorage.setItem("loginlogo", result);
-                    },
+                        if (IsShowUpgradeScreen) ShowUpgradeScreen();
+                    }, error: function (jqXHR, textStatus, errorThrown) {
+                        if (IsShowUpgradeScreen) ShowUpgradeScreen();
+
+                    }
                 });
 
 
             }
+        }
+
+        function ShowUpgradeScreen() {
+
+            document.location.href = "WebPages/UpgradeScreen.aspx";
         }
 
         function SetAngularasDefault() {
@@ -2066,22 +1983,197 @@
             //}
         }
 
+
+        function BrandingFunction() {
+            window.sessionStorage.setItem("IsBranding", false);
+            window.sessionStorage.setItem("IsPrivateLabel", false);
+            window.sessionStorage.setItem("ContactEmail", "");
+            window.sessionStorage.setItem("loginlogo", "");
+            var hash = $(location).attr('href');
+            var domain = hash.split('/')[2];
+            if (hash) {
+                var hashSplit = hash.toLowerCase().split("tenant");
+                if (hashSplit) {
+                    var Key = hashSplit[1];
+                    if (hashSplit[1]) {
+                        BrandingTenant = hashSplit[1].split('=')[1];
+                    }
+                }
+
+            }
+            if (BrandingTenant) {
+
+                var myLogoMethodUrl = "api/branding/getisbrandingtenant/?tenant=" + BrandingTenant;
+                $.ajax({
+                    url: myLogoMethodUrl,
+                    type: 'GET',
+                    contentType: 'application/json',
+
+                    success: function (result) {
+                        if (result) IsBranding = result.EnableBranding;
+                        if (IsBranding == true) {
+                            window.sessionStorage.setItem("ContactEmail", result.ContactEmail);
+                            window.sessionStorage.setItem("IsBranding", IsBranding);
+                            window.sessionStorage.setItem("Tenant", BrandingTenant);
+
+                            $("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
+
+                        }
+                        LoadLogo();
+                    },
+                });
+
+            }
+            else {
+                var myLogoMethodUrl = "api/PrivateLable/getisprivatelableurl/?url=" + domain;
+                $.ajax({
+                    url: myLogoMethodUrl,
+                    type: 'GET',
+                    contentType: 'application/json',
+
+                    success: function (result) {
+                        if (result) IsPrivateLabel = result.EnablePrivateLable;
+                        if (IsPrivateLabel == true) {
+                            window.sessionStorage.setItem("ContactEmail", result.ContactUsEmail);
+                            window.sessionStorage.setItem("IsPrivateLabel", IsPrivateLabel);
+                            window.sessionStorage.setItem("SmallLogoURL", result.SmallLogoURL);
+                            window.sessionStorage.setItem("LogoURL", result.LogoURL);
+                            window.sessionStorage.setItem("PrivateLabelUrl", result.PrivateLabelUrl);
+                            window.sessionStorage.setItem("PrivateLabelShortName", result.PrivateLabelShortName);
+
+                            //$("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
+
+                        }
+                        LoadLogo();
+                    },
+                });
+            }
+
+
+            _LoginViewModel = new LoginViewModel();
+            ko.applyBindings(_LoginViewModel);
+
+            $("#Password").keyup(function (e) {
+                if (e.which == 13) {
+                    _LoginViewModel.validateMethod();
+                }
+            });
+
+        }
+
   
         function OnLoad() {
+
+            var url = window.location.href;
+            var isDSV = url.toLowerCase().indexOf("dsv.co.il") > -1 ? true : false;
+            var myDomain = url.split('/')[2];
+
+
+            var url = "api/LogitudeApplication"
+            $.ajax({
+                url: url,
+                type: 'GET',
+                contentType: 'application/json',
+
+                success: function (result) {
+                    if (result == true) {
+                        IsShowUpgradeScreen = true;
+                        if (isDSV == true) {
+
+                            window.sessionStorage.setItem("Environment", "LogBox");
+                            document.location.href = "WebPages/UpgradeScreen.aspx";
+                        }
+                        else BrandingFunction();
+         
+                    }
+                    else {
+                        IsShowUpgradeScreen = false;
+                        if (isDSV) {
+                            DSVLogin(myDomain);
+                        } else {
+
+                            ComplateLoadProess();
+                            BrandingFunction();
+
+                            var Containerelem = document.getElementById("Container");
+                            if (Containerelem) {
+                                Containerelem.style.display = 'block';
+                            }
+                           
+      
+                          
+
+                        }
+                      
+                     
+                    }
+                },
+
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                }
+            });
+
+
+        }
+
+
+
+        function DSVLogin(myDomain) {
+
+
+                var myLogoMethodUrl = "api/PrivateLable/getisprivatelableurl/?url=" + myDomain;
+                $.ajax({
+                    url: myLogoMethodUrl,
+                    type: 'GET',
+                    contentType: 'application/json',
+
+                    success: function (result) {
+                        if (result) IsPrivateLabel = result.EnablePrivateLable;
+                        if (IsPrivateLabel == true) {
+                            window.sessionStorage.setItem("ContactEmail", result.ContactUsEmail);
+                            window.sessionStorage.setItem("IsPrivateLabel", IsPrivateLabel);
+                            window.sessionStorage.setItem("SmallLogoURL", result.SmallLogoURL);
+                            window.sessionStorage.setItem("LogoURL", result.LogoURL);
+                            window.sessionStorage.setItem("PrivateLabelUrl", result.PrivateLabelUrl);
+                            window.sessionStorage.setItem("PrivateLabelShortName", result.PrivateLabelShortName);
+
+                            //$("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
+
+                        }
+                        var urlMenu = "";
+                        var mypageUrl = document.URL;
+                        if (mypageUrl && mypageUrl.indexOf("Menu=") > -1) {
+                            urlMenu = mypageUrl.split("Menu=")[1];
+                            document.location.href = "AngularLogin" + "/index.html" + ("?Menu=" + urlMenu);
+                        }
+                        else {
+
+                            document.location.href = "AngularLogin" + "/index.html";
+                        }
+                        //document.location.href = "AngularLogin" + "/index.html";
+                    },
+                });
+
+    
+  
+        }
+      
+        function ComplateLoadProess() {
             ExternalTenant = "";
             var urlPage = window.location.href;
             if (urlPage) {
                 var args = urlPage.split('&');
                 if (args[1] && args[1].indexOf('Tenant=') != -1) {
                     ExternalTenant = args[1].split('=')[1];
-                 
+
                 }
 
             }
 
             var tokenKey = ExternalTenant ? "Token_" + ExternalTenant : "Token";
             var tokenCard = ExternalTenant ? "CardId_" + ExternalTenant : "CardId";
-           
+
             var token = window.localStorage.getItem(tokenKey);
             var cardId = window.localStorage.getItem(tokenCard);
 
@@ -2113,7 +2205,7 @@
                             if (userdata.TwoFactorkey) {
                                 window.localStorage.setItem('TwoFactorkey_' + userdata.Id + '_' + userdata.CurrentTenant, userdata.TwoFactorkey);
                             }
-                            
+
                             if (userdata.IsTwoFactorAuthenticationRequired == true) {
 
                                 $("#DefultLoginScreen").css("display", "block");
@@ -2145,8 +2237,6 @@
             }
 
         }
-      
-
 
 </script>
 
@@ -2156,7 +2246,7 @@
     expdays = 365
     var IsBranding = false;
     var IsPrivateLabel = false;
-
+    var IsShowUpgradeScreen = false;
     var BrandingTenant = "";
     // An adaptation of Dorcht's cookie functions 
 
@@ -2244,6 +2334,7 @@
         $(document).ready(function () {
 
             OnLoad();
+
             var myCode = document.getElementById('PartnerEnvironmentInput').value;
             $("#PartnerImgAtlas").css("display", "none");
             $("#othersTable").css("display", "table");
@@ -2296,5 +2387,6 @@
             }
         });
     </script>
+
 </body>
 </html>

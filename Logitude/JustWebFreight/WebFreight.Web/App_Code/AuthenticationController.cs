@@ -540,29 +540,29 @@ namespace WebFreight.Web
         //    return data;
         //}
 
-        public string PostSignUpContactData(string name, string email, string company)
-        {
-            IGlobalContext globalContext = GlobalContext.GetContext();
-            LogitudeLeadRepository leadRepository = new LogitudeLeadRepository(globalContext);
-            email = email.ToLower();
-            LogitudeLead lead = new LogitudeLead()
-            {
-                Id = Guid.NewGuid().ToString(),
-                ContactName = name,
-                CompanyName = company,
-                Email = email,
-                CreateDate = DateTime.Now,
-                Country = "Palestine",
-                LastUpdateDate = DateTime.Now
+        //public string PostSignUpContactData(string name, string email, string company)
+        //{
+        //    IGlobalContext globalContext = GlobalContext.GetContext();
+        //    LogitudeLeadRepository leadRepository = new LogitudeLeadRepository(globalContext);
+        //    email = email.ToLower();
+        //    LogitudeLead lead = new LogitudeLead()
+        //    {
+        //        Id = Guid.NewGuid().ToString(),
+        //        ContactName = name,
+        //        CompanyName = company,
+        //        Email = email,
+        //        CreateDate = DateTime.Now,
+        //        Country = "Palestine",
+        //        LastUpdateDate = DateTime.Now
 
-            };
+        //    };
 
-            globalContext.LogitudeLeads.Add(lead);
+        //    globalContext.LogitudeLeads.Add(lead);
 
-            globalContext.SaveChanges();
+        //    globalContext.SaveChanges();
 
-            return lead.Id;
-        }
+        //    return lead.Id;
+        //}
 
         public bool GetLogOutData(string userEmail)
         {
@@ -1105,13 +1105,29 @@ namespace WebFreight.Web
 
                         if (!data.IpRestricted && loginParameters.ClientType == "Web")
                         {
-                            if (contactPassword == null) contactPassword = globalObjectContext.ContactPasswords.Where(c => c.Email.ToLower() == email).FirstOrDefault();
+                            bool isLoadContactPasswords = false;
+                            if (contactPassword == null)
+                            {
+                                contactPassword = globalObjectContext.ContactPasswords.Where(c => c.Email.ToLower() == email).FirstOrDefault();
+                                isLoadContactPasswords = true;
+                            }
                             if (contactPassword != null)
                             {
                                 if (contactPassword.NumberOfRetries++ >= 5)
                                 {
                                     CaptchaHelper captchaHelper = new CaptchaHelper();
                                     captchaHelper.AddCaptchaKey(loginParameters.Email, data, "Login");
+
+                                    if (!isLoadContactPasswords)
+                                    {
+                                        contactPassword = globalObjectContext.ContactPasswords.Where(c => c.Email.ToLower() == loginParameters.Email).FirstOrDefault();
+                                    }
+
+                                    if (contactPassword != null)
+                                    {
+                                        contactPassword.CaptchaKey = data.CaptchaKey;
+                                        globalObjectContext.SaveChanges();
+                                    }
                                 }
                             }
                         }
@@ -1147,11 +1163,12 @@ namespace WebFreight.Web
             if (!loginParameters.IsMobileLogin && loginParameters.ClientType == "Web")
             {
                 bool isCheckCaptchaCode = !string.IsNullOrEmpty(loginParameters.CaptchaCode) && !string.IsNullOrEmpty(loginParameters.CaptchaKey) ? true : false;
-
+                ContactPassword contactPassword = null;
+                IGlobalContext globalContext = null;
                 if (!isCheckCaptchaCode)
                 {
-                    IGlobalContext globalContext = GlobalContext.GetContext();
-                    ContactPassword contactPassword= globalContext.ContactPasswords.Where(c => c.Email.ToLower() == loginParameters.Email).FirstOrDefault();
+                     globalContext = GlobalContext.GetContext();
+                     contactPassword= globalContext.ContactPasswords.Where(c => c.Email.ToLower() == loginParameters.Email).FirstOrDefault();
                     if (contactPassword!=null)
                     {
                         if (contactPassword.NumberOfRetries++ >= 5)
@@ -1166,10 +1183,22 @@ namespace WebFreight.Web
                         }
                     }
                 }
+                else
+                {
+                    globalContext = GlobalContext.GetContext();
+                    contactPassword = globalContext.ContactPasswords.Where(c => c.Email.ToLower() == loginParameters.Email).FirstOrDefault();
+                }
 
-                if (isCheckCaptchaCode && !captchaHelper.CheckCaptchaCodeValidated(loginParameters.CaptchaCode, loginParameters.CaptchaKey))
+                string userCaptchaKey = contactPassword != null ? contactPassword.CaptchaKey : null;
+                if (isCheckCaptchaCode && !captchaHelper.CheckCaptchaCodeValidated(loginParameters.CaptchaCode, loginParameters.CaptchaKey , userCaptchaKey))
                 {
                     captchaHelper.AddCaptchaKey(loginParameters.Email, data, "Login");
+                    if (contactPassword != null)
+                    {
+                        contactPassword.CaptchaKey = data.CaptchaKey;
+                        globalContext.SaveChanges();
+                    }
+
                 }
 
             }
@@ -2410,6 +2439,7 @@ namespace WebFreight.Web
                 contact.IsLocked = false;
                 contact.LockDateTime = null;
                 contact.NumberOfRetries = 0;
+                contact.CaptchaKey = null;
                 globalContext.SaveChanges();
             }
         }

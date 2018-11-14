@@ -1919,7 +1919,7 @@ export class ShipmentReceivableItem extends BaseComponent {
     get TotalAmount() { return this.EntityPM.TotalAmount; }
     set TotalAmount(ivalue: number) {
 
-        var value = AppTool.Round(ivalue, 2);
+        var value = ivalue;
 
         if (value) {
             if (this.QuoteSaleMinAmount != null) {
@@ -1937,38 +1937,10 @@ export class ShipmentReceivableItem extends BaseComponent {
 
         if (this.EntityPM.TotalAmount != value) {
 
-            var inputValue: number = value;
-
-            /* Min */
-            if (this.EntityPM.QuoteSaleMinAmount != null) {
-                if (value == null) {
-                    value = this.EntityPM.QuoteSaleMinAmount;
-                }
-
-                else {
-                    if (value < this.EntityPM.QuoteSaleMinAmount) {
-                        value = this.EntityPM.QuoteSaleMinAmount;
-                    }
-                }
-            }
-
-            /* Max */
-            if (this.EntityPM.QuoteSaleMaxAmount != null) {
-                if (value == null) {
-                    value = this.EntityPM.QuoteSaleMaxAmount;
-                }
-
-                else {
-                    if (value > this.EntityPM.QuoteSaleMaxAmount) {
-                        value = this.EntityPM.QuoteSaleMaxAmount;
-                    }
-                }
-            }
-
             this.EntityPM.TotalAmount = AppTool.Round(value, 2);
 
             this.SetLineStatus();
-            this.ComputeUnitPrice(inputValue);
+            this.ComputeUnitPrice(value);
             this.ComputeTotalAmountLocal();
             this.SetMinMaxFromQuoteIconVisibility();
             this.OnLineAmountChanged();

@@ -16,5 +16,6 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string Email { get; set; }
         public string IP { get; set; }
         public string Activity { get; set; }
+        public bool IsUsed { get; set; }
     }
 }

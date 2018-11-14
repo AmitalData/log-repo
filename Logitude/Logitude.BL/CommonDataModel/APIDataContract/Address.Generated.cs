@@ -30,7 +30,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
     public Country Country { get; set; }
     
-    public string City { get; set; }
+    public City City { get; set; }
     
     public string ZipCode { get; set; }
     

@@ -93,7 +93,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
                 if (MyEntity.MainAddress != null)
                 {
-                    var myMainAddressPM = MainAddressAddressService.AddressDataMappingAndValidatin(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+                    var myMainAddressPM = MainAddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.MainAddress, Tenant, ComputingPartnerName);
                     if (myMainAddressPM != null)
                     {
                         temp.MainAddressId = myMainAddressPM.Id;
@@ -114,7 +114,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 if (MyEntity.MainAddress != null)
                 {
                     AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
-                    AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+                    AddressPM address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
                     address.AddressTypeId = "M";
                     address.Description = "Main Address";
                     address.Tenant = Tenant;
