@@ -202,7 +202,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(5)))
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
-                    InitDueLocalBalanceListToUpdate(accountingContext, tenant, true,true);
+                    //InitDueLocalBalanceListToUpdate(accountingContext, tenant, true,true);
+                    InitDueLocalBalanceListToUpdate(accountingContext, tenant,true, false);// WHY I CHANGE TO FALSE FALSE (FROM TRUE*2) 1 NO TIME 2 THE REVERSE DUE DATE RETURN LISt
                     myDueLocalBalanceListToUpdate = _QDueLocalBalanceListToUpdate.ToList();
                     
                     myClientAndVendorTypeGLAccountIds = _QClientAndVendorTypeGLAccountIds.ToList();
