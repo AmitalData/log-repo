@@ -31,6 +31,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string AgentReference2 { get; set; }
         public string ContainerCode { get; set; }
         public string ShipmentId { get; set; }
+        public string PackageId { get; set; }
         public string TransportModeId { get; set; }
         public string MainCarriageCarrierPrefix { get; set; }
         public string AgentId { get; set; }
@@ -133,5 +134,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Transshipment2VesselId { get; set; }
         public string Transshipment1VesselId { get; set; }
         public string MainCarriageVesselId { get; set; }
+
+        public string BookingConfirmationNumber { get; set; }
     }
 }

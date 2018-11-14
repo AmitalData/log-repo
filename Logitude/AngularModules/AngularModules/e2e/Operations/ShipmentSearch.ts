@@ -1,7 +1,7 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../Helpers/FieldsHelper';
 import { GeneralFunctions } from './../Helpers/GeneralFunctions';
-import { Driver } from 'selenium-webdriver/safari';
+// import { Driver } from 'selenium-webdriver/safari';
 
 
 export class ShipmentSearch {

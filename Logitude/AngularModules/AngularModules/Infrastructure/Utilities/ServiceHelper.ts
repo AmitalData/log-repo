@@ -131,7 +131,10 @@ export class ServiceHelper {
                 }
                 else if (apiException.ErrorType == "AutenticationException") {
                     if (!SessionLocator.IsSiguOut) {
-                        SessionLocator.HomeComponent.SignoutClicked();
+                        if (errorMessage != "" && errorMessage != "Sorry! this user is not authorized! due to session expiration" ) {
+                            SessionLocator.HomeComponent.SignoutClicked();
+                        }
+                    
                     }
                 }
 

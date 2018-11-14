@@ -256,14 +256,15 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         {
             var errors = "";
 
-            bool useLocal = true;
-            var user = GetLoggedContact(tenant);
-            if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
-
+           
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
+                bool useLocal = true;
+                var user = GetLoggedContact(tenant);
+                if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+
                 if (!isOut)
                 {
                     if (code == "CH" || code == "CA")
