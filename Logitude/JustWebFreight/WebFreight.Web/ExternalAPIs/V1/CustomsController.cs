@@ -45,7 +45,27 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-        
+
+        public HttpResponseMessage GetSingleCustomsByNumber(string number)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                CustomsQueryService Service = new CustomsQueryService(tenant);
+                ServiceResponse response = new ServiceResponse();
+                var Result = Service.GetCustomsByShipmentNumber(number, tenant);
+                //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
+                return Request.CreateResponse(HttpStatusCode.OK, Result);
+            }
+            catch (Exception ex)
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
         public HttpResponseMessage Post(Customs entity)
         {
           

@@ -52,7 +52,27 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-        
+
+        public HttpResponseMessage GetSingleDirectByNumber(string number)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                DirectQueryService Service = new DirectQueryService(tenant);
+                ServiceResponse response = new ServiceResponse();
+                var Result = Service.GetDirectByShipmentNumber(number, tenant);
+                //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
+                return Request.CreateResponse(HttpStatusCode.OK, Result);
+            }
+            catch (Exception ex)
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
         public HttpResponseMessage Post(Direct entity)
         {      
             if (ModelState.IsValid)
