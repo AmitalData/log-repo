@@ -46,6 +46,30 @@ namespace WebFreight.Web.MetaDataUpdate
             CreateShipmentCustomsTransmissionObjectFields(objectFields, textCodes);
             CreatePickUpDeliveryTransportModeObject(objectFields, textCodes);
             CreateShipmentPackageHarmonizeFields(objectFields, textCodes);
+            CreatePickUpDeliveryPackageHarmonizeFields(objectFields, textCodes);
+        }
+
+        private void CreatePickUpDeliveryPackageHarmonizeFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
+        {
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Harmonize",
+                FullFieldLable = "Harmonize",
+                FieldName = "Harmonize",
+                FieldsDataType = "Text",
+                IsRequired = true,
+                MaxLength = 60,
+                MinLength = 0,
+                ObjectTableId = PickUpDeliveryPackageHarmonizeObject.Id,
+                ObjectTableName = PickUpDeliveryPackageHarmonizeObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "StartsWith",
+                PMPropertyPath = "Harmonize",
+                ListPropertyPath = "Harmonize",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            this.ObjectContext.SaveChanges();
         }
 
         private void CreateShipmentPackageHarmonizeFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
@@ -73,6 +97,27 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private void CreateShipmentFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Project #",
+                FullFieldLable = "ProjectNumber",
+                FieldName = "ProjectNumber",
+                FieldsDataType = "Text",
+                MaxLength = 100,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                ListFieldLable = "ProjectNumberListLable",
+                Operator = "Equals",
+                ListPropertyPath = "ProjectNumber",
+                PMPropertyPath = "ProjectNumber"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "First Pickup ATA",
@@ -12682,6 +12727,25 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection2 = "ShipmentFollowUp",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Container Status - last 7 days",
+                FullFieldLable = "ContainerStatusLast7Days",
+                FieldName = "ContainerStatusLast7Days",
+                FieldsDataType = "Constant",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = ShipmentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                CanFilter = true,
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                Operator = "Equals",
+                IsCustomFilter = true,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             // end of shipment
             this.ObjectContext.SaveChanges();
         }
@@ -24324,6 +24388,40 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Quote Sale MinAmount",
+                FullFieldLable = "QuoteSaleMinAmount",
+                FieldName = "QuoteSaleMinAmount",
+                FieldsDataType = "Double",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentReceivablesObject.Id,
+                ObjectTableName = ShipmentReceivablesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "QuoteSaleMinAmount",
+                ListPropertyPath = "QuoteSaleMinAmount",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Quote Sale Max Amount",
+                FullFieldLable = "QuoteSaleMaxAmount",
+                FieldName = "QuoteSaleMaxAmount",
+                FieldsDataType = "Double",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentReceivablesObject.Id,
+                ObjectTableName = ShipmentReceivablesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "QuoteSaleMaxAmount",
+                ListPropertyPath = "QuoteSaleMaxAmount",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Expense Charge",
                 FullFieldLable = "IsExpense",
                 FieldName = "IsExpense",
@@ -24748,6 +24846,74 @@ namespace WebFreight.Web.MetaDataUpdate
         }
         private void CreateShipmentPayablesFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Min Amount",
+                FullFieldLable = "MinAmount",
+                FieldName = "MinAmount",
+                FieldsDataType = "Double",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentPayablesObject.Id,
+                ObjectTableName = ShipmentPayablesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "MinAmount",
+                ListPropertyPath = "MinAmount",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Max Amount",
+                FullFieldLable = "MaxAmount",
+                FieldName = "MaxAmount",
+                FieldsDataType = "Double",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentPayablesObject.Id,
+                ObjectTableName = ShipmentPayablesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "MaxAmount",
+                ListPropertyPath = "MaxAmount",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Quote Cost Min Amount",
+                FullFieldLable = "QuoteCostMinAmount",
+                FieldName = "QuoteCostMinAmount",
+                FieldsDataType = "Double",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentPayablesObject.Id,
+                ObjectTableName = ShipmentPayablesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "QuoteCostMinAmount",
+                ListPropertyPath = "QuoteCostMinAmount",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Quote Cost Max Amount",
+                FullFieldLable = "QuoteCostMaxAmount",
+                FieldName = "QuoteCostMaxAmount",
+                FieldsDataType = "Double",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentPayablesObject.Id,
+                ObjectTableName = ShipmentPayablesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "QuoteCostMaxAmount",
+                ListPropertyPath = "QuoteCostMaxAmount",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "VAT Type",

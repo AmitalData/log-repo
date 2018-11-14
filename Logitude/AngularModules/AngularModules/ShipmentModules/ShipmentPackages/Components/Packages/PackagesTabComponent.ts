@@ -198,7 +198,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         if (this.IsFCLEntity) {
             if (FeatureLocator.HasFeaturePermession("Shipment", "ShippingInstructions")) {
-                if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "E") {
+                if (this.EntityPM.TransportModeId == "O" && (this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "I")) {
                     if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C") {
                         this.IsShippingInstructionsVisible = true;
                     }

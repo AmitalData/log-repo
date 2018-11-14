@@ -4705,6 +4705,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWQueryColumnMap());
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
             modelBuilder.Configurations.Add(new ShipmentPackageHarmonizeMap());
+            modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
 
             base.OnModelCreating(modelBuilder);
         }

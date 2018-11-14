@@ -2184,12 +2184,26 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.INTTRAIsFreighted = shipment.INTTRAIsFreighted;
             shipmentPM.INTTRADocumentTypeCode = shipment.INTTRADocumentTypeCode;
             shipmentPM.INTTRALastStatusDate = shipment.INTTRALastStatusDate;
+            shipmentPM.ContainerLastStatusDate = shipment.ContainerLastStatusDate;
 
             shipmentPM.Notify1Reference = shipment.Notify1Reference;
             shipmentPM.Notify2Reference = shipment.Notify2Reference;
             shipmentPM.ShipperNotExporterReference = shipment.ShipperNotExporterReference;
             shipmentPM.ConsigneeNotImporterReference = shipment.ConsigneeNotImporterReference;
+            shipmentPM.ProjectNumber = shipment.ProjectNumber;
 
+           
+            bool iDangerousShipmentPackages = true;
+            if (shipment.IsDangerous)
+            {   
+                foreach (ShipmentPackagePM item in shipmentPM.ShipmentPackages)
+                {
+                    if (!item.IsDangerous) iDangerousShipmentPackages = false;
+                }
+            }
+
+            if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
+       
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
@@ -6683,7 +6697,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
         #endregion
 
-        public ShipmentsSummary GetShipmentsDashBoardSummary(int tenant, string directionId, string transportModeId, string loggedContactId, bool hasETDFeature, bool hasFollowupsFeature, bool hasExpDepNotTransmittedFeature, bool hasShippingInstructionsLast7DaysFeature)
+        public ShipmentsSummary GetShipmentsDashBoardSummary(int tenant, string directionId, string transportModeId, string loggedContactId, bool hasETDFeature, bool hasFollowupsFeature, bool hasExpDepNotTransmittedFeature, bool hasShippingInstructionsLast7DaysFeature, bool hasContainerStatusLast7DaysFeature)
         {
             ShipmentsSummary myResult = new ShipmentsSummary() { Id = 1 };
 
@@ -6770,6 +6784,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (hasShippingInstructionsLast7DaysFeature)
             {
                 myResult.ShippingInstructionsLast7DaysCount = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRASIStatusDate >= lastWeekDate || d.INTTRALastStatusDate >= lastWeekDate)).Take(1001).Count();
+            }
+
+            if (hasContainerStatusLast7DaysFeature)
+            {
+                myResult.ContainerStatusLast7DaysCount = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRALastStatusDate >= lastWeekDate)).Take(1001).Count();
             }
 
             // Others
@@ -7154,6 +7173,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                  {
                      Id = shipment.Id + (!string.IsNullOrEmpty(jd.Id) ? jd.Id : ""),
                      ShipmentId = shipment.Id,
+                     PackageId = jd.Id,
                      DirectionId = shipment.DirectionId,
                      ShipmentNumber = shipment.ShipmentNumber,
                      CreateDateTime = shipment.CreateDateTime,
@@ -7269,6 +7289,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Transshipment1VesselId = m.Transshipment1VesselId,
                      Transshipment2VesselId = m.Transshipment2VesselId,
                      Transshipment3VesselId = m.Transshipment3VesselId,
+                     BookingConfirmationNumber = m.BookingConfirmationNumber,
                  });
 
             return dataList;
@@ -8217,6 +8238,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Notify2Reference = f.Notify2Reference,
                                ShipperNotExporterReference = f.ShipperNotExporterReference,
                                ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
+                               ProjectNumber = f.ProjectNumber,
+                               ContainerLastStatusDate = f.ContainerLastStatusDate,
                            };
             return myResult;
         }
@@ -8547,6 +8570,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Notify2Reference = f.Notify2Reference,
                     ShipperNotExporterReference = f.ShipperNotExporterReference,
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
+                    ProjectNumber = f.ProjectNumber,
+                    ContainerLastStatusDate = f.ContainerLastStatusDate,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
@@ -8792,6 +8817,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     Notify2Reference = f.Notify2Reference,
                     ShipperNotExporterReference = f.ShipperNotExporterReference,
                     ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
+                    ProjectNumber = f.ProjectNumber,
+                    ContainerLastStatusDate = f.ContainerLastStatusDate,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

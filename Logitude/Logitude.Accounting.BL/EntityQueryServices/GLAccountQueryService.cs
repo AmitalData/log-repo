@@ -592,7 +592,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
            var groupedByMonthpayments = (from a in payments
                                                group a by
-                                                new { a.RegisterDate.Value.Month } into g
+                                                new { a.RegisterDate } into g
                                              select new 
                                              {
                                                
@@ -616,6 +616,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                           IsAutonomy = a.IsAutonomy,
                                           IsInternationalPartner = a.IsInternationalPartner,
                                           EnglishName= a.EnglishName,
+                                          VatNumber = a.VatNumber,
+                                          
                                   }
                                       ).ToList();
 
@@ -628,7 +630,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                               DisplayNumber = a.DisplayNumber,
                                               Occupation = a.Occupation,
                                               LocalName = a.LocalName,
-                                              DeductionTypeName = a.AccountingCompanyType != null ? a.AccountingCompanyType.LocalName : null,
+                                              DeductionTypeId = a.AccountingCompanyType != null ? a.AccountingCompanyType.Code : null,
+                                              
                                               DeductionFileTypeCode = a.WithholdingTaxDeductionType != null? a.WithholdingTaxDeductionType.Code :null,
                                               DeductionFileTypeName = a.WithholdingTaxDeductionType!= null? a.WithholdingTaxDeductionType.LocalName : null,
                                               AssessingOfficeCode = a.TaxWithholdingAssessOffice != null ? a.TaxWithholdingAssessOffice.Code :null,
@@ -655,6 +658,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     Month= item.RegisterDate.Value.Month,
                     TaxDeductionPercentage = item.TaxDeductionPercentage,
                     VendorId = item.VendorId,
+                   
 
                 };
 
@@ -676,7 +680,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         byVendorList.AssessingOfficerName = gLAccount.AssessingOfficeName;
                         byVendorList.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
                         byVendorList.DeductionFileNumber = gLAccount.DeductionFileNumber;
-                        byVendorList.DeductionType = gLAccount.DeductionTypeName;
+                        byVendorList.DeductionType = gLAccount.DeductionTypeId;
                         byVendorList.EnglishName = gLAccount.EnglishName;
                     }
 
@@ -703,16 +707,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             foreach (var item in groupedByMonthpayments)
             {
                 var month = item.Key;
+                var year = item.Key.RegisterDate.Value.Year.ToString().Substring(2, 2);
                 ByMonthList byMonthList = new ByMonthList()
                 {
-                    Month = month.Month,
-                   TotalVendors = taxDeduction.ByVendorList.Where(d => d.Month == month.Month).Count(),
-                 TotalPaymentsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfAmountInLocalCurrency),
-                TotalDeductionsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfTaxDeductionLocalAmount),
-                TotalDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfAmountInLocalCurrency),
-                TotalDeductionsFromDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfTaxDeductionLocalAmount)
-
-            };
+                    Month = month.RegisterDate.Value.Month,
+                    TotalVendors = taxDeduction.ByVendorList.Where(d => d.Month == month.RegisterDate.Value.Month).Count(),
+                    TotalPaymentsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.RegisterDate.Value.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfAmountInLocalCurrency),
+                    TotalDeductionsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.RegisterDate.Value.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfTaxDeductionLocalAmount),
+                    TotalDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.RegisterDate.Value.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfAmountInLocalCurrency),
+                    TotalDeductionsFromDivided = taxDeduction.ByVendorList.Where(d => d.Month == month.RegisterDate.Value.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfTaxDeductionLocalAmount),
+                    ReportMonth = month.RegisterDate.Value.Month + "." + year,
+                };
 
 
               

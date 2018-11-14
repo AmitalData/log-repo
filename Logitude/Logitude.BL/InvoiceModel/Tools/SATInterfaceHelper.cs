@@ -1912,7 +1912,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                 pagoItem.TipoCadPagoSpecified = true;
                 pagoItem.TipoCadPago = "01";
                 pagoItem.CertPago = entityPM.CertPago;
-                pagoItem.CadPago = entityPM.CadPago;
+                if(!string.IsNullOrEmpty(entityPM.CadPago))
+                pagoItem.CadPago = entityPM.CadPago.Replace("|", "&#124;");
                 pagoItem.SelloPago = entityPM.SelloPago;
 
             }

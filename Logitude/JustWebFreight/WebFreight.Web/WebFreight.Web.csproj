@@ -1490,11 +1490,13 @@
     <Compile Include="Controllers\CustomsModel\WebServices\VendorController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ClientController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationRestoreController.cs" />
+    <Compile Include="Controllers\GlobalModel\Extended\AerolineaseAtlasRegistrationLeadsController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\AgentSharedLogisticsKeysController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\IIGGeneralMessagesController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\PaymentMessagesController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\QuantityTypeController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\TapagMessagesController.cs" />
+    <Compile Include="Controllers\GlobalModel\Extended\LogitudeLeadVerificationController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\TenantManagmentPrivateLabelsController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\BatchServicesDefinitionExtendedController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\SystemMetadataLastUpdateController.cs" />
@@ -2143,6 +2145,7 @@
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
     <Compile Include="Helpers\FlatFileHelper.cs" />
     <Compile Include="Helpers\LogBox\LogBoxMailgunAnalyzer.cs" />
+    <Compile Include="Helpers\LogitudeLeadHelper.cs" />
     <Compile Include="Helpers\PasswordChangeHelper.cs" />
     <Compile Include="Helpers\QueueMessagesWebHelper.cs" />
     <Compile Include="Helpers\ExportToExcelHelper.cs" />
@@ -2154,6 +2157,7 @@
     <Compile Include="Helpers\SecurityDocumentHelper.cs" />
     <Compile Include="Helpers\SendGrid\SendGridAnalyzer.cs" />
     <Compile Include="Helpers\SharedLogisticContactHelper.cs" />
+    <Compile Include="Helpers\SignUpHelper.cs" />
     <Compile Include="Helpers\TableQueryReflector.cs" />
     <Compile Include="Helpers\MessageArgs.cs" />
     <Compile Include="Helpers\TermsofUseArgs.cs" />
@@ -2640,7 +2644,6 @@
     <Content Include="SharedDocuments\SharedDocumentsViewModel.js" />
     <Content Include="EntityExternalUpdate.aspx" />
     <Content Include="ShipmentStatuses.aspx" />
-    <Content Include="SignUp.aspx" />
     <Content Include="SignUpVerification.aspx" />
     <Content Include="Stimulsoft\css\demo.css" />
     <Content Include="Stimulsoft\css\stimulsoft.designer.office2013.whiteblue.css" />
@@ -3999,7 +4002,6 @@
     <Content Include="SharedLogistic\InvoicePage.aspx" />
     <Content Include="SharedLogistic\ShipmentMobilePage.aspx" />
     <Content Include="SharedLogistic\ShipmentPage.aspx" />
-    <Content Include="SignUpPage.aspx" />
     <Content Include="ShipmentPackageModel\RegisterShipmentPackageWebService.asmx" />
     <Content Include="Silverlight.js" />
     <Content Include="Simplog.InfrastructureTestPage.aspx" />
@@ -4938,20 +4940,6 @@
     </Compile>
     <Compile Include="SignalRHubs\LogitudeHub.cs" />
     <Compile Include="SignalRStartup.cs" />
-    <Compile Include="SignUp.aspx.cs">
-      <DependentUpon>SignUp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SignUp.aspx.designer.cs">
-      <DependentUpon>SignUp.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="SignUpPage.aspx.cs">
-      <DependentUpon>SignUpPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SignUpPage.aspx.designer.cs">
-      <DependentUpon>SignUpPage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="SignUpVerification.aspx.cs">
       <DependentUpon>SignUpVerification.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

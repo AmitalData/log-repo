@@ -26,6 +26,9 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Logitude.Server.Tools.Helpers;
+using System.Reflection;
+using SilverlightExpressions;
+using WebFreight.Web.Validators;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -50,7 +53,25 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-
+        //public HttpResponseMessage GetSingleMasterByNumber(string number)
+        //{
+        //    try
+        //    {
+        //        string token = HttpContext.Current.Request.Headers["Token"];
+        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //        int tenant = authToken.Tenant;
+        //        MasterQueryService Service = new MasterQueryService(tenant);
+        //        ServiceResponse response = new ServiceResponse();
+        //        var Result = Service.GetMasterByMaster(number, tenant);
+        //        //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
+        //        return Request.CreateResponse(HttpStatusCode.OK, Result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+        //        return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+        //    }
+        //}
         public HttpResponseMessage Post(Master entity)
         {
             if (ModelState.IsValid)
@@ -75,23 +96,28 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     {
                         if (entity.IsOperationalClosed)
                         {
-                            //IWebFreightContext context = WebFreightContext.GetContext(authToken.Tenant);
-                            //ObjectTableRuleRepository ObjectTableRuleRepository = new ObjectTableRuleRepository(context);
-                            //ObjectTableRuleFieldRepository ObjectTableRuleFieldRepository = new ObjectTableRuleFieldRepository(context);
+                            string errorMessage = "";
 
-                            //List<ObjectTableRule> allRules = ObjectTableRuleRepository.GetObjectTableRulesByTenant(authToken.Tenant);
-                            //List<ObjectTableRuleField> allFields = ObjectTableRuleFieldRepository.GetTenantRuleFields(authToken.Tenant);
+                            RulesValidator validator = new RulesValidator();
+                            validator.Initialize(authToken.Tenant);
+                            List<ObjectTableRuleField> requiredFields = validator.ValidateAllRequiredFieldRules(entityPM, "Shipment", authToken.Tenant);
 
-                            //List<ObjectTableRule> myRules = allRules.Where(r => r.RuleTypeCode == "REQ" && r.InActive == false && r.InActive == false && (r.ActiveForUpdate)).ToList();
+                            IWebFreightContext webFreightContext = WebFreightContext.GetContext(authToken.Tenant);
+                            ObjectFieldRepository ObjectFieldRepository = new ObjectFieldRepository(webFreightContext);
+                            if (requiredFields.Count > 0)
+                            {
+                                foreach (ObjectTableRuleField field in requiredFields)
+                                {                                    
+                                    ObjectField f = ObjectFieldRepository.GetSingleObjectFieldById(field.ObjectFieldId, authToken.Tenant);
+                                    errorMessage = errorMessage + ", " + TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
+                                }
+                            }
 
-                            //List<ObjectTableRuleField> requiredFields = new List<ObjectTableRuleField>();
-
-                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_AE", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
-                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_AI", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
-                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_OE", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
-                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_OI", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
-                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_IE", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
-                            //this.ExecuteRequierdFieldRule("Master_OpClosed_Req_II", entityPM, requiredFields, myRules, allFields, authToken.Tenant);
+                            if (!string.IsNullOrEmpty(errorMessage))
+                            {
+                                errorMessage = errorMessage.TrimStart(',');
+                                throw new ApplicationException(errorMessage);
+                            }
                         }
 
                         if (entity.Houses.Count > 0)
@@ -279,32 +305,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             var apiExceptionResult = ApiExceptionHandler.HandleException(new Exception("Updates are not supported"));
             APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Shipment", null, "Master API");
             return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-        }
-
-        private void ExecuteRequierdFieldRule(string ruleCode, ShipmentPM entity, List<ObjectTableRuleField> requiredFields, List<ObjectTableRule> myRules, List<ObjectTableRuleField> allFields, int tenant)
-        {
-            ObjectTableRule rule = myRules.Where(a => a.RuleCode == ruleCode && (a.Tenant == tenant || a.Tenant == 0) && a.InActive == false).FirstOrDefault();
-            if (rule != null)
-            {
-                List<ObjectTableRuleField> ruleFields = allFields.Where(rf => rf.ObjectTableRuleId == rule.Id && rf.RuleNotificationTypeCode == "ERR").ToList();
-                
-                if (rule.TriggerTypeCode == "ALLW")
-                {
-                    //this.GenerateRuleErrors(ruleFields, entity, requiredFields);
-                }
-                else
-                {
-                    //if (rule.AdvancedCondition == false && rule.RuleConditionFields.length > 0)
-                    //{
-                    //    bool required = this.ValidateConditionFieldsRule(entity, rule.RuleConditionFields);
-
-                    //    if (required)
-                    //    {
-                    //        this.GenerateRuleErrors(ruleFields, entity, requiredFields);
-                    //    }
-                    //}
-                }
-            }
         }
     }
 }

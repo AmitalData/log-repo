@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool, DateTool, FontTool} from '../../../../../Infrastructure/Tools';
@@ -1685,17 +1685,22 @@ export class AWBWizardOtherChargeItem extends BaseComponent {
             this.SetLineStatus();
 
             if (this.PayablePM != null) {
-                if (this.PayablePM.QuoteCostMinPrice != null) {
+                if (this.PayablePM.QuoteCostMinAmount != null || this.PayablePM.QuoteCostMaxAmount != null) {
                     if (amount == null) {
-                        amount = this.PayablePM.QuoteCostMinPrice;
+                        amount = this.PayablePM.QuoteCostMinAmount;
                     }
 
-                    else {
-                        if (amount < this.PayablePM.QuoteCostMinPrice) {
-                            amount = this.PayablePM.QuoteCostMinPrice;
+                    if (amount != null) {
+                        if (amount < this.PayablePM.QuoteCostMinAmount) {
+                            amount = this.PayablePM.QuoteCostMinAmount;
+                        }
+
+                        else if (amount > this.PayablePM.QuoteCostMaxAmount) {
+                            amount = this.PayablePM.QuoteCostMaxAmount;
                         }
                     }
                 }
+               
 
                 /* From Tariff */
                 if (this.PayablePM.MinAmount != null || this.PayablePM.MaxAmount != null) {
@@ -1729,14 +1734,19 @@ export class AWBWizardOtherChargeItem extends BaseComponent {
             }
 
             else if (this.ReceivablePM != null) {
-                if (this.ReceivablePM.QuoteSaleMinPrice != null) {
+
+                if (this.ReceivablePM.QuoteSaleMinAmount != null || this.ReceivablePM.QuoteSaleMaxAmount != null) {
                     if (amount == null) {
-                        amount = this.ReceivablePM.QuoteSaleMinPrice;
+                        amount = this.ReceivablePM.QuoteSaleMinAmount;
                     }
 
-                    else {
-                        if (amount < this.ReceivablePM.QuoteSaleMinPrice) {
-                            amount = this.ReceivablePM.QuoteSaleMinPrice;
+                    if (amount != null) {
+                        if (amount < this.ReceivablePM.QuoteSaleMinAmount) {
+                            amount = this.ReceivablePM.QuoteSaleMinAmount;
+                        }
+
+                        else if (amount > this.ReceivablePM.QuoteSaleMaxAmount) {
+                            amount = this.ReceivablePM.QuoteSaleMaxAmount;
                         }
                     }
                 }

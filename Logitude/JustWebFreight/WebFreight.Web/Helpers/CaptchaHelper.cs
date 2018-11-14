@@ -70,18 +70,27 @@ namespace WebFreight.Web.Helpers
             return base64String;
         }
 
-        public bool CheckCaptchaCodeValidated(string code, string Key)
+        public bool CheckCaptchaCodeValidated(string code, string Key ,string userCaptchaKey= null)
         {
 
             bool result = false;
-            if (!string.IsNullOrEmpty(code) && !string.IsNullOrEmpty(Key))
+            if (!string.IsNullOrEmpty(Key))
             {
                 CaptchaKeyRepository captchaKeyRepository = new CaptchaKeyRepository();
                 CaptchaKey captchaKey = captchaKeyRepository.GetSingleCaptchaKey(Key);
                 if (captchaKey != null)
                 {
-                    if (captchaKey.Code.ToUpper() == code.ToUpper())
-                        result = true;
+                    if (captchaKey.Id == userCaptchaKey || string.IsNullOrEmpty(userCaptchaKey))
+                    {
+                        if (!string.IsNullOrEmpty(code))
+                        {
+                            if (captchaKey.Code.ToUpper() == code.ToUpper()) result = true;
+                        }
+                    }
+
+                    captchaKey.IsUsed = true;
+                    captchaKeyRepository.Update(captchaKey);
+                    captchaKeyRepository.SubmitChanges();
                 }
             }
             return result;
@@ -98,6 +107,7 @@ namespace WebFreight.Web.Helpers
                 CreateDate = DateTime.Now,
                 Email = email,
                 Activity = activity,
+                IsUsed = false,
             };
             captchaKeyRepository.Add(captchaKey);
             captchaKeyRepository.SubmitChanges();

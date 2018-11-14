@@ -118,38 +118,38 @@ export class ARInvoiceMenuButtonsHandler {
 
                         case "AutoCredit":
                             {
-                                if (SessionLocator.TenantPM.AccountingActivated == true) {
-                                    if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
-                                        myButtonIsDisabled = true;
-                                    }
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                    myButtonIsDisabled = true;
                                 }
-                                else {
-                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                        myButtonIsDisabled = true;
-                                    }
 
-                                    else if (this.EntityPM.StatusCode == "LL" || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
-                                        myButtonIsDisabled = true;
-                                    }
+                                else if (this.EntityPM.StatusCode == "LL" || this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
+                                    myButtonIsDisabled = true;
+                                }
 
-                                    else if (this.EntityPM.ARInvoiceTypeCode == "IN") {
-                                        var isEnabled = false;
+                                else if (this.EntityPM.ARInvoiceTypeCode == "IN") {
+                                    var isEnabled = false;
 
-                                        if (!this.EntityPM.IsCancelled) {
-                                            if (this.EntityPM.IsConstituentInvoice) {
-                                                if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId)) {
-                                                    isEnabled = true;
-                                                }
-                                            }
-
-                                            else {
-                                                if (this.EntityPM.StatusCode == "PP" || this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "AD") {
-                                                    isEnabled = true;
-                                                }
+                                    if (!this.EntityPM.IsCancelled) {
+                                        if (this.EntityPM.IsConstituentInvoice) {
+                                            if (AppTool.IsNullOrEmpty(this.EntityPM.ConsolidationInvoiceId)) {
+                                                isEnabled = true;
                                             }
                                         }
 
-                                        myButtonIsDisabled = !isEnabled;
+                                        else {
+                                            if (this.EntityPM.StatusCode == "PP" || this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "AD") {
+                                                isEnabled = true;
+                                            }
+                                        }
+                                    }
+
+                                    myButtonIsDisabled = !isEnabled;
+                                }
+
+
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
+                                        myButtonIsDisabled = true;
                                     }
                                 }
 
@@ -273,6 +273,10 @@ export class ARInvoiceMenuButtonsHandler {
     }
 
     CheckSATStatus() {
+        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.GetARInvoiceSATCancellationStatus(this.EntityPM.Id).subscribe(response => {
+
+        });
 
     }
 

@@ -1,4 +1,5 @@
 ﻿
+
 declare var window: any;
 import { Component, OnInit, ViewChildren, QueryList} from '@angular/core';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -8,6 +9,9 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ShipmentPM } from '../../../Shipment/EntityPMs/ShipmentPM';
+import { ShipmentPickUpPM } from '../../../Shipment/EntityPMs/ShipmentPickUpPM';
+import { ShipmentDeliveryPM } from '../../../Shipment/EntityPMs/ShipmentDeliveryPM';
+
 import {AppTool, DateTool, FormatTool} from '../../../Infrastructure/Tools';
 import { ShipmentTool } from '../../../Shipment/Tools';
 import {AirlineListService} from '../../../Common/Services/StandardLists/AirlineListService';
@@ -202,17 +206,32 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
     HidePickupDetailsArea: boolean = false;
-    HideDeliveyDetailsArea: boolean = false;
+    HideDeliveryDetailsArea: boolean = false;
     
     IsNoPickupDetailsFound: boolean = false;
-    IsNoDeliveyDetailsFound: boolean = false;
+    IsNoDeliveryDetailsFound: boolean = false;
     myPackageTypeService: PackageTypeListService;
     IsLoadedToPickUpTranslation: boolean = false;
     IsLoadedFromPickUpTranslation: boolean = false;
 
 
+    IsLoadedFromDeliveryTranslation: boolean = false;
+    IsLoadedToDeliveryTranslation: boolean = false;
+
     OurSideShipmentPickUp: ShipmentPickUpDeliverySL;
     OurSideShipmentDelivery: ShipmentPickUpDeliverySL;
+
+
+
+
+
+
+
+
+
+
+
+
     constructor(public _sharedAgentManifestService: SharedAgentManifestService, public _agentSharedManifestPMService: AgentSharedManifestPMService, public entityPMService:EntityPMService) {
         super();
         this.myPackageTypeService = new PackageTypeListService();
@@ -1420,10 +1439,6 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
             this.AgentShipmentPickUpMainCarriageATD = this.ManifestSL.ShipmentPickUp.MainCarriageATD;
             this.AgentShipmentPickUpMainCarriageATA = this.ManifestSL.ShipmentPickUp.MainCarriageATA;
 
-        } else {
-
-            this.IsNoPickupDetailsFound = true;
-            this.HidePickupDetailsArea = true;
         }
 
         if (this.ManifestSL.ShipmentDelivery) {
@@ -1432,11 +1447,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
             this.AgentShipmentDeliveryMainCarriageATD = this.ManifestSL.ShipmentDelivery.MainCarriageATD;
             this.AgentShipmentDeliveryMainCarriageATA = this.ManifestSL.ShipmentDelivery.MainCarriageATA;
 
-        } else {
-            this.IsNoDeliveyDetailsFound = true;
-
-            this.HideDeliveyDetailsArea = true;
-        }
+        } 
     }
 
     FullShipmentProperites() {
@@ -2466,179 +2477,8 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
         } 
 
 
-
-
-        if (this.ManifestSL && this.ManifestSL.ShipmentPickUp) {
-
-            this.OurSideShipmentPickUp = new ShipmentPickUpDeliverySL();
-
-            this.OurSideShipmentPickUp.MainCarriageATA = this.ManifestSL.ShipmentPickUp.MainCarriageATA;
-            this.OurSideShipmentPickUp.MainCarriageATD = this.ManifestSL.ShipmentPickUp.MainCarriageATD;
-            this.OurSideShipmentPickUp.MainCarriageETA = this.ManifestSL.ShipmentPickUp.MainCarriageETA;
-            this.OurSideShipmentPickUp.MainCarriageETD = this.ManifestSL.ShipmentPickUp.MainCarriageETD;
-            this.OurSideShipmentPickUp.TransportModeCode = this.ManifestSL.ShipmentPickUp.TransportModeCode;
-            this.OurSideShipmentPickUp.TransportModeName = this.ManifestSL.ShipmentPickUp.TransportModeName;
-
-            //From
-            if (this.ManifestSL.ShipmentPickUp.FromPort) {
-                var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
-                apiQueryFilters.GetAll = true;
-                apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-                this.myPortListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: PortList[] = myResponse.Result;
-                        if (this.ManifestSL.MainCarriageFromPort != null) {
-                            var fromPort: PortList = list.filter(d => d.Code == this.ManifestSL.ShipmentPickUp.FromPort.Code)[0];
-                            if (fromPort) {
-                                this.OurSideShipmentPickUp.FromPortId = fromPort.Id;
-                            }
-                        }
-                    }
-                    this.IsLoadedFromPickUpTranslation = true;
-                });
-
-            }
-            else if (this.ManifestSL.ShipmentPickUp.FromPartner) {
-                // Shipper Translation
-                var shipmentPickUpFromPartnerTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.ManifestSL.ShipmentPickUp.FromPartner.Code && f.ObjectTableName == "ShipmentPickUpFromPartner")[0];
-                if (shipmentPickUpFromPartnerTranslation) {
-                    this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipmentPickUpFromPartnerTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
-                        var pmResponse: ServiceResponse = res;
-
-                        if (!pmResponse.HasError) {
-                            var myResult = pmResponse.Result;
-                            if (myResult) {
-
-                                this.OurSideShipmentPickUp.FromPartnerCardId = myResult;
-                            }
-                        }
-
-                        this.IsLoadedFromPickUpTranslation = true;
-                        this.StopBusyIndicator();
-
-
-                    });
-
-                } else this.IsLoadedFromPickUpTranslation = true;
-
-            }
-            else if (this.ManifestSL.ShipmentPickUp.PickUpDeliveryFromTypeCode == "CASL") {
-
-                if (this.ManifestSL.ShipmentPickUp.FromAddressCountryCode) {
-
-                    var shipmentPickUpFromCountryTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.ManifestSL.ShipmentPickUp.FromAddressCountryCode && f.ObjectTableName == "ShipmentPickUpFromCountry")[0];
-                    if (shipmentPickUpFromCountryTranslation) {
-                        var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
-                        apiQueryFilters.GetAll = true;
-                        apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-                        apiQueryFilters.addAdditionalFilter("Code", shipmentPickUpFromCountryTranslation.MyCode, null, null, "Equals", true, true, true, "Text");
-                        this.countryListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
-                            if (!myResponse.HasError) {
-                                var list: any[] = myResponse.Result;
-                                var CountryList: any = list.filter(d => d.Code == this.AgentSideData.Notify1.CountryCode && !d.InActive)[0];
-                                if (CountryList) {
-                                    this.OurSideShipmentPickUp.FromAddressCountryId = CountryList.Id;
-                                    this.OurSideShipmentPickUp.FromAddressCountryName = CountryList.EnglishName;
-
-                                }
-                            }
-
-                            this.IsLoadedFromPickUpTranslation = true;
-                            this.StopBusyIndicator();
-                        });
-
-                    } else this.IsLoadedFromPickUpTranslation = true;
-
-                }
-
-                this.OurSideShipmentPickUp.FromAddressZipCode = this.ManifestSL.ShipmentPickUp.FromAddressZipCode;
-                this.OurSideShipmentPickUp.FromAddressCity = this.ManifestSL.ShipmentPickUp.FromAddressCity;
-
-            }
-            else this.IsLoadedFromPickUpTranslation = true;
-
-            //To
-            if (this.ManifestSL.ShipmentPickUp.ToPort) {
-                var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
-                apiQueryFilters.GetAll = true;
-                apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-                this.myPortListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: PortList[] = myResponse.Result;
-                        if (this.ManifestSL.MainCarriageToPort != null) {
-                            var ToPort: PortList = list.filter(d => d.Code == this.ManifestSL.ShipmentPickUp.ToPort.Code)[0];
-                            if (ToPort) {
-                                this.OurSideShipmentPickUp.ToPortId = ToPort.Id;
-                            }
-                        }
-                    }
-                    this.IsLoadedToPickUpTranslation = true;
-                });
-
-            }
-            else if (this.ManifestSL.ShipmentPickUp.ToPartner) {
-                // Shipper Translation
-                var shipmentPickUpToPartnerTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.ManifestSL.ShipmentPickUp.ToPartner.Code && f.ObjectTableName == "ShipmentPickUpToPartner")[0];
-                if (shipmentPickUpToPartnerTranslation) {
-                    this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipmentPickUpToPartnerTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
-                        var pmResponse: ServiceResponse = res;
-
-                        if (!pmResponse.HasError) {
-                            var myResult = pmResponse.Result;
-                            if (myResult) {
-
-                                this.OurSideShipmentPickUp.ToPartnerCardId = myResult;
-                            }
-                        }
-
-                        this.IsLoadedToPickUpTranslation = true;
-                        this.StopBusyIndicator();
-
-
-                    });
-
-                } else this.IsLoadedToPickUpTranslation = true;
-
-            }
-            else if (this.ManifestSL.ShipmentPickUp.PickUpDeliveryToTypeCode == "CASL") {
-
-                if (this.ManifestSL.ShipmentPickUp.ToAddressCountryCode) {
-
-                    var shipmentPickUpToCountryTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.ManifestSL.ShipmentPickUp.ToAddressCountryCode && f.ObjectTableName == "ShipmentPickUpToCountry")[0];
-                    if (shipmentPickUpToCountryTranslation) {
-                        var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
-                        apiQueryFilters.GetAll = true;
-                        apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-                        apiQueryFilters.addAdditionalFilter("Code", shipmentPickUpToCountryTranslation.MyCode, null, null, "Equals", true, true, true, "Text");
-                        this.countryListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
-                            if (!myResponse.HasError) {
-                                var list: any[] = myResponse.Result;
-                                var CountryList: any = list.filter(d => d.Code == this.AgentSideData.Notify1.CountryCode && !d.InActive)[0];
-                                if (CountryList) {
-                                    this.OurSideShipmentPickUp.ToAddressCountryId = CountryList.Id;
-                                    this.OurSideShipmentPickUp.ToAddressCountryName = CountryList.EnglishName;
-
-                                }
-                            }
-
-                            this.IsLoadedToPickUpTranslation = true;
-                            this.StopBusyIndicator();
-                        });
-
-                    } else this.IsLoadedToPickUpTranslation = true;
-
-                }
-
-                this.OurSideShipmentPickUp.ToAddressZipCode = this.ManifestSL.ShipmentPickUp.ToAddressZipCode;
-                this.OurSideShipmentPickUp.ToAddressCity = this.ManifestSL.ShipmentPickUp.ToAddressCity;
-
-            }
-            else this.IsLoadedToPickUpTranslation = true;
-
-        } else {
-            this.IsLoadedToPickUpTranslation = true;
-            this.IsLoadedFromPickUpTranslation = true;
-        }
+        this.BuildOurPickUpDeliverySide("PICK");
+        this.BuildOurPickUpDeliverySide("DELV");
         
         this.ComputeHeightAgentDataTransLationArea();
 
@@ -2663,6 +2503,9 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
     IsLoadAdditionalScreen: boolean = false;
     IsLoadSharedManifestheaderScreen: boolean = false;
+
+
+ 
 
     //BuildAdditionalFields() {
     //    //SharedManifestAdditionalScreen
@@ -2837,14 +2680,21 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
         var componentPath: string = newWizardComponentPath;
 
         if (componentPath != null) {
+            var ourSideShipmentPickUpDelivery: any = entityName == "Pickup" ? this.OurSideShipmentPickUp : this.OurSideShipmentDelivery;
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;
 
+            if (ourSideShipmentPickUpDelivery) {
+                var args = new NewEntityArgs();
+                args.DefaultValues = code == "F" ? ourSideShipmentPickUpDelivery.FromPartnerDefaultValues : ourSideShipmentPickUpDelivery.ToPartnerDefaultValues;
+                logWindow.WindowArgs = args;
+            }
+  
             var windowTitle = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(originalTableName));
             logWindow.Title = windowTitle;
-
+      
             logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event, code, entityName));
             logWindow.Show(componentPath);
         }
@@ -2889,10 +2739,12 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                 if (code == "F") {
                     ourSideShipmentPickUpDelivery.FromAddressCity = args.CityName;
                     ourSideShipmentPickUpDelivery.FromAddressCountryId = args.CountryId;
+
                 } else{
 
                     ourSideShipmentPickUpDelivery.ToAddressCity = args.CityName;
                     ourSideShipmentPickUpDelivery.ToAddressCountryId = args.CountryId;
+               
                 }
 
             }
@@ -3327,6 +3179,13 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
         this.HidePickupDetailsArea = !this.HidePickupDetailsArea;
     }
 
+    imgHideDeliveryDetailsAreaClicked() {
+        this.HideDeliveryDetailsArea = !this.HideDeliveryDetailsArea;
+    }
+
+
+    
+
 
     imgHideGeneralDetailsAreaClicked() {
         this.HideGeneralDetailsArea = !this.HideGeneralDetailsArea;
@@ -3476,12 +3335,18 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
         }
 
 
+        this.AddShipmentPickUpDeliveryPM("PICK");
+        this.AddShipmentPickUpDeliveryPM("DELV");
+
         if (this.ValidationErrorsList.length != 0) {
 
             SessionLocator.CurrentSession.StopBusyIndicator();
             return;
         }
 
+
+        this.AddShipmentPickUpDeliveryTransLation("PICK");
+        this.AddShipmentPickUpDeliveryTransLation("DELV");
 
         //IncotermCode
         if (this.AgentSideData.IncotermCode && !this.IsHideIncoterm && this.IncotermCode && this.AgentSideData.IncotermAddedManually) {
@@ -3699,7 +3564,449 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
     }
 
 
+    AddShipmentPickUpDeliveryPM(pickUpDeliveryTypeCode:string) {
+        if (this.ManifestSL && !this.IsHouseShipment) {
+            var agentshipmentPickUpDelivery: any = pickUpDeliveryTypeCode == "PICK" ? this.ManifestSL.ShipmentPickUp : this.ManifestSL.ShipmentDelivery;
 
+
+            if (agentshipmentPickUpDelivery) {
+                var shipmentPickUpDeliveryPM: any = pickUpDeliveryTypeCode == "PICK" ? new ShipmentPickUpPM(null) : new ShipmentDeliveryPM(null);
+
+                var ourSideShipmentPickUpDelivery: any = pickUpDeliveryTypeCode == "PICK" ? this.OurSideShipmentPickUp : this.OurSideShipmentDelivery;
+
+                var entityName = pickUpDeliveryTypeCode == "PICK" ? "Pickup" : "Delivery";
+
+                shipmentPickUpDeliveryPM.PickUpDeliveryFromTypeCode = ourSideShipmentPickUpDelivery.PickUpDeliveryFromTypeCode;
+                shipmentPickUpDeliveryPM.PickUpDeliveryToTypeCode = ourSideShipmentPickUpDelivery.PickUpDeliveryToTypeCode;
+                shipmentPickUpDeliveryPM.ETA = ourSideShipmentPickUpDelivery.MainCarriageETA;
+                shipmentPickUpDeliveryPM.ETD = ourSideShipmentPickUpDelivery.MainCarriageETD;
+                shipmentPickUpDeliveryPM.ATA = ourSideShipmentPickUpDelivery.MainCarriageATA;
+                shipmentPickUpDeliveryPM.ATD = ourSideShipmentPickUpDelivery.MainCarriageATD;
+                shipmentPickUpDeliveryPM.TransportModeCode = ourSideShipmentPickUpDelivery.SelectedTransportMode ? ourSideShipmentPickUpDelivery.SelectedTransportMode.Code : null;
+                shipmentPickUpDeliveryPM.PickUpDeliveryTypeCode = pickUpDeliveryTypeCode;
+                //From
+                if (shipmentPickUpDeliveryPM.PickUpDeliveryFromTypeCode == "PORT") {
+                    var fromPort = agentshipmentPickUpDelivery.FromPort;
+
+                    if (fromPort) {
+                        shipmentPickUpDeliveryPM.FromPortId = ourSideShipmentPickUpDelivery.FromPortId;
+                        shipmentPickUpDeliveryPM.FromPortCode = fromPort.Code;
+                        shipmentPickUpDeliveryPM.FromPortCountryCode = fromPort.CountryCode;
+                    }
+
+
+                }
+                else if (shipmentPickUpDeliveryPM.PickUpDeliveryFromTypeCode == "PART") {
+                    shipmentPickUpDeliveryPM.FromPartnerCardId = ourSideShipmentPickUpDelivery.FromPartnerCardId;
+                    shipmentPickUpDeliveryPM.FromAddressId = ourSideShipmentPickUpDelivery.FromAddressId;
+
+
+                    if (AppTool.IsNullOrEmpty(shipmentPickUpDeliveryPM.FromPartnerCardId)) {
+                        this.ValidationErrorsList.push(entityName + " From Partner field is required");
+                    }
+
+                }
+                else if (shipmentPickUpDeliveryPM.PickUpDeliveryFromTypeCode == "CASL") {
+                    shipmentPickUpDeliveryPM.FromAddressZipCode = ourSideShipmentPickUpDelivery.FromAddressZipCode;
+                    shipmentPickUpDeliveryPM.FromAddressCity = ourSideShipmentPickUpDelivery.FromAddressCity;
+                    shipmentPickUpDeliveryPM.FromAddressCountryId = ourSideShipmentPickUpDelivery.FromAddressCountryId;
+                    shipmentPickUpDeliveryPM.FromAddressCountryCode = ourSideShipmentPickUpDelivery.FromAddressCountryCode;
+
+                    if (AppTool.IsNullOrEmpty(shipmentPickUpDeliveryPM.FromAddressCountryId)) {
+                        this.ValidationErrorsList.push(entityName + " From Country field is required");
+                    }
+                    if (AppTool.IsNullOrEmpty(shipmentPickUpDeliveryPM.FromAddressZipCode) && AppTool.IsNullOrEmpty(shipmentPickUpDeliveryPM.FromAddressCity)) {
+                        this.ValidationErrorsList.push(entityName + " From City or From Zip Code field is required");
+                    }
+
+                }
+
+                //To
+                if (shipmentPickUpDeliveryPM.PickUpDeliveryToTypeCode == "PORT") {
+                    var toPort = agentshipmentPickUpDelivery.ToPort;
+                    if (toPort) {
+                        shipmentPickUpDeliveryPM.ToPortId = ourSideShipmentPickUpDelivery.ToPortId;
+                        shipmentPickUpDeliveryPM.ToPortCode = toPort.Code;
+                        shipmentPickUpDeliveryPM.ToPortCountryCode = toPort.CountryCode;
+                    }
+
+                }
+                else if (shipmentPickUpDeliveryPM.PickUpDeliveryToTypeCode == "PART") {
+                    shipmentPickUpDeliveryPM.ToPartnerCardId = ourSideShipmentPickUpDelivery.ToPartnerCardId;
+                    shipmentPickUpDeliveryPM.ToAddressId = ourSideShipmentPickUpDelivery.ToAddressId;
+                    if (AppTool.IsNullOrEmpty(shipmentPickUpDeliveryPM.ToPartnerCardId)) {
+                        this.ValidationErrorsList.push(entityName + " To Partner field is required");
+                    }
+
+
+                }
+                else if (shipmentPickUpDeliveryPM.PickUpDeliveryToTypeCode == "CASL") {
+                    shipmentPickUpDeliveryPM.ToAddressZipCode = ourSideShipmentPickUpDelivery.ToAddressZipCode;
+                    shipmentPickUpDeliveryPM.ToAddressCity = ourSideShipmentPickUpDelivery.ToAddressCity;
+                    shipmentPickUpDeliveryPM.ToAddressCountryId = ourSideShipmentPickUpDelivery.ToAddressCountryId;
+                    shipmentPickUpDeliveryPM.ToAddressCountryCode = ourSideShipmentPickUpDelivery.ToAddressCountryCode;
+
+                    if (AppTool.IsNullOrEmpty(shipmentPickUpDeliveryPM.ToAddressCountryId)) {
+                        this.ValidationErrorsList.push(entityName + " To Country field is required");
+                    }
+                    if (AppTool.IsNullOrEmpty(shipmentPickUpDeliveryPM.ToAddressZipCode) && AppTool.IsNullOrEmpty(shipmentPickUpDeliveryPM.ToAddressCity)) {
+                        this.ValidationErrorsList.push(entityName + " To City or To Zip Code field is required");
+                    }
+
+                }
+
+                if (this.ValidationErrorsList.length == 0) {
+
+                    if (pickUpDeliveryTypeCode == "PICK") {
+                        this.EntityPM.ShipmentPickUps = [];
+                        this.EntityPM.AddPickUp(shipmentPickUpDeliveryPM);
+                    } else {
+
+                        this.EntityPM.ShipmentDeliveries = [];
+                        this.EntityPM.AddDelivery(shipmentPickUpDeliveryPM);
+                    }
+                }
+
+            }
+
+        }
+    }
+
+    AddShipmentPickUpDeliveryTransLation(pickUpDeliveryTypeCode:string) {
+        if (this.ManifestSL && !this.IsHouseShipment) {
+            var agentshipmentPickUpDelivery: any = pickUpDeliveryTypeCode == "PICK" ? this.ManifestSL.ShipmentPickUp : this.ManifestSL.ShipmentDelivery;
+            if (agentshipmentPickUpDelivery) {
+                var ourSideShipmentPickUpDelivery: any = pickUpDeliveryTypeCode == "PICK" ? this.OurSideShipmentPickUp : this.OurSideShipmentDelivery;
+                var entityName = pickUpDeliveryTypeCode == "PICK" ? "PickUp" : "Delivery";
+
+                if (ourSideShipmentPickUpDelivery) {
+                    if (ourSideShipmentPickUpDelivery.PickUpDeliveryFromTypeCode == "PART") {
+                        if (ourSideShipmentPickUpDelivery.FromPartnerCardCode) this.InsertAndUpdateTransLation(agentshipmentPickUpDelivery.FromPartner.Code, ("Shipment" + entityName + "FromPartner"), ourSideShipmentPickUpDelivery.FromPartnerCardCode);
+                    }
+                    else if (ourSideShipmentPickUpDelivery.PickUpDeliveryFromTypeCode == "CASL") {
+                        if (ourSideShipmentPickUpDelivery.FromAddressCountryCode) this.InsertAndUpdateTransLation(agentshipmentPickUpDelivery.FromAddressCountryCode, ("Shipment" + entityName + "FromCountry"), ourSideShipmentPickUpDelivery.FromAddressCountryCode);
+                    }
+
+                    if (ourSideShipmentPickUpDelivery.PickUpDeliveryToTypeCode == "PART") {
+                        if (ourSideShipmentPickUpDelivery.ToPartnerCardCode) this.InsertAndUpdateTransLation(agentshipmentPickUpDelivery.ToPartner.Code, ("Shipment" + entityName + "ToPartner"), ourSideShipmentPickUpDelivery.ToPartnerCardCode);
+                    } else if (ourSideShipmentPickUpDelivery.PickUpDeliveryToTypeCode == "CASL") {
+                        if (ourSideShipmentPickUpDelivery.ToAddressCountryCode) this.InsertAndUpdateTransLation(agentshipmentPickUpDelivery.ToAddressCountryCode, ("Shipment" + entityName + "ToCountry"), ourSideShipmentPickUpDelivery.ToAddressCountryCode);
+                    }
+                }
+
+            }
+        }
+    }
+
+    BuildOurPickUpDeliverySide(pickUpDeliveryTypeCode:string) {
+
+
+      
+
+
+       var isNoFound: boolean = false;
+        if (this.ManifestSL && !this.IsHouseShipment) {
+            var agentshipmentPickUpDelivery: any = pickUpDeliveryTypeCode == "PICK" ? this.ManifestSL.ShipmentPickUp : this.ManifestSL.ShipmentDelivery;
+
+            if (agentshipmentPickUpDelivery) {
+                var ourSideShipmentPickUpDelivery: any = pickUpDeliveryTypeCode == "PICK" ? this.OurSideShipmentPickUp = new ShipmentPickUpDeliverySL() : this.OurSideShipmentDelivery = new ShipmentPickUpDeliverySL();
+                var entityName = pickUpDeliveryTypeCode == "PICK" ? "PickUp" : "Delivery";
+
+                ourSideShipmentPickUpDelivery.PickUpDeliveryFromTypeCode = agentshipmentPickUpDelivery.PickUpDeliveryFromTypeCode;
+                ourSideShipmentPickUpDelivery.PickUpDeliveryToTypeCode = agentshipmentPickUpDelivery.PickUpDeliveryToTypeCode;
+                ourSideShipmentPickUpDelivery.MainCarriageATA = agentshipmentPickUpDelivery.MainCarriageATA;
+                ourSideShipmentPickUpDelivery.MainCarriageATD = agentshipmentPickUpDelivery.MainCarriageATD;
+                ourSideShipmentPickUpDelivery.MainCarriageETA = agentshipmentPickUpDelivery.MainCarriageETA;
+                ourSideShipmentPickUpDelivery.MainCarriageETD = agentshipmentPickUpDelivery.MainCarriageETD;
+                ourSideShipmentPickUpDelivery.SelectedTransportMode = ourSideShipmentPickUpDelivery.TransportModeLists.filter(d => d.Code == agentshipmentPickUpDelivery.TransportModeCode)[0];
+
+                var isNeedTranslations: boolean = false;
+
+                //From
+                if (agentshipmentPickUpDelivery.FromPort) {
+                    var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+                    apiQueryFilters.GetAll = true;
+                    apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+                    this.myPortListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var list: PortList[] = myResponse.Result;
+                            var fromPort: PortList = list.filter(d => d.Code == agentshipmentPickUpDelivery.FromPort.Code)[0];
+                            if (fromPort) {
+                                ourSideShipmentPickUpDelivery.FromPortId = fromPort.Id;
+
+                            }
+                        }
+                        if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
+                        else this.IsLoadedFromDeliveryTranslation = true;
+
+                        this.StopBusyIndicator();
+                    });
+
+                }
+                else if (agentshipmentPickUpDelivery.FromPartner) {
+                    // Shipper Translation
+                    var shipmentPickUpFromPartnerTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == agentshipmentPickUpDelivery.FromPartner.Code && f.ObjectTableName == "Shipment" + entityName + "FromPartner")[0];
+                    if (shipmentPickUpFromPartnerTranslation) {
+                        this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipmentPickUpFromPartnerTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
+                            var pmResponse: ServiceResponse = res;
+
+                            if (!pmResponse.HasError) {
+                                var myResult = pmResponse.Result;
+                                if (myResult) {
+
+                                    ourSideShipmentPickUpDelivery.FromPartnerCardId = myResult;
+                                } else isNeedTranslations = true;
+                            }
+
+                            if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
+                            else this.IsLoadedFromDeliveryTranslation = true;
+
+                            this.StopBusyIndicator();
+                        });
+
+                    }
+                    else {
+
+                        if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
+                        else this.IsLoadedFromDeliveryTranslation = true;
+
+                        isNeedTranslations = true;
+                        this.StopBusyIndicator();
+                    }
+
+
+                    var englishName = !AppTool.IsNullOrEmpty(agentshipmentPickUpDelivery.FromPartner.EnglishName) ? agentshipmentPickUpDelivery.FromPartner.EnglishName : "";
+                    var Address1 = !AppTool.IsNullOrEmpty(agentshipmentPickUpDelivery.FromPartner.Address1) ? agentshipmentPickUpDelivery.FromPartner.Address1 : "";
+                    var Address2 = !AppTool.IsNullOrEmpty(agentshipmentPickUpDelivery.FromPartner.Address2) ? agentshipmentPickUpDelivery.FromPartner.Address2 : "";
+                    var city = !AppTool.IsNullOrEmpty(agentshipmentPickUpDelivery.FromPartner.City) ? agentshipmentPickUpDelivery.FromPartner.City : "";
+
+                    ourSideShipmentPickUpDelivery.FromPartnerDefaultValues = englishName + "^";
+                    ourSideShipmentPickUpDelivery.FromPartnerDefaultValues += (Address1 + "^");
+                    ourSideShipmentPickUpDelivery.FromPartnerDefaultValues += (Address2 + "^");
+                    ourSideShipmentPickUpDelivery.FromPartnerDefaultValues += (city + "^");
+                    var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+                    apiQueryFilters.GetAll = true;
+                    apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+                    apiQueryFilters.addAdditionalFilter("Code", agentshipmentPickUpDelivery.FromPartner.CountryCode, null, null, "Equals", true, true, true, "Text");
+                    this.countryListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var list: any[] = myResponse.Result;
+                            var CountryList: any = list.filter(d => d.Code == agentshipmentPickUpDelivery.FromPartner.CountryCode && !d.InActive)[0];
+                            if (CountryList) {
+                                ourSideShipmentPickUpDelivery.FromPartnerDefaultValues += (CountryList.Id);
+                            }
+                        }
+
+                    });
+
+                }
+                else if (agentshipmentPickUpDelivery.PickUpDeliveryFromTypeCode == "CASL") {
+
+                    if (agentshipmentPickUpDelivery.FromAddressCountryCode) {
+
+                        var shipmentPickUpFromCountryTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == agentshipmentPickUpDelivery.FromAddressCountryCode && f.ObjectTableName == "Shipment" + entityName + "FromCountry")[0];
+                        if (shipmentPickUpFromCountryTranslation) {
+                            var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+                            apiQueryFilters.GetAll = true;
+                            apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+                            apiQueryFilters.addAdditionalFilter("Code", shipmentPickUpFromCountryTranslation.MyCode, null, null, "Equals", true, true, true, "Text");
+                            this.countryListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
+                                if (!myResponse.HasError) {
+                                    var list: any[] = myResponse.Result;
+                                    var CountryList: any = list.filter(d => d.Code == shipmentPickUpFromCountryTranslation.MyCode && !d.InActive)[0];
+                                    if (CountryList) {
+                                        ourSideShipmentPickUpDelivery.FromAddressCountryId = CountryList.Id;
+                                        ourSideShipmentPickUpDelivery.FromAddressCountryName = CountryList.EnglishName;
+                                        ourSideShipmentPickUpDelivery.FromAddressCountryCode = CountryList.Code;
+
+                                    } else isNeedTranslations = true;
+                                }
+
+                                if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
+                                else this.IsLoadedFromDeliveryTranslation = true;
+
+                                this.StopBusyIndicator();
+                            });
+
+                        } else {
+                            if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
+                            else this.IsLoadedFromDeliveryTranslation = true;
+                            isNeedTranslations = true;
+                            this.StopBusyIndicator();
+                        }
+
+                    }
+                    if (agentshipmentPickUpDelivery.FromAddressCity) isNeedTranslations = true;
+
+                    ourSideShipmentPickUpDelivery.FromAddressZipCode = agentshipmentPickUpDelivery.FromAddressZipCode;
+                    ourSideShipmentPickUpDelivery.FromAddressCity = agentshipmentPickUpDelivery.FromAddressCity;
+
+                }
+                else {
+                    if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
+                    else this.IsLoadedFromDeliveryTranslation = true;
+                }
+
+
+                //To
+                if (agentshipmentPickUpDelivery.ToPort) {
+                    var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+                    apiQueryFilters.GetAll = true;
+                    apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+                    this.myPortListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var list: PortList[] = myResponse.Result;
+                            var ToPort: PortList = list.filter(d => d.Code == agentshipmentPickUpDelivery.ToPort.Code)[0];
+                            if (ToPort) {
+                                ourSideShipmentPickUpDelivery.ToPortId = ToPort.Id;
+
+                            }
+                        }
+                        if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
+                        else this.IsLoadedToDeliveryTranslation = true;
+
+                        this.StopBusyIndicator();
+                    });
+
+                }
+                else if (agentshipmentPickUpDelivery.ToPartner) {
+                    // Shipper Translation
+                    var shipmentPickUpToPartnerTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == agentshipmentPickUpDelivery.ToPartner.Code && f.ObjectTableName == "Shipment" + entityName + "ToPartner")[0];
+                    if (shipmentPickUpToPartnerTranslation) {
+                        this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipmentPickUpToPartnerTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
+                            var pmResponse: ServiceResponse = res;
+
+                            if (!pmResponse.HasError) {
+                                var myResult = pmResponse.Result;
+                                if (myResult) {
+
+                                    ourSideShipmentPickUpDelivery.ToPartnerCardId = myResult;
+                                } else isNeedTranslations = true;
+                            }
+
+                            if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
+                            else this.IsLoadedToDeliveryTranslation = true;
+
+                            this.StopBusyIndicator();
+                        });
+
+                    }
+                    else {
+
+                        if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
+                        else this.IsLoadedToDeliveryTranslation = true;
+
+                        isNeedTranslations = true;
+                        this.StopBusyIndicator();
+                    }
+
+
+                    var englishName = !AppTool.IsNullOrEmpty(agentshipmentPickUpDelivery.ToPartner.EnglishName) ? agentshipmentPickUpDelivery.ToPartner.EnglishName : "";
+                    var Address1 = !AppTool.IsNullOrEmpty(agentshipmentPickUpDelivery.ToPartner.Address1) ? agentshipmentPickUpDelivery.ToPartner.Address1 : "";
+                    var Address2 = !AppTool.IsNullOrEmpty(agentshipmentPickUpDelivery.ToPartner.Address2) ? agentshipmentPickUpDelivery.ToPartner.Address2 : "";
+                    var city = !AppTool.IsNullOrEmpty(agentshipmentPickUpDelivery.ToPartner.City) ? agentshipmentPickUpDelivery.ToPartner.City : "";
+
+                    ourSideShipmentPickUpDelivery.ToPartnerDefaultValues = englishName + "^";
+                    ourSideShipmentPickUpDelivery.ToPartnerDefaultValues += (Address1 + "^");
+                    ourSideShipmentPickUpDelivery.ToPartnerDefaultValues += (Address2 + "^");
+                    ourSideShipmentPickUpDelivery.ToPartnerDefaultValues += (city + "^");
+                    var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+                    apiQueryFilters.GetAll = true;
+                    apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+                    apiQueryFilters.addAdditionalFilter("Code", agentshipmentPickUpDelivery.ToPartner.CountryCode, null, null, "Equals", true, true, true, "Text");
+                    this.countryListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var list: any[] = myResponse.Result;
+                            var CountryList: any = list.filter(d => d.Code == agentshipmentPickUpDelivery.ToPartner.CountryCode && !d.InActive)[0];
+                            if (CountryList) {
+                                ourSideShipmentPickUpDelivery.ToPartnerDefaultValues += (CountryList.Id);
+                            }
+                        }
+
+                    });
+
+                }
+                else if (agentshipmentPickUpDelivery.PickUpDeliveryToTypeCode == "CASL") {
+
+                    if (agentshipmentPickUpDelivery.ToAddressCountryCode) {
+
+                        var shipmentPickUpToCountryTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == agentshipmentPickUpDelivery.ToAddressCountryCode && f.ObjectTableName == "Shipment" + entityName + "ToCountry")[0];
+                        if (shipmentPickUpToCountryTranslation) {
+                            var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+                            apiQueryFilters.GetAll = true;
+                            apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+                            apiQueryFilters.addAdditionalFilter("Code", shipmentPickUpToCountryTranslation.MyCode, null, null, "Equals", true, true, true, "Text");
+                            this.countryListService.getAllFromCache(apiQueryFilters).subscribe((myResponse: ServiceResponse) => {
+                                if (!myResponse.HasError) {
+                                    var list: any[] = myResponse.Result;
+                                    var CountryList: any = list.filter(d => d.Code == shipmentPickUpToCountryTranslation.MyCode && !d.InActive)[0];
+                                    if (CountryList) {
+                                        ourSideShipmentPickUpDelivery.ToAddressCountryId = CountryList.Id;
+                                        ourSideShipmentPickUpDelivery.ToAddressCountryName = CountryList.EnglishName;
+                                        ourSideShipmentPickUpDelivery.ToAddressCountryCode = CountryList.Code;
+
+                                    } else isNeedTranslations = true;
+                                }
+
+                                if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
+                                else this.IsLoadedToDeliveryTranslation = true;
+
+                                this.StopBusyIndicator();
+                            });
+
+                        } else {
+                            if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
+                            else this.IsLoadedToDeliveryTranslation = true;
+                            isNeedTranslations = true;
+                            this.StopBusyIndicator();
+                        }
+
+                    }
+                    if (agentshipmentPickUpDelivery.ToAddressCity) isNeedTranslations = true;
+
+                    ourSideShipmentPickUpDelivery.ToAddressZipCode = agentshipmentPickUpDelivery.ToAddressZipCode;
+                    ourSideShipmentPickUpDelivery.ToAddressCity = agentshipmentPickUpDelivery.ToAddressCity;
+
+                }
+                else {
+                    if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
+                    else this.IsLoadedToDeliveryTranslation = true;
+                }
+        
+                if (!isNeedTranslations) {
+                    if (pickUpDeliveryTypeCode == "PICK") this.IsNoPickupDetailsFound = true;
+                    else this.IsNoDeliveryDetailsFound = true;
+                }
+            }
+            else isNoFound = true;
+        }
+        else isNoFound = true;
+
+
+
+
+        if (isNoFound) {
+
+            if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
+            else this.IsLoadedFromDeliveryTranslation = true;
+
+
+            if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
+            else this.IsLoadedToDeliveryTranslation = true;
+
+
+            if (pickUpDeliveryTypeCode == "PICK") this.HidePickupDetailsArea = true;
+            else this.HideDeliveryDetailsArea = true;
+
+            if (pickUpDeliveryTypeCode == "PICK") this.IsNoPickupDetailsFound = true;
+            else this.IsNoDeliveryDetailsFound = true;
+
+            this.StopBusyIndicator();
+        }
+
+    }
+
+    
     InsertAndUpdateTransLation(agentCode: string, tableName: string, myCode:string) {
       
         var trans = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == agentCode && f.ObjectTableName == tableName)[0];
@@ -3794,7 +4101,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
 
-        if (this.IsLoadedCarrierTranslation && this.IsLoadedIncotermTranslation && this.IsLoadedShipperTranslation && this.IsLoadedConsigneeTranslation && this.IsLoadedShiperDefaultValues && this.IsLoadedConsigneeDefaultValues && this.IsLoadedTransshipment1CarrierTranslation && this.IsLoadedTransshipment2CarrierTranslation && this.IsLoadedTransshipment3CarrierTranslation && this.IsLoadedMainCarriageVesselTranslation && this.IsLoadedTransshipment1VesselTranslation && this.IsLoadedTransshipment2VesselTranslation && this.IsLoadedTransshipment3VesselTranslation && this.IsLoadedMainCarriageInterlineTranslation && this.IsLoadedNotify1IdTranslation && this.IsLoadedNotify1DefaultValuesTranslation && this.IsLoadedPortsTranslation && this.IsLoadedPackageTranslation && this.IsLoadedMoveTypeTranslation && this.IsLoadedValueOfGoodsCurrencyTranslation && this.IsLoadedFromPickUpTranslation && this.IsLoadedToPickUpTranslation) {
+        if (this.IsLoadedCarrierTranslation && this.IsLoadedIncotermTranslation && this.IsLoadedShipperTranslation && this.IsLoadedConsigneeTranslation && this.IsLoadedShiperDefaultValues && this.IsLoadedConsigneeDefaultValues && this.IsLoadedTransshipment1CarrierTranslation && this.IsLoadedTransshipment2CarrierTranslation && this.IsLoadedTransshipment3CarrierTranslation && this.IsLoadedMainCarriageVesselTranslation && this.IsLoadedTransshipment1VesselTranslation && this.IsLoadedTransshipment2VesselTranslation && this.IsLoadedTransshipment3VesselTranslation && this.IsLoadedMainCarriageInterlineTranslation && this.IsLoadedNotify1IdTranslation && this.IsLoadedNotify1DefaultValuesTranslation && this.IsLoadedPortsTranslation && this.IsLoadedPackageTranslation && this.IsLoadedMoveTypeTranslation && this.IsLoadedValueOfGoodsCurrencyTranslation && this.IsLoadedFromPickUpTranslation && this.IsLoadedToPickUpTranslation && this.IsLoadedFromDeliveryTranslation && this.IsLoadedToDeliveryTranslation) {
             SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             if ((!AppTool.IsNullOrEmpty(this.IncotermId) || this.IsHideIncoterm) && (!AppTool.IsNullOrEmpty(this.MoveTypeId) || this.IsHideMoveType) && (!AppTool.IsNullOrEmpty(this.ValueOfGoodsCurrencyId) || this.IsHideValueOfGoodsCurrency)) {

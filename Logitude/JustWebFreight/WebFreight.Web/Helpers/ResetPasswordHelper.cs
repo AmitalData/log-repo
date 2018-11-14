@@ -28,10 +28,12 @@ namespace WebFreight.Web.Helpers
             DateTime dateNowBefor5Minutes = DateTime.Now.AddMinutes(-5);
             int invalidEmailResetPasswordCount = 0;
             bool checkCaptcha = false;
-            DateTime lastResetDate = globalObjectContext.ChangePasswordLogs.Where(a => a.IP == iP).OrderByDescending(d=>d.CreateDate).Select(d=>d.CreateDate).FirstOrDefault();
+  
 
             if (usecaptcha)
             {
+                DateTime lastResetDate = globalObjectContext.ChangePasswordLogs.Where(a => a.IP == iP).OrderByDescending(d => d.CreateDate).Select(d => d.CreateDate).FirstOrDefault();
+
                 invalidEmailResetPasswordCount = globalObjectContext.InvalidEmailResetPasswords.Where(a => a.IP == iP && a.CreateDate >= dateNowBefor5Minutes && a.CreateDate > lastResetDate).Count();
 
                 if (!string.IsNullOrEmpty(captchaCode) && !string.IsNullOrEmpty(captchaKey)) checkCaptcha = true;

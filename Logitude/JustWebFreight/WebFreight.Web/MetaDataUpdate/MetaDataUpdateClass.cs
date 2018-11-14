@@ -11426,7 +11426,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidARI",
                 PMPropertyPath = "AllowVoidARI",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidARI",
+                HelpTextDefaultText = "To activate VOID action for AR Invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11447,7 +11449,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidARP",
                 PMPropertyPath = "AllowVoidARP",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidARP",
+                HelpTextDefaultText = "To activate VOID action for AR Payment",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11468,7 +11472,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidAPI",
                 PMPropertyPath = "AllowVoidAPI",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidAPI",
+                HelpTextDefaultText = "To activate VOID option in AP invoices",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11489,7 +11495,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowVoidAPP",
                 PMPropertyPath = "AllowVoidAPP",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowVoidAPP",
+                HelpTextDefaultText = "To activate VOID option in AP Payments",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11510,7 +11518,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowManualInvoiceNumber",
                 PMPropertyPath = "AllowManualInvoiceNumber",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowManualInvoiceNumber",
+                HelpTextDefaultText = "To manage an external invoice number to be entered manually in the Invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11531,7 +11541,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAR",
                 PMPropertyPath = "IsVatNumberMandatoryInAR",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsVatNumberMandatoryInAR",
+                HelpTextDefaultText = "Mandatory Bill to VAT number in AR Invoice & AR Payment",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11552,7 +11564,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAP",
                 PMPropertyPath = "IsVatNumberMandatoryInAP",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsVatNumberMandatoryInAP",
+                HelpTextDefaultText = "Mandatory Bill to VAT number in AP Invoices and AP Payments",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11573,7 +11587,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsChronologicalDates",
                 PMPropertyPath = "IsChronologicalDates",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsChronologicalDates",
+                HelpTextDefaultText = "Avoid issuing an invoice with date less than the date of the previous issued invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11594,7 +11610,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowMinusInvoicelines",
                 PMPropertyPath = "AllowMinusInvoicelines",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowMinusInvoicelines",
+                HelpTextDefaultText = "Allow invoices including negative charges amounts",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11612,7 +11630,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowPositiveAmountsInTheCreditNote",
                 PMPropertyPath = "AllowPositiveAmountsInTheCreditNote",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowPositiveAmountsInTheCreditNote",
+                HelpTextDefaultText = "Allow credit notes including positive charges amounts",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11633,7 +11653,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "AllowClosureWithoutPayables",
                 PMPropertyPath = "AllowClosureWithoutPayables",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "AllowClosureWithoutPayables",
+                HelpTextDefaultText = "Allows to accounting close shipments with open payables lines",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11720,7 +11742,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ListPropertyPath = "IsSingleTaxPerInvoice",
                 PMPropertyPath = "IsSingleTaxPerInvoice",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "IsSingleTaxPerInvoice",
+                HelpTextDefaultText = "You are limited to use one VAT type per invoice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11885,7 +11909,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiPercentageVATTypes",
                 PMPropertyPath = "EnableMultiPercentageVATTypes",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiPercentageVATTypes",
+                HelpTextDefaultText = "Allows creating combined VAT types from two or more VAT Types with different percentages",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11903,7 +11929,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "NotifyPastDateOnInvoiceEdit",
                 PMPropertyPath = "NotifyPastDateOnInvoiceEdit",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "NotifyPastDateOnInvoiceEdit",
+                HelpTextDefaultText = "Alert in draft or open constituent invoice if the date should be updated to the current day",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11921,7 +11949,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiRateAPInvoices",
                 PMPropertyPath = "EnableMultiRateAPInvoices",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiRateAPInvoices",
+                HelpTextDefaultText = "Allows recording AP invoice with different exchange rates",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11957,7 +11987,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiCurrencyARPayments",
                 PMPropertyPath = "EnableMultiCurrencyARPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiCurrencyARPayments",
+                HelpTextDefaultText = "Allows closing AR invoices in foreign currency with AR Payment in local currency or vice versa",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11975,7 +12007,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableMultiCurrencyAPPayments",
                 PMPropertyPath = "EnableMultiCurrencyAPPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableMultiCurrencyAPPayments",
+                HelpTextDefaultText = "Allows closing AP invoices in foreign currencies with payment in local currency or vice versa",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -11993,7 +12027,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableNegativeOffsetARPayments",
                 PMPropertyPath = "EnableNegativeOffsetARPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableNegativeOffsetARPayments",
+                HelpTextDefaultText = "Allows recording AR Payments in negative amounts using payment method \"Offset\"",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -12011,7 +12047,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ListPropertyPath = "EnableNegativeOffsetAPPayments",
                 PMPropertyPath = "EnableNegativeOffsetAPPayments",
-                Operator = "Equals"
+                Operator = "Equals",
+                HelpTextCode = "EnableNegativeOffsetAPPayments",
+                HelpTextDefaultText = "Allows recording payables payments in negative amounts using payment method is Offset",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             this.ObjectContext.SaveChanges();
@@ -55393,6 +55431,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature shipmentFeature_CreditLimitBlockedShipments = tenantFeatures.Where(d => d.Code == "CreditLimitBlockedShipments" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature shipmentFeature_ExpectedDeparturesNotTransmitted = tenantFeatures.Where(d => d.Code == "ExpectedDeparturesNotTransmitted" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature shipmentFeature_ShippingInstructionsLast7Days = tenantFeatures.Where(d => d.Code == "ShippingInstructionsLast7Days" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            Feature shipmentFeature_ContainerStatusLast7Days = tenantFeatures.Where(d => d.Code == "ContainerStatusLast7Days" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             #endregion
 
             #region Master features
@@ -55746,8 +55785,11 @@ namespace WebFreight.Web.MetaDataUpdate
             Query sentFSRQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.SentFSR" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 12, Code = "SentFSR", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "LastFSRStatusRequestDate", EditWizardName = "Simplog.ShipmentLib.Views.AWBWizardEditControl", FeatureId = shipmentsFeature11.Id }, QueriesRepository, tenantQueries);
             Query shipmentQuery_CustomerActualData = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.CustomerActualData" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 13, Code = "CustomerShipmentActualData", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = false, SpotlightDataTemplate = "ShipmentSpotlightDataTemplate", FeatureId = shipmentFeature_CustomerActualData.Id, IsHiddenFromView = true, }, QueriesRepository, tenantQueries);
             Query shipmentQuery_CreditLimitBlockedShipments = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.CreditLimitBlockedShipments" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 14, Code = "CreditLimitBlockedShipments", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, SpotlightDataTemplate = "ShipmentSpotlightDataTemplate", FeatureId = shipmentFeature_CreditLimitBlockedShipments.Id }, QueriesRepository, tenantQueries);
+
+            // INTTRA
             Query shipmentQuery_ExpectedDeparturesNotTransmitted = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.ExpectedDeparturesNotTransmitted" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 15, Code = "ExpDepNotTransmitted", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, SpotlightDataTemplate = "ShipmentSpotlightDataTemplate", FeatureId = shipmentFeature_ExpectedDeparturesNotTransmitted.Id }, QueriesRepository, tenantQueries);
             Query shipmentQuery_ShippingInstructionsLast7Days = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.ShippingInstructionsLast7Days" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 16, Code = "ShippingInstructionsLast7Days", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, SpotlightDataTemplate = "ShipmentSpotlightDataTemplate", FeatureId = shipmentFeature_ShippingInstructionsLast7Days.Id }, QueriesRepository, tenantQueries);
+            Query shipmentQuery_ContainerStatusLast7Days = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Shipment.Q.ContainerStatusLast7Days" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, IndexOrder = 17, Code = "ContainerStatusLast7Days", QueryGroupCode = shipmentsGroup.Code, DisplayCount = true, Tenant = 0, ObjectTableId = ShipmentObject.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, SpotlightDataTemplate = "ShipmentSpotlightDataTemplate", FeatureId = shipmentFeature_ContainerStatusLast7Days.Id }, QueriesRepository, tenantQueries);
             #endregion
 
             #region Master
@@ -56422,6 +56464,21 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn ShippingInstructionsLast7Days_Column10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ShippingInstructionsLast7Days.Id, IndexOrder = 10, ObjectFieldId = objectFields.Where(d => d.FieldName == "INTTRASIError" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter ShippingInstructionsLast7Days_AdvancedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = objectFields.Where(d => d.FieldName == "ShippingInstructionsLast7Days" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, PredefinedValue = "True", QueryId = shipmentQuery_ShippingInstructionsLast7Days.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
+
+            #region ContainerStatusLast7Days
+            QueryColumn ContainerStatusLast7Days_Column01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 1, ObjectFieldId = objectFields.Where(d => d.FieldName == "INTTRALastStatusDate" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ContainerStatusLast7Days_Column02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 2, ObjectFieldId = objectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ContainerStatusLast7Days_Column03 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 3, ObjectFieldId = objectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ContainerStatusLast7Days_Column04 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 4, ObjectFieldId = objectFields.Where(d => d.FieldName == "MainCarriageETD" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ContainerStatusLast7Days_Column05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 5, ObjectFieldId = objectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ContainerStatusLast7Days_Column06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 6, ObjectFieldId = objectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ContainerStatusLast7Days_Column07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 7, ObjectFieldId = objectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 140 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ContainerStatusLast7Days_Column08 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 8, ObjectFieldId = objectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ContainerStatusLast7Days_Column09 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 9, ObjectFieldId = objectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ContainerStatusLast7Days_Column10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 10, ObjectFieldId = objectFields.Where(d => d.FieldName == "INTTRASIError" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
+            AdvancedQueryFilter ContainerStatusLast7Days_AdvancedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = objectFields.Where(d => d.FieldName == "ContainerStatusLast7Days" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, PredefinedValue = "True", QueryId = shipmentQuery_ContainerStatusLast7Days.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            #endregion
+
             #endregion
 
             #region MasterQueriesDetails
@@ -60402,6 +60459,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.CreditLimitBlockedShipments", DefaultText = "Credit Limit Blocked Shipments", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ExpectedDeparturesNotTransmitted", DefaultText = "Expected Departures - Not Transmitted", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ShippingInstructionsLast7Days", DefaultText = "Shipping Instructions - last 7 days", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ContainerStatusLast7Days", DefaultText = "Container Status - last 7 days", ObjectTableId = ShipmentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region Master Queries
@@ -60858,6 +60917,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.FilingInbox", DefaultText = "Filing Inbox", LocalDefaultText = "Filing Inbox", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.DeclarationCargoSplits", DefaultText = "Cargo Splits", LocalDefaultText = "בקשות פיצול מטען", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Tasks", DefaultText = "Tasks", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Shipments", DefaultText = "Shipments", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.Invoices", DefaultText = "Invoices", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", }, TextCodeRepository, textcodes);
 
             #endregion
 
@@ -61991,6 +62052,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.ShowProfitDetails", DefaultText = "Show Profit Details", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.PricedueQuoteCharge", DefaultText = "Price is due to Quote Charge Sale Price Steps", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.AmountdueQuoteMinimum", DefaultText = "Amount is due to Quote minimum amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.AmountdueQuoteMaximum", DefaultText = "Amount is due to Quote maximum amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.ForeignAmountsetasFixed", DefaultText = "Foreign Amount set as Fixed", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.GrossWeightNotSameAsQuote", DefaultText = "Gross Weight is not same as Quote", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.ChargeableWeightNotSameAsQuote", DefaultText = "Chargeable Weight is not same as Quote", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
@@ -61999,6 +62062,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.ShowProfitDetails", DefaultText = "Show Profit Details", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.PricedueQuoteCharge", DefaultText = "Price is due to Quote Charge Cost Price Steps", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueQuoteMinimum", DefaultText = "Amount is due to Quote minimum amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueQuoteMaximum", DefaultText = "Amount is due to Quote maximum amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueTarrifChargeMax", DefaultText = "Amount is due to Tarrif Charge Max Amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueTarrifChargeMin", DefaultText = "Amount is due to Tarrif Charge Min Amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.GrossWeightNotSameAsQuote", DefaultText = "Gross Weight is not same as Quote", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
@@ -63883,6 +63948,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.ConfirmVoid", LocalDefaultText = "ברגע שמבטלים או מתעלמים מחשבונית, השינוי הוא בלתי הפיך. במידה וביטלת חשבונית או התעלמת ממנה וברצונך לשחזר אותה, עליך ליצור חשבונית חדשה", DefaultText = "Once you void or delete an invoice, the change is permanent. If you void or delete an invoice and want to restore it later, you'll have to create a new invoice.", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.ClosedInvoice", DefaultText = "This invoice is closed", LocalDefaultText = "חשבונית זאת סגורה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.NoGLAccount", DefaultText = "The chosen charge type doesn't have GLAccount connected to it", LocalDefaultText = "סעיף החיוב הנבחר לא מקושר לכרטיס הנה''ח", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.VendorNoGLAccount", DefaultText = "The vendor does not have GLAccount", LocalDefaultText = "לספק לא קושר כרטיס הנהלת חשבונות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
 
             #endregion
 
@@ -64735,6 +64801,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature GeneralContactsfeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTACTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Contacts", NameTextCodeDefaultText = "Contacts", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralLogBoxDSfeature0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LBDS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.LBDS", NameTextCodeDefaultText = "LB Digital signature", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralTasksfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TASKS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Tasks", NameTextCodeDefaultText = "Tasks", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature sharedShipmentsfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDSHIPMENTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SharedShipments", NameTextCodeDefaultText = "Shared Logistics Shipments", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature sharedInvoicesfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHAREDINVOICES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.SharedInvoices", NameTextCodeDefaultText = "Shared Logistics Invoices", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature GeneralShippersandConsignee = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHIPPERSANDCONSIGNEES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ShippersAndConsignees", NameTextCodeDefaultText = "Shippers and Consignees", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralAgentsfeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGENTS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Agents", NameTextCodeDefaultText = "Agents", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -64900,6 +64968,10 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature GeneralApplicationSettingsButtonfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AppSettingsBtn", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.AppSettingsBtn", NameTextCodeDefaultText = "Application Settings Button", FeatureTypeCode = "OTH" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature btexFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BatchTaskExecutionMNU", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.BatchTaskExecutions", NameTextCodeDefaultText = "Batch Task Executions", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
+             
+            Feature ExternalAPIsEventFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXTERNALAPIS", ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExternalAPIs", NameTextCodeDefaultText = "External API", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -66026,6 +66098,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ShipmentFeature_Q15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CreditLimitBlockedShipments", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.CreditLimitBlockedShipments", NameTextCodeDefaultText = "Credit Limit Blocked Shipments", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShipmentFeature_Q16 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExpectedDeparturesNotTransmitted", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.ExpectedDeparturesNotTransmitted", NameTextCodeDefaultText = "Expected Departures - Not Transmitted", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ShipmentFeature_Q17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShippingInstructionsLast7Days", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.ShippingInstructionsLast7Days", NameTextCodeDefaultText = "Shipping Instructions - last 7 days", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ShipmentFeature_Q18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainerStatusLast7Days", Packagable = true, ObjectTableId = ShipmentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Shipment.Features.ContainerStatusLast7Days", NameTextCodeDefaultText = "Container Status - last 7 days", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
             #endregion
 
             #region Master

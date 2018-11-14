@@ -257,6 +257,14 @@
     <Compile Include="Migrations\201811010618518_ChangeFieldNameInTableSessionPolicies.Designer.cs">
       <DependentUpon>201811010618518_ChangeFieldNameInTableSessionPolicies.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.cs" />
+    <Compile Include="Migrations\201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.Designer.cs">
+      <DependentUpon>201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131835452_AbedAddCaptchaKeyToContactPassword.cs" />
+    <Compile Include="Migrations\201811131835452_AbedAddCaptchaKeyToContactPassword.Designer.cs">
+      <DependentUpon>201811131835452_AbedAddCaptchaKeyToContactPassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -305,6 +313,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811010618518_ChangeFieldNameInTableSessionPolicies.resx">
       <DependentUpon>201811010618518_ChangeFieldNameInTableSessionPolicies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.resx">
+      <DependentUpon>201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131835452_AbedAddCaptchaKeyToContactPassword.resx">
+      <DependentUpon>201811131835452_AbedAddCaptchaKeyToContactPassword.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

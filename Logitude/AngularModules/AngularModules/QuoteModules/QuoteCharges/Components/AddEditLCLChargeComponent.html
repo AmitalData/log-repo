@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SummarySection {
         overflow: hidden;
@@ -68,13 +68,24 @@
                                         </tr>
 
                                         <!-- CostMinAmount -->
-                                        <tr class="FormFieldRow" *ngIf="!DataContext.IsAdhoc">
+                                        <tr class="FormFieldRow">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'CostMinAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
                                             <td>
                                                 <LogTextBox [ObjectFieldName]="'CostMinAmount'" [Text]="DataContext.CostMinAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <!-- CostMaxAmount -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'CostMaxAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'CostMaxAmount'" [Text]="DataContext.CostMaxAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                             </td>
                                         </tr>
 
@@ -146,13 +157,24 @@
                                         </tr>
 
                                         <!-- SaleMinAmount -->
-                                        <tr class="FormFieldRow" *ngIf="!DataContext.IsAdhoc">
+                                        <tr class="FormFieldRow">
                                             <td>
                                                 <LogLabel [ObjectFieldName]="'SaleMinAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
 
                                             <td>
                                                 <LogTextBox [ObjectFieldName]="'SaleMinAmount'" [Text]="DataContext.SaleMinAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <!-- SaleMaxAmount -->
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'SaleMaxAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'SaleMaxAmount'" [Text]="DataContext.SaleMaxAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                             </td>
                                         </tr>
 
@@ -318,13 +340,9 @@
                                         <div style="height: 100%; width: 100%; position: relative;">
                                             <table>
                                                 <tr>
-                                                    <td style="width:16px;" *ngIf="item.FromTarrifIconIsVisibile">
-                                                        <img style="left:-10px;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.FromTarrifIconTitle" />
-                                                    </td>
-
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
+                                                    <td style="width:16px;" *ngIf="item.CostMinMaxIconIsVisibile">
+                                                        <img style="left:-10px;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.CostMinMaxIconTitle" />
+                                                    </td>                                                   
 
                                                     <td style="text-align:right;">
                                                         {{item.CostTotalAmount | NumbersPipe:'N2'}}
@@ -426,8 +444,18 @@
                                     </log-header-template>
 
                                     <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_SaleTotalAmount">
-                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" [ngStyle]="{color: item.SaleTotalAmountColor}" class="TextTrimming" [attr.title]="item.SaleTotalAmount | NumbersPipe:'N2'">
-                                            {{item.SaleTotalAmount | NumbersPipe:'N2'}}
+                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">                                           
+                                            <table>
+                                                <tr>
+                                                    <td style="width:16px;" *ngIf="item.SaleMinMaxIconIsVisibile">
+                                                        <img style="left:-10px;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.SaleMinMaxIconTitle" />
+                                                    </td>
+                                                   
+                                                    <td style="text-align:right;" [ngStyle]="{color: item.SaleTotalAmountColor}">
+                                                        {{item.SaleTotalAmount | NumbersPipe:'N2'}}
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
 
                                         <div *ngIf="logcelltemplate.IsEditMode">
@@ -452,15 +480,15 @@
                                     </log-header-template>
 
                                     <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_SaleTotalAmountLocal">
-                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.SaleTotalAmountLocal | NumbersPipe:'N2'">
+                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;" class="TextTrimming">
                                             <table>
                                                 <tr>
-                                                    <td style="width:16px;" *ngIf="item.IsAllIN">
-                                                        <img style="left:-10px;" src="./Images/Icons/A-icon.png" width="16" height="16" title="All In" />
+                                                    <td style="width:16px;" *ngIf="item.SaleMinMaxIconIsVisibile">
+                                                        <img style="left:-10px;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.SaleMinMaxIconTitle" />
                                                     </td>
 
-                                                    <td>
-                                                        <div></div>
+                                                    <td style="width:16px;" *ngIf="item.IsAllIN">
+                                                        <img style="left:-10px;" src="./Images/Icons/A-icon.png" width="16" height="16" title="All In" />
                                                     </td>
 
                                                     <td style="text-align:right;" [ngStyle]="{color: item.SaleTotalAmountLocalColor}">

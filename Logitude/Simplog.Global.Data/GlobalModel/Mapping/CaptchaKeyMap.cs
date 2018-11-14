@@ -51,6 +51,8 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t =>t.Code).HasColumnName("Code");
             this.Property(t => t.IP).HasColumnName("IP");
             this.Property(t => t.Activity).HasColumnName("Activity");
+            this.Property(t => t.IsUsed).HasColumnName("IsUsed");
+            
         }
     }
 }

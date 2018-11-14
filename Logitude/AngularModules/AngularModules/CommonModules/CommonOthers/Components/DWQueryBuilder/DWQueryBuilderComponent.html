@@ -196,7 +196,7 @@
         <td>
             <table>
                 <tr>
-                    <td style="width: 30%;height:100%;">
+                    <td style="width: 35%;height:100%;">
                         <div style="height:100%;width:100%;border:solid 1px #BABABA;border-radius:5px">
                             <table>
                                 <tr>
@@ -221,89 +221,113 @@
                                         <table class="BodyBackground">
                                             <tr>
                                                 <td>
-                                                    <div style="overflow:auto;max-height:685px;">
+                                                    <div style="overflow:auto;max-height:685px;overflow-x:hidden;">
                                                         <table style="vertical-align:top;top:0px;">
-                                                            <tr style="text-align:left;vertical-align:top" *ngFor="let item of DataSource">
+                                                            <tr style="text-align:left;vertical-align:top" *ngFor="let Group of DataSource">
                                                                 <td style="min-height:30px;">
                                                                     <table>
                                                                         <tr>
-                                                                            <td *ngIf="item &&  item.HasTree" style="width:20px">
-                                                                                <div style="width:20px">
-                                                                                    <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
-                                                                                    <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+                                                                            <td>
+                                                                                <div style="width:100%;height:100%;background-color: #E4E4E4;border-bottom: 1px solid;border-top: 1px solid;border-color:rgb(167, 169, 172);height: 27px;">
+                                                                                    <div style="float:left;">
+                                                                                        <img [src]="Group.DetailsIcon" style="margin-top:5px;" (click)="Group.GroupClicked()"/>
+                                                                                        <label style="margin:5px;vertical-align: middle;">{{Group.Key}}</label>
+                                                                                    </div> 
                                                                                 </div>
                                                                             </td>
-
-                                                                            <td *ngIf="item &&  !item.HasTree" style="width:20px">
-                                                                                <div style="width:20px"></div>
-
-                                                                            </td>
-
-
-                                                                            <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" (mouseover)="item.OnMouseOver($event)" (mouseout)="item.OnMouseOut($event)" *ngIf="item" style="width:100px;height:24px">
-                                                                                <table>
-                                                                                    <tr>
-                                                                                        <td style="width:70%;"><p style="display:inline-block;">{{item.Name}}</p></td>
-                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:5%;"></td>
-                                                                                        <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span></td>
-                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:1%;"></td>
-                                                                                        <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span></td>
-                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:4%;"></td>
-                                                                                        <td *ngIf="item &&  item.HasTree" style="width:30%;"></td>
-                                                                                    </tr>
-                                                                                </table>
-
-                                                                            </td>
-
-
                                                                         </tr>
+                                                                        <tr *ngIf="Group.IsDetailesOpened">
+                                                                            <td>
+                                                                                <table *ngFor="let item of Group.FieldsList" style="margin-left:5px;">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                     <table>
+                                                                                        <tr>
+                                                                                            <td *ngIf="item &&  item.HasTree" style="width:20px">
+                                                                                                <div style="width:20px">
+                                                                                                    <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
+                                                                                                    <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+                                                                                                </div>
+                                                                                            </td>
 
-                                                                        <tr>
+                                                                                            <td *ngIf="item &&  !item.HasTree" style="width:20px">
+                                                                                                <div style="width:20px"></div>
 
-                                                                            <td style="width:20px"></td>
+                                                                                            </td>
+
+
+                                                                                            <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" (mouseover)="item.OnMouseOver($event)" (mouseout)="item.OnMouseOut($event)" *ngIf="item" style="width:100px;height:24px">
+                                                                                                <table>
+                                                                                                    <tr>
+                                                                                                        <td style="width:70%;"><p style="display:inline-block;">{{item.Name}}</p></td>
+                                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:5%;"></td>
+                                                                                                        <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span></td>
+                                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:1%;"></td>
+                                                                                                        <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span></td>
+                                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:4%;"></td>
+                                                                                                        <td *ngIf="item &&  item.HasTree" style="width:30%;"></td>
+                                                                                                    </tr>
+                                                                                                </table>
+
+                                                                                            </td>
+
+
+                                                                                        </tr>
+
+                                                                                        <tr>
+
+                                                                                            <td style="width:20px"></td>
 
 
 
-                                                                            <td colspan="2">
-                                                                                <table *ngIf="item && item.IsViewTree">
-                                                                                    <tr style="text-align:left;vertical-align:top;" *ngFor="let item of item.Items">
-                                                                                        <td style="min-height:30px;">
-                                                                                            <table>
-                                                                                                <tr>
-                                                                                                    <td *ngIf="item &&  item.HasTree" style="width:20px">
-                                                                                                        <div style="width:20px">
-                                                                                                            <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
-                                                                                                            <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
-                                                                                                        </div>
-                                                                                                    </td>
+                                                                                            <td colspan="2">
+                                                                                                <table *ngIf="item && item.IsViewTree">
+                                                                                                    <tr style="text-align:left;vertical-align:top;" *ngFor="let item of item.Items">
+                                                                                                        <td style="min-height:30px;">
+                                                                                                            <table>
+                                                                                                                <tr>
+                                                                                                                    <td *ngIf="item &&  item.HasTree" style="width:20px">
+                                                                                                                        <div style="width:20px">
+                                                                                                                            <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
+                                                                                                                            <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+                                                                                                                        </div>
+                                                                                                                    </td>
 
-                                                                                                    <td *ngIf="item &&  !item.HasTree" style="width:20px">
-                                                                                                        <div style="width:20px"></div>
+                                                                                                                    <td *ngIf="item &&  !item.HasTree" style="width:20px">
+                                                                                                                        <div style="width:20px"></div>
 
-                                                                                                    </td>
+                                                                                                                    </td>
 
-                                                                                                    <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" (mouseover)="item.OnMouseOver($event)" (mouseout)="item.OnMouseOut($event)" *ngIf="item" style="width:100px;height:24px">
-                                                                                                        <table>
-                                                                                                            <tr>
-                                                                                                                <td style="width:70%;"><p style="display:inline-block;">{{item.Name}}</p></td>
-                                                                                                                <td *ngIf="item &&  !item.HasTree" style="width:5%;"></td>
-                                                                                                                <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span></td>
-                                                                                                                <td *ngIf="item &&  !item.HasTree" style="width:1%;"></td>
-                                                                                                                <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span></td>
-                                                                                                                <td *ngIf="item &&  !item.HasTree" style="width:4%;"></td>
-                                                                                                                <td *ngIf="item &&  item.HasTree" style="width:30%;"></td>
-                                                                                                            </tr>
-                                                                                                        </table>
-                                                                                                    </td>
+                                                                                                                    <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" (mouseover)="item.OnMouseOver($event)" (mouseout)="item.OnMouseOut($event)" *ngIf="item" style="width:100px;height:24px">
+                                                                                                                        <table>
+                                                                                                                            <tr>
+                                                                                                                                <td style="width:70%;"><p style="display:inline-block;">{{item.Name}}</p></td>
+                                                                                                                                <td *ngIf="item &&  !item.HasTree" style="width:5%;"></td>
+                                                                                                                                <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span></td>
+                                                                                                                                <td *ngIf="item &&  !item.HasTree" style="width:1%;"></td>
+                                                                                                                                <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span></td>
+                                                                                                                                <td *ngIf="item &&  !item.HasTree" style="width:4%;"></td>
+                                                                                                                                <td *ngIf="item &&  item.HasTree" style="width:30%;"></td>
+                                                                                                                            </tr>
+                                                                                                                        </table>
+                                                                                                                    </td>
 
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                    </td>
+                                                                        </tr>
+                                                                    </table>
                                                                             </td>
                                                                         </tr>
                                                                     </table>
+                                                                  
+                                                            
                                                                 </td>
 
 
