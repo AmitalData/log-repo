@@ -23,7 +23,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public CaptchaKey GetSingleCaptchaKey(string id)
         {
-            CaptchaKey item = context.CaptchaKeys.Where(d => d.Id == id).FirstOrDefault();
+            CaptchaKey item = context.CaptchaKeys.Where(d => d.Id == id && !d.IsUsed).FirstOrDefault();
             return item;
         }
 

@@ -1250,7 +1250,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 EventCode = "CheckSATStatus",
                 Index = 13,
                 IsActive = true,
-                LabelTextCodeCode = "ARPayment.B.CheckSATStatus",
+                LabelTextCodeCode = "ARInvoice.B.CheckSATStatus",
                 LabelTextCodeDefaultText = "Check SAT Status",
                 ObjectTableId = invoiceObject.Id,
                 Tenant = tenant,
