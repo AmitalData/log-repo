@@ -64968,6 +64968,10 @@ namespace WebFreight.Web.MetaDataUpdate
 
             Feature btexFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BatchTaskExecutionMNU", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.BatchTaskExecutions", NameTextCodeDefaultText = "Batch Task Executions", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
+
+             
+            Feature ExternalAPIsEventFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXTERNALAPIS", ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExternalAPIs", NameTextCodeDefaultText = "External API", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
             #endregion
 
             #region Excel Features
