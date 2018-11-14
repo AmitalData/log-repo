@@ -7168,6 +7168,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                  {
                      Id = shipment.Id + (!string.IsNullOrEmpty(jd.Id) ? jd.Id : ""),
                      ShipmentId = shipment.Id,
+                     PackageId = jd.Id,
                      DirectionId = shipment.DirectionId,
                      ShipmentNumber = shipment.ShipmentNumber,
                      CreateDateTime = shipment.CreateDateTime,
@@ -7283,6 +7284,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Transshipment1VesselId = m.Transshipment1VesselId,
                      Transshipment2VesselId = m.Transshipment2VesselId,
                      Transshipment3VesselId = m.Transshipment3VesselId,
+                     BookingConfirmationNumber = m.BookingConfirmationNumber,
                  });
 
             return dataList;
