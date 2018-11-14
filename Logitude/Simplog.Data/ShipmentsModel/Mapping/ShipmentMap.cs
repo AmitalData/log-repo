@@ -671,6 +671,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ConsigneeNotImporterReference).HasColumnName("ConsigneeNotImporterReference");
             this.Property(t => t.ForwardingPartnerId).HasColumnName("ForwardingPartnerId");
             this.Property(t => t.ProjectNumber).HasColumnName("ProjectNumber");
+            this.Property(t => t.ContainerLastStatusDate).HasColumnName("ContainerLastStatusDate");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

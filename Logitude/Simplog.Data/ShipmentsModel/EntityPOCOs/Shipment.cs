@@ -726,7 +726,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? FirstPickupETA { get; set; }
         public bool SplitOnCarriage { get; set; }
         public DateTime? INTTRALastStatusDate { get; set; }
-
         public string ProjectNumber { get; set; }
+        public DateTime? ContainerLastStatusDate { get; set; }
     }
 }

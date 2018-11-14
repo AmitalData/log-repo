@@ -33,6 +33,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                bool exist = SecurityUtility.CheckFeature("General", "EXTERNALAPIS", tenant);
+                if (!exist)
+                {
+
+                }
                 HouseQueryService Service = new HouseQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetHouseById(id, tenant);
@@ -46,16 +51,22 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage GetSingleHouseByNumber(string shipmentnumber)
+        public HttpResponseMessage GetSingleHouseByNumber(string number)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                bool exist = SecurityUtility.CheckFeature("General", "EXTERNALAPIS", tenant);
+                if (!exist)
+                {
+
+                }
+
                 HouseQueryService Service = new HouseQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetHouseByShipmentNumber(shipmentnumber, tenant);
+                var Result = Service.GetHouseByShipmentNumber(number, tenant);
                 //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }

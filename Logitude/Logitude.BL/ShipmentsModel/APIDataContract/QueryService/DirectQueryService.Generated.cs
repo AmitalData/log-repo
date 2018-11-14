@@ -58,6 +58,25 @@ using Simplog.Data.ShipmentsModel;
             }
         }
 		
+		public Direct GetDirectByShipmentNumber(string ShipmentNumber,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByShipmentNumber(ShipmentNumber,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Shipment with ShipmentNumber " + ShipmentNumber + " doesn't exist");
+
+				return DirectDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public Direct DirectDataMapping(ShipmentPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -252,10 +271,14 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+					
+					if (!string.IsNullOrEmpty(MyEntity.ShipmentNumber))
+					{
+						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant);
+					} 					   
 					if(temp == null)
 					{
-					    throw new ApplicationException("Shipment with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("Shipment with ShipmentNumber " + MyEntity.ShipmentNumber + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{

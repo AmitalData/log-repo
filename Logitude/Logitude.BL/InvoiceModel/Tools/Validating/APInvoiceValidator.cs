@@ -25,6 +25,8 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -236,11 +238,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
+                bool useLocal = true;
+                var user = GetLoggedContact(tenant);
+                if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+
                 GLAccountPM glAccount = getGLAccount(vendorId, tenant);
 
                 if (glAccount == null)
                 {
-                    string msg = "The vendor does not have GLAccount ";
+
+                    string msg = TranslateTextsClass.Translate("APInvoice.M.VendorNoGLAccount",tenant);
                     errors += msg + ";";
                 }
                 if (glAccount != null && (glAccount.IsMultiCurrency == null || glAccount.IsMultiCurrency == false))
@@ -293,6 +300,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             return glaAccount;
+        }
+
+        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        private static ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
+            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
+                AuthenticationUtil.ResolveUserIdentityName(tenant)
+                , tenant);
+            if (loggedContact == null)
+            {
+                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
+            }
+            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
+            return loggedContact;
         }
     }
 }

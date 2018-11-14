@@ -2672,10 +2672,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         shipmentAdditionalCloudData.ApprovedByUserName = entityPM.ApprovedBy;
                     }
+                    if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml)
+                    {
+                        shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
+                    }
+                   
                     if (entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData) && entityPM.CustomsClearanceDate == null)
                     {
-                        shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
-                        shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
+                        shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData; 
                         shipmentAdditionalCloudData.IsImporterApprovalRequried = true;
                         shipmentAdditionalCloudData.ApprovedByUserName = null;
                         shipmentAdditionalCloudData.ApproveDateTime = null;

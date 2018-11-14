@@ -273,6 +273,10 @@ export class ARInvoiceMenuButtonsHandler {
     }
 
     CheckSATStatus() {
+        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.GetARInvoiceSATCancellationStatus(this.EntityPM.Id).subscribe(response => {
+
+        });
 
     }
 
