@@ -53,7 +53,25 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-
+        //public HttpResponseMessage GetSingleMasterByNumber(string number)
+        //{
+        //    try
+        //    {
+        //        string token = HttpContext.Current.Request.Headers["Token"];
+        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //        int tenant = authToken.Tenant;
+        //        MasterQueryService Service = new MasterQueryService(tenant);
+        //        ServiceResponse response = new ServiceResponse();
+        //        var Result = Service.GetMasterByMaster(number, tenant);
+        //        //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
+        //        return Request.CreateResponse(HttpStatusCode.OK, Result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+        //        return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+        //    }
+        //}
         public HttpResponseMessage Post(Master entity)
         {
             if (ModelState.IsValid)

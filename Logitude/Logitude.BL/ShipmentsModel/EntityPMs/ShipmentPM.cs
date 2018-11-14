@@ -2271,5 +2271,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? ContainerLastStatusDate { get; set; }
 
+        public bool ShipmentContanisDangerousGoods { get; set; }
+        
     }
 }
