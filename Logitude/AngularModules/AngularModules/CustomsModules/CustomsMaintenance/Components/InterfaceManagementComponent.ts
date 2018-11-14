@@ -225,7 +225,8 @@ export class InterfaceManagementComponent implements OnInit {
         logWindow.Height = 500;
         logWindow.Title = windowTitle;
         logWindow.IsShowCloseButton = true;
-        logWindow.Show('./Customs/Components/Maintenance/AddEditInterfaceManagementComponent');
+        //logWindow.Show('./Customs/Components/Maintenance/AddEditInterfaceManagementComponent');
+        logWindow.Show('./CustomsModules/CustomsMaintenance/Components/AddEditInterfaceManagementComponent');
 
     }
     RefreshBtnClick() {

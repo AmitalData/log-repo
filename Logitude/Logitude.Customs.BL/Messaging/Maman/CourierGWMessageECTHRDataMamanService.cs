@@ -94,14 +94,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DecWeight = DecWeight,
                 DolarValue = DolarValue,
                 StoreTypeReq = "67",//לפי טבלה B1                יש לשלוח תמיד 67
-                Description = _DeclarationPM.Consignments.DefaultIfEmpty( new ConsignmentPM()).First().CargoDescription,
+                Description = _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().CargoDescription,
                 CustomerName = _DeclarationPM.ImporterName,
                 CustomerAddress = _DeclarationPM.ImporterAddress,
                 CustomerPhone = _DeclarationPM.CasualImporterTel,
                 DestLineDesc = "",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
                 BaldarMessageTime = DateTime.Now,
                 BaldarHp = _DeclarationPM.AgentId,
-                OpenBaldarAwbDate = _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ManifestDate.GetValueOrDefault(),///ThirdCargoID.Consignment
+                OpenBaldarAwbDate = GetOpenBaldarAwbDate(),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
 
 
 
@@ -112,9 +112,20 @@ namespace Logitude.Customs.BL.Messaging.Maman
             return courierHawbMamanModel;
         }
 
-
-
-
+        private DateTime GetOpenBaldarAwbDate()
+        {
+            var myConsignmentPM=_DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First();
+            if (myConsignmentPM == null)
+            {
+                return DateTime.MinValue;
+            }
+            if (string.IsNullOrWhiteSpace(myConsignmentPM.ThirdCargoID)){
+                return DateTime.MinValue;
+            }
+            DateTime d = DateTime.MinValue;
+            DateTime.TryParse(myConsignmentPM.ThirdCargoID, out d);
+            return d;
+        }
 
         private int CInt(string string_Maybe_mAWB)
         {
