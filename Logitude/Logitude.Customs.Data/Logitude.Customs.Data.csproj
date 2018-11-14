@@ -48,27 +48,13 @@
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data, Version=5.0.895.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Entity.Spatials, Version=8.2.103.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Entity.Spatials.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Web, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
-    </Reference>
+    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.Oracle.Entity.Spatials, Version=8.2.103.6, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
