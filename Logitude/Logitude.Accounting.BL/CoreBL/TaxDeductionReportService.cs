@@ -67,11 +67,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else myStringBuilder.Append("a0");
 
-                if (item.DeductionFileTypeCode != null)
+                if (item.DeductionType != null)
                 {
-                    if (item.DeductionFileTypeCode.Length > 1) item.DeductionFileTypeCode.Substring(0, 1);
+                    if (item.DeductionType.Length > 1) item.DeductionType.Substring(0, 1);
 
-                    myStringBuilder.Append("a"+item.DeductionFileTypeCode);
+                    myStringBuilder.Append("a"+item.DeductionType);
                 }
 
                 if (item.VATNumber != null)
@@ -129,11 +129,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 myStringBuilder.Append(' ', 52);
 
-                if (item.DeductionType != null)
+                if (item.DeductionFileTypeCode != null)
                 {
-                    if (item.DeductionType.Length > 2) item.DeductionType.Substring(0, 2);
+                    if (item.DeductionFileTypeCode.Length > 2) item.DeductionFileTypeCode.Substring(0, 2);
 
-                    myStringBuilder.Append("a" + item.DeductionType.PadLeft(2, '0'));
+                    myStringBuilder.Append("a" + item.DeductionFileTypeCode.PadLeft(2, '0'));
                 }
                 myStringBuilder.Append("a60");
                 myStringBuilder.Append('\n');
