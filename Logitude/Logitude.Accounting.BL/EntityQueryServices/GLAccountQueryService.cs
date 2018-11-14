@@ -617,6 +617,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                           IsInternationalPartner = a.IsInternationalPartner,
                                           EnglishName= a.EnglishName,
                                           VatNumber = a.VatNumber,
+                                          
                                   }
                                       ).ToList();
 
