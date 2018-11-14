@@ -2244,5 +2244,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string DeclarationWCOXml { get; set; }
 
         public string ProjectNumber { get; set; }
+        public bool ShipmentContanisDangerousGoods { get; set; }
+        
     }
 }

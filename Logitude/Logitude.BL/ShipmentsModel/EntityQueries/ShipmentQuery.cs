@@ -2191,6 +2191,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ConsigneeNotImporterReference = shipment.ConsigneeNotImporterReference;
             shipmentPM.ProjectNumber = shipment.ProjectNumber;
 
+           
+            bool iDangerousShipmentPackages = true;
+            if (shipment.IsDangerous)
+            {   
+                foreach (ShipmentPackagePM item in shipmentPM.ShipmentPackages)
+                {
+                    if (!item.IsDangerous) iDangerousShipmentPackages = false;
+                }
+            }
+
+            if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
+       
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
