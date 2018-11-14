@@ -3,21 +3,15 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {AppTool, ArrayTool} from '../../../../Infrastructure/Tools';
-import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
-import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {CustomSendOptionsArgs, SendRequestVIA} from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {CourierPendingReasonPM} from '../../../../Customs/EntityPMs/CourierPendingReasonPM';
 import { CourierPendingReasonPMService } from '../../../../Customs/Services/StandardPMs/CourierPendingReasonPMService';
 import { CourierPendingReasonExtendedListService } from '../../../../Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
-import { List } from '../../../../Infrastructure/DataContracts/Dashboard/List';
-
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     moduleId: module.id,
@@ -35,18 +29,23 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
     _CourierPendingReasonPMService: CourierPendingReasonPMService = new CourierPendingReasonPMService();
     _CourierPendingReasonExtendedListService: CourierPendingReasonExtendedListService = new CourierPendingReasonExtendedListService();
 
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
-        if (AppTool.IsNullOrEmpty(entityArgs.EntityPM)) {
-            this.EntityPM = new CourierPendingReasonPM();
-            this.EntityPM.Tenant = SessionLocator.Tenant;
-            this.isWindowMode = true;
-            this.isNewRecord = true;
-        } else {
-            this.EntityPM = this.entityArgs.EntityPM;
-        }
-        this.UIProperties.SetEnabled("UnifreightStatusCode", this.ObjectTableName, false);
 
+        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CourierPendingReason").subscribe(response => {
+
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            if (AppTool.IsNullOrEmpty(entityArgs.EntityPM)) {
+                this.EntityPM = new CourierPendingReasonPM();
+                this.EntityPM.Tenant = SessionLocator.Tenant;
+                this.isWindowMode = true;
+                this.isNewRecord = true;
+            } else {
+                this.EntityPM = this.entityArgs.EntityPM;
+            }
+            this.UIProperties.SetEnabled("UnifreightStatusCode", this.ObjectTableName, false);
+        });
     }
 
     SetWindowArgs(args: any) {

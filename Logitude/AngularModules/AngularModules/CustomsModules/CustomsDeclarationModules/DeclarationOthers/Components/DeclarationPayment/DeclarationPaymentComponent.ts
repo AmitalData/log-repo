@@ -559,6 +559,10 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     private PostSendCreditToGetBank() {
 
+        if (this.DeclarationPM.PaymentDate) {
+            return;
+        }
+
         let objecttable: ObjectTablePM = window.ObjectTables.filter(d => d.Name == "Customs.Declaration")[0];
         let searchParams = new CustomFileCreditRequestParams();
         {
@@ -606,6 +610,9 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         let bank: CustomBankList = allCustomBankList.filter(d => d.InternalCode == customFileCreditResponseData.BankCode && !d.InActive)[0];
                         if (!AppTool.IsNullOrEmpty(bank)) {
                             this.GetCreditInternalBankId = bank.Id;
+                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                                this.JustAutoFillPaymentScreen();
+                            }
                         }
                     });
                 }
@@ -646,6 +653,13 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
     AutoFillPaymentScreenByDefault() {
         this.NewMethodMethod();
+
+        if (!AppTool.IsNullOrEmpty(this.GetCreditInternalBankId)) {
+            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                this.JustAutoFillPaymentScreen();
+                return;
+            }
+        }
         this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
             .subscribe(
             (response: ServiceResponse) => {
