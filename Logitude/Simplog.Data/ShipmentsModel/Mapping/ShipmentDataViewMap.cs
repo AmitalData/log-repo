@@ -869,6 +869,8 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.Notify2Reference).HasColumnName("Notify2Reference");
             this.Property(t => t.ShipperNotExporterReference).HasColumnName("ShipperNotExporterReference");
             this.Property(t => t.ConsigneeNotImporterReference).HasColumnName("ConsigneeNotImporterReference");
+            this.Property(t => t.ContainerLastStatusDate).HasColumnName("ContainerLastStatusDate");
+
         }
     }
 }

@@ -712,6 +712,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? FirstPickupETD { get; set; }
         public DateTime? FirstPickupETA { get; set; }
         public DateTime? INTTRALastStatusDate { get; set; }
+        public DateTime? ContainerLastStatusDate { get; set; }
 
     }
 }

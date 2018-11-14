@@ -294,6 +294,10 @@
     <Compile Include="Migrations\201811120753156_AddProjectNumberToShipment_Maheera.Designer.cs">
       <DependentUpon>201811120753156_AddProjectNumberToShipment_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811140626215_AddShipmentContainerLastStatusDate.cs" />
+    <Compile Include="Migrations\201811140626215_AddShipmentContainerLastStatusDate.Designer.cs">
+      <DependentUpon>201811140626215_AddShipmentContainerLastStatusDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -458,6 +462,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811120753156_AddProjectNumberToShipment_Maheera.resx">
       <DependentUpon>201811120753156_AddProjectNumberToShipment_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811140626215_AddShipmentContainerLastStatusDate.resx">
+      <DependentUpon>201811140626215_AddShipmentContainerLastStatusDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
