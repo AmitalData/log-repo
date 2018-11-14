@@ -296,6 +296,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipperNotExporterReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeNotImporterReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ForwardingPartnerId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ProjectNumber).HasMaxLength(100).IsUnicode(false);
 
             //    .HasColumnAnnotation(
             //IndexAnnotation.AnnotationName,
@@ -669,6 +670,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipperNotExporterReference).HasColumnName("ShipperNotExporterReference");
             this.Property(t => t.ConsigneeNotImporterReference).HasColumnName("ConsigneeNotImporterReference");
             this.Property(t => t.ForwardingPartnerId).HasColumnName("ForwardingPartnerId");
+            this.Property(t => t.ProjectNumber).HasColumnName("ProjectNumber");
+            this.Property(t => t.ContainerLastStatusDate).HasColumnName("ContainerLastStatusDate");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

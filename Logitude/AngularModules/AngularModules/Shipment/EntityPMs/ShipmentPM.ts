@@ -4099,6 +4099,11 @@ export class ShipmentPM {
     public get INTTRALastStatusDate() { return this.iNTTRALastStatusDate; }
     public set INTTRALastStatusDate(newValue: Date) { if (this.iNTTRALastStatusDate != newValue) { this.iNTTRALastStatusDate = newValue; this.MarkAsDirty("INTTRALastStatusDate"); } }
 
+    private projectNumber: string;
+    public get ProjectNumber() { return this.projectNumber; }
+    public set ProjectNumber(newValue: string) { if (this.projectNumber != newValue) { this.projectNumber = newValue; this.MarkAsDirty("ProjectNumber"); } }
+
+
     private notify1Reference: string;
     public get Notify1Reference() { return this.notify1Reference; }
     public set Notify1Reference(newValue: string) {

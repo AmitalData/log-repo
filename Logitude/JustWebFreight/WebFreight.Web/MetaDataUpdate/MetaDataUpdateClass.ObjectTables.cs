@@ -472,10 +472,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 EnableSecurity = true,
                 ObjectTableTypeCode = "BR",
                 AllowCustomFields = true,
-                MaxNumberOfCustomFields = 10,
+                MaxNumberOfCustomFields = 40,
                 HasDynamicHeader = true,                                
                 HasDocuments = true,
-
                 ClientModuleName = "Shipment",
                 NewWizardComponentPath = "./Shipment/Components/NewEntity/NewShipmentComponent",
                 HasHelper = true,

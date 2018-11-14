@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //Outputs
             foreach (Journal a in journals)
             {
-                var exist = taxReport.TaxReportLines.Select(d => d.JournalId == a.Id).FirstOrDefault();
+                var exist = taxReport.TaxReportLines.Where(d => d.JournalId == a.Id).Any();
                 if (!exist)
                 {
                     string reference = null;

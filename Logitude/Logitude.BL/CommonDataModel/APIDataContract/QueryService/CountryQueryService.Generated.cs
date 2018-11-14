@@ -58,6 +58,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public Country GetCountryByCode(string Code,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Country with Code " + Code + " doesn't exist");
+
+				return CountryDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public Country CountryDataMapping(CountryPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -65,8 +84,7 @@ using Simplog.Data.CommonDataModel;
 				   
 				   var temp = new Country(); 
 				   temp.Id = MyEntityPM.Id;
-				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.Code = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Country");  
+				   temp.Code = MyEntityPM.Code;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;					
 				   return temp;
@@ -90,21 +108,11 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.Code,ComputingPartnerName,"Country");
-					    if(string.IsNullOrEmpty(MyCode))
-						{
-						  throw new ApplicationException("Country with Partner Code " + MyEntity.Code + " doesn't match any record");
-						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant);
-						
-						
-					}
-					
-					   					   
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
+					} 					   
 					if(temp == null)
 					{
-					    throw new ApplicationException("Country with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("Country with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{

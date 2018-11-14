@@ -1,4 +1,4 @@
-﻿import {QuotePM} from '../EntityPMs/QuotePM';
+import {QuotePM} from '../EntityPMs/QuotePM';
 import {QuotePackagePM} from '../EntityPMs/QuotePackagePM';
 import {QuoteChargePM} from '../EntityPMs/QuoteChargePM';
 import {QuotePriceStepsPM} from '../EntityPMs/QuotePriceStepsPM';
@@ -297,6 +297,7 @@ export class QuoteUtilities {
             newChargePM.CostMaxAmount = item.CostMaxAmount;
             newChargePM.CostMinAmount = item.CostMinAmount;
             newChargePM.SaleMinAmount = item.SaleMinAmount;
+            newChargePM.SaleMaxAmount = item.SaleMaxAmount;
             newChargePM.MarkUpValue = 0;
             newChargePM.ContainerType1MarkUpValue = 0;
             newChargePM.ContainerType2MarkUpValue = 0;

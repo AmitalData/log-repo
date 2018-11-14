@@ -96,5 +96,11 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public List<CustomField> CustomFields { get; set; }
     
     public bool IsOperationalClosed { get; set; }
+    
+    public Vessel Vessel { get; set; }
+    
+    public DateTime? MainCarriageATA { get; set; }
+    
+    public DateTime? MainCarriageATD { get; set; }
     }
 } 

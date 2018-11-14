@@ -854,7 +854,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (glAccount.CurrencyId != invoiceCurrencyId)
                         {
-                            string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceCurrencyGLAccount" + " " + glAccount.CurrencyCode, tenant);
+                            string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceCurrencyGLAccount", tenant) + " " + glAccount.CurrencyCode;
                             errors += msg + ";";
                             //throw new ApplicationException(msg);
                         }
