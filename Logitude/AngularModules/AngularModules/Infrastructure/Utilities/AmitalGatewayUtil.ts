@@ -492,7 +492,8 @@ export class AmitalGatewayUtil {
 
                                 });
 
-                                logWindow.Show('./Customs/Components/Declaration/DeclarationPayment/SupplierInvoiceSelectionComponent');
+                                //logWindow.Show('./Customs/Components/Declaration/DeclarationPayment/SupplierInvoiceSelectionComponent');
+                                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/SupplierInvoiceSelectionComponent');
                             });
                         return;
                     }
@@ -963,7 +964,8 @@ export class MapDocumentTypeCustomsData {
         logWindow.ShowCloseButton = true;
         logWindow.Show(
             //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
-            './Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+            //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+            './CustomsModules/CustomsMaintenance/Components/DocumentTypeCustomsDataComponent'
         );
 
         logWindow.WindowClosed.subscribe(($event1: any) => {
