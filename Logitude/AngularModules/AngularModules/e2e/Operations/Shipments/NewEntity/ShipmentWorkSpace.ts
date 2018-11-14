@@ -50,8 +50,8 @@ export class ShipmentWorkSpace {
         this.DirectShipment.CreateDirectShipment(shipperRef1, LogitudeShipType, Direction, TransportMode, ShipmentType);
         this.Helper.WaitBusyIndicator();
 
-        this.QuickSearch.UseQuickSearch(shipperRef1);
-        this.EditShipmentTabs.EditTabs(shipperRef1,LogitudeShipType, ShipmentType);
+        // this.QuickSearch.UseQuickSearch(shipperRef1);
+        // this.EditShipmentTabs.EditTabs(shipperRef1,LogitudeShipType, ShipmentType);
 
         // this.QuickSearch.UseQuickSearch('4445364363');
         // this.EditShipmentTabs.EditTabs('4445364363',LogitudeShipType, ShipmentType);

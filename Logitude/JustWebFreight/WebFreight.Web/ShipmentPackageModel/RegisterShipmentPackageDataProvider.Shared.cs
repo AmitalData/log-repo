@@ -113,6 +113,12 @@ namespace WebFreight.Web.ShipmentPackageModel
             public DateTime? LastETA { get; set; } //: datetime : will take ETA from transshipment 3 if exist, if not from trans. 2, if not from trans. 1 and then from the main carriage if no transshipments.
             public DateTime? LastATA { get; set; } // :datetime : same logic as above, but for ATA
             public string LastVessel { get; set; }  //: string : same logic but for the vessel name
+
+            public string BookingConfirmationNumber { get; set; }
+
+            public string ContainerPackageItemsDescription { get; set; }
+            public string ContainerPackageItemsValue { get; set; }
+            public string ContainerPackageItemsQuantity { get; set; }
         }
     }
 }
