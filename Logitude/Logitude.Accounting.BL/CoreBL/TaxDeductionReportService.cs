@@ -95,7 +95,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (item.EnglishName.Length > 22) item.EnglishName = item.EnglishName.Substring(0, 22);
 
-                        myStringBuilder.Append("a"+item.EnglishName.ToUpper().PadLeft(22, '0'));
+                        myStringBuilder.Append("a"+item.EnglishName.ToUpper().PadLeft(22, ' '));
                     }
                 }
                 else
@@ -103,29 +103,40 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.GLAccountLocalName != null)
                     {
                         if (item.GLAccountLocalName.Length > 22) item.GLAccountLocalName = item.GLAccountLocalName.Substring(0, 22);
-                        myStringBuilder.AppendFormat("a"+ item.GLAccountLocalName.ToUpper().PadLeft(22, '0'));
+                        myStringBuilder.AppendFormat("a"+ item.GLAccountLocalName.ToUpper().PadLeft(22, ' '));
                     }
                 }
 
                 if (item.VendorAddress != null)
                 {
-                    if (item.VendorAddress.Length > 13) item.VendorAddress = item.VendorAddress.Substring(0, 13);
+                    if (item.VendorAddress.Length > 13) item.VendorAddress = item.VendorAddress.Substring(0, 21);
 
-                    myStringBuilder.Append("a"+item.VendorAddress.PadLeft(13, '0'));
+                    myStringBuilder.Append("a"+item.VendorAddress.PadLeft(21, ' '));
+                }
+
+                
+
+                if (item.VendorCity != null)
+                {
+                    if (item.VendorCity.Length > 13) item.VendorCity = item.VendorCity.Substring(0, 13);
+
+                    myStringBuilder.Append("a" + item.VendorCity.PadLeft(13, ' '));
                 }
 
                 myStringBuilder.Append("a" + item.SumOfAmountInLocalCurrency);
                 myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount);
+
+
                 myStringBuilder.Append("a" + item.TaxDeductionPercentage);
 
                 string s = item.AssessingOfficerCode + " " + item.AssessingOfficerName;
                 if ( s.Length > 12) s = s.Substring(0, 12);
-                myStringBuilder.Append("a" + s.PadLeft(12,'0'));
+                myStringBuilder.Append("a" + s.PadLeft(12,' '));
 
                 if (item.Occupation != null)
                 {
                     if (item.Occupation.Length > 14) item.Occupation = item.Occupation.Substring(0, 14);
-                    myStringBuilder.Append("a" + item.Occupation.PadLeft(14, '0'));
+                    myStringBuilder.Append("a" + item.Occupation.PadLeft(14, ' '));
                 }
                 myStringBuilder.Append(' ', 52);
 
@@ -305,7 +316,8 @@ namespace Logitude.Accounting.BL.CoreBL
             User loggedUser = GetLoggedUser(tenant);
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("TDR856", tenant);
 
-            string _code = tenantPM.VatNumber + taxDeductionReport.TaxYear.ToString().Substring(1, 3);// CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
+            string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
+            string name = tenantPM.VatNumber + "."+ taxDeductionReport.TaxYear.ToString().Substring(1, 3);
             DocumentsFilingPM document = new DocumentsFilingPM()
             {
                 Description = "TDR856 Text File",
@@ -323,6 +335,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 FileExtension = "txt",
                 SecurityId = "100",
+                FileName = name,
             };
 
             byte[] bytearray = Encoding.Unicode.GetBytes(file);

@@ -8165,10 +8165,10 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "Contains",
                 HelpTextDefaultText = "Searching by :\n1:Payment # \n2:Bill to \n3:Reference",
                 HelpTextCode = "SearchFields",
-                FullLocalDefaultText = "חיפוש לפי תשלום  / כרטיס / אסמכתא",
-                ListLocalDefaultText = "חיפוש לפי תשלום  / כרטיס / אסמכתא",
-                ShortLocalDefaultText = "חיפוש לפי תשלום  / כרטיס / אסמכתא",
-                HelpLocalDefaultText = "חיפוש לפי תשלום  / כרטיס / אסמכתא",
+                FullLocalDefaultText = "חיפוש לפי מספר קבלה\\לקוח",
+                ListLocalDefaultText = "חיפוש לפי מספר קבלה\\לקוח",
+                ShortLocalDefaultText = "חיפוש לפי מספר קבלה\\לקוח",
+                HelpLocalDefaultText = "חיפוש לפי מספר קבלה\\לקוח",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()

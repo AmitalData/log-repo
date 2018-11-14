@@ -89,6 +89,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             bool hasFollowupsFeature = SecurityUtility.CheckTableContactFeature("Shipment", "MYFOLLOWUPS", tenant) || SecurityUtility.CheckTableContactFeature("Shipment", "ALLFOLLOWUPS", tenant);
             bool hasExpDepNotTransmittedFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ExpectedDeparturesNotTransmitted", tenant);
             bool hasShippingInstructionsLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ShippingInstructionsLast7Days", tenant);
+            bool hasContainerStatusLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ContainerStatusLast7Days", tenant);
 
             string loggedUserEmail = ServiceContext.User.Identity.Name;
             string loggedContactId = null;
@@ -101,7 +102,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
             shipmentQuery = new ShipmentQuery(tenant);
 
-            ShipmentsSummary myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, directionId, transportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature);
+            ShipmentsSummary myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, directionId, transportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature);
 
             return myResult;
         }
