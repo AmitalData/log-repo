@@ -80,7 +80,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             var courierHawbMamanModel = new GWMessageECTHRData()
             {
-                BaldarCode = "לקחת מדיפולט קוד משלח בלדר",
+                BaldarCode = "2026" ,//"לקחת מדיפולט קוד משלח בלדר",
                 BaldarAwb = _DeclarationPM.CourierHAWB,
                 AirlineAwbPref = _CourierMasterPM.AirlineId,//יש לשלוח את Airline PRFIX)- 114
                 Master = CInt(_CourierMasterPM.MAWB),
@@ -147,35 +147,36 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         // not from  https://docs.google.com/document/d/1cjjeORaFsWMS32LhIxmEqNza3q7s7ZAr_PQVQOlwupw/edit#
         //from https://maman.wsfreeze.co.il/WebAPIExt/Help/Api/POST-api-baldar-CreateECTHRMessgae
+        public string BaldarCode { get; set; }
+        public string BaldarAwb { get; set; }
+
         public string AirlineAwbPref { get; set; }
 
-        public string AirlineCode { get; set; }
+        
+        public int Master { get; set; }
         public int Awb8 { get; set; }
-        public string BaldarAwb { get; set; }
-        public string BaldarCode { get; set; }
-        public string BaldarHp { get; set; }
 
-        public DateTime BaldarMessageTime { get; set; }
-        public string CustomerAddress { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerPhone { get; set; }
+        public string HawbExtnd { get; set; }
+        public string AirlineCode { get; set; }
+        public int FltNo { get; set; }
+        public DateTime? FltDate { get; set; }
+        public DateTime? LandTime { get; set; }
         public int DecNoOfPackags { get; set; }
         public decimal DecWeight { get; set; }
-
-        public string Description { get; set; }
-        public string DestLineDesc { get; set; }
         public decimal DolarValue { get; set; }
-
-        public DateTime? FltDate { get; set; }
-        public int FltNo { get; set; }
-        public string HawbExtnd { get; set; }
-        public DateTime? LandTime { get; set; }
-        public int Master { get; set; }
+        public string StoreTypeReq { get; set; }
+        public string Description { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerAddress { get; set; }
+        public string CustomerPhone { get; set; }
+        public string DestLineDesc { get; set; }
+        public DateTime BaldarMessageTime { get; set; }
+        public string BaldarHp { get; set; }
         public DateTime OpenBaldarAwbDate { get; set; }
 
         public int ResponseStatusCode { get; set; }
         public string ResponseStatusMsg { get; set; }
-        public string StoreTypeReq { get; set; }
+        
 
 
     }

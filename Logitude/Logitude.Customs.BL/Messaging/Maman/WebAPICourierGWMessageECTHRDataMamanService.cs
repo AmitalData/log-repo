@@ -61,7 +61,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             //.PostIt("", "F_unitedf", "Unit2019", data);
             var settings = new CourierHawbMamanCommunicationLogSettings()
             {
-                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/api/baldar/CreateECTHRMessgae",
+                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
                 URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
 
                 username = "F_unitedf",
