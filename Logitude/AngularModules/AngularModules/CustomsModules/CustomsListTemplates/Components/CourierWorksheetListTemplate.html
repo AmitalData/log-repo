@@ -140,11 +140,11 @@
                 <!--<div style="width:30px;height:30px">
                     <div>-->
                 <ul style="width:100px; ">
-                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] == null">
-                        <span (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">הזנת Pending</span>
+                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');" >
+                        <span >הזנת Pending</span>
                     </li>
-                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null">
-                        <span (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">מחיקת Pending</span>
+                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null"  (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
+                        <span >מחיקת Pending</span>
                     </li>
                 </ul>
                 <!--</div>
