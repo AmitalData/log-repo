@@ -128,6 +128,10 @@
         <span *ngIf="_CourierWorksheet['IsClosedForFollowUp']">{{'Customs.CourierMaster.Status.Close'  | TextCodeTranslationPipe }}</span>
     </div>
 
+    <div class="TextTrimming" *ngIf="fieldName == 'CourierPendingReasonName'" style="text-align:right;">
+        <span data-toggle="tooltip" data-placement="bottom" title="{{_CourierWorksheet['PendingRemarks']}}">{{_CourierWorksheet.CourierPendingReasonName}}</span>
+    </div>
+
     <div *ngIf="fieldName == 'CourierPendingReasonCode'" style="width: 14px; height: 14px; margin-top:7.5px; margin-right:16.5px; text-align:right;">
         <courier-filter-button #MyDropdownMenuFilterComponent (DropdownMenuButtonClicked)="DropdownMenuButtonClicked(event)">
             <div class="class-filter-content">
@@ -140,11 +144,11 @@
                 <!--<div style="width:30px;height:30px">
                     <div>-->
                 <ul style="width:100px; ">
-                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');" >
-                        <span >הזנת Pending</span>
+                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                        <span>הזנת Pending</span>
                     </li>
-                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null"  (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
-                        <span >מחיקת Pending</span>
+                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
+                        <span>מחיקת Pending</span>
                     </li>
                 </ul>
                 <!--</div>
@@ -177,10 +181,10 @@
                                 <span (click)="currSplitButtonComponent.DropdownDisplayClose();SendPay($event);">תשלום</span>
                             </li>
 
-                            <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true" >
+                            <li *ngIf="IsWebAPICourierGWMessageECTHRDataMamanEnable === true">
                                 <span (click)="currSplitButtonComponent.DropdownDisplayClose();GetSendECTHRDataMaman($event);">ש.מ.ב לממן</span>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </div>
