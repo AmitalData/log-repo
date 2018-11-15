@@ -404,6 +404,18 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             this.EntityPM.ImporterPassportNumber = null;
            // this.EntityPM.ImporterName = null;
             this.EntityPM.ImporterPassCountryCode = null;
+
+            this.EntityPM.ImporterName = "";//
+
+            this.EntityPM.CasualImporterAddress1 = "";
+            this.EntityPM.CasualImporterAddress2 = "";
+            this.EntityPM.CasualImporterCity = "";
+            this.EntityPM.CasualImporterZipCode = "";
+            this.EntityPM.CasualImporterFax = "";
+            this.EntityPM.CasualImporterEmail = "";
+            this.EntityPM.CasualImporterTel = "";
+            this.EntityPM.CasualImporterContact = "";
+
         }
 
 

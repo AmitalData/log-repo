@@ -292,9 +292,10 @@
 
     </tr>
     <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
-
-        <LogLabel [ObjectFieldName]="'CasualImporterAddress1'" [ObjectTableName]="ObjectTableName"
-                  [DataContext]="DataContext"></LogLabel>
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterAddress1'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
         <td colspan="2">
             <LogTextBox [ObjectFieldName]="'CasualImporterAddress1'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterAddress1"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
@@ -302,9 +303,10 @@
 
     </tr>
     <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
-        <LogLabel [ObjectFieldName]="'CasualImporterAddress2'" [ObjectTableName]="ObjectTableName"
-                  [DataContext]="DataContext"></LogLabel>
-
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterAddress2'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
         <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterAddress2'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterAddress2"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
@@ -314,10 +316,10 @@
 
     
     <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
-
-        <LogLabel [ObjectFieldName]="'CasualImporterCity'" [ObjectTableName]="ObjectTableName"
-                  [DataContext]="DataContext"></LogLabel>
-
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterCity'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
         <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterCity'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterCity"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
@@ -325,50 +327,50 @@
     </tr>
 
     <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
-
-        <LogLabel [ObjectFieldName]="'CasualImporterZipCode'" [ObjectTableName]="ObjectTableName"
-                  [DataContext]="DataContext"></LogLabel>
-
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterZipCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
         <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterZipCode'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterZipCode"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
     </tr>
     <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
-
-        <LogLabel [ObjectFieldName]="'CasualImporterFax'" [ObjectTableName]="ObjectTableName"
-                  [DataContext]="DataContext"></LogLabel>
-
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterFax'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
         <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterFax'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterFax"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
     </tr>
     <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
-
-        <LogLabel [ObjectFieldName]="'CasualImporterEmail'" [ObjectTableName]="ObjectTableName"
-                  [DataContext]="DataContext"></LogLabel>
-
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterEmail'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
         <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterEmail'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterEmail"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
     </tr>
     <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
-
-        <LogLabel [ObjectFieldName]="'CasualImporterTel'" [ObjectTableName]="ObjectTableName"
-                  [DataContext]="DataContext" [Text]="'טלפון:'"></LogLabel>
-
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterTel'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext" [Text]="'טלפון'"></LogLabel>
+        </td>
         <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterTel'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterTel"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
     </tr>
     <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
-
-        <LogLabel [ObjectFieldName]="'CasualImporterContact'" [ObjectTableName]="ObjectTableName"
-                  [DataContext]="DataContext"></LogLabel>
-
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterContact'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
         <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterContact'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterContact"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>

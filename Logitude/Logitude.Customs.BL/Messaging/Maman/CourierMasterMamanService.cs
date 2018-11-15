@@ -7,17 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unifreight.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.Messaging.Maman
 {
     public class CourierMasterMamanService
     {
         private CourierMasterPM _CourierMasterPM;
+        private ICustomContext _Context;
 
         public string SendFTPMamanRequest(string courierMasterId, int tenant)
         {
-            var context = CustomContext.GetContext(tenant);
-            var myCourierMasterQueryService = new CourierMasterQueryService(context);
+            _Context = CustomContext.GetContext(tenant);
+            var myCourierMasterQueryService = new CourierMasterQueryService(_Context);
 
             _CourierMasterPM = myCourierMasterQueryService.GetSingle(courierMasterId, false, false);
             if (_CourierMasterPM == null)
@@ -47,7 +49,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             CourierMasterMamanModel courierMasterMamanModel = new CourierMasterMamanModel();
             //string space = " ";
             courierMasterMamanModel.MAWB = _CourierMasterPM.MAWB != null ? _CourierMasterPM.MAWB : " ";
-            courierMasterMamanModel.AirlineId = _CourierMasterPM.AirlineId != null ? _CourierMasterPM.AirlineId : " ";
+            courierMasterMamanModel.AirlineId = _CourierMasterPM.AirlinePrefix != null ? _CourierMasterPM.AirlinePrefix : " ";
             courierMasterMamanModel.HAWBShort = _CourierMasterPM.ShortHAWB != null ? _CourierMasterPM.ShortHAWB : " ";
             courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode : " ";
             courierMasterMamanModel.Weight = "K";
@@ -69,9 +71,13 @@ namespace Logitude.Customs.BL.Messaging.Maman
             //{
             //    courierMasterMamanModel.Description = "";
             //}
-            courierMasterMamanModel.Agent = "";
+
+            var declarationQS = new DeclarationQueryService(_Context);
+            string forwarder = declarationQS.GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _CourierMasterPM.Tenant);
+
+            courierMasterMamanModel.Agent = forwarder;
             courierMasterMamanModel.SystemDate = String.Format("{0:yyMMdd}", DateTime.Now);
-            courierMasterMamanModel.Forwarder = "";
+            courierMasterMamanModel.Forwarder = forwarder;
             courierMasterMamanModel.Internet = "I";
             courierMasterMamanModel.HAWB = _CourierMasterPM.HAWB != null ? _CourierMasterPM.HAWB : " ";
 
@@ -114,7 +120,6 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         }
     }
-
 
     public class CourierMasterMamanModel
     {

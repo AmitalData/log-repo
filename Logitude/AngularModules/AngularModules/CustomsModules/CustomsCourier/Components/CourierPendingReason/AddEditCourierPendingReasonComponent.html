@@ -60,8 +60,18 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td>
-                        <LogTextBox [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [Text]="Code"
+                        <LogTextBox *ngIf="!isFromUnifreight" [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [Text]="Code"
                                     [DataContext]="DataContext" [HideColumns]="true" [InputType]="'integertext'"></LogTextBox>
+
+                        <LogLov *ngIf="isFromUnifreight"
+                                [ObjectFieldName]="'PendingCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CourierPendingReason'"
+                                [HideColumns]="true"
+                                [FocusOnMe]="true"
+                                [SelectedValue]="PendingCode">
+                        </LogLov>
                     </td>
                     <td></td>
                 </tr>

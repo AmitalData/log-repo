@@ -56,7 +56,18 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         private List<string> BuildDBManifest()
         {
             string ResourceStreamPath = "Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO.DBManifest_18.csv";
-            string text = GetResource(ResourceStreamPath);
+            ResourceStreamPath = "Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO.DBManifest_18UTF8.csv";
+            //string text = GetResource(ResourceStreamPath);
+            string text;
+            //bool fromResource = false;
+            //if (fromResource)
+            //{
+            //    //text = WCOResource.DBManifest_18;
+            //}
+            //else
+            {
+                text = GetResource(ResourceStreamPath);
+            }
             var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             var rows = lines.Skip(3);//remove header
             return rows.ToList();
@@ -64,8 +75,20 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         }
         private List<string> BuildDB()
         {
+            
             string ResourceStreamPath = "Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO.DB.csv";
-            string text = GetResource(ResourceStreamPath);
+            ResourceStreamPath = "Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO.DBUTF8.csv";
+            string text;
+            //bool fromResource = false;
+            //if (fromResource)
+            //{
+            //    //text = WCOResource.DB;
+            //}
+            //else
+            {
+                text = GetResource(ResourceStreamPath);
+            }
+            //string text = GetResource(ResourceStreamPath);
             var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             var rows = lines.Skip(1);//remove header
             return rows.ToList();

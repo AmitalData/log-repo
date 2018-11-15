@@ -58,13 +58,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 
 
-
+            //.PostIt("", "F_unitedf", "Unit2019", data);
             var settings = new CourierHawbMamanCommunicationLogSettings()
             {
-                host = "https://maman.wsfreeze.co.il/api/baldar/CreateECTHRMessgae",
+                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
+                URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
 
-                username = "",
-                password = "",
+                username = "F_unitedf",
+                password = "Unit2019",
 
                 Tenant = tenant,
                 DeclarationId = declarationId
@@ -173,13 +174,19 @@ namespace Logitude.Customs.BL.Messaging.Maman
     }
     public class CourierHawbMamanCommunicationLogSettings
     {
-        public string host { get; set; }
         
+
+        public string URIToken { get; set; }////@"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
+        public string URIBaldarCreateECTHRMessgae { get; set; }///"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";
+
+        //.PostIt("", "ftp-uti", "Pariz2019+", data);
+        //.PostIt("", "F_unitedf", "Unit2019", data);
+
         public string username { get; set; }
         public string password { get; set; }
 
+
         public int Tenant { get; set; }
-        
         public string DeclarationId { get;  set; }
     }
 

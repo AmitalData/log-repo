@@ -1090,7 +1090,8 @@ export class MaintenanceComponent {
                     logitudeWindow.Height = 400;
                     logitudeWindow.Width = 500;
 
-                    logitudeWindow.Show('./Customs/Components/CustomsRequests/GeneralRequests/RecallSuppliersFromFileComponent');
+                    //logitudeWindow.Show('./Customs/Components/CustomsRequests/GeneralRequests/RecallSuppliersFromFileComponent');
+                    logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent');
                     break;
                 }
             case "MTDD": {
