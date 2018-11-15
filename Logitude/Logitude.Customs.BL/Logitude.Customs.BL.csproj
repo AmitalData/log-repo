@@ -1652,6 +1652,11 @@
     <Compile Include="EntityUpdateServices\PhysicalCheckUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsVendorUpdateService.cs" />
+    <Compile Include="WCOResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WCOResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="StimulReport\GenerateCls\DeclarationSReport.cs" />
     <Compile Include="StimulReport\DeclarationSReport.P.cs" />
     <Compile Include="StimulReport\SupplierInvioceItemAddsM.cs" />
@@ -1694,18 +1699,22 @@
     <Compile Include="Validators\DeclarationValidator.Shared.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="WCOResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WCOResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="StimulReport\Test\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <EmbeddedResource Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\DB.csv" />
-    <EmbeddedResource Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\DBManifest_18.csv" />
     <None Include="Messaging\U2L\FritzDeclaration\FritzDeclarationCls\FritzDeclaration.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Resources\DB.csv" />
+    <None Include="Resources\DBManifest_18.csv" />
     <None Include="StimulReport\GenerateCls\DeclarationSReport.dtd" />
     <None Include="StimulReport\GenerateCls\DeclarationSReport.xsd">
       <SubType>Designer</SubType>
