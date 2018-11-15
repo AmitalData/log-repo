@@ -1709,6 +1709,8 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <EmbeddedResource Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\DBManifest_18UTF8.csv" />
+    <EmbeddedResource Include="Messaging\LogitudeClient\DeclarationErrorPointer\DBWCO\DBUTF8.csv" />
     <None Include="Messaging\U2L\FritzDeclaration\FritzDeclarationCls\FritzDeclaration.xsd">
       <SubType>Designer</SubType>
     </None>

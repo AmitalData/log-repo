@@ -56,14 +56,15 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         private List<string> BuildDBManifest()
         {
             string ResourceStreamPath = "Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO.DBManifest_18.csv";
+            ResourceStreamPath = "Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO.DBManifest_18UTF8.csv";
             //string text = GetResource(ResourceStreamPath);
             string text;
-            bool fromResource = true;
-            if (fromResource)
-            {
-                text = WCOResource.DBManifest_18;
-            }
-            else
+            //bool fromResource = false;
+            //if (fromResource)
+            //{
+            //    //text = WCOResource.DBManifest_18;
+            //}
+            //else
             {
                 text = GetResource(ResourceStreamPath);
             }
@@ -76,13 +77,14 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         {
             
             string ResourceStreamPath = "Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO.DB.csv";
+            ResourceStreamPath = "Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO.DBUTF8.csv";
             string text;
-            bool fromResource = true;
-            if (fromResource)
-            {
-                text = WCOResource.DB;
-            }
-            else
+            //bool fromResource = false;
+            //if (fromResource)
+            //{
+            //    //text = WCOResource.DB;
+            //}
+            //else
             {
                 text = GetResource(ResourceStreamPath);
             }
