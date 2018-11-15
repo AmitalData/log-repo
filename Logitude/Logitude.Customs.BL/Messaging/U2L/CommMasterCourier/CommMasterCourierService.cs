@@ -1,0 +1,346 @@
+﻿//using Logitude.AmitalMessaging.Customs.
+using Logitude.AmitalMessaging.Infrastructure;
+using Logitude.AmitalMessaging.Utils;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
+using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Server.Tools.Contracts;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Models;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
+using System.Linq;
+using Unifreight.Data.AmitalModel;
+
+namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
+{
+    public class CommMasterCourierService : UnifreightGenericService
+    {
+        private LOGIMASTERCOUR _LOGIMASTERCOUR;
+        private LogitudeMasterCourier _LogitudeMasterCourier;
+        private CourierMasterPM _CourierMasterPM;
+        private ICustomContext _context;
+
+        private AmitalContext amitalContext;
+
+        public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.CommMasterCourier.CommMasterCourierService.Upsert()";
+        
+        private Stopwatch _Stopwatch;
+
+        public CommMasterCourierService()
+            : base(
+            "1.000.000001",
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name,
+            true
+            )
+        {
+
+        }
+
+        protected int ResolvedTenantLocal() 
+        {
+            if (int.Parse(_LOGIMASTERCOUR.LogitudeMasterCourier[0].Tenant) > 0)
+            {
+                return int.Parse(_LOGIMASTERCOUR.LogitudeMasterCourier[0].Tenant);
+            }
+            
+            return ResolvedTenant();
+        }
+
+        public override void ProccessGenericRequest(
+              string xmlLOGIMASTERCOUR,
+              ref string MoreParams,
+              out string MessageOut)
+        {
+            MessageOut = "";
+            _Stopwatch = Stopwatch.StartNew();
+            MyCommunicationsParams.Subject = "CommMasterCourierService ";
+
+            DeserilazeObject(xmlLOGIMASTERCOUR);
+            AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+            //CheckIntegrity();
+            AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+            MyGenericResponseObj.Stage = "GetContext";
+            MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+            _context = CustomContext.GetContext(ResolvedTenant());
+            amitalContext = AmitalContext.GetContext(ResolvedTenant());
+            
+
+            ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
+            MyGenericResponseObj.Stage = "CourierMasterUpsert";
+            
+            try
+            {
+                var myQueryService = new CourierMasterQueryService(_context);
+                var myCourierMasterUpdateService = new CourierMasterUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenantLocal());
+
+                MyGenericResponseObj.Stage = "Check integrity ";
+                ///must 
+
+                if (String.IsNullOrWhiteSpace(_LogitudeMasterCourier.AirlineId))
+                {
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                    MyGenericResponseObj.Message = "AirlineId is missing";
+                    AppendLogLine(MyGenericResponseObj.Message);
+                    return;
+                }
+                int index = _LogitudeMasterCourier.AirlineId.IndexOf('-');
+                if (index < 1)
+                {
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                    MyGenericResponseObj.Message = "airlineId does not contains code and prefix";
+                    AppendLogLine(MyGenericResponseObj.Message);
+                    return;
+                }
+                var airlineId = TranslateAirline(_LogitudeMasterCourier.AirlineId);
+                if (String.IsNullOrWhiteSpace(airlineId))
+                {
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                    MyGenericResponseObj.Message = "AirlineId " + _LogitudeMasterCourier.AirlineId + " Doesn't exist";
+                    AppendLogLine(MyGenericResponseObj.Message);
+                    return;
+                }
+
+                if (String.IsNullOrWhiteSpace(_LogitudeMasterCourier.MAWB))
+                {
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                    MyGenericResponseObj.Message = "MAWB is missing";
+                    AppendLogLine(MyGenericResponseObj.Message);
+                    return;
+                }
+
+                if (String.IsNullOrWhiteSpace(_LogitudeMasterCourier.HAWB))
+                {
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                    MyGenericResponseObj.Message = "HAWB is missing";
+                    AppendLogLine(MyGenericResponseObj.Message);
+                    return;
+                }
+
+                MyGenericResponseObj.Stage = "GetSingle";
+                this._CourierMasterPM = myQueryService.GetSingleByAirlineAWBs(airlineId, _LogitudeMasterCourier.HAWB, _LogitudeMasterCourier.MAWB, ResolvedTenant());
+                /// Exist
+                if (_CourierMasterPM == null || String.IsNullOrWhiteSpace(_CourierMasterPM.Id))
+                {
+                    this._CourierMasterPM = new Def.EntityPMs.CourierMasterPM();
+                    this._CourierMasterPM.ChangeSetOp = ChangeSetOperation.Insert;
+                }
+                else
+                {
+                    this._CourierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
+                }
+                
+                _CourierMasterPM.AirlineId = airlineId;
+                _CourierMasterPM.MAWB = _LogitudeMasterCourier.MAWB;
+                _CourierMasterPM.MAWBTypeCode = "740";
+                _CourierMasterPM.HAWB = _LogitudeMasterCourier.HAWB;
+                decimal grossMassMeasure = 0;
+                if (decimal.TryParse(_LogitudeMasterCourier.GrossMassMeasure, out grossMassMeasure) || string.IsNullOrWhiteSpace(_LogitudeMasterCourier.GrossMassMeasure))
+                {
+                    _CourierMasterPM.GrossMassMeasure = grossMassMeasure;
+                }
+                int packageQuantity = 0;
+                if (int.TryParse(_LogitudeMasterCourier.PackageQuantityTy, out packageQuantity) || string.IsNullOrWhiteSpace(_LogitudeMasterCourier.PackageQuantityTy))
+                {
+                    _CourierMasterPM.PackageQuantity = packageQuantity;
+                }
+                _CourierMasterPM.EstimatedArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.EstimatedArrivalDate, "LogitudeMasterCourier.EstimatedArrivalDate");
+                _CourierMasterPM.GatewayPortCode = TranslateInternationalSite(_LogitudeMasterCourier.GatewayPortCode);
+                _CourierMasterPM.OriginPortCode = TranslateInternationalSite(_LogitudeMasterCourier.OriginPortCode);
+                _CourierMasterPM.Tenant = ResolvedTenant();
+
+                _CourierMasterPM.CurrentContextTag = UpsertActionConst;
+                myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
+
+                AppendLogLine("CourierMasterUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+                MyGenericResponseObj.Stage = "Done All ";
+                MyGenericResponseObj.ApplicationId = this._CourierMasterPM.Id;
+                MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
+                MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                AppendLogLine("ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                return;
+            }
+            catch (Exception e)
+            {
+                AppendLogLine("ProccessRequest():Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
+                return;
+            }
+            if(!String.IsNullOrWhiteSpace(MyGenericResponseObj.StatusType.ToString()) && MyGenericResponseObj.StatusType != GenericResponseObj.StatusEnum.Success)
+            {
+                return;
+            }
+            
+        }
+
+        private string TranslateAirline(string airlineId)
+        {
+            if (String.IsNullOrWhiteSpace(airlineId))
+            {
+                AppendLogLine("airlineId is null");
+                return null;
+            }
+
+            //GET Airline.Id BY PREFIX
+            int index = airlineId.IndexOf('-');
+            if (index < 1)
+            {
+                AppendLogLine("airlineId does not contains code and prefix");
+                return null;
+            }
+            string code = airlineId.Substring(0, index);
+            string prefix = airlineId.Substring(index + 1);
+            CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(ResolvedTenantLocal());
+            CustomsAirline airline = airlineRepository.GetByAirlineAndPrefix(code,prefix, null);
+            if (airline != null)
+            {
+                return airline.Id;
+            }
+            AppendLogLine("No Airline found for airlineId " + airlineId);
+            return null;
+        }
+
+        private string TranslateInternationalSite(string internationalSite)
+        {
+            if (String.IsNullOrWhiteSpace(internationalSite))
+            {
+                AppendLogLine("internationalSite is null");
+                return null;
+            }
+            string internationalSiteId = null;
+            InternationalSiteQueryService internationalSiteQueryService = new InternationalSiteQueryService(ResolvedTenant());
+            InternationalSitePM internationalSitePM = internationalSiteQueryService.GetSingle(internationalSite, true, false);
+            if (internationalSitePM != null && !internationalSitePM.Inactive)
+            {
+                internationalSiteId = internationalSitePM.Code;
+            }
+            else
+            {
+                AppendLogLine("internationalSite = " + internationalSite + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("internationalSite = " + internationalSite + " Translated to " + internationalSiteId);
+            return internationalSiteId;
+        }
+        
+
+        void DeserilazeObject(string xmlLOGIMASTERCOUR)
+        {
+
+            MyGenericResponseObj.Stage = "Initalize ProccessRequest";
+            AppendLogLine("CommMasterCourierService.ProccessRequest");
+
+            AppendLogLine("Deserialize(DataIn1) ..");
+
+            if (string.IsNullOrWhiteSpace(xmlLOGIMASTERCOUR))
+            {
+                throw new BusinessErrorException("DataIn1 is missing");
+            }
+            if (xmlLOGIMASTERCOUR.Length > 1000)
+            {
+                AppendLogLine("XmlIn=" + xmlLOGIMASTERCOUR.Substring(0, 1000));
+                AppendLogLine(".Substring(0, 1000)");
+            }
+            else
+            {
+                AppendLogLine("XmlIn=" + xmlLOGIMASTERCOUR);
+            }
+
+            AppendLogLine("Tring DeserilazeObject");
+            MyGenericResponseObj.Stage = "Trying DeserilazeObject";
+            this._LOGIMASTERCOUR = XmlGenericUtil<LOGIMASTERCOUR>.DeSerializeObject(xmlLOGIMASTERCOUR);
+
+            if (_LOGIMASTERCOUR.LogitudeMasterCourier == null || _LOGIMASTERCOUR.LogitudeMasterCourier.Length != 1)
+            {
+                throw new BusinessErrorException("_LOGIMASTERCOUR.CommMasterCourier.Length != 1");
+            }
+            this._LogitudeMasterCourier = _LOGIMASTERCOUR.LogitudeMasterCourier[0];
+        }
+
+        public override string GetAssemblyQualifiedName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetExampleDataIn1()
+        {
+            var xml = "";
+            var amitalObjExample = new LOGIMASTERCOUR();
+            var myAmitalCommMasterCourier = new LogitudeMasterCourier();
+            
+            myAmitalCommMasterCourier.AirlineId = "1-1";
+            myAmitalCommMasterCourier.EstimatedArrivalDate = System.DateTime.Now.ToString();
+            myAmitalCommMasterCourier.GatewayPortCode = "HKG";
+            myAmitalCommMasterCourier.GrossMassMeasure = "1";
+            myAmitalCommMasterCourier.HAWB = "12345678";
+            myAmitalCommMasterCourier.MAWB = "114-12345678";
+            myAmitalCommMasterCourier.OriginPortCode = "HKG";
+            myAmitalCommMasterCourier.PackageQuantityTy = "1";
+            myAmitalCommMasterCourier.Tenant = "1";
+
+            amitalObjExample.LogitudeMasterCourier = new LogitudeMasterCourier[] { myAmitalCommMasterCourier };
+
+            xml = XmlGenericUtil<LOGIMASTERCOUR>.SerializeObject(amitalObjExample);
+
+            return xml;
+        }
+
+        public override string GetExampleDataIn2()
+        {
+            return "";
+        }
+
+        public override string GetExampleDataout1()
+        {
+            return "";
+        }
+
+        public override string GetExampleDataout2()
+        {
+            return "";
+        }
+
+        public override void ProccessRequest(string DataIn1, string DataIn2, out string DataOut1, out string DataOut2, out string SUCCESS, ref string MoreParams, out string MessageOut)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ProccessBASE64Request(string BASE64DataIn1, string BASE64DataIn2, string BASE64DataIn3, out string BASE64DataOut1, out string BASE64DataOut2, out string BASE64DataOut3, out string SUCCESS, ref string MoreParams, out string MessageOut)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public string GetTranslationL2P(string partnerID, string tableID, string localCode)
+        {
+            var rec = (from a in amitalContext.GTRTRANs
+                       where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
+                       select a).FirstOrDefault();
+            if (rec == null)
+            {
+                return null;
+            }
+            return rec.PARTNERCODE;
+        }
+
+    }
+}
+

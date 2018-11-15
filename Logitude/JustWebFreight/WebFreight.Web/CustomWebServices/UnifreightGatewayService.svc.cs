@@ -117,36 +117,27 @@ namespace WebFreight.Web.CustomWebServices
             curr = "Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments.DeclarationDocumentsService";
             _AllIUnifreightGenericService.Add(curr);
             _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments.DeclarationDocumentsService>(curr);
+
             curr = "Logitude.Customs.BL.Messaging.U2L.Courier.CourierService"; 
             _AllIUnifreightGenericService.Add(curr);
             _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.Courier.CourierService>(curr);
-
 
             curr = "Logitude.CustomsMessaging.UnifreightGateway.SendDirectMessageService";
             _AllTypes.Add(curr);
             _UnityContainer.RegisterType<UnifreightGatewayProxy, Logitude.CustomsMessaging.UnifreightGateway.SendDirectMessageService>(curr);
             AddSendDirectMessageService();
 
-
             curr = "Logitude.CustomsMessaging.UnifreightGateway.Testres.MritTestService";
             _AllTypes.Add(curr);
             _UnityContainer.RegisterType<UnifreightGatewayProxy, Logitude.CustomsMessaging.UnifreightGateway.Testres.MritTestService>(curr);
             AddSendDirectMessageService();
-
-
-
+            
             curr = "Logitude.CustomsMessaging.UnifreightGateway.AnalyzeQueueMessageService";
             _AllTypes.Add(curr);
             _UnityContainer.RegisterType<UnifreightGatewayProxy, Logitude.CustomsMessaging.UnifreightGateway.AnalyzeQueueMessageService>(curr);
 
-
-
-
-
-
             //var messagingServiceTestSendXml =_UnityContainer.Resolve<Logitude.CustomsMessaging.MessagingServices.IMessagingServiceTestSendXml>(curr);
             //messagingServiceTestSendXml.TestSendXml(
-
 
             curr = "Logitude.CustomsMessaging.Testers.SubmitDeclarationTestService";
             _AllTypes.Add(curr);
@@ -156,17 +147,13 @@ namespace WebFreight.Web.CustomWebServices
             _AllTypes.Add(curr);
             _UnityContainer.RegisterType<UnifreightGatewayProxy, Logitude.CustomsMessaging.Testers.PaymentTestService>(curr);
 
-
             curr = "Logitude.CustomsMessaging.UnifreightGateway.UGEnvironmentService";
             _AllTypes.Add(curr);
             _UnityContainer.RegisterType<UnifreightGatewayProxy, Logitude.CustomsMessaging.UnifreightGateway.UGEnvironmentService>(curr);
 
-
             curr = "Logitude.CustomsMessaging.UnifreightGateway.CustomsRequestsSheetInProgressService";
             _AllTypes.Add(curr);
             _UnityContainer.RegisterType<UnifreightGatewayProxy, Logitude.CustomsMessaging.UnifreightGateway.CustomsRequestsSheetInProgressService>(curr);
-
-
 
             curr = "Logitude.CustomsMessaging.UnifreightGateway.SivugUpsertBatchService";
             _AllIUnifreightGenericService.Add(curr);
@@ -180,11 +167,13 @@ namespace WebFreight.Web.CustomWebServices
             _AllIUnifreightGenericService.Add(curr);
             _UnityContainer.RegisterType<UnifreightGenericService, Logitude.CustomsMessaging.UnifreightGateway.MevakerSendSignedDeclarationService>(curr);
 
-
-
             curr = "Logitude.CustomsMessaging.UnifreightGateway.CacheManagerService";
             _AllIUnifreightGenericService.Add(curr);
             _UnityContainer.RegisterType<UnifreightGenericService, Logitude.CustomsMessaging.UnifreightGateway.CacheManagerService>(curr);
+
+            curr = "Logitude.Customs.BL.Messaging.U2L.CommMasterCourier.CommMasterCourierService";
+            _AllIUnifreightGenericService.Add(curr);
+            _UnityContainer.RegisterType<UnifreightGenericService, Logitude.Customs.BL.Messaging.U2L.CommMasterCourier.CommMasterCourierService>(curr);
         }
 
         private static void AddSendDirectMessageService()
