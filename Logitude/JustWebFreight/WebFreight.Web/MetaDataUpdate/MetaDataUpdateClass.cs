@@ -20776,7 +20776,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 IsCustom = false,
                 Isoveridden = false,
                 IsRequired = false,
-                MaxLength = 40,
+                MaxLength = 60,
                 MinLength = 0,
                 ObjectTableId = CustomersObject.Id,
                 ObjectTableName = CustomersObject.Name,
@@ -56466,7 +56466,7 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region ContainerStatusLast7Days
-            QueryColumn ContainerStatusLast7Days_Column01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 1, ObjectFieldId = objectFields.Where(d => d.FieldName == "INTTRALastStatusDate" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ContainerStatusLast7Days_Column01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 1, ObjectFieldId = objectFields.Where(d => d.FieldName == "INTTRALastStatusDate" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn ContainerStatusLast7Days_Column02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 2, ObjectFieldId = objectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn ContainerStatusLast7Days_Column03 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 3, ObjectFieldId = objectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn ContainerStatusLast7Days_Column04 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = shipmentQuery_ContainerStatusLast7Days.Id, IndexOrder = 4, ObjectFieldId = objectFields.Where(d => d.FieldName == "MainCarriageETD" && d.ObjectTableId == ShipmentObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
@@ -64968,6 +64968,10 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature GeneralApplicationSettingsButtonfeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AppSettingsBtn", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.AppSettingsBtn", NameTextCodeDefaultText = "Application Settings Button", FeatureTypeCode = "OTH" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature btexFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BatchTaskExecutionMNU", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.BatchTaskExecutions", NameTextCodeDefaultText = "Batch Task Executions", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
+             
+            Feature ExternalAPIsEventFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXTERNALAPIS", ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ExternalAPIs", NameTextCodeDefaultText = "External API", FeatureTypeCode = "OTH", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 

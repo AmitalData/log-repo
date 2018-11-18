@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -735,6 +735,7 @@ export class ShipmentsSummary {
     public CreditLimitBlockedCount: number;
     public ExpectedDeparturesNotTransmittedCount: number;
     public ShippingInstructionsLast7DaysCount: number;
+    public ContainerStatusLast7DaysCount: number;
 }
 export class FlightSummary {
     public Id: string;

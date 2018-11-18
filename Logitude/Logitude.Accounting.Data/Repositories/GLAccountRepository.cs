@@ -485,21 +485,45 @@ namespace Logitude.Accounting.Data.Repositories
         {
             if (revaluationEnabled.HasValue && revaluationEnabled.Value)
             {
-                return (from record in context.GLAccounts
-                        where record.Tenant == tenant && record.Inactive != true && record.RevaluationEnabled.HasValue && record.RevaluationEnabled.Value
-                        select record).ToList();
+                List<GLAccount> rv1;
+                IQueryable<GLAccount> rec1 =
+                from record in context.GLAccounts
+                        where record.Tenant == tenant && record.Inactive != true && record.RevaluationEnabled.HasValue && record.RevaluationEnabled.Value 
+                        && (!record.IsControlAccount.HasValue || record.IsControlAccount == false)
+                 select record;
+                if (rec1 != null)
+                {
+                    rv1 = rec1.ToList();
+                    return (rv1);
+                }
+                else
+                {
+                    return null;
+                }
             }
             else if (!String.IsNullOrEmpty(chartOfAccountsTypeCode) || !String.IsNullOrEmpty(chartOfAccountsId) || !String.IsNullOrEmpty(accountTypeCode) || !String.IsNullOrEmpty(gLAccountId))
             {
-                return (from record in context.GLAccounts
+                List<GLAccount> rv2;
+                IQueryable<GLAccount> rec2 = 
+                 from record in context.GLAccounts
                         where record.Tenant == tenant && (record.Inactive == null || record.Inactive == false)
                                     && (record.ChartOfAccountsTypeCode == chartOfAccountsTypeCode || String.IsNullOrEmpty(chartOfAccountsTypeCode))
                                     && (record.ChartOfAccountsId == chartOfAccountsId || String.IsNullOrEmpty(chartOfAccountsId))
                                     && (record.AccountTypeCode == accountTypeCode || String.IsNullOrEmpty(accountTypeCode))
                                     && (record.Id == gLAccountId || String.IsNullOrEmpty(gLAccountId)
                                     && (record.CurrencyId != accountingCurrencyId || (record.IsMultiCurrency.HasValue && record.IsMultiCurrency.Value) || String.IsNullOrEmpty(accountingCurrencyId))
-                            )
-                        select record).ToList();
+                                    && (!record.IsControlAccount.HasValue || record.IsControlAccount == false)
+               )
+                 select record;
+                if (rec2 != null)
+                {
+                    rv2 = rec2.ToList();
+                    return (rv2);
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
