@@ -90,6 +90,7 @@ namespace WebFreight.Web.MetaDataUpdate
             FeaturePM ARInvoiceFeature_SaveAndApprove = features.Where(d => d.Code == "SAVEANDAPPROVE" && d.ObjectTableId == ARInvoiceTableId).FirstOrDefault();
             FeaturePM ARInvoiceFeature_Print = features.Where(d => d.Code == "PRINT" && d.ObjectTableId == ARInvoiceTableId).FirstOrDefault();
             FeaturePM ARInvoiceFeature_ReTransfer = features.Where(d => d.Code == "EnableReTransfer" && d.ObjectTableId == ARInvoiceTableId).FirstOrDefault();
+            FeaturePM ARInvoiceFeature_SendQBO = features.Where(d => d.Code == "SendToQBO" && d.ObjectTableId == ARInvoiceTableId).FirstOrDefault();
 
             FeaturePM APInvoiceFeature_CancelApproval = features.Where(d => d.Code == "CANCELAPPROVAL" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
             FeaturePM APInvoiceFeature_Void = features.Where(d => d.Code == "VOID" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
@@ -105,7 +106,9 @@ namespace WebFreight.Web.MetaDataUpdate
             FeaturePM ARPaymentFeature_Print = features.Where(d => d.Code == "PRINT" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
             FeaturePM ARPaymentFeature_SendToSAT = features.Where(d => d.Code == "SENDToSAT" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
             FeaturePM ARPaymentFeature_CHECKSATStatus = features.Where(d => d.Code == "CHECKSATSTATUS" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
+            FeaturePM ARPaymentFeature_SendToQBO = features.Where(d => d.Code == "SendToQBO" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
 
+            
 
             FeaturePM APPaymentFeature_CancelApproval = features.Where(d => d.Code == "CANCELAPPROVAL" && d.ObjectTableId == APPaymentTableId).FirstOrDefault();
             FeaturePM APPaymentFeature_Void = features.Where(d => d.Code == "VOID" && d.ObjectTableId == APPaymentTableId).FirstOrDefault();
@@ -1157,6 +1160,25 @@ namespace WebFreight.Web.MetaDataUpdate
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
 
+
+            #region SendToQbo
+            MenuButton InvoiceSendToQBOButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "SendToQBO",
+                Index = 14,
+                IsActive = true,
+                LabelTextCodeCode = "ARInvoice.B.SendToQBO",
+                LabelTextCodeDefaultText = "Send to QBO",
+                LocalDefaultText = "Send to QBO",
+                ObjectTableId = invoiceObject.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = InvoiceMenuButtonGroup.Id,
+                ParentMenuButtonId = InvoiceActionButton.Id,
+                MenuButtonType = "menuitem",
+                FeatureId = ARInvoiceFeature_SendQBO.Id,
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            #endregion
+
             #region Separator
             MenuButton VoidInvoiceOperationsSeparator = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
             {
@@ -1563,6 +1585,21 @@ namespace WebFreight.Web.MetaDataUpdate
                 FeatureId = ARPaymentFeature_CHECKSATStatus.Id,
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
 
+            MenuButton ARPaymentSendToQBOButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "SendToQBO",
+                Index = 10,
+                IsActive = true,
+                LabelTextCodeCode = "ARPayment.B.SendToQBO",
+                LabelTextCodeDefaultText = "Send To QBO",
+                LocalDefaultText = "Send To QBO",
+                ObjectTableId = theARPaymentObject.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
+                ParentMenuButtonId = ARPaymentActionButton.Id,
+                MenuButtonType = "menuitem",
+                FeatureId = ARPaymentFeature_SendToQBO.Id,
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
 
             #endregion
 
