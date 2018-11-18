@@ -84,7 +84,7 @@ implements OnDestroy
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
-    _SelectedACCValue: string = 'A'; // All/Wrong
+    _SelectedACCValue: string = 'W'; // All/Wrong
 
     public columns: any[] = null;
 
@@ -141,7 +141,9 @@ implements OnDestroy
         this._SelectedTabFilter = item;
         this._SelectedMNFValue = 'A';
         this._SelectedDECValue = 'A';
-        this._SelectedDOCValue = 'A'; 
+        this._SelectedDOCValue = 'A';
+        this._SelectedACCValue = 'W';
+
         switch (item.Code) {
             case "DECR": 
                 this._ReadyDECToBatchSend = item.Value;
@@ -223,7 +225,13 @@ implements OnDestroy
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
-        //this.SendALLCorrectManifest_OLD(courierDeclarationStatusCode);
+        if (this._CorrectMNFToBatchSend == 0 && courierDeclarationStatusCode == "RV") {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            return;
+        }
 
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
@@ -361,6 +369,14 @@ implements OnDestroy
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
+        if (this._CorrectDECToBatchSend == 0 && courierDeclarationStatusCode == "RV") {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            return;
+        }
+
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -541,6 +557,8 @@ implements OnDestroy
     _MNF_W_Total = 0;
     _MNF_C_Total = 0;
     //_ACC_W_Total = 0;
+    _CorrectMNFToBatchSend = 0;
+    _CorrectDECToBatchSend = 0;
 
     RefreshStatistic() {
         SessionLocator.CurrentSession.StartBusyIndicatorCreating();
@@ -557,9 +575,19 @@ implements OnDestroy
                             this._ReadyDECToBatchSend = item.Value;
                             break;
                         }
+                        case "DECR_RV": {
+                            //statements; 
+                            this._CorrectDECToBatchSend = item.Value;
+                            break;
+                        }
                         case "MNFR": {
                             //statements; 
                             this._ReadyMNFToBatchSend = item.Value;
+                            break;
+                        }
+                        case "MNFR_RV": {
+                            //statements; 
+                            this._CorrectMNFToBatchSend = item.Value;
                             break;
                         }
                         case "SVG": {
