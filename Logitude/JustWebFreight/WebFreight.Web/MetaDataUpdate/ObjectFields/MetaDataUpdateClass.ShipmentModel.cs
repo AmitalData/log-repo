@@ -6631,7 +6631,32 @@ namespace WebFreight.Web.MetaDataUpdate
                 DependencyFilter1Type = "Path",
                 DependencyFilter1Value = "TransportModeId",
                 IsRestrictable = true,
+                AllowedinAutomationConditions =true,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Shipment Contanis Dangerous Goods",
+                FullFieldLable = "ShipmentContanisDangerousGoods",
+                FieldName = "ShipmentContanisDangerousGoods",
+                FieldsDataType = "Boolean",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = ShipmentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "ShipmentContanisDangerousGoodsLable",
+                ListLableDefaultText = "Shipment Contanis Dangerous Goods",
+                ValidForQuerySection1 = "Shipment",
+                Operator = "Equals",
+                ListPropertyPath = "ShipmentContanisDangerousGoods",
+                PMPropertyPath = "ShipmentContanisDangerousGoods",
+                DisplayInEntityVariables = true,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {

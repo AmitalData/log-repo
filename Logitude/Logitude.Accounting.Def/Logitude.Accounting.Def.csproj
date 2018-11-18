@@ -109,6 +109,7 @@
     <Compile Include="EntityPMs\Generated\JournalStatusTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LedgerTransactionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OpenFormatReportPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PaymentChequeLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PaymentChequePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PaymentChequeStatusPM.Generated.cs" />
