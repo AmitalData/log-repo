@@ -66,39 +66,19 @@
                                 <tr style="height: 28px;">
 
 
-                                    <!-- ImporterCode -->
-                                    <td style="width: 115px;">
-                                        <LogLabel [ObjectFieldName]="'ImporterCode'" 
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [Text]="'שם לקוח'"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td style="width: 100px;">
-                                        <LogTextBox [ObjectFieldName]="'CalculatedImporterName'" [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true" 
-                                                    [DataContext]="DataContext" 
-                                                    [Text]="CalculatedImporterName"></LogTextBox>
-
-                                        
-                                    </td>
-
-
-
-
-                                    <td style="width: 10px;"><div></div></td>
 
                                     <!-- CasualSupplierName -->
                                     <td style="width: 130px;">
                                         <LogLabel [ObjectFieldName]="'CasualSupplierName'"
-                                                   [ObjectTableName]="ObjectTableName"
+                                                  [ObjectTableName]="ObjectTableName"
                                                   [Text]="'ספק'"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td style="width: 105px;" tabindex="2">
-                                        <LogTextBox [ObjectFieldName]="'CasualSupplierName'" 
+                                        <LogTextBox [ObjectFieldName]="'CasualSupplierName'"
                                                     [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true" 
-                                                    [DataContext]="DataContext" 
+                                                    [HideColumns]="true"
+                                                    [DataContext]="DataContext"
                                                     [Text]="CasualSupplierName"></LogTextBox>
 
                                     </td>
@@ -124,6 +104,53 @@
                                     </td>
 
 
+                                    <td style="width: 10px;"><div></div></td>
+
+
+                                    <!-- ImporterCode -->
+                                    <!--<td style="width: 115px;">
+        <LogLabel [ObjectFieldName]="'ImporterCode'"
+                  [ObjectTableName]="ObjectTableName"
+                  [Text]="'שם לקוח'"
+                  [DataContext]="DataContext"></LogLabel>
+    </td>
+    <td style="width: 100px;">
+        <LogTextBox [ObjectFieldName]="'CalculatedImporterName'" [ObjectTableName]="ObjectTableName"
+                    [HideColumns]="true"
+                    [DataContext]="DataContext"
+                    [Text]="CalculatedImporterName"></LogTextBox>
+
+
+    </td>-->
+
+                                    <td style="width: 115px;">
+                                        <LogLabel [ObjectFieldName]="'ImporterCode'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width: 100px;">
+                                        <SearchBox #ImporterSearchBox [ObjectTableName]="'Customs.Client'"
+                                                   [IsQuickSearch]="true"
+                                                   [DropDownWidth]="143"
+                                                   [DisplayText]="ImporterCode"
+                                                   [SearchText]="ImporterCode"
+                                                   [DisplayMember]="'Code'"
+                                                   [ItemHeight]="36"
+                                                   [HideIcons]="true"
+                                                   [Watermark]="''"
+                                                   [IsDisabled]="!IsImporerCodeEnabled"
+                                                   (LostFocus)="ImporterLostFocus( $event, ImporterSearchBox)"
+                                                   (ItemClicked)="ImporterClicked($event)"></SearchBox>
+                                        <!--(TextChanged)="ImporterTextChanged('Importer', $event, ImporterSearchBox)"-->
+                                    </td>
+
+                                    <td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Edit'" (click)="EditImporter()" [IsEnabled]="!IsDisplayOnly"></IconButton></td>
+                                    <!--<td style="width: 25px;"><IconButton [IsSmall]="true" [Name]="'Search'" (click)="SearchImporter('Importer', $event)" [IsEnabled]="!IsDisplayOnly"></IconButton></td>-->
+                                    
+                                    <td style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 5px;">
+                                        <div style="color: #646464; font-size: 11px;">{{CalculatedImporterName}}</div>
+                                    </td>
+
+
                                     <td><div></div></td>
 
                                 </tr>
@@ -133,27 +160,6 @@
                                 <tr style="height: 28px;">
 
 
-                                    <!-- ImporterCode -->
-                                    <td style="width: 115px;">
-                                        <LogLabel [ObjectFieldName]="'ImporterCode'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td style="width: 100px;">
-                                        <LogTextBox [ObjectFieldName]="'ImporterCode'" 
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true" 
-                                                    [DataContext]="DataContext" 
-                                                    [Text]="CalculatedImporterName"></LogTextBox>
-
-
-                                    </td>
-
-
-
-
-                                    <td style="width: 10px;"><div></div></td>
-
-                                    
 
                                     <!-- _PackageQuantity.ConsignmentPackages -->
                                     <td style="width: 130px;">
@@ -188,8 +194,26 @@
                                                     [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
 
                                     </td>
-                                    
 
+                                    <td style="width: 10px;"><div></div></td>
+
+                                    <!-- FreightAmount -->
+                                    <td style="width: 150px;">
+                                        <LogLabel [ObjectFieldName]="'FreightAmount'"
+                                                  [ObjectTableName]="'Customs.SupplierInvoice'"
+                                                  [Text]="'הובלה'"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 160px;">
+                                        <LogTextBox [FocusOnMe]="'true'"
+                                                    [ObjectFieldName]="'FreightAmount'"
+                                                    [Text]="FreightAmount"
+                                                    [DataContext]="DataContext"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [HideColumns]="true"></LogTextBox>
+
+                                    </td>
 
                                     <td><div></div></td>
 
@@ -264,36 +288,8 @@
                                 </tr>
 
 
-                                <!--LINE 4 :הובלה -->
-                                <tr style="height: 28px;">
 
 
-                                    <!-- space -->
-                                    <td colspan="6">
-                                    </td>
-
-                                    <!-- FreightAmount -->
-                                    <td style="width: 150px;">
-                                        <LogLabel [ObjectFieldName]="'FreightAmount'" 
-                                                  [ObjectTableName]="'Customs.SupplierInvoice'"
-                                                  [Text]="'הובלה'"
-                                                  [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td style="width: 160px;">
-                                        <LogTextBox [FocusOnMe]="'true'" 
-                                                    [ObjectFieldName]="'FreightAmount'" 
-                                                    [Text]="FreightAmount"
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName" 
-                                                    [HideColumns]="true"></LogTextBox>
-                                        
-                                    </td>
-
-
-                                    <td><div></div></td>
-
-                                </tr>                                
                                 <tr  style="height: 28px;">
 
 
