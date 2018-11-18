@@ -248,6 +248,17 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                         select d;
                     }
 
+                    if (item.FieldName == "ContainerStatusLast7Days")
+                    {
+                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                        DateTime lastWeekDate = todayDate.AddDays(-7);
+
+                        queryableData = from d in queryableData
+                                        where d.INTTRASIStatusCode != "NSEN"
+                                        && (d.INTTRALastStatusDate >= lastWeekDate)
+                                        select d;
+                    }
+
                     if (item.FieldName == "SentFSR")
                     {
                         DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
