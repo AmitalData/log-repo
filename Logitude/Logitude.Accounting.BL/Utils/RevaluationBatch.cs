@@ -285,6 +285,7 @@ namespace Logitude.Accounting.BL.Utils
             newJournal.CreatedByUserId = revaluation.CreatedByUserId;
             newJournal.AccountingEntityCode = "8"; //Revaluation
             newJournal.AccountingEntityId = revaluation.Id;
+            newJournal.AccountingEntityReference = revaluation.RevaluationNumber.ToString();
             newJournal.ExternalNo = null;
             newJournal.UpdateDate = DateTime.Now;
             newJournal.UpdatedByUserId = revaluation.CreatedByUserId;
