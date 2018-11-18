@@ -25,11 +25,12 @@
    declare @PartnerType as varchar(20)
    declare @SourceTenant int
    declare @ParentTenant int
-
+   declare @CountryCode as varchar(2)
+   declare @PrimaryContactEmail as varchar(70)
 
 	DECLARE PartnersCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Partners.Id, dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , dw_States.EnglishName , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant
+	SELECT dw_Partners.Id, dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , dw_States.EnglishName , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant,dw_Countries.Code,dw_Contacts.Email
 	From dw_Partners
 
 	left JOIN dw_Customers ON dw_Partners.Id = dw_Customers.Id
@@ -41,20 +42,21 @@
     left join dw_States  on dw_Addresses.StateId = dw_States.Id
 	inner join dw_PartnerTypes  on dw_Partners.PartnerTypeId=dw_PartnerTypes.Id
 	inner JOIN dw_DWHSettings ON dw_Partners.Tenant = dw_DWHSettings.Tenant
+		inner JOIN dw_Countries ON dw_Partners.CountryId = dw_Countries.Id
 	where dw_Partners.AutomaticLastUpdateDate > @LastUpdateDate	
 
-	OPEN PartnersCursor FETCH NEXT FROM PartnersCursor INTO @Id , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant
+	OPEN PartnersCursor FETCH NEXT FROM PartnersCursor INTO @Id , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,@CountryCode,@PrimaryContactEmail
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
 	set @Key = (select Id from DIM_Partners where Id = @Id)
 	
-	if(@Key is  null) begin  insert into DIM_Partners values(@Id,@Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant) end
-	else begin update   DIM_Partners set Name =@Name,  [Local Name] =@LocalName ,  City = @City , Country = @Country,  [State Name] = @State, [Zip Code] = @ZipCode ,  [Primary Contact] = @PrimaryContact,[Account Manager] = @AccountManager,Salesman = @Salesman, [Customer Rank] = @Rank,[Partner Type] = @PartnerType , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant where Id = @Id; end
+	if(@Key is  null) begin  insert into DIM_Partners values(@Id,@Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant,@CountryCode,@PrimaryContactEmail) end
+	else begin update   DIM_Partners set Name =@Name,  [Local Name] =@LocalName ,  City = @City , Country = @Country,  [State Name] = @State, [Zip Code] = @ZipCode ,  [Primary Contact] = @PrimaryContact,[Account Manager] = @AccountManager,Salesman = @Salesman, [Customer Rank] = @Rank,[Partner Type] = @PartnerType , [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant ,[Country Code] = @CountryCode,[Primary Contact Email] = @PrimaryContactEmail  where Id = @Id; end
 
 	
 
-	FETCH NEXT FROM PartnersCursor INTO @Id , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant
+	FETCH NEXT FROM PartnersCursor INTO @Id , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant ,@CountryCode,@PrimaryContactEmail
 		End
 	CLOSE PartnersCursor
 	DEALLOCATE PartnersCursor
