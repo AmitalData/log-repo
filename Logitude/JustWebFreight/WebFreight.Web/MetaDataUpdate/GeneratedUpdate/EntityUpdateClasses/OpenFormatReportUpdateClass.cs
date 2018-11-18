@@ -70,7 +70,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class SprintUpdateClass
+   public class OpenFormatReportUpdateClass
    {  
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -78,57 +78,52 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Sprint",
+	             				    ObjectTableName =  "OpenFormatReport",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Sprints",
-			      				    OldDBTableName =  "Sprints",
-			      				    ObjectTableSingular =  "Sprint",
-			      				    ObjectTablePlural =  "Sprints",
+			      				    DBTableName =  "OpenFormatReports",
+			      				    OldDBTableName =  "OpenFormatReports",
+			      				    ObjectTableSingular =  "Open Format Report",
+			      				    ObjectTablePlural =  "Open Format Reports",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
-			      				    IsNewWizard =  true,
-			      				    LookUp1 =  "Name",
+			      				    IsNewWizard =  false,
 			      				    KeyPropertyPath =  "Id",
-			      				    AutoCompleteSearchWindow =  true,
+			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
-			      				    CacheOnClient =  true,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
-			      				    IsAutoComplete =  true,
+			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Id",
+			      				    SortingByObjectField =  "CreateDate",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  true,
+			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "BR",
+			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    NewWizardControlName =  "NewTMSprint",
-			      				    DefaultText =  "Sprint",
-			      				    Code =  "8b58",
+			      				    DefaultText =  "Open Format Report",
+			      				    Code =  "b5ce",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "TimeManagement",
-			      				    ServerModuleName =  "TimeManagement",
-			      				    NewWizardComponentPath =  "./TimeManagement/Components/NewEntity/NewSprintComponent",
+			      				    ClientModuleName =  "Accounting",
+			      				    ServerModuleName =  "Accounting",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  true,
+			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-                                    CodeField="Name",
-                                    NameField= "Name",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -139,21 +134,81 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "CreateDate",
+					  						OldFieldName =  "CreateDate",
+					  						ObjectTableName =  "OpenFormatReport",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreateDate",
+					  						ListPropertyPath =  "CreateDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "OpenFormatReport",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreateDate",
+					  						DefaultText =  "Create Date",
+					  						FullLocalDefaultText =  "תאריך יצירה",
+					  						ListFieldLable =  "CreateDateListLable",
+					  						ListLableDefaultText =  "Create Date",
+					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "CreatedByUserId",
 					  						OldFieldName =  "CreatedByUserId",
-					  						ObjectTableName =  "Sprint",
+					  						ObjectTableName =  "OpenFormatReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  true,
 					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -167,6 +222,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "OpenFormatReport",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -177,6 +233,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
 					  						DefaultText =  "Created By",
+					  						FullLocalDefaultText =  "נוצר ע\"י",
+					  						ListFieldLable =  "CreatedByUserIdListLable",
+					  						ListLableDefaultText =  "Created By User",
+					  						ListLocalDefaultText =  "נוצר ע\"י",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "UpdateDate",
+					  						OldFieldName =  "UpdateDate",
+					  						ObjectTableName =  "OpenFormatReport",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "UpdateDate",
+					  						ListPropertyPath =  "UpdateDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "OpenFormatReport",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "UpdateDate",
+					  						DefaultText =  "Update Date",
+					  						FullLocalDefaultText =  "תאריך עדכון ",
+					  						ListFieldLable =  "UpdateDateListLable",
+					  						ListLableDefaultText =  "Update Date",
+					  						ListLocalDefaultText =  "תאריך עדכון ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -195,7 +314,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "UpdatedByUserId",
 					  						OldFieldName =  "UpdatedByUserId",
-					  						ObjectTableName =  "Sprint",
+					  						ObjectTableName =  "OpenFormatReport",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "User",
 					  						MinLength =  0,
@@ -249,7 +368,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "SearchFields",
 					  						OldFieldName =  "SearchFields",
-					  						ObjectTableName =  "Sprint",
+					  						ObjectTableName =  "OpenFormatReport",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -274,7 +393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Sprint",
+					  						ValidForQuerySection1 =  "OpenFormatReport",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -303,20 +422,78 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "ReportNumber",
+					  						OldFieldName =  "ReportNumber",
+					  						ObjectTableName =  "OpenFormatReport",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ReportNumber",
+					  						ListPropertyPath =  "ReportNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "OpenFormatReport",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ReportNumber",
+					  						DefaultText =  "Report Number",
+					  						FullLocalDefaultText =  "מספר דוח",
+					  						ListFieldLable =  "ReportNumberListLable",
+					  						ListLableDefaultText =  "Report Number",
+					  						ListLocalDefaultText =  "מספר דוח",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "FromDate",
 					  						OldFieldName =  "FromDate",
-					  						ObjectTableName =  "Sprint",
+					  						ObjectTableName =  "OpenFormatReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
-					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeNewFormatConverter",
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -332,7 +509,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Sprint",
+					  						ValidForQuerySection1 =  "OpenFormatReport",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -342,9 +519,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FromDate",
-					  						DefaultText =  "From Date",
+					  						DefaultText =  "From",
+					  						FullLocalDefaultText =  "מתאריך",
 					  						ListFieldLable =  "FromDateListLable",
-					  						ListLableDefaultText =  "From Date",
+					  						ListLableDefaultText =  "From",
+					  						ListLocalDefaultText =  "מתאריך",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -352,7 +531,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  true,
+					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -363,18 +542,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ToDate",
 					  						OldFieldName =  "ToDate",
-					  						ObjectTableName =  "Sprint",
+					  						ObjectTableName =  "OpenFormatReport",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
 					  						MaxLength =  0,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
-					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeNewFormatConverter",
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -390,7 +568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Sprint",
+					  						ValidForQuerySection1 =  "OpenFormatReport",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -400,9 +578,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ToDate",
-					  						DefaultText =  "To Date",
+					  						DefaultText =  "To ",
+					  						FullLocalDefaultText =  "עד תאריך",
 					  						ListFieldLable =  "ToDateListLable",
-					  						ListLableDefaultText =  "To Date",
+					  						ListLableDefaultText =  "To",
+					  						ListLocalDefaultText =  "עד תאריך",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -410,7 +590,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  true,
+					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -419,26 +599,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Name",
-					  						OldFieldName =  "Name",
-					  						ObjectTableName =  "Sprint",
-					  						FieldsDataType =  "nText",
+					 						FieldName =  "DateType",
+					  						OldFieldName =  "DateType",
+					  						ObjectTableName =  "OpenFormatReport",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  100,
-					  						IsRequired =  true,
-					  						DisplayOnLookUp =  true,
-					  						CanFilter =  true,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  100,
+					  						SystemMaxLength =  1,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						PMPropertyPath =  "Name",
-					  						ListPropertyPath =  "Name",
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DateType",
+					  						ListPropertyPath =  "DateType",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -447,20 +626,134 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Sprint",
+					  						ValidForQuerySection1 =  "OpenFormatReport",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
+					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						FullFieldLable =  "DateType",
+					  						DefaultText =  "Date Type",
+					  						FullLocalDefaultText =  "סוג תאריך",
+					  						ListFieldLable =  "DateTypeListLable",
+					  						ListLableDefaultText =  "Date Type",
+					  						ListLocalDefaultText =  "סוג תאריך",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "StatusTypeCode",
+					  						OldFieldName =  "StatusTypeCode",
+					  						ObjectTableName =  "OpenFormatReport",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "StatusTypeCode",
+					  						ListPropertyPath =  "StatusTypeCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "OpenFormatReport",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "StatusTypeCode",
+					  						DefaultText =  "Status",
+					  						FullLocalDefaultText =  "סטטוס",
+					  						ListFieldLable =  "StatusTypeCodeListLable",
+					  						ListLableDefaultText =  "Status",
+					  						ListLocalDefaultText =  "סטטוס",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ErrorMessage",
+					  						OldFieldName =  "ErrorMessage",
+					  						ObjectTableName =  "OpenFormatReport",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  4000,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  4000,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ErrorMessage",
+					  						ListPropertyPath =  "ErrorMessage",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ErrorMessage",
+					  						DefaultText =  "Error Message",
+					  						FullLocalDefaultText =  "הערות שגיאה",
+					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -475,95 +768,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  
-	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup SprintQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "8b58", Name = " Query Group" }, queryGroupRepository);
-						QueryGroup SprintQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "de93", Name = " Query Group" }, queryGroupRepository);
-				        queryGroupRepository.SubmitChanges();
-
-	        ObjectTable SprintObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Sprint" && d.Tenant == 0).FirstOrDefault();
-	        List<ObjectField> SprintObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Sprint").ToList();   
-
-			   TextCode SprintTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Sprint.Q.AllSprints", DefaultText = @"All Sprints",LocalDefaultText = "All Sprints", ObjectTableId = SprintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SprintFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Sprint.Q.AllSprints", ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "SprintFeatures.AllSprints", NameTextCodeDefaultText = "All Sprints", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
-	        TextCodeRepository.SubmitChanges();
-	        FeaturesRepository.SubmitChanges();    
-	      
-
-			  Query AllSprintsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = SprintTextCode_0.Id, Code = "All Sprints",  QueryGroupCode = "8b58", IndexOrder = 0, Tenant = 0, ObjectTableId = SprintObjectTable.Id, QuerySection = "Sprint", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = SprintFeature_0.Id, DefaultSortName = "Name", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
-	
-			 QueryColumn AllSprintsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSprintsQuery.Id, IndexOrder = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == SprintObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 250 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllSprintsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSprintsQuery.Id, IndexOrder = 1, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "FromDate" && d.ObjectTableId == SprintObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn AllSprintsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllSprintsQuery.Id, IndexOrder = 2, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "ToDate" && d.ObjectTableId == SprintObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-	   
+	    {  	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {   
-
-		   ObjectTable SprintObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Sprint" && d.Tenant == 0).FirstOrDefault();
-		   List<ObjectField> SprintObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Sprint").ToList();
-		       
-	      
-
-	         Screen SprintGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Sprint.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = SprintObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
-      
-            ScreenField SprintGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField SprintGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "FromDate").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         
-            ScreenField SprintGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "ToDate").FirstOrDefault().Id, ScreenId = SprintGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-           
-	      
-
-	         Screen SprintSprintHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Sprint.HeaderScreen", Name = "SprintHeaderScreen", ObjectTableId = SprintObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      
-            ScreenField SprintSprintHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = SprintObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = SprintSprintHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
-         	
-		    SprintObjectTable.HeaderScreenId = SprintSprintHeaderScreenScreen1.Id;
-	   		  
+	    {    
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {    
-			 ObjectTable SprintObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Sprint" && d.Tenant == 0).FirstOrDefault();  
-                 
-			   TextCode SprintGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Sprint.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = SprintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature SprintGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Sprint.Tab.General", ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "SprintFeatures.GESP", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
- 
-                 
-			   TextCode SprintEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Sprint.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = SprintObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature SprintEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Sprint.Tab.Events", ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "SprintFeatures.EVSP", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-			 TextCodeRepository.SubmitChanges();
-			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
-			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GESP",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Sprint.Tab.General" && d.ObjectTableId == SprintObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = SprintObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Sprint.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
-   
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVSP",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Sprint.Tab.Events" && d.ObjectTableId == SprintObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = SprintObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Sprint.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
-   
+	    {      
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
-		   ObjectTable SprintObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Sprint" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature SprintFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature SprintFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature SprintFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature SprintFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = SprintObjectTable.Id, Tenant = 0, NameTextCodeCode = "Sprint.Features.PackageFeature", NameTextCodeDefaultText = "Sprint Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault(); 
+		   Feature OpenFormatReportFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature OpenFormatReportFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature OpenFormatReportFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature OpenFormatReportFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReport.Features.PackageFeature", NameTextCodeDefaultText = "OpenFormatReport Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable SprintObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Sprint" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -577,7 +806,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = SprintObjectTable.Id,
+                ObjectTableId = OpenFormatReportObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -595,7 +824,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = SprintObjectTable.Id,
+                ObjectTableId = OpenFormatReportObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

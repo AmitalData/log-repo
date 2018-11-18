@@ -618,6 +618,7 @@ namespace WarehouseDataService.Helper
 
                         cmd = " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "SalesmanUserId DEFAULT '-1' FOR SalesmanUserId"
                             + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PrimaryContactId DEFAULT '-1' FOR PrimaryContactId;"
+                            + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "CountryId DEFAULT '-1' FOR CountryId;"
                             + " ALTER TABLE " + table.Dw_TableName + " ADD CONSTRAINT DF_" + table.DBTableName + "PartnerTypeId DEFAULT '-1' FOR PartnerTypeId;";
 
                         break;
@@ -677,9 +678,13 @@ namespace WarehouseDataService.Helper
             {
                 string cmd = "";
 
-                if (table.DBTableName == "States" || table.DBTableName == "Countries")
+                if (table.DBTableName == "States")
                 {
                     cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified' , GETDATE());";
+                }
+                else if (table.DBTableName == "Countries")
+                {
+                    cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,Code,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified' ,'', GETDATE());";
                 }
                 else if (table.DBTableName == "Addresses") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,CountryId,StateId ,AutomaticLastUpdateDate )values('-1'," + tenant + ",'-1' ,'-1' , GETDATE());";
 
