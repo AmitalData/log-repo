@@ -131,6 +131,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int PAY_RL = 0;
             int ACC = 0;
             int ACC_W = 0;
+            int MNFR_RV = 0;
+            int DECR_RV = 0;
 
             var totQ =
             (from dStatus in q
@@ -151,7 +153,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  pAY = g.Count(r => (r.CourierPaymentStatusCode == "R")),
                  PAY_RL = g.Count(r => (r.CourierPaymentStatusCode == "R" && r.HighLowValue=="L")),
                  MNFR = g.Count(r => (r.CourierManifestStatusCode == "R" )),
+                 MNFR_RV = g.Count(r => (r.CourierManifestStatusCode == "R" || r.CourierManifestStatusCode == "V")),
                  DECR = g.Count(r => (r.CourierDeclarationStatusCode == "R" )),
+                 DECR_RV = g.Count(r => (r.CourierManifestStatusCode == "R" || r.CourierManifestStatusCode == "V")),
                  HOLD = g.Count(r => (r.CourierPendingReasonCode != null)),
                  ACC = g.Count(),
                  //ACC_W = g.Count(r => (r. == "2")),
@@ -175,6 +179,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 PAY = tot.pAY;
                 MNFR = tot.MNFR;
                 DECR = tot.DECR;
+                MNFR_RV = tot.MNFR_RV;
+                DECR_RV = tot.DECR_RV;
                 PAY_RL = tot.PAY_RL;
                 ACC = tot.ACC;
             }
@@ -194,6 +200,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             keyValuePairList.Add(new KeyValuePair<string, int>("HOLD", HOLD));
             keyValuePairList.Add(new KeyValuePair<string, int>("DECR", DECR));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNFR", MNFR));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DECR_RV", DECR));
+            keyValuePairList.Add(new KeyValuePair<string, int>("MNFR_RV", MNFR));
             keyValuePairList.Add(new KeyValuePair<string, int>("PAY_RL", PAY_RL));
             keyValuePairList.Add(new KeyValuePair<string, int>("ACC", ACC));
         }

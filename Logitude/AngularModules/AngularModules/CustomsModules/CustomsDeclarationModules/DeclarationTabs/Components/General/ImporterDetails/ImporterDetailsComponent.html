@@ -1,3 +1,8 @@
+<style>
+    .EditMe {
+        width:250px;
+    }
+</style>
 <table style="margin:5px">
 
 
@@ -246,15 +251,15 @@
             <LogLabel [ObjectFieldName]="'TransferImporterName'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td colspan="2" *ngIf="ImporterVisibility">
+        <td class="EditMe" *ngIf="ImporterVisibility">
             <LogTextBox [ObjectFieldName]="'ImporterName'" [ObjectTableName]="ObjectTableName" [Text]="ImporterName"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
-        <td colspan="2" *ngIf="EntitleVisibility">
+        <td class="EditMe" *ngIf="EntitleVisibility">
             <LogTextBox [ObjectFieldName]="'EntitleImporterName'" [ObjectTableName]="ObjectTableName" [Text]="EntitleImporterName"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
-        <td colspan="2" *ngIf="TransferVisibility">
+        <td class="EditMe" *ngIf="TransferVisibility">
             <LogTextBox [ObjectFieldName]="'TransferImporterName'" [ObjectTableName]="ObjectTableName" [Text]="TransferImporterName"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
@@ -275,16 +280,16 @@
             <LogLabel [ObjectFieldName]="'TransferImporterAddress'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td colspan="2" *ngIf="ImporterVisibility  && !isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && !isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'ImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="ImporterAddress"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
 
-        <td colspan="2" *ngIf="EntitleVisibility">
+        <td class="EditMe" *ngIf="EntitleVisibility">
             <LogTextBox [ObjectFieldName]="'EntitleImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="EntitleImporterAddress"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
-        <td colspan="2" *ngIf="TransferVisibility">
+        <td class="EditMe" *ngIf="TransferVisibility">
             <LogTextBox [ObjectFieldName]="'TransferImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="TransferImporterAddress"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
@@ -296,7 +301,7 @@
             <LogLabel [ObjectFieldName]="'CasualImporterAddress1'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td colspan="2">
+        <td class="EditMe">
             <LogTextBox [ObjectFieldName]="'CasualImporterAddress1'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterAddress1"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
@@ -307,7 +312,7 @@
             <LogLabel [ObjectFieldName]="'CasualImporterAddress2'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterAddress2'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterAddress2"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
@@ -320,7 +325,7 @@
             <LogLabel [ObjectFieldName]="'CasualImporterCity'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterCity'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterCity"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
@@ -331,7 +336,7 @@
             <LogLabel [ObjectFieldName]="'CasualImporterZipCode'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterZipCode'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterZipCode"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
@@ -341,7 +346,7 @@
             <LogLabel [ObjectFieldName]="'CasualImporterFax'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterFax'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterFax"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
@@ -351,7 +356,7 @@
             <LogLabel [ObjectFieldName]="'CasualImporterEmail'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterEmail'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterEmail"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
@@ -361,7 +366,7 @@
             <LogLabel [ObjectFieldName]="'CasualImporterTel'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext" [Text]="'טלפון'"></LogLabel>
         </td>
-        <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterTel'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterTel"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
@@ -371,7 +376,7 @@
             <LogLabel [ObjectFieldName]="'CasualImporterContact'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td colspan="2" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'CasualImporterContact'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterContact"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
