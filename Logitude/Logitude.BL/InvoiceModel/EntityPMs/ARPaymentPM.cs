@@ -113,6 +113,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool SetCancelApproval { get; set; }
         public bool HasInvoicesErrors { get; set; }
         public bool SetReTransfer { get; set; }
+        public bool SetReSendQBO { get; set; }
 
         public string BankAccountId { get; set; }
         public string CashbookId { get; set; }

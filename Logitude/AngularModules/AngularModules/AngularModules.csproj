@@ -1782,7 +1782,9 @@
     <Content Include="_Resources\Images\Icons\All\Help.png" />
     <Content Include="_Resources\Images\Icons\All\RadioButtonChecked.png" />
     <Content Include="_Resources\Images\Icons\All\SidebarLeft.png" />
+    <Content Include="_Resources\Images\Icons\All\SidebarLeft_small.png" />
     <Content Include="_Resources\Images\Icons\All\SidebarRight.png" />
+    <Content Include="_Resources\Images\Icons\All\SidebarRight_small.png" />
     <Content Include="_Resources\Images\Icons\All\Tab.X.Blue.png" />
     <Content Include="_Resources\Images\Icons\All\Tab.X.Gray.png" />
     <Content Include="_Resources\Images\Icons\All\ToggleIcon.png" />

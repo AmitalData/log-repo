@@ -411,8 +411,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateTotalVats();
                 
                 ARInvoiceHelper helper = new ARInvoiceHelper();
-                helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+                if (entityPM.SetReSendQBO)
+                {
+                    helper.ARInvoiceQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
+                }
+                else
+                {
+                    helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
+                }
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);
                 invoiceRepository.SubmitChanges();
