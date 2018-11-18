@@ -1578,7 +1578,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 FullFieldLable = "AccountManagerUserName",
                 FieldName = "AccountManagerUserName",
                 FieldsDataType = "Text",
-                MaxLength = 40,
+                MaxLength = 60,
                 MinLength = 0,
                 ObjectTableId = ShipmentObject.Id,
                 ObjectTableName = ShipmentObject.Name,
