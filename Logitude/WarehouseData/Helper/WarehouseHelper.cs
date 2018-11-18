@@ -623,9 +623,13 @@ namespace WarehouseData.Helper
             {
                 string cmd = "";
 
-                if (table.DBTableName == "States" || table.DBTableName == "Countries")
+                if (table.DBTableName == "States")
                 {
                     cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified' , GETDATE());";
+                }
+                else if(table.DBTableName == "Countries")
+                {
+                    cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,EnglishName,Code,AutomaticLastUpdateDate)values('-1'," + tenant + ",'Not Specified' ,'', GETDATE());";
                 }
                 else if (table.DBTableName == "Addresses") cmd = "INSERT INTO " + table.Dw_TableName + " (Id,Tenant,CountryId,StateId ,AutomaticLastUpdateDate )values('-1'," + tenant + ",'-1' ,'-1' , GETDATE());";
 
