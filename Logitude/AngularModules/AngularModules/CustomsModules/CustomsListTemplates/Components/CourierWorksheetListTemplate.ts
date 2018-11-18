@@ -1,7 +1,6 @@
 
-
 declare var window: any;
-
+import { EditComponent } from "../../../Infrastructure/Components/EditComponent/EditComponent";
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import { Component, ChangeDetectorRef, ViewChild ,OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
@@ -38,189 +37,189 @@ import { DeclarationCourierStatusListService } from '../../../Customs/Services/S
 import { retry } from 'rxjs/operator/retry';
 
 @Component({
-  moduleId: module.id,
-  templateUrl: './CourierWorksheetListTemplate.html',
+    moduleId: module.id,
+    templateUrl: './CourierWorksheetListTemplate.html',
 })
 
 export class CourierWorksheetListTemplate {
 
-  _CourierWorksheet: DeclarationCourierStatusList;
-  public fieldName: any;
+    _CourierWorksheet: DeclarationCourierStatusList;
+    public fieldName: any;
 
-  IsDocumentStatusGreen: boolean = false;
-  IsDocumentStatusRed: boolean = false;
-  IsDocumentStatusBlue: boolean = false;
-  IsManifestStatusRed: boolean = false;
-  IsManifestStatusGreen: boolean = false;
-  IsManifestStatusBlue: boolean = false;
-  IsManifestStatusOrange: boolean = false;
-  IsDeclarationStatusRed: boolean = false;
-  IsDeclarationStatusGreen: boolean = false;
-  IsDeclarationStatusBlue: boolean = false;
-  IsDeclarationStatusOrange: boolean = false;
-  IsPaymentStatusRed: boolean = false;
-  IsPaymentStatusGreen: boolean = false;
-  IsPaymentStatusBlue: boolean = false;
-  IsPaymentStatusOrange: boolean = false;
-  IsHighLow: boolean = false;
-  IsDeclarationChecked: boolean = false;
-  SuspentionReasonText: string;
-  SuspentionReasonTip: string;
+    IsDocumentStatusGreen: boolean = false;
+    IsDocumentStatusRed: boolean = false;
+    IsDocumentStatusBlue: boolean = false;
+    IsManifestStatusRed: boolean = false;
+    IsManifestStatusGreen: boolean = false;
+    IsManifestStatusBlue: boolean = false;
+    IsManifestStatusOrange: boolean = false;
+    IsDeclarationStatusRed: boolean = false;
+    IsDeclarationStatusGreen: boolean = false;
+    IsDeclarationStatusBlue: boolean = false;
+    IsDeclarationStatusOrange: boolean = false;
+    IsPaymentStatusRed: boolean = false;
+    IsPaymentStatusGreen: boolean = false;
+    IsPaymentStatusBlue: boolean = false;
+    IsPaymentStatusOrange: boolean = false;
+    IsHighLow: boolean = false;
+    IsDeclarationChecked: boolean = false;
+    SuspentionReasonText: string;
+    SuspentionReasonTip: string;
 
-  _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
+    _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
 
-  FirePreventSelect() {
-    SessionLocator.CurrentSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
-  }
-  FireUnSelect() {
-    SessionLocator.CurrentSession.PseventRowSelectEvent.emit("FireUnSelect");
-  }
-
-//  @ViewChild( SplitButtonComponent)  public MySplitButtonComponent: SplitButtonComponent = new SplitButtonComponent(null,null);
-  //@ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
-  //@ViewChild('MySplitButtonComponent', { read: SplitButtonComponent }) MySplitButtonComponent: SplitButtonComponent;
-  
-  constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private CD: ChangeDetectorRef) {
-
-  }
-  
-  //[AdditionalData] = "{rowIndex:row.rowIndex,gridId:LogGridId,RowOutEvent:RowOutEvent,RowOverEvent:RowOverEvent}"
-  RefreshData() {
-    
-    var noLocal = true;
-    if (noLocal) {
-      this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
-      return;
-    } 
-
-    var myDeclarationCourierStatusListService = new DeclarationCourierStatusListService();
-    myDeclarationCourierStatusListService.getSingle(this._CourierWorksheet.DeclarationId)
-      .subscribe(serviceResponse => {
-        //this._CourierWorksheet = serviceResponse.Result;
-        //this._CourierWorksheet.CourierCustomStatusCode = "X";
-        var courierWorksheet = serviceResponse.Result as DeclarationCourierStatusList;
-        courierWorksheet.CourierCustomStatusCode = "X";
-        //this.CD.detectChanges();
-        this.setVariables(courierWorksheet, this.fieldName);/*, AdditionalData:any)*/ 
-      });
-
-    
-  }
-  DropdownMenuButtonClicked(event) {
-    this.ButtonClick(event);
-  }
-  DropdownDisplayClose() {
-    //if (!AppTool.IsNullOrEmpty(this.MySplitButtonComponent)) {
-    //  this.MySplitButtonComponent.DropdownDisplayClose();
-    //}
-  }
-
-  setVariables(courierWorksheet: DeclarationCourierStatusList, fieldName: string)/*, AdditionalData:any)*/ {
-    this._CourierWorksheet = courierWorksheet;
-    this.fieldName = fieldName;
-    //this._AdditionalData = AdditionalData;
-    this.DropdownDisplayClose();
-    DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
-
-    if (this._CourierWorksheet.DocumentStatusCode != null) {
-      switch (this._CourierWorksheet.DocumentStatusCode) {
-        case "M":
-        case "X": {
-          this.IsDocumentStatusRed = true;
-          break;
-        }
-        case "V": {
-          this.IsDocumentStatusGreen = true;
-          break;
-        }
-        case "I": {
-          this.IsDocumentStatusBlue = true;
-          break;
-        }
-      }
+    FirePreventSelect() {
+        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
+    }
+    FireUnSelect() {
+        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("FireUnSelect");
     }
 
-    if (this._CourierWorksheet.CourierManifestStatusCode != null) {
-      switch (this._CourierWorksheet.CourierManifestStatusCode) {
-        case "M":
-        case "X": {
-          this.IsManifestStatusRed = true;
-          break;
-        }
-        case "V": {
-          this.IsManifestStatusGreen = true;
-          break;
-        }
-        case "I": {
-          this.IsManifestStatusBlue = true;
-          break;
-        }
-        case "R": {
-          this.IsManifestStatusOrange = true;
-          break;
-        }
-      }
+    //  @ViewChild( SplitButtonComponent)  public MySplitButtonComponent: SplitButtonComponent = new SplitButtonComponent(null,null);
+    //@ViewChild('ShortTitle', { read: ViewContainerRef }) ShortTitleViewContainerRef: ViewContainerRef;
+    //@ViewChild('MySplitButtonComponent', { read: SplitButtonComponent }) MySplitButtonComponent: SplitButtonComponent;
+
+    constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private CD: ChangeDetectorRef) {
+
     }
 
-    if (this._CourierWorksheet.CourierDeclarationStatusCode != null) {
-      switch (this._CourierWorksheet.CourierDeclarationStatusCode) {
-        case "M":
-        case "X": {
-          this.IsDeclarationStatusRed = true;
-          break;
+    //[AdditionalData] = "{rowIndex:row.rowIndex,gridId:LogGridId,RowOutEvent:RowOutEvent,RowOverEvent:RowOverEvent}"
+    RefreshData() {
+
+        var noLocal = true;
+        if (noLocal) {
+            this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+            return;
         }
-        case "V": {
-          this.IsDeclarationStatusGreen = true;
-          break;
-        }
-        case "I": {
-          this.IsDeclarationStatusBlue = true;
-          break;
-        }
-        case "R": {
-          this.IsDeclarationStatusOrange = true;
-          break;
-        }
-      }
+
+        var myDeclarationCourierStatusListService = new DeclarationCourierStatusListService();
+        myDeclarationCourierStatusListService.getSingle(this._CourierWorksheet.DeclarationId)
+            .subscribe(serviceResponse => {
+                //this._CourierWorksheet = serviceResponse.Result;
+                //this._CourierWorksheet.CourierCustomStatusCode = "X";
+                var courierWorksheet = serviceResponse.Result as DeclarationCourierStatusList;
+                courierWorksheet.CourierCustomStatusCode = "X";
+                //this.CD.detectChanges();
+                this.setVariables(courierWorksheet, this.fieldName);/*, AdditionalData:any)*/
+            });
+
+
+    }
+    DropdownMenuButtonClicked(event) {
+        this.ButtonClick(event);
+    }
+    DropdownDisplayClose() {
+        //if (!AppTool.IsNullOrEmpty(this.MySplitButtonComponent)) {
+        //  this.MySplitButtonComponent.DropdownDisplayClose();
+        //}
     }
 
-    if (this._CourierWorksheet.CourierPaymentStatusCode != null) {
-      switch (this._CourierWorksheet.CourierPaymentStatusCode) {
-        case "R": {
-          this.IsPaymentStatusRed = true;
-          break;
-        }
-        case "P": {
-          this.IsPaymentStatusGreen = true;
-          break;
-        }
-        case "I": {
-          this.IsPaymentStatusBlue = true;
-          break;
-        }
-        case "O": {
-          this.IsPaymentStatusOrange = true;
-          break;
-        }
-      }
-    }
+    setVariables(courierWorksheet: DeclarationCourierStatusList, fieldName: string)/*, AdditionalData:any)*/ {
+        this._CourierWorksheet = courierWorksheet;
+        this.fieldName = fieldName;
+        //this._AdditionalData = AdditionalData;
+        this.DropdownDisplayClose();
+        DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
 
-    if (this._CourierWorksheet.HighLowValue == "H"
-      || (this._CourierWorksheet.HighLowValue == "L" && this._CourierWorksheet.CourierCustomStatusCode == "2")) {
-      this.IsHighLow = true;
-    }
-    else {
-      this.IsHighLow = false;
-    }
+        if (this._CourierWorksheet.DocumentStatusCode != null) {
+            switch (this._CourierWorksheet.DocumentStatusCode) {
+                case "M":
+                case "X": {
+                    this.IsDocumentStatusRed = true;
+                    break;
+                }
+                case "V": {
+                    this.IsDocumentStatusGreen = true;
+                    break;
+                }
+                case "I": {
+                    this.IsDocumentStatusBlue = true;
+                    break;
+                }
+            }
+        }
 
-    if (this._CourierWorksheet.CourierCustomStatusCode == "2") {
-      this.SuspentionReasonTip = this._CourierWorksheet.CourierSuspentionReasonName;
-    }
-    this.SuspentionReasonText = this._CourierWorksheet.CourierCustomStatusName;
+        if (this._CourierWorksheet.CourierManifestStatusCode != null) {
+            switch (this._CourierWorksheet.CourierManifestStatusCode) {
+                case "M":
+                case "X": {
+                    this.IsManifestStatusRed = true;
+                    break;
+                }
+                case "V": {
+                    this.IsManifestStatusGreen = true;
+                    break;
+                }
+                case "I": {
+                    this.IsManifestStatusBlue = true;
+                    break;
+                }
+                case "R": {
+                    this.IsManifestStatusOrange = true;
+                    break;
+                }
+            }
+        }
 
-    this.BuildDeclarationsCheckBox();
-    this.CD.detectChanges();
+        if (this._CourierWorksheet.CourierDeclarationStatusCode != null) {
+            switch (this._CourierWorksheet.CourierDeclarationStatusCode) {
+                case "M":
+                case "X": {
+                    this.IsDeclarationStatusRed = true;
+                    break;
+                }
+                case "V": {
+                    this.IsDeclarationStatusGreen = true;
+                    break;
+                }
+                case "I": {
+                    this.IsDeclarationStatusBlue = true;
+                    break;
+                }
+                case "R": {
+                    this.IsDeclarationStatusOrange = true;
+                    break;
+                }
+            }
+        }
+
+        if (this._CourierWorksheet.CourierPaymentStatusCode != null) {
+            switch (this._CourierWorksheet.CourierPaymentStatusCode) {
+                case "R": {
+                    this.IsPaymentStatusRed = true;
+                    break;
+                }
+                case "P": {
+                    this.IsPaymentStatusGreen = true;
+                    break;
+                }
+                case "I": {
+                    this.IsPaymentStatusBlue = true;
+                    break;
+                }
+                case "O": {
+                    this.IsPaymentStatusOrange = true;
+                    break;
+                }
+            }
+        }
+
+        if (this._CourierWorksheet.HighLowValue == "H"
+            || (this._CourierWorksheet.HighLowValue == "L" && this._CourierWorksheet.CourierCustomStatusCode == "2")) {
+            this.IsHighLow = true;
+        }
+        else {
+            this.IsHighLow = false;
+        }
+
+        if (this._CourierWorksheet.CourierCustomStatusCode == "2") {
+            this.SuspentionReasonTip = this._CourierWorksheet.CourierSuspentionReasonName;
+        }
+        this.SuspentionReasonText = this._CourierWorksheet.CourierCustomStatusName;
+
+        this.BuildDeclarationsCheckBox();
+        this.CD.detectChanges();
     }
 
     BuildDeclarationsCheckBox() {
@@ -232,74 +231,74 @@ export class CourierWorksheetListTemplate {
         }
     }
 
-  SendManifest(event) {
-    this.ButtonClick(event);
-    let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
-    myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])
-      .subscribe(rsptPMget => {
-        let entitypm = rsptPMget.Result;
-        let objectTable = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
-        let _SendManifestService: SendManifestService = new SendManifestService();
-        _SendManifestService.Run({ EntityPM: entitypm, ObjectTable: objectTable, CourierWorksheetmode: true });
-        _SendManifestService.OnSuccessSendMethod =
-          (res1) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
-            this.RefreshData();
-          };
-        _SendManifestService.OnCustomSendOptionsButtonClick({
-          RequestVIA: SendRequestVIA.WebServiceInteractive,
-          Option: "WI",
-          ForcePersonalSign: false
-        });
+    SendManifest(event) {
+        this.ButtonClick(event);
+        let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
+        myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])
+            .subscribe(rsptPMget => {
+                let entitypm = rsptPMget.Result;
+                let objectTable = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
+                let _SendManifestService: SendManifestService = new SendManifestService();
+                _SendManifestService.Run({ EntityPM: entitypm, ObjectTable: objectTable, CourierWorksheetmode: true });
+                _SendManifestService.OnSuccessSendMethod =
+                    (res1) => {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+                        this.RefreshData();
+                    };
+                _SendManifestService.OnCustomSendOptionsButtonClick({
+                    RequestVIA: SendRequestVIA.WebServiceInteractive,
+                    Option: "WI",
+                    ForcePersonalSign: false
+                });
 
-      });
+            });
 
 
 
-  }
-  SendButtonClicked() {
-    this.ButtonClick(null);
-  }
-  SendDec(event) {
-    //event.stopPropagation();
-    //SplitButtonComponent.EnsureLastSplitButtonIsClosed();
-    //DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
-    this.ButtonClick(event);
+    }
+    SendButtonClicked() {
+        this.ButtonClick(null);
+    }
+    SendDec(event) {
+        //event.stopPropagation();
+        //SplitButtonComponent.EnsureLastSplitButtonIsClosed();
+        //DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
+        this.ButtonClick(event);
 
-    let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
-    myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])
-      .subscribe(rsptPMget => {
-        let entitypm = rsptPMget.Result;
-        let objectTable = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
-        let _SendDeclarationService: SendDeclarationService = new SendDeclarationService();
-        _SendDeclarationService.Run({ EntityPM: entitypm, ObjectTable: objectTable, CourierWorksheetmode: true });
-        _SendDeclarationService.OnSuccessSendMethod =
-          (res1) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
-            this.RefreshData()
-          };
-        _SendDeclarationService.OnCustomSendOptionsButtonClick({
-          RequestVIA: SendRequestVIA.WebServiceInteractive,
-          Option: "WI",
-          ForcePersonalSign: false
-        });
+        let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
+        myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])
+            .subscribe(rsptPMget => {
+                let entitypm = rsptPMget.Result;
+                let objectTable = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
+                let _SendDeclarationService: SendDeclarationService = new SendDeclarationService();
+                _SendDeclarationService.Run({ EntityPM: entitypm, ObjectTable: objectTable, CourierWorksheetmode: true });
+                _SendDeclarationService.OnSuccessSendMethod =
+                    (res1) => {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+                        this.RefreshData()
+                    };
+                _SendDeclarationService.OnCustomSendOptionsButtonClick({
+                    RequestVIA: SendRequestVIA.WebServiceInteractive,
+                    Option: "WI",
+                    ForcePersonalSign: false
+                });
 
-      });
+            });
 
-  }
+    }
 
-    
 
-  ButtonClick(event) {
-    this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = true;
-    
 
-    //event.stopPropagation();
-    //this.RowSelect()
-    this.DropdownDisplayClose();//this.MySplitButtonComponent.DropdownDisplayClose();//SplitButtonComponent.EnsureLastSplitButtonIsClosed();
-    //DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
+    ButtonClick(event) {
+        this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = true;
+
+
+        //event.stopPropagation();
+        //this.RowSelect()
+        this.DropdownDisplayClose();//this.MySplitButtonComponent.DropdownDisplayClose();//SplitButtonComponent.EnsureLastSplitButtonIsClosed();
+        //DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
     }
 
 
@@ -315,35 +314,60 @@ export class CourierWorksheetListTemplate {
                 myMessageWindow.Show(res.Result);
             });
     }
-  SendPay(event) {
-    this.ButtonClick(event);
+    SendPay(event) {
+        this.ButtonClick(event);
 
-    let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
-    myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])
-      .subscribe(rsptPMget => {
-        let entitypm = rsptPMget.Result;
-        let objectTable = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
 
-        var args: any = {
-          EntityPM: entitypm,
-        };
 
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
-        logWindow.Height = 700;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
-        logWindow.WindowArgs = args;
-        logWindow.ShowCloseButton = true;
-        
-          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => {
-          //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
-          this.RefreshData()
-        });
-        //TODO | !TODO   ???? >>>>this.ActivateUnifreightInstruction();
-      });
+        let BackButtonLabel = "תיק עמילות"
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                //this.SelectionChanged(myDeclarationEditTab);
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: this._CourierWorksheet['DeclarationId'],//"1-103991"
+                    ObjectTableName: 'Customs.Declaration',//'Customs.Declaration'
+                    BackButtonLabel: BackButtonLabel
+                });
 
-  }
+
+                let myEditComponent: EditComponent = cmpRef.instance;
+
+
+
+                //let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
+                //myDeclarationPMService.get(this._CourierWorksheet['DeclarationId'])
+                //  .subscribe(rsptPMget => {
+                let sub = myEditComponent.OnFirstTimeAfterSingleDataLoaded.subscribe(
+                    (token1) => {
+                        sub.unsubscribe();
+                        let entitypm = myEditComponent.EntityPM; //rsptPMget.Result;
+                        let objectTable = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
+
+                        var args: any = {
+                            EntityPM: entitypm,
+                        };
+
+                        var logWindow = new LogitudeWindow();
+                        logWindow.Width = 1000;
+                        logWindow.Height = 700;
+                        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
+                        logWindow.WindowArgs = args;
+                        logWindow.ShowCloseButton = true;
+
+                        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
+                        logWindow.WindowClosed.subscribe(($event: any) => {
+                            //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+                            myEditComponent.BackButtonClicked();
+                            this.RefreshData()
+                        });
+                        //TODO | !TODO   ???? >>>>this.ActivateUnifreightInstruction();
+                    });
+
+            }
+            );
+    }
+
 
     CourierPendingReasonCommand(event, declarationId, mode) {
         //event.stopPropagation();
