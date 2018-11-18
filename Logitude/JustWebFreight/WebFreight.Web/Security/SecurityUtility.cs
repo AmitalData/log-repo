@@ -32,28 +32,14 @@ namespace WebFreight.Web.Security
             {
                 string email = HttpContext.Current.User.Identity.Name;
 
-                #region
-                if (string.IsNullOrEmpty(email))
+                if (HttpContext.Current.Items!=null)
                 {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    ICommonDataContext context = CommonDataContext.GetContext(0);
-                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    if (authToken != null && authToken.ClientType == "Web")
+                    string val = HttpContext.Current.Items["Session"] as string;
+                    if (val == "SessionExpiration")
                     {
-                        if (authToken.ExpirationDate != null)
-                        {
-                            DateTime nowDate = DateTime.Now;
-                            DateTime expirationDate = (DateTime)authToken.ExpirationDate;
-                            if (expirationDate < nowDate)
-                            {
-                                throw new AutenticationException("Sorry! this user is not authorized! due to session expiration");
-                            }
-                        }
+                        throw new Exception("Sorry! this user is not authorized! due to session expiration");
                     }
                 }
-
-                #endregion
 
                 ContactInfo contactinfo = GetContactInfo(email, tenant);
                 if (contactinfo == null || string.IsNullOrEmpty(email))
@@ -850,6 +836,17 @@ namespace WebFreight.Web.Security
         {
             if (HttpContext.Current != null)
             {
+
+                if (HttpContext.Current.Items != null)
+                {
+                    string val = HttpContext.Current.Items["Session"] as string;
+                    if (val == "SessionExpiration")
+                    {
+                        throw new Exception("Sorry! this user is not authorized! due to session expiration");
+                    }
+                }
+
+
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
                 {
                     return HttpContext.Current.User.Identity.Name;

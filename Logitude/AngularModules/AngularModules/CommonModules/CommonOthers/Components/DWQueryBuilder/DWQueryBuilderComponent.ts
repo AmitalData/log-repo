@@ -25,6 +25,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public _DWObjectTablePMService: DWObjectTablePMService;
     public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
     public _DWQueryBuilderService: DWQueryBuilderService;
+    @Output() SelectedFiltersDataSourceChanged = new EventEmitter();
     @Output() onSelectedDataLoadedEvent = new EventEmitter();
     @Output() onUnSelectedDataLoadedEvent = new EventEmitter();
     @Output() onDataSourceChangedEvent = new EventEmitter();
@@ -547,6 +548,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 //tempDataNew.push(this.SelectedItem);
                 this.SelectedFiltersDataSource = tempDataNew;
             }
+            this.SelectedFiltersDataSourceChanged.emit(this.SelectedFiltersDataSource);
             if (this.CD) {
                 this.CD.detectChanges();
             }
@@ -789,13 +791,13 @@ export class DWQueryBuilderComponent extends BaseComponent {
         //if (this.InnerTables.length == 0) {
         if (this.SelectedFiltersDataSource.length > 0) {
             this.Notes = SelectStmt + this.WhereStmt + (HasMeasurement && GroupByStmt != " group by" ? GroupByStmt : "");
-            if (GroupByStmt != " group by") {
+            if (GroupByStmt != " group by" || this.Notes.indexOf(" group by") == -1) {
                 this.PreviewData(StopPreview);
             }
         }
         else {
             this.Notes = SelectStmt + (HasMeasurement && GroupByStmt != " group by" ? GroupByStmt : "");
-            if (GroupByStmt != " group by") {
+            if (GroupByStmt != " group by" || this.Notes.indexOf(" group by") == -1) {
                 this.PreviewData(StopPreview);
             }
         }
@@ -813,19 +815,22 @@ export class DWQueryBuilderComponent extends BaseComponent {
     }
     IsPreview: boolean = true;
     PreviewData(StopPreview: boolean = false) {
-        if (StopPreview == true) {
-            return;
-        }
-        this.IsPreview = true;
-        this.StartBusyIndicator("Loading ..");
-        var tempSQL = this.Notes.replace("Select ", "Select top 100 ").trim();
-        this._DWQueryBuilderService.GetDWQueryData(tempSQL, "Fact_Shipments").subscribe(myResult => {
-            if (!myResult.HasError) {
-                this.SampleData = myResult.Result;
-                this.StopBusyIndicator();
+        if (this.Notes) {
+            if (StopPreview == true) {
+                return;
             }
+            this.IsPreview = true;
+            this.StartBusyIndicator("Loading ..");
+            var tempSQL = this.Notes.replace("Select ", "Select top 100 ").trim();
+            this._DWQueryBuilderService.GetDWQueryData(tempSQL, "Fact_Shipments").subscribe(myResult => {
+                if (!myResult.HasError) {
+                    this.SampleData = myResult.Result;
+                    this.StopBusyIndicator();
+                }
 
-        });
+            });
+        }
+        
     }
     ShowSQL() {
         this.SaveChanges(true);
