@@ -20776,7 +20776,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 IsCustom = false,
                 Isoveridden = false,
                 IsRequired = false,
-                MaxLength = 40,
+                MaxLength = 60,
                 MinLength = 0,
                 ObjectTableId = CustomersObject.Id,
                 ObjectTableName = CustomersObject.Name,

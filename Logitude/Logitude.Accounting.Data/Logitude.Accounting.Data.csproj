@@ -87,6 +87,7 @@
     <Compile Include="DataContract\TaxReportData.cs" />
     <Compile Include="EntityKeys\AutomaticExternalReconcileMethodKeys.cs" />
     <Compile Include="EntityKeys\BankPageEntryTypeKeys.cs" />
+    <Compile Include="EntityKeys\JournalAdditionalDataKeys.cs" />
     <Compile Include="EntityKeys\JournalMoreDataKeys.cs" />
     <Compile Include="EntityKeys\RevaluationStatusKeys.cs" />
     <Compile Include="EntityKeys\TaxDeductionReportKeys.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="EntityListQueryServices\BankPageEntryTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AutomaticExternalReconcileMethodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BankPageEntryTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\JournalAdditionalDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RevaluationStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TaxDeductionReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TaxDeductionReportStatusListQueryService.Generated.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="EntityListQueryServices\Generated\TaxReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TaxReportStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\VatReportStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\JournalAdditionalDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RevaluationStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TaxDeductionReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TaxDeductionReportStatusListQueryService.cs" />
@@ -124,6 +127,7 @@
     <Compile Include="EntityListQueryServices\VatReportStatusListQueryService.cs" />
     <Compile Include="EntityLists\Generated\AutomaticExternalReconcileMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BankPageEntryTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\JournalAdditionalDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RevaluationStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TaxDeductionReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TaxDeductionReportStatusList.Generated.cs" />
@@ -136,6 +140,7 @@
     <Compile Include="EntityLists\Generated\VatReportStatusList.Generated.cs" />
     <Compile Include="EntityMapping\AutomaticExternalReconcileMethodMap.cs" />
     <Compile Include="EntityMapping\BankPageEntryTypeMap.cs" />
+    <Compile Include="EntityMapping\JournalAdditionalDataMap.cs" />
     <Compile Include="EntityMapping\JournalMoreDataMap.cs" />
     <Compile Include="EntityMapping\RevaluationStatusMap.cs" />
     <Compile Include="EntityMapping\TaxDeductionReportMap.cs" />
@@ -149,6 +154,7 @@
     <Compile Include="EntityMapping\VatReportStatusMap.cs" />
     <Compile Include="EntityPOCOs\AutomaticExternalReconcileMethod.cs" />
     <Compile Include="EntityPOCOs\BankPageEntryType.cs" />
+    <Compile Include="EntityPOCOs\JournalAdditionalData.cs" />
     <Compile Include="EntityPOCOs\JournalMoreData.cs" />
     <Compile Include="EntityPOCOs\RevaluationStatus.cs" />
     <Compile Include="EntityPOCOs\TaxDeductionReport.cs" />
@@ -165,6 +171,7 @@
     <Compile Include="Repositories\Generated\AutomaticExternalReconcileMethodRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\BankPageEntryTypeRepository.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountWithholdingTaxListQueryService.Generated.cs" />
+    <Compile Include="Repositories\Generated\JournalAdditionalDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\JournalMoreDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\RevaluationStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\TaxDeductionReportRepository.Generated.cs" />
@@ -176,6 +183,7 @@
     <Compile Include="Repositories\Generated\TaxReportRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\TaxReportStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\VatReportStatusRepository.Generated.cs" />
+    <Compile Include="Repositories\JournalAdditionalDataRepository.cs" />
     <Compile Include="Repositories\JournalMoreDataRepository.cs" />
     <Compile Include="Repositories\RevaluationStatusRepository.cs" />
     <Compile Include="Repositories\TaxDeductionReportRepository.cs" />
