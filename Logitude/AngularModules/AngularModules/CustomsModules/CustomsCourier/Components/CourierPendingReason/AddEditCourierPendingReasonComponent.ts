@@ -24,6 +24,7 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
     public EntityPM: CourierPendingReasonPM;
     isWindowMode: boolean = false;
     isNewRecord: boolean = false;
+    isFromUnifreight: boolean = false;
     ValidationErrorsList: any[] = [];
 
     _CourierPendingReasonPMService: CourierPendingReasonPMService = new CourierPendingReasonPMService();
@@ -51,14 +52,13 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.isWindowMode = true;
+            this.isFromUnifreight = true;
 
             if (args.FromUnifreight && !AppTool.IsNullOrEmpty(args.UnifreightStatusCode)) {
                 this.isNewRecord = true;
                 this.EntityPM = new CourierPendingReasonPM();
                 this.UnifreightStatusCode = args.UnifreightStatusCode;
-                this.EntityPM.Code = args.UnifreightStatusCode;
                 this.UIProperties.SetEnabled("UnifreightStatusCode", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("Code", this.ObjectTableName, false);
 
                 this._CourierPendingReasonExtendedListService.GetCourierPendingReasonByUnifreightStatus(this.UnifreightStatusCode).subscribe(response => {
                     var courierPendingReasonResult: CourierPendingReasonPM[] = response.Result;
@@ -85,6 +85,19 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
     public get Code() { return this.EntityPM.Code; }
     public set Code(newValue: string) {
         this.EntityPM.Code = newValue;
+    }
+
+    public get PendingCode() { return this.EntityPM.Code; }
+    public set PendingCode(newValue: string) {
+        if (newValue) {
+            var saveUnifreightStatusCode: string = this.UnifreightStatusCode;
+            this._CourierPendingReasonPMService.get(newValue).subscribe(response => {
+                if (!response.HasError && response.Result != null) {
+                    this.EntityPM = response.Result;
+                    this.UnifreightStatusCode = saveUnifreightStatusCode;
+                }
+            });
+        }
     }
 
     public get EnglishName() { return this.EntityPM.EnglishName; }

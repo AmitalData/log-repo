@@ -782,6 +782,8 @@ implements OnDestroy
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
         });
 
         this.columns.push({

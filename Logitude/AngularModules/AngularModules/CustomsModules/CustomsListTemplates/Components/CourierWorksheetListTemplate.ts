@@ -213,10 +213,10 @@ export class CourierWorksheetListTemplate {
             this.IsHighLow = false;
         }
 
-        if (this._CourierWorksheet.CourierCustomStatusCode == "2") {
-            this.SuspentionReasonTip = this._CourierWorksheet.CourierSuspentionReasonName;
-        }
-        this.SuspentionReasonText = this._CourierWorksheet.CourierCustomStatusName;
+      if (this._CourierWorksheet.CourierCustomStatusCode == "2") {
+          this.SuspentionReasonTip = this._CourierWorksheet.CourierSuspentionReasonName;
+      }
+    this.SuspentionReasonText = this._CourierWorksheet.CourierCustomStatusName;
 
         this.BuildDeclarationsCheckBox();
         this.CD.detectChanges();

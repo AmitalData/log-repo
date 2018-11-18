@@ -108,6 +108,10 @@
     <Compile Include="Migrations\201811060542460_AddMigrationPendingErrorPlace.Designer.cs">
       <DependentUpon>201811060542460_AddMigrationPendingErrorPlace.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811151237538_VendorVATNumberChange.cs" />
+    <Compile Include="Migrations\201811151237538_VendorVATNumberChange.Designer.cs">
+      <DependentUpon>201811151237538_VendorVATNumberChange.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -171,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811060542460_AddMigrationPendingErrorPlace.resx">
       <DependentUpon>201811060542460_AddMigrationPendingErrorPlace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811151237538_VendorVATNumberChange.resx">
+      <DependentUpon>201811151237538_VendorVATNumberChange.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
