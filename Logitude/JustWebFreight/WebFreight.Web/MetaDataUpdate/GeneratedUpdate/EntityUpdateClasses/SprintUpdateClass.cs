@@ -122,11 +122,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardComponentPath =  "./TimeManagement/Components/NewEntity/NewSprintComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
+			      				    AllowedForComputingPartners =  true,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+                                    CodeField="Name",
+                                    NameField= "Name",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

@@ -2672,7 +2672,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         shipmentAdditionalCloudData.ApprovedByUserName = entityPM.ApprovedBy;
                     }
-                    if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml)
+                    if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml && entityPM.DeclarationWCOXml != null)
                     {
                         shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
                     }

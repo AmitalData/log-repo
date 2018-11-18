@@ -3211,6 +3211,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (CLoudData != null)
                     {
                         returnShipment.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        returnShipment.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                         returnShipment.ApproveDateTime = CLoudData.ApproveDateTime;
                         returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         returnShipment.VersionApproved = CLoudData.VersionApproved;
@@ -3320,6 +3321,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (CLoudData != null)
                     {
                         shipmentPM.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        shipmentPM.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                         shipmentPM.ApproveDateTime = CLoudData.ApproveDateTime;
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
@@ -3371,6 +3373,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (CLoudData != null)
                     {
                         shipmentPM.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        shipmentPM.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                         shipmentPM.ApproveDateTime = CLoudData.ApproveDateTime;
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
@@ -3415,6 +3418,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (CLoudData != null)
             {
                 returnShipment.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                returnShipment.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                 returnShipment.ApproveDateTime = CLoudData.ApproveDateTime;
                 returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                 returnShipment.VersionApproved = CLoudData.VersionApproved;
