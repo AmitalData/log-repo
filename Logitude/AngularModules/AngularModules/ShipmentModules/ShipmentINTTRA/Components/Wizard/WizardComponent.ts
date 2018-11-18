@@ -361,7 +361,13 @@ export class WizardComponent extends BaseComponent {
         this.myCloner.AddField('SIHasAttachList');
         this.myCloner.AddField('INTTRADocumentQTY');
         this.myCloner.AddField('INTTRADocumentTypeCode');
-
+        this.myCloner.AddField('INTTRAIsFreighted');
+        this.myCloner.AddField('BasicFreightId');
+        this.myCloner.AddField('DestinationPortChargesId');
+        this.myCloner.AddField('DestinationHaulageChargesId');
+        this.myCloner.AddField('AdditionalChargesId');
+        this.myCloner.AddField('FreightPayerId');
+        this.myCloner.AddField('FreightPayerAddressId');
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {
