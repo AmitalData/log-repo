@@ -20776,7 +20776,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 IsCustom = false,
                 Isoveridden = false,
                 IsRequired = false,
-                MaxLength = 40,
+                MaxLength = 60,
                 MinLength = 0,
                 ObjectTableId = CustomersObject.Id,
                 ObjectTableName = CustomersObject.Name,
@@ -66219,6 +66219,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARInvoiceFeature_C08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRANSFER", FeatureTypeCode = "ACT", ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.Transfer", NameTextCodeDefaultText = "Transfer", FullLocalDefaultText = "העברה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_C09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableReTransfer", FeatureTypeCode = "ACT", ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.EnableReTransfer", NameTextCodeDefaultText = "Enable accounting re-transfer", FullLocalDefaultText = "אפשר העברה מחדש להנה''ח" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_C10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoiceEditExchangeRate", ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.EditExchangeRate", NameTextCodeDefaultText = "Edit Exchange Rate", FullLocalDefaultText = "ערוך שער חליפין", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ARInvoiceFeature_C12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.SendToQBO", NameTextCodeDefaultText = "Send to QBO", FullLocalDefaultText = "Send to QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature ARInvoiceFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.AllInvoices", NameTextCodeDefaultText = "All Invoices", FullLocalDefaultText = "כל החשבוניות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DRAFTINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.DraftInvoices", NameTextCodeDefaultText = "Draft Invoices", FullLocalDefaultText = "חשבוניות טויטה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -66290,6 +66291,11 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARPaymentFeature_C07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiCurrency", Packagable = true, FeatureTypeCode = "ACT", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.EnableMultiCurrency", NameTextCodeDefaultText = "Enable multi-currency", FullLocalDefaultText = "לאפשר ריבוי מטבעות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_C08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentEditExchangeRate", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.EditExchangeRate", NameTextCodeDefaultText = "Edit Exchange Rate", FullLocalDefaultText = "ערוך שער חליפין", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_C09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKSATSTATUS", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.CheckSATStatus", NameTextCodeDefaultText = "Check SAT Status", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ARPaymentFeature_C10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.SendToQBO", NameTextCodeDefaultText = "Send To QBO", FullLocalDefaultText = "Send To QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
+
+
 
             Feature ARPaymentFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLPAYMENTS", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.AllPayments", NameTextCodeDefaultText = "All Payments", FullLocalDefaultText = "כל הקבלות", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENPAYMENTS", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.OpenPayments", NameTextCodeDefaultText = "Open Payments", FullLocalDefaultText = "קבלות פתוחות", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);

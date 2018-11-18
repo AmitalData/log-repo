@@ -552,7 +552,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentPickUpPM GetFistShipmentPickUpPMByTenantAndShipmentId(string shipmentId, string shipmentNumber, int tenant)
         {
             ShipmentPickUpPM shipmentPickUpPM = (from entityPOCO in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("TransportMode")
-                                         where entityPOCO.ShipmentId == shipmentId && entityPOCO.Tenant == tenant && entityPOCO.PickUpDeliveryTypeCode == "PICK" && entityPOCO.PickUpDeliveryNumber  == (shipmentNumber + "/1")
+                                         where entityPOCO.ShipmentId == shipmentId && entityPOCO.Tenant == tenant && entityPOCO.PickUpDeliveryTypeCode == "PICK" 
                                          select new ShipmentPickUpPM()
                                          {
                                              Id = entityPOCO.Id,
@@ -604,7 +604,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                              EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                                              TransportModeCode = entityPOCO.TransportModeCode,
                                              TransportModeName = entityPOCO.TransportMode == null ? null : entityPOCO.TransportMode.Name,
-                                         }).FirstOrDefault();
+                                         }).OrderBy(d=>d.PickUpDeliveryNumber).FirstOrDefault();
 
             if (shipmentPickUpPM!=null)
             {
