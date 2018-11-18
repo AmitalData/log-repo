@@ -154,7 +154,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //}
                 if (this._MyDeclarationPM.PaymentDate.HasValue) //If declaration was already paid 
                 {
-                    if (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value) //Compare Declaration Version
+                    //Task 44715 allow update of 1.0 if current <1.0 and it's a restore response
+                    if (!(requestParams.GetType() == typeof(DeclarationRestoreRequestParams) && System.Convert.ToDouble(_MyDeclarationPM.VersionId) < 1.0 && System.Convert.ToDouble(customResponse.Response.Declaration.DMExtensions.VersionID.Value) == 1.0) //restored version 1.0 and current 0.x
+                        && (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value)) //Compare Declaration Version
+                        
+                    //if (_MyDeclarationPM.VersionId != customResponse.Response.Declaration.DMExtensions.VersionID.Value) //Compare Declaration Version
                     {
                         string mess = "נתוני ההצהרה לא עודכנו " + " (" + _MyDeclarationPM.DeclarationNumber + ")" + " הצהרה כבר שולמה ויש שוני בין הגרסאות";
                         LogMessagingUtil.Instance.AppendLine(mess);
@@ -416,10 +420,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             _MyDeclarationPM.TotalTax = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TaxAssessedAmount.Value, 2);
             _MyDeclarationPM.DealValueWithFactor = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value, 2);
             _MyDeclarationPM.TaxationDateTime = Convert.ToDateTime(customResponse.Response.Declaration.DMExtensions.TaxationDateTime);
-            if (_IsSubmitDeclarationResponse != true) _MyDeclarationPM.IsChanged = false;
-            //_MyDeclarationPM.DealValueWithoutFactor = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value;
-            //_MyDeclarationPM.DealValueWithoutFactor = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value, 2);
-            decimal DealValueWithoutFactor = 0;
+            //if (_IsSubmitDeclarationResponse != true) _MyDeclarationPM.IsChanged = false;
+            if (requestParams.GetType() != typeof(DeclarationRestoreRequestParams))//Task 44715
+            {
+                if (_IsSubmitDeclarationResponse != true) _MyDeclarationPM.IsChanged = false;
+            }
+
+                //_MyDeclarationPM.DealValueWithoutFactor = customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value;
+                //_MyDeclarationPM.DealValueWithoutFactor = Math.Round(customResponse.Response.Declaration.DMExtensions.CustomsValueComponent.TotalMADDealValueAmountNIS.Value, 2);
+                decimal DealValueWithoutFactor = 0;
             if (customResponse.Response.Declaration.GoodsShipment != null)
             {
                 foreach (var goodsShipment in customResponse.Response.Declaration.GoodsShipment)
@@ -648,8 +657,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (!String.IsNullOrWhiteSpace("itzik and yaron move to herer from DeclarationWebService.asmx"))
             {
-                _MyDeclarationPM.MarkAsChanged = false;
-                _MyDeclarationPM.IsChanged = false;
+                if (requestParams.GetType() != typeof(DeclarationRestoreRequestParams))//Task 44715 (add condition to itzik and yaron...
+                {
+                    _MyDeclarationPM.MarkAsChanged = false;
+                    _MyDeclarationPM.IsChanged = false;
+                }
             }
             _MyDeclarationPM.CustomsRequestsSheetId = requestParams.CustomsRequestsSheetId;
             _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
