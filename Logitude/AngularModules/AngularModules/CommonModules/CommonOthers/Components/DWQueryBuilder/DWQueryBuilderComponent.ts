@@ -548,7 +548,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 //tempDataNew.push(this.SelectedItem);
                 this.SelectedFiltersDataSource = tempDataNew;
             }
-            this.SelectedFiltersDataSourceChanged.emit(this.SelectedFiltersDataSource);
+            //this.SelectedFiltersDataSourceChanged.emit(this.SelectedFiltersDataSource);
             if (this.CD) {
                 this.CD.detectChanges();
             }

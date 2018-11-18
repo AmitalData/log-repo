@@ -2675,6 +2675,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml && entityPM.DeclarationWCOXml != null)
                     {
                         shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
+                        shipmentAdditionalCloudData.DeclarationXmlData = null;
                     }
                    
                     if (entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData) && entityPM.CustomsClearanceDate == null)
