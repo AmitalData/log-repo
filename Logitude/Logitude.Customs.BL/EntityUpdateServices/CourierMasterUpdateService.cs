@@ -86,8 +86,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId)
-            {
+//Task 44476 remove if in order to always create task - in case another field was changed but cfi don't has updated value
+//            if (entityPM.HAWB != entityPOCO.HAWB || entityPM.MAWB != entityPOCO.MAWB || entityPM.AirlineId != entityPOCO.AirlineId)
+//            {
                 if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0)
                 {
                     this.toSendTask = true;
@@ -102,7 +103,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         this.toSendTask = true;
                     }
                 }
-            }
+//            }
 
             entityPM.ConnectedDeclarations = null;
             entityPM.NotConnectedDeclarations = null;
