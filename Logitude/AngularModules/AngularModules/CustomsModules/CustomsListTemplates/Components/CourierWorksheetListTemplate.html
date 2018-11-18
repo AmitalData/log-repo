@@ -200,8 +200,11 @@
         </div>
     </div>
 
-    <div class="TextTrimming" style="text-align:right" title="{{SuspentionReasonTip}}" *ngIf="fieldName == 'CourierCustomStatusName' && SuspentionReasonText!=''">
+    <!--<div class="TextTrimming" style="text-align:right" title="{{SuspentionReasonTip}}" *ngIf="fieldName == 'CourierCustomStatusName' && SuspentionReasonText!=''">
         {{SuspentionReasonText}}
+    </div>-->
+    <div class="TextTrimming" style="text-align:right" title="{{SuspentionReasonTip}}" *ngIf="fieldName == 'CourierCustomStatusName' && SuspentionReasonText!=''">
+        <span style="color:red" *ngIf="_CourierWorksheet['CourierCustomStatusCode']=='2'">{{SuspentionReasonText}}</span><!--Task 44091-->
+        <span style="color:green" *ngIf="_CourierWorksheet['CourierCustomStatusCode']=='1'">{{SuspentionReasonText}}</span><!--Task 44091-->
     </div>
-
 </div>

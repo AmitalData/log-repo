@@ -67,6 +67,7 @@ export class CourierWorksheetListTemplate {
   SuspentionReasonText: string;
   SuspentionReasonTip: string;
 
+
   _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
 
@@ -214,9 +215,9 @@ export class CourierWorksheetListTemplate {
       this.IsHighLow = false;
     }
 
-    if (this._CourierWorksheet.CourierCustomStatusCode == "2") {
-      this.SuspentionReasonTip = this._CourierWorksheet.CourierSuspentionReasonName;
-    }
+      if (this._CourierWorksheet.CourierCustomStatusCode == "2") {
+          this.SuspentionReasonTip = this._CourierWorksheet.CourierSuspentionReasonName;
+      }
     this.SuspentionReasonText = this._CourierWorksheet.CourierCustomStatusName;
 
     this.BuildDeclarationsCheckBox();
