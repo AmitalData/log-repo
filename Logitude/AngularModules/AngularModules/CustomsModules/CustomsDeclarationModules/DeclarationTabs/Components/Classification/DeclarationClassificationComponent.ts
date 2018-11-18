@@ -246,6 +246,10 @@ export class DeclarationClassificationComponent extends BaseComponent implements
 
     _TotalInvoiceAmountInUSD: string = "";
     public get TotalInvoiceAmountInUSD() { return this._TotalInvoiceAmountInUSD; }
+    public set TotalInvoiceAmountInUSD(newValue: string) {
+        this._TotalInvoiceAmountInUSD = newValue;
+        
+    }
     public get DeclarationOfficeCode() { return this.EntityPM.DeclarationOfficeCode; }
     public set DeclarationOfficeCode(newValue: string) {
         this.EntityPM.DeclarationOfficeCode = newValue;
