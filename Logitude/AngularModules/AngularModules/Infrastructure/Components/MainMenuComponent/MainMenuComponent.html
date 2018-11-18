@@ -29,8 +29,8 @@
                                     <table class="PreventSelect">
                                         <tr style="height: 20px;">
                                             <td>
-                                                <img *ngIf="IsMainSidebarCollapsed == true" src="./_Resources/Images/Icons/All/SidebarRight.png" class="SidebarCollapseButton" (click)="IsMainSidebarCollapsed = false" />
-                                                <img *ngIf="IsMainSidebarCollapsed == false" src="./_Resources/Images/Icons/All/SidebarLeft.png" class="SidebarCollapseButton" (click)="IsMainSidebarCollapsed = true" />
+                                                <img *ngIf="IsMainSidebarCollapsed == true" src="./_Resources/Images/Icons/All/SidebarRight_big.png" class="SidebarCollapseButton" (click)="IsMainSidebarCollapsed = false" />
+                                                <img *ngIf="IsMainSidebarCollapsed == false" src="./_Resources/Images/Icons/All/SidebarLeft_big.png" class="SidebarCollapseButton" (click)="IsMainSidebarCollapsed = true" />
                                             </td>
                                         </tr>
 
@@ -76,8 +76,8 @@
 
                                         <tr>
                                             <td>
-                                                <div class="MediaFill" [hidden]="IsMainSidebarCollapsed">
-                                                    <MainMenuFollowups *ngIf="ShowFollowUps" [ObjectTableId]="FollowUpsTableId"></MainMenuFollowups>
+                                                <div class="MediaFill">
+                                                    <MainMenuFollowups *ngIf="ShowFollowUps" [ObjectTableId]="FollowUpsTableId" [IsMainSidebarCollapsed]="IsMainSidebarCollapsed"></MainMenuFollowups>
                                                 </div>
                                             </td>
                                         </tr>
