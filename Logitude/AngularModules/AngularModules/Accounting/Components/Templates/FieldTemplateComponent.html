@@ -30,6 +30,13 @@
                     <div *ngIf="FieldName == 'VatNumber'">
                         <div>{{ FieldValue }}</div>
                     </div>
+                    <div *ngIf="FieldName == 'AutomaticReconcileName'">
+                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">{{  showLocal ? Entity["AutomaticReconcileLocalName"] : Entity["AutomaticReconcileName"] }}</div>
+                    </div>
+
+                    <div *ngIf="FieldName == 'ReconcileMethodName'">
+                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">{{  showLocal ? Entity["ReconcileMethodLocalName"] : Entity["ReconcileMethodName"] }}</div>
+                    </div>
                 </div>
 
                 <!-- Journal -->
