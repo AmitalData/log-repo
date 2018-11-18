@@ -232,6 +232,15 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
         this.IsTransferImporterEnabled = !this.IsDisplayOnly;
         this.IsEntitleImporterEnabled = !this.IsDisplayOnly;
+        if (!this.IsDisplayOnly) {
+
+            this.IsImporerCodeEnabled = AppTool.IsNullOrEmpty(this.EntityPM.ImporterName);
+            if (this.ImporterCode.includes("F") || this.ImporterCode.includes("P")) {
+                this.IsImporerCodeEnabled = false;
+            }
+
+        }
+
         
     }
     
@@ -246,6 +255,10 @@ export class DeclarationClassificationComponent extends BaseComponent implements
 
     _TotalInvoiceAmountInUSD: string = "";
     public get TotalInvoiceAmountInUSD() { return this._TotalInvoiceAmountInUSD; }
+    public set TotalInvoiceAmountInUSD(newValue: string) {
+        this._TotalInvoiceAmountInUSD = newValue;
+        
+    }
     public get DeclarationOfficeCode() { return this.EntityPM.DeclarationOfficeCode; }
     public set DeclarationOfficeCode(newValue: string) {
         this.EntityPM.DeclarationOfficeCode = newValue;
@@ -276,13 +289,110 @@ export class DeclarationClassificationComponent extends BaseComponent implements
             this.EntityPM.ImporterPassportNumber = null;
             // this.EntityPM.ImporterName = null;
             this.EntityPM.ImporterPassCountryCode = null;
+
+            this.EntityPM.ImporterName = "";//
+
+            this.EntityPM.CasualImporterAddress1 = "";
+            this.EntityPM.CasualImporterAddress2 = "";
+            this.EntityPM.CasualImporterCity = "";
+            this.EntityPM.CasualImporterZipCode = "";
+            this.EntityPM.CasualImporterFax = "";
+            this.EntityPM.CasualImporterEmail = "";
+            this.EntityPM.CasualImporterTel = "";
+            this.EntityPM.CasualImporterContact = "";
+
         }
 
 
     }
-    
-    
-    
+    ImporterLostFocus(item: any,importerSearchBox: any) {
+        let type = 'Importer';
+        if (this.isImporterClicked != true) {
+            switch (type) {
+                case 'Importer': {
+                    this.EntityPM.ImporterId = "";
+                    this.CalculatedImporterName = "";
+                    break;
+                }
+              
+            }
+        }
+        this.isImporterClicked = false;
+
+        if (type == 'Importer' && !AppTool.IsNullOrEmpty(this.EntityPM.CustomerVatNo) && !AppTool.IsNullOrEmpty(item) && this.EntityPM.CustomerVatNo != item) {
+
+            var confirmWindow = new ConfirmWindow(); confirmWindow.Width = 400;
+            confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.VatChanged"));
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) { // YES
+                    this.EntityPM.VatChanged = true;
+                    this.ImporterCode = item;
+                }
+                if (confirmWindow.No) { // NO
+                    SessionLocator.SustainFocusOnCell = true;
+                    var element = document.getElementById(importerSearchBox.InputId);
+                    if (element) {
+                        element.focus();
+                    }
+                }
+            });
+        }
+        else {
+            switch (type) {
+                case 'Importer': {
+                    this.ImporterCode = item;
+                    break;
+                }
+                
+            }
+        }
+    }
+    private isImporterClicked: boolean = false;
+
+    ImporterClicked(client: ClientList) {
+        let type = 'Importer';
+        if (client) {
+            this.isImporterClicked = true;
+            this.UIProperties.SetEnabled("ImporterCode", this.ObjectTableName, true);
+
+            switch (type) {
+                case 'Importer': {
+                    this.ImporterCode = client.Code;
+                    this.EntityPM.ImporterId = client.Id;
+                    this.CalculatedImporterName = AppTool.IsNullOrEmpty(client) ? "" : client.FullName;
+                    break;
+                }
+               
+            }
+        }
+
+    }
+    EditImporter() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+
+        SessionLocator.CurrentSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
+
+        var logWindow = new LogitudeWindow();
+        windowArgs.Type = "Importer";
+        ///this.Type = "Importer";
+        logWindow.Width = 550;
+        logWindow.Height = this.EntityPM.IsCourierDeclaration ? 550 : 350;
+
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
+    }
+    SetFieldsDisabled(message: string) {
+        this.SetScreenFieldsEditability()
+        
+    }
+
     public get CasualSupplierName() {
         
         return this.EntityPM.CasualSupplierName;
