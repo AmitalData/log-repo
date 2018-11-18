@@ -41,31 +41,6 @@ namespace WebFreight.Web.Security
                     }
                 }
 
-
-
-                //#region
-                //if (string.IsNullOrEmpty(email))
-                //{
-                //    string token = HttpContext.Current.Request.Headers["Token"];
-                //    ICommonDataContext context = CommonDataContext.GetContext(0);
-                //    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
-                //    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //    if (authToken != null && authToken.ClientType == "Web")
-                //    {
-                //        if (authToken.ExpirationDate != null)
-                //        {
-                //            DateTime nowDate = DateTime.Now;
-                //            DateTime expirationDate = (DateTime)authToken.ExpirationDate;
-                //            if (expirationDate < nowDate)
-                //            {
-                //                throw new AutenticationException("Sorry! this user is not authorized! due to session expiration");
-                //            }
-                //        }
-                //    }
-                //}
-
-                //#endregion
-
                 ContactInfo contactinfo = GetContactInfo(email, tenant);
                 if (contactinfo == null || string.IsNullOrEmpty(email))
                 {
