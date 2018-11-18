@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnDestroy} from '@angular/core';
 import {AppTool, DateTool} from '../../../Tools';
 import {TextCodeTranslator} from '../../../Utilities/TextCodeTranslator';
@@ -13,7 +13,7 @@ import {ServiceResponse} from '../../../DataContracts/ServiceResponse';
     selector: "MainMenuFollowups",
     moduleId: module.id,
     templateUrl: './MainMenuFollowups.html',
-    inputs: ['ObjectTableId'],
+    inputs: ['ObjectTableId', 'IsMainSidebarCollapsed'],
 })
 
 export class MainMenuFollowups implements OnDestroy {
@@ -21,6 +21,7 @@ export class MainMenuFollowups implements OnDestroy {
     public ItemsSource: MainMenuFollowupItem[] = [];
     public ObjectTableName: string;
     public BackButtonLabel: string;
+    public IsMainSidebarCollapsed: boolean = false;
     private DomainService: InfrastructureDomainService;
     constructor() {
         this.DomainService = new InfrastructureDomainService();
