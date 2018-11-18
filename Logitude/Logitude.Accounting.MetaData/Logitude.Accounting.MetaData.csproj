@@ -78,6 +78,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\BankPageEntryType.lxml" />
+    <None Include="EntityFiles\OpenFormatReport.lxml" />
     <None Include="EntityFiles\PaymentCheque.lxml" />
     <None Include="EntityFiles\PaymentChequeLine.lxml" />
     <None Include="EntityFiles\PaymentChequeStatus.lxml" />

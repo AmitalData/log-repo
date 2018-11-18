@@ -26,6 +26,9 @@ create table DIM_Dates (
 primary key ([Date Key]));
 
 insert into DIM_Dates values(-1,null, '0000-00-00',0, 0, 0, 'Not Specified', null, null, 0,null, null, 'Not Specified', null, null, null, null, 'Not Specified')
+insert into DIM_Dates values(-2,null, '0000-00-00',0, 0, 0, 'Old Date', null, null, 0,null, null, 'Old Date', null, null, null, null, 'Old Date')
+insert into DIM_Dates values(-3,null, '0000-00-00',0, 0, 0, 'Future Date', null, null, 0,null, null, 'Not Specified', null, null, null, null, 'Future Date')
+
 insert into DIM_Dates values(20080101, '2008-1-1', '2008-1-1',2, 1, 1, 'Tuesday', 'Tue', 1, 1,1, 1, 'January', 'Jan', 1, 2008, 200801, 'Not Month End')
 insert into DIM_Dates values(20080102, '2008-1-2', '2008-2-1',3, 2, 2, 'Wednesday', 'Wed', 1, 1,1, 1, 'January', 'Jan', 1, 2008, 200801, 'Not Month End')
 insert into DIM_Dates values(20080103, '2008-1-3', '2008-3-1',4, 3, 3, 'Thursday', 'Thu', 1, 1,1, 1, 'January', 'Jan', 1, 2008, 200801, 'Not Month End')
