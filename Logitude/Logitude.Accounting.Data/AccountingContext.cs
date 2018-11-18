@@ -138,6 +138,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new JournalActionTypeMap());
 	
+            modelBuilder.Configurations.Add(new JournalAdditionalDataMap());
+	
             modelBuilder.Configurations.Add(new JournalLineMap());
 	
             modelBuilder.Configurations.Add(new JournalMoreDataMap());
@@ -767,6 +769,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<JournalActionType> JournalActionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<JournalAdditionalData> JournalAdditionalDatas 
 	 {
 	      get; set;
 	 
