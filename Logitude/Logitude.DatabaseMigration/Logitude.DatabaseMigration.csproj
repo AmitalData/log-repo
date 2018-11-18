@@ -310,6 +310,10 @@
     <Compile Include="Migrations\201811180938423_JournalAdditionalDataMigration.Designer.cs">
       <DependentUpon>201811180938423_JournalAdditionalDataMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811181329366_OpenFormatReportMigration.cs" />
+    <Compile Include="Migrations\201811181329366_OpenFormatReportMigration.Designer.cs">
+      <DependentUpon>201811181329366_OpenFormatReportMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -486,6 +490,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811180938423_JournalAdditionalDataMigration.resx">
       <DependentUpon>201811180938423_JournalAdditionalDataMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811181329366_OpenFormatReportMigration.resx">
+      <DependentUpon>201811181329366_OpenFormatReportMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
