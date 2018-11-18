@@ -835,8 +835,15 @@ export class ARInvoicePM {
      private setVoided: boolean;
     public get SetVoided() { return this.setVoided; }
     public set SetVoided(newValue: boolean) { if (this.setVoided != newValue) { this.setVoided = newValue; this.MarkAsDirty("SetVoided"); } }
-       
-	 
+
+
+
+
+    private setReSendQBO: boolean;
+    public get SetReSendQBO() { return this.setReSendQBO; }
+    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
+    
+
     private setAsSent: boolean;
     public get SetAsSent() { return this.setAsSent; }
     public set SetAsSent(newValue: boolean) { if (this.setAsSent != newValue) { this.setAsSent = newValue; this.MarkAsDirty("SetAsSent"); } }

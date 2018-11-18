@@ -314,6 +314,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool SetReTransfer { get; set; }
         public bool SetCancelDraft { get; set; }
         public bool IsExternalAPI { get; set; }
+        public bool SetReSendQBO { get; set; }
 
         // Full Accounting Fields 
         public string JournalId { get; set; }
