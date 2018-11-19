@@ -101,6 +101,7 @@
     <Compile Include="EntityPMs\Generated\GLAccountTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\GLAccountWithholdingTaxPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalActionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\JournalAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalMoreDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalPM.Generated.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="EntityPMs\Generated\JournalStatusTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LedgerTransactionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OpenFormatReportPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PaymentChequeLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PaymentChequePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PaymentChequeStatusPM.Generated.cs" />

@@ -225,6 +225,32 @@ export class ARPaymentMenuButtonsHandler {
 
                                 break;
                             }
+
+
+                        case "SendToQBO":
+                            {
+                                if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+                                    button.IsHidden = false;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                                if (this.EntityPM.TransferStatusCode == "RD" || this.EntityPM.TransferStatusCode == "NR") {
+                                    button.DisplayText = "Send to QBO";
+                                }
+                                else if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+                                    button.LabelTextCodeCode = null;
+                                    button.DisplayText = "Resend to QBO";
+                                }
+                                if (this.EntityPM.StatusCode == "DR") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+
+                                break;
+                            }
                     }
                 }
             }
@@ -271,8 +297,48 @@ export class ARPaymentMenuButtonsHandler {
                     this.CheckSATStatus();
                     break;
                 }
+
+            case "SendToQBO":
+                {
+                    this.SendToQBO();
+                    break;
+                }
         }
     }
+
+
+
+    SendToQBO() {
+        if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+            var myConfirmWindow = new ConfirmWindow();
+            myConfirmWindow.Width = 400;
+            myConfirmWindow.Show("Resend this [invoice] to QBO?");
+            myConfirmWindow.WindowClosed.subscribe(s => {
+                this.ResetAllFlags();
+                if (myConfirmWindow.Yes) {
+                    this.SendToQBOApproved("Resending Invoice to QBO");
+
+                }
+            });
+        }
+
+        else {
+            this.SendToQBOApproved("Sending Invoice to QBO");
+            this.ResetAllFlags();
+        }
+    }
+
+    SendToQBOApproved(Text: string) {
+        this.EntityPM.SetReSendQBO = true;
+        this.EntityPM.SetVoided = false;
+        this.EntityPM.SetApproved = false;
+        this.EntityPM.SetReTransfer = false;
+        this.EntityPM.SetCancelApproval = false;
+
+        this.entityArgs.EditComponent.SaveChanges(Text);
+    }
+
+
 
     CheckSATStatus() {
         var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
@@ -414,6 +480,8 @@ private CompleteApprove(){
             this.EntityPM.SetVoided = false;
             this.EntityPM.SetApproved = true;
             this.EntityPM.SetCancelApproval = false;
+            this.EntityPM.SetReSendQBO = false;
+
             if (this.CurrentDocument != null) {
                 this.CurrentDocument.NeedsRebuild = true;
                 //CommonContext.SubmitChanges();
@@ -468,6 +536,7 @@ private CompleteApprove(){
         if (isValid) {
             this.EntityPM.SetVoided = false;
             this.EntityPM.SetApproved = false;
+            this.EntityPM.SetReSendQBO = false;
             this.EntityPM.SetCancelApproval = true;
             if (this.CurrentDocument != null) {
                 this.CurrentDocument.NeedsRebuild = true;
@@ -563,6 +632,7 @@ private CompleteApprove(){
                         this.EntityPM.SetVoided = true;
                         this.EntityPM.SetApproved = false;
                         this.EntityPM.SetCancelApproval = false;
+                        this.EntityPM.SetReSendQBO = false;
                         if (this.CurrentDocument != null) {
                             this.CurrentDocument.NeedsRebuild = true;
                             //CommonContext.SubmitChanges();
@@ -584,7 +654,7 @@ private CompleteApprove(){
             this.EntityPM.SetApproved = false;
             this.EntityPM.SetReTransfer = true;
             this.EntityPM.SetCancelApproval = false;
-
+            this.EntityPM.SetReSendQBO = false;
             this.entityArgs.EditComponent.SaveChanges();
         }
     }

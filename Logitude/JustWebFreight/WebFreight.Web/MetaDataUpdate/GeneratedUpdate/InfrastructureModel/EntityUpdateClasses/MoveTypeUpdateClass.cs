@@ -123,7 +123,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
 			      				    Code =  "MTQG",
-			                    
+                                    NameField = "MoveTypeEnglishName",
+                
+
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	

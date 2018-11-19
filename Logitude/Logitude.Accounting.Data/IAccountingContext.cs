@@ -52,12 +52,14 @@ namespace Logitude.Accounting.Data
 		 IDbSet<GLAccountWithholdingTax> GLAccountWithholdingTax { get; }
 		 IDbSet<Journal> Journals { get; }
 		 IDbSet<JournalActionType> JournalActionTypes { get; }
+		 IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; }
 		 IDbSet<JournalLine> JournalLines { get; }
 		 IDbSet<JournalMoreData> JournalMoreDatas { get; }
 		 IDbSet<JournalReconcile> JournalReconciles { get; }
 		 IDbSet<JournalStatusType> JournalStatusTypes { get; }
 		 IDbSet<JournalType> JournalTypes { get; }
 		 IDbSet<LedgerTransaction> LedgerTransactions { get; }
+		 IDbSet<OpenFormatReport> OpenFormatReports { get; }
 		 IDbSet<PaymentCheque> PaymentCheques { get; }
 		 IDbSet<PaymentChequeLine> PaymentChequeLines { get; }
 		 IDbSet<PaymentChequeStatus> PaymentChequeStatuses { get; }

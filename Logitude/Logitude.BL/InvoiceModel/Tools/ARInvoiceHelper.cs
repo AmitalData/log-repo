@@ -112,7 +112,8 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     }
             }
-                if (IsSetApproved || (entityPM.IsAutoCredit && entityPM.ExternalAccountingEntityId==null))
+
+            else if (IsSetApproved || (entityPM.IsAutoCredit && entityPM.ExternalAccountingEntityId==null))
             {
                 commonContext = CommonContext;
                 Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();

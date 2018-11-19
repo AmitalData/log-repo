@@ -149,6 +149,7 @@ namespace Logitude.Accounting.BL.Utils
             {
                 revaluationPM.Status = status;
                 revaluationPM.Message = message;
+                revaluationPM.ChangeSetOp = ChangeSetOperation.Update;
                 RevaluationUpdateService myRevaluationUpdateService = new RevaluationUpdateService(context, new Dictionary<string, IContext>(), tenant);
                 myRevaluationUpdateService.Update(revaluationPM, true);
             }
@@ -237,7 +238,7 @@ namespace Logitude.Accounting.BL.Utils
                                 AccountingDate = revaluationDate,
                                 Tenant = gLAccountPM.Tenant,
                                 DebitAccountId = gLAccountPM.Id,
-                                DebitControlAccountId = gLAccountPM.ControlAccountId,
+                                // DebitControlAccountId = gLAccountPM.ControlAccountId,
                                 DocumentDate = revaluationDate,
                                 DueDate = revaluationDate,
                                 LocalAmount = difference,
@@ -272,7 +273,7 @@ namespace Logitude.Accounting.BL.Utils
         private static void WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation)
         {
             // Start
-            JournalPM newJournal = new JournalPM();
+                JournalPM newJournal = new JournalPM();
 
             // Head
             newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -284,6 +285,7 @@ namespace Logitude.Accounting.BL.Utils
             newJournal.CreatedByUserId = revaluation.CreatedByUserId;
             newJournal.AccountingEntityCode = "8"; //Revaluation
             newJournal.AccountingEntityId = revaluation.Id;
+            newJournal.AccountingEntityReference = revaluation.RevaluationNumber.ToString();
             newJournal.ExternalNo = null;
             newJournal.UpdateDate = DateTime.Now;
             newJournal.UpdatedByUserId = revaluation.CreatedByUserId;
@@ -302,10 +304,10 @@ namespace Logitude.Accounting.BL.Utils
                     Line = LineNumber,
                     ActionCode = line.ActionCode,
                     CreditAccountId = line.CreditAccountId,
-                    CreditControlAccountId = line.CreditControlAccountId,
+                  //  CreditControlAccountId = line.CreditControlAccountId,
                     CurrencyId = line.CurrencyId,
                     DebitAccountId = line.DebitAccountId,
-                    DebitControlAccountId = line.DebitControlAccountId,
+                 //   DebitControlAccountId = line.DebitControlAccountId,
                     DocumentDate = line.DocumentDate,
                     AccountingDate = newJournal.AccountingDate,
                     DueDate = line.DueDate,

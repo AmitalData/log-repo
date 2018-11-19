@@ -735,6 +735,7 @@ export class ShipmentsSummary {
     public CreditLimitBlockedCount: number;
     public ExpectedDeparturesNotTransmittedCount: number;
     public ShippingInstructionsLast7DaysCount: number;
+    public ContainerStatusLast7DaysCount: number;
 }
 export class FlightSummary {
     public Id: string;

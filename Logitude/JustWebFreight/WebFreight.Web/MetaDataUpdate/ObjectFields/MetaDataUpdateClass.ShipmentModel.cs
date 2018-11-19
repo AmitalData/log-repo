@@ -1578,7 +1578,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 FullFieldLable = "AccountManagerUserName",
                 FieldName = "AccountManagerUserName",
                 FieldsDataType = "Text",
-                MaxLength = 40,
+                MaxLength = 60,
                 MinLength = 0,
                 ObjectTableId = ShipmentObject.Id,
                 ObjectTableName = ShipmentObject.Name,
@@ -6631,7 +6631,32 @@ namespace WebFreight.Web.MetaDataUpdate
                 DependencyFilter1Type = "Path",
                 DependencyFilter1Value = "TransportModeId",
                 IsRestrictable = true,
+                AllowedinAutomationConditions =true,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Shipment Contanis Dangerous Goods",
+                FullFieldLable = "ShipmentContanisDangerousGoods",
+                FieldName = "ShipmentContanisDangerousGoods",
+                FieldsDataType = "Boolean",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = ShipmentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListFieldLable = "ShipmentContanisDangerousGoodsLable",
+                ListLableDefaultText = "Shipment Contanis Dangerous Goods",
+                ValidForQuerySection1 = "Shipment",
+                Operator = "Equals",
+                ListPropertyPath = "ShipmentContanisDangerousGoods",
+                PMPropertyPath = "ShipmentContanisDangerousGoods",
+                DisplayInEntityVariables = true,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
@@ -12744,6 +12769,138 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection2 = "ShipmentFollowUp",
                 Operator = "Equals",
                 IsCustomFilter = true,
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Basic Freight",
+                FullFieldLable = "BasicFreightId",
+                FieldName = "BasicFreightId",
+                FieldsDataType = "LookUp",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = ShipmentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                SystemMaxLength = 1,
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = PrepaidCollectObject.Id,
+                Operator = "Equals",
+                ListPropertyPath = "BasicFreightId",
+                PMPropertyPath = "BasicFreightId",
+                DependencyFilter1Type = "Constant",
+                DependencyFilter1Value = "True",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Destination Port Charges",
+                FullFieldLable = "DestinationPortChargesId",
+                FieldName = "DestinationPortChargesId",
+                FieldsDataType = "LookUp",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = ShipmentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                SystemMaxLength = 1,
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = PrepaidCollectObject.Id,
+                Operator = "Equals",
+                ListPropertyPath = "DestinationPortChargesId",
+                PMPropertyPath = "DestinationPortChargesId",
+                DependencyFilter1Type = "Constant",
+                DependencyFilter1Value = "True",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Destination Haulage Charges",
+                FullFieldLable = "DestinationHaulageChargesId",
+                FieldName = "DestinationHaulageChargesId",
+                FieldsDataType = "LookUp",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = ShipmentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                SystemMaxLength = 1,
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = PrepaidCollectObject.Id,
+                Operator = "Equals",
+                ListPropertyPath = "DestinationHaulageChargesId",
+                PMPropertyPath = "DestinationHaulageChargesId",
+                DependencyFilter1Type = "Constant",
+                DependencyFilter1Value = "True",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Additional Charges",
+                FullFieldLable = "AdditionalChargesId",
+                FieldName = "AdditionalChargesId",
+                FieldsDataType = "LookUp",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = ShipmentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                SystemMaxLength = 1,
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = PrepaidCollectObject.Id,
+                Operator = "Equals",
+                ListPropertyPath = "AdditionalChargesId",
+                PMPropertyPath = "AdditionalChargesId",
+                DependencyFilter1Type = "Constant",
+                DependencyFilter1Value = "True",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Freight Payer",
+                FullFieldLable = "FreightPayerId",
+                FieldName = "FreightPayerId",
+                FieldsDataType = "LookUp",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = CardsObject.Id,
+                ListPropertyPath = "FreightPayerId",
+                PMPropertyPath = "FreightPayerId"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Freight Payer Address",
+                FullFieldLable = "FreightPayerAddressId",
+                FieldName = "FreightPayerAddressId",
+                FieldsDataType = "LookUp",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = AddressObject.Id,
+                ListPropertyPath = "FreightPayerAddressId",
+                PMPropertyPath = "FreightPayerAddressId"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             // end of shipment
@@ -23761,7 +23918,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortFieldLableDefaultText = "Ref 1",
                 FieldsDataType = "Text",
                 CanFilter = true,
-                MaxLength = 150,
+                MaxLength = 250,
                 MinLength = 0,
                 ObjectTableId = ShipmentPackagesObject.Id,
                 ObjectTableName = ShipmentPackagesObject.Name,
@@ -23784,7 +23941,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortFieldLableDefaultText = "Ref 2",
                 FieldsDataType = "Text",
                 CanFilter = true,
-                MaxLength = 150,
+                MaxLength = 250,
                 MinLength = 0,
                 ObjectTableId = ShipmentPackagesObject.Id,
                 ObjectTableName = ShipmentPackagesObject.Name,
@@ -23807,7 +23964,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortFieldLableDefaultText = "Ref 3",
                 FieldsDataType = "Text",
                 CanFilter = true,
-                MaxLength = 150,
+                MaxLength = 250,
                 MinLength = 0,
                 ObjectTableId = ShipmentPackagesObject.Id,
                 ObjectTableName = ShipmentPackagesObject.Name,
@@ -23829,7 +23986,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortFieldLable = "Reference4",
                 ShortFieldLableDefaultText = "Ref 4",
                 FieldsDataType = "Text",
-                MaxLength = 150,
+                MaxLength = 250,
                 MinLength = 0,
                 ObjectTableId = ShipmentPackagesObject.Id,
                 ObjectTableName = ShipmentPackagesObject.Name,
@@ -24263,7 +24420,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortFieldLableDefaultText = "Ref 1",
                 FieldsDataType = "Text",
                 CanFilter = true,
-                MaxLength = 50,
+                MaxLength = 250,
                 MinLength = 0,
                 ObjectTableId = InsideShipmentPackagesObject.Id,
                 ObjectTableName = InsideShipmentPackagesObject.Name,
@@ -24286,7 +24443,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortFieldLableDefaultText = "Ref 2",
                 FieldsDataType = "Text",
                 CanFilter = true,
-                MaxLength = 50,
+                MaxLength = 250,
                 MinLength = 0,
                 ObjectTableId = InsideShipmentPackagesObject.Id,
                 ObjectTableName = InsideShipmentPackagesObject.Name,
@@ -24309,7 +24466,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortFieldLableDefaultText = "Ref 3",
                 FieldsDataType = "Text",
                 CanFilter = true,
-                MaxLength = 50,
+                MaxLength = 250,
                 MinLength = 0,
                 ObjectTableId = InsideShipmentPackagesObject.Id,
                 ObjectTableName = InsideShipmentPackagesObject.Name,
@@ -24331,7 +24488,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortFieldLable = "Reference4",
                 ShortFieldLableDefaultText = "Ref 4",
                 FieldsDataType = "Text",
-                MaxLength = 50,
+                MaxLength = 250,
                 MinLength = 0,
                 ObjectTableId = InsideShipmentPackagesObject.Id,
                 ObjectTableName = InsideShipmentPackagesObject.Name,

@@ -31,6 +31,16 @@ namespace WebFreight.Web.Security
             if (HttpContext.Current != null)
             {
                 string email = HttpContext.Current.User.Identity.Name;
+
+                if (HttpContext.Current.Items!=null)
+                {
+                    string val = HttpContext.Current.Items["Session"] as string;
+                    if (val == "SessionExpiration")
+                    {
+                        throw new Exception("Sorry! this user is not authorized! due to session expiration");
+                    }
+                }
+
                 ContactInfo contactinfo = GetContactInfo(email, tenant);
                 if (contactinfo == null || string.IsNullOrEmpty(email))
                 {
@@ -826,6 +836,17 @@ namespace WebFreight.Web.Security
         {
             if (HttpContext.Current != null)
             {
+
+                if (HttpContext.Current.Items != null)
+                {
+                    string val = HttpContext.Current.Items["Session"] as string;
+                    if (val == "SessionExpiration")
+                    {
+                        throw new Exception("Sorry! this user is not authorized! due to session expiration");
+                    }
+                }
+
+
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
                 {
                     return HttpContext.Current.User.Identity.Name;

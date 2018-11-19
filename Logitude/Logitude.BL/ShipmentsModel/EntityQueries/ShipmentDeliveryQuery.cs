@@ -832,10 +832,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentDeliveryPM GetFirstShipmentDeliveryPMsByTenantAndShipment(string shipmentId,string shipmentNumber ,  int tenant)
         {
             IQueryable<ShipmentPickUpDelivery> iQueryable = (from d in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("TransportMode")
-                                                             where d.ShipmentId == shipmentId && d.Tenant == tenant && d.PickUpDeliveryTypeCode == "DELV" &&  d.PickUpDeliveryNumber == (shipmentNumber + "/1")
-                                                             select d);
+                                                             where d.ShipmentId == shipmentId && d.Tenant == tenant && d.PickUpDeliveryTypeCode == "DELV"
+                                                             select d).OrderBy(d => d.PickUpDeliveryNumber);
 
-            ShipmentDeliveryPM shipmentDeliveryPM = (from entityPOCO in iQueryable
+        ShipmentDeliveryPM shipmentDeliveryPM = (from entityPOCO in iQueryable
                                                      select new ShipmentDeliveryPM()
                                                      {
                                                          Id = entityPOCO.Id,

@@ -534,7 +534,7 @@
                                 </log-column>
 
                                 <!-- VatType -->
-                                <log-column *ngIf="IsVATVisible" [header]="'VAT Type'" [width]="Father.VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
+                                <log-column *ngIf="IsVATVisible" [header]="'QuoteCharge.F.VatTypeId' | TextCodeTranslationPipe" [width]="Father.VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
                                     <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                         <div class="MediaFill">
                                             <table>

@@ -1133,6 +1133,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ForeignPartnerCountryCode = shipment.ForeignPartnerCountryCode;
             shipmentPM.IsNewARInvoiceBlocked = shipment.IsNewARInvoiceBlocked;
             shipmentPM.OperationalDate = shipment.OperationalDate;
+            shipmentPM.BasicFreightId = shipment.BasicFreightId;
+            shipmentPM.DestinationPortChargesId = shipment.DestinationPortChargesId;
+            shipmentPM.DestinationHaulageChargesId = shipment.DestinationHaulageChargesId;
+            shipmentPM.AdditionalChargesId = shipment.AdditionalChargesId;
+            shipmentPM.FreightPayerId = shipment.FreightPayerId;
+            shipmentPM.FreightPayerAddressId = shipment.FreightPayerAddressId;
 
             #region ppcc region
             string ppcc = "";
@@ -3211,6 +3217,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (CLoudData != null)
                     {
                         returnShipment.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        returnShipment.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                         returnShipment.ApproveDateTime = CLoudData.ApproveDateTime;
                         returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         returnShipment.VersionApproved = CLoudData.VersionApproved;
@@ -3320,6 +3327,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (CLoudData != null)
                     {
                         shipmentPM.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        shipmentPM.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                         shipmentPM.ApproveDateTime = CLoudData.ApproveDateTime;
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
@@ -3371,6 +3379,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     if (CLoudData != null)
                     {
                         shipmentPM.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                        shipmentPM.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                         shipmentPM.ApproveDateTime = CLoudData.ApproveDateTime;
                         shipmentPM.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                         shipmentPM.VersionApproved = CLoudData.VersionApproved;
@@ -3415,6 +3424,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (CLoudData != null)
             {
                 returnShipment.DeclarationXMLData = CLoudData.DeclarationXmlData;
+                returnShipment.DeclarationWCOXml = CLoudData.DeclarationWCOXml;
                 returnShipment.ApproveDateTime = CLoudData.ApproveDateTime;
                 returnShipment.IsImporterApprovalRequired = CLoudData.IsImporterApprovalRequried;
                 returnShipment.VersionApproved = CLoudData.VersionApproved;
@@ -6697,7 +6707,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
         #endregion
 
-        public ShipmentsSummary GetShipmentsDashBoardSummary(int tenant, string directionId, string transportModeId, string loggedContactId, bool hasETDFeature, bool hasFollowupsFeature, bool hasExpDepNotTransmittedFeature, bool hasShippingInstructionsLast7DaysFeature)
+        public ShipmentsSummary GetShipmentsDashBoardSummary(int tenant, string directionId, string transportModeId, string loggedContactId, bool hasETDFeature, bool hasFollowupsFeature, bool hasExpDepNotTransmittedFeature, bool hasShippingInstructionsLast7DaysFeature, bool hasContainerStatusLast7DaysFeature)
         {
             ShipmentsSummary myResult = new ShipmentsSummary() { Id = 1 };
 
@@ -6784,6 +6794,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (hasShippingInstructionsLast7DaysFeature)
             {
                 myResult.ShippingInstructionsLast7DaysCount = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRASIStatusDate >= lastWeekDate || d.INTTRALastStatusDate >= lastWeekDate)).Take(1001).Count();
+            }
+
+            if (hasContainerStatusLast7DaysFeature)
+            {
+                myResult.ContainerStatusLast7DaysCount = iQueryable_Shipments.Where(d => d.INTTRASIStatusCode != "NSEN" && (d.INTTRALastStatusDate >= lastWeekDate)).Take(1001).Count();
             }
 
             // Others

@@ -112,7 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
+			      				    AllowedForComputingPartners =  true,
 			      				    NameField =  "EnglishName",
 			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Common",
@@ -121,7 +121,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
-			                    
+                                    CodeField = "Code",
+
+
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	

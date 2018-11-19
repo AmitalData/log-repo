@@ -527,7 +527,7 @@ namespace WebFreight.Web
                 {
                     HttpContext.Current.User = null;
                 }
-
+              
                 string token = HttpContext.Current.Request.Headers["Token"];
                 if (!string.IsNullOrEmpty(token))
                 {
@@ -549,7 +549,7 @@ namespace WebFreight.Web
                                         DateTime expirationDate = (DateTime)authToken.ExpirationDate;
                                         if (expirationDate < nowDate)
                                         {
-                                            HttpContext.Current.User = null;
+                                            HttpContext.Current.Items.Add("Session", "SessionExpiration");
                                             return;
                                         }
                     

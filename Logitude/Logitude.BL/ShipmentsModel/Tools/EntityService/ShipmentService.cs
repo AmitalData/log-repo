@@ -2522,6 +2522,46 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.InitializeHouseField();
                 }
 
+                entityPM.BasicFreightId = entityPM.FreightPrepaidCollectId;
+                entityPM.DestinationPortChargesId = entityPM.OtherPrepaidCollectId;
+                entityPM.DestinationHaulageChargesId = entityPM.OtherPrepaidCollectId;
+                entityPM.AdditionalChargesId = entityPM.OtherPrepaidCollectId;
+
+                if (entityPM.FreightPrepaidCollectId == "P")
+                {
+                    if (entityPM.ShipperId != null)
+                    {
+                        entityPM.FreightPayerId = entityPM.ShipperId;
+                        entityPM.FreightPayerAddressId = entityPM.ShipperAddressId;
+
+                        if (entityPM.FreightPayerAddressId == null)
+                        {
+                            Address address = myAddressRepository.GetSingleAddressByCardIdAndTypeId(entityPM.ShipperId, "M", entityPM.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.FreightPayerAddressId = address.Id;
+                            }
+                        }
+                    }
+                }
+
+                else if (entityPM.FreightPrepaidCollectId == "C")
+                {
+                    if (entityPM.AgentId != null)
+                    {
+                        entityPM.FreightPayerId = entityPM.AgentId;
+                        entityPM.FreightPayerAddressId = entityPM.AgentAddressId;
+
+                        if (entityPM.FreightPayerAddressId == null)
+                        {
+                            Address address = myAddressRepository.GetSingleAddressByCardIdAndTypeId(entityPM.AgentId, "M", entityPM.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.FreightPayerAddressId = address.Id;
+                            }
+                        }
+                    }
+                }
                 #endregion
             }
 
@@ -2672,9 +2712,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         shipmentAdditionalCloudData.ApprovedByUserName = entityPM.ApprovedBy;
                     }
-                    if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml)
+                    if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml && entityPM.DeclarationWCOXml != null)
                     {
                         shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
+                        shipmentAdditionalCloudData.DeclarationXmlData = null;
                     }
                    
                     if (entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData) && entityPM.CustomsClearanceDate == null)
