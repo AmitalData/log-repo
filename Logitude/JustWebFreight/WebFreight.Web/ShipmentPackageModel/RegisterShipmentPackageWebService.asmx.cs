@@ -72,7 +72,7 @@ namespace WebFreight.Web.ShipmentPackageModel
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
 
             IQueryable<ShipmentJoinPackageList> shipments = shipmentQuery.GetShipmentsJoinPackagesByTenant(tenant);
-            List<string> packageIds = shipments.Select(s => s.Id).ToList();
+            List<string> packageIds = shipments.Select(s => s.PackageId).ToList();
             List<ShipmentPackageItem> packageItems = shipmentCotnext.ShipmentPackageItems.Where(d => packageIds.Contains(d.PackageId)).ToList();
 
             QueryFilterItem fromDateItem = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDateTime" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();

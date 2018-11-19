@@ -1,6 +1,9 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
@@ -120,6 +123,16 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     address.Tenant = Tenant;
                     temp.Addresses.Add(address);
                 }
+
+                //IGLAccountQueryServiceExt GLAccountGLAccountService = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                //if (MyEntity.GLAccount != null)
+                //{
+                //    var myGLAccountPM = GLAccountGLAccountService.GLAccountDataMappingAndValidatin(MyEntity.GLAccount, Tenant, ComputingPartnerName);
+                //    if (myGLAccountPM != null)
+                //    {
+                //        temp.GLAccountId = myGLAccountPM.Id;                        
+                //    }
+                //}
 
                 return temp;
             }

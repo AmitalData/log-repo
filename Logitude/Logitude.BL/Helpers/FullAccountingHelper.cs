@@ -36,6 +36,22 @@ namespace Logitude.BL.Helpers
                 }
             }
         }
+
+        public string CreateGLAccount(Card card)
+        {
+            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+
+            GLAccountPM gLAccountEntity = new GLAccountPM();
+            gLAccountEntity.Tenant = card.Tenant;
+            gLAccountEntity.EnglishName = card.EnglishName;
+            gLAccountEntity.LocalName = card.LocalName;
+            gLAccountEntity.AccountTypeCode = "2";
+            gLAccountEntity.ChangeSetOp = ChangeSetOperation.Insert;
+            IGLAccountUpdateServiceExt glaccountCreate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
+            glaccountCreate.Create(gLAccountEntity);
+
+            return gLAccountEntity.Id;
+        }
     }
 
     public class GLAccountData
