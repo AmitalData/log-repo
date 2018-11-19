@@ -70,6 +70,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var JournalUpdateOnCreatingFactory = new JournalUpdateOnCreating.Factory();
             var JournalUpdateInsert = JournalUpdateOnCreatingFactory.Create(this.MainContext as IAccountingContext);
             JournalUpdateInsert.OnCreating(entityPM, entityParentPM);
+
+          
         }
 
 
@@ -105,14 +107,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
-    
+
 
 
         protected override void OnUpdating(JournalPM entityPM, Journal entityPOCO)
         {
             var journalUpdate = GetJournalOnUpdtatingObject();
-            
+
             journalUpdate.OnUpdating(entityPM, entityPOCO, ChangeTrackingEntityPM);
+
+            
         }
         public JournalRepository GetJournalRepositoryPriv()
         {
@@ -341,6 +345,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.StatusCode = journalOldStatusCode;
                 throw;
+            }
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                JournalAdditionalDataUpdateService additionalDataUpdateService = new JournalAdditionalDataUpdateService((IAccountingContext)this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                JournalAdditionalDataPM journalAdditionalDataPM = new JournalAdditionalDataPM()
+                {
+                    JournalId = entityPM.Id,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    TaxReportId = null,
+                    TaxReportStatusCode = null,
+                    Tenant = entityPM.Tenant,
+                };
+
+                additionalDataUpdateService.Update(journalAdditionalDataPM, true);
             }
 
 

@@ -59,6 +59,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<JournalStatusType> JournalStatusTypes { get; }
 		 IDbSet<JournalType> JournalTypes { get; }
 		 IDbSet<LedgerTransaction> LedgerTransactions { get; }
+		 IDbSet<OpenFormatReport> OpenFormatReports { get; }
 		 IDbSet<PaymentCheque> PaymentCheques { get; }
 		 IDbSet<PaymentChequeLine> PaymentChequeLines { get; }
 		 IDbSet<PaymentChequeStatus> PaymentChequeStatuses { get; }

@@ -239,6 +239,12 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @DIM_PartnersParentTenantNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PartnersParentTenantNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder) Values(@DIM_PartnersParentTenantNewId,0,'DIM_Partners','[Parent Tenant]','Parent Tenant','Integer','true',0,0,'false','false','false')  
+declare @DIM_PartnersCountryCodeNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersCountryCodeNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder) Values(@DIM_PartnersCountryCodeNewId,0,'DIM_Partners','[Country Code]','Country Code','Text','false',0,2,'false','false','true')  
+declare @DIM_PartnersPrimaryContactEmailNewId varchar(15)
+execute usp_GetNextTableIdValue @DIM_PartnersPrimaryContactEmailNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder) Values(@DIM_PartnersPrimaryContactEmailNewId,0,'DIM_Partners','[Primary Contact Email]','Primary Contact Email','Text','false',0,70,'false','false','true')  
 ------------------------------------------------------------------------------------
 declare @DIM_PortsNewId varchar(15)
 execute usp_GetNextTableIdValue @DIM_PortsNewId OUTPUT,'DWObjectTable' 
@@ -445,24 +451,12 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsAccountManagerNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsAccountManagerNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder) Values(@Fact_ShipmentsAccountManagerNewId,0,'Fact_Shipments','[Account Manager]','Account Manager','Dimension','false',0,0,'DIM_Users','false','false','true')  
-declare @Fact_ShipmentsReceivablesLocalNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ShipmentsReceivablesLocalNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsReceivablesLocalNewId,0,'Fact_Shipments','[Receivables ( Local )]','Receivables ( Local )','Decimal','false',0,0,'false','true','COUNT','true')  
-declare @Fact_ShipmentsPayablesLocalNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ShipmentsPayablesLocalNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsPayablesLocalNewId,0,'Fact_Shipments','[Payables ( Local )]','Payables ( Local )','Decimal','false',0,0,'false','true','COUNT','true')  
 declare @Fact_ShipmentsProfitLocalNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsProfitLocalNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsProfitLocalNewId,0,'Fact_Shipments','[Profit ( Local )]','Profit ( Local )','Decimal','false',0,0,'false','true','COUNT','true')  
-declare @Fact_ShipmentsReceivablesProfitNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ShipmentsReceivablesProfitNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsReceivablesProfitNewId,0,'Fact_Shipments','[Receivables (Profit)]','Receivables (Profit)','Decimal','false',0,0,'false','true','COUNT','true')  
-declare @Fact_ShipmentsPayablesProfitNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ShipmentsPayablesProfitNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsPayablesProfitNewId,0,'Fact_Shipments','[Payables (Profit)]','Payables (Profit)','Decimal','false',0,0,'false','true','COUNT','true')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsProfitLocalNewId,0,'Fact_Shipments','[Profit ( Local )]','Profit ( Local )','Decimal','false',0,0,'false','true','SUM','true')  
 declare @Fact_ShipmentsProfitNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsProfitNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsProfitNewId,0,'Fact_Shipments','[Profit]','Profit','Decimal','false',0,0,'false','true','COUNT','true')  
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsProfitNewId,0,'Fact_Shipments','[Profit]','Profit','Decimal','false',0,0,'false','true','SUM','true')  
 declare @Fact_ShipmentsLocalCurrencyNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsLocalCurrencyNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder) Values(@Fact_ShipmentsLocalCurrencyNewId,0,'Fact_Shipments','[Local Currency ]','Local Currency ','Dimension','false',0,0,'DIM_Currencies','false','false','true')  
@@ -526,3 +520,27 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsAccountingCloseDateNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsAccountingCloseDateNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder) Values(@Fact_ShipmentsAccountingCloseDateNewId,0,'Fact_Shipments','[Accounting Close Date]','Accounting Close Date','Dimension','false',0,0,'DIM_Dates','false','false','true')  
+declare @Fact_ShipmentsOpenReceivablesLocalNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsOpenReceivablesLocalNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsOpenReceivablesLocalNewId,0,'Fact_Shipments','[Open Receivables ( Local )]','Open Receivables ( Local )','Decimal','false',0,0,'false','true','SUM','true')  
+declare @Fact_ShipmentsOpenReceivablesProfitNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsOpenReceivablesProfitNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsOpenReceivablesProfitNewId,0,'Fact_Shipments','[Open Receivables ( Profit )]','Open Receivables ( Profit )','Decimal','false',0,0,'false','true','SUM','true')  
+declare @Fact_ShipmentsAccountedReceivablesLocalNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsAccountedReceivablesLocalNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsAccountedReceivablesLocalNewId,0,'Fact_Shipments','[Accounted Receivables ( Local )]','Accounted Receivables ( Local )','Decimal','false',0,0,'false','true','SUM','true')  
+declare @Fact_ShipmentsAccountedReceivablesProfitNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsAccountedReceivablesProfitNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsAccountedReceivablesProfitNewId,0,'Fact_Shipments','[Accounted Receivables ( Profit )]','Accounted Receivables ( Profit )','Decimal','false',0,0,'false','true','SUM','true')  
+declare @Fact_ShipmentsOpenPayablesLocalNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsOpenPayablesLocalNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsOpenPayablesLocalNewId,0,'Fact_Shipments','[Open Payables ( Local )]','Open Payables ( Local )','Decimal','false',0,0,'false','true','SUM','true')  
+declare @Fact_ShipmentsOpenPayablesProfitNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsOpenPayablesProfitNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsOpenPayablesProfitNewId,0,'Fact_Shipments','[Open Payables ( Profit )]','Open Payables ( Profit )','Decimal','false',0,0,'false','true','SUM','true')  
+declare @Fact_ShipmentsAccountedPayablesLocalNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsAccountedPayablesLocalNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsAccountedPayablesLocalNewId,0,'Fact_Shipments','[Accounted Payables ( Local )]','Accounted Payables ( Local )','Decimal','false',0,0,'false','true','SUM','true')  
+declare @Fact_ShipmentsAccountedPayablesProfitNewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsAccountedPayablesProfitNewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,AggregationTypeCode,DisplayInQueryBuilder) Values(@Fact_ShipmentsAccountedPayablesProfitNewId,0,'Fact_Shipments','[Accounted Payables ( Profit )]','Accounted Payables ( Profit )','Decimal','false',0,0,'false','true','SUM','true')  

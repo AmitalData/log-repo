@@ -2272,6 +2272,24 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? ContainerLastStatusDate { get; set; }
 
         public bool ShipmentContanisDangerousGoods { get; set; }
-        
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string BasicFreightId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string DestinationPortChargesId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string DestinationHaulageChargesId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string AdditionalChargesId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string FreightPayerId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string FreightPayerAddressId { get; set; }
+
     }
 }

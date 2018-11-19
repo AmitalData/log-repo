@@ -16,5 +16,7 @@
     <field Id="&quot;33d3d46a-3797-46fd-bbe2-c7e2fb6a30a2&quot;" Code="&quot;[Partner Type]&quot;" Name="&quot;Partner Type&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="20" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" />
     <field Id="&quot;9f4c5186-e870-4965-a9c3-e6db56cff8d7&quot;" Code="&quot;[Source Tenant]&quot;" Name="&quot;Source Tenant&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" />
     <field Id="&quot;fe3502f2-8d81-49ed-a107-cc15945d77c8&quot;" Code="&quot;[Parent Tenant]&quot;" Name="&quot;Parent Tenant&quot;" DataTypeCode="&quot;Integer&quot;" IsRequired="true" MinLength="0" MaxLength="0" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" />
+    <field Id="&quot;d9e3c40f-d0b5-4028-ad4e-b1574f5f91fd&quot;" Code="&quot;[Country Code]&quot;" Name="&quot;Country Code&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="false" MinLength="0" MaxLength="2" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" />
+    <field Id="&quot;b35b38d3-14aa-4160-afb6-25d5cd3d5dde&quot;" Code="&quot;[Primary Contact Email]&quot;" Name="&quot;Primary Contact Email&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="false" MinLength="0" MaxLength="70" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" />
   </fields>
 </entity>

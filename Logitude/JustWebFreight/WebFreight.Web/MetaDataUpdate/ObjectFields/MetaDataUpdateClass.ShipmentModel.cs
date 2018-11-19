@@ -12771,6 +12771,138 @@ namespace WebFreight.Web.MetaDataUpdate
                 IsCustomFilter = true,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Basic Freight",
+                FullFieldLable = "BasicFreightId",
+                FieldName = "BasicFreightId",
+                FieldsDataType = "LookUp",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = ShipmentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                SystemMaxLength = 1,
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = PrepaidCollectObject.Id,
+                Operator = "Equals",
+                ListPropertyPath = "BasicFreightId",
+                PMPropertyPath = "BasicFreightId",
+                DependencyFilter1Type = "Constant",
+                DependencyFilter1Value = "True",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Destination Port Charges",
+                FullFieldLable = "DestinationPortChargesId",
+                FieldName = "DestinationPortChargesId",
+                FieldsDataType = "LookUp",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = ShipmentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                SystemMaxLength = 1,
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = PrepaidCollectObject.Id,
+                Operator = "Equals",
+                ListPropertyPath = "DestinationPortChargesId",
+                PMPropertyPath = "DestinationPortChargesId",
+                DependencyFilter1Type = "Constant",
+                DependencyFilter1Value = "True",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Destination Haulage Charges",
+                FullFieldLable = "DestinationHaulageChargesId",
+                FieldName = "DestinationHaulageChargesId",
+                FieldsDataType = "LookUp",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = ShipmentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                SystemMaxLength = 1,
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = PrepaidCollectObject.Id,
+                Operator = "Equals",
+                ListPropertyPath = "DestinationHaulageChargesId",
+                PMPropertyPath = "DestinationHaulageChargesId",
+                DependencyFilter1Type = "Constant",
+                DependencyFilter1Value = "True",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Additional Charges",
+                FullFieldLable = "AdditionalChargesId",
+                FieldName = "AdditionalChargesId",
+                FieldsDataType = "LookUp",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = ShipmentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                SystemMaxLength = 1,
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = PrepaidCollectObject.Id,
+                Operator = "Equals",
+                ListPropertyPath = "AdditionalChargesId",
+                PMPropertyPath = "AdditionalChargesId",
+                DependencyFilter1Type = "Constant",
+                DependencyFilter1Value = "True",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Freight Payer",
+                FullFieldLable = "FreightPayerId",
+                FieldName = "FreightPayerId",
+                FieldsDataType = "LookUp",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = CardsObject.Id,
+                ListPropertyPath = "FreightPayerId",
+                PMPropertyPath = "FreightPayerId"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Freight Payer Address",
+                FullFieldLable = "FreightPayerAddressId",
+                FieldName = "FreightPayerAddressId",
+                FieldsDataType = "LookUp",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                ValidForQuerySection1 = "Shipment",
+                ValidForQuerySection2 = "ShipmentFollowUp",
+                LookUpTableId = AddressObject.Id,
+                ListPropertyPath = "FreightPayerAddressId",
+                PMPropertyPath = "FreightPayerAddressId"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             // end of shipment
             this.ObjectContext.SaveChanges();
         }
