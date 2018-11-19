@@ -411,5 +411,80 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             };
             return result;
         }
+
+        public VendorPM GetSingleVendorPMByCode(string code, int tenant)
+        {
+            VendorPM vendor = (from a in repository.context.Vendors.Include("Card")
+                               where a.Card.Code == code && a.Tenant == tenant
+                               select new VendorPM()
+                               {
+                                   Id = a.Id,
+                                   Tenant = a.Tenant,
+                                   Code = a.Card.Code,
+                                   EnglishName = a.Card.EnglishName,
+                                   LocalName = a.Card.LocalName,
+                                   CardPMId = a.Id,
+                                   ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                   PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                   CreateDate = a.Card.CreateDate,
+                                   InActive = a.Card.InActive,
+                                   Notes = a.Card.Notes,
+                                   PartnerTypeId = a.Card.PartnerTypeId,
+                                   PaymentTermId = a.Card.PaymentTermId,
+                                   VatNumber = a.Card.VatNumber,
+                                   ComputedLocalName = string.IsNullOrEmpty(a.Card.LocalName) ? a.Card.EnglishName : a.Card.LocalName,
+                                   Website = a.Card.Website,
+                                   InvoiceCurrencyId = a.Card.InvoiceCurrencyId,
+                                   VatTypeId = a.Card.VatTypeId,
+                                   AccountNumber = a.Card.AccountNumber,
+                                   Swift = a.Card.Swift,
+                                   IBANNumber = a.Card.IBANNumber,
+                                   BankName = a.Card.BankName,
+                                   BankAddress = a.Card.BankAddress,
+                                   PrimaryContactId = a.Card.PrimaryContactId,
+                                   EnableConsolidationInvoices = a.Card.EnableConsolidationInvoices,
+                                   IRSNumber = a.Card.IRSNumber,
+                                   IRSPlace = a.Card.IRSPlace,
+                                   ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
+                                   PaymentMethodCode = a.Card.SATPaymentMethodCode,
+                                   ExternalId2 = a.Card.ExternalId2,
+                                   SATForeignRFC = a.Card.SATForeignRFC,
+                                   MetodoPagoCode = a.Card.MetodoPagoCode,
+                                   UsoCFDICode = a.Card.UsoCFDICode,
+                                   Card = new CardPM()
+                                   {
+                                       Id = a.Id,
+                                       Tenant = a.Tenant,
+                                       EnglishName = a.Card.EnglishName,
+                                       PrimaryContactId = a.Card.PrimaryContactId,
+                                       PartnerTypeId = a.Card.PartnerTypeId,
+                                       Code = a.Card.Code,
+                                   },
+                               }).FirstOrDefault();
+
+            CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
+            CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
+            vendor.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(vendor.Id, vendor.Tenant);
+
+            if (vendor != null)
+            {
+                vendor.IsExternal = false;
+
+                AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
+                AccountingSystemPM accountingSystem = accountingSystemHelper.GetAccountingSystem(tenant);
+                if (accountingSystem != null)
+                {
+                    if (accountingSystem.IsExternalCodesFromTable)
+                    {
+                        vendor.IsExternal = true;
+                    }
+                }
+            }
+
+            VendorPM securedPm = new VendorPM();
+            SecuredMapping.GetMappedPM(vendor, securedPm, "Vendor", tenant);
+
+            return securedPm;
+        }
     }
 }

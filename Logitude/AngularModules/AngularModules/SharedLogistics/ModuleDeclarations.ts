@@ -17,6 +17,8 @@ import {FieldTemplateComponent} from './Components/Templates/FieldTemplateCompon
 import {TenantAccessSettingsComponent} from './Components/TenantAccessSettingsComponent';
 import { SharedLogisticsMoneyPermissiosComponent } from './Components/SharedLogisticsMoneyPermissiosComponent';
 import { SharedLogisticsPartnersPermissiosComponent } from './Components/SharedLogisticsPartnersPermissiosComponent';
+import { SharedInvoicesWorkspaceComponent } from './Components/Workspaces/SharedInvoicesWorkspaceComponent';
+import { SharedShipmentsWorkspaceComponent } from './Components/Workspaces/SharedShipmentsWorkspaceComponent';
 
 export const ControlsComponents =
     [
@@ -24,7 +26,7 @@ export const ControlsComponents =
         SharedLogisticsEventPermissiosComponent,
         SharedLogisticsDocumentPermissiosComponent,
         SharedLogisticsMoneyPermissiosComponent,
-        SharedLogisticsPartnersPermissiosComponent,
+        SharedLogisticsPartnersPermissiosComponent,        
     ];
 
 
@@ -49,6 +51,8 @@ export const Components =
         TenantAccessSettingsComponent,
         SharedLogisticsMoneyPermissiosComponent,
         SharedLogisticsPartnersPermissiosComponent,
+        SharedInvoicesWorkspaceComponent,
+        SharedShipmentsWorkspaceComponent,
     ];
 
 export class ModuleDeclarations {
@@ -75,7 +79,9 @@ export class ModuleDeclarations {
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }      
             case "TenantAccessSettingsComponent": { myResult = TenantAccessSettingsComponent; break; } 
             case "SharedLogisticsMoneyPermissiosComponent": { myResult = SharedLogisticsMoneyPermissiosComponent; break; } 
-            case "SharedLogisticsPartnersPermissiosComponent": { myResult = SharedLogisticsPartnersPermissiosComponent; break; } 
+            case "SharedLogisticsPartnersPermissiosComponent": { myResult = SharedLogisticsPartnersPermissiosComponent; break; }
+            case "SharedInvoicesWorkspaceComponent": { myResult = SharedInvoicesWorkspaceComponent; break; }
+            case "SharedShipmentsWorkspaceComponent": { myResult = SharedShipmentsWorkspaceComponent; break; } 
         }
 
         return myResult;
