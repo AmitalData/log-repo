@@ -123,7 +123,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
                  where tot.Year > _FromBeginOfMonth.Year ||
-              (tot.Year == _FromBeginOfMonth.Year && tot.Month > _FromBeginOfMonth.Month)
+             //(tot.Year == _FromBeginOfMonth.Year && tot.Month > _FromBeginOfMonth.Month)
+             (tot.Year == _FromBeginOfMonth.Year && tot.Month >= _FromBeginOfMonth.Month)
 
                  where tot.Year < _ToBeginOfMonth.Year ||
                  (tot.Year == _ToBeginOfMonth.Year && tot.Month < _ToBeginOfMonth.Month)
