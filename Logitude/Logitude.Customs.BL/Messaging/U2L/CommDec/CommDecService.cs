@@ -8,6 +8,7 @@ using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -31,6 +32,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         private LOGICOMMDEC _LOGICOMMDEC;
         private LogitudeCommDecFile _LogitudeCommDecFile;
         private SupplierInvoicePM _MySupplierInvoicePM;
+        private CourierMasterPM _CourierMasterPM;
+        private CourierDeclarationPM _CourierDeclarationPM;
         private ICustomContext _context;
 
         private AmitalContext amitalContext;
@@ -114,6 +117,62 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            string courier_id = null;
+            if (!String.IsNullOrWhiteSpace(MoreParams))
+            {
+                AppendLogLine("MoreParams: " + MoreParams);
+                var unifreightListsParams = UnifreightListsUtil.Deserialize(MoreParams);
+                AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
+                courier_id = UnifreightListsUtil.GetValue(ref unifreightListsParams, "COURIER_ID");
+                AppendLogLine("courier id: " + courier_id);
+            }
+            
+                //Get CourierMaster
+                var myCourierMasterQueryService = new CourierMasterQueryService(_context);
+            if (!String.IsNullOrWhiteSpace(courier_id))
+            {
+                _CourierMasterPM = myCourierMasterQueryService.GetSingle(courier_id, true, false);
+            }
+            else
+            {
+                var airlineId = TranslateAirline(_LogitudeCommDecFile.CarrierPrefix);
+                if (String.IsNullOrWhiteSpace(airlineId))
+                {
+                    MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                    MyGenericResponseObj.Message = "Airline Prefix " + _LogitudeCommDecFile.CarrierPrefix + " Doesn't exist";
+                    AppendLogLine(MyGenericResponseObj.Message);
+                }
+                _CourierMasterPM = myCourierMasterQueryService.GetSingleByAirlineAWBs(airlineId, _LogitudeCommDecFile.HAWB, _LogitudeCommDecFile.MAWB, ResolvedTenant());
+            }
+            if (_CourierMasterPM != null)
+            {
+                var myCourierDeclarationQueryService = new CourierDeclarationQueryService(_context);
+                var myCourierDeclarationUpdateService = new CourierDeclarationUpdateService(_context, new Dictionary<string, IContext>(), ResolvedTenant());
+                _CourierDeclarationPM = myCourierDeclarationQueryService.GetSingle(_MyDeclarationPM.Id, _CourierMasterPM.Id, false, true);
+                if (_CourierDeclarationPM == null)
+                {
+                    _CourierDeclarationPM = new CourierDeclarationPM();
+                    _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    _CourierDeclarationPM.DeclarationId = _MyDeclarationPM.Id;
+                    _CourierDeclarationPM.CourierMasterId = _CourierMasterPM.Id;
+                }
+                else
+                {
+                    _CourierDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                }
+                if (_CourierDeclarationPM.SequenceNumeric == null)
+                {
+                    int? sequenceNumericMax = myCourierDeclarationQueryService.GetCourierMasterMaxSequenceNumeric(_CourierDeclarationPM.CourierMasterId, ResolvedTenant());
+                    if (sequenceNumericMax == null)
+                    {
+                        sequenceNumericMax = 0;
+                    }
+                    _CourierDeclarationPM.SequenceNumeric = sequenceNumericMax + 1;
+                }
+                _CourierDeclarationPM.Tenant = ResolvedTenant();
+                myCourierDeclarationUpdateService.Update(_CourierDeclarationPM, true);
+            }
+            
 
             if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.TaxationDateTime))
             {
@@ -347,6 +406,37 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
         }
+
+
+        private string TranslateAirline(string airlineId)
+        {
+            if (String.IsNullOrWhiteSpace(airlineId))
+            {
+                AppendLogLine("airlineId is null");
+                return null;
+            }
+
+            //GET Airline.Id BY PREFIX
+            int index = airlineId.IndexOf('-');
+            if (index > 0)
+            {
+                string code = airlineId.Substring(0, index);
+                string prefix = airlineId.Substring(index + 1);
+                CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(ResolvedTenant());
+                CustomsAirline airline = airlineRepository.GetByAirlineAndPrefix(code, prefix, null);
+                if (airline != null) return airline.Id;
+            }
+            else
+            {
+                CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(ResolvedTenant());
+                CustomsAirline airline = airlineRepository.GetByPrefix(airlineId, null);
+                if (airline != null) return airline.Id;
+            }
+
+            AppendLogLine("No Airline found for airlineId " + airlineId);
+            return null;
+        }
+
 
         private string TranslateClient(string importerId)
         {
