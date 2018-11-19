@@ -50,6 +50,31 @@
         cursor: pointer;
     }
 
+    .P-button-drop-menu {
+        text-align: center;
+        font-size: 15px;
+        list-style: none;
+        background-color: #F2F2F2;
+        background-clip: padding-box;
+        border: .5px solid #45494A;
+    }
+
+    .P-button-drop-menu li span {
+        text-align: right;
+        display: block;
+        clear: both;
+        font-family: arial;
+        color: #444;
+        text-decoration: none;
+        height: 22px;
+        line-height: 23px; /*make text center*/
+    }
+
+    .P-button-drop-menu li span:hover {
+        background: #D3D3D3;
+        cursor: pointer;
+    }
+
      .LogitudeCheckBox input:focus  {
         border: 1px solid #3BB3E2;
     }
@@ -143,9 +168,12 @@
             <div dir="RTL" class="class-dropdownfilter-content">
                 <!--<div style="width:30px;height:30px">
                     <div>-->
-                <ul style="width:100px; ">
+                <ul class="P-button-drop-menu" style="width:100px; ">
                     <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
                         <span>הזנת Pending</span>
+                    </li>
+                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Update');">
+                        <span>עדכון Pending</span>
                     </li>
                     <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
                         <span>מחיקת Pending</span>

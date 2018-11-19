@@ -93,6 +93,7 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
             var saveUnifreightStatusCode: string = this.UnifreightStatusCode;
             this._CourierPendingReasonPMService.get(newValue).subscribe(response => {
                 if (!response.HasError && response.Result != null) {
+                    this.isNewRecord = false;
                     this.EntityPM = response.Result;
                     this.UnifreightStatusCode = saveUnifreightStatusCode;
                 }
