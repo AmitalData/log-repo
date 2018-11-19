@@ -256,9 +256,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId).FirstOrDefault(); 
+                JournalPM journal = journalPMs.Where(d => d.Id == a.JournalId).FirstOrDefault();
+                string CreditAccountId = null;
 
-				string CreditAccountId = journal.JournalLines.FirstOrDefault().CreditAccountId;
+                if (journal.JournalLines.Count >0)
+                {
+                     CreditAccountId = journal.JournalLines.FirstOrDefault().CreditAccountId;
+                }
+				
 
 
 				GLAccountPM account =  gLAccountQueryService.GetSingle(CreditAccountId, false, false);

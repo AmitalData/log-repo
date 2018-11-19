@@ -44,6 +44,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             Validate(entityPM);
         }
 
+        //protected override void UpdateComposition(TaxReportPM entityPM)
+        //{
+           
+        //    var taxReportLineUpdateService = new TaxReportLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+        //    taxReportLineUpdateService.UpdateMulti(entityPM.TaxReportLines, entityPM.DeletedTaxReportLines, entityPM, true);
+
+
+        //    base.UpdateComposition(entityPM);
+        //}
         protected override void Validate(TaxReportPM entityPM)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
@@ -114,20 +123,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 entityPM.StatusCode = "C"; // C- Cancelled מבוטל
             }
 
-            TaxReportLineQueryService lineQS = new TaxReportLineQueryService(entityPOCO.Tenant);
-            List<TaxReportLinePM> lines = new List<TaxReportLinePM>(); ;
-            //List<TaxReportLinePM> lines = lineQS.GetMulti(new Data.EntityKeys.TaxReportKeys() { Id = entityPOCO.Id }, false, false);
-
             if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 // recalculate totals
-                entityPM.TaxableOutputAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
-                entityPM.OutputTaxAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
-                entityPM.ExemptTaxableOutput = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
-                entityPM.OutputLinesCount = lines.Where(d => d.OutputOrInput == "O").Count();
-                entityPM.OtherInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
-                entityPM.InputLinesCount = lines.Where(d => d.OutputOrInput == "I").Count();
-                entityPM.EquipmentInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
+                entityPM.TaxableOutputAmount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
+                entityPM.OutputTaxAmount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
+                entityPM.ExemptTaxableOutput = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
+                entityPM.OutputLinesCount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "O").Count();
+                entityPM.OtherInputsTaxAmount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
+                entityPM.InputLinesCount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "I").Count();
+                entityPM.EquipmentInputsTaxAmount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
 
                 //updates
                 if (!entityPM.IsNew)
