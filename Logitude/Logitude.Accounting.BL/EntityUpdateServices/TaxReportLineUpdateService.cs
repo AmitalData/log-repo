@@ -44,18 +44,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     JournalMoreDataUpdateService journalMoreDataUpdateService = new JournalMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 
                     JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
-                    JournalMoreDataPM journalMoreDataPM = moreDataQueryService.GetSingleJournalMorData(journalPM.Id, entityPM.Tenant);
                     if (journalPM != null)
                     {
-                        if (entityPM.TransmitStatusCode == "1") // 1- For transmit
-                            journalMoreDataPM.TaxReportId = entityPM.TaxReportId;
-                        else if (entityPM.TransmitStatusCode == "3") // 3- Not for transmit at all
-                            journalMoreDataPM.TaxReportId = "1111";
 
-                        //update
+                        //// Journal more data
+                        //JournalMoreDataPM journalMoreDataPM = moreDataQueryService.GetSingleJournalMorData(journalPM.Id, entityPM.Tenant);
+                        //if (entityPM.TransmitStatusCode == "1") // 1- For transmit
+                        //    journalMoreDataPM.TaxReportId = entityPM.TaxReportId;
+                        //else if (entityPM.TransmitStatusCode == "3") // 3- Not for transmit at all
+                        //    journalMoreDataPM.TaxReportId = "1111";
+                        ////update
+                        //journalMoreDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                        //journalMoreDataUpdateService.Update(journalMoreDataPM, true);
 
-                        journalMoreDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                        journalMoreDataUpdateService.Update(journalMoreDataPM, true);
+
                         entityPM.IsManuallyChanged = false;
 
                     }

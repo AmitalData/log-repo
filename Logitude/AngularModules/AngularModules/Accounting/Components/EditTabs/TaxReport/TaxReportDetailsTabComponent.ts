@@ -115,6 +115,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     ReloadScreen(){
         this.GetStatuses();
         this.FillGrids();
+        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+        this.GetReportCounter();
     }
 
     SetUIProperty() {
