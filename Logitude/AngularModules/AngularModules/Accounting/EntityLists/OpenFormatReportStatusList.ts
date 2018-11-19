@@ -6,21 +6,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class OpenFormatReportList {
+export class OpenFormatReportStatusList {
    
-	Id: string;
-	Tenant: number;
-	CreateDate: Date;
-	CreatedByUserId: string;
-	UpdateDate: Date;
-	UpdatedByUserId: string;
+	Code: string;
+	EnglishName: string;
 	SearchFields: string;
-	ReportNumber: string;
-	FromDate: Date;
-	ToDate: Date;
-	DateTypeCode: string;
-	StatusTypeCode: string;
-	ErrorMessage: string;
+	LocalName: string;
 	
 }
  

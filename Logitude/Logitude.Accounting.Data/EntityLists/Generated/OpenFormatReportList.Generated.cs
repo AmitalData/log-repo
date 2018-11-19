@@ -35,7 +35,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public DateTime? ToDate  { get; set; }
        [DataMember]
-       public string DateType  { get; set; }
+       public string DateTypeCode  { get; set; }
        [DataMember]
        public string StatusTypeCode  { get; set; }
        [DataMember]

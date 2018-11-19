@@ -45,7 +45,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          ToDate = a.ToDate,
 					
-					                          DateType = a.DateType,
+					                          DateTypeCode = a.DateTypeCode,
 					
 					                          StatusTypeCode = a.StatusTypeCode,
 					

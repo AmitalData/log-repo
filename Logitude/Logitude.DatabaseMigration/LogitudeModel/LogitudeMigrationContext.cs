@@ -3311,6 +3311,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; set; }
 
         public IDbSet<OpenFormatReport> OpenFormatReports { get; set; }
+        public IDbSet<OpenFormatReportStatus> OpenFormatReportStatuses { get; set; }
+    //    public IDbSet<OpenFormatDateType> OpenFormatReportStatuses { get; set; }
 
         #endregion
 

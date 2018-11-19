@@ -43,7 +43,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.ToDate).HasColumnName("ToDate");
 
-            this.Property(t => t.DateType).HasColumnName("DateType").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.DateTypeCode).HasColumnName("DateTypeCode").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.StatusTypeCode).HasColumnName("StatusTypeCode").HasMaxLength(1).IsUnicode(false);
 
