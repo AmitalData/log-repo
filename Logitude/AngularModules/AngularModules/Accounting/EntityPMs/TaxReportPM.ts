@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {TaxReportLinePM} from './TaxReportLinePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -189,6 +190,20 @@ export class TaxReportPM {
     public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty("IsNew"); } }
        
 	 
+     
+	private taxReportLines: TaxReportLinePM[];
+    get  TaxReportLines() {
+        if (this.taxReportLines == null) {
+            this.taxReportLines = [];
+        }
+
+        return this.taxReportLines;
+    }
+    set  TaxReportLines(newValue: TaxReportLinePM[]) {
+        if (this.taxReportLines != newValue) {
+            this.taxReportLines = newValue;
+        }
+    }
 
     public OldEntityPM: TaxReportPM;
 		
