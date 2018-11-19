@@ -71,9 +71,15 @@ namespace CommunicationWorkerRole
                     try
                     {
                         queueservice = queueservice = new DbQueueService(queueName, 0);
-                        var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
+                        QueueResponse iQueueResponse = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
 
-                        string AnalyzeQueueId = response.MessageValues["AnalyzeQueueId"].ToString();
+                        if(iQueueResponse != null)
+                        {
+                            //string d1 = iQueueResponse.MessageId;
+                           // string d2 = iQueueResponse.MessageValues;
+                        }
+
+                        string AnalyzeQueueId = iQueueResponse.MessageValues["AnalyzeQueueId"].ToString();
                         if (!string.IsNullOrEmpty(AnalyzeQueueId))
                         {
                             queueservice.Complete();
