@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Simplog.Data.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +12,104 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
     public partial class VendorQueryService
     {
+        public VendorPM VendorCustomDataMappingAndValidating(Vendor MyEntity, int Tenant, string ComputingPartnerCode = "")
+        {
+            try
+            {
+                UserQuery userQuery = new UserQuery(Tenant);
+                UserPM MyUserPM = userQuery.GetSingleUserPMByEmail("system@tenant" + Tenant + ".com", Tenant, false);
+
+                VendorPM temp = this.MapAndValidate(MyEntity, Tenant, ComputingPartnerCode);
+                temp.Tenant = Tenant;
+                temp.PartnerTypeId = "VD";
+                temp.CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+                temp.UpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+
+                if (string.IsNullOrEmpty(temp.CreatedByUserId))
+                {
+                    temp.CreatedByUserId = MyUserPM.Id;
+                    temp.UpdatedByUserId = MyUserPM.Id;
+                }
+
+                return temp;
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public VendorPM MapAndValidate(Vendor MyEntity, int Tenant, string ComputingPartnerName = "")
+        {
+            try
+            {
+                var myQuery = new VendorQuery(Tenant);
+                var temp = new VendorPM();
+                if (!string.IsNullOrEmpty(MyEntity.Id))
+                {
+                    temp = myQuery.GetSinglePM(MyEntity.Id, Tenant);
+                }
+
+                if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+                {
+                    ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+                    var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode, ComputingPartnerName, "Card");
+
+                    if (string.IsNullOrEmpty(MyCode))
+                    {
+                        throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+                    }
+
+                    temp = myQuery.GetSingleVendorPMByCode(MyCode, Tenant);
+                }
+
+                if (temp == null)
+                {
+                    throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
+                }
+
+                if (string.IsNullOrEmpty(temp.Id))
+                {
+                    temp.Id = MyEntity.Id;
+                }
+
+                temp.EnglishName = MyEntity.EnglishName;
+                temp.LocalName = MyEntity.LocalName;
+                temp.VatNumber = MyEntity.VatNumber;
+
+                PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
+                if (MyEntity.PaymentTerm != null)
+                {
+                    var myPaymentTermPM = PaymentTermPaymentTermService.PaymentTermDataMappingAndValidatin(MyEntity.PaymentTerm, Tenant, ComputingPartnerName);
+                    if (myPaymentTermPM != null)
+                    {
+                        temp.PaymentTermId = myPaymentTermPM.Id;
+                    }
+                }
+                
+                if (string.IsNullOrEmpty(temp.Code))
+                {
+                    temp.Code = MyEntity.PartnerCode;
+                }
+                
+                if (MyEntity.MainAddress != null)
+                {
+                    AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
+                    AddressPM address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+                    address.AddressTypeId = "M";
+                    address.Description = "Main Address";
+                    address.Tenant = Tenant;
+                    temp.Addresses.Add(address);
+                }
+
+                return temp;
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

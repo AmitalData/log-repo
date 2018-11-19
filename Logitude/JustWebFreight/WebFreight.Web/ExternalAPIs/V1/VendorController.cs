@@ -59,44 +59,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                     VendorQueryService mappingService = new VendorQueryService(authToken.Tenant);
-                    //VendorPM entityPM = mappingService.VendorCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
+                    VendorPM entityPM = mappingService.VendorCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        //if (entityPM.Addresses.Count == 0)
-                        //{
-                        //    throw new ApplicationException("Missing Main Address");
-                        //}
-                        //else
-                        //{
-                        //    Tenant myTenant = MyContext.Tenants.Where(d => d.Id == authToken.Tenant).FirstOrDefault();
-                        //    if (myTenant.IsCustomerTelRequired)
-                        //    {
-                        //        if (string.IsNullOrEmpty(entity.MainAddress.PhoneNumber))
-                        //        {
-                        //            throw new ApplicationException("Phone Number is required");
-                        //        }
-                        //    }
-
-                        //    if (myTenant.IsCustomerFaxRequired)
-                        //    {
-                        //        if (string.IsNullOrEmpty(entity.MainAddress.FaxNumber))
-                        //        {
-                        //            throw new ApplicationException("Fax Number is required");
-                        //        }
-                        //    }
-                        //}
-
-                        //VendorService service = new VendorService(MyContext, entityPM);
-                        //service.Create();
-                        //service.Submit();
+                        VendorService service = new VendorService(MyContext, authToken.Tenant);
+                        service.Create(entityPM);
                         scope.Complete();
                     }
 
-                    //var result = mappingService.GetVendorById(entityPM.Id, authToken.Tenant);
-                    //APIHelper.AddCommunicationLog("D", entity, result, "Vendor", entityPM.Id, "Vendor API", authToken.Tenant);
-                    //return Request.CreateResponse(HttpStatusCode.OK, result);
-                    return Request.CreateResponse(HttpStatusCode.OK, new VendorPM());
+                    var result = mappingService.GetVendorById(entityPM.Id, authToken.Tenant);
+                    APIHelper.AddCommunicationLog("D", entity, result, "Vendor", entityPM.Id, "Vendor API", authToken.Tenant);
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
 
                 catch (Exception ex)
