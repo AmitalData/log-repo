@@ -17,34 +17,34 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {TaxReportPM} from '../../EntityPMs/TaxReportPM';
+import {TaxReportLinePM} from '../../EntityPMs/TaxReportLinePM';
 
 
 @Injectable()
 
-export class TaxReportPMService {
+export class TaxReportLinePMService {
  private _http: Http;
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/taxreports';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/taxreportlines';      
     }
 
- get(id: string) {
+ get(taxreportid: string, line: number) {
          
          
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
 		 return Observable.defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
+                return this._http.get(this._apiUrl+'/getsingle?'+'taxreportid=' + taxreportid+'&'+'line=' + line, {
                     headers: authHeader
                 }).map(response => {
                     var pm = response.json();
 
                    
 					
-                    var entity: TaxReportPM;
+                    var entity: TaxReportLinePM;
 					if(pm)
 					{
                       entity = this.MapJsonToEntityPM(pm);
@@ -55,7 +55,7 @@ export class TaxReportPMService {
                 serviceResponse.Result = entity;
               
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReport", "GetSinglePM", 'id=' + id);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReportLine", "GetSinglePM", 'taxreportid=' + taxreportid+'&'+'line=' + line);
 				 
                 return serviceResponse;
 
@@ -63,7 +63,7 @@ export class TaxReportPMService {
             });                    
     }
 
-	 insert(entityPM: TaxReportPM) {
+	 insert(entityPM: TaxReportLinePM) {
  
         var callTime = new Date();        
         return Observable.defer(() => {
@@ -76,13 +76,13 @@ export class TaxReportPMService {
                  
                 validator = new ClassLevelValidator();
                  
-                var errorsArray = validator.Validate("TaxReport", entityPM);
+                var errorsArray = validator.Validate("TaxReportLine", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: TaxReportPM;
+                    var mappedEntity: TaxReportLinePM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
@@ -91,14 +91,14 @@ export class TaxReportPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  TaxReportPM;
+                               var mappedResult:  TaxReportLinePM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							}
 							
 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReport", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReportLine", "SaveChanges", "");                    
 												 
                             
                             return serviceResponse;
@@ -118,7 +118,7 @@ export class TaxReportPMService {
             );
     }
 
-    update(entityPM: TaxReportPM) {
+    update(entityPM: TaxReportLinePM) {
 
             var callTime = new Date();         
             return Observable.defer(() => {
@@ -131,13 +131,13 @@ export class TaxReportPMService {
                  
                 validator = new ClassLevelValidator();
                
-                var errorsArray = validator.Validate("TaxReport", entityPM);
+                var errorsArray = validator.Validate("TaxReportLine", entityPM);
                  
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
-                    var mappedEntity: TaxReportPM;
+                    var mappedEntity: TaxReportLinePM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
 				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
@@ -147,13 +147,13 @@ export class TaxReportPMService {
                             var pm = response.json();
 							if(pm)
 							{
-                               var mappedResult:  TaxReportPM;
+                               var mappedResult:  TaxReportLinePM;
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							 }
 							 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReport", "SaveChanges", "");                    
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReportLine", "SaveChanges", "");                    
 					                           
                             return serviceResponse;
 
@@ -175,12 +175,12 @@ export class TaxReportPMService {
 
    
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TaxReportPM = null) {
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TaxReportLinePM = null) {
 
          
         if (!entityPM) {
             
-            entityPM = new TaxReportPM();
+            entityPM = new TaxReportLinePM();
         }
 
 		var customFields: Array<string> = [];
@@ -244,8 +244,8 @@ export class TaxReportPMService {
     }
 
 	  public GetNewEntityPM() {		 
-		    var entityPM: TaxReportPM;
-			entityPM = new TaxReportPM();
+		    var entityPM: TaxReportLinePM;
+			entityPM = new TaxReportLinePM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

@@ -952,6 +952,7 @@
     <Compile Include="Controllers\AccountingModel\BankAccountViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxDeductionReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxReportController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxReportLineController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxWithholdingAssessOfficeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\WithholdingTaxDeductionTypeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountCurrencyController.cs" />

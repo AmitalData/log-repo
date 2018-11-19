@@ -70,6 +70,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 			IAccountingContext MyContext = AccountingContext.GetContext(taxReport.Tenant);
 			TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
+            TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(MyContext, new Dictionary<string, IContext>(), taxReport.Tenant);
 			APInvoiceQuery aPInvoiceQueryService = new APInvoiceQuery(tenant);
 			CardRepository cardRepository = new CardRepository(tenant);
 			TenantQuery tenantQuery = new TenantQuery(tenant);
@@ -82,10 +83,13 @@ namespace Logitude.Accounting.BL.CoreBL
             List<Simplog.Data.CommonDataModel.EntityPOCOs.Card> cards = cardRepository.GetCardsByIds(cardIds, tenant).ToList();
             
             string  vatNumber = null;
+
+            List<TaxReportLinePM> reportLinesList = new List<TaxReportLinePM>();
+
             //Outputs
             foreach (Journal a in journals)
             {
-                var exist = taxReport.TaxReportLines.Where(d => d.JournalId == a.Id).Any();
+                var exist = reportLinesList.Where(d => d.JournalId == a.Id).Any();
                 if (!exist)
                 {
                     string reference = null;
@@ -149,7 +153,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             line.LineTypeCode = "S";
                         }
 
-                        taxReport.TaxReportLines.Add(line);
+                        reportLinesList.Add(line);
                     }
                 }
             }
@@ -285,24 +289,24 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     taxReportLine.LineTypeCode = "C";
                 }
-                
 
 
 
-                taxReport.TaxReportLines.Add(taxReportLine);
+
+                reportLinesList.Add(taxReportLine);
 
 
 			}
 
-			if (taxReport.TaxReportLines.Count > 0)
+			if (reportLinesList.Count > 0)
 			{
-				taxReport.TaxableOutputAmount = taxReport.TaxReportLines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
-				taxReport.OutputTaxAmount = taxReport.TaxReportLines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
-				taxReport.ExemptTaxableOutput = taxReport.TaxReportLines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
-				taxReport.OutputLinesCount = taxReport.TaxReportLines.Where(d => d.OutputOrInput == "O").Count();
-				taxReport.OtherInputsTaxAmount = taxReport.TaxReportLines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
-				taxReport.InputLinesCount = taxReport.TaxReportLines.Where(d => d.OutputOrInput == "I").Count();
-                taxReport.EquipmentInputsTaxAmount = taxReport.TaxReportLines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
+				taxReport.TaxableOutputAmount = reportLinesList.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
+				taxReport.OutputTaxAmount = reportLinesList.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
+				taxReport.ExemptTaxableOutput = reportLinesList.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
+				taxReport.OutputLinesCount = reportLinesList.Where(d => d.OutputOrInput == "O").Count();
+				taxReport.OtherInputsTaxAmount = reportLinesList.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
+				taxReport.InputLinesCount = reportLinesList.Where(d => d.OutputOrInput == "I").Count();
+                taxReport.EquipmentInputsTaxAmount = reportLinesList.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
             }
 
 
@@ -318,9 +322,19 @@ namespace Logitude.Accounting.BL.CoreBL
 			taxReport.ProcessEndDate = DateTime.Now;
 
 
+            // saving report
 			taxReport.ChangeSetOp = ChangeSetOperation.Update;
 			updateService.Update(taxReport, true);
-		}
+
+            // saving lines
+            foreach (TaxReportLinePM linePM in reportLinesList)
+            {
+                linePM.ChangeSetOp = ChangeSetOperation.Insert;
+                lineUpdateService.Update(linePM, true);
+            }
+
+
+        }
 
         public static BatchTaskExecutionPM CreatePNCFileInBatch(string taxReportId, int tenant)
         {

@@ -4,6 +4,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -20,12 +21,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     public partial class TaxReportLineUpdateService
     {
 
-        protected override void OnCreating(TaxReportLinePM entityPM, TaxReportPM entityParentPM)
+        protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
-            entityPM.TaxReportId = entityParentPM.Id;
-            entityParentPM.TaxReportLineLastLine += 1;
-            entityPM.Line = entityParentPM.TaxReportLineLastLine;
+            //entityPM.TaxReportId = entityParentPM.Id;
+            //entityParentPM.TaxReportLineLastLine += 1;
+            //entityPM.Line = entityParentPM.TaxReportLineLastLine;
             entityPM.IsManuallyChanged = true;
+            base.OnCreating(entityPM, entityParentPM);
         }
 
         protected override void OnUpdating(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
