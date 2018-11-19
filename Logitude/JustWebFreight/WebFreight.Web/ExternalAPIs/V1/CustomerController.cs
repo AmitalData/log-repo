@@ -62,12 +62,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     CustomerPM entityPM = mappingService.CustomerCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {      
-                        if(SecurityUtility.CheckTableContactFeature("Customer", "CREATEACTIVECUSTOMER", authToken.Tenant))
-                        {
-                            entityPM.IsCustomer = true;
-                        }
-
+                    {    
                         if(entityPM.Addresses.Count == 0)
                         {
                             throw new ApplicationException("Missing Main Address");

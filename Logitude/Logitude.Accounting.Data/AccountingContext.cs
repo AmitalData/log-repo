@@ -152,6 +152,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new LedgerTransactionMap());
 	
+            modelBuilder.Configurations.Add(new OpenFormatReportMap());
+	
             modelBuilder.Configurations.Add(new PaymentChequeMap());
 	
             modelBuilder.Configurations.Add(new PaymentChequeLineMap());
@@ -811,6 +813,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<LedgerTransaction> LedgerTransactions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OpenFormatReport> OpenFormatReports 
 	 {
 	      get; set;
 	 

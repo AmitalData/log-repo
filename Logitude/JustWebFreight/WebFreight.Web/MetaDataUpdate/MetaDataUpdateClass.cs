@@ -62711,6 +62711,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddConsignee", DefaultText = "Add Consignee", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddPotentialShipper", DefaultText = "Add Potential Shipper", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddPotentialConsignee", DefaultText = "Add Potential Consignee", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddAgent", DefaultText = "Add Agent", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "B", }, TextCodeRepository, textcodes);
             #endregion
 
             #region Messages
@@ -62795,7 +62796,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.FillDimensions", DefaultText = "Fill Dimensions", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Summary", DefaultText = "Summary", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.IsLocalLanguage", DefaultText = "Is Local Language", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
-
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Address", DefaultText = "Address", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             #endregion
 
             #region Workspace
@@ -62824,6 +62825,11 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.AddNotify", DefaultText = "Add Notify", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.EditNotify", DefaultText = "Edit Notify", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.MainAddress", DefaultText = "Main Address", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            #endregion
+
+            #region Packages
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Packages.AddPackage", DefaultText = "Add Package", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Packages.EditPackage", DefaultText = "Edit Package", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "S", }, TextCodeRepository, textcodes);
             #endregion
 
             #region Routings

@@ -4140,6 +4140,60 @@ export class ShipmentPM {
         }
     }
 
+    private basicFreightId: string;
+    public get BasicFreightId() { return this.basicFreightId; }
+    public set BasicFreightId(newValue: string) {
+        if (this.basicFreightId != newValue) {
+            this.basicFreightId = newValue;
+            this.MarkAsDirty("BasicFreightId");
+        }
+    }
+
+    private destinationPortChargesId: string;
+    public get DestinationPortChargesId() { return this.destinationPortChargesId; }
+    public set DestinationPortChargesId(newValue: string) {
+        if (this.destinationPortChargesId != newValue) {
+            this.destinationPortChargesId = newValue;
+            this.MarkAsDirty("DestinationPortChargesId");
+        }
+    }
+
+    private destinationHaulageChargesId: string;
+    public get DestinationHaulageChargesId() { return this.destinationHaulageChargesId; }
+    public set DestinationHaulageChargesId(newValue: string) {
+        if (this.destinationHaulageChargesId != newValue) {
+            this.destinationHaulageChargesId = newValue;
+            this.MarkAsDirty("DestinationHaulageChargesId");
+        }
+    }
+
+    private additionalChargesId: string;
+    public get AdditionalChargesId() { return this.additionalChargesId; }
+    public set AdditionalChargesId(newValue: string) {
+        if (this.additionalChargesId != newValue) {
+            this.additionalChargesId = newValue;
+            this.MarkAsDirty("AdditionalChargesId");
+        }
+    }
+
+    private freightPayerId: string;
+    public get FreightPayerId() { return this.freightPayerId; }
+    public set FreightPayerId(newValue: string) {
+        if (this.freightPayerId != newValue) {
+            this.freightPayerId = newValue;
+            this.MarkAsDirty("FreightPayerId");
+        }
+    }
+
+    private freightPayerAddressId: string;
+    public get FreightPayerAddressId() { return this.freightPayerAddressId; }
+    public set FreightPayerAddressId(newValue: string) {
+        if (this.freightPayerAddressId != newValue) {
+            this.freightPayerAddressId = newValue;
+            this.MarkAsDirty("FreightPayerAddressId");
+        }
+    }
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

@@ -297,6 +297,12 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ConsigneeNotImporterReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ForwardingPartnerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ProjectNumber).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.BasicFreightId).HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.DestinationPortChargesId).HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.DestinationHaulageChargesId).HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.AdditionalChargesId).HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.FreightPayerId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.FreightPayerAddressId).HasMaxLength(15).IsUnicode(false);
 
             //    .HasColumnAnnotation(
             //IndexAnnotation.AnnotationName,
@@ -672,6 +678,12 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ForwardingPartnerId).HasColumnName("ForwardingPartnerId");
             this.Property(t => t.ProjectNumber).HasColumnName("ProjectNumber");
             this.Property(t => t.ContainerLastStatusDate).HasColumnName("ContainerLastStatusDate");
+            this.Property(t => t.BasicFreightId).HasColumnName("BasicFreightId");
+            this.Property(t => t.DestinationPortChargesId).HasColumnName("DestinationPortChargesId");
+            this.Property(t => t.DestinationHaulageChargesId).HasColumnName("DestinationHaulageChargesId");
+            this.Property(t => t.AdditionalChargesId).HasColumnName("AdditionalChargesId");
+            this.Property(t => t.FreightPayerId).HasColumnName("FreightPayerId");
+            this.Property(t => t.FreightPayerAddressId).HasColumnName("FreightPayerAddressId");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -873,6 +885,13 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.OnCarriageAdditionalTransportMode).WithMany().HasForeignKey(d => d.OnCarriageAdditionalTransportModeCode);
             this.HasOptional(t => t.INTTRADocumentType).WithMany().HasForeignKey(d => d.INTTRADocumentTypeCode);
             //this.HasOptional(t => t.HybridPartner).WithMany().HasForeignKey(d => d.ForwardingPartnerId);
+            this.HasOptional(t => t.BasicFreight).WithMany().HasForeignKey(d => d.BasicFreightId);
+            this.HasOptional(t => t.DestinationPortCharges).WithMany().HasForeignKey(d => d.DestinationPortChargesId);
+            this.HasOptional(t => t.DestinationHaulageCharges).WithMany().HasForeignKey(d => d.DestinationHaulageChargesId);
+            this.HasOptional(t => t.AdditionalCharges).WithMany().HasForeignKey(d => d.AdditionalChargesId);
+            this.HasOptional(t => t.FreightPayer).WithMany().HasForeignKey(d => d.FreightPayerId);
+            this.HasOptional(t => t.FreightPayerAddress).WithMany().HasForeignKey(d => d.FreightPayerAddressId);
+
         }
     }
 }
