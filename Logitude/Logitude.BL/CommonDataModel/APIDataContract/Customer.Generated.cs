@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -37,5 +36,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public string PartnerCode { get; set; }
     
     public List<Contact> Contacts { get; set; }
+    
+    //public GLAccount GLAccount { get; set; }
     }
 } 
