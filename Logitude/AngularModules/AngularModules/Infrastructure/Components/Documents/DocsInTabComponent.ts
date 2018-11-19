@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {DocumentTypeList} from '../../../Common/EntityLists/DocumentTypeList';
 import {DocumentsFilingPM} from '../../../Common/EntityPMs/DocumentsFilingPM';
@@ -88,7 +88,14 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         var table = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];
         if (table) {
             this.ObjectTableName = table.Name;
-        } else this.ObjectTableName = "Shipment";
+        }
+
+        else this.ObjectTableName = "Shipment";
+
+        // Ayman:
+        // we need this for Translation
+        // Please don't remove it
+        this.TabHeaderTextCode = this.ObjectTableName + ".TH.DocsIn";
 
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("DocsIn").subscribe(response => {

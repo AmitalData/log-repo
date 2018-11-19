@@ -473,7 +473,7 @@
                                     </log-column>
 
                                     <!-- VatType -->
-                                    <log-column *ngIf="IsAdhoc && IsChargesByVAT" [header]="'VAT Type'" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
+                                    <log-column *ngIf="IsAdhoc && IsChargesByVAT" [header]="'QuoteCharge.F.VatTypeId' | TextCodeTranslationPipe" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div class="MediaFill">
                                                 <table>

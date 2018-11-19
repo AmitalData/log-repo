@@ -1247,7 +1247,7 @@ namespace WebFreight.Web.WebServices
                     Subject = "Document Backup",
                     FolderName = "DocumentFillingBackupQueue",
                     ByteData = logXML,
-                    LoggingEntityReference = entityPM.EntityReference,
+                    LoggingEntityReference = entityPM.Code,
                 };
 
                 //logParams.QueueParameters = new Dictionary<string, string>() { { "DocumentFilingId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } };

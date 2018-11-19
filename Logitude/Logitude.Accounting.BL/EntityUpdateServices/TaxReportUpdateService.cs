@@ -44,15 +44,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             Validate(entityPM);
         }
 
-        protected override void UpdateComposition(TaxReportPM entityPM)
-        {
+        //protected override void UpdateComposition(TaxReportPM entityPM)
+        //{
            
-            var taxReportLineUpdateService = new TaxReportLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            taxReportLineUpdateService.UpdateMulti(entityPM.TaxReportLines, entityPM.DeletedTaxReportLines, entityPM, true);
+        //    var taxReportLineUpdateService = new TaxReportLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+        //    taxReportLineUpdateService.UpdateMulti(entityPM.TaxReportLines, entityPM.DeletedTaxReportLines, entityPM, true);
 
 
-            base.UpdateComposition(entityPM);
-        }
+        //    base.UpdateComposition(entityPM);
+        //}
         protected override void Validate(TaxReportPM entityPM)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
