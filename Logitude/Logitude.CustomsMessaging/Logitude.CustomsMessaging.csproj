@@ -173,6 +173,7 @@
     <Compile Include="MessagingServices\CL_MSG100_AddClientMassagingService.cs" />
     <Compile Include="MessagingServices\CL_NG_8343_ClientSearchByIDParamMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInCLAIM_2300_MissingDocumentRequestMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInCLAIM_5115_ContinuousMessageMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInST_60_SpecialActivityExecutionReportMessagingService.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="ResponseServices\CB_NG_8316_CustomItemLegalDemandsResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2300_MissingDocumentRequestResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2345_ClaimAnswerResponseService.cs" />
+    <Compile Include="ResponseServices\CLAIM_5114_AcceptanceOrRejectionClaimMessageResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_5115_ContinuousMessageResponseService.cs" />
     <Compile Include="ResponseServices\CL_3630_AddUpdateDeleteAddressContactResponseService.cs" />
     <Compile Include="ResponseServices\CL_MSG100_AddClientResponseService.cs" />

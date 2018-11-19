@@ -2345,7 +2345,23 @@ namespace Logitude.Customs.Def.ClosedTable
                 ResponseInterfaceCode = "",
             });
 
-
+            //DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices
+            all.Add(
+            new InterfaceManagementDetails()
+            {
+                Code = "5114",
+                InOut = InOutEnum.I.ToString(),
+                Description = "אישור/דחיה תביעה",
+                DcaPrefixName = "SendCLAIM_MSG10_AcceptanceOrRejectionClaimMessage_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //   NotificationId = "",
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                // NeedSignature = false
+            });
 
             all.Add(new InterfaceManagementDetails()
             {

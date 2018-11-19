@@ -403,6 +403,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             MN_MSG8370_CargoSplitMessagingService>
                             ((new MN_MSG8370_CargoSplitMessagingService()).MainInterfaceCode);
 
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                            DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices>
+                            ((new DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices()).MainInterfaceCode);
+
 
         }
         public static void InitContainer()
