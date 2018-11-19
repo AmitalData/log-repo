@@ -411,7 +411,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         itemPM.QuoteId = this.EntityPM.Id;
 
         var itemComponent = new QuotePackageItem(itemPM, this, true);
-        this.RunAddEditPackage(itemComponent, "Add Package");
+        this.RunAddEditPackage(itemComponent, TextCodeTranslator.Translate("Quote.S.Packages.AddPackage"));
 
         //if (this.ItemsSource.Length < 10) {           
         //    var itemPM = new QuotePackagePM(null);
@@ -428,7 +428,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         //}
     };
     EditPackageClicked(itemComponent: QuotePackageItem) {
-        this.RunAddEditPackage(itemComponent, "Edit Package");
+        this.RunAddEditPackage(itemComponent, TextCodeTranslator.Translate("Quote.S.Packages.EditPackage"));
     }
     RunAddEditPackage(itemComponent: QuotePackageItem, windowTitle: string) {
         var logitudeWindow = new LogitudeWindow();
@@ -438,7 +438,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
     DeletePackageClicked(itemComponent: QuotePackageItem) {
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Delete this package");
+        confirmWindow.Show(TextCodeTranslator.Translate("Quote.M.DeleteThisPackage"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
 

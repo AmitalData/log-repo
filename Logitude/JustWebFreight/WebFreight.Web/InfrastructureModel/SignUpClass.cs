@@ -558,10 +558,11 @@ namespace WebFreight.Web.InfrastructureModel
                             {
                                 #region Country
                                 string countryId = null;
+                                string countryCode = null;
                                 if (!string.IsNullOrEmpty(cardAddress.CountryId))
                                 {
                                     CountryRepository countryRepository = new CountryRepository(tenant);
-                                    string countryCode = cardAddress.Country!=null ? cardAddress.Country.Code : null;
+                                    countryCode = cardAddress.Country!=null ? cardAddress.Country.Code : null;
 
                                     if (!string.IsNullOrEmpty(countryCode))
                                     {
@@ -572,10 +573,11 @@ namespace WebFreight.Web.InfrastructureModel
 
                                 #region State
                                 string stateId = null;
+                                string stateCode = null;
                                 if (!string.IsNullOrEmpty(cardAddress.StateId))
                                 {
                                     StateRepository stateRepository = new StateRepository(tenant);
-                                    string stateCode = cardAddress.State != null ? cardAddress.State.Code : null;
+                                    stateCode = cardAddress.State != null ? cardAddress.State.Code : null;
 
                                     if (!string.IsNullOrEmpty(stateCode)) { 
                                         stateId = stateRepository.GetStateIdByCode(stateCode, tenant);
@@ -604,15 +606,14 @@ namespace WebFreight.Web.InfrastructureModel
                                 addressRepository.Add(newAddress);
                                 addressRepository.SubmitChanges();
 
+                                ComputeInvoiceSectionFields(tenantPoco, newAddress, countryCode, stateCode);
+
                                 tenantPoco.AddressId = newAddress.Id;
                                 tenantRepository.Update(tenantPoco);
                                 tenantRepository.SubmitChanges();
 
-                            }
-                           
-                           
+                            }                                                      
                         }
-
                         #endregion
 
                         OpportunityRepository opportunityRepository = new OpportunityRepository(signUpInfo.Tenant);
@@ -647,6 +648,77 @@ namespace WebFreight.Web.InfrastructureModel
             }
 
             return password;
+        }
+
+        private static void ComputeInvoiceSectionFields(Tenant iTenant, Address iAddress, string iCountryCode, string iStateCode)
+        {
+            if (iAddress != null)
+            {
+                var value = iTenant.Company + Environment.NewLine;
+
+                if (iAddress.Address1 != null && iAddress.Address2 != null)
+                {
+                    value = value + iAddress.Address1 + "," + iAddress.Address2 + Environment.NewLine;
+                }
+
+                else if (iAddress.Address1 != null && iAddress.Address2 == null)
+                {
+                    value = value + iAddress.Address1 + Environment.NewLine;
+                }
+
+                else if (iAddress.Address1 == null && iAddress.Address2 != null)
+                {
+                    value = value + iAddress.Address2 + Environment.NewLine;
+                }
+
+                if (iAddress.City != null || iStateCode != null || iCountryCode != null || iAddress.ZipCode != null)
+                {
+                    if (iAddress.City != null && iCountryCode == null)
+                    {
+                        value = value + iAddress.City;
+                    }
+
+                    else if (iCountryCode != null && iAddress.City == null)
+                    {
+                        value = value + iCountryCode;
+                    }
+
+                    else if (iAddress.City != null && iCountryCode != null)
+                    {
+                        value = value + iAddress.City + "-" + iCountryCode;
+                    }
+
+                    else if (iStateCode != null)
+                    {
+                        value = value + "(" + iStateCode + ")";
+                    }
+
+                    else if (iAddress.ZipCode != null)
+                    {
+                        value = value + iAddress.ZipCode;
+                    }
+
+                    value = value + Environment.NewLine;
+                }
+
+                if (iAddress.PhoneNumber != null && iAddress.FaxNumber != null)
+                {
+                    value = value + "Tel:" + " " + iAddress.PhoneNumber + " " + "Fax:" + " " + iAddress.FaxNumber + Environment.NewLine;
+                }
+
+                else if (iAddress.PhoneNumber != null && iAddress.FaxNumber == null)
+                {
+                    value = value + "Tel:" + " " + iAddress.PhoneNumber + " " + Environment.NewLine;
+                }
+
+                else if (iAddress.PhoneNumber == null && iAddress.FaxNumber != null)
+                {
+                    value = value + "Fax:" + " " + iAddress.FaxNumber + Environment.NewLine;
+                }
+
+                iTenant.InvoiceSection1 = value;
+                iTenant.InvoiceSection2 = iTenant.Company;
+            }
         }
 
         private static void InitializeEmployeeGroup(string email)

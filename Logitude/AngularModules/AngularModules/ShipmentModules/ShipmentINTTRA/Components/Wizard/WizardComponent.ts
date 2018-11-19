@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
@@ -10,6 +10,8 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
+import { CardList } from '../../../../Common/EntityLists/CardList';
+import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
 
 @Component({
     moduleId: module.id,
@@ -28,10 +30,12 @@ export class WizardComponent extends BaseComponent {
     public IsDevelopment: boolean = false;
     public SimulatorIsVisible: boolean = false;
     private myService: INTRAWebService;
+    private CardListService: CardListService;
     private entityArgs: EntityArgs;
     constructor() {
         super();
         this.myService = new INTRAWebService();
+        this.CardListService = new CardListService();
     }
 
     SetWindowArgs(args: any) {
@@ -154,6 +158,63 @@ export class WizardComponent extends BaseComponent {
     set INTTRAIsFreighted(value: boolean) {
         if (this.EntityPM.INTTRAIsFreighted != value) {
             this.EntityPM.INTTRAIsFreighted = value;
+        }
+    }
+
+    get BasicFreightId() { return this.EntityPM.BasicFreightId; }
+    set BasicFreightId(value: string) {
+        if (this.EntityPM.BasicFreightId != value) {
+            this.EntityPM.BasicFreightId = value;
+        }
+    }
+
+    get DestinationPortChargesId() { return this.EntityPM.DestinationPortChargesId; }
+    set DestinationPortChargesId(value: string) {
+        if (this.EntityPM.DestinationPortChargesId != value) {
+            this.EntityPM.DestinationPortChargesId = value;
+        }
+    }
+
+    get DestinationHaulageChargesId() { return this.EntityPM.DestinationHaulageChargesId; }
+    set DestinationHaulageChargesId(value: string) {
+        if (this.EntityPM.DestinationHaulageChargesId != value) {
+            this.EntityPM.DestinationHaulageChargesId = value;
+        }
+    }
+
+    get AdditionalChargesId() { return this.EntityPM.AdditionalChargesId; }
+    set AdditionalChargesId(value: string) {
+        if (this.EntityPM.AdditionalChargesId != value) {
+            this.EntityPM.AdditionalChargesId = value;
+        }
+    }
+
+    get FreightPayerId() { return this.EntityPM.FreightPayerId; }
+    set FreightPayerId(value: string) {
+        if (this.EntityPM.FreightPayerId != value) {
+            this.EntityPM.FreightPayerId = value;
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.FreightPayerAddressId = null;
+            }
+
+            else {
+                this.CardListService.getSingle(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: CardList = myResponse.Result;
+                        if (list) {
+                            this.FreightPayerAddressId = list.MainAddressId;
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    get FreightPayerAddressId() { return this.EntityPM.FreightPayerAddressId; }
+    set FreightPayerAddressId(value: string) {
+        if (this.EntityPM.FreightPayerAddressId != value) {
+            this.EntityPM.FreightPayerAddressId = value;
         }
     }
 
@@ -300,7 +361,13 @@ export class WizardComponent extends BaseComponent {
         this.myCloner.AddField('SIHasAttachList');
         this.myCloner.AddField('INTTRADocumentQTY');
         this.myCloner.AddField('INTTRADocumentTypeCode');
-
+        this.myCloner.AddField('INTTRAIsFreighted');
+        this.myCloner.AddField('BasicFreightId');
+        this.myCloner.AddField('DestinationPortChargesId');
+        this.myCloner.AddField('DestinationHaulageChargesId');
+        this.myCloner.AddField('AdditionalChargesId');
+        this.myCloner.AddField('FreightPayerId');
+        this.myCloner.AddField('FreightPayerAddressId');
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {

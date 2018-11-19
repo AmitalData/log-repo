@@ -310,6 +310,14 @@
     <Compile Include="Migrations\201811180938423_JournalAdditionalDataMigration.Designer.cs">
       <DependentUpon>201811180938423_JournalAdditionalDataMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811181208402_AddNewShipmentFields.cs" />
+    <Compile Include="Migrations\201811181208402_AddNewShipmentFields.Designer.cs">
+      <DependentUpon>201811181208402_AddNewShipmentFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811181401529_AddFreightPayerAddressId.cs" />
+    <Compile Include="Migrations\201811181401529_AddFreightPayerAddressId.Designer.cs">
+      <DependentUpon>201811181401529_AddFreightPayerAddressId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201811181329366_OpenFormatReportMigration.cs" />
     <Compile Include="Migrations\201811181329366_OpenFormatReportMigration.Designer.cs">
       <DependentUpon>201811181329366_OpenFormatReportMigration.cs</DependentUpon>
@@ -490,6 +498,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811180938423_JournalAdditionalDataMigration.resx">
       <DependentUpon>201811180938423_JournalAdditionalDataMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811181208402_AddNewShipmentFields.resx">
+      <DependentUpon>201811181208402_AddNewShipmentFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811181401529_AddFreightPayerAddressId.resx">
+      <DependentUpon>201811181401529_AddFreightPayerAddressId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811181329366_OpenFormatReportMigration.resx">
       <DependentUpon>201811181329366_OpenFormatReportMigration.cs</DependentUpon>
