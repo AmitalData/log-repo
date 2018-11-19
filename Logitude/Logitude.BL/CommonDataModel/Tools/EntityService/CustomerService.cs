@@ -479,6 +479,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }  
         }
 
+        private void CreateGLAccount()
+        {
+
+        }
+
         private void AddCustomerToQueue()
         {
             if (LogitudeSettings.EnableHybridQueue)
@@ -578,7 +583,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     entityPM.Code = CodeCounter.GetNumber("Customer", tenant).ToString();
                 }
 
-                CreatePotentialMainAddress();
+                this.CreatePotentialMainAddress();
+                this.CreateGLAccount();
             }
 
             else

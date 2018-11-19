@@ -1,5 +1,6 @@
 ﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using System;
@@ -38,8 +39,10 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
            
         }
 
-       
-
-
+        public APIDataContract.ApiV1.GLAccount GLAccountDataMappingAndValidatin(GLAccountPM MyEntity, int Tenant, string ComputingPartnerName = "")
+        {
+            APIDataContract.ApiV1.GLAccountQueryService query = new APIDataContract.ApiV1.GLAccountQueryService(Tenant);
+            return query.GLAccountDataMappingAndValidatin(MyEntity, Tenant);
+        }
     }
 }

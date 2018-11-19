@@ -23,5 +23,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServiceExt
             GLAccountUpdateService service = new GLAccountUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entity.Tenant);
             service.Update(entity, true);
         }
+
+        public void Create(GLAccountPM entity)
+        {
+            IAccountingContext context = AccountingContext.GetContext(entity.Tenant);
+            GLAccountUpdateService service = new GLAccountUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), entity.Tenant);
+            service.Update(entity, true);
+        }
     }
 }
