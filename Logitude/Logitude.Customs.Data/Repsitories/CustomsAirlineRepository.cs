@@ -32,6 +32,17 @@ namespace Logitude.Customs.Data.Repsitories
             return Airline;
         }
 
+        public CustomsAirline GetByPrefix(string prefix, string entityId)
+        {
+
+            var Airline = (from a in context.CustomsAirlines
+                           where a.AirlinePrefix == prefix
+                              && a.Id != entityId
+                           select a).FirstOrDefault();
+
+            return Airline;
+        }
+
     }
 
 }

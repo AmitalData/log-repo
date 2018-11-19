@@ -98,6 +98,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                     AppendLogLine(MyGenericResponseObj.Message);
                     return;
                 }
+                /*
                 int index = _LogitudeMasterCourier.AirlineId.IndexOf('-');
                 if (index < 1)
                 {
@@ -106,6 +107,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                     AppendLogLine(MyGenericResponseObj.Message);
                     return;
                 }
+                */
                 var airlineId = TranslateAirline(_LogitudeMasterCourier.AirlineId);
                 if (String.IsNullOrWhiteSpace(airlineId))
                 {
@@ -201,19 +203,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
 
             //GET Airline.Id BY PREFIX
             int index = airlineId.IndexOf('-');
-            if (index < 1)
+            if (index > 0)
             {
-                AppendLogLine("airlineId does not contains code and prefix");
-                return null;
+                string code = airlineId.Substring(0, index);
+                string prefix = airlineId.Substring(index + 1);
+                CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(ResolvedTenantLocal());
+                CustomsAirline airline = airlineRepository.GetByAirlineAndPrefix(code, prefix, null);
+                if (airline != null) return airline.Id;
             }
-            string code = airlineId.Substring(0, index);
-            string prefix = airlineId.Substring(index + 1);
-            CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(ResolvedTenantLocal());
-            CustomsAirline airline = airlineRepository.GetByAirlineAndPrefix(code,prefix, null);
-            if (airline != null)
+            else
             {
-                return airline.Id;
+                CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(ResolvedTenantLocal());
+                CustomsAirline airline = airlineRepository.GetByPrefix(airlineId, null);
+                if (airline != null) return airline.Id;
             }
+            
             AppendLogLine("No Airline found for airlineId " + airlineId);
             return null;
         }
