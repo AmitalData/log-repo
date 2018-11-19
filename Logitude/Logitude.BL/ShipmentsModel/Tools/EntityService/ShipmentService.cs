@@ -6268,7 +6268,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
-            else if (!string.IsNullOrEmpty(this.entityPM.WarehouseLegWarehouseId))
+            else if (this.entityPM.DirectionId == "I" && !string.IsNullOrEmpty(this.entityPM.WarehouseLegWarehouseId))
             {
                 Card warehouse = cardRepository.GetSingleCard(this.entityPM.WarehouseLegWarehouseId, tenant);
                 if (warehouse != null)

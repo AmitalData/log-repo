@@ -560,6 +560,8 @@
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
     <Content Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.html" />
     <Content Include="SharedLogistics\Components\SharedLogisticsPartnersPermissiosComponent.html" />
+    <Content Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.html" />
+    <Content Include="SharedLogistics\Components\Workspaces\SharedShipmentsWorkspaceComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.html" />
     <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.html" />
@@ -2947,6 +2949,8 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsMoneyPermissiosComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\SharedLogisticsPartnersPermissiosComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedShipmentsWorkspaceComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.ts" />
