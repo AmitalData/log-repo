@@ -322,6 +322,10 @@
     <Compile Include="Migrations\201811181329366_OpenFormatReportMigration.Designer.cs">
       <DependentUpon>201811181329366_OpenFormatReportMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811190809263_AddEntityTypeToTicket_Maheera.cs" />
+    <Compile Include="Migrations\201811190809263_AddEntityTypeToTicket_Maheera.Designer.cs">
+      <DependentUpon>201811190809263_AddEntityTypeToTicket_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201811191001479_OpenFormatClosedTablesMigration.cs" />
     <Compile Include="Migrations\201811191001479_OpenFormatClosedTablesMigration.Designer.cs">
       <DependentUpon>201811191001479_OpenFormatClosedTablesMigration.cs</DependentUpon>
@@ -511,6 +515,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811181329366_OpenFormatReportMigration.resx">
       <DependentUpon>201811181329366_OpenFormatReportMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811190809263_AddEntityTypeToTicket_Maheera.resx">
+      <DependentUpon>201811190809263_AddEntityTypeToTicket_Maheera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811191001479_OpenFormatClosedTablesMigration.resx">
       <DependentUpon>201811191001479_OpenFormatClosedTablesMigration.cs</DependentUpon>

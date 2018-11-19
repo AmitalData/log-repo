@@ -50,7 +50,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => bankAccountOnUpdatingUpdateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnUpdatingUpdateService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             bankAccountOnUpdatingUpdateService.OnUpdating(entityPM, poco);
-            Assert.AreEqual(entityPM.UpdatedByUserId, expectedLoggedUserId);
+            Assert.AreEqual(expectedLoggedUserId, entityPM.UpdatedByUserId);
 
         }
 
@@ -91,7 +91,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => bankAccountOnUpdatingUpdateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnUpdatingUpdateService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             bankAccountOnUpdatingUpdateService.OnUpdating(entityPM, poco);
-            Assert.AreEqual(entityPM.UpdateDate, expectedDateTime);
+            Assert.AreEqual(expectedDateTime, entityPM.UpdateDate);
 
         }
 
@@ -130,7 +130,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => bankAccountOnUpdatingUpdateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnUpdatingUpdateService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             bankAccountOnUpdatingUpdateService.OnUpdating(entityPM, poco);
-            Assert.AreEqual(entityPM.CreatedByUserId, expectedLoggedUserId);
+            Assert.AreEqual(expectedLoggedUserId, entityPM.CreatedByUserId);
 
         }
 
@@ -173,7 +173,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => bankAccountOnUpdatingUpdateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnUpdatingUpdateService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             bankAccountOnUpdatingUpdateService.OnUpdating(entityPM, poco);
-            Assert.AreEqual(entityPM.SearchFields, expectedSearchFields);
+            Assert.AreEqual(expectedSearchFields, entityPM.SearchFields);
 
         }
 
