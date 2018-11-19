@@ -336,6 +336,19 @@ export class MainMenuComponent {
                         myComponentPath = "./SharedLogistics/Components/SharedLogisticMainMenuComponent";
                         break;
                     }
+
+                    case "General.MH.Shipments": {
+                        ServiceLocator.SendTotangoUserActivity("SharedLogistics", "Main View");
+                        myComponentPath = "./SharedLogistics/Components/Workspaces/SharedShipmentsWorkspaceComponent";
+                        break;
+                    }
+
+                    case "General.MH.Invoices": {
+                        ServiceLocator.SendTotangoUserActivity("SharedLogistics", "Main View");
+                        myComponentPath = "./SharedLogistics/Components/Workspaces/SharedInvoicesWorkspaceComponent";
+                        break;
+                    }
+
                     case "General.MH.ActivationWizard": {
                         ServiceLocator.SendTotangoUserActivity("ActivationWizard", "Main View");
                         myComponentPath = "./InfrastructureModules/InfrastructureOthers/Components/ActivationWizard/ActivationWizardComponent";

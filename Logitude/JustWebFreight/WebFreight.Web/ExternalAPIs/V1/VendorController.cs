@@ -19,18 +19,18 @@ using WebFreight.Web.Security;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
-    public class CustomerController : ApiController
+    public class VendorController : ApiController
     {
-        public HttpResponseMessage GetSingleCustomer(string id)
+        public HttpResponseMessage GetSingleVendor(string id)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                CustomerQueryService Service = new CustomerQueryService(tenant);
+                VendorQueryService Service = new VendorQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetCustomerById(id, tenant);
+                var Result = Service.GetVendorById(id, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
 
@@ -41,7 +41,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage Post(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer entity)
+        public HttpResponseMessage Post(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity)
         {
             if (ModelState.IsValid)
             {
@@ -58,65 +58,66 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     }
 
                     ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
-                    CustomerQueryService mappingService = new CustomerQueryService(authToken.Tenant);
-                    CustomerPM entityPM = mappingService.CustomerCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
+                    VendorQueryService mappingService = new VendorQueryService(authToken.Tenant);
+                    //VendorPM entityPM = mappingService.VendorCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {    
-                        if(entityPM.Addresses.Count == 0)
-                        {
-                            throw new ApplicationException("Missing Main Address");
-                        }
-                        else
-                        {
-                            Tenant myTenant = MyContext.Tenants.Where(d => d.Id == authToken.Tenant).FirstOrDefault();
-                            if (myTenant.IsCustomerTelRequired)
-                            {
-                                if (string.IsNullOrEmpty(entity.MainAddress.PhoneNumber))
-                                {
-                                    throw new ApplicationException("Phone Number is required");
-                                }
-                            }
+                    {
+                        //if (entityPM.Addresses.Count == 0)
+                        //{
+                        //    throw new ApplicationException("Missing Main Address");
+                        //}
+                        //else
+                        //{
+                        //    Tenant myTenant = MyContext.Tenants.Where(d => d.Id == authToken.Tenant).FirstOrDefault();
+                        //    if (myTenant.IsCustomerTelRequired)
+                        //    {
+                        //        if (string.IsNullOrEmpty(entity.MainAddress.PhoneNumber))
+                        //        {
+                        //            throw new ApplicationException("Phone Number is required");
+                        //        }
+                        //    }
 
-                            if (myTenant.IsCustomerFaxRequired)
-                            {
-                                if (string.IsNullOrEmpty(entity.MainAddress.FaxNumber))
-                                {
-                                    throw new ApplicationException("Fax Number is required");
-                                }
-                            }
-                        }
+                        //    if (myTenant.IsCustomerFaxRequired)
+                        //    {
+                        //        if (string.IsNullOrEmpty(entity.MainAddress.FaxNumber))
+                        //        {
+                        //            throw new ApplicationException("Fax Number is required");
+                        //        }
+                        //    }
+                        //}
 
-                        CustomerService service = new CustomerService(MyContext, entityPM);
-                        service.Create();
-                        service.Submit();
+                        //VendorService service = new VendorService(MyContext, entityPM);
+                        //service.Create();
+                        //service.Submit();
                         scope.Complete();
                     }
 
-                    var result = mappingService.GetCustomerById(entityPM.Id, authToken.Tenant);
-                    APIHelper.AddCommunicationLog("D", entity, result, "Customer", entityPM.Id, "Customer API", authToken.Tenant);
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                    //var result = mappingService.GetVendorById(entityPM.Id, authToken.Tenant);
+                    //APIHelper.AddCommunicationLog("D", entity, result, "Vendor", entityPM.Id, "Vendor API", authToken.Tenant);
+                    //return Request.CreateResponse(HttpStatusCode.OK, result);
+                    return Request.CreateResponse(HttpStatusCode.OK, new VendorPM());
                 }
 
                 catch (Exception ex)
                 {
                     var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                    APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Customer", null, "Customer API");
+                    APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Vendor", null, "Vendor API");
                     return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
                 }
             }
             else
             {
                 var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
-                APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Customer", null, "Customer API");
+                APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Vendor", null, "Vendor API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
 
-        public HttpResponseMessage Put(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer entity)
+        public HttpResponseMessage Put(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Vendor entity)
         {
             var apiExceptionResult = ApiExceptionHandler.HandleException(new Exception("Updates are not supported"));
-            APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Customer", null, "Customer API");
+            APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Vendor", null, "Vendor API");
             return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
         }
     }

@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {QuoteDomainService, CRMSummary} from '../../Services/QuoteDomainService';
 import {QuoteList} from '../../EntityLists/QuoteList';
 import {QuoteListService} from '../../Services/StandardLists/QuoteListService';
@@ -696,7 +696,7 @@ export class QuotesComponent extends BaseComponent {
         logWindow.Width = 960;
         logWindow.Height = 570;
         logWindow.WindowArgs = args;
-        logWindow.Title = "Create New Quote";
+        logWindow.Title = TextCodeTranslator.Translate("Quote.S.NewQuote.CreateNewQuote");
         logWindow.Show('./Quote/Components/NewEntity/NewQuoteComponent');
 
         logWindow.WindowClosed.subscribe(s => {            

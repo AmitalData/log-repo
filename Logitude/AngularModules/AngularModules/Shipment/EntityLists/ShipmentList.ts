@@ -406,5 +406,10 @@ export class ShipmentList {
     Notify2Reference: string;
     ShipperNotExporterReference: string;
     ConsigneeNotImporterReference: string;
-
-}
+    BasicFreightId: string;
+    DestinationPortChargesId: string;
+    DestinationHaulageChargesId: string;
+    AdditionalChargesId: string;
+    FreightPayerId: string;
+    FreightPayerAddressId: string;
+}
