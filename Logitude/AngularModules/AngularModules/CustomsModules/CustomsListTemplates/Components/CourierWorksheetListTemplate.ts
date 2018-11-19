@@ -384,6 +384,7 @@ export class CourierWorksheetListTemplate {
                 declarationIdList.push(response.Result);
                 windowArgs.DeclarationIdList = declarationIdList;
                 windowArgs.CourierHawb = this._CourierWorksheet.CourierHawb;
+                windowArgs.Mode = mode;
                 
                 if (mode == "Delete") {
                     var confirm = new ConfirmWindow();
@@ -401,6 +402,10 @@ export class CourierWorksheetListTemplate {
                     });
                 }
                 else {
+                    if (mode == "Update") {
+                        windowArgs.CourierPendingReasonCode = this._CourierWorksheet.CourierPendingReasonCode;
+                        windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
+                    }
                     logitudeWindow.Width = 450;
                     logitudeWindow.Height = 280;
                     logitudeWindow.IsShowCloseButton = false;

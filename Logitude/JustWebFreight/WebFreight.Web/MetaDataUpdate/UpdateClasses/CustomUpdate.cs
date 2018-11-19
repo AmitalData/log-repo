@@ -14817,11 +14817,12 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
 
             // Unique Filing Payment Order	BASE >> create  add on include 
-            Feature paymentOrderFeature19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code =
-                "UNIQUEFILINGPO", ObjectTableId = paymentOrderObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.PaymentOrder.Features.UniqueFilingPO",
+            Feature paymentOrderFeature19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() {
+                Packagable = true,Code ="UNIQUEFILINGPO", ObjectTableId = paymentOrderObjectTable.Id, Tenant = tenant,
+                NameTextCodeCode = "Customs.PaymentOrder.Features.UniqueFilingPO",
                 NameTextCodeDefaultText = "Unique Filing Payment Order ",
                 FullLocalDefaultText = "תייק גרסת הוראת תשלום", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-
+            FeaturesRepository.SubmitChanges();
             #endregion
 
             #region SupplierInvoice
