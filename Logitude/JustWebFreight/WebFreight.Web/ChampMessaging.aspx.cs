@@ -56,7 +56,7 @@ namespace WebFreight.Web
 
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "ChampMessaging Page", "ChampMessaging Method", null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "ChampMessaging Page", "Page_Load Method", null);
             }
         }
 
