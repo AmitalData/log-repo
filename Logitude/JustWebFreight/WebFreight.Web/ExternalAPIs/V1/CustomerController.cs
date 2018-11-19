@@ -1,6 +1,8 @@
-﻿using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -86,10 +88,32 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 }
                             }
                         }
-
+                        
                         CustomerService service = new CustomerService(MyContext, entityPM);
                         service.Create();
                         service.Submit();
+
+                        //if (entity.GLAccount != null)
+                        //{
+                        //    CardRepository cardRepository = new CardRepository(authToken.Tenant);
+                        //    Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(entityPM.Id, authToken.Tenant);
+                        //    if(card != null)
+                        //    {
+                        //        if(entity.GLAccount.IsMultiCurrency == false && string.IsNullOrEmpty(entity.GLAccount.CurrencyId))
+                        //        {
+                        //            throw new ApplicationException("GLAccount currency is required");
+                        //        }
+
+                        //        GLAccountPM gLAccountEntity = new GLAccountPM()
+                        //        {
+                        //            CurrencyId = entity.GLAccount.Currency,
+                        //        };
+
+                        //        FullAccountingHelper fullAccountingHelper = new FullAccountingHelper();
+                        //        string glAccountId = fullAccountingHelper.CreateGLAccount(card);
+                        //    }                            
+                        //}
+
                         scope.Complete();
                     }
 

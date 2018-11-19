@@ -19,7 +19,7 @@ using WebFreight.Web.Security;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
-    public class VendorController : ApiController
+    public class VendorPartnerController : ApiController
     {
         public HttpResponseMessage GetSingleVendor(string id)
         {

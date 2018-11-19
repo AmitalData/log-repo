@@ -20,6 +20,8 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityLists;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.BL.CoreBL.Reports;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -651,7 +653,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                           join v in vendors on a.Id equals v.GLAccountId
                           select a).ToList();
 
-            foreach(APPaymentList item in groupedpayments)
+           
+            
+            foreach (APPaymentList item in groupedpayments)
             {
                 ByVendorList  byVendorList= new ByVendorList()
                 {
@@ -682,9 +686,49 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         byVendorList.DeductionFileNumber = gLAccount.DeductionFileNumber;
                         byVendorList.DeductionType = gLAccount.DeductionTypeId;
                         byVendorList.EnglishName = gLAccount.EnglishName;
+
+                        LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
+
+
+                        LTBFilter.PageSize = 10;
+                        LTBFilter.PageStartAtRecordIndex = 0;
+                        LTBFilter.Tenant = tenant;
+
+
+
+                        LTBFilter.GLAccountId = gLAccount.Id;
+                        LTBFilter.From = new DateTime((int)reportYear, 1, 1);
+                        LTBFilter.To = new DateTime((int)reportYear, 12, 31);
+                        LTBFilter.IncludeRelatedCurrenciesAccount = false;
+                        LTBFilter.IncludeChildAccounts = false;
+
+                        var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(context, LTBFilter);
+                        ledgerTransactionBalanceService.Run();
+                        //LTBFilter.CallBack = new LedgerTransactionBalanceFilterCallBack()
+                        //{
+                        //    //EndBalanceForeign = ledgerTransactionBalanceService.Response.EndBalanceForeign,
+                        //    EndBalanceForeignList = ledgerTransactionBalanceService.Response.EndBalanceForeignList,
+                        //    EndBalanceLocal = ledgerTransactionBalanceService.Response.EndBalanceLocal,
+                        //    Have1CurrencyIdInPeriod = ledgerTransactionBalanceService.Response.Have1CurrencyIdInPeriod,
+                        //    MaxCreateAt = ledgerTransactionBalanceService.Response.MaxCreateAt,
+
+                        //    //StartBalanceForeign = ledgerTransactionBalanceService.Response.StartBalanceForeign,
+                        //    StartBalanceForeignList = ledgerTransactionBalanceService.Response.StartBalanceForeignList,
+                        //    StartBalanceLocal = ledgerTransactionBalanceService.Response.StartBalanceLocal,
+                        //    TotalRowCount = ledgerTransactionBalanceService.Response.TotalRowCount,
+                        //    SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionBalanceService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
+
+                        //};
+                        byVendorList.EndYearBalance = ledgerTransactionBalanceService.Response.EndBalanceLocal != null ? ledgerTransactionBalanceService.Response.EndBalanceLocal :0 ;
+                        
+                      
                     }
 
 
+                    if (byVendorList.EndYearBalance == null)
+                    {
+                        byVendorList.EndYearBalance = 0;
+                    }
                     
                         byVendorList.VATNumber = selectedVendor.VatNumber;
                         byVendorList.VendorName = selectedVendor.EnglishName;
