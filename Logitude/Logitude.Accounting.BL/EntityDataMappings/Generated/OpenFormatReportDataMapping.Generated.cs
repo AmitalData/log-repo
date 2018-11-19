@@ -32,7 +32,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ReportNumber, 
 	         FromDate, 
 	         ToDate, 
-	         DateType, 
+	         DateTypeCode, 
 	         StatusTypeCode, 
 	         ErrorMessage,
 	      }
@@ -51,7 +51,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ReportNumber, 
 	         FromDate, 
 	         ToDate, 
-	         DateType, 
+	         DateTypeCode, 
 	         StatusTypeCode, 
 	         ErrorMessage,
 	      }
@@ -107,9 +107,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.ToDate = entityPM.ToDate;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateType))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateTypeCode))
             {
-				entityPOCO.DateType = entityPM.DateType;
+				entityPOCO.DateTypeCode = entityPM.DateTypeCode;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusTypeCode))
@@ -178,9 +178,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ToDate = entityPOCO.ToDate;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DateType))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DateTypeCode))
             {
-					entityPM.DateType = entityPOCO.DateType;
+					entityPM.DateTypeCode = entityPOCO.DateTypeCode;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StatusTypeCode))
@@ -244,9 +244,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.ToDate = entityPM.ToDate;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateType))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateTypeCode))
             {
-                oldEntityPM.DateType = entityPM.DateType;
+                oldEntityPM.DateTypeCode = entityPM.DateTypeCode;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StatusTypeCode))

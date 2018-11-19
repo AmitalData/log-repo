@@ -62,7 +62,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 		    entityPM.Id = IdCounter.GetNumber("SLALine", entityPM.Tenant); 
 					
 	    }
-
+        
 		protected override void FillDefaultValuesOnUpdate(SLALinePM entityPM)
         {       
            
