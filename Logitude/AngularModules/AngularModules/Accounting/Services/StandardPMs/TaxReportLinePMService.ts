@@ -180,7 +180,7 @@ export class TaxReportLinePMService {
          
         if (!entityPM) {
             
-            entityPM = new TaxReportLinePM();
+            entityPM = new TaxReportLinePM(null);
         }
 
 		var customFields: Array<string> = [];
@@ -245,7 +245,7 @@ export class TaxReportLinePMService {
 
 	  public GetNewEntityPM() {		 
 		    var entityPM: TaxReportLinePM;
-			entityPM = new TaxReportLinePM();
+			entityPM = new TaxReportLinePM(null);
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }

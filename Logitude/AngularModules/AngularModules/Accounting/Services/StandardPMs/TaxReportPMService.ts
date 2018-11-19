@@ -245,7 +245,7 @@ export class TaxReportPMService {
                 continue;
             }
             var newTaxReportLinePM: TaxReportLinePM;
-            newTaxReportLinePM = new TaxReportLinePM();
+            newTaxReportLinePM = new TaxReportLinePM(entityPM);
 				                
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
