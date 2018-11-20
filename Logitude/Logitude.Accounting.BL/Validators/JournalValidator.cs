@@ -24,7 +24,7 @@ namespace Logitude.Accounting.BL.Validators
 
 
         public const string M_YouShouldHaveOneLineAtLeast = "Journal.M.YouShouldHaveOneLineAtLeast";
-        public const string M_ClosedMonth = "AccountingPeriod.F.ClosedMonth";
+        public const string M_ClosedMonth = "ARInvoice.M.ClosedMonth" //"AccountingPeriod.F.ClosedMonth";
         public const string M_ExternalNoAlreadyExists_1 = "Journals.O.ExternalNoAlreadyExists_1";
         public const string M_ExternalNoAlreadyExists_2 = "Journals.O.ExternalNoAlreadyExists_2";
         public const string M_ExternalNoAlreadyExists_3 = "Journals.O.ExternalNoAlreadyExists_3";
