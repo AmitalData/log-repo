@@ -14822,7 +14822,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 NameTextCodeCode = "Customs.PaymentOrder.Features.UniqueFilingPO",
                 NameTextCodeDefaultText = "Unique Filing Payment Order ",
                 FullLocalDefaultText = "תייק גרסת הוראת תשלום", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            FeaturesRepository.SubmitChanges();
+
+            
             #endregion
 
             #region SupplierInvoice
