@@ -263,7 +263,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             PortRepository portRepository = new PortRepository(myCommonContext);
             DocumentRepository documentrepository = new DocumentRepository(myCommonContext);
             BookingAnswerRepository bookingAnswerRepository = new BookingAnswerRepository(myContext);
-            CommunicationLogRepository commLogRep = new CommunicationLogRepository(myCommonContext);
             AirlineRepository airlineRepository = new AirlineRepository(myCommonContext);
 
             entityPM.FMAAcknowledgementReason = null;
@@ -416,7 +415,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                             FlightNumber = entityPM.MainCarriageCarrierPrefix + item.MovementDetail.FlightNumber,
                         };
 
-                        CommunicationLog log = commLogRep.GetSingleCommunicationLog(analyzeQueue.CommunicationLogId, myTenant);
                         Airline airline = airlineRepository.GetSingleAirlineByCode(item.MovementDetail.CarrierCode, myTenant);
 
                         BookingAnswer answer = new BookingAnswer()
@@ -429,7 +427,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                             StatusCode = "ACC",
                             Origin = myFromPortCode,
                             Destination = myToPortCode,
-                            CommunicationLogId = log == null ? null : log.Id,
+                            CommunicationLogId = analyzeQueue.CommunicationLogId,
                             FlightNumber = myStatusContext.FlightNumber,
                             BookingSpaceAllocationCode = "KK",
                             CarrierId = airline == null ? null : airline.Id,

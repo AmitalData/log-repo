@@ -149,30 +149,6 @@ namespace CommunicationWorkerRole
             myRepository.SubmitChanges();
         }
 
-        //private void SaveMessageToAnalyzeQueue(string messageData)
-        //{
-        //    AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
-        //    byte[] messageBytes = Encoding.ASCII.GetBytes(messageData);
-        //    //string mmm = Encoding.ASCII.GetString(messageBytes);
-
-        //    AnalyzeQueue analyzeQueue = new AnalyzeQueue()
-        //    {
-        //        CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
-        //        From = "Champ",
-        //        Id = IdCounter.GetNumber("AnalyzeQueue", 0),
-        //        MessageBody = messageBytes,
-        //        Status = "W",
-        //        Retries = 0,
-        //        ConnectedToEntity = false,
-        //        ConnectedToTenant = false,
-        //        FileSize = messageData.Length,               
-        //    };
-
-        //    analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
-        //    analyzeQueueReposiory.Add(analyzeQueue);
-        //    analyzeQueueReposiory.SubmitChanges();
-        //}
-
         public override bool OnStart()
         {
             // Set the maximum number of concurrent connections 

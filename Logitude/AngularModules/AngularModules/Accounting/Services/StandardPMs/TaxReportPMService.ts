@@ -19,6 +19,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {TaxReportPM} from '../../EntityPMs/TaxReportPM';
 
+import {TaxReportLinePM} from '../../EntityPMs/TaxReportLinePM';
 
 @Injectable()
 
@@ -209,12 +210,22 @@ export class TaxReportPMService {
                  
             }
 			
+               this.MapTaxReportLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.TaxReportLines = [];
+            for (var item in entityPM.TaxReportLines) {
+            var myTaxReportLinePM = entityPM.TaxReportLines[item];
+            var newTaxReportLinePM: TaxReportLinePM = this.clone(myTaxReportLinePM);
+						
+							 
+            entityPM.OldEntityPM.TaxReportLines.push(newTaxReportLinePM);
+            }
+			   
 		}
         else {
 
@@ -224,6 +235,31 @@ export class TaxReportPMService {
         return entityPM;
     }
 
+    MapTaxReportLines(entityPM: TaxReportPM, jsonPM: any, mapParent: boolean = true) {
+
+        entityPM.TaxReportLines = new Array<TaxReportLinePM>();
+        for (var item in jsonPM.TaxReportLines) {
+
+            var jItem = jsonPM.TaxReportLines[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newTaxReportLinePM: TaxReportLinePM;
+            newTaxReportLinePM = new TaxReportLinePM(entityPM);
+				                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+			
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newTaxReportLinePM[pmProperty] = jItem[pmProperty];
+            }
+            newTaxReportLinePM.IsDirty = false;
+            entityPM.TaxReportLines.push(newTaxReportLinePM);
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;
