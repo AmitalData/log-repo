@@ -884,6 +884,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(TreatmentWay, TreatmentWayObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(TreatmentWay);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData decisionType = closedSystemTables.Where(d => d.id == "1157").FirstOrDefault();
+            ObjectTable decisionTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.DecisionType", 0, false);
+            InsertClosedTableRecord(decisionType, decisionTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(decisionType);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData TPGFileType = closedSystemTables.Where(d => d.id == "1596").FirstOrDefault();
             ObjectTable TPGFileTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.TPGFileType", 0, false);
             InsertClosedTableRecord(TPGFileType, TPGFileTypeObjectTable, customsClosedTables, customsClosedTableRepository);

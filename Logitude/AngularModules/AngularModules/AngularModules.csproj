@@ -371,6 +371,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\CourierPendingReasonList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAirlineList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsPartnerFtpList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\DecisionTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingErrorPlaceList.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CourierPendingReasonPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAirlinePM.ts" />
@@ -378,6 +379,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsItemPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\DecCargoSplitConsPackDetPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\DecisionTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedLists\CourierPendingReasonExtendedListService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
@@ -386,6 +388,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierPendingReasonListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsAirlineListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CustomsPartnerFtpListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\DecisionTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingErrorPlaceListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsAirlinePMService.ts" />

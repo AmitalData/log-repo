@@ -308,6 +308,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
 	
+            modelBuilder.Configurations.Add(new DecisionTypeMap());
+	
             modelBuilder.Configurations.Add(new DeclarationMap());
 	
             modelBuilder.Configurations.Add(new DeclarationCargoSplitMap());
@@ -1759,6 +1761,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DecisionType> DecisionTypes 
 	 {
 	      get; set;
 	 

@@ -157,7 +157,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  DECR = g.Count(r => (r.CourierDeclarationStatusCode == "R" )),
                  DECR_RV = g.Count(r => (r.CourierManifestStatusCode == "R" || r.CourierManifestStatusCode == "V")),
                  HOLD = g.Count(r => (r.CourierPendingReasonCode != null)),
-                 ACC = g.Count(),
+                 //ACC = g.Count(),
                  //ACC_W = g.Count(r => (r. == "2")),
              });
 
@@ -182,7 +182,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 MNFR_RV = tot.MNFR_RV;
                 DECR_RV = tot.DECR_RV;
                 PAY_RL = tot.PAY_RL;
-                ACC = tot.ACC;
+                //ACC = tot.ACC;
             }
 
             keyValuePairList.Add(new KeyValuePair<string, int>("ALL", ALL));

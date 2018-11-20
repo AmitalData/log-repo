@@ -13,7 +13,7 @@ using UnifreightIIG.Common.MessageLib.Claim;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
-    class CLAIM_5114_AcceptanceOrRejectionClaimMessageResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, CLAIM_MSG10_AcceptanceOrRejectionClaimMessage, GenericRequestParams>
+    public class CLAIM_5114_AcceptanceOrRejectionClaimMessageResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, CLAIM_MSG10_AcceptanceOrRejectionClaimMessage, GenericRequestParams>
     {
         public ClaimPM _MyClaimPM;
 

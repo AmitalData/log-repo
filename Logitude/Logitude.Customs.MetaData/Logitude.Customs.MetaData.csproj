@@ -98,6 +98,9 @@
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
     <None Include="EntityFiles\CustomsPartnerFtp.lxml" />
+    <None Include="EntityFiles\DecisionType.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\MamanStatus.lxml" />
     <None Include="EntityFiles\ClientDrivingLicense.lxml" />
     <None Include="EntityFiles\ClientDrivingLicenseType.lxml" />

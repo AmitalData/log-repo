@@ -109,6 +109,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnifreightIIG.1.0.0\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnifreightIIG.1.0.0\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+    </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnifreightIIG.1.0.0\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
@@ -145,6 +151,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\CourtInstanceDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CurrencyTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerActivityTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\DecisionTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\EntitlementTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\FacilitationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\FreightPaymentMethodDetails.Generated.cs" />
@@ -187,6 +194,7 @@
     <Compile Include="CloseTables\EnumGenerated\CourtInstanceStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CurrencyTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomerActivityTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DecisionTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\EntitlementTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\FreightPaymentMethodStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\GovernmentProcedureTypeStruct.Generated.cs" />
@@ -331,6 +339,7 @@
     <Compile Include="EntityDataMappings\DecCargoSplitConDataMapping.cs" />
     <Compile Include="EntityDataMappings\DecCargoSplitConsItemDataMapping.cs" />
     <Compile Include="EntityDataMappings\DecCargoSplitConsPackDetDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DecisionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationCargoSplitDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationConsAcceptanceDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationConstraintDataMapping.cs" />
@@ -482,6 +491,7 @@
     <Compile Include="EntityDataMappings\Generated\DecCargoSplitConDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DecCargoSplitConsItemDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DecCargoSplitConsPackDetDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DecisionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationCargoSplitDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationConsAcceptanceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationConstraintDataMapping.Generated.cs" />
@@ -822,6 +832,7 @@
     <Compile Include="EntityQueryServices\Generated\DecCargoSplitConQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DecCargoSplitConsItemQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DecCargoSplitConsPackDetQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DecisionTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCargoSplitQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationConsAcceptanceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCourierStatusQueryService.Generated.cs" />
@@ -1211,6 +1222,7 @@
     <Compile Include="EntityUpdateServices\Generated\DecCargoSplitConsItemUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DecCargoSplitConsPackDetUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DecCargoSplitConUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DecisionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationCargoSplitUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationConsAcceptanceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationCourierStatusUpdateService.Generated.cs" />
