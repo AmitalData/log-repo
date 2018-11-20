@@ -10,10 +10,20 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
     {
         [Key]
         public string Id { get; set; }
-
         public int Tenant { get; set; }
+
         public DateTime CreateDate { get; set; }
+        public DateTime CreateDateUTC { get; set; }
+
         public DateTime? DoneDate { get; set; }
+        public DateTime? DoneDateUTC { get; set; }
+
+        public DateTime LastStatusDate { get; set; }
+        public DateTime LastStatusDateUTC { get; set; }
+
+        public DateTime? NextTryDateTime { get; set; }
+        public DateTime? NextTryDateTimeUTC { get; set; }
+
         public string CommunicationLogTypeCode { get; set; }
         public string CommunicationStatusTypeCode { get; set; }
         public string Subject { get; set; }
@@ -32,22 +42,11 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int Retries { get; set; }
         public string BCC { get; set; }
         public string From { get; set; }
-        public DateTime LastStatusDate { get; set; }
-
         public string SearchFields { get; set; }
         public string EntityReference { get; set; }
         public string ExceptionMessage { get; set; }
-
         public string Logs { get; set; }
         public string CorrelationID { get; set; }
-        public DateTime? NextTryDateTime { get; set; }
-
-        public DateTime CreateDateUTC { get; set; }
-        public DateTime? DoneDateUTC { get; set; }
-        public DateTime LastStatusDateUTC { get; set; }
-        public DateTime? NextTryDateTimeUTC { get; set; }
-
-
         public string ResponseDocumentId { get; set; }
 
         public int Priority { get; set; }

@@ -132,21 +132,13 @@ export class TaxReportExtendedPMService {
 
         }
 
-        this.MapTaxReportLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
 
 
 
         if (mapParent) {
             entityPM.OldEntityPM = this.clone(entityPM);
 
-            entityPM.OldEntityPM.TaxReportLines = [];
-            for (var item in entityPM.TaxReportLines) {
-                var myTaxReportLinePM = entityPM.TaxReportLines[item];
-                var newTaxReportLinePM: TaxReportLinePM = this.clone(myTaxReportLinePM);
 
-
-                entityPM.OldEntityPM.TaxReportLines.push(newTaxReportLinePM);
-            }
 
         }
         else {
@@ -155,96 +147,6 @@ export class TaxReportExtendedPMService {
         }
         entityPM.IsDirty = false;
         return entityPM;
-    }
-
-    MapTaxReportLines(entityPM: TaxReportPM, jsonPM: any, mapParent: boolean = true) {
-
-        var oldTaxReportLines: TaxReportLinePM[] = [];
-        if (entityPM.OldEntityPM && !mapParent) {
-            oldTaxReportLines = entityPM.OldEntityPM.TaxReportLines;
-        }
-
-        entityPM.TaxReportLines = new Array<TaxReportLinePM>();
-        for (var item in jsonPM.TaxReportLines) {
-            var jItem = jsonPM.TaxReportLines[item];
-            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
-                continue;
-            }
-            var newTaxReportLinePM: TaxReportLinePM;
-
-            if (mapParent) {
-                newTaxReportLinePM = new TaxReportLinePM(entityPM);
-            }
-            else {
-                newTaxReportLinePM = new TaxReportLinePM(null);
-            }
-
-            var pmKeysArray = Object.keys(jItem);
-            for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
-                    continue;
-                }
-                var pmProperty = pmKeysArray[pmKey];
-                newTaxReportLinePM[pmProperty] = jItem[pmProperty];
-            }
-
-
-            if (mapParent) {
-                newTaxReportLinePM.UniqueKey = Guid.newGuid();
-                newTaxReportLinePM.ChangeSetOp = "None";
-                jItem.ChangeSetOp = "None";
-                newTaxReportLinePM.OldEntityPM = this.clone(newTaxReportLinePM);
-
-
-            }
-            else {
-                if (newTaxReportLinePM.UniqueKey) {
-
-                    if (jItem.IsDirty)
-                        newTaxReportLinePM.ChangeSetOp = "Update";
-                }
-                else {
-                    newTaxReportLinePM.ChangeSetOp = "Insert";
-                }
-
-                newTaxReportLinePM.OldEntityPM = null;
-                newTaxReportLinePM.EntityParentPM = null;
-            }
-
-            newTaxReportLinePM.IsDirty = false;
-            entityPM.TaxReportLines.push(newTaxReportLinePM);
-        }
-        if (oldTaxReportLines) {
-
-            for (var itemKey in oldTaxReportLines) {
-                if (entityPM.TaxReportLines.filter(p => p.UniqueKey === oldTaxReportLines[itemKey].UniqueKey).length === 0) {
-
-                    if (oldTaxReportLines[itemKey]) {
-                        //oldTaxReportLines[itemKey].ChangeSetOp = "Delete";
-                        //entityPM.TaxReportLines.push(oldTaxReportLines[itemKey]);
-                        var oldItemJson = oldTaxReportLines[itemKey];
-                        var deletedPM: TaxReportLinePM = new TaxReportLinePM(null);
-                        var pmKeys = Object.keys(oldItemJson);
-                        for (var key in pmKeys) {
-
-                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
-                                continue;
-                            }
-
-                            var property = pmKeys[key];
-                            deletedPM[property] = oldItemJson[property];
-                        }
-
-
-                        deletedPM.IsDirty = false;
-                        deletedPM.ChangeSetOp = "Delete";
-
-                        deletedPM.OldEntityPM = null;
-                        entityPM.TaxReportLines.push(deletedPM);
-                    }
-                }
-            }
-        }
     }
 
     public clone(jsonPM: any) {

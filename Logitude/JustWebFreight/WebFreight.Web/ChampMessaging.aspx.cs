@@ -5,11 +5,13 @@ using Newtonsoft.Json;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -23,40 +25,45 @@ namespace WebFreight.Web
         {
             try
             {
-                HttpRequest iRequest = this.Request;
-
-                if (iRequest != null)
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    string iString = "";
+                    HttpRequest iRequest = this.Request;
 
-                    using (var reader = new StreamReader(Request.InputStream))
+                    if (iRequest != null)
                     {
-                        iString = reader.ReadToEnd();
+                        string iString = "";
+
+                        using (var reader = new StreamReader(Request.InputStream))
+                        {
+                            iString = reader.ReadToEnd();
+                        }
+
+                        //string jsonData = HttpUtility.UrlDecode(iString);
+
+                        //XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Envelope\":" + jsonData, "Root");
+
+                        //string xmlString = System.Xml.Linq.XElement.Parse(doc.OuterXml).ToString();
+
+                        if (!string.IsNullOrEmpty(iString))
+                        {
+                            this.SaveMessageToAnalyzeQueue(iString);
+                        }
                     }
 
-                    //string jsonData = HttpUtility.UrlDecode(iString);
-
-                    //XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Envelope\":" + jsonData, "Root");
-
-                    //string xmlString = System.Xml.Linq.XElement.Parse(doc.OuterXml).ToString();
-
-                    if (!string.IsNullOrEmpty(iString))
-                    {
-                        this.SaveMessageToAnalyzeQueue(iString);
-                    }
+                    scope.Complete();
                 }
             }
 
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "ChampMessaging Page", "ChampMessaging Method", null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "ChampMessaging Page", "Page_Load Method", null);
             }
         }
 
-        private void SaveMessageToAnalyzeQueue(string messageData)
+        private void SaveMessageToAnalyzeQueue(string xmlfileText)
         {
             AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
-            byte[] messageBytes = Encoding.ASCII.GetBytes(messageData);
+            byte[] messageBytes = Encoding.ASCII.GetBytes(xmlfileText);
 
             AnalyzeQueue analyzeQueue = new AnalyzeQueue()
             {
@@ -68,7 +75,7 @@ namespace WebFreight.Web
                 Retries = 0,
                 ConnectedToEntity = false,
                 ConnectedToTenant = false,
-                FileSize = messageData.Length,
+                FileSize = xmlfileText.Length,
             };
 
             analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
@@ -76,7 +83,7 @@ namespace WebFreight.Web
             analyzeQueueReposiory.SubmitChanges();
 
             DbQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("ChampAnalyzer", 0);
+            queueservice.InitializeQueue("ChampAnalyzer", 0);            
             queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
             queueservice.Complete();
         }

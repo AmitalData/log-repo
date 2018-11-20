@@ -137,6 +137,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             MyLedgerTransaction.OppositeAccountId = _JournalLine.CreditAccountId;
             
 
+
         }
 
         public virtual decimal ResolveVat(int Tenant, DateTime DocumentDate)

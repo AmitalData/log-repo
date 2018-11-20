@@ -115,6 +115,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     ReloadScreen(){
         this.GetStatuses();
         this.FillGrids();
+        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+        this.GetReportCounter();
     }
 
     SetUIProperty() {
@@ -317,19 +319,19 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     //#region Data
     FillGrids() {
-        var lines = [];
+        // var lines = [];
 
-        this.ReportLines = new ObservableCollection([]);
-        this.OriginalReportLines = new ObservableCollection([]);
+        // this.ReportLines = new ObservableCollection([]);
+        // this.OriginalReportLines = new ObservableCollection([]);
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
-            for (let item of this.EntityPM.TaxReportLines.sort((a, b) => { return (a.Line === b.Line) ? 0 : (a.Line < b.Line) ? -1 : 1 })) {
-                //lines.push(new ReportLineModel(item, this));
-            }
-        }
+        // if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
+        //     for (let item of this.EntityPM.TaxReportLines.sort((a, b) => { return (a.Line === b.Line) ? 0 : (a.Line < b.Line) ? -1 : 1 })) {
+        //         //lines.push(new ReportLineModel(item, this));
+        //     }
+        // }
 
-        this.ReportLines.InsertCollection(lines);
-        this.OriginalReportLines.InsertCollection(lines);
+        // this.ReportLines.InsertCollection(lines);
+        // this.OriginalReportLines.InsertCollection(lines);
 
         //calculate sums
         //this.TaxableTransactionsCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "O" && d.TaxReportLinePM.VatAmount > 0).length;
