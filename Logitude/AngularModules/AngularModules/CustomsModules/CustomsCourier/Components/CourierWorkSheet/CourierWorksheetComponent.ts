@@ -142,7 +142,7 @@ implements OnDestroy
         this._SelectedMNFValue = 'A';
         this._SelectedDECValue = 'A';
         this._SelectedDOCValue = 'A';
-        this._SelectedACCValue = 'A';//'W';eitan temp
+        this._SelectedACCValue = 'A';
 
         switch (item.Code) {
             case "DECR": 
@@ -156,6 +156,9 @@ implements OnDestroy
                 break;
             case "DOC":
                 this._SelectedDOCValue = 'A';
+                break;
+            case "ACC":
+                this._SelectedACCValue = 'W';
                 break;
         }
 
