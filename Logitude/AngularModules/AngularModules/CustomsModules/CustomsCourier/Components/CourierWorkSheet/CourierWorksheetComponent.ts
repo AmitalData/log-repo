@@ -84,7 +84,7 @@ implements OnDestroy
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
-    _SelectedACCValue: string = 'W'; // All/Wrong
+    _SelectedACCValue: string = 'A';//'W'; // All/Wrong eitan temp
 
     public columns: any[] = null;
 
@@ -142,7 +142,7 @@ implements OnDestroy
         this._SelectedMNFValue = 'A';
         this._SelectedDECValue = 'A';
         this._SelectedDOCValue = 'A';
-        this._SelectedACCValue = 'W';
+        this._SelectedACCValue = 'A';//'W';eitan temp
 
         switch (item.Code) {
             case "DECR": 

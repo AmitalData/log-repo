@@ -127,6 +127,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     {
                                         declarationPM.PaymentDate = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime;
                                         declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                                        declarationUpdateService.ToUpdateWithPaymentDate = true;
                                         declarationUpdateService.Update(declarationPM, true);
                                     }
                                 }
