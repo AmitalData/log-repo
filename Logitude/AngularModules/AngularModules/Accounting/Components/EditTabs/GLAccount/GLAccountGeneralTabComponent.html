@@ -54,7 +54,7 @@
                                                             [LookUpTableName]="'ChartOfAccount'"
                                                             [SelectedValue]="ChartOfAccountsId"
                                                             [DependencyFilter1Value]="null"
-                                                            [DependencyFilter2Value]="IsCustomerAccount ? '3' : ChartOfAccountsTypeCode"
+                                                            [DependencyFilter2Value]="IsVendor ? '4' : (IsCustomerAccount ? '3' :  ChartOfAccountsTypeCode)"
                                                             [HideColumns]="true">
                                                     </LogLov>
                                                 </td>
@@ -207,8 +207,8 @@
 
                         <!-- Card: Categories + ParentAccountId -->
                         <td>
-                            <table>     
-                                
+                            <table>
+
                                 <tr class="FormFieldRow">
                                     <td>
                                         <table>
