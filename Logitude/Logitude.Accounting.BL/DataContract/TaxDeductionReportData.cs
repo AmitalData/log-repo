@@ -20,6 +20,12 @@ namespace Logitude.Accounting.BL.DataContract
         public List<ByMonthList> ByMonthList { get; set; }
         public List<ByVendorList> ByVendorList { get; set; }
         public List<TotalForCompany> TotalForCompany { get; set; }
+        public double? TotalAmountInLocalCurrency { get; set; }
+        public decimal? TotalDeductionInLocalCurrency { get; set; }
+        public double? TotalAmountInLocalCurrency08 { get; set; }
+        public decimal? TotalTaxDeductionInLocalCurrency08 { get; set; }
+        public decimal? TotalEndBalance  { get; set; }
+
 
     }
 

@@ -930,42 +930,41 @@ namespace CommunicationWorkerRole
             return gateWay;
         }
 
-        private void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfile)
+        private async void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfileText)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xmlfile);
-            string jsonText = JsonConvert.SerializeXmlNode(doc);
+            // https://stackoverflow.com/questions/25352462/how-to-send-xml-content-with-httpclient-postasync
 
-            string url = "https://community.champ.aero:8443/logitude/test/NO_WAIT";
+            string iSendingURL = "https://community.champ.aero:8444/logitude/test/NO_WAIT";
 
-            var POSTURI = url;
-
-            var content = new StringContent(jsonText, Encoding.UTF8, "application/json");
+            StringContent content = new StringContent(xmlfileText, Encoding.UTF8, "application/xml");
 
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.Add("password", "logitudett");
 
-                client.DefaultRequestHeaders.Add("Password", "logitudett");
+                //var iResponse = client.PostAsync(iSendingURL, content);
+                //System.Threading.Tasks.Task iResponse = client.PostAsync(iSendingURL, content);
+                //System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> iResponse = client.PostAsync(iSendingURL, content);
 
-                var result = client.PutAsync(POSTURI, content);
-            }
+                System.Net.Http.HttpResponseMessage iResponse = await client.PostAsync(iSendingURL, content);
 
-            bool succeeded = true;
+                if (iResponse != null)
+                {
+                    if (iResponse.StatusCode == HttpStatusCode.OK)
+                    {
+                        waitingCommLog.CommunicationStatusTypeCode = "D";
+                        waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                        waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+                        waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                        waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
 
-            if (succeeded)
-            {                
-                CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
-             
-                waitingCommLog.CommunicationStatusTypeCode = "D";
-                waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-                waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-                commLogrepository.Update(waitingCommLog);
-                commLogrepository.SubmitChanges();
+                        CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+
+                        commLogrepository.Update(waitingCommLog);
+                        commLogrepository.SubmitChanges();
+                    }                   
+                }
             }
         }
-
-
     }
 }

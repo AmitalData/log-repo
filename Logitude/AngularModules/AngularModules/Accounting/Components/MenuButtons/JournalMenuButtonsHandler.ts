@@ -58,15 +58,15 @@ export class JournalMenuButtonsHandler {
                     var button = menuButtons[i];
 
                     // Status codes:
-                    //  0- Draft 
-                    //  1- Waiting for Approve 
-                    //  2- Approved 
+                    //  0- Draft
+                    //  1- Waiting for Approve
+                    //  2- Approved
                     //  3- Voided
 
                     switch (button.EventCode) {
                         case "JournalSave": // save and close
                             {
-                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3") { 
+                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3") {
                                     button.IsDisabled = true;
                                 }
 
@@ -155,7 +155,7 @@ export class JournalMenuButtonsHandler {
             case "JournalSaveAsDraft":
                 {
                     this.EntityPM.StatusCode = "0"; // Draft
-
+                    this.EntityPM.IsDirty = true;
                     this.SaveChenges();
                     break;
                 }
@@ -208,7 +208,7 @@ export class JournalMenuButtonsHandler {
         this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
             if ($event == true) {
                 this.entityArgs.EditComponent.ReloadEntityPM();
-                
+
 
             }
         });
@@ -284,7 +284,7 @@ export class JournalMenuButtonsHandler {
                                                 //5
                                                 //view page
                                                 var documentName =  documentOutCopy.Id;
-                                              
+
                                                 this.ViewPage(documentName, documentOutCopy.DocoumentTypeCopyName, documentout);
                                             } else {
                                                 this.BuildDocument(); // resend the request, the method [getCreateDocumentOut] does not create document out copy!!
@@ -292,7 +292,7 @@ export class JournalMenuButtonsHandler {
                                             }
 
 
-                                            
+
                                         }
                                         else
                                             this.StopBusyIndicator();
@@ -311,7 +311,7 @@ export class JournalMenuButtonsHandler {
                             //    this.BuildDocument(); // resend the request, the method [getCreateDocumentOut] does not create document out copy!!
                             //}
 
-                            
+
 
 
                         } else {
@@ -329,7 +329,7 @@ export class JournalMenuButtonsHandler {
         });
 
 
-        
+
     }
 
     ViewPage(documentName: string, docoumentTypeCopyName: string, documentOut: DocumentOutPM) {

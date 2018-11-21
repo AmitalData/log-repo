@@ -584,7 +584,39 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
+        public List<ARPaymentChequePM> GetListByPaymentId(string banDepositId, int tenant)
+        {
+            BankDepositLineQueryService bankDepositLineQueryService = new BankDepositLineQueryService(context);
+            List<string> paymentChequeIds = (from a in context.BankDepositLines
+                                             where a.DepositId == banDepositId && a.Tenant == tenant
+                                             select a.ARPaymentChequeId).ToList();
 
+            List<ARPaymentChequePM> paymentCheques = (from a in context.ARPaymentCheques
+                                                      where paymentChequeIds.Contains(a.Id) && a.Tenant == tenant
+                                                      select new ARPaymentChequePM()
+                                                      {
+                                                          Id = a.Id,
+                                                          Tenant = a.Tenant,
+                                                          CurrencyCode = a.Currency.Code,
+                                                          SearchFields = a.SearchFields,
+                                                          LineNumber = a.LineNumber,
+                                                          ChequeNumber = a.ChequeNumber,
+                                                          ValueDate = a.ValueDate,
+                                                          LocalAmount = a.LocalAmount,
+                                                          ForeignAmount = a.ForeignAmount,
+                                                          BankId = a.BankId,
+                                                          BankBranch = a.BankBranch,
+                                                          BankAccount = a.BankAccount,
+                                                          StatusName = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.EnglishName : "",
+                                                          PaymentId= a.PaymentId,
+                                                          ExchangeRate = a.ExchangeRate,
+                                                          StatusCode = a.StatusCode,
+                                                          CurrencyId = a.CurrencyId,
+
+
+                                                      }).ToList();
+            return paymentCheques;
+        }
 
         private static ContactPM GetLoggedContact(int tenant)
         {
