@@ -77,14 +77,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 					 
 
 		    entityPM.UpdateDate =  myDate;
-                      
-
-			if (loggedContact != null)
-            {
-		        entityPM.UpdatedByUserId = loggedContact.Id;
-		    }
-                        
-					
+                     
 	    }
         
 		protected override void FillDefaultValuesOnUpdate(OpenFormatReportPM entityPM)
@@ -92,21 +85,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            
 		    DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 			entityPM.UpdateDate =  myDate;
-					  
-            string email = "system@tenant" + entityPM.Tenant + ".com";
-            if (HttpContext.Current != null)
-            {
-                email = HttpContext.Current.User.Identity.Name; 
-            }
-             
-		    //string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-			if (loggedContact != null)
-            {
-		        entityPM.UpdatedByUserId = loggedContact.Id;
-		    }
-                        
 					
         }
 		  

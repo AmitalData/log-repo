@@ -25,8 +25,6 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public DateTime UpdateDate  { get; set; }
        [DataMember]
-       public string UpdatedByUserId  { get; set; }
-       [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
        public string ReportNumber  { get; set; }
