@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.InfrastructureModel.EntityLists
 {
-   public class DWQueryList
+   public class DWSubQueryList
     {
         public string Id { get; set; }
         public int Tenant { get; set; }
-        //public string DWObjectTableCode { get; set; }
+        public string DWFactTableCode { get; set; }
+        public string DWQueryId { get; set; }
         public string SQLString { get; set; }
-        public string CreatedByUserId { get; set; }
-        public string UpdateByUserId { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        public string FiltersXML { get; set; }
+        public string ColumnsXML { get; set; }
+
     }
 }

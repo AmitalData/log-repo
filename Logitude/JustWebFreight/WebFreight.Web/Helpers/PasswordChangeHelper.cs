@@ -148,13 +148,14 @@ namespace WebFreight.Web.Helpers
 
             result = IsSeries(passwordNumnberList,"+");
             if(!result) result = IsSeries(passwordNumnberList, "-");
-            if (!result) result = IsSeries(passwordNumnberList, "Same");
+            if(result) throw new Exception("Password should not contain more than 3 following characters");
 
-            if (result)
+            if (!result)
             {
-                throw new Exception("Password should not contain series (4 letters/numbers)");
+                result = IsSeries(passwordNumnberList, "Same");
+                if (result) throw new Exception("Password should not contain more then 3 consecutive repeating characters");
             }
-       
+
         }
 
        public bool IsSeries(List<int> passwordNumnberList , string operatorCode)

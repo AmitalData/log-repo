@@ -624,12 +624,11 @@
         }
 
 
-        // contain series(5 letters / numbers)
-        if (IsPasswordContainsSeries(password)) {
-            messageError = "Password should not contain series (4 letters/numbers)";
-            return messageError;
-
-        }
+         var seriesError = IsPasswordContainsSeries(password);
+            if (seriesError) {
+                messageError = seriesError;
+                return messageError;
+            }
 
         return "";
            
@@ -637,7 +636,7 @@
         }
 
        function IsPasswordContainsSeries(password) {
-
+        var error = "";
         var result = false;
         if (password) password = password.toUpperCase();
 
@@ -656,10 +655,17 @@
         }
 
            result = IsSeries(passwordNumnberList ,"+");
-           if(!result)  result = IsSeries(passwordNumnberList ,"-");
-           if(!result)  result = IsSeries(passwordNumnberList ,"Same");
+           if (!result) result = IsSeries(passwordNumnberList, "-");
 
-        return result;
+           if (result) error = "Password should not contain more than 3 following characters";
+
+           if (!result) {
+               result = IsSeries(passwordNumnberList, "Same");
+               if (result) error = "Password should not contain more then 3 consecutive repeating characters";
+           }
+
+      
+        return error;
     }
 
    

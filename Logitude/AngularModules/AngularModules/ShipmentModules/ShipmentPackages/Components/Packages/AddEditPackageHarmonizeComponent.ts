@@ -77,21 +77,17 @@ export class AddEditPackageHarmonizeComponent {
     }
     OkButtonClicked() {
         var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, "ShipmentPackage", errors);
 
         this.ItemsSource.forEach(item => {
-            Validator.TryValidateObject(item, this.ObjectTableName, errors);
+            Validator.TryValidateObject(item.EntityPM, this.ObjectTableName, errors);
         });
 
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-
             var allItemsPM: ShipmentPackageHarmonizePM[] = [];
-            //var allRemoved: ShipmentPackageHarmonizePM[] = [];
-
+            
             this.ItemsSource.forEach((item: HarmonizeItemClass) => {
-
                 var index = this.EntityPM.ShipmentPackageHarmonizes.indexOf(item.EntityPM);
 
                 if (index > -1) {
@@ -119,16 +115,7 @@ export class AddEditPackageHarmonizeComponent {
                     this.EntityPM.RemoveShipmentPackageHarmonizePM(item);
                 } 
             }
-
-            //this.EntityPM.ShipmentPackageHarmonizes.forEach(item => {
-
-            //    var index = allItemsPM.indexOf(item);
-
-            //    if (index == -1) {
-            //        this.EntityPM.RemoveShipmentPackageHarmonizePM(item);
-            //    }                
-            //});
-
+            
             this.EntityPM.IsMultiHarmonize = this.EntityPM.ShipmentPackageHarmonizes.length > 0 ? true : false;
             if (this.EntityPM.IsMultiHarmonize) {
                 if (this.EntityPM.Harmonize) {

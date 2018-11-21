@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Component, OnInit}  from '@angular/core';
@@ -141,6 +141,14 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
                 case "TaxReport":
                 case "PaymentCheque":
                 case "WarehouseRelease":
+                case "Airline":
+                case "CustomAgent":
+                case "Participant":
+                case "ShippingAgent":
+                case "ShippingLine":
+                case "Trucker":
+                case "Vendor":
+                case "Warehouse":
                     {
 
                     if (tempList.filter(f => f.Name == item.Name).length == 0) {
@@ -203,10 +211,9 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         }
         else this.IsShowAdvanceLink = false;
 
-
-        this.IsEnableFormat = true;
-
-
+        if (this.EntityPM.IsDocOut) {
+            this.IsEnableFormat = true;
+        }
 
     }
 
