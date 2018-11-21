@@ -135,29 +135,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string updatedByUserId ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserId  
-	   {
-	    
-	     get
-		{
-		   return updatedByUserId;
-		 }
-		 set
-		 {
-		   if(updatedByUserId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserId",OldValue=updatedByUserId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   updatedByUserId=value;
-		   }
-			
-		 }
-	   }
 	  private string searchFields ;
 	  	  
        

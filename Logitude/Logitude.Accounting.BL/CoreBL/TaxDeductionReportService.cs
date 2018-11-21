@@ -274,11 +274,39 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(item.Month);
                 
                 myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month== item.Month).Count());
-               myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfAmountInLocalCurrency));
-                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
+
+                if (item.TotalPaymentsWithoutDivided != null)
+                {
+                    if (item.TotalPaymentsWithoutDivided.Value.ToString().Length > 12) item.TotalPaymentsWithoutDivided.Value.ToString().Substring(0, 12);
+
+                    myStringBuilder.Append("a" + item.TotalPaymentsWithoutDivided.Value.ToString().PadLeft(12, '0'));
+                }
+
+                if (item.TotalDeductionsWithoutDivided != null)
+                {
+                    if (item.TotalDeductionsWithoutDivided.Value.ToString().Length > 12) item.TotalDeductionsWithoutDivided.Value.ToString().Substring(0, 12);
+
+                    myStringBuilder.Append("a" + item.TotalDeductionsWithoutDivided.Value.ToString().PadLeft(12, '0'));
+                }
+                //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfAmountInLocalCurrency));
+                //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
                 myStringBuilder.Append('0', 12);
-                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfAmountInLocalCurrency));
-                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
+                if (item.TotalDivided != null)
+                {
+                    if (item.TotalDivided.Value.ToString().Length > 12) item.TotalDivided.Value.ToString().Substring(0, 12);
+
+                    myStringBuilder.Append("a" + item.TotalDivided.Value.ToString().PadLeft(12, '0'));
+                }
+
+                if (item.TotalDeductionsFromDivided != null)
+                {
+                    if (item.TotalDeductionsFromDivided.Value.ToString().Length > 12) item.TotalDeductionsFromDivided.Value.ToString().Substring(0, 12);
+
+                    myStringBuilder.Append("a" + item.TotalDeductionsFromDivided.Value.ToString().PadLeft(12, '0'));
+                }
+
+                //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfAmountInLocalCurrency));
+                //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
                 myStringBuilder.Append(' ', 131);
                 myStringBuilder.Append("a80");
                 myStringBuilder.Append("\n");

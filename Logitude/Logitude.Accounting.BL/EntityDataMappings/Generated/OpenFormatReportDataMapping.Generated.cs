@@ -27,7 +27,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreateDate, 
 	         CreatedByUserId, 
 	         UpdateDate, 
-	         UpdatedByUserId, 
 	         SearchFields, 
 	         ReportNumber, 
 	         FromDate, 
@@ -46,7 +45,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreateDate, 
 	         CreatedByUserId, 
 	         UpdateDate, 
-	         UpdatedByUserId, 
 	         SearchFields, 
 	         ReportNumber, 
 	         FromDate, 
@@ -80,11 +78,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
             {
 				entityPOCO.UpdateDate = entityPM.UpdateDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
-            {
-				entityPOCO.UpdatedByUserId = entityPM.UpdatedByUserId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
@@ -153,11 +146,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.UpdateDate = entityPOCO.UpdateDate;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UpdatedByUserId))
-            {
-					entityPM.UpdatedByUserId = entityPOCO.UpdatedByUserId;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
             {
 					entityPM.SearchFields = entityPOCO.SearchFields;
@@ -217,11 +205,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDate))
             {
                 oldEntityPM.UpdateDate = entityPM.UpdateDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdatedByUserId))
-            {
-                oldEntityPM.UpdatedByUserId = entityPM.UpdatedByUserId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
