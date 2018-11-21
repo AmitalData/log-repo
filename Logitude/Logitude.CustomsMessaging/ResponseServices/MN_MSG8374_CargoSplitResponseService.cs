@@ -83,6 +83,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     cargoSpllitRequestNumber = customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumber.ToString();
                     declarationCargoSplitID = myDeclarationCargoSplitQueryService.GetIdByDeclarationCargoSplitRequestNumber(cargoSpllitRequestNumber, requestParams.Tenant);
                 }
+                if (string.IsNullOrWhiteSpace(declarationCargoSplitID))
+                {
+                    if (customResponse != null && customResponse.CargoSplitRequestResponse != null && customResponse.CargoSplitRequestResponse.CargoIdentifier.Count() > 0)
+                    {
+                        declarationCargoSplitID = myDeclarationCargoSplitQueryService.GetIdByCargoIdentifiers(customResponse.CargoSplitRequestResponse.CargoIdentifier[0].cargoIdentifierKey1, customResponse.CargoSplitRequestResponse.CargoIdentifier[0].cargoIdentifierKey2, customResponse.CargoSplitRequestResponse.CargoIdentifier[0].cargoIdentifierKey3, customResponse.CargoSplitRequestResponse.CargoIdentifier[0].cargoIdentifierType, requestParams.Tenant);
+                    }
+                }
+
                 if (string.IsNullOrWhiteSpace(declarationCargoSplitID) && !string.IsNullOrWhiteSpace(requestParams.DeclarationCargoSplit))
                 {
                     declarationCargoSplitID = requestParams.DeclarationCargoSplit;
@@ -152,7 +160,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         var myDecCargoSplitCargoIdentifierPMList = new List<DecCargoSplitCargoIdentifierPM>();
                         int Counter = 0;
-                        foreach (var item in customResponse.CargoSplitRequestResponse.CargoIdentifier)
+                        foreach (var item in customResponse.CargoSplitRequestResponse.CargoIdentifier.Skip(1))
                         {
                             var myDecCargoSplitCargoIdentifierPM = new DecCargoSplitCargoIdentifierPM();
                             myDecCargoSplitCargoIdentifierPM.DeclarationCargoSplitId = _DeclarationCargoSplitPM.Id;
