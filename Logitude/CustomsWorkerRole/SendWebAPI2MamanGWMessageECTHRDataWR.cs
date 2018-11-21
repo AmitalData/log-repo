@@ -36,6 +36,10 @@ using Microsoft.Practices.Unity;
 
 namespace CustomsWorkerRole
 {
+    /*
+Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('SendWebAPI2MamanGWMessageECTHRDataWR','SendWebAPI2MamanGWMessageECTHRDataWR');
+Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values ('SendWebAPI2MamanGWMessageECTHRDataWR',0,1);
+     */
     public class SendWebAPI2MamanGWMessageECTHRDataWR : CustomsWorkerEntryPoint
     {
         QueueDescription _QueueDescription;
