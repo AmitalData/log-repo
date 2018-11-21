@@ -27,7 +27,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.FiltersXML).IsMaxLength().IsUnicode(true);
 
 
-            this.ToTable("DWQueries");
+            this.ToTable("DWSubQueries");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.DWQueryId).HasColumnName("DWQueryId");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
