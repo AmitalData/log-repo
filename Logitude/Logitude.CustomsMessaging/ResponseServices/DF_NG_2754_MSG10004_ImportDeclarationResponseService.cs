@@ -45,7 +45,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         DeclarationError _MyDeclarationError;
         decimal? _TotalBtlCoverageNISSum = 0;
-        
+
+        public override void OnRequestFail(DF_NG_2754_MSG10004_ImportDeclarationResponse customResponse, GenericRequestParams requestParams)
+        {
+            base.OnRequestFail(customResponse, requestParams);
+        }
+
         public override INF_MSG_GenericResponseData GetResponse(
             DF_NG_2754_MSG10004_ImportDeclarationResponse customResponse, GenericRequestParams requestParams)
         {

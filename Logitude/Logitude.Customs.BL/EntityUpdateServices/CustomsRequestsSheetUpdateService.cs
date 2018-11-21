@@ -77,60 +77,70 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     throw new Exception("While canceling its must Set CommLogStepCanCancellAction !!!");
                 }
                 CommLogStepCanCancelledAction(entityPOCO, entityPM, null);
-                if (entityPOCO.InterfaceTypeCode == "2715")//InterfaceTypeCode = "2715"
-                {
-
-                    /*
-                    1	Sent	נשלח	1	0
-                    2	Fail	נכשל	2	0
-                    3	Needed	נדרש	3	0
-                    4	Verified	אומת	4	0
-                    5	Verified With Customer Presents	אומת בנוכחות הלקוח	5	0
-                    6	Verify Rejected	נדחה אימות	6	0
-                    7	Sent Without Answer	נשלח ללא תשובה	7	0
-                     */
-                    //CustomsDocumentPM customsDocumentPM =null;
-                    //customsDocumentPM.DocumentStatusCode=null;
-                    var customContext = MainContext as ICustomContext;
-                    var customsDocumentQueryService = new CustomsDocumentQueryService(entityPOCO.Tenant);
-
-                    var LoggingObjectTableId2 = entityPOCO.ObjectTableId2; ;//
-                    if (LoggingObjectTableId2 != ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"))
-                    {
-                        throw new Exception("Unable to cancel request. in 2715 ObjectTableId2 must be Customs.CustomsDocument! ");
-                    }
-                    var documentsfilingid = entityPOCO.EntityId2;//= entityPM.DocumentsFilingId,
-                    var customsDocumentPM = customsDocumentQueryService.GetSingle(documentsfilingid, false, false);
-                    if (customsDocumentPM == null)
-                    {
-                        throw new Exception("Unable to cancel request. Current customsDocumentPM==null ");
-                    }
-                    if (customsDocumentPM.DocumentStatusCode != "7")
-                    {
-                        throw new Exception("Unable to cancel request. Current customsDocumentPM.DocumentStatusCode!=7 ");
-                    }
-                    var featureDocumentStatusCodeShouldNOTChange = ConfigurationManager.AppSettings["20180624.DocumentStatusCodeShouldNOTChange"] == "1";
-
-                    if (featureDocumentStatusCodeShouldNOTChange &&
-                        !String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
-                    {
-                        throw new Exception("Unable to cancel request. Current customsDocumentPM.CustomsDocId is not null  === Send !!!!");
-                    }
-                    var customsDocumentUpdateService = new CustomsDocumentUpdateService(customContext, new Dictionary<string, IContext>(), entityPOCO.Tenant);
-                    customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
-                    customsDocumentPM.DocumentStatusCode = null;
-                    customsDocumentPM.CurrentContextTag = CustomsDocumentUpdateService.SetCustomsRequestSheetStatus;
-                    customsDocumentUpdateService.Update(customsDocumentPM, true);
-
-                }
-
-
-
+                Request2715(entityPOCO);
+                RequestCourier(entityPOCO);
 
                 base.OnUpdating(entityPM, entityPOCO);
             }
         }
 
+        private void RequestCourier(CustomsRequestsSheet entityPOCO)
+        {
+            if (entityPOCO.ObjectTableId1 == ObjectTableRepository.GetObjectTableByName("Customs.CoureirMaster"))
+            {
+
+            }
+        }
+
+        private void Request2715(CustomsRequestsSheet entityPOCO)
+        {
+            if (entityPOCO.InterfaceTypeCode == "2715")//InterfaceTypeCode = "2715"
+            {
+
+                /*
+                1	Sent	נשלח	1	0
+                2	Fail	נכשל	2	0
+                3	Needed	נדרש	3	0
+                4	Verified	אומת	4	0
+                5	Verified With Customer Presents	אומת בנוכחות הלקוח	5	0
+                6	Verify Rejected	נדחה אימות	6	0
+                7	Sent Without Answer	נשלח ללא תשובה	7	0
+                 */
+                //CustomsDocumentPM customsDocumentPM =null;
+                //customsDocumentPM.DocumentStatusCode=null;
+                var customContext = MainContext as ICustomContext;
+                var customsDocumentQueryService = new CustomsDocumentQueryService(entityPOCO.Tenant);
+
+                var LoggingObjectTableId2 = entityPOCO.ObjectTableId2; ;//
+                if (LoggingObjectTableId2 != ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"))
+                {
+                    throw new Exception("Unable to cancel request. in 2715 ObjectTableId2 must be Customs.CustomsDocument! ");
+                }
+                var documentsfilingid = entityPOCO.EntityId2;//= entityPM.DocumentsFilingId,
+                var customsDocumentPM = customsDocumentQueryService.GetSingle(documentsfilingid, false, false);
+                if (customsDocumentPM == null)
+                {
+                    throw new Exception("Unable to cancel request. Current customsDocumentPM==null ");
+                }
+                if (customsDocumentPM.DocumentStatusCode != "7")
+                {
+                    throw new Exception("Unable to cancel request. Current customsDocumentPM.DocumentStatusCode!=7 ");
+                }
+                var featureDocumentStatusCodeShouldNOTChange = ConfigurationManager.AppSettings["20180624.DocumentStatusCodeShouldNOTChange"] == "1";
+
+                if (featureDocumentStatusCodeShouldNOTChange &&
+                    !String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
+                {
+                    throw new Exception("Unable to cancel request. Current customsDocumentPM.CustomsDocId is not null  === Send !!!!");
+                }
+                var customsDocumentUpdateService = new CustomsDocumentUpdateService(customContext, new Dictionary<string, IContext>(), entityPOCO.Tenant);
+                customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
+                customsDocumentPM.DocumentStatusCode = null;
+                customsDocumentPM.CurrentContextTag = CustomsDocumentUpdateService.SetCustomsRequestSheetStatus;
+                customsDocumentUpdateService.Update(customsDocumentPM, true);
+
+            }
+        }
 
 
         public Action<CustomsRequestsSheet, CustomsRequestsSheetPM,DateTime?> CommLogStepCanCancelledAction  { get; set; }
