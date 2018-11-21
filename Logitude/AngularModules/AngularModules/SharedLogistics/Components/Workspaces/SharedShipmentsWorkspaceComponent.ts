@@ -116,6 +116,7 @@ export class ShipmentEntity {
     get StatusName() { return this.myEntity.StatusName; }
     get IncotermCode() { return this.myEntity.IncotermCode; }
     get ShipmentType() { return this.myEntity.ShipmentType; }
+    get DescriptionOfGoods() { return this.myEntity.DescriptionOfGoods; }
 
     get PartnerName() {
         var result = "";
