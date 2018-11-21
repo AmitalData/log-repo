@@ -24,7 +24,7 @@ namespace Logitude.Accounting.BL.DataContract
         public decimal? TotalDeductionInLocalCurrency { get; set; }
         public double? TotalAmountInLocalCurrency08 { get; set; }
         public decimal? TotalTaxDeductionInLocalCurrency08 { get; set; }
-
+        public decimal? TotalEndBalance  { get; set; }
 
 
     }

@@ -202,9 +202,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append("a" + data.TotalTaxDeductionInLocalCurrency08.Value.ToString().PadLeft(10, '0'));
             }
 
+            if (data.TotalEndBalance != null)
+            {
+                if (data.TotalEndBalance.Value.ToString().Length > 11) data.TotalEndBalance.Value.ToString().Substring(0, 11);
+
+                myStringBuilder.Append("a" + data.TotalEndBalance.Value.ToString().PadLeft(11, '0'));
+            }
+
 
             // myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfAmountInLocalCurrency));
-           // myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfTaxDeductionLocalAmount));
+            // myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfTaxDeductionLocalAmount));
+
+
+
 
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSingleAddressPM(tenantPM.AddressId, tenant);
@@ -217,8 +227,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 
             }
-
-            if(data.TotalAmountInLocalCurrency != null)
+            myStringBuilder.Append(' ', 28);
+            if (data.TotalAmountInLocalCurrency != null)
             {
                 if (data.TotalAmountInLocalCurrency.Value.ToString().Length > 12) data.TotalAmountInLocalCurrency.Value.ToString().Substring(0, 12);
 
