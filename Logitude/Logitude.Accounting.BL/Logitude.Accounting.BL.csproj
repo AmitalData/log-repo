@@ -379,6 +379,7 @@
     <Compile Include="EntityQueryServices\AutomaticReconcileQueryService.cs" />
     <Compile Include="EntityQueryServices\BankAccountQueryService.cs" />
     <Compile Include="EntityQueryServices\BankCodeQueryService.cs" />
+    <Compile Include="EntityQueryServices\BankDepositLineQueryService.cs" />
     <Compile Include="EntityQueryServices\Category1QueryService.cs" />
     <Compile Include="EntityQueryServices\Category2QueryService.cs" />
     <Compile Include="EntityQueryServices\Category3QueryService.cs" />
