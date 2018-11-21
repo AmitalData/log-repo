@@ -235,8 +235,10 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         if (!this.IsDisplayOnly) {
 
             this.IsImporerCodeEnabled = AppTool.IsNullOrEmpty(this.EntityPM.ImporterName);
-            if (this.ImporterCode.includes("F") || this.ImporterCode.includes("P")) {
-                this.IsImporerCodeEnabled = false;
+            if (!AppTool.IsNullOrEmpty(this.ImporterCode)) {
+                if (this.ImporterCode.includes("F") || this.ImporterCode.includes("P")) {
+                    this.IsImporerCodeEnabled = false;
+                }
             }
 
         }
