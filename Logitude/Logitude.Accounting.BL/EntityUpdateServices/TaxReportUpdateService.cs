@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Accounting.Data.EntityListQueryServices;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -117,6 +118,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(TaxReportPM entityPM, TaxReport entityPOCO)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
+            TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
+
             if (entityPOCO.IsCancelled == false && entityPM.IsCancelled == true)
             {
                 // canceled!!
@@ -126,13 +129,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 // recalculate totals
-                entityPM.TaxableOutputAmount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
-                entityPM.OutputTaxAmount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
-                entityPM.ExemptTaxableOutput = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
-                entityPM.OutputLinesCount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "O").Count();
-                entityPM.OtherInputsTaxAmount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
-                entityPM.InputLinesCount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "I").Count();
-                entityPM.EquipmentInputsTaxAmount = entityPM.TaxReportLines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
+                List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(entityPM.Id, entityPOCO.Tenant);
+
+
+                entityPM.TaxableOutputAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
+                entityPM.OutputTaxAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
+                entityPM.ExemptTaxableOutput = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
+                entityPM.OutputLinesCount = lines.Where(d => d.OutputOrInput == "O").Count();
+                entityPM.OtherInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
+                entityPM.InputLinesCount = lines.Where(d => d.OutputOrInput == "I").Count();
+                entityPM.EquipmentInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
 
                 //updates
                 if (!entityPM.IsNew)

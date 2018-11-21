@@ -35,7 +35,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          UpdateDate = a.UpdateDate,
 					
-					                          UpdatedByUserId = a.UpdatedByUserId,
+					                     
 					
 					                          SearchFields = a.SearchFields,
 					

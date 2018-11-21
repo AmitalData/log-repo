@@ -791,7 +791,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             taxDeduction.TotalForCompany = new List<TotalForCompany>();
             taxDeduction.TotalForCompany.Add(companyTotal);
 
-
+            taxDeduction.TotalAmountInLocalCurrency = taxDeduction.ByVendorList.Sum(d => d.SumOfAmountInLocalCurrency);
+            taxDeduction.TotalDeductionInLocalCurrency = taxDeduction.ByVendorList.Sum(d => d.SumOfTaxDeductionLocalAmount);
+            taxDeduction.TotalAmountInLocalCurrency08 = taxDeduction.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfAmountInLocalCurrency);
+            taxDeduction.TotalTaxDeductionInLocalCurrency08 = taxDeduction.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfTaxDeductionLocalAmount);
+            taxDeduction.TotalEndBalance = taxDeduction.ByVendorList.Sum(d => d.EndYearBalance);
             return taxDeduction;
 
 
