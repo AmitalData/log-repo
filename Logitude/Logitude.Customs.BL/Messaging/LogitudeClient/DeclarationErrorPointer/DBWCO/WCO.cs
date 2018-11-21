@@ -66,7 +66,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             //}
             //else
             {
-                text = GetResource(ResourceStreamPath);
+                text = UnifreightIIG.Resources.IIGResource.DBManifest_18UTF8; // GetResource(ResourceStreamPath);
             }
             var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             var rows = lines.Skip(3);//remove header
@@ -86,7 +86,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
             //}
             //else
             {
-                text = GetResource(ResourceStreamPath);
+                text = UnifreightIIG.Resources.IIGResource.DBUTF8; ///GetResource(ResourceStreamPath);
             }
             //string text = GetResource(ResourceStreamPath);
             var lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
