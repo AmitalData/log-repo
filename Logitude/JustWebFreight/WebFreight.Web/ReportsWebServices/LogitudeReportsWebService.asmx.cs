@@ -9947,13 +9947,26 @@ namespace WebFreight.Web.ReportsWebServices
             foreach (var item in dateList)
             {
                 var taskItem = new TasksWithoutProjectsData();
-                taskItem.EmployeeName = result.EmployeeUserName;
-                taskItem.DayOfWork = item.DateOfWork.ToString("dddd");
+                string contact_Name = "";
+                if (!string.IsNullOrEmpty(result.EmployeeUserId))
+                {
+                    contact_Name = result.EmployeeUserName;
+                }
+                else
+                {
+                    Contact contact = contactRepository.GetSingleContact(item.EmployeeUserId, tenant);
+                    if (contact != null)
+                    {
+                        contact_Name = contact.EnglishName;
+                    }
+                }
+
+                taskItem.EmployeeName = contact_Name;
+                taskItem.DateOfWork = item.DateOfWork;
                 taskItem.Description = item.Description;
                 taskItem.WINumber = item.WINumber;
                 result.TasksWithoutProjectsList.Add(taskItem);
             }
-
             return result;
         }
         #endregion

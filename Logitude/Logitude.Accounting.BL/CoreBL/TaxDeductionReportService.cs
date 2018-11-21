@@ -212,7 +212,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if(taxDeductionReportPM.Email != null)
             {
                 if (taxDeductionReportPM.Email.Length > 50) taxDeductionReportPM.Email = taxDeductionReportPM.Email.Substring(0, 50);
-                myStringBuilder.Append("a" + taxDeductionReportPM.Email.PadLeft(50, '0'));
+                myStringBuilder.Append("a" + taxDeductionReportPM.Email.PadLeft(50, ' '));
             }
 
             myStringBuilder.Append("בדיקה");
