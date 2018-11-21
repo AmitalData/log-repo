@@ -23,11 +23,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
-            //entityPM.TaxReportId = entityParentPM.Id;
-            //entityParentPM.TaxReportLineLastLine += 1;
-            //entityPM.Line = entityParentPM.TaxReportLineLastLine;
-
-
             entityPM.IsManuallyChanged = true;
 
             base.OnCreating(entityPM, entityParentPM);
