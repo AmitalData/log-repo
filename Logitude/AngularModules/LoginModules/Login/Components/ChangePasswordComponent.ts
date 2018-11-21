@@ -241,10 +241,10 @@ export class ChangePasswordComponent {
         result = this.IsSeries(passwordNumnberList, "+");
         if (!result) result = this.IsSeries(passwordNumnberList, "-");
         if (result) messageError = "Password should not contain more than 3 following characters";
-
-
-        if (!result) result = this.IsSeries(passwordNumnberList, "Same");
-        if (result) messageError = "Password should not contain more then 3 consecutive repeating characters";
+        if (!result) {
+            result = this.IsSeries(passwordNumnberList, "Same");
+            if (result) messageError = "Password should not contain more then 3 consecutive repeating characters";
+        }
 
         return messageError;
 
