@@ -32,11 +32,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual User CreatedByUser { get; set; }
         [Column("UpdateDate")]
 	    public DateTime UpdateDate { get; set; }
-        [ForeignKey("UpdatedByUser")]
-        [Column("UpdatedByUserId")]
-	    public string UpdatedByUserId { get; set; }
-	      
-        public virtual User UpdatedByUser { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
         [Column("ReportNumber")]
@@ -45,10 +40,16 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public DateTime? FromDate { get; set; }
         [Column("ToDate")]
 	    public DateTime? ToDate { get; set; }
-        [Column("DateType")]
-	    public string DateType { get; set; }
+        [ForeignKey("OpenFormatDateType")]
+        [Column("DateTypeCode")]
+	    public string DateTypeCode { get; set; }
+	      
+        public virtual OpenFormatDateType OpenFormatDateType { get; set; }
+        [ForeignKey("OpenFormatReportStatus")]
         [Column("StatusTypeCode")]
 	    public string StatusTypeCode { get; set; }
+	      
+        public virtual OpenFormatReportStatus OpenFormatReportStatus { get; set; }
         [Column("ErrorMessage")]
 	    public string ErrorMessage { get; set; }
     }

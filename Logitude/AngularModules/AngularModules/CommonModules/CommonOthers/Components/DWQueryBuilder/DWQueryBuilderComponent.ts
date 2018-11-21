@@ -72,6 +72,14 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         Result.Result.forEach((Group) => {
 
                             var view = new DWFieldsGroup(Group.Key, Group.FieldsList);
+                            if (MyGroups.length == 0) {
+                                view.IsDetailesOpened = true;
+                                view.DetailsIcon = "./Images/CellIcons/Arrowup.png"; 
+                            }
+                            else {
+                                view.IsDetailesOpened = false;
+                                view.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
+                            }
                             var MyInnerList = [];
                             view.FieldsList.forEach((field) => {
                                 if (field.DisplayInQueryBuilder == true) {
@@ -86,6 +94,14 @@ export class DWQueryBuilderComponent extends BaseComponent {
                             });
 
                             var view1 = new DWFieldsGroup(Group.Key, Group.FieldsList);
+                            if (MyAllGroups.length == 0) {
+                                view1.IsDetailesOpened = true;
+                                view1.DetailsIcon = "./Images/CellIcons/Arrowup.png"; 
+                            }
+                            else {
+                                view1.IsDetailesOpened = false;
+                                view1.DetailsIcon = "./Images/CellIcons/Arrowdown.png";
+                            }
                             var MyInnerList1 = [];
                             view1.FieldsList.forEach((field) => {
                                 if (field.DisplayInQueryBuilder == true) {
@@ -548,7 +564,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 //tempDataNew.push(this.SelectedItem);
                 this.SelectedFiltersDataSource = tempDataNew;
             }
-            this.SelectedFiltersDataSourceChanged.emit(this.SelectedFiltersDataSource);
+            //this.SelectedFiltersDataSourceChanged.emit(this.SelectedFiltersDataSource);
             if (this.CD) {
                 this.CD.detectChanges();
             }
@@ -1310,7 +1326,7 @@ export class DWFieldsGroup {
     public get DetailsIcon() { return this.detailsIcon; }
     public set DetailsIcon(newValue: string) { this.detailsIcon = newValue; }
 
-    private isDetailesOpened: boolean = true;
+    private isDetailesOpened: boolean = false;
     public get IsDetailesOpened() { return this.isDetailesOpened; }
     public set IsDetailesOpened(newValue: boolean) { this.isDetailesOpened = newValue; }
 

@@ -49,7 +49,7 @@ export class DWQueryBuilderFiltersComponent implements OnInit{
         if (this.SelectedFiltersDataSourceChanged) {
             this.SelectedFiltersDataSourceChanged.subscribe((res) => {
                 this.SelectedFiltersDataSource = res;
-                alert(res.length);
+                //alert(res.length);
             });
         }
     }

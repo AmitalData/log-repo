@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef, OnInit, AfterViewInit} from '@angular/core';
+import {Component, ChangeDetectorRef, OnInit, AfterViewInit} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -37,7 +37,8 @@ import {LastFilterClass} from '../../../../Infrastructure/Utilities/LastFilterCl
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
 
-declare var window,UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64, makeAmBarChart, makeAMLineChart: any;  
+declare var window, UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64, makeAmBarChart, BarClick, ResetItem, makeAMLineChart: any;
+
 @Component({
     moduleId: module.id,
     templateUrl: './CustomerStatisticsTabComponent.html',
@@ -67,6 +68,8 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
     public ActualVsPotentialChart: string = "ActualVsPotential_ID_";
     public legenddiv: string = "ActualVsPotentialLegends_ID_";
     public barChartData: any[] = [{ data: [], label: '' }, { data: [], label: '' }];
+    public NewActualVsPotential: Array<any> = [];
+
     CompareComboBoxItemsChange(item) {
         this.SelectedCompareComboBoxItems = item;
         this.LoadActuals();
@@ -114,6 +117,54 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
             this.BuildCompareChartData();
         });
     }
+
+    ActualVsPotentialChartClick() {
+        if (BarClick() != null) {
+            this.OnActualVsPotentialClick(BarClick());
+            ResetItem();
+        }
+    }
+
+
+    OnActualVsPotentialClick(e) {
+        if (e.target.columnIndex == 1) {
+            var objectTableName = "Shipment";
+            var queryCode = "CustomerShipmentActualData";
+
+
+            var myProductCode = null;
+            if (!AppTool.IsNullOrEmpty(this.NewActualVsPotential[e.target.columnIndex].ProductTypeCode[0])) {
+                myProductCode = this.NewActualVsPotential[e.target.columnIndex].ProductTypeCode[0];
+            }
+
+            var actualDate: Date = DateTool.GetDateParts(new Date(this.NewActualVsPotential[e.target.columnIndex].Year[0], this.NewActualVsPotential[e.target.columnIndex].Month, 1)).DateObject;
+            var filterAgrs = new ApiQueryFilters();
+            filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "boolean");
+            filterAgrs.addAdditionalFilter("ProductCode", myProductCode, null, null, "Equals", false, false, false, "String");
+            filterAgrs.addAdditionalFilter("CustomerId", this.EntityPM.Id, null, null, "Equals", false, false, false, "String");
+            filterAgrs.addAdditionalFilter("ActualDataDateYearMonth", this.NewActualVsPotential[e.target.columnIndex].Year[0], this.NewActualVsPotential[e.target.columnIndex].Month[0], null, "Equals", true, true, false, "Date");
+
+            var listArgs = new ListComponentArgs();
+            listArgs.Filters = filterAgrs;
+            listArgs.QueryCode = queryCode;
+            listArgs.ObjectTableName = objectTableName;
+            listArgs.DisplayTitle = "Customer Actual Data";
+            listArgs.BackButtonTitle = "Back";
+            listArgs.ShowViews = false;
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadQueries());
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run(listArgs);
+                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    });
+            });
+        }
+
+    }
+
+
 
     ShowOpenReceivables() {
         var table = window.ObjectTables.filter(d => d.Name === 'Shipment')[0];
@@ -269,10 +320,19 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
                 this.barChartLabels = [];
                 var max = 0;
                 var list = result.Result.filter(d => !d.InActive).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });;
+                this.NewActualVsPotential = [];
+
                 list.forEach(element => {
                     var productItem: CustomerProductPM = this.EntityPM.CustomerProducts.filter(d => d.ProductTypeCode == element.Code)[0];
                     var actualItem: CustomerProductActualDataPM = this.actualDataList.filter(d => d.ProductTypeCode == element.Code)[0];
-                   
+                    if (this.NewActualVsPotential[1] == null) {
+                        this.NewActualVsPotential[1] = { Year: [], label: null, ProductTypeCode: [], Month: [], DateTime: [], BusinessUnitId: [] };
+                    }                
+                    if (actualItem != null) {
+                        this.NewActualVsPotential[1].Year.push(actualItem.Year);
+                        this.NewActualVsPotential[1].ProductTypeCode.push(actualItem.ProductTypeCode);
+                        this.NewActualVsPotential[1].Month.push(actualItem.Month);
+                    }
                         if (i == 0) {
                             Graphs = [{
                                 "balloonText": FormatTool.FormatBigNumbersToExtension("[[value]]") + "",

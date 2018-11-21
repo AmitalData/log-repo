@@ -425,8 +425,10 @@ export class LoginComponent implements OnInit {
 
             var f = { valid: true };
             this.ChooseTenant(f, null);
-        }
 
+            SessionInfo.LoggedUserCardId = this.SelectedCompany.CardId;
+            SessionInfo.LoggedUserCardType = this.SelectedCompany.CardType;
+        }
     }
     ChooseTenant(f, values) {
         if (f.valid) {

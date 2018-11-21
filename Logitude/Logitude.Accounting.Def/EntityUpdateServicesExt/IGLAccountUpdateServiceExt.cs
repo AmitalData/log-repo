@@ -10,5 +10,6 @@ namespace Logitude.Accounting.Def.EntityUpdateServicesExt
     public interface IGLAccountUpdateServiceExt
     {
         void Update(GLAccountPM entityPM);
+        void Create(GLAccountPM entityPM);
     }
 }

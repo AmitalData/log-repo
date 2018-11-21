@@ -13,12 +13,11 @@ export class OpenFormatReportList {
 	CreateDate: Date;
 	CreatedByUserId: string;
 	UpdateDate: Date;
-	UpdatedByUserId: string;
 	SearchFields: string;
 	ReportNumber: string;
 	FromDate: Date;
 	ToDate: Date;
-	DateType: string;
+	DateTypeCode: string;
 	StatusTypeCode: string;
 	ErrorMessage: string;
 	

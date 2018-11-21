@@ -33,8 +33,6 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
 
-            this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
-
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.ReportNumber).HasColumnName("ReportNumber").HasMaxLength(15).IsUnicode(false);
@@ -43,7 +41,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.ToDate).HasColumnName("ToDate");
 
-            this.Property(t => t.DateType).HasColumnName("DateType").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.DateTypeCode).HasColumnName("DateTypeCode").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.StatusTypeCode).HasColumnName("StatusTypeCode").HasMaxLength(1).IsUnicode(false);
 

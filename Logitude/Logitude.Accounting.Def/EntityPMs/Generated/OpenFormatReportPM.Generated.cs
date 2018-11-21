@@ -135,29 +135,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string updatedByUserId ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string UpdatedByUserId  
-	   {
-	    
-	     get
-		{
-		   return updatedByUserId;
-		 }
-		 set
-		 {
-		   if(updatedByUserId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserId",OldValue=updatedByUserId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   updatedByUserId=value;
-		   }
-			
-		 }
-	   }
 	  private string searchFields ;
 	  	  
        
@@ -250,25 +227,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string dateType ;
+	  private string dateTypeCode ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string DateType  
+       public string DateTypeCode  
 	   {
 	    
 	     get
 		{
-		   return dateType;
+		   return dateTypeCode;
 		 }
 		 set
 		 {
-		   if(dateType != value)
+		   if(dateTypeCode != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DateType",OldValue=dateType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DateTypeCode",OldValue=dateTypeCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   dateType=value;
+		   dateTypeCode=value;
 		   }
 			
 		 }
