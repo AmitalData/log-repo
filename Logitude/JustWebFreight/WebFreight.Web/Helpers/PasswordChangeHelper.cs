@@ -150,8 +150,11 @@ namespace WebFreight.Web.Helpers
             if(!result) result = IsSeries(passwordNumnberList, "-");
             if(result) throw new Exception("Password should not contain more than 3 following characters");
 
-            if (!result) result = IsSeries(passwordNumnberList, "Same");
-            if (result) throw new Exception("Password should not contain more then 3 consecutive repeating characters");
+            if (!result)
+            {
+                result = IsSeries(passwordNumnberList, "Same");
+                if (result) throw new Exception("Password should not contain more then 3 consecutive repeating characters");
+            }
 
         }
 
