@@ -188,8 +188,33 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
-            myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfAmountInLocalCurrency));
-            myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfTaxDeductionLocalAmount));
+            if (data.TotalAmountInLocalCurrency08 != null)
+            {
+                if (data.TotalAmountInLocalCurrency08.Value.ToString().Length > 12) data.TotalAmountInLocalCurrency08.Value.ToString().Substring(0, 12);
+
+                myStringBuilder.Append("a" + data.TotalAmountInLocalCurrency08.Value.ToString().PadLeft(12, '0'));
+            }
+
+            if (data.TotalTaxDeductionInLocalCurrency08 != null)
+            {
+                if (data.TotalTaxDeductionInLocalCurrency08.Value.ToString().Length > 10) data.TotalTaxDeductionInLocalCurrency08.Value.ToString().Substring(0, 10);
+
+                myStringBuilder.Append("a" + data.TotalTaxDeductionInLocalCurrency08.Value.ToString().PadLeft(10, '0'));
+            }
+
+            if (data.TotalEndBalance != null)
+            {
+                if (data.TotalEndBalance.Value.ToString().Length > 11) data.TotalEndBalance.Value.ToString().Substring(0, 11);
+
+                myStringBuilder.Append("a" + data.TotalEndBalance.Value.ToString().PadLeft(11, '0'));
+            }
+
+
+            // myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfAmountInLocalCurrency));
+            // myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfTaxDeductionLocalAmount));
+
+
+
 
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSingleAddressPM(tenantPM.AddressId, tenant);
@@ -202,8 +227,22 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 
             }
-            myStringBuilder.Append("a" + data.ByVendorList.Sum(d => d.SumOfAmountInLocalCurrency));
-            myStringBuilder.Append("a" + data.ByVendorList.Sum(d => d.SumOfTaxDeductionLocalAmount));
+            myStringBuilder.Append(' ', 28);
+            if (data.TotalAmountInLocalCurrency != null)
+            {
+                if (data.TotalAmountInLocalCurrency.Value.ToString().Length > 12) data.TotalAmountInLocalCurrency.Value.ToString().Substring(0, 12);
+
+                myStringBuilder.Append("a" + data.TotalAmountInLocalCurrency.Value.ToString().PadLeft(12, '0'));
+            }
+
+            if (data.TotalDeductionInLocalCurrency != null)
+            {
+                if (data.TotalDeductionInLocalCurrency.Value.ToString().Length > 10) data.TotalDeductionInLocalCurrency.Value.ToString().Substring(0, 10);
+
+                myStringBuilder.Append("a" + data.TotalDeductionInLocalCurrency.Value.ToString().PadLeft(10, '0'));
+            }
+
+          
             myStringBuilder.Append('0', 9);
             myStringBuilder.Append(' ', 9);
             myStringBuilder.Append("a" + data.ByVendorList.Count().ToString().PadLeft(6,'0'));

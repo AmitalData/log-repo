@@ -228,20 +228,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             AddIfNotNull(refs, _JournalLine.Reference2);
             AddIfNotNull(refs, _JournalLine.Reference3);
             MyLedgerTransaction.SearchFields= string.Join(",", refs.ToArray());
-            if (_JournalLine.ExternalOpenAmount.HasValue)
-            {
-                if (_JournalLine.ExternalOpenAmount.GetValueOrDefault()==0)
-                {
-                    MyLedgerTransaction.IsReconciled = true;
-                    MyLedgerTransaction.OpenAmount= 0;
-                }
-                else
-                {
-                    MyLedgerTransaction.IsReconciled = false;
-                    MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
-                }
-
-            }
+            
 
             return MyLedgerTransaction;
         }
@@ -261,7 +248,24 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
         protected IGLAccountDataProvider _GLAccountPMProvider;
         //public virtual GLAccountPM GetGLAccountPM(string AccountId, int Tenant);
-        
+
+        protected void MapExternalOpenAmount()
+        {
+            if (_JournalLine.ExternalOpenAmount.HasValue)
+            {
+                if (_JournalLine.ExternalOpenAmount.GetValueOrDefault() == 0)
+                {
+                    MyLedgerTransaction.IsReconciled = true;
+                    MyLedgerTransaction.OpenAmount = 0;
+                }
+                else
+                {
+                    MyLedgerTransaction.IsReconciled = false;
+                    MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
+                }
+
+            }
+        }
     }
 
 }
