@@ -1,4 +1,4 @@
-﻿
+
 <div class="TabHolder">
     <table>
         <tr style="height:5px;">
@@ -127,14 +127,22 @@
                                             <!-- Entity Type -->
                                             <tr class="FormFieldRow">
                                                 <td style="width:153px;">
-                                                    <LogLabel [NoObjectField]="true" [Text]="'Entity Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'EntityType'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <!--<LogLabel [NoObjectField]="true" [Text]="'Entity Type'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>-->
                                                 </td>
 
                                                 <td style="width:260px;">
-                                                    <ComboBox [IsDisabled]="!IsTicketEditEnabled" [ItemsSource]="EntityList"
+                                                    <LogLov [ObjectFieldName]="'EntityType'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [SelectedValue]="EntityType"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ObjectTable'"
+                                                            (SelectedItemChanged)="$event ? EntityObjectTableName = $event.Name : EntityObjectTableName = null"
+                                                            [DependencyFilter3Value]="true" [HideColumns]="true"></LogLov>
+                                                    <!--<ComboBox [IsDisabled]="!IsTicketEditEnabled" [ItemsSource]="EntityList"
                                                               [SelectedItem]="SelectedFilter"
                                                               (SelectedItemChanged)="SelectedFilter = $event"
-                                                              [Binding]="'Name'"></ComboBox>
+                                                              [Binding]="'Name'"></ComboBox>-->
                                                 </td>
 
                                                 <td> <div></div></td>
@@ -143,7 +151,7 @@
                                             <!-- Entity Number -->
                                             <tr class="FormFieldRow">
                                                 <td style="width:153px;">
-                                                    <LogLabel [NoObjectField]="true" [Text]="EntityNumberTitle" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [NoObjectField]="true" [Text]="'Entity Number'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>

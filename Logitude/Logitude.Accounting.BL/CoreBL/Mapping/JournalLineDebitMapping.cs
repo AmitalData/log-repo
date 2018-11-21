@@ -131,11 +131,13 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                         MyLedgerTransaction.OpenAmount = (decimal)_JournalLine.ForeignAmount;
                         MyLedgerTransaction.OpenAmountCurrencyId = _JournalLine.CurrencyId;
                     }
+                    MapExternalOpenAmount();
                 }
             }
 
             MyLedgerTransaction.OppositeAccountId = _JournalLine.CreditAccountId;
             
+
 
         }
 

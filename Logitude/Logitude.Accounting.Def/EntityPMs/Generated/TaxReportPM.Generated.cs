@@ -687,40 +687,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
-	   private List<TaxReportLinePM> taxReportLines;
-	 
-		     
-	   [Include]
-	   [Association("TaxReportTaxReportLine", "Id","TaxReportId")]
-	   [DataMember]
-	   public virtual List<TaxReportLinePM> TaxReportLines  
-	   {
-	        get
-             {
-                 if (taxReportLines == null)
-                 {
-                     taxReportLines = new List<TaxReportLinePM>();
-                 }
-                 return taxReportLines;
-              }
-             set { taxReportLines = value; }
-	    }
-		   
-	   private List<TaxReportLinePM>  deletedTaxReportLines;
-	   public virtual List<TaxReportLinePM> DeletedTaxReportLines  
-	   {
-	        get
-             {
-                 if ( deletedTaxReportLines == null)
-                 {
-                      deletedTaxReportLines = new List<TaxReportLinePM>();
-                 }
-                 return  deletedTaxReportLines;
-              }
-             set {  deletedTaxReportLines = value; }
-	    }
-	  	  private string statusEnglishName ;
+	  private string statusEnglishName ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]

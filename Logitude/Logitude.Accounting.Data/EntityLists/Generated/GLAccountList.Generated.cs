@@ -174,6 +174,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string DeductionTypeEnglishName  { get; set; }
        [DataMember]
        public decimal? TotalOpenChequesInLocalCur  { get; set; }
+       [DataMember]
+       public string AutomaticReconcileLocalName  { get; set; }
+       [DataMember]
+       public string ReconcileMethodLocalName  { get; set; }
    }
 
 }

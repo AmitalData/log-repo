@@ -36,10 +36,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         protected IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> QBaseGLAccountTotalByMonthsFrom0BCTilNotIncludeStartOfMonthFromDate;
 
+
+        // מצטברים מחודש כולל ועד חודש לא כולל
         protected IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> QBaseTotalsFromStartOfMonthFromTilStartOfMonthTo;
 
+        // תנעות מכולל תחילת החודש  של מתאריך עד למתאריך -לא כולל    
         protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBaseTranactionBeginOfMonthFromTillFromDateNotInclude;
 
+
+
+        // תנעות מתחילת חודש אחרון כולל עד  תאריך הסיום + 1 לא כולל
         protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBaseTranactionBeginOfMonthToDateTillToDateInculde;
 
         protected IQueryable<ChartOfAccount5LevelM> QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy;
@@ -123,14 +129,15 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
                  where tot.Year > _FromBeginOfMonth.Year ||
-              (tot.Year == _FromBeginOfMonth.Year && tot.Month > _FromBeginOfMonth.Month)
+             //(tot.Year == _FromBeginOfMonth.Year && tot.Month > _FromBeginOfMonth.Month)
+             (tot.Year == _FromBeginOfMonth.Year && tot.Month >= _FromBeginOfMonth.Month)
 
                  where tot.Year < _ToBeginOfMonth.Year ||
                  (tot.Year == _ToBeginOfMonth.Year && tot.Month < _ToBeginOfMonth.Month)
                  select tot
                  );
 
-
+            // תנעות מכולל תחילת החודש  של מתאריך עד למתאריך -לא כולל    
             QBaseTranactionBeginOfMonthFromTillFromDateNotInclude = (
                 from trans in _AccountingContext.LedgerTransactions
                 where trans.Tenant == _TrailReportParam.Tenant
@@ -141,7 +148,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 select trans
                    );
             var toDateAdd1Day = _TrailReportParam.ToDate.AddDays(1);//INclude //
-            QBaseTranactionBeginOfMonthToDateTillToDateInculde =
+            QBaseTranactionBeginOfMonthToDateTillToDateInculde =// תנעות מתחילת חודש אחרון כולל עד  תאריך הסיום + 1 לא כולל
                 (
                 from trans in _AccountingContext.LedgerTransactions
                 where trans.Tenant == _TrailReportParam.Tenant

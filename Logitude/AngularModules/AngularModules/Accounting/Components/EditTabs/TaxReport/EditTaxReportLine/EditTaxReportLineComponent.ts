@@ -15,6 +15,7 @@ import { EntityResourceService } from '../../../../../Infrastructure/Services/En
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../../Infrastructure/Locators/ObjectsLocator';
 import { TaxReportPMService } from '../../../../Services/StandardPMs/TaxReportPMService';
+import { TaxReportLinePMService } from '../../../../Services/StandardPMs/TaxReportLinePMService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
@@ -31,6 +32,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
 
     _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
+    _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
 
     constructor() {
         super();
@@ -114,8 +116,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     OkButtonClicked() {
 
         // update line
-        var line:TaxReportLinePM = this.TaxReportPM.TaxReportLines.find(d => d == this.TaxReportLinePM);
-        line.IsManuallyChanged = true;
+        this.TaxReportLinePM.IsManuallyChanged = true;
 
         //update report
         this.TaxReportPM.NeedsRebulid = true;
@@ -125,8 +126,19 @@ export class EditTaxReportLineComponent extends BaseComponent {
         this._TaxReportPMService.update(this.TaxReportPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+            if (!mm.HasError)
+            {
+                this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe(myResult => {
+
+                    var mm: ServiceResponse = myResult;
+                    if (!mm.HasError) {
+                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    }
+                    else {
+                        this.ValidationErrorsList = mm.ErrorsArray;
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                    }
+                });
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;

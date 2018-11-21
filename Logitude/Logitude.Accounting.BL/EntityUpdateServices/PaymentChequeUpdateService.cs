@@ -102,10 +102,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 };
                 if (entityPM.ForeignAmount == null) entityPM.ForeignAmount = 0;
+                string creditAccount = null;
+                if (bankAccount.TransferGLAcccountId != null)
+                {
+                    creditAccount = bankAccount.TransferGLAcccountId;
+                }
+                else
+                {
+                    creditAccount = entityPM.BankAccountGLAccountId;
+                }
+               
                 JournalLinePM journalLine1 = new JournalLinePM()
                 {
                     ActionCode = "1",
-                   CreditAccountId = entityPM.BankAccountGLAccountId,
+                   CreditAccountId = creditAccount,
                    DocumentDate = entityPM.CreateDate,
                     AccountingDate = (DateTime)entityPM.CreateDate,
 
