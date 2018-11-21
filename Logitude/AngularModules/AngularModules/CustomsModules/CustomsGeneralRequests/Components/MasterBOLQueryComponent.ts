@@ -60,6 +60,7 @@ export class MasterBOLQueryComponent
         if (this.RequestParams == null) {
             this.RequestParams = new MasterBOLQueryRequestParams();
             this.Date = new Date().getFullYear();
+            this.ReturnAllInernalCargos = true;//task 44705 21.11.18
             this.UIProperties.SetRequired("MasterBillOfLading", null, true);
             this.UIProperties.SetRequired("InternalIdentifier", null, true);
         }
@@ -210,7 +211,8 @@ export class MasterBOLQueryComponent
             this.Date = lastFetchDeclarationList.ManifestNumber;
             this.MasterBillOfLading = lastFetchDeclarationList.SecondCargoID;
             this.InternalIdentifier = lastFetchDeclarationList.ThirdCargoID;
-            this.ReturnAllInernalCargos = lastFetchDeclarationList.ThirdCargoID ? false : true;
+            //this.ReturnAllInernalCargos = lastFetchDeclarationList.ThirdCargoID ? false : true;
+            this.ReturnAllInernalCargos = true;//task 44705 21.11.18
 
             this.UIProperties.SetValidity("CustomFileNo", this.ObjectTableName, true, "");
             this.UIProperties.SetEnabled("Date", null, false);
