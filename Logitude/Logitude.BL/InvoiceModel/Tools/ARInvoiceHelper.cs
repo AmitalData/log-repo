@@ -335,18 +335,13 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 ServiceContext context = getServiceContext(tenant);
                 QueryService<Intuit.Ipp.Data.Vendor> VendorQueryService = new QueryService<Intuit.Ipp.Data.Vendor>(context);
-                List<Intuit.Ipp.Data.Vendor> myResult = VendorQueryService.ExecuteIdsQuery(sql).ToList();
+                List<Intuit.Ipp.Data.Vendor> myResult = VendorQueryService.ExecuteIdsQuery(sql).ToList();                
                 return myResult;
-
-
-
             }
 
             catch (Exception ex)
             {
-
                 throw new ApplicationException(ex.ToString());
-
             }
 
 

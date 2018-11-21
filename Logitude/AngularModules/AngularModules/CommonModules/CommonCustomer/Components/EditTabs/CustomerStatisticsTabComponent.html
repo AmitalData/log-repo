@@ -1,4 +1,4 @@
-﻿
+
 <div class="TabHolder" style="overflow-x:auto" *ngIf="!CustomerOverViewTabHide">
     <table>
         <tr class="TabTitleRow" style="height:50px">
@@ -147,7 +147,7 @@
 
                                             <tr>
                                                 <td colspan="2">
-                                                    <div [attr.id]="ActualVsPotentialChart" class="CellContent"></div>
+                                                    <div [attr.id]="ActualVsPotentialChart" (click)="ActualVsPotentialChartClick()" class="CellContent"></div>
                                                 </td>
                                             </tr>
                                         </table>
