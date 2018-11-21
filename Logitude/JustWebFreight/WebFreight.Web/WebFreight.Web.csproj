@@ -952,6 +952,7 @@
     <Compile Include="Controllers\AccountingModel\BankAccountViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxDeductionReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxReportController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxReportLineController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxWithholdingAssessOfficeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\WithholdingTaxDeductionTypeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountCurrencyController.cs" />
@@ -2115,7 +2116,7 @@
     <Compile Include="ExternalAPIs\V1\DirectController.cs" />
     <Compile Include="ExternalAPIs\V1\DocumentsFilingController.cs" />
     <Compile Include="ExternalAPIs\V1\HouseController.cs" />
-    <Compile Include="ExternalAPIs\V1\VendorController.cs" />
+    <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ComputeHelper.cs" />
@@ -2415,6 +2416,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ManifestCargoStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MAWBTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatDateTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PointerLevelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeLineUpdateClass.cs" />

@@ -116,16 +116,18 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 
 
-                if (item.VendorCity != null)
+                if (item.VendorCity != null) 
                 {
                     if (item.VendorCity.Length > 13) item.VendorCity = item.VendorCity.Substring(0, 13);
 
                     myStringBuilder.Append("a" + item.VendorCity.PadLeft(13, ' '));
                 }
 
-                myStringBuilder.Append("a" + item.SumOfAmountInLocalCurrency);
-                myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount);
+                myStringBuilder.Append("a" + item.SumOfAmountInLocalCurrency.Value.ToString().PadLeft(11, '0'));
+                myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount.Value.ToString().PadLeft(9, '0'));
 
+                myStringBuilder.Append("00000000");
+                myStringBuilder.Append(item.EndYearBalance.Value.ToString().PadLeft(14,'0'));
 
                 myStringBuilder.Append("a" + item.TaxDeductionPercentage);
 
@@ -210,7 +212,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if(taxDeductionReportPM.Email != null)
             {
                 if (taxDeductionReportPM.Email.Length > 50) taxDeductionReportPM.Email = taxDeductionReportPM.Email.Substring(0, 50);
-                myStringBuilder.Append("a" + taxDeductionReportPM.Email.PadLeft(50, '0'));
+                myStringBuilder.Append("a" + taxDeductionReportPM.Email.PadLeft(50, ' '));
             }
 
             myStringBuilder.Append("בדיקה");

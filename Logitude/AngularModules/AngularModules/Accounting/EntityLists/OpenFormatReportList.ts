@@ -18,7 +18,7 @@ export class OpenFormatReportList {
 	ReportNumber: string;
 	FromDate: Date;
 	ToDate: Date;
-	DateType: string;
+	DateTypeCode: string;
 	StatusTypeCode: string;
 	ErrorMessage: string;
 	
