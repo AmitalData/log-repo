@@ -51,9 +51,12 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        var objectTableName = window.ObjectTables.filter(d => d.Id === this.EntityPM.EntityType)[0].Name;
-        if (objectTableName == "Quote") {
-            this.EntityNumberTitle = "Quote Number";
+        var objectTable = window.ObjectTables.filter(d => d.Id === this.EntityPM.EntityType)[0];
+        if (objectTable != null) {
+            var objectTableName = window.ObjectTables.filter(d => d.Id === this.EntityPM.EntityType)[0].Name;
+            if (objectTableName == "Quote") {
+                this.EntityNumberTitle = "Quote Number";
+            }
         }
         this.CreateEntities();
         this.SetUIProperties();

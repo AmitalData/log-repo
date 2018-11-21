@@ -10,11 +10,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {PortList} from '../../../../Common/EntityLists/PortList';
-import {AddressList} from '../../../../Common/EntityLists/AddressList';
 import {PackageTypeList} from '../../../../Common/EntityLists/PackageTypeList';
-import {PortListService} from '../../../../Common/Services/StandardLists/PortListService';
-import {AddressListService} from '../../../../Common/Services/StandardLists/AddressListService';
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
@@ -26,6 +22,7 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import {WarehouseReleasePackageListExtendedService} from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleasePackageListExtendedService';
+import {PickUpDeliveryPackageHarmonizePM} from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 
 @Component({
     moduleId: module.id,
@@ -2666,6 +2663,15 @@ export class ShipmentPackageItem extends BaseComponent {
         newDeliveryPackagePM.Length = this.EntityPM.Length;
         newDeliveryPackagePM.Harmonize = this.EntityPM.Harmonize;
         newDeliveryPackagePM.OriginalShipmentPackageId = this.EntityPM.Id;
+        newDeliveryPackagePM.IsMultiHarmonize = this.EntityPM.IsMultiHarmonize;
+
+        this.EntityPM.ShipmentPackageHarmonizes.forEach(harmonizeItem => {
+            var harmonize = new PickUpDeliveryPackageHarmonizePM(null);
+            harmonize.Harmonize = harmonizeItem.Harmonize;
+            harmonize.Tenant = harmonizeItem.Tenant;
+            newDeliveryPackagePM.AddPickUpDeliveryPackageHarmonizePM(harmonize);
+        });
+
         newDeliveryPM.AddPackage(newDeliveryPackagePM);
 
         var logitudeWindow = new LogitudeWindow();

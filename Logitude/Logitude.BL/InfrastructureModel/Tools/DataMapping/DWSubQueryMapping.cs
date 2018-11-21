@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
-   public class DWQueryMapping
+   public class DWSubQueryMapping
     {
-        public static void MapEntity(DWQueryPM entityPM, DWQuery entityPOCO, bool isNewState)
+        public static void MapEntity(DWSubQueryPM entityPM, DWSubQuery entityPOCO, bool isNewState)
         {
             if (isNewState)
             {
@@ -18,10 +18,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
                 entityPOCO.Tenant = entityPM.Tenant;
             }
 
-            entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
-            entityPOCO.CreatedDate = entityPM.CreatedDate;
-            entityPOCO.UpdateByUserId = entityPM.UpdateByUserId;
-            entityPOCO.UpdatedDate = entityPM.UpdatedDate;
+            entityPOCO.DWFactTableCode = entityPM.DWFactTableCode;
+            entityPOCO.DWQueryId = entityPM.DWQueryId;
+            entityPOCO.FiltersXML = entityPM.FiltersXML;
+            entityPOCO.ColumnsXML = entityPM.ColumnsXML;
             entityPOCO.SQLString = entityPM.SQLString;
             //entityPOCO.DWObjectTableCode = entityPM.DWObjectTableCode;
 

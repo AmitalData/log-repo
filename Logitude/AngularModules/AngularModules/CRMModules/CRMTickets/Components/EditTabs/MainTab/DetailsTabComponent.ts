@@ -101,11 +101,14 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
     InitTab(trigger: TicketMainTabComponent) {
         this.Trigger = trigger;
         this.EntityPM = this.Trigger.EntityPM;
-        var objectTableName = window.ObjectTables.filter(d => d.Id === this.Trigger.EntityPM.EntityType)[0].Name;
-        if (objectTableName == "Quote") {
-            this.EntityNumberTitle = "Quote Number";
+        var objectTable = window.ObjectTables.filter(d => d.Id === this.Trigger.EntityPM.EntityType)[0];
+        if (objectTable != null) {
+            var objectTableName = window.ObjectTables.filter(d => d.Id === this.Trigger.EntityPM.EntityType)[0].Name;
+            if (objectTableName == "Quote") {
+                this.EntityNumberTitle = "Quote Number";
+            }
         }
-
+        
         this.Filters = new ApiQueryFilters();
         this.Filters.PageIndex = 0;
         this.Filters.PageSize = 10;

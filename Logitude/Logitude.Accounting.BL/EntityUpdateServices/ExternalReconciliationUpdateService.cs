@@ -72,13 +72,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 List<LedgerTransactionPM> LedgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(LedgerTransactionIds, entityPM.Tenant);
                 List<ReconcileExternalPageLinePM> PageLines = pageLineQuery.GetPageLinesPMsByIdList(PageLineIds, entityPM.Tenant);
 
+                BankDepositQueryService bankDepositQueryService = new BankDepositQueryService(entityPM.Tenant);
                 foreach (var transactionPM in LedgerTransactions)
                 {
                     transactionPM.ChangeSetOp = ChangeSetOperation.Update;
                     transactionPM.IsExternalReconcile = true;
-                    if (transactionPM.SourceTypeCode == "3")
+                    if (transactionPM.SourceTypeCode == "6")
                     {
-                        List<ARPaymentChequePM> aRPaymentChequePMs = aRPaymentChequeQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
+                        List<ARPaymentChequePM> aRPaymentChequePMs = bankDepositQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
 
                         foreach (ARPaymentChequePM item in aRPaymentChequePMs)
                         {
