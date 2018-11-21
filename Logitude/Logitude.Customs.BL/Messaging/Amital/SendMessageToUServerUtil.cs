@@ -87,7 +87,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
             }
 
 
-            var myUServerUtil = new UServerUtil(myUServerDNS, myUServerPort, 1,true); ;
+            var myUServerUtil = new UServerUtil(myUServerDNS, myUServerPort, serviceAddressWithout_gwsfinsrvexe, 360);
             var stopwatch = Stopwatch.StartNew();
             try
             {

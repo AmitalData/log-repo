@@ -19,6 +19,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 
 
 export class TaxDeductionReportMenuButtonsHandler {
@@ -27,7 +28,7 @@ export class TaxDeductionReportMenuButtonsHandler {
     public entityArgs: EntityArgs
     public TenantPM: TenantPM;
     public ObjectTableName: string = "TaxDeductionReport"
-
+    EntityResourceService: EntityResourceService = new EntityResourceService();
    // _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -78,6 +79,8 @@ export class TaxDeductionReportMenuButtonsHandler {
                 }
             case "TXFL":
                 {
+                    this.EntityResourceService.getEntityResourceByTableName("TaxReport").subscribe(response => {
+                   
                     var windowTitle = TextCodeTranslator.Translate("TaxReport.B.Download");
 
                     var windowArgs: any = {};
@@ -97,7 +100,7 @@ export class TaxDeductionReportMenuButtonsHandler {
                     });
                     logWindow.Show('./Accounting/Components/Others/AccountingFlatFileDownloadComponent');
 
-
+                    });
                     break;
                 }
 

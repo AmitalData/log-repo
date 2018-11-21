@@ -1837,7 +1837,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                     }
                                     documentInPM.SignersList = Signerslist.TrimEnd(',');
-                                    item.IsDigitallySign = true;
+                                    documentInPM.IsDigitallySigned = true;
                                 }
                             }
                         }
