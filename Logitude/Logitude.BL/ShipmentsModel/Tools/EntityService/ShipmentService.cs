@@ -2447,6 +2447,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
                 shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
                 shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
+                if (!string.IsNullOrEmpty(entityPM.DeclarationWCOXml))
+                {
+                    shipmentAdditionalCloudData.DeclarationXmlData = null;
+                }
                 shipmentAdditionalCloudData.VersionApproved = entityPM.VersionApproved;
                 shipmentAdditionalCloudData.ApproveDateTime = entityPM.ApproveDateTime;
                 if (entityPM.UpdateSendUpdatesToAgentEnabledField)
@@ -2672,11 +2676,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         shipmentAdditionalCloudData.ApprovedByUserName = entityPM.ApprovedBy;
                     }
-                    if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml && entityPM.DeclarationWCOXml != null)
-                    {
-                        shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
-                        shipmentAdditionalCloudData.DeclarationXmlData = null;
-                    }
+                   
                    
                     if (entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData) && entityPM.CustomsClearanceDate == null)
                     {
@@ -2685,6 +2685,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         shipmentAdditionalCloudData.ApprovedByUserName = null;
                         shipmentAdditionalCloudData.ApproveDateTime = null;
                         shipmentAdditionalCloudData.DenyReason = null;
+                    }
+
+                    if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml && entityPM.DeclarationWCOXml != null)
+                    {
+                        shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
+                        shipmentAdditionalCloudData.DeclarationXmlData = null;
                     }
 
 
