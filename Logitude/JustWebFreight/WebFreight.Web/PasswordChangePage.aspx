@@ -659,9 +659,12 @@
 
            if (result) error = "Password should not contain more than 3 following characters";
 
-           if (!result) result = IsSeries(passwordNumnberList, "Same");
-           if (result) error = "Password should not contain more then 3 consecutive repeating characters";
+           if (!result) {
+               result = IsSeries(passwordNumnberList, "Same");
+               if (result) error = "Password should not contain more then 3 consecutive repeating characters";
+           }
 
+      
         return error;
     }
 
