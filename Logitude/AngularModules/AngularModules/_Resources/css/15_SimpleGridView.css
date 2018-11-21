@@ -1,4 +1,4 @@
-﻿
+
 .SimpleGridView .CellSeparator {
     width: 1px;
     height: 20px;
@@ -203,6 +203,15 @@
     bottom: 0;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+.SimpleGridView .SimpleGridViewBody2 {
+    min-width: 100%;
+    position: absolute;
+    top: 25px;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y:scroll;
 }
 
 .SimpleGridView {

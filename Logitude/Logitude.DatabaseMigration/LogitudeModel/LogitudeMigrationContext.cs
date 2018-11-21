@@ -1376,6 +1376,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
+        public IDbSet<DWSubQuery> DWSubQueries
+        {
+            get;
+            set;
+        }
+
         public IDbSet<DWQueryColumn> DWQueryColumns
         {
             get;

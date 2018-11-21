@@ -110,6 +110,7 @@ namespace Simplog.Data.InfrastructureModel
 
 
         IDbSet<DWQuery> DWQueries { get;}
+        IDbSet<DWSubQuery> DWSubQueries { get; }
         IDbSet<DWQueryColumn> DWQueryColumns { get; }
         IDbSet<DWQueryFilter> DWQueryFilters { get; }
 

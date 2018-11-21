@@ -107,32 +107,32 @@ namespace CommunicationWorkerRole
 
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
-            RoleEnvironment.Changing += RoleEnvironmentChanging;
+            //RoleEnvironment.Changing += RoleEnvironmentChanging;
 
             if (!string.IsNullOrEmpty(LogitudeSettings.ChampEnv))
             {
-                string[] roleId = null;
+                //string[] roleId = null;
 
-                string subscribtionName;
-                try
-                {
-                    roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
-                }
-                catch
-                {
-                    roleId = new string[] { "1", "2"};
+                string subscribtionName = "ChampSubScription";
+                //try
+                //{
+                //    roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+                //}
+                //catch
+                //{
+                //    roleId = new string[] { "1", "2"};
  
-                }
+                //}
 
-                if (LogitudeSettings.DeploymentStage == "Dev")
-                {
-                    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
-                }
+                //if (LogitudeSettings.DeploymentStage == "Dev")
+                //{
+                //    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
+                //}
 
-                else
-                {
-                    subscribtionName = roleId[roleId.Length - 1];
-                }
+                //else
+                //{
+                //    subscribtionName = roleId[roleId.Length - 1];
+                //}
 
                 subscriptionClient = Microsoft.ServiceBus.Messaging.SubscriptionClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(LogitudeSettings.DeploymentStage), "champmessageintopic", subscribtionName);
             }

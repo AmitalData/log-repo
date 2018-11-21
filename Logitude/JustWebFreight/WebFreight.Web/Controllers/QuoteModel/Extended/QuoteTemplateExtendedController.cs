@@ -278,7 +278,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 
 
 
-        public HttpResponseMessage GetUpdatedQuoteDocumentVersion(string quoteId, int versionNumber, string quoteTemplateId, string updatedByUserId, int tenant)
+        public HttpResponseMessage GetUpdatedQuoteDocumentVersion(string quoteId, int versionNumber, string quoteTemplateId, string updatedByUserId, int tenant, bool isGenerate = false)
         {
             try
             {
@@ -306,7 +306,9 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         QuoteDocumentVersion version = quoteDocumentVersionRep.GetSingleQuoteDocumentVersion(quoteId, tenant, versionNumber);
                         Quote quote = quoteRep.GetSingleQuote(quoteId, tenant);
                         QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(tenant);
-                        List<QuoteTemplateSectionPM> templateSections = quoteTemplateSectionQuery.GetQuoteTemplateSectionPMsByTemplateId(quoteTemplateId, quoteId, tenant, quote.QuoteTemplateId, quote.QuotationSections);
+
+                        string defult = !isGenerate ? quote.QuoteTemplateId : null;
+                        List <QuoteTemplateSectionPM> templateSections = quoteTemplateSectionQuery.GetQuoteTemplateSectionPMsByTemplateId(quoteTemplateId, quoteId, tenant, defult, quote.QuotationSections);
                         string sectionsIds = "";
                         foreach (QuoteTemplateSectionPM section in templateSections)
                         {
@@ -322,6 +324,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                             quote.QuoteTemplateId = quoteTemplateId;
                             quote.QuotationSections = sectionsIds;
                             quoteRep.Update(quote);
+                            quoteRep.SubmitChanges();
                         }
 
 
