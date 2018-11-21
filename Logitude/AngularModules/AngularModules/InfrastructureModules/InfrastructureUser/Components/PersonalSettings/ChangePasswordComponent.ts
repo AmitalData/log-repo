@@ -222,8 +222,9 @@ export class ChangePasswordComponent implements OnInit {
         }
 
         // contain series(5 letters / numbers)
-        if (this.IsPasswordContainsSeries(this.NewPassword)) {
-            this.ValidationErrorsList.push("Password should not contain series (4 letters/numbers)");
+        var seriesMessage: string = this.IsPasswordContainsSeries(this.NewPassword);
+        if (seriesMessage) {
+            this.ValidationErrorsList.push(seriesMessage);
         }
 
     }
@@ -350,7 +351,9 @@ export class ChangePasswordComponent implements OnInit {
     
 
     IsPasswordContainsSeries(password: string) {
-       
+
+        var messageError: string = "";
+
         var result = false;
         if (password) password = password.toUpperCase();
 
@@ -364,12 +367,18 @@ export class ChangePasswordComponent implements OnInit {
             passwordNumnberList.push(x);
         }
 
-        result = this.IsSeries(passwordNumnberList,"+");
+        result = this.IsSeries(passwordNumnberList, "+");
         if (!result) result = this.IsSeries(passwordNumnberList, "-");
-        if (!result) result = this.IsSeries(passwordNumnberList, "Same");
+        if (result) messageError = "Password should not contain more than 3 following characters";
 
-        return result;
+
+        if (!result) result = this.IsSeries(passwordNumnberList, "Same");
+        if (result) messageError = "Password should not contain more then 3 consecutive repeating characters";
+        return messageError;
     }
+
+
+
 
     IsSeries(passwordNumnberList: any, operatorCode: string) {
 

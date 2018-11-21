@@ -163,7 +163,7 @@ namespace CommunicationWorkerRole
 
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
-            RoleEnvironment.Changing += RoleEnvironmentChanging;
+            //RoleEnvironment.Changing += RoleEnvironmentChanging;
             TopicDescription champMessageInTopic;
 
             try
@@ -178,19 +178,19 @@ namespace CommunicationWorkerRole
                     champMessageInTopic = StorageAcountDetails.NameSpaceManager.GetTopic("champmessageintopic");
                 }
 
-                string subscribtionName;
+                string subscribtionName = "ChampSubScription";
                 SubscriptionDescription myAgentSubscription;
-                string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+                //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
 
-                if (LogitudeSettings.DeploymentStage == "Dev")
-                {
-                    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
-                }
+                //if (LogitudeSettings.DeploymentStage == "Dev")
+                //{
+                //    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
+                //}
 
-                else
-                {
-                    subscribtionName = roleId[roleId.Length - 1];
-                }
+                //else
+                //{
+                //    subscribtionName = roleId[roleId.Length - 1];
+                //}
 
                 if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(champMessageInTopic.Path, subscribtionName))
                 {
