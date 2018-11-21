@@ -37,23 +37,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (entityPM.IsManuallyChanged == true)
                 {
                     JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
-                    JournalMoreDataQueryService moreDataQueryService = new JournalMoreDataQueryService(entityPM.Tenant);
+                    JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(entityPM.Tenant);
                     IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                    JournalMoreDataUpdateService journalMoreDataUpdateService = new JournalMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 
                     JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
-                    JournalMoreDataPM journalMoreDataPM = moreDataQueryService.GetSingleJournalMorData(journalPM.Id, entityPM.Tenant);
+                    JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(journalPM.Id, false,false);
                     if (journalPM != null)
                     {
                         if (entityPM.TransmitStatusCode == "1") // 1- For transmit
-                            journalMoreDataPM.TaxReportId = entityPM.TaxReportId;
+                        journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
                         else if (entityPM.TransmitStatusCode == "3") // 3- Not for transmit at all
-                            journalMoreDataPM.TaxReportId = "1111";
+                        journalAdditionalDataPM.TaxReportId = "1111";
 
-                        //update
+                    //update
 
-                        journalMoreDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                        journalMoreDataUpdateService.Update(journalMoreDataPM, true);
+                    journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                    journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
                         entityPM.IsManuallyChanged = false;
 
                     }

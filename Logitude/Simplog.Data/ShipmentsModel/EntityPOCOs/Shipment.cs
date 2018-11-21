@@ -728,5 +728,30 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? INTTRALastStatusDate { get; set; }
         public string ProjectNumber { get; set; }
         public DateTime? ContainerLastStatusDate { get; set; }
+
+        public string BasicFreightId { get; set; }
+        [ForeignKey("BasicFreightId")]
+        public PrepaidCollect BasicFreight { get; set; }
+
+        public string DestinationPortChargesId { get; set; }
+        [ForeignKey("DestinationPortChargesId")]
+        public PrepaidCollect DestinationPortCharges { get; set; }
+
+        public string DestinationHaulageChargesId { get; set; }
+        [ForeignKey("DestinationHaulageChargesId")]
+        public PrepaidCollect DestinationHaulageCharges { get; set; }
+
+        public string AdditionalChargesId { get; set; }
+        [ForeignKey("AdditionalChargesId")]
+        public PrepaidCollect AdditionalCharges { get; set; }
+
+        public string FreightPayerId { get; set; }
+        [ForeignKey("FreightPayerId")]
+        public virtual Card FreightPayer { get; set; }
+
+        public string FreightPayerAddressId { get; set; }
+        [ForeignKey("FreightPayerAddressId")]
+        public virtual Address FreightPayerAddress { get; set; }
+
     }
 }

@@ -1,3 +1,6 @@
+import { TaxReportLinePMService } from './../../Services/StandardPMs/TaxReportLinePMService';
+import { TaxReportLineList } from './../../EntityLists/TaxReportLineList';
+import { TaxReportPMService } from './../../Services/StandardPMs/TaxReportPMService';
 import {Component,ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
@@ -25,6 +28,8 @@ export class TaxReportListTemplate {
 
     public isRTL: boolean = false;
 
+    private _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
+    private _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
 
     constructor(private CD: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -58,24 +63,70 @@ export class TaxReportListTemplate {
     }
 
     EditLine() {
-        var entity = this.rowData;
-        if (entity) {
-            var windowTitle = TextCodeTranslator.Translate("Accounting.O.EditLine") + " " + entity.Line;
+        var lineEntity: TaxReportLineList = this.rowData;
+        if (lineEntity) {
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
 
-            var windowArgs: any = {};
-            //windowArgs.TaxReportPM = this.EntityPM;
-            windowArgs.TaxReportLinePM = entity;
+            var windowTitle = TextCodeTranslator.Translate("Accounting.O.EditLine") + " " + lineEntity.Line;
 
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 450;
-            logWindow.Height = 350;
-            logWindow.Title = windowTitle;
-            logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe((event: any) => {
-                if (event == "ok")
-                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            this._TaxReportPMService.get(lineEntity.TaxReportId).subscribe(myResult => {
+
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    var report = mm.Result;
+
+
+
+
+                    this._TaxReportLinePMService.get(report.Id,lineEntity.Line).subscribe(myResult => {
+
+                        var mm: ServiceResponse = myResult;
+                        if (!mm.HasError) {
+                            SessionLocator.CurrentSession.StopBusyIndicator();
+
+                            var linePM = mm.Result;
+
+                            var windowArgs: any = {};
+                            windowArgs.TaxReportPM = report;
+                            windowArgs.TaxReportLinePM = linePM;
+
+                            var logWindow = new LogitudeWindow();
+                            logWindow.Width = 450;
+                            logWindow.Height = 350;
+                            logWindow.Title = windowTitle;
+                            logWindow.WindowArgs = windowArgs;
+                            logWindow.WindowClosed.subscribe((event: any) => {
+                                if (event == "ok")
+                                    SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            });
+                            logWindow.Show('./Accounting/Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent');
+
+
+                        }
+                        else {
+                            SessionLocator.CurrentSession.StopBusyIndicator();
+                        }
+                    });
+
+
+
+
+
+
+
+
+                }
+                else {
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                }
             });
-            logWindow.Show('./Accounting/Components/EditTabs/TaxReport/EditTaxReportLine/EditTaxReportLineComponent');
+
+
+
+
+
+
+
         }
 
 

@@ -132,7 +132,7 @@ namespace Logitude.Accounting.BL.Utils
                         string errorMessage = e.Message.Split(new[] { '\r', '\n' }).FirstOrDefault();
                         _ResponseText = errorMessage;
                         _StatusCode = HttpStatusCode.InternalServerError;
-                        UpdateRevaluationStatus(id, tenant, "2", errorMessage, context);
+              //          UpdateRevaluationStatus(id, tenant, "2", errorMessage, context);
                     }
                     excScope.Complete();
                 }
@@ -195,7 +195,7 @@ namespace Logitude.Accounting.BL.Utils
                         double localFromForeign_double = (double)item.ForeignAmount * (double)lastRate.Rate;
                         localFromForeign_double = Math.Round(localFromForeign_double, 2);
                         decimal localFromForeign_decimal = (decimal)localFromForeign_double;
-                        decimal difference = (decimal)item.LocalAmount - localFromForeign_decimal;
+                        decimal difference = localFromForeign_decimal - (decimal)item.LocalAmount;
                         AccountingLogger.LogMe(" Local(foreign) = " + localFromForeign_decimal, false, "REV");
                         AccountingLogger.LogMe(" Local = " + (decimal)item.LocalAmount, false, "REV");
                         AccountingLogger.LogMe(" Difference = " + difference, false, "REV");
@@ -255,7 +255,7 @@ namespace Logitude.Accounting.BL.Utils
                             {
                                 WriteJournal(journalUpdateService, lineList, revaluation);
                                 lineList.Clear();
-                                scope.Complete();
+                              //  scope.Complete();
                             }
                         }
                     }
@@ -285,6 +285,7 @@ namespace Logitude.Accounting.BL.Utils
             newJournal.CreatedByUserId = revaluation.CreatedByUserId;
             newJournal.AccountingEntityCode = "8"; //Revaluation
             newJournal.AccountingEntityId = revaluation.Id;
+            newJournal.AccountingEntityReference = revaluation.RevaluationNumber.ToString();
             newJournal.ExternalNo = null;
             newJournal.UpdateDate = DateTime.Now;
             newJournal.UpdatedByUserId = revaluation.CreatedByUserId;

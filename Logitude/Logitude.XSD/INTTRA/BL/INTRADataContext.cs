@@ -818,12 +818,57 @@ namespace Logitude.XSD.INTTRA.BL
         {
             this.ChargeCategories = new List<INTTRA_Out.ChargeCategory>();
 
-            if (this.Shipment.FreightPrepaidCollectId != null)
+            //if (this.Shipment.FreightPrepaidCollectId != null)
+            //{
+            //    INTTRA_Out.ChargeCategory item = new INTTRA_Out.ChargeCategory()
+            //    {
+            //        ChargeType = INTTRA_Out.ChargeCategoryChargeType.BasicFreight,
+            //        PrepaidorCollectIndicator = this.Shipment.FreightPrepaidCollectId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
+            //    };
+
+            //    this.ChargeCategories.Add(item);
+            //}
+
+
+            if (this.Shipment.BasicFreightId != null)
             {
                 INTTRA_Out.ChargeCategory item = new INTTRA_Out.ChargeCategory()
                 {
                     ChargeType = INTTRA_Out.ChargeCategoryChargeType.BasicFreight,
-                    PrepaidorCollectIndicator = this.Shipment.FreightPrepaidCollectId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
+                    PrepaidorCollectIndicator = this.Shipment.BasicFreightId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
+                };
+
+                this.ChargeCategories.Add(item);
+            }
+
+            if (this.Shipment.DestinationPortChargesId != null)
+            {
+                INTTRA_Out.ChargeCategory item = new INTTRA_Out.ChargeCategory()
+                {
+                    ChargeType = INTTRA_Out.ChargeCategoryChargeType.DestinationPortCharges,
+                    PrepaidorCollectIndicator = this.Shipment.DestinationPortChargesId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
+                };
+
+                this.ChargeCategories.Add(item);
+            }
+
+            if (this.Shipment.DestinationHaulageChargesId != null)
+            {
+                INTTRA_Out.ChargeCategory item = new INTTRA_Out.ChargeCategory()
+                {
+                    ChargeType = INTTRA_Out.ChargeCategoryChargeType.DestinationHaulageCharges,
+                    PrepaidorCollectIndicator = this.Shipment.DestinationHaulageChargesId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
+                };
+
+                this.ChargeCategories.Add(item);
+            }
+
+            if (this.Shipment.AdditionalChargesId != null)
+            {
+                INTTRA_Out.ChargeCategory item = new INTTRA_Out.ChargeCategory()
+                {
+                    ChargeType = INTTRA_Out.ChargeCategoryChargeType.AdditionalCharges,
+                    PrepaidorCollectIndicator = this.Shipment.AdditionalChargesId.ToUpper() == "P" ? INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Prepaid : INTTRA_Out.ChargeCategoryPrepaidorCollectIndicator.Collect,
                 };
 
                 this.ChargeCategories.Add(item);
@@ -1392,50 +1437,72 @@ namespace Logitude.XSD.INTTRA.BL
             #endregion
 
             #region FreightPayer
-            if (this.Shipment.FreightPrepaidCollectId != null)
+            if (this.Shipment.FreightPayerId != null)
             {
-                if (this.Shipment.FreightPrepaidCollectId.ToUpper() == "P")
+                Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.FreightPayerId select d).FirstOrDefault();
+                if (myCard != null)
                 {
-                    if (this.Shipper != null)
+                    INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
                     {
-                        INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
-                        {
-                            PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
-                            PartnerName = this.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
-                        };
+                        PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
+                        PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+                    };
 
-                        if (this.ShipperAddress != null)
-                        {
-                            item.AddressInformation = this.GetAddressInformation(this.ShipperAddress);
-                        }
+                   Address FreightPayerAddress = (from d in CommonContext.Addresses where d.Id == this.Shipment.FreightPayerAddressId select d).FirstOrDefault();
 
-                        this.MessagePropertiesParties.Add(item);
-                    }
-                }
-
-                else if (this.Shipment.FreightPrepaidCollectId.ToUpper() == "C")
-                {
-                    if (this.Shipment.AgentId != null)
+                    if (FreightPayerAddress != null)
                     {
-                        Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.AgentId select d).FirstOrDefault();
-                        if (myCard != null)
-                        {
-                            INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
-                            {
-                                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
-                                PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
-                            };
-
-                            if (this.AgentAddress != null)
-                            {
-                                item.AddressInformation = this.GetAddressInformation(this.AgentAddress);
-                            }
-
-                            this.MessagePropertiesParties.Add(item);
-                        }
+                        item.AddressInformation = this.GetAddressInformation(FreightPayerAddress);
                     }
+
+                    this.MessagePropertiesParties.Add(item);
                 }
             }
+
+            //if (this.Shipment.FreightPrepaidCollectId != null)
+            //{
+            //    if (this.Shipment.FreightPrepaidCollectId.ToUpper() == "P")
+            //    {
+            //        if (this.Shipper != null)
+            //        {
+            //            INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+            //            {
+            //                PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
+            //                PartnerName = this.GetStringList(this.Shipper.EnglishName, 2, 35).ToArray<string>(),
+            //            };
+
+            //            if (this.ShipperAddress != null)
+            //            {
+            //                item.AddressInformation = this.GetAddressInformation(this.ShipperAddress);
+            //            }
+
+            //            this.MessagePropertiesParties.Add(item);
+            //        }
+            //    }
+
+            //    else if (this.Shipment.FreightPrepaidCollectId.ToUpper() == "C")
+            //    {
+            //        if (this.Shipment.AgentId != null)
+            //        {
+            //            Card myCard = (from d in CommonContext.Cards where d.Id == this.Shipment.AgentId select d).FirstOrDefault();
+            //            if (myCard != null)
+            //            {
+            //                INTTRA_Out.PartnerInformation item = new INTTRA_Out.PartnerInformation()
+            //                {
+            //                    PartnerRole = INTTRA_Out.PartnerInformationPartnerRole.FreightPayer,
+            //                    PartnerName = this.GetStringList(myCard.EnglishName, 2, 35).ToArray<string>(),
+            //                };
+
+            //                if (this.AgentAddress != null)
+            //                {
+            //                    item.AddressInformation = this.GetAddressInformation(this.AgentAddress);
+            //                }
+
+            //                this.MessagePropertiesParties.Add(item);
+            //            }
+            //        }
+            //    }
+            //}
             #endregion
 
             #region MessageRecipient

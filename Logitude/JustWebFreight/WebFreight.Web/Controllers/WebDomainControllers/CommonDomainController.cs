@@ -1,5 +1,7 @@
 ﻿
 using Dropbox.Api;
+using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.security;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -1776,6 +1778,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         var entityId = summary.EntityId;
                         var entityNumber = summary.EntityNumber;
+
                         if (!string.IsNullOrEmpty(item.House))
                         {
                             entityId = item.House;
@@ -1810,6 +1813,34 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             SignRequestByUserEmail = loggedUserEmail,
                             DontAddToQueue = false,
                         };
+                        if (documentInPM.FileExtension != null && documentInPM.FileExtension.ToLower() == "pdf")
+                        {
+                            List<Dictionary<string, string>> signatures = new List<Dictionary<string, string>>();
+                            string message = "";
+                            bool success = this.GetSignatureMetadata(item.FileName, mybytearray, out signatures, out message);
+                            if (success)
+                            {
+                                string Signerslist = "";
+                                if (signatures.Count > 0)
+                                {
+                                    for (int i = 0; i < signatures.Count; i++)
+                                    {
+                                        try
+                                        {
+                                            Signerslist += signatures[i]["CN"] + ',';
+                                            Signerslist += "Vat: " + signatures[i]["O"] + ',';
+                                        }
+                                        catch (Exception exc)
+                                        {
+
+                                        }
+
+                                    }
+                                    documentInPM.SignersList = Signerslist.TrimEnd(',');
+                                    item.IsDigitallySign = true;
+                                }
+                            }
+                        }
                         ShipmentRepository ShipmentRepo = new ShipmentRepository(tenant);
                         var myshipment = ShipmentRepo.GetSingleShipment(documentInPM.EntityId, tenant);
                         if (myshipment != null && string.IsNullOrEmpty(myshipment.ForwarderShipmentNumber))
@@ -1863,6 +1894,45 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        private bool GetSignatureMetadata(string filename, byte[] filedata, out List<Dictionary<string, string>> signatures, out string message)
+        {
+            signatures = new List<Dictionary<string, string>>();
+            message = "";
+            try
+            {
+                using (PdfReader reader = new PdfReader(filedata))
+                {
+                    AcroFields af = reader.AcroFields;
+                    var names = af.GetSignatureNames();
+                    for (int i = 0; i < names.Count; ++i)
+                    {
+                        Dictionary<string, string> metadata = new Dictionary<string, string>();
+                        String name = (string)names[i];
+                        PdfPKCS7 pk = af.VerifySignature(name);
+                        metadata.Add("SignDate", pk.SignDate.ToString("dd.MM.yyyy HH:mi.ss"));
+                        var subjectFields = CertificateInfo.GetSubjectFields(pk.SigningCertificate);
+                        List<string> mdlist = new List<string>() { "C", "CN", "SN", "T", "OU", "O", "GIVENNAME", "SURNAME", };
+                        if (subjectFields != null)
+                        {
+                            foreach (var md in mdlist)
+                            {
+                                string value = subjectFields.GetField(md);
+                                if (!string.IsNullOrEmpty(value))
+                                    metadata.Add(md, value);
+                            }
+                        }
+                        signatures.Add(metadata);
+                    }
+                }
+                return (true);
+            }
+            catch (Exception ex)
+            {
+                message = "Failed to get metadata from pdf file '" + filename + "'" + Environment.NewLine + ex.ToString();
+                return (false);
+            }
+        }
+
         public HttpResponseMessage GetLoggedTenantDB()
         {
             try

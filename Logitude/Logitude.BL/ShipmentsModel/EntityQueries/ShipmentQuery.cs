@@ -1133,6 +1133,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ForeignPartnerCountryCode = shipment.ForeignPartnerCountryCode;
             shipmentPM.IsNewARInvoiceBlocked = shipment.IsNewARInvoiceBlocked;
             shipmentPM.OperationalDate = shipment.OperationalDate;
+            shipmentPM.BasicFreightId = shipment.BasicFreightId;
+            shipmentPM.DestinationPortChargesId = shipment.DestinationPortChargesId;
+            shipmentPM.DestinationHaulageChargesId = shipment.DestinationHaulageChargesId;
+            shipmentPM.AdditionalChargesId = shipment.AdditionalChargesId;
+            shipmentPM.FreightPayerId = shipment.FreightPayerId;
+            shipmentPM.FreightPayerAddressId = shipment.FreightPayerAddressId;
 
             #region ppcc region
             string ppcc = "";

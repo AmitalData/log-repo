@@ -102,7 +102,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var qAccumulateTotalsFromStartOfMonthFromTilStartOfMonthTo = //Accumulate Totals From StartOfMonth(FromDate) Until StartOfMonth(ToDate) 
                  (from totalCOAType in
 
-                      (from tot in QBaseTotalsFromStartOfMonthFromTilStartOfMonthTo
+                      (from tot in QBaseTotalsFromStartOfMonthFromTilStartOfMonthTo //// מצטברים מחודש כולל ועד חודש לא כולל
                        join a in QBaseAllCardsAndDetailsAccType
                        on tot.AccountId equals a.Id
                        select new
@@ -512,9 +512,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                    LocalDebit =
                    (
-                    +g.Sum(x => x.LocalAmountDebitTotalDelta2End)
-                    + g.Sum(x => x.LocalAmountDebitTransEnd)
-                    - g.Sum(x => x.LocalAmountDebitTransStart)
+                    +g.Sum(x => x.LocalAmountDebitTotalDelta2End)//// מצטברים מחודש כולל ועד חודש לא כולל
+                    + g.Sum(x => x.LocalAmountDebitTransEnd)// תנעות מתחילת חודש אחרון כולל עד  תאריך הסיום + 1 לא כולל
+                    - g.Sum(x => x.LocalAmountDebitTransStart)//// תנעות מכולל תחילת החודש  של מתאריך עד למתאריך -לא כולל    
                    ),
                    LocalCredit =
                    (
