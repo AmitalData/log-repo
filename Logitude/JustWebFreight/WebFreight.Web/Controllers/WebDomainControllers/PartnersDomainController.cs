@@ -42,8 +42,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
+                AuthenticationToken authToken2 = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken2.Tenant;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
