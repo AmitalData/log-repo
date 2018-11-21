@@ -46,6 +46,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 ((new TSH_NG_3053_MSG8_AgentPaymentRequestMessageService()).MainInterfaceCode);
 
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                TSH_NG_3053_MSG8_AgentPaymentRequestMessageService>
+                ("3050");// because alalyze DCA MEssaage its not 3053 its 3050 !!!
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService>
                 ((new CL_MSG101_GetCustomerByEntityCustomerIdentificationMassagingService()).MainInterfaceCode);
 

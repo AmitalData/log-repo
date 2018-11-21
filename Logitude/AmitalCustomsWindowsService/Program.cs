@@ -16,6 +16,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WebFreight.Web.CustomModel;
 using WebFreight.Web.Security;
 
 namespace AmitalCustomsWindowsService
@@ -127,11 +128,10 @@ namespace AmitalCustomsWindowsService
 
                 InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null);
                 Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe("StartStatic", false, "", DateTime.MaxValue);
-                
 
+                CustomsRegistrations.Register();
                 _ThreadStartStaticLoaded = true;
-                ContainerAccessor.Container.RegisterType<ICustomsDocumentQueryServiceExt, CustomsDocumentQueryServiceExt>("CustomsDocumentQueryServiceExt", new InjectionFactory(c => new CustomsDocumentQueryServiceExt()));
-
+                
             }
             catch (Exception e)
             {
