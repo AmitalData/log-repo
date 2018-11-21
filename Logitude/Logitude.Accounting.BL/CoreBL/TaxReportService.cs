@@ -332,8 +332,10 @@ namespace Logitude.Accounting.BL.CoreBL
 			updateService.Update(taxReport, true);
 
             // saving lines
+            int count = 0;
             foreach (TaxReportLinePM linePM in reportLinesList)
             {
+                linePM.Line = ++count;
                 linePM.ChangeSetOp = ChangeSetOperation.Insert;
                 lineUpdateService.Update(linePM, true);
             }

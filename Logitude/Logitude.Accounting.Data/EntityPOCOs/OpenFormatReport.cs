@@ -32,11 +32,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual User CreatedByUser { get; set; }
         [Column("UpdateDate")]
 	    public DateTime UpdateDate { get; set; }
-        [ForeignKey("UpdatedByUser")]
-        [Column("UpdatedByUserId")]
-	    public string UpdatedByUserId { get; set; }
-	      
-        public virtual User UpdatedByUser { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
         [Column("ReportNumber")]
