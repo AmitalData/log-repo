@@ -66,7 +66,7 @@ namespace Logitude.Server.Tools.FTP
                 sftp.SSHPassword = p_password;
                 sftp.RemotePath = p_directory;
                 sftp.SSHAuthMode = SftpSSHAuthModes.amPublicKey;
-
+                sftp.RuntimeLicense = "XISUB-RA1SU-BATJ5-2458B-59JHG";
                 //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
                 //DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
                 //string solutionDirectory = solutionDir.FullName;
