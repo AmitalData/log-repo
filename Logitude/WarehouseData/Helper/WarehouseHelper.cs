@@ -155,14 +155,17 @@ namespace WarehouseData.Helper
 
         }
    
-        public void ExecuteScript(string scripName, string forderName, string connectionString )
+        public void ExecuteScript(string scripName, string forderName, string connectionString , string mode  = "Debug")
         {
 
-            string path = Environment.CurrentDirectory;
-            path = path.Replace(@"\bin\Debug", string.Empty);
+            string path = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+
+            if (path.Contains(@"\bin\" + mode))
+            {
+                path = path.Replace(@"\bin\" + mode, string.Empty);
+            }
 
             string fileDirectory = Path.Combine(path, "WarehouseScript\\" + forderName, scripName + ".sql");
-
             FileInfo file = new FileInfo(fileDirectory);
 
             string cmd = file.OpenText().ReadToEnd();
@@ -171,7 +174,7 @@ namespace WarehouseData.Helper
             using (SqlConnection cn = new SqlConnection(connectionString))
             {
                 SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                sqlCommand.CommandTimeout = (int)this.timeOut;
+                sqlCommand.CommandTimeout = (int)timeOut;
                 cn.Open();
                 sqlCommand.ExecuteNonQuery();
                 cn.Close();
@@ -254,7 +257,7 @@ namespace WarehouseData.Helper
         #region Build Data Base
 
 
-        public void BuildDataBase(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
+        public void BuildDataBase(string mode,string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
         {
             bool isPrivateDB = privateTenant!=null ? true : false;
 
@@ -289,17 +292,17 @@ namespace WarehouseData.Helper
                 UpdateAutomaticLastUpdate(table, sourceConnectionString , destinationConnectionString, privateTenant);
             }
             
-            ExecuteScript("BuildDateDimensionsTable", "BuildWarehouse", destinationConnectionString);
+            ExecuteScript("BuildDateDimensionsTable", "BuildWarehouse", destinationConnectionString , mode);
 
 
             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
             {
-                ExecuteScript(table.BuildScriptName, "BuildWarehouse", destinationConnectionString);
+                ExecuteScript(table.BuildScriptName, "BuildWarehouse", destinationConnectionString , mode);
             }
 
             foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
             {
-                ExecuteScript(table.BuildScriptName, "BuildWarehouse", destinationConnectionString);
+                ExecuteScript(table.BuildScriptName, "BuildWarehouse", destinationConnectionString, mode);
             }
 
         }
@@ -360,8 +363,12 @@ namespace WarehouseData.Helper
                  
                             bulkCopy.EnableStreaming =true;
                             bulkCopy.BatchSize = 100000;
-                            bulkCopy.NotifyAfter = 100000;
-                            bulkCopy.SqlRowsCopied += new SqlRowsCopiedEventHandler(OnSqlRowsCopied);
+                            if (Control != null && Table != null)
+                            {
+                                bulkCopy.NotifyAfter = 100000;
+                                bulkCopy.SqlRowsCopied += new SqlRowsCopiedEventHandler(OnSqlRowsCopied);
+                            }
+
                             bulkCopy.WriteToServer(reader);
 
                         }
@@ -1051,7 +1058,7 @@ namespace WarehouseData.Helper
             return tenants;
         }
 
-        public void BuildOrUpdatePrivateDBData(string dbsourceConnection, string dbDestinationConnection, string type)
+        public void BuildOrUpdatePrivateDBData(string dbsourceConnection, string dbDestinationConnection, string type , string appName,string mode )
         {
             if (!string.IsNullOrEmpty(dbsourceConnection) && !string.IsNullOrEmpty(dbDestinationConnection))
             {
@@ -1060,7 +1067,10 @@ namespace WarehouseData.Helper
 
                 if (sourceConnectionArray.Length != 4 || destinationConnectionArray.Length != 4)
                 {
-                    MessageBox.Show("connection not valid");
+                    if (appName != "Service")
+                    {
+                        MessageBox.Show("connection not valid");
+                    }
                     return;
                 }
                 WarehouseHelper warehouseHelper = new WarehouseHelper();
@@ -1081,11 +1091,14 @@ namespace WarehouseData.Helper
                     if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
 
                     string tenants = warehouseHelper.ConvertIntgerListToString(relatedTenants);
-                    if (type == "Build") BuildDataBase(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                    if (type == "Build") BuildDataBase(mode, sourceConnectionString, destinationConnectionString, tenant, tenants);
                     else warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString, tenant, tenants);
                 }
             }
-            else MessageBox.Show("Connection Problem");
+            else if (appName != "Service")
+            {
+                MessageBox.Show("Connection Problem");
+            }
         }
 
         #endregion

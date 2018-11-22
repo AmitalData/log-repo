@@ -15,7 +15,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [Key]
         public string Id { get; set; }
         public int Tenant { get; set; }
-        public string DWObjectTableCode { get; set; }
+        //public string DWObjectTableCode { get; set; }
         public string SQLString { get; set; }
         public string CreatedByUserId { get; set; }
         public string UpdateByUserId { get; set; }
@@ -31,8 +31,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public User UpdateBy { get; set; }
 
 
-        [ForeignKey("DWObjectTableCode")]
-        public virtual DWObjectTable DWObjectTable { get; set; }
+        //[ForeignKey("DWObjectTableCode")]
+        //public virtual DWObjectTable DWObjectTable { get; set; }
 
 
     }

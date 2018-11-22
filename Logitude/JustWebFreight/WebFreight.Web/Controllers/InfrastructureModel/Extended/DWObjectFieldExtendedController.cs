@@ -88,12 +88,31 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     {
                         var MyGroup = new DWFieldsGroup();
                         MyGroup.Key = item.Key;
-                        MyGroup.FieldsList = item.Select(a => a).ToList();
-                        MyGroups.Add(MyGroup);
+                        if (item.Key == null)
+                        {
+                            MyGroup.FieldsList = item.Where(a => a.Category2 == null).ToList();
+                        }
+                        else
+                        { 
+                            MyGroup.FieldsList = item.Select(a => a).ToList();
+                        }
+                        if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
+                        {
+                            MyGroups.Add(MyGroup);
+                        }
+                        
                     }
                     else
                     {
-                        MyKey.FieldsList = MyKey.FieldsList.Concat(item.Select(a => a).ToList()).ToList();
+                        //MyKey.FieldsList = MyKey.FieldsList.Concat(item.Select(a => a).ToList()).ToList();
+                        if (MyKey.Key == null)
+                        {
+                            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Where(a => a.Category2 == null && (MyKey.FieldsList.Where(b => b.Id != a.Id).FirstOrDefault() == null)).ToList()).ToList();
+                        }
+                        else
+                        {
+                            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Select(a => a).ToList()).ToList();
+                        }
                     }
                 }
                 foreach (var item in Category2Group)
@@ -103,13 +122,35 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                     {
                         var MyGroup = new DWFieldsGroup();
                         MyGroup.Key = item.Key;
-                        MyGroup.FieldsList = item.Select(a => a).ToList();
-                        MyGroups.Add(MyGroup);
+                        if (item.Key == null)
+                        {
+                            MyGroup.FieldsList = item.Where(a => a.Category1 == null).ToList();
+                        }
+                        else
+                        {
+                            MyGroup.FieldsList = item.Select(a => a).ToList();
+                        }
+                        if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
+                        {
+                            MyGroups.Add(MyGroup);
+                        }
                     }
                     else
                     {
-                        MyKey.FieldsList = MyKey.FieldsList.Concat(item.Select(a => a).ToList()).ToList();
+                        if (MyKey.Key == null)
+                        {
+                            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Where(a => a.Category1 == null && (MyKey.FieldsList.Where(b => b.Id != a.Id).FirstOrDefault() == null)).ToList()).ToList(); 
+                        }
+                        else
+                        {
+                            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Select(a => a).ToList()).ToList();
+                        } 
                     }
+                }
+                var NULLGroup = MyGroups.Where(a => a.Key == null).FirstOrDefault();
+                if (NULLGroup != null && NULLGroup.FieldsList.Count == 0)
+                {
+                    MyGroups.Remove(NULLGroup);
                 }
                 //List<DWObjectFieldPM> dWObjectFieldPM = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).ToList();
 

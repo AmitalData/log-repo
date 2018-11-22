@@ -158,10 +158,10 @@ export class QuoteTemplateExtendedPMService {
         }).catch(ServiceHelper.HandleServiceError);
     }
 
-    GetUpdatedQuoteDocumentVersion(quoteId: string, versionNumber: number, quoteTemplateId: string, updatedByUserId: string, tenant: number) {
+    GetUpdatedQuoteDocumentVersion(quoteId: string, versionNumber: number, quoteTemplateId: string, updatedByUserId: string, tenant: number, isGenerate: boolean = false) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetUpdatedQuoteDocumentVersion/?' + 'quoteId=' + quoteId + '&versionNumber=' + versionNumber + '&quoteTemplateId=' + quoteTemplateId + '&updatedByUserId=' + updatedByUserId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/GetUpdatedQuoteDocumentVersion/?' + 'quoteId=' + quoteId + '&versionNumber=' + versionNumber + '&quoteTemplateId=' + quoteTemplateId + '&updatedByUserId=' + updatedByUserId + '&tenant=' + tenant + '&isGenerate=' + isGenerate, { headers: authHeader }).map(response => {
             var result = response.json();
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();

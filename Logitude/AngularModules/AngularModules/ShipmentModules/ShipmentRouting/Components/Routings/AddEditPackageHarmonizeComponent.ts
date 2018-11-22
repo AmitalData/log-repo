@@ -61,15 +61,18 @@ export class AddEditPackageHarmonizeComponent {
     }
     OkButtonClicked() {
         var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, "ShipmentPickUpDeliveryPackage", errors);
         this.ItemsSource.forEach(item => {
-            Validator.TryValidateObject(item, this.ObjectTableName, errors);
+            Validator.TryValidateObject(item.EntityPM, this.ObjectTableName, errors);
         });
+
         this.ValidationErrorsList = errors;
+
         if (errors.length == 0) {
             var allItemsPM: PickUpDeliveryPackageHarmonizePM[] = [];
+
             this.ItemsSource.forEach((item: HarmonizeItemClass) => {
                 var index = this.EntityPM.PickUpDeliveryPackageHarmonizes.indexOf(item.EntityPM);
+
                 if (index > -1) {
                     var itemPM = this.EntityPM.PickUpDeliveryPackageHarmonizes[index];
                     if (itemPM) {
@@ -78,23 +81,31 @@ export class AddEditPackageHarmonizeComponent {
                         }
                     }
                 }
+
                 else {
                     this.EntityPM.PickUpDeliveryPackageHarmonizes.push(item.EntityPM);
                 }
+
                 allItemsPM.push(item.EntityPM);
             });
-            this.EntityPM.PickUpDeliveryPackageHarmonizes.forEach(item => {
-                var index = allItemsPM.indexOf(item);
+
+            for (var i = this.EntityPM.PickUpDeliveryPackageHarmonizes.length - 1; i >= 0; i--) {
+
+                var index = allItemsPM.indexOf(this.EntityPM.PickUpDeliveryPackageHarmonizes[i]);
+
                 if (index == -1) {
+                    var item = this.EntityPM.PickUpDeliveryPackageHarmonizes[i];
                     this.EntityPM.RemovePickUpDeliveryPackageHarmonizePM(item);
                 }
-            });
+            }
+
             this.EntityPM.IsMultiHarmonize = this.EntityPM.PickUpDeliveryPackageHarmonizes.length > 0 ? true : false;
             if (this.EntityPM.IsMultiHarmonize) {
                 if (this.EntityPM.Harmonize) {
                     this.EntityPM.Harmonize = null;
                 }
             }
+
             SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
         }
     }

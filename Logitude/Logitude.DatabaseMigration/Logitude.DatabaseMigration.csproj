@@ -334,6 +334,18 @@
     <Compile Include="Migrations\201811191041580_OpenFormatForeignKeysMigration.Designer.cs">
       <DependentUpon>201811191041580_OpenFormatForeignKeysMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811210833410_OpenFormatUpdatedByUserMigration.cs" />
+    <Compile Include="Migrations\201811210833410_OpenFormatUpdatedByUserMigration.Designer.cs">
+      <DependentUpon>201811210833410_OpenFormatUpdatedByUserMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811211128336_AddSubQueries_Rabaia.cs" />
+    <Compile Include="Migrations\201811211128336_AddSubQueries_Rabaia.Designer.cs">
+      <DependentUpon>201811211128336_AddSubQueries_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811211426578_FixSubQueryTableName_Rabaia.cs" />
+    <Compile Include="Migrations\201811211426578_FixSubQueryTableName_Rabaia.Designer.cs">
+      <DependentUpon>201811211426578_FixSubQueryTableName_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -528,6 +540,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811191041580_OpenFormatForeignKeysMigration.resx">
       <DependentUpon>201811191041580_OpenFormatForeignKeysMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811210833410_OpenFormatUpdatedByUserMigration.resx">
+      <DependentUpon>201811210833410_OpenFormatUpdatedByUserMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811211128336_AddSubQueries_Rabaia.resx">
+      <DependentUpon>201811211128336_AddSubQueries_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811211426578_FixSubQueryTableName_Rabaia.resx">
+      <DependentUpon>201811211426578_FixSubQueryTableName_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -28,7 +28,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     public ParentsFilterItems: ApiQueryFilters;
   IsVendor: boolean = false;
     private _GLAccountExtendedListService = new GLAccountExtendedListService();
-    
+
 
     public isRTL: boolean = false;
 
@@ -48,18 +48,18 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
         //this.ChartOfAccountTypeFilterItems.addAdditionalFilter("Code", "4", null, null, "NotEqual", false, false, false, "string", false, true);
         //#endregion
-        
+
 
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {// Edit Mode
-            
-        
+
+
           this.IsEditMode = true;
 
           this.IsVendor = false;
             if (this.EntityPM.AccountTypeCode == "5" || this.EntityPM.AccountTypeCode == "4") {
                 this.DisableGLAccount = true;
-                this.SetFieldsEditablility(false); 
+                this.SetFieldsEditablility(false);
             } else if (this.EntityPM.AccountTypeCode == "2" || this.EntityPM.AccountTypeCode == "3")
             {
                 this.IsCustomerAccount = true;
@@ -69,36 +69,72 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             }
              if (this.EntityPM.AccountTypeCode == "3") {
               this.IsVendor = true;
-          
+
           }
-          
+
             //#region initialize query filters for Parent Account
             this.ParentsFilterItems = new ApiQueryFilters();
             this.ParentsFilterItems.addAdditionalFilter("Id", this.EntityPM.Id, null, null, "Exclude", false, false, false, "string", false, true);
             this.ParentsFilterItems.addAdditionalFilter("ChartOfAccountsId", this.EntityPM.ChartOfAccountsId, null, null, "Equals", false, false, false, "string", false, true);
             this.ParentsFilterItems.addAdditionalFilter("ParentAccountId", "Please Don't Erase Me", null, null, "IsNull", false, false, false, "string", false, true);
 
-            if (this.IsCustomerAccount) {
+
+            if (this.IsVendor) {
+                this.ParentsFilterItems.addAdditionalFilter("AccountTypeCode", "3", null, null, "Equals", false, false, false, "string", false, true);
+            } else if (this.IsCustomerAccount) {
                 this.ParentsFilterItems.addAdditionalFilter("AccountTypeCode", "2", null, null, "Equals", false, false, false, "string", false, true);
             }
             //#endregion
 
             if (this.ChartOfAccountsTypeCode == "1") { // 1-Revenues
               this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
-            
+
             } else if (this.ChartOfAccountsTypeCode == "2") { // 2-Expenses
               this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
-           
+
             } else {
               this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
-             
+
           }
 
 
-         
+
         }
         this.SetUIProperties();
 
+        this.Listen();
+    }
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
+    public CurrentEditComponentId: string;
+    Listen() {
+
+
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+
+            //
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    }
+                });
+            }
+
+            //
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        console.log("Entity Reloaded");
+                    }
+                });
+            }
+
+        }
     }
 
     //#region Properties
@@ -110,7 +146,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
             if (value != this.oldIsMultiCurrency)
                 GLAccountValidator.ValidateIsMultiCurrency(this.EntityPM);
-            
+
             if (value) {
                 // Change UI Property
                 this.CurrencyId = null;
@@ -136,7 +172,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     set RevaluationEnabled(value: boolean) {
         if (this.EntityPM.RevaluationEnabled != value) {
             this.EntityPM.RevaluationEnabled = value;
-          
+
         }
   }
 
@@ -156,7 +192,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
     }
 
-    
+
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
     set ChartOfAccountsTypeCode(value: string) {
         if (this.EntityPM.ChartOfAccountsTypeCode != value) {
@@ -316,7 +352,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.ChartOfAccountsId = this.EntityPM.ChartOfAccountsId;
             this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
         }
-        
+
     }
 
     SetFieldsEditablility(enable) {

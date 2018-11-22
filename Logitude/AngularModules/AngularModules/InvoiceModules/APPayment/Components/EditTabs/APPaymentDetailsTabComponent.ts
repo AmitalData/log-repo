@@ -426,39 +426,17 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
     // Load Data
     public IsDataLoaded: boolean = false;
-    private baselist: APInvoiceList[] = [];
     private searchText: string = "";
     SearchTextKeyUp(args: any) {
         this.searchText = args;
         this.LoadPaymentInvoices();
     }
     LoadPaymentInvoices() {
-        this.baselist = [];
+        var baselist = [];
         this.ItemsSource.Clear();
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId) && this.EntityPM.StatusCode != "VD") {
-            var filters = new ApiQueryFilters();
-            filters.PageIndex = 0;
-            filters.PageSize = 1000;
-            filters.SortBy = "DueDate";
-            filters.SortDirection = "Descending";
-
-            filters.addAdditionalFilter("VendorId", this.EntityPM.VendorId, null, null, "Equals", false, false, false, "string");
-            filters.addAdditionalFilter("StatusCode", "WA,AD,PP,PD", null, null, "InList", false, true, false, "string");
-
-            var searchValue = null;
-            if (!AppTool.IsNullOrEmpty(this.searchText)) {
-                searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
-            }
-
-            filters.addAdditionalFilter("APPaymentInvoicesSearch", searchValue, null, null, "Contains", true, false, false, "string");
-
-            this.APPaymentsDetailsService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    this.baselist = myResponse.Result;
-                    this.FillBaselist();
-                }
-            });
+            this.LoadPaymentInvoices_Connected();
         }
 
         else {
@@ -466,12 +444,61 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.IsDataLoaded = true;
         }
     }
-    FillBaselist() {
+    LoadPaymentInvoices_Connected() {
+
+        var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 1000;
+        filters.SortBy = "DueDate";
+        filters.SortDirection = "Descending";
+
+        var searchValue = null;
+        if (!AppTool.IsNullOrEmpty(this.searchText)) {
+            searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
+        }
+
+        filters.addAdditionalFilter("APPaymentInvoicesSearch", searchValue, null, null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("APPaymentInvoicesConnected", this.EntityPM.Id, null, null, "Contains", true, false, false, "string");
+
+        this.APPaymentsDetailsService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.FillBaselist(myResponse.Result);
+
+                if (!this.EntityPM.IsClosed) {
+                    this.LoadPaymentInvoices_IsMatched();
+                }
+            }
+        });
+    }
+    LoadPaymentInvoices_IsMatched() {
+        var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 1000;
+        filters.SortBy = "DueDate";
+        filters.SortDirection = "Descending";
+
+        filters.addAdditionalFilter("VendorId", this.EntityPM.VendorId, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("StatusCode", "WA,AD,PP,PD", null, null, "InList", false, true, false, "string");
+
+        var searchValue = null;
+        if (!AppTool.IsNullOrEmpty(this.searchText)) {
+            searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
+        }
+
+        filters.addAdditionalFilter("APPaymentInvoicesSearch", searchValue, null, null, "Contains", true, false, false, "string");
+
+        this.APPaymentsDetailsService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.FillBaselist(myResponse.Result);
+            }
+        });
+    }
+    FillBaselist(baselist: APInvoiceList[]) {
         var connectedList: APPaymentInvoiceArgs[] = [];
         var unConnectedMatchedList: APPaymentInvoiceArgs[] = [];
         var unConnectedListNotMatched: APPaymentInvoiceArgs[] = [];
 
-        this.baselist.forEach(item => {
+        baselist.forEach(item => {
             if (this.EntityPM.PaymentInvoices.filter(d => d.APInvoiceId == item.Id)[0]) {
 
                 if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
