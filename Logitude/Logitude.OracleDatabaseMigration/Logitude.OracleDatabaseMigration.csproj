@@ -116,6 +116,10 @@
     <Compile Include="Migrations\201811201042007_AddMogrationDecisionType.Designer.cs">
       <DependentUpon>201811201042007_AddMogrationDecisionType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811220919515_AddMigrationClaimRelatedEntityDecision.cs" />
+    <Compile Include="Migrations\201811220919515_AddMigrationClaimRelatedEntityDecision.Designer.cs">
+      <DependentUpon>201811220919515_AddMigrationClaimRelatedEntityDecision.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -185,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811201042007_AddMogrationDecisionType.resx">
       <DependentUpon>201811201042007_AddMogrationDecisionType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811220919515_AddMigrationClaimRelatedEntityDecision.resx">
+      <DependentUpon>201811220919515_AddMigrationClaimRelatedEntityDecision.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

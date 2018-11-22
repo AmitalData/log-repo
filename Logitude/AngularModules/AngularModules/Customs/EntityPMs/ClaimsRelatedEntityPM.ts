@@ -277,6 +277,36 @@ export class ClaimsRelatedEntityPM {
     public set IsSendClaimsRelatedEntity(newValue: boolean) { if (this.isSendClaimsRelatedEntity != newValue) { this.isSendClaimsRelatedEntity = newValue; this.MarkAsDirty("IsSendClaimsRelatedEntity"); } }
        
 	 
+    private decisionCode: string;
+    public get DecisionCode() { return this.decisionCode; }
+    public set DecisionCode(newValue: string) { if (this.decisionCode != newValue) { this.decisionCode = newValue; this.MarkAsDirty("DecisionCode"); } }
+       
+	 
+    private decisionName: string;
+    public get DecisionName() { return this.decisionName; }
+    public set DecisionName(newValue: string) { if (this.decisionName != newValue) { this.decisionName = newValue; this.MarkAsDirty("DecisionName"); } }
+       
+	 
+    private decisionNote: string;
+    public get DecisionNote() { return this.decisionNote; }
+    public set DecisionNote(newValue: string) { if (this.decisionNote != newValue) { this.decisionNote = newValue; this.MarkAsDirty("DecisionNote"); } }
+       
+	 
+    private eilatVatRefoundDecision: string;
+    public get EilatVatRefoundDecision() { return this.eilatVatRefoundDecision; }
+    public set EilatVatRefoundDecision(newValue: string) { if (this.eilatVatRefoundDecision != newValue) { this.eilatVatRefoundDecision = newValue; this.MarkAsDirty("EilatVatRefoundDecision"); } }
+       
+	 
+    private depositingAmount: number;
+    public get DepositingAmount() { return this.depositingAmount; }
+    public set DepositingAmount(newValue: number) { if (this.depositingAmount != newValue) { this.depositingAmount = newValue; this.MarkAsDirty("DepositingAmount"); } }
+       
+	 
+    private refundAmount: number;
+    public get RefundAmount() { return this.refundAmount; }
+    public set RefundAmount(newValue: number) { if (this.refundAmount != newValue) { this.refundAmount = newValue; this.MarkAsDirty("RefundAmount"); } }
+       
+	 
 
     public OldEntityPM: ClaimsRelatedEntityPM;
 	

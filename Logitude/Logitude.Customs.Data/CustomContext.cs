@@ -637,6 +637,10 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<ClaimsRelatedEntity>().Property(x => x.DeclarationVersion).HasPrecision(5, 3);
 				
+			modelBuilder.Entity<ClaimsRelatedEntity>().Property(x => x.DepositingAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<ClaimsRelatedEntity>().Property(x => x.RefundAmount).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<ClientAddress>().Property(x => x.LocalApartment).HasPrecision(4, 0);
 				
 			modelBuilder.Entity<CollateralsRequestFileCond>().Property(x => x.RequestedAmount).HasPrecision(18, 2);
