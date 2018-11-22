@@ -11,6 +11,7 @@ import {ClaimPM} from './ClaimPM';
 import {ClaimsRelatedEntitiesAmountPM} from './ClaimsRelatedEntitiesAmountPM';
 import {ClaimsRelatedEntitiesReasonPM} from './ClaimsRelatedEntitiesReasonPM';
 import {ClaimsRelatedEntsExpDeclarPM} from './ClaimsRelatedEntsExpDeclarPM';
+import {ClaimsRelatedEntitiesSeizurePM} from './ClaimsRelatedEntitiesSeizurePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -307,7 +308,41 @@ export class ClaimsRelatedEntityPM {
     public set RefundAmount(newValue: number) { if (this.refundAmount != newValue) { this.refundAmount = newValue; this.MarkAsDirty("RefundAmount"); } }
        
 	 
+     
+	private claimsRelatedEntitiesSeizures: ClaimsRelatedEntitiesSeizurePM[];
+    get  ClaimsRelatedEntitiesSeizures() {
+        if (this.claimsRelatedEntitiesSeizures == null) {
+            this.claimsRelatedEntitiesSeizures = [];
+        }
 
+        return this.claimsRelatedEntitiesSeizures;
+    }
+    set  ClaimsRelatedEntitiesSeizures(newValue: ClaimsRelatedEntitiesSeizurePM[]) {
+        if (this.claimsRelatedEntitiesSeizures != newValue) {
+            this.claimsRelatedEntitiesSeizures = newValue;
+        }
+    }
+    public AddClaimsRelatedEntitiesSeizure(item: ClaimsRelatedEntitiesSeizurePM) {
+        if (item != null) {
+            var index = this. ClaimsRelatedEntitiesSeizures.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. ClaimsRelatedEntitiesSeizures.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveClaimsRelatedEntitiesSeizure(item: ClaimsRelatedEntitiesSeizurePM) {
+        if (item != null) {
+            var index = this. ClaimsRelatedEntitiesSeizures.indexOf(item);
+            if (index > -1) {
+                this. ClaimsRelatedEntitiesSeizures.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public ClaimsRelatedEntitiesSeizures: Array<ClaimsRelatedEntitiesSeizurePM>= [];
+ 
     public OldEntityPM: ClaimsRelatedEntityPM;
 	
     private entityParentPM: any;

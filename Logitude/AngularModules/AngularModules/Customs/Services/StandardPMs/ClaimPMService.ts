@@ -28,6 +28,7 @@ import {ClaimsRelatedEntitiesAmountPM} from '../../EntityPMs/ClaimsRelatedEntiti
 import {ClaimsRelatedEntitiesReasonPM} from '../../EntityPMs/ClaimsRelatedEntitiesReasonPM';
 import {ClaimsRelatedEntsReasonsExpPM} from '../../EntityPMs/ClaimsRelatedEntsReasonsExpPM';
 import {ClaimsRelatedEntsExpDeclarPM} from '../../EntityPMs/ClaimsRelatedEntsExpDeclarPM';
+import {ClaimsRelatedEntitiesSeizurePM} from '../../EntityPMs/ClaimsRelatedEntitiesSeizurePM';
 import {ClaimImporterDeclarsPage3APM} from '../../EntityPMs/ClaimImporterDeclarsPage3APM';
 import {ClaimImporterDeclarsPage3BPM} from '../../EntityPMs/ClaimImporterDeclarsPage3BPM';
 import {ClaimValidator} from '../../Validators/ClaimValidator';
@@ -290,6 +291,13 @@ export class ClaimPMService {
 				    var myClaimsRelatedEntsExpDeclarPM =myClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars[k];
 				    var newClaimsRelatedEntsExpDeclarPM=this.clone(myClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars[k]);
                     newClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars.push(newClaimsRelatedEntsExpDeclarPM);
+
+					                 }
+                newClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures = [];
+                for (var k in myClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures) {
+				    var myClaimsRelatedEntitiesSeizurePM =myClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures[k];
+				    var newClaimsRelatedEntitiesSeizurePM=this.clone(myClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures[k]);
+                    newClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures.push(newClaimsRelatedEntitiesSeizurePM);
 
 					                 }
 							 
@@ -585,6 +593,14 @@ export class ClaimPMService {
                     //var clonedInside = this.clone(newClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars[k]);
                     newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntsExpDeclars.push(newClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars[k].OldEntityPM); // clone old ClaimsRelatedEntsExpDeclars//
                 }
+ 
+
+                this.MapClaimsRelatedEntitiesSeizures(newClaimsRelatedEntityPM, jItem, mapParent);
+                newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntitiesSeizures = [];
+                for (var k in newClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures) {
+                    //var clonedInside = this.clone(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures[k]);
+                    newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntitiesSeizures.push(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures[k].OldEntityPM); // clone old ClaimsRelatedEntitiesSeizures//
+                }
 
 				
             }
@@ -606,6 +622,9 @@ export class ClaimPMService {
  
 
                 this.MapClaimsRelatedEntsExpDeclars(newClaimsRelatedEntityPM, jItem, mapParent);
+ 
+
+                this.MapClaimsRelatedEntitiesSeizures(newClaimsRelatedEntityPM, jItem, mapParent);
  
                 newClaimsRelatedEntityPM.OldEntityPM = null;
                 newClaimsRelatedEntityPM.EntityParentPM = null;
@@ -648,6 +667,9 @@ export class ClaimPMService {
  
 
                         this.MapClaimsRelatedEntsExpDeclars(deletedPM, oldItemJson, mapParent);
+ 
+
+                        this.MapClaimsRelatedEntitiesSeizures(deletedPM, oldItemJson, mapParent);
                         deletedPM.OldEntityPM = null;
                         entityPM.ClaimsRelatedEntities.push(deletedPM);
                     }
@@ -1045,6 +1067,101 @@ export class ClaimPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.ClaimsRelatedEntsExpDeclars.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapClaimsRelatedEntitiesSeizures(entityPM: ClaimsRelatedEntityPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimsRelatedEntitiesSeizures: ClaimsRelatedEntitiesSeizurePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimsRelatedEntitiesSeizures = entityPM.OldEntityPM.ClaimsRelatedEntitiesSeizures;
+        }
+
+        entityPM.ClaimsRelatedEntitiesSeizures = new Array<ClaimsRelatedEntitiesSeizurePM>();
+        for (var item in jsonPM.ClaimsRelatedEntitiesSeizures) {
+            var jItem = jsonPM.ClaimsRelatedEntitiesSeizures[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimsRelatedEntitiesSeizurePM: ClaimsRelatedEntitiesSeizurePM;
+	  
+            if (mapParent) {
+                newClaimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM(entityPM);
+            }
+            else
+            {
+                newClaimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimsRelatedEntitiesSeizurePM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimsRelatedEntitiesSeizurePM.UniqueKey = Guid.newGuid();
+                newClaimsRelatedEntitiesSeizurePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimsRelatedEntitiesSeizurePM.OldEntityPM = this.clone(newClaimsRelatedEntitiesSeizurePM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newClaimsRelatedEntitiesSeizurePM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newClaimsRelatedEntitiesSeizurePM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimsRelatedEntitiesSeizurePM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newClaimsRelatedEntitiesSeizurePM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newClaimsRelatedEntitiesSeizurePM.OldEntityPM = null;
+                newClaimsRelatedEntitiesSeizurePM.EntityParentPM = null;
+            }
+			
+			 newClaimsRelatedEntitiesSeizurePM.IsDirty = false;
+            entityPM.ClaimsRelatedEntitiesSeizures.push(newClaimsRelatedEntitiesSeizurePM);
+        }
+        if (oldClaimsRelatedEntitiesSeizures) {
+            
+            for (var itemKey in oldClaimsRelatedEntitiesSeizures) {
+                if (entityPM.ClaimsRelatedEntitiesSeizures.filter(p=> p.UniqueKey === oldClaimsRelatedEntitiesSeizures[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimsRelatedEntitiesSeizures[itemKey]) {
+                        //oldClaimsRelatedEntitiesSeizures[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimsRelatedEntitiesSeizures.push(oldClaimsRelatedEntitiesSeizures[itemKey]);
+						var oldItemJson = oldClaimsRelatedEntitiesSeizures[itemKey];
+                        var deletedPM: ClaimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimsRelatedEntitiesSeizures.push(deletedPM);
                     }
                 }
             }

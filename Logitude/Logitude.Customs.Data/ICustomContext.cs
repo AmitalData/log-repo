@@ -50,6 +50,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ClaimImporterDeclarsPage3B> ClaimImporterDeclarsPage3Bs { get; }
 		 IDbSet<ClaimsRelatedEntitiesAmount> ClaimsRelatedEntitiesAmounts { get; }
 		 IDbSet<ClaimsRelatedEntitiesReason> ClaimsRelatedEntitiesReasons { get; }
+		 IDbSet<ClaimsRelatedEntitiesSeizure> ClaimsRelatedEntitiesSeizures { get; }
 		 IDbSet<ClaimsRelatedEntity> ClaimsRelatedEntities { get; }
 		 IDbSet<ClaimsRelatedEntsExpDeclar> ClaimsRelatedEntsExpDeclars { get; }
 		 IDbSet<ClaimsRelatedEntsReasonsExp> ClaimsRelatedEntsReasonsExps { get; }

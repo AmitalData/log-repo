@@ -895,6 +895,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<PendingErrorPlace> PendingErrorPlace { get; set; }
         public IDbSet<DecisionType> DecisionType { get; set; }
         public IDbSet<SeizureMethodType> SeizureMethodType { get; set; }
+        public IDbSet<ClaimsRelatedEntitiesSeizure> ClaimsRelatedEntitiesSeizure { get; set; }
 
         #endregion
 
@@ -3893,6 +3894,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
             modelBuilder.Configurations.Add(new DecisionTypeMap());
             modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
+            modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesSeizureMap());
 
             #endregion
 

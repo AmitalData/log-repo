@@ -128,6 +128,7 @@
     <Compile Include="EntityPMs\Generated\ClaimPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ClaimsRelatedEntitiesAmountPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ClaimsRelatedEntitiesReasonPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ClaimsRelatedEntitiesSeizurePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ClaimsRelatedEntityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ClaimsRelatedEntsExpDeclarPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ClaimsRelatedEntsReasonsExpPM.Generated.cs" />

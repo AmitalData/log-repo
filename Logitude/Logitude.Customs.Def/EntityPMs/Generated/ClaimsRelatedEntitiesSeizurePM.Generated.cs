@@ -1,0 +1,214 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class ClaimsRelatedEntitiesSeizurePM : EntityPM
+   {
+   	  private string claimId ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClaimId  
+	   {
+	    
+	     get
+		{
+		   return claimId;
+		 }
+		 set
+		 {
+		   if(claimId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClaimId",OldValue=claimId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   claimId=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private int counterKey ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CounterKey  
+	   {
+	    
+	     get
+		{
+		   return counterKey;
+		 }
+		 set
+		 {
+		   if(counterKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CounterKey",OldValue=counterKey,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   counterKey=value;
+		   }
+			
+		 }
+	   }
+	  private int seizureLinoNo ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int SeizureLinoNo  
+	   {
+	    
+	     get
+		{
+		   return seizureLinoNo;
+		 }
+		 set
+		 {
+		   if(seizureLinoNo != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SeizureLinoNo",OldValue=seizureLinoNo,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   seizureLinoNo=value;
+		   }
+			
+		 }
+	   }
+	  private string seizureFactorCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SeizureFactorCode  
+	   {
+	    
+	     get
+		{
+		   return seizureFactorCode;
+		 }
+		 set
+		 {
+		   if(seizureFactorCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SeizureFactorCode",OldValue=seizureFactorCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   seizureFactorCode=value;
+		   }
+			
+		 }
+	   }
+	  private string seizureMethodCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SeizureMethodCode  
+	   {
+	    
+	     get
+		{
+		   return seizureMethodCode;
+		 }
+		 set
+		 {
+		   if(seizureMethodCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SeizureMethodCode",OldValue=seizureMethodCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   seizureMethodCode=value;
+		   }
+			
+		 }
+	   }
+	  private string seizureMethodName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SeizureMethodName  
+	   {
+	    
+	     get
+		{
+		   return seizureMethodName;
+		 }
+		 set
+		 {
+		   if(seizureMethodName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SeizureMethodName",OldValue=seizureMethodName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   seizureMethodName=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? seizureAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? SeizureAmount  
+	   {
+	    
+	     get
+		{
+		   return seizureAmount;
+		 }
+		 set
+		 {
+		   if(seizureAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SeizureAmount",OldValue=seizureAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   seizureAmount=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

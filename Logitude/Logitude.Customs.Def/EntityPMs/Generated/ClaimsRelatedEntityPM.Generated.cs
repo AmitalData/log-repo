@@ -932,7 +932,42 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<ClaimsRelatedEntitiesSeizurePM> claimsRelatedEntitiesSeizures;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClaimsRelatedEntitiesSeizure", "ClaimId,EntityCounterKey","ClaimId,CounterKey")]
+	   [DataMember]
+	   public virtual List<ClaimsRelatedEntitiesSeizurePM> ClaimsRelatedEntitiesSeizures  
+	   {
+	        get
+             {
+                 if (claimsRelatedEntitiesSeizures == null)
+                 {
+                     claimsRelatedEntitiesSeizures = new List<ClaimsRelatedEntitiesSeizurePM>();
+                 }
+                 return claimsRelatedEntitiesSeizures;
+              }
+             set { claimsRelatedEntitiesSeizures = value; }
+	    }
+		   
+	   private List<ClaimsRelatedEntitiesSeizurePM>  deletedClaimsRelatedEntitiesSeizures;
+	   public virtual List<ClaimsRelatedEntitiesSeizurePM> DeletedClaimsRelatedEntitiesSeizures  
+	   {
+	        get
+             {
+                 if ( deletedClaimsRelatedEntitiesSeizures == null)
+                 {
+                      deletedClaimsRelatedEntitiesSeizures = new List<ClaimsRelatedEntitiesSeizurePM>();
+                 }
+                 return  deletedClaimsRelatedEntitiesSeizures;
+              }
+             set {  deletedClaimsRelatedEntitiesSeizures = value; }
+	    }
+	     }
    
 }
 	 
