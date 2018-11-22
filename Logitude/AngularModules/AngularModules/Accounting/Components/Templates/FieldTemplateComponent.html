@@ -217,6 +217,14 @@
                             <div [style.text-align]="isRTL ? 'right' : 'left'">{{ FieldValue}}</div>
                         </div>
                     </div>
+
+
+
+                    <div *ngIf="FieldName == 'Status'">
+                        <div *ngIf="!IsHeaderScreenTemplate" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-right: 3px;">{{ FieldValue  }}</div>
+                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;">{{ FieldValue  }}</div>
+
+                    </div>
                 </div>
 
             </div>

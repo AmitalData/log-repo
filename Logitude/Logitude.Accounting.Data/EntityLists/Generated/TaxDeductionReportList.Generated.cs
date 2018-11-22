@@ -44,6 +44,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string CreatedByUser  { get; set; }
        [DataMember]
        public string Status  { get; set; }
+       [DataMember]
+       public string StatusLocalName  { get; set; }
    }
 
 }

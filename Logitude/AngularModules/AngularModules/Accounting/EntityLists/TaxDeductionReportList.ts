@@ -23,6 +23,7 @@ export class TaxDeductionReportList {
 	ErrorMessage: string;
 	CreatedByUser: string;
 	Status: string;
+	StatusLocalName: string;
 	
 }
  
