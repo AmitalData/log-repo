@@ -41,11 +41,11 @@
 
                 <!-- Journal -->
                 <div *ngIf="ObjectTableName == 'Journal'">
-                    <div *ngIf="FieldName == 'StatusName'">
-                        <div *ngIf="FieldValue == 'Draft'">{{ Entity.StatusLocalName}}</div>
-                        <div *ngIf="FieldValue == 'Waiting for Approval'" style="color: darkorange;">{{ Entity.StatusLocalName}}</div>
-                        <div *ngIf="FieldValue == 'Approved'" style="color: green;">{{ Entity.StatusLocalName }}</div>
-                        <div *ngIf="FieldValue == 'Voided'" style="color: darkred;">{{ Entity.StatusLocalName }}</div>
+                    <div *ngIf="FieldName == 'StatusName'"  [style.text-align]="isRTL ? 'right' : 'left'" >
+                        <div *ngIf="FieldValue == 'Draft'">{{ showLocal ? Entity.StatusLocalName : Entity.StatusName }}</div>
+                        <div *ngIf="FieldValue == 'Waiting for Approval'" style="color: darkorange;">{{ showLocal ? Entity.StatusLocalName : Entity.StatusName }}</div>
+                        <div *ngIf="FieldValue == 'Approved'" style="color: green;">{{ showLocal ? Entity.StatusLocalName : Entity.StatusName  }}</div>
+                        <div *ngIf="FieldValue == 'Voided'" style="color: darkred;">{{ showLocal ? Entity.StatusLocalName : Entity.StatusName  }}</div>
                     </div>
                     <div *ngIf="FieldName == 'AccountingEntityReference'">
                         <div *ngIf="IsHeaderScreenTemplate">
@@ -216,6 +216,14 @@
                         <div *ngIf="!IsHeaderScreenTemplate">
                             <div [style.text-align]="isRTL ? 'right' : 'left'">{{ FieldValue}}</div>
                         </div>
+                    </div>
+
+
+
+                    <div *ngIf="FieldName == 'Status'">
+                        <div *ngIf="!IsHeaderScreenTemplate" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-right: 3px;">{{ FieldValue  }}</div>
+                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;">{{ FieldValue  }}</div>
+
                     </div>
                 </div>
 

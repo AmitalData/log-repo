@@ -211,10 +211,9 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         }
         else this.IsShowAdvanceLink = false;
 
-
-        this.IsEnableFormat = true;
-
-
+        if (this.EntityPM.IsDocOut) {
+            this.IsEnableFormat = true;
+        }
 
     }
 

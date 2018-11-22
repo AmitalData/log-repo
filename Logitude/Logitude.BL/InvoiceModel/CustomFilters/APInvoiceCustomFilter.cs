@@ -4,6 +4,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.DataContracts;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Data.InvoiceModel;
 
 namespace Logitude.BL.InvoiceModel.CustomFilters
 {
@@ -36,6 +37,18 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
                                  ||
                                  r.VendorCard != null && r.VendorCard.EnglishName.ToUpper().Contains(searchText.ToUpper())
                                  select r);
+                        }
+                    }
+
+                    else if (item.FieldName == "APPaymentInvoicesConnected")
+                    {
+                        string iPaymentId = item.FieldValue as string;
+
+                        if (!string.IsNullOrEmpty(iPaymentId))
+                        {
+                            IInvoiceContext iContext = InvoiceContext.GetContext(Tenant);
+                            List<string> ids = (from d in iContext.APInvoicePayments where d.Tenant == Tenant && d.APPaymentId == iPaymentId select d.APInvoiceId).ToList();
+                            queryableData = (from d in queryableData where ids.Contains(d.Id) select d);
                         }
                     }
 
