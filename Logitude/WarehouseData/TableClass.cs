@@ -8,9 +8,6 @@ namespace WarehouseData
 {
     public class TableClass
     {
-
-
-
         public string TableName { get; set; }
         public string DBTableName { get; set; }
         public string Dw_TableName { get; set; }
@@ -27,6 +24,21 @@ namespace WarehouseData
         public string BuildScriptName { get; set; }
         public string IncrementalScriptName { get; set; }
 
+        public string DWObjectTableCode { get; set; }
+        public List<DWObjectFieldDB> DWObjectFieldDBLists { get; set; }
 
     }
+
+    public class DWObjectFieldDB
+    {
+        public string FieldName { get; set; }
+        public string DataTypeCode { get; set; }
+        public int MaxLength { get; set; }
+        public int MinLength { get; set; }
+        public bool IsRequired { get; set; }
+        public bool IsPrimaryKey { get; set; }
+        public string DimensionTableCode { get; set; }
+        
+    }
+
 }

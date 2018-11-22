@@ -1,16 +1,16 @@
 
-If(OBJECT_ID('tempdb..#DIM_LevelsTemp') Is Not Null)
-Begin
-    Drop Table #DIM_LevelsTemp
-End
+--If(OBJECT_ID('tempdb..#DIM_LevelsTemp') Is Not Null)
+--Begin
+--    Drop Table #DIM_LevelsTemp
+--End
 
-CREATE TABLE #DIM_LevelsTemp (
-	Code varchar(1) not null primary key,
-	Name varchar(40) not null
-);
+--CREATE TABLE #DIM_LevelsTemp (
+--	Code varchar(1) not null primary key,
+--	Name varchar(40) not null
+--);
  
 
-insert into #DIM_LevelsTemp values ('1' , 'Not Specified' )
+insert into #DIM_LevelsTemp (Code,Name) values ('1' , 'Not Specified' )
 
 
    declare @Code as varchar(1)
@@ -24,7 +24,7 @@ insert into #DIM_LevelsTemp values ('1' , 'Not Specified' )
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-    insert into #DIM_LevelsTemp values(@Code,@Name)
+    insert into #DIM_LevelsTemp  (Code,Name) values(@Code,@Name)
 
 	FETCH NEXT FROM ShipmentLevelsCursor INTO @Code , @Name
 		End

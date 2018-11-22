@@ -1,20 +1,20 @@
 
 
-If(OBJECT_ID('tempdb..#DIM_IncotermsTemp') Is Not Null)
-Begin
-    Drop Table #DIM_IncotermsTemp
-End
+--If(OBJECT_ID('tempdb..#DIM_IncotermsTemp') Is Not Null)
+--Begin
+--    Drop Table #DIM_IncotermsTemp
+--End
 
-CREATE TABLE #DIM_IncotermsTemp (
-	Id_Number int not null identity(1,1) primary key,
-    Id varchar(15) not null,
-    Name varchar(40) not null,
-	[Local Name] nvarchar(40),
-    Code varchar(3) not null,
-   	[Source Tenant]  int,
-    [Parent Tenant]  int,
-);
-insert into #DIM_IncotermsTemp values ('-1' , 'Not Specified' ,'Not Specified' ,'NOS', 0,0)
+--CREATE TABLE #DIM_IncotermsTemp (
+--	Id_Number int not null identity(1,1) primary key,
+--    Id varchar(15) not null,
+--    Name varchar(40) not null,
+--	[Local Name] nvarchar(40),
+--    Code varchar(3) not null,
+--   	[Source Tenant]  int,
+--    [Parent Tenant]  int,
+--);
+insert into #DIM_IncotermsTemp (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant]) values ('-1' , 'Not Specified' ,'Not Specified' ,'NOS', 0,0)
 
 
    declare @Id as varchar(15)
@@ -34,7 +34,7 @@ insert into #DIM_IncotermsTemp values ('-1' , 'Not Specified' ,'Not Specified' ,
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-    insert into #DIM_IncotermsTemp values(@Id,@Name,@LocalName,@Code ,@SourceTenant , @ParentTenant)
+    insert into #DIM_IncotermsTemp (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant]) values(@Id,@Name,@LocalName,@Code ,@SourceTenant , @ParentTenant)
 
 	FETCH NEXT FROM IncotermsCursor  INTO @Id , @Name, @LocalName, @Code,@SourceTenant , @ParentTenant
 		End

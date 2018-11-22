@@ -1,16 +1,16 @@
 
-If(OBJECT_ID('tempdb..#DIM_DirectionsTemp') Is Not Null)
-Begin
-    Drop Table #DIM_DirectionsTemp
-End
+--If(OBJECT_ID('tempdb..#DIM_DirectionsTemp') Is Not Null)
+--Begin
+--    Drop Table #DIM_DirectionsTemp
+--End
 
-CREATE TABLE #DIM_DirectionsTemp (
-	Code varchar(1) not null primary key,
-	Name varchar(40) not null
-);
+--CREATE TABLE #DIM_DirectionsTemp (
+--	Code varchar(1) not null primary key,
+--	Name varchar(40) not null
+--);
  
  
-insert into #DIM_DirectionsTemp values ( '1' ,'Not Specified' )
+insert into #DIM_DirectionsTemp  (Code,Name) values ( '1' ,'Not Specified' )
 
    declare @Id as varchar(1)
    declare @Name as varchar(40)
@@ -23,7 +23,7 @@ insert into #DIM_DirectionsTemp values ( '1' ,'Not Specified' )
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-    insert into #DIM_DirectionsTemp values(@Id,@Name)
+    insert into #DIM_DirectionsTemp (Code,Name) values(@Id,@Name)
 
 	FETCH NEXT FROM DirectionsCursor INTO @Id , @Name
 		End
