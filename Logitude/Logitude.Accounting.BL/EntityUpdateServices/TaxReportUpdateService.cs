@@ -28,6 +28,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.Id = IdCounter.GetNumber("TaxReport", entityPM.Tenant);
             entityPM.CreateDate = DateTime.Now;
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+            entityPM.TaxReportMonth = new DateTime(entityPM.TaxReportMonth.Year, entityPM.TaxReportMonth.Month, 1);
             DateTime date = entityPM.TaxReportMonth.AddMonths(1);
           
         
