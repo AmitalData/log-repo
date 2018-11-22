@@ -14,74 +14,74 @@ BEGIN
 END
 
 
-If(OBJECT_ID('tempdb..#Fact_ShipmentsTable') Is Not Null)
-Begin
-    Drop Table #Fact_ShipmentsTable
-End
+--If(OBJECT_ID('tempdb..#Fact_ShipmentsTemp') Is Not Null)
+--Begin
+--    Drop Table #Fact_ShipmentsTemp
+--End
 
 
-CREATE TABLE #Fact_ShipmentsTable (
-	Id_Number int not null identity(1,1) primary key,
-    Id varchar(15) not null,
-   	[Source Tenant]  int,
-    [Parent Tenant]  int,
-	Direction varchar(1) not null,
-	[Transport Mode]  varchar(1) not null,
-	Level  varchar(1) not null,
-	Type  varchar(4) not null,
-	Department  int not null,
-	Branch  int not null,
-    [Shipment Number] varchar(15) not null,
-	House varchar(20),
-	Master varchar(30),
-	Shipper  int,
-	Consignee int,
-	Agent int,
-	Customer int,
-	Incoterm int,
-	[Gross Weight (KG)] float,
-	[Chargeable Weight (KG)] float,
-	[Total Volume (CBM)] float,
-	[Number of Packages] int ,
-	[Number of Containers] int ,
-	Salesman int,
-	[Account Manager] int,
+--CREATE TABLE #Fact_ShipmentsTemp (
+--	Id_Number int not null identity(1,1) primary key,
+--    Id varchar(15) not null,
+--   	[Source Tenant]  int,
+--    [Parent Tenant]  int,
+--	Direction varchar(1) not null,
+--	[Transport Mode]  varchar(1) not null,
+--	Level  varchar(1) not null,
+--	Type  varchar(4) not null,
+--	Department  int not null,
+--	Branch  int not null,
+--    [Shipment Number] varchar(15) not null,
+--	House varchar(20),
+--	Master varchar(30),
+--	Shipper  int,
+--	Consignee int,
+--	Agent int,
+--	Customer int,
+--	Incoterm int,
+--	[Gross Weight (KG)] float,
+--	[Chargeable Weight (KG)] float,
+--	[Total Volume (CBM)] float,
+--	[Number of Packages] int ,
+--	[Number of Containers] int ,
+--	Salesman int,
+--	[Account Manager] int,
 
-	[Profit ( Local )] float,
-	Profit  float,
+--	[Profit ( Local )] float,
+--	Profit  float,
 	
-	[Local Currency ] int,
-    [Profit Currency]  int,
-	[Number of Invoices]  int,
-	[Operationally Closed]  bit,
-	[Accounting Closed] bit ,
-	Status int , 
-	Location nvarchar(40),
-	Origin int,
-	[Final Destination] int,
-	[Is Departed] bit,
-	[Departed Date] datetime,
-	[Is Arrived] bit,
-	[Arrived Date] datetime,
-	[Is Customs Cleared] bit,
-	[Customs Clearence Date] int ,
-	[Total Shipments] int ,
-    [Create Date] datetime ,
-	[Last Update Date] datetime ,
-	[Operational Date] int ,
-	[Operational Close Date] int ,
-	[Accounting Close Date] int ,
+--	[Local Currency ] int,
+--    [Profit Currency]  int,
+--	[Number of Invoices]  int,
+--	[Operationally Closed]  bit,
+--	[Accounting Closed] bit ,
+--	Status int , 
+--	Location nvarchar(40),
+--	Origin int,
+--	[Final Destination] int,
+--	[Is Departed] bit,
+--	[Departed Date] datetime,
+--	[Is Arrived] bit,
+--	[Arrived Date] datetime,
+--	[Is Customs Cleared] bit,
+--	[Customs Clearence Date] int ,
+--	[Total Shipments] int ,
+--    [Create Date] datetime ,
+--	[Last Update Date] datetime ,
+--	[Operational Date] int ,
+--	[Operational Close Date] int ,
+--	[Accounting Close Date] int ,
 	
-	[Open Receivables ( Local )] float ,
-	[Open Receivables ( Profit )] float,
-	[Accounted Receivables ( Local )] float,
-	[Accounted Receivables ( Profit )] float,
-    [Open Payables ( Local )] float,
-	[Open Payables ( Profit )] float,
-    [Accounted Payables ( Local )] float,
-	[Accounted Payables ( Profit )] float,
+--	[Open Receivables ( Local )] float ,
+--	[Open Receivables ( Profit )] float,
+--	[Accounted Receivables ( Local )] float,
+--	[Accounted Receivables ( Profit )] float,
+--    [Open Payables ( Local )] float,
+--	[Open Payables ( Profit )] float,
+--    [Accounted Payables ( Local )] float,
+--	[Accounted Payables ( Profit )] float,
 
-);
+--);
 
 
    declare @Id as varchar(15)
@@ -230,7 +230,7 @@ CREATE TABLE #Fact_ShipmentsTable (
 
 
 
-	    insert into #Fact_ShipmentsTable values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @Level, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency,@NumberOfInvoices ,@OperationallyClosed,@AccountingClosed, @Status, @Location,  @Origin , @FinalDestination , @IsDeparted , @DepartedDate ,@IsArrived , @ArrivedDate , @IsCustomsCleared , dbo.GetDateFormateAsNumber(@CustomsClearenceDate) , 1 ,@CreateDate , @LastUpdateDate ,dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency )
+	    insert into #Fact_ShipmentsTemp ([Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[Level],[Type],[Department],[Branch],[Shipment Number],[House],[Master],[Shipper],[Consignee],[Agent],[Customer],[Incoterm],[Gross Weight (KG)],[Chargeable Weight (KG)],[Total Volume (CBM)],[Number of Packages],[Number of Containers],[Salesman],[Account Manager],[Profit ( Local )],[Profit],[Local Currency ],[Profit Currency],[Number of Invoices],[Operationally Closed],[Accounting Closed],[Status],[Location],[Origin],[Final Destination],[Is Departed],[Departed Date],[Is Arrived],[Arrived Date],[Is Customs Cleared],[Customs Clearence Date],[Total Shipments],[Create Date],[Last Update Date],[Operational Date],[Operational Close Date],[Accounting Close Date],[Open Receivables ( Local )],[Open Receivables ( Profit )],[Accounted Receivables ( Local )],[Accounted Receivables ( Profit )],[Open Payables ( Local )],[Open Payables ( Profit )],[Accounted Payables ( Local )],[Accounted Payables ( Profit )]) values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @Level, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency,@NumberOfInvoices ,@OperationallyClosed,@AccountingClosed, @Status, @Location,  @Origin , @FinalDestination , @IsDeparted , @DepartedDate ,@IsArrived , @ArrivedDate , @IsCustomsCleared , dbo.GetDateFormateAsNumber(@CustomsClearenceDate) , 1 ,@CreateDate , @LastUpdateDate ,dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency )
 
 	FETCH NEXT FROM ShipmentsCursor    INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @Level , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Shipper , @Consignee , @Agent, @Customer 
 	,@Incoterm , @TotalGrossWeightInKG, @TotalChargeableWeightInKG , @TotalVolumeInCBM , @NumberOfPackages , @NumberOfContainers , @Salesman ,@AccountManager ,@TotalProfitInLocalCurrency , 
@@ -243,10 +243,10 @@ CREATE TABLE #Fact_ShipmentsTable (
 
  IF OBJECT_ID ('NewFact_Shipments', 'U')  IS NOT NULL begin drop table NewFact_Shipments end	
  	
-SELECT *  INTO NewFact_Shipments FROM #Fact_ShipmentsTable
-If(OBJECT_ID('tempdb..#Fact_ShipmentsTable') Is Not Null)
+SELECT *  INTO NewFact_Shipments FROM #Fact_ShipmentsTemp
+If(OBJECT_ID('tempdb..#Fact_ShipmentsTemp') Is Not Null)
 Begin
-    Drop Table #Fact_ShipmentsTable
+    Drop Table #Fact_ShipmentsTemp
 
 End
 

@@ -11,10 +11,19 @@ using System.Windows.Forms;
 
 namespace WarehouseData.Helper
 {
-  public  class WarehouseHelper
+    public class WarehouseHelper
     {
+
         #region General 
         long timeOut = 10000000000000000;
+        string AppName = string.Empty;
+        string Mode = string.Empty;
+
+        public WarehouseHelper(string appName= "WarehouseData" , string mode = "Debug")
+        {
+            this.AppName = appName;
+            this.Mode = mode;
+        }
 
         public List<TableClass> FillTable()
         {
@@ -24,24 +33,24 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Country",  DBTableName = "Countries", Dw_TableName = "dw_Countries", KeyName = "Id", HasNotSpecifiedValue = true });
             tableNameLists.Add(new TableClass() { TableName = "State",  DBTableName = "States", Dw_TableName = "dw_States", KeyName = "Id", HasNotSpecifiedValue = true });
             tableNameLists.Add(new TableClass() { TableName = "PartnerType",  DBTableName = "PartnerTypes", Dw_TableName = "dw_PartnerTypes", KeyName = "Id", HasNotSpecifiedValue = true });
-            tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "Direction",  DBTableName = "Directions", Dw_TableName = "dw_Directions", KeyName = "Id", HasDimensionTable = true, BuildScriptName = "BuildDirectionDimensionsTable" , IncrementalScriptName = "UpdateDirectionDimensionTable" });
-            tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "TransportMode",  DBTableName = "TransportModes", Dw_TableName = "dw_TransportModes", KeyName = "Id", HasDimensionTable = true, BuildScriptName = "BuildTransportModeDimensionTable" , IncrementalScriptName = "UpdateTransportModeDimensionTable" });
-            tableNameLists.Add(new TableClass() { IsCloseTable = true,  TableName = "ShipmentLevel",  DBTableName = "ShipmentLevels", Dw_TableName = "dw_Levels", KeyName = "Code", HasDimensionTable = true, BuildScriptName = "BuildShipmentLevelDimensionTable" , IncrementalScriptName = "UpdateShipmentLevelDimensionTable" });
-            tableNameLists.Add(new TableClass() { IsCloseTable = true,  TableName = "ShipmentType",   DBTableName = "ShipmentTypes", Dw_TableName = "dw_Types", KeyName = "Id", HasDimensionTable = true, HasNotSpecifiedValue = true, BuildScriptName = "BuildShipmentTypeDimensionTable" , IncrementalScriptName = "UpdateShipmentTypeDimensionTable" });
-            tableNameLists.Add(new TableClass() { TableName = "Branch",  DBTableName = "Branches", Dw_TableName = "dw_Branches", KeyName = "Id", HasDimensionTable = true, BuildScriptName = "BuildBrancheDimensionTable" , IncrementalScriptName = "UpdateBrancheDimensionTable" });
-            tableNameLists.Add(new TableClass() { TableName = "EntityStatus",  DBTableName = "EntityStatus", Dw_TableName = "dw_ShipmentStatuses", KeyName = "Id", HasDimensionTable = true, BuildScriptName = "BuildEntityStatusDimensionTable" , IncrementalScriptName = "UpdateEntityStatusDimensionTable" });
+            tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "Direction",  DBTableName = "Directions", Dw_TableName = "dw_Directions", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Directions",  BuildScriptName = "BuildDirectionDimensionsTable" , IncrementalScriptName = "UpdateDirectionDimensionTable" });
+            tableNameLists.Add(new TableClass() { IsCloseTable = true, TableName = "TransportMode",  DBTableName = "TransportModes", Dw_TableName = "dw_TransportModes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_TransportModes", BuildScriptName = "BuildTransportModeDimensionTable" , IncrementalScriptName = "UpdateTransportModeDimensionTable" });
+            tableNameLists.Add(new TableClass() { IsCloseTable = true,  TableName = "ShipmentLevel",  DBTableName = "ShipmentLevels", Dw_TableName = "dw_Levels", KeyName = "Code", HasDimensionTable = true, DWObjectTableCode = "DIM_Levels", BuildScriptName = "BuildShipmentLevelDimensionTable" , IncrementalScriptName = "UpdateShipmentLevelDimensionTable" });
+            tableNameLists.Add(new TableClass() { IsCloseTable = true,  TableName = "ShipmentType",   DBTableName = "ShipmentTypes", Dw_TableName = "dw_Types", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Types",  HasNotSpecifiedValue = true, BuildScriptName = "BuildShipmentTypeDimensionTable" , IncrementalScriptName = "UpdateShipmentTypeDimensionTable" });
+            tableNameLists.Add(new TableClass() { TableName = "Branch",  DBTableName = "Branches", Dw_TableName = "dw_Branches", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Branches", BuildScriptName = "BuildBrancheDimensionTable" , IncrementalScriptName = "UpdateBrancheDimensionTable" });
+            tableNameLists.Add(new TableClass() { TableName = "EntityStatus",  DBTableName = "EntityStatus", Dw_TableName = "dw_ShipmentStatuses", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_ShipmentStatuses", BuildScriptName = "BuildEntityStatusDimensionTable" , IncrementalScriptName = "UpdateEntityStatusDimensionTable" });
             tableNameLists.Add(new TableClass() { TableName = "Rank",  DBTableName = "Ranks", Dw_TableName = "dw_Ranks", KeyName = "Id", });
-            tableNameLists.Add(new TableClass() { TableName = "Shipment", FieldsDBName = "ToPortId,FromPortId", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "Shipment", DWObjectTableCode = "Fact_Shipments", FieldsDBName = "ToPortId,FromPortId", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "ShipmentMasterData", DBTableName = "ShipmentMasterDatas", Dw_TableName = "dw_ShipmentMasterDatas",  KeyName = "Id", HasNotSpecifiedValue = true,  HasConstraint = true, DispayInScreen = true });
-            tableNameLists.Add(new TableClass() { TableName = "Card",  DBTableName = "Cards", Dw_TableName = "dw_Partners", KeyName = "Id", HasDimensionTable = true, BuildScriptName = "BuildCardsDimensionTable", IncrementalScriptName = "UpdateCardDimensionTable", HasConstraint = true, DispayInScreen = true });
-            tableNameLists.Add(new TableClass() { TableName = "Port",  DBTableName = "Ports", Dw_TableName = "dw_Ports", KeyName = "Id", HasDimensionTable = true, BuildScriptName = "BuildPortsDimensionTable", IncrementalScriptName = "UpdatePortsDimensionTable", HasConstraint = true, DispayInScreen = true });
-            tableNameLists.Add(new TableClass() { TableName = "User",  DBTableName = "Users", Dw_TableName = "dw_Users", KeyName = "Id", HasDimensionTable = true, BuildScriptName = "BuildUsersDimensionTable", IncrementalScriptName = "UpdateUsersDimensionTable", DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "Card",  DBTableName = "Cards", Dw_TableName = "dw_Partners", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Partners", BuildScriptName = "BuildCardsDimensionTable", IncrementalScriptName = "UpdateCardDimensionTable", HasConstraint = true, DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "Port",  DBTableName = "Ports", Dw_TableName = "dw_Ports", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Ports", BuildScriptName = "BuildPortsDimensionTable", IncrementalScriptName = "UpdatePortsDimensionTable", HasConstraint = true, DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "User",  DBTableName = "Users", Dw_TableName = "dw_Users", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Users", BuildScriptName = "BuildUsersDimensionTable", IncrementalScriptName = "UpdateUsersDimensionTable", DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Contact", DBTableName = "Contacts", Dw_TableName = "dw_Contacts", KeyName = "Id",  HasNotSpecifiedValue = true , DispayInScreen = true});
             tableNameLists.Add(new TableClass() { TableName = "Customer", DBTableName = "Customers", Dw_TableName = "dw_Customers", KeyName = "Id", DispayInScreen = true });
-            tableNameLists.Add(new TableClass() { TableName = "Tenant", DBTableName = "Tenants", Dw_TableName = "dw_Tenants", KeyName = "Id",  HasDimensionTable = true, HasConstraint = true, BuildScriptName = "BuildTenantDimensionTable", IncrementalScriptName = "UpdateTenantDimensionTable", DispayInScreen = true });
-            tableNameLists.Add(new TableClass() { TableName = "Department",  DBTableName = "Departments", Dw_TableName = "dw_Departments", KeyName = "Id", HasDimensionTable = true, BuildScriptName = "BuildDepartmentDimensionTable", IncrementalScriptName = "UpdateDepartmentDimensionTable", DispayInScreen = true});
-            tableNameLists.Add(new TableClass() { TableName = "Incoterm", DBTableName = "Incoterms", Dw_TableName = "dw_Incoterms", KeyName = "Id", HasDimensionTable = true,  BuildScriptName = "BuildIncotermDimensionTable", IncrementalScriptName = "UpdateIncotermDimensionTable" , DispayInScreen = true});
-            tableNameLists.Add(new TableClass() { TableName = "Currency",  DBTableName = "Currencies", Dw_TableName = "dw_Currencies", KeyName = "Id", HasDimensionTable = true, BuildScriptName = "BuildCurrencyDimensionTable", IncrementalScriptName = "UpdateCurrencyDimensionTable", DispayInScreen = true});
+            tableNameLists.Add(new TableClass() { TableName = "Tenant", DBTableName = "Tenants", Dw_TableName = "dw_Tenants", KeyName = "Id",  HasDimensionTable = true, DWObjectTableCode = "DIM_Tenants", HasConstraint = true, BuildScriptName = "BuildTenantDimensionTable", IncrementalScriptName = "UpdateTenantDimensionTable", DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "Department",  DBTableName = "Departments", Dw_TableName = "dw_Departments", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Departments", BuildScriptName = "BuildDepartmentDimensionTable", IncrementalScriptName = "UpdateDepartmentDimensionTable", DispayInScreen = true});
+            tableNameLists.Add(new TableClass() { TableName = "Incoterm", DBTableName = "Incoterms", Dw_TableName = "dw_Incoterms", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Incoterms", BuildScriptName = "BuildIncotermDimensionTable", IncrementalScriptName = "UpdateIncotermDimensionTable" , DispayInScreen = true});
+            tableNameLists.Add(new TableClass() { TableName = "Currency",  DBTableName = "Currencies", Dw_TableName = "dw_Currencies", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Currencies", BuildScriptName = "BuildCurrencyDimensionTable", IncrementalScriptName = "UpdateCurrencyDimensionTable", DispayInScreen = true});
             tableNameLists.Add(new TableClass() { TableName = "WaterMark", DBTableName = "WaterMarks", Dw_TableName = "dw_WaterMarks", KeyName = "TableName"  , FieldsDBName = "TableName,LastUpdateDate" });
 
 
@@ -49,12 +58,84 @@ namespace WarehouseData.Helper
 
         }
 
+
+
+
+        public void BuildDWObjectFieldDB(List<TableClass> tableNameLists, string connectionString)
+        {
+
+            var dWObjectFieldDB = new DataTable();
+
+            using (SqlConnection sourceConnection =
+       new SqlConnection(connectionString))
+            {
+                sourceConnection.Open();
+                SqlCommand commandSourceData = new SqlCommand("SELECT  Code, DWObjectTableCode,DataTypeCode,MaxLength,MinLength,IsRequired ,IsPrimaryKey,DimensionTableCode from DWObjectFields", sourceConnection);
+                SqlDataReader reader = commandSourceData.ExecuteReader();
+
+                dWObjectFieldDB.Load(reader);
+                reader.Close();
+
+            }
+
+
+            foreach (TableClass tableClass in tableNameLists.Where(d => d.HasDimensionTable || d.HasFactTable).ToList())
+            {
+                var rowList = dWObjectFieldDB.AsEnumerable().Where(row => row["DWObjectTableCode"].ToString() == tableClass.DWObjectTableCode).ToList();
+                tableClass.DWObjectFieldDBLists = new List<DWObjectFieldDB>();
+                foreach (DataRow row in rowList)
+                {
+                    var fieldDB = new DWObjectFieldDB();
+                        fieldDB.FieldName = row["Code"].ToString();
+                        fieldDB.DataTypeCode = row["DataTypeCode"].ToString();
+                        fieldDB.MaxLength =Int32.Parse(row["MaxLength"].ToString());
+                        fieldDB.MinLength = Int32.Parse(row["MinLength"].ToString());
+                        fieldDB.IsRequired = bool.Parse(row["IsRequired"].ToString());
+                        fieldDB.IsPrimaryKey = bool.Parse(row["IsPrimaryKey"].ToString());
+                        fieldDB.DimensionTableCode = row["DimensionTableCode"].ToString();
+                        tableClass.DWObjectFieldDBLists.Add(fieldDB);
+                }
+            }
+
+
+            foreach (TableClass tableClass in tableNameLists.Where(d => d.HasDimensionTable || d.HasFactTable).ToList())
+            {
+                if (tableClass.DWObjectFieldDBLists != null)
+                {
+                    foreach (DWObjectFieldDB field in tableClass.DWObjectFieldDBLists.Where(d=>d.DataTypeCode == "Dimension").ToList())
+                    {
+                        if (field.DimensionTableCode != "DIM_Dates")
+                        {
+                            var dimensionTable = tableNameLists.Where(d => d.DWObjectTableCode == field.DimensionTableCode).FirstOrDefault();
+                            if (dimensionTable != null)
+                            {
+                                DWObjectFieldDB orginalField = dimensionTable.DWObjectFieldDBLists.Where(d => d.IsPrimaryKey).FirstOrDefault();
+                                if (orginalField != null)
+                                {
+                                    field.DataTypeCode = orginalField.DataTypeCode;
+                                    field.MaxLength = orginalField.MaxLength;
+                                    field.MinLength = orginalField.MinLength;
+                                    field.IsRequired = orginalField.IsRequired;
+                                    field.IsPrimaryKey = false;
+                                }
+                            }
+                        }
+                        else field.DataTypeCode = "Integer";
+                      
+                    }
+                }
+            }
+
+        }
+
+        
+
         public void BuildWarehouseObjectField(List<TableClass> tableNameLists, string connectionString)
         {
             var objectFieldsTable = new DataTable();
 
             using (SqlConnection sourceConnection =
-       new SqlConnection(connectionString))
+            new SqlConnection(connectionString))
             {
                 sourceConnection.Open();
 
@@ -155,22 +236,33 @@ namespace WarehouseData.Helper
 
         }
    
-        public void ExecuteScript(string scripName, string forderName, string connectionString , string mode  = "Debug")
+        public void ExecuteScript( string forderName,  string connectionString , TableClass table , string scripName = null)
         {
-
             string path = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
-
-            if (path.Contains(@"\bin\" + mode))
+            if (AppName != "Service")
             {
-                path = path.Replace(@"\bin\" + mode, string.Empty);
+                if (path.Contains(@"\bin\" + Mode))
+                {
+                    path = path.Replace(@"\bin\" + Mode, string.Empty);
+                }
+            }
+            
+            if(scripName == null)
+            {
+                if (table != null) scripName = forderName == "BuildWarehouse" ? table.BuildScriptName : table.IncrementalScriptName;
             }
 
             string fileDirectory = Path.Combine(path, "WarehouseScript\\" + forderName, scripName + ".sql");
             FileInfo file = new FileInfo(fileDirectory);
-
             string cmd = file.OpenText().ReadToEnd();
 
 
+            if (forderName == "BuildWarehouse" && table != null)
+            {
+                cmd = CreateTempTable(connectionString, table) + cmd;
+            }
+
+           // string s = GetShipmentField();
             using (SqlConnection cn = new SqlConnection(connectionString))
             {
                 SqlCommand sqlCommand = new SqlCommand(cmd, cn);
@@ -181,6 +273,87 @@ namespace WarehouseData.Helper
             }
 
         }
+
+
+
+       private string CreateTempTable(string connectionString, TableClass table)
+        {
+            string sql = "If(OBJECT_ID('tempdb..#" + table.DWObjectTableCode + "Temp') Is Not Null) Begin  Drop Table #"+ table.DWObjectTableCode + "Temp End";
+            sql += " CREATE TABLE #" + table.DWObjectTableCode + "Temp ( ";
+
+            foreach(DWObjectFieldDB field in table.DWObjectFieldDBLists)
+            {
+                sql += field.FieldName + " " ;
+
+                if (field.DataTypeCode == "Text" || field.DataTypeCode == "nText")
+                {
+                    if (field.DataTypeCode == "nText") sql += "n";
+                    sql += "varchar(" + field.MaxLength + ")";
+                }
+                else if (field.DataTypeCode == "Boolean") sql += " bit";
+                else if (field.DataTypeCode == "Decimal" || field.DataTypeCode == "Double") sql += " float";
+                else if (field.DataTypeCode == "Integer") sql += " int";
+                else if (field.DataTypeCode == "DateTime") sql += " dateTime";
+                else if (field.DataTypeCode == "Date") sql += " date";
+
+                if(field.IsRequired) sql += " not null";
+
+
+                if (field.IsPrimaryKey)
+                {
+                    if (field.FieldName == "[Id_Number]") sql += " identity(1, 1)";
+                    sql += "  primary key";
+                }
+
+                sql += ",";
+            }
+            sql += ");";
+
+            sql = sql.Replace(",);", ");");
+
+            return sql;
+
+
+        }
+
+
+
+    //    public string GetShipmentField()
+    //    {
+
+    //        string sourceConnectionString = "Data Source=" + "." + ";Initial Catalog=" + "Logitude2-5_Global" + ";Integrated Security=False;Persist Security Info=True;User ID=" + "sa" + ";Password= " + "Saas256" + ";MultipleActiveResultSets=True;Connect Timeout=60";
+
+    //        var dwObjectTable = new DataTable();
+
+
+    //        using (SqlConnection sourceConnection =
+    //new SqlConnection(sourceConnectionString))
+    //        {
+    //            sourceConnection.Open();
+
+    //            SqlCommand commandSourceData = new SqlCommand("select top(1) *" + " from " + " Fact_Shipments", sourceConnection);
+
+    //            SqlDataReader reader = commandSourceData.ExecuteReader();
+
+    //            dwObjectTable.Load(reader);
+    //            reader.Close();
+
+    //        }
+    //        string sql = "(";
+    //        for (int i = 0; i < dwObjectTable.Columns.Count; i++)
+    //        {
+    //            sql+= "[" + dwObjectTable.Columns[i].ColumnName + "],";
+    //        }
+    //        sql += ")";
+    //        sql = sql.Replace("],)", "])");
+    //        return sql;
+
+
+    //    }
+
+      
+
+
 
         public string BuildConnectionString(string catalog, string userName, string password, string server)
         {
@@ -257,7 +430,7 @@ namespace WarehouseData.Helper
         #region Build Data Base
 
 
-        public void BuildDataBase(string mode,string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
+        public void BuildDataBase(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
         {
             bool isPrivateDB = privateTenant!=null ? true : false;
 
@@ -265,7 +438,7 @@ namespace WarehouseData.Helper
       
             List<TableClass> tableNameLists = FillTable();
             BuildWarehouseObjectField(tableNameLists, sourceConnectionString);
-
+            BuildDWObjectFieldDB(tableNameLists, sourceConnectionString);
             foreach (TableClass table in tableNameLists)
             {
                 if (table.TableName != "WaterMark")
@@ -292,23 +465,26 @@ namespace WarehouseData.Helper
                 UpdateAutomaticLastUpdate(table, sourceConnectionString , destinationConnectionString, privateTenant);
             }
             
-            ExecuteScript("BuildDateDimensionsTable", "BuildWarehouse", destinationConnectionString , mode);
+            ExecuteScript( "BuildWarehouse", destinationConnectionString ,null, "BuildDateDimensionsTable");
 
 
             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
             {
-                ExecuteScript(table.BuildScriptName, "BuildWarehouse", destinationConnectionString , mode);
+                ExecuteScript("BuildWarehouse", destinationConnectionString , table);
             }
 
             foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
             {
-                ExecuteScript(table.BuildScriptName, "BuildWarehouse", destinationConnectionString, mode);
+                ExecuteScript( "BuildWarehouse", destinationConnectionString , table);
             }
 
         }
 
         Control Control = null;
         TableClass Table = null;
+
+
+
 
         public void CopyDataBase(Control control, TableClass table, string sourceConnectionString, string destinationConnectionString, int? privateTenant = null , string relatedTenants = null)
         {
@@ -779,7 +955,7 @@ namespace WarehouseData.Helper
             #region Update Dimensions Table
             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
             {
-                ExecuteScript(table.IncrementalScriptName, "IncrementalWarehouse", destinationConnectionString);
+                ExecuteScript("IncrementalWarehouse", destinationConnectionString, table);
             }
             #endregion
 
@@ -788,7 +964,7 @@ namespace WarehouseData.Helper
             foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
             {
                 RemoveDataFromFactShipment(table, destinationConnectionString);
-                ExecuteScript(table.IncrementalScriptName, "IncrementalWarehouse", destinationConnectionString);
+                ExecuteScript( "IncrementalWarehouse", destinationConnectionString , table);
             }
 
             #endregion
@@ -1058,7 +1234,7 @@ namespace WarehouseData.Helper
             return tenants;
         }
 
-        public void BuildOrUpdatePrivateDBData(string dbsourceConnection, string dbDestinationConnection, string type , string appName,string mode )
+        public void BuildOrUpdatePrivateDBData(string dbsourceConnection, string dbDestinationConnection, string type)
         {
             if (!string.IsNullOrEmpty(dbsourceConnection) && !string.IsNullOrEmpty(dbDestinationConnection))
             {
@@ -1067,7 +1243,7 @@ namespace WarehouseData.Helper
 
                 if (sourceConnectionArray.Length != 4 || destinationConnectionArray.Length != 4)
                 {
-                    if (appName != "Service")
+                    if (AppName != "Service")
                     {
                         MessageBox.Show("connection not valid");
                     }
@@ -1091,11 +1267,11 @@ namespace WarehouseData.Helper
                     if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
 
                     string tenants = warehouseHelper.ConvertIntgerListToString(relatedTenants);
-                    if (type == "Build") BuildDataBase(mode, sourceConnectionString, destinationConnectionString, tenant, tenants);
+                    if (type == "Build") BuildDataBase(sourceConnectionString, destinationConnectionString, tenant, tenants);
                     else warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString, tenant, tenants);
                 }
             }
-            else if (appName != "Service")
+            else if (AppName != "Service")
             {
                 MessageBox.Show("Connection Problem");
             }

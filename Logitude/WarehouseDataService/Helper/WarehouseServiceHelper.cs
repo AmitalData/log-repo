@@ -40,7 +40,6 @@ namespace WarehouseDataService.Helper
             return countStart;
         }
 
-
         public bool GetWarehouseFieldFromSettings(string fieldName, string connectionString)
         {
             string connection = connectionString.Replace("Main", "Global");
@@ -69,8 +68,6 @@ namespace WarehouseDataService.Helper
             }
             return result;
         }
-
-
 
         public DateTime? GetDWNextRunTime(string connectionString)
         {
@@ -135,33 +132,11 @@ namespace WarehouseDataService.Helper
             }
         }
 
-        public void ExecuteScript(string scripName, string forderName, string connectionString)
+        public string BuildConnectionString(string catalog, string userName, string password, string server)
         {
-            string path = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
-
-            if (path.Contains(@"\bin\" + ApplicationInfo.Mode))
-            {
-                path = path.Replace(@"\bin\" + ApplicationInfo.Mode, string.Empty);
-            }
-
-            string fileDirectory = Path.Combine(path, "WarehouseScript\\" + forderName, scripName + ".sql");
-            FileInfo file = new FileInfo(fileDirectory);
-
-            string cmd = file.OpenText().ReadToEnd();
-
-
-            using (SqlConnection cn = new SqlConnection(connectionString))
-            {
-                SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-                sqlCommand.CommandTimeout = (int)timeOut;
-                cn.Open();
-                sqlCommand.ExecuteNonQuery();
-                cn.Close();
-            }
-
+            string result = "Data Source=" + server + ";Initial Catalog=" + catalog + ";Integrated Security=False;Persist Security Info=True;User ID=" + userName + ";Password= " + password + ";MultipleActiveResultSets=True;Connect Timeout=60";
+            return result;
         }
-
-
 
     }
 }
