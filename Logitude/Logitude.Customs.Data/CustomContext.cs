@@ -510,6 +510,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SalesTaxExemptionTypeMap());
 	
+            modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
+	
             modelBuilder.Configurations.Add(new SignatureTypeMap());
 	
             modelBuilder.Configurations.Add(new SiteLookupMap());
@@ -2371,6 +2373,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SeizureMethodType> SeizureMethodTypes 
 	 {
 	      get; set;
 	 

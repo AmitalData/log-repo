@@ -120,6 +120,10 @@
     <Compile Include="Migrations\201811220919515_AddMigrationClaimRelatedEntityDecision.Designer.cs">
       <DependentUpon>201811220919515_AddMigrationClaimRelatedEntityDecision.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811221127221_AddMigrationSeizureMethodType.cs" />
+    <Compile Include="Migrations\201811221127221_AddMigrationSeizureMethodType.Designer.cs">
+      <DependentUpon>201811221127221_AddMigrationSeizureMethodType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -192,6 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811220919515_AddMigrationClaimRelatedEntityDecision.resx">
       <DependentUpon>201811220919515_AddMigrationClaimRelatedEntityDecision.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811221127221_AddMigrationSeizureMethodType.resx">
+      <DependentUpon>201811221127221_AddMigrationSeizureMethodType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

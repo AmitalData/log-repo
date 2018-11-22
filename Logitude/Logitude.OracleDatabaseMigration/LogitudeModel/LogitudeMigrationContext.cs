@@ -894,6 +894,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<ClientDrivingLicenseType> ClientDrivingLicenseType { get; set; }
         public IDbSet<PendingErrorPlace> PendingErrorPlace { get; set; }
         public IDbSet<DecisionType> DecisionType { get; set; }
+        public IDbSet<SeizureMethodType> SeizureMethodType { get; set; }
 
         #endregion
 
@@ -3891,6 +3892,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DecCargoSplitCargoIdentifierMap());
             modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
             modelBuilder.Configurations.Add(new DecisionTypeMap());
+            modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
 
             #endregion
 

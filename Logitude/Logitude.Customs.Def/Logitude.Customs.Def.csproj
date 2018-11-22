@@ -316,6 +316,7 @@
     <Compile Include="EntityPMs\Generated\RequiredGuaranteeTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ReturnConditionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SalesTaxExemptionTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SeizureMethodTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SignatureTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SiteLookupPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SiteTypePM.Generated.cs" />
