@@ -6,9 +6,12 @@ using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.Messaging.Maman
 {
@@ -78,17 +81,21 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DolarValue = _DeclarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD.GetValueOrDefault());
             }
 
+            string defBaldarCodeValue = GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _DeclarationPM.Tenant);
+
             var courierHawbMamanModel = new GWMessageECTHRData()
             {
-                BaldarCode = "2026" ,//"לקחת מדיפולט קוד משלח בלדר",
+                BaldarCode = defBaldarCodeValue,//"לקחת מדיפולט קוד משלח בלדר",
                 BaldarAwb = _DeclarationPM.CourierHAWB,
-                AirlineAwbPref = _CourierMasterPM.AirlineId,//יש לשלוח את Airline PRFIX)- 114
+                //AirlineAwbPref = _CourierMasterPM.AirlineId,//יש לשלוח את Airline PRFIX)- 114
+                AirlineAwbPref = _CourierMasterPM.AirlinePrefix??"",//יש לשלוח את Airline PRFIX)- 114
+
                 Master = CInt(_CourierMasterPM.MAWB),
                 Awb8 = CInt(_CourierMasterPM.ShortHAWB),
                 HawbExtnd = _CourierMasterPM.HAWB,
-                AirlineCode = _CourierMasterPM.AirlineId,
+                AirlineCode = _CourierMasterPM.AirlineName??"",
                 FltNo = CInt(_CourierMasterPM.FlightNumber),
-                FltDate = _CourierMasterPM.DepartureDate,// fltdate is not nullable ??
+                FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date,// fltdate is not nullable ??
                 LandTime = _CourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
                 DecNoOfPackags = DecNoOfPackags,
                 DecWeight = DecWeight,
@@ -111,6 +118,22 @@ namespace Logitude.Customs.BL.Messaging.Maman
             };
             return courierHawbMamanModel;
         }
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(tenant));
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            var myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
 
         private DateTime GetOpenBaldarAwbDate()
         {
@@ -124,6 +147,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
             DateTime d = DateTime.MinValue;
             DateTime.TryParse(myConsignmentPM.ThirdCargoID, out d);
+            if (d == DateTime.MinValue)
+            {
+                DateTime.TryParseExact(myConsignmentPM.ThirdCargoID, "ddMMyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out d);
+            }
             return d;
         }
 

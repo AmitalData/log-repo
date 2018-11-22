@@ -626,9 +626,17 @@ export class ImporterDetailsComponent extends BaseComponent {
     OkButtonClicked() {
         if (this.type == "Importer" && this.isCourierDeclaration) {
             //if (!FormatTool.IsEmail(this.CasualImporterEmail)) {
-                //errors.push("Invalid email format!");
+            //errors.push("Invalid email format!");
             //}
-            this.ImporterAddress = this.CasualImporterAddress1 + " " + this.CasualImporterAddress2 + " " + this.CasualImporterCity;
+            this.ImporterAddress = null;
+            if (!AppTool.IsNullOrEmpty(this.CasualImporterAddress1) ||
+                !AppTool.IsNullOrEmpty(this.CasualImporterAddress2) ||
+                !AppTool.IsNullOrEmpty(this.CasualImporterCity) 
+
+                ) {
+                this.ImporterAddress = this.CasualImporterAddress1 + " " +
+                    this.CasualImporterAddress2 + " " + this.CasualImporterCity;
+            }
         }
         
         SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
