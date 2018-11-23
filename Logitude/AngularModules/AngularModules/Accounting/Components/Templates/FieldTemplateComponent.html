@@ -53,6 +53,10 @@
                         </div>
                         <div [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="!IsHeaderScreenTemplate">{{FieldValue}}</div>
                     </div>
+
+                    <div *ngIf="FieldName == 'TypeName'">
+                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">{{  showLocal ? Entity["TypeLocalName"] : Entity["TypeName"] }}</div>
+                    </div>
                 </div>
 
                 <!-- BankDeposit -->
