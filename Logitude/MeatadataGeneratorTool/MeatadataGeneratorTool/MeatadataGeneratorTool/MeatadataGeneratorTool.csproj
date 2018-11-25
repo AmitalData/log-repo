@@ -356,19 +356,6 @@
   <ItemGroup>
     <Content Include="bin\Debug\MeatadataGeneratorTool.exe" />
     <Content Include="bin\Debug\MeatadataGeneratorTool.pdb" />
-    <Content Include="dlls\EntityFramework.dll" />
-    <Content Include="dlls\GalaSoft.MvvmLight.Extras.WPF45.dll" />
-    <Content Include="dlls\GalaSoft.MvvmLight.WPF45.dll" />
-    <Content Include="dlls\Logitude.Customs.BL.dll" />
-    <Content Include="dlls\Logitude.Customs.Data.dll" />
-    <Content Include="dlls\Logitude.Server.Tools.dll" />
-    <Content Include="dlls\Microsoft.Practices.ServiceLocation.dll" />
-    <Content Include="dlls\Microsoft.ServiceBus.dll" />
-    <Content Include="dlls\Microsoft.WindowsAzure.Storage.dll" />
-    <Content Include="dlls\Simplog.Data.dll" />
-    <Content Include="dlls\Simplog.Data.Global.dll" />
-    <Content Include="dlls\Simplog.Server.Infrastructure.dll" />
-    <Content Include="dlls\System.Windows.Interactivity.dll" />
     <Resource Include="logo_tr_AVr_icon.ico" />
     <Resource Include="Eraser-icon.png" />
   </ItemGroup>
