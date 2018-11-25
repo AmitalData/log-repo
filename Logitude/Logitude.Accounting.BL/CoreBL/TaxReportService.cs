@@ -82,13 +82,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
             List<Simplog.Data.CommonDataModel.EntityPOCOs.Card> cards = cardRepository.GetCardsByIds(cardIds, tenant).ToList();
             
-            string  vatNumber = null;
+           
 
             List<TaxReportLinePM> reportLinesList = new List<TaxReportLinePM>();
 
             //Outputs
             foreach (Journal a in journals)
             {
+                string vatNumber = null;
                 var exist = reportLinesList.Where(d => d.JournalId == a.Id).Any();
                 if (!exist)
                 {

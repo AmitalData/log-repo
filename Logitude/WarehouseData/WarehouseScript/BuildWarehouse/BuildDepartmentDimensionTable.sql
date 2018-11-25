@@ -1,21 +1,21 @@
 
-If(OBJECT_ID('tempdb..#DIM_DepartmentsTemp') Is Not Null)
-Begin
-    Drop Table #DIM_DepartmentsTemp
-End
+--If(OBJECT_ID('tempdb..#DIM_DepartmentsTemp') Is Not Null)
+--Begin
+--    Drop Table #DIM_DepartmentsTemp
+--End
 
 
 
-CREATE TABLE #DIM_DepartmentsTemp (
-	Id_Number int not null identity(1,1) primary key,
-    Id varchar(15) not null,
-    Name varchar(40) not null,
-	[Local Name] nvarchar(40),
-   	[Source Tenant]  int,
-    [Parent Tenant]  int,
-);
+--CREATE TABLE #DIM_DepartmentsTemp (
+--	Id_Number int not null identity(1,1) primary key,
+--    Id varchar(15) not null,
+--    Name varchar(40) not null,
+--	[Local Name] nvarchar(40),
+--   	[Source Tenant]  int,
+--    [Parent Tenant]  int,
+--);
 
-insert into #DIM_DepartmentsTemp values ('-1' , 'Not Specified' ,'Not Specified' , 0,0)
+insert into #DIM_DepartmentsTemp (Id,Name,[Local Name],[Source Tenant],[Parent Tenant]) values ('-1' , 'Not Specified' ,'Not Specified' , 0,0)
 
    declare @Id as varchar(15)
    declare @EnglishName as varchar(40)
@@ -32,7 +32,7 @@ insert into #DIM_DepartmentsTemp values ('-1' , 'Not Specified' ,'Not Specified'
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-    insert into #DIM_DepartmentsTemp values(@Id,@EnglishName,@LocalName,	@SourceTenant , @ParentTenant)
+    insert into #DIM_DepartmentsTemp (Id,Name,[Local Name],[Source Tenant],[Parent Tenant]) values(@Id,@EnglishName,@LocalName,	@SourceTenant , @ParentTenant)
 
 	FETCH NEXT FROM DepartmentsCursor INTO @Id , @EnglishName, @LocalName, 	@SourceTenant , @ParentTenant
 		End

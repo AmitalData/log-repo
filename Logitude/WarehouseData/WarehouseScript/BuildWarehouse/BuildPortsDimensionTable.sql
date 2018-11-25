@@ -1,27 +1,27 @@
 
 
-If(OBJECT_ID('tempdb..#DIM_PortsTemp') Is Not Null)
-Begin
-    Drop Table #DIM_PortsTemp
-End
+--If(OBJECT_ID('tempdb..#DIM_PortsTemp') Is Not Null)
+--Begin
+--    Drop Table #DIM_PortsTemp
+--End
 
 
 
---Create temporal #DIM_PortsTemp
+----Create temporal #DIM_PortsTemp
 
-CREATE TABLE #DIM_PortsTemp (
-	Id_Number int not null identity(1,1) primary key,
-    Id varchar(15) not null,
-    Name varchar(40) not null,
-	Code varchar(3) not null,
-	[Local Name] nvarchar(40),
-	[UN Loc Code] varchar(30),
-	Country varchar(120)  not null,
-	[State Name]  varchar(40),
-   	[Source Tenant]  int,
-    [Parent Tenant]  int,
-);
-insert into #DIM_PortsTemp values ('-1' , 'Not Specified' ,'NOS' ,'Not Specified','Not Specified','Not Specified','Not Specified',0,0)
+--CREATE TABLE #DIM_PortsTemp (
+--	Id_Number int not null identity(1,1) primary key,
+--    Id varchar(15) not null,
+--    Name varchar(40) not null,
+--	Code varchar(3) not null,
+--	[Local Name] nvarchar(40),
+--	[UN Loc Code] varchar(30),
+--	Country varchar(120)  not null,
+--	[State Name]  varchar(40),
+--   	[Source Tenant]  int,
+--    [Parent Tenant]  int,
+--);
+insert into #DIM_PortsTemp (Id,Name,Code,[Local Name],[UN Loc Code] ,Country,[State Name],  [Source Tenant],[Parent Tenant]) values ('-1' , 'Not Specified' ,'NOS' ,'Not Specified','Not Specified','Not Specified','Not Specified',0,0)
 
    declare @Id as varchar(15)
    declare @Name as varchar(40)
@@ -44,9 +44,9 @@ insert into #DIM_PortsTemp values ('-1' , 'Not Specified' ,'NOS' ,'Not Specified
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
-	insert into #DIM_PortsTemp values(@Id,@Name,@Code,@LocalName ,@CombinedCode, @Country, @State , @SourceTenant , @ParentTenant)
+	insert into #DIM_PortsTemp  (Id,Name,Code,[Local Name],[UN Loc Code] ,Country,[State Name],  [Source Tenant],[Parent Tenant])  values(@Id,@Name,@Code,@LocalName ,@CombinedCode, @Country, @State , @SourceTenant , @ParentTenant)
 
-	FETCH NEXT FROM PortsCursor  INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant 
+	FETCH NEXT FROM PortsCursor   INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant 
 		End
 	CLOSE PortsCursor
 	DEALLOCATE PortsCursor

@@ -1,18 +1,18 @@
 
-If(OBJECT_ID('tempdb..#DIM_TenantsTemp') Is Not Null)
-Begin
-    Drop Table #DIM_TenantsTemp
-End
+--If(OBJECT_ID('tempdb..#DIM_TenantsTemp') Is Not Null)
+--Begin
+--    Drop Table #DIM_TenantsTemp
+--End
 
 
 
---Create temporal #DIM_PortsTable
+----Create temporal #DIM_PortsTable
 
- CREATE TABLE #DIM_TenantsTemp (
-	[Tenant Number] int not null  primary key,
-    [Tenant Name] varchar(100) not null,
-	Country varchar(120),
-);
+-- CREATE TABLE #DIM_TenantsTemp (
+--	[Tenant Number] int not null  primary key,
+--    [Tenant Name] varchar(100) not null,
+--	Country varchar(120),
+--);
 insert into #DIM_TenantsTemp values ( -1 ,'Not Specified' ,'Not Specified')
 
 

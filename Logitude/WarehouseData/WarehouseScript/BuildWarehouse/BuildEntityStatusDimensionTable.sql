@@ -1,23 +1,23 @@
 
 
 
-If(OBJECT_ID('tempdb..#DIM_ShipmentStatusesTemp') Is Not Null)
-Begin
-    Drop Table #DIM_ShipmentStatusesTemp
-End
+--If(OBJECT_ID('tempdb..#DIM_ShipmentStatusesTemp') Is Not Null)
+--Begin
+--    Drop Table #DIM_ShipmentStatusesTemp
+--End
 
 
-CREATE TABLE #DIM_ShipmentStatusesTemp (
-	Id_Number int not null identity(1,1) primary key,
-    Id varchar(15) not null,
-    Name varchar(40) not null,
-    Code varchar(4) not null,
-   	[Source Tenant]  int,
-    [Parent Tenant]  int,
-);
+--CREATE TABLE #DIM_ShipmentStatusesTemp (
+--	Id_Number int not null identity(1,1) primary key,
+--    Id varchar(15) not null,
+--    Name varchar(40) not null,
+--    Code varchar(4) not null,
+--   	[Source Tenant]  int,
+--    [Parent Tenant]  int,
+--);
 
 
-insert into #DIM_ShipmentStatusesTemp values ('1' , 'Not Specified' ,'NOSP' , 0, 0)
+insert into #DIM_ShipmentStatusesTemp (Id,Name,Code,[Source Tenant],[Parent Tenant]) values ('1' , 'Not Specified' ,'NOSP' , 0, 0)
 
    declare @Id as varchar(15)
    declare @Name as varchar(40)
@@ -35,7 +35,7 @@ insert into #DIM_ShipmentStatusesTemp values ('1' , 'Not Specified' ,'NOSP' , 0,
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-    insert into #DIM_ShipmentStatusesTemp values(@Id,@Name,@Code , 	@SourceTenant , @ParentTenant)
+    insert into #DIM_ShipmentStatusesTemp  (Id,Name,Code,[Source Tenant],[Parent Tenant]) values(@Id,@Name,@Code , 	@SourceTenant , @ParentTenant)
 
 	FETCH NEXT FROM EntityStatusCursor  INTO @Id , @Name, @Code, 	@SourceTenant , @ParentTenant
 		End

@@ -1,17 +1,17 @@
 
-If(OBJECT_ID('tempdb..#DIM_TransportModesTemp') Is Not Null)
-Begin
-    Drop Table #DIM_TransportModesTemp
-End
+--If(OBJECT_ID('tempdb..#DIM_TransportModesTemp') Is Not Null)
+--Begin
+--    Drop Table #DIM_TransportModesTemp
+--End
 
-CREATE TABLE #DIM_TransportModesTemp (
-	Code varchar(1) not null primary key,
-	Name varchar(13) not null
-);
+--CREATE TABLE #DIM_TransportModesTemp (
+--	Code varchar(1) not null primary key,
+--	Name varchar(13) not null
+--);
 
 
 
-insert into #DIM_TransportModesTemp values ( '1' ,'Not Specified' )
+insert into #DIM_TransportModesTemp  (Code,Name) values ( '1' ,'Not Specified' )
 
 
 
@@ -26,7 +26,7 @@ insert into #DIM_TransportModesTemp values ( '1' ,'Not Specified' )
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-    insert into #DIM_TransportModesTemp values(@Id,@Name)
+    insert into #DIM_TransportModesTemp  (Code,Name) values(@Id,@Name)
 
 	FETCH NEXT FROM TransportModesCursor INTO @Id , @Name
 		End
