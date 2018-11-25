@@ -100,12 +100,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                       where myPackage.Tenant == tenant && myShipment.Tenant == tenant
                                       && myShipment.IsCancelled == false
                                       && allStatusedIds_DEP.Contains(myShipment.StatusId)
-                                      &&
-                                      (
-                                      myPackage.IsDeliveryFU
-                                      ||
-                                      myPackage.IsEmptyContainerReturnFU
-                                      )
+
+                                      // Task 44634: In Transit Query | follow up is not required
+                                      //&&
+                                      //(
+                                      //myPackage.IsDeliveryFU
+                                      //||
+                                      //myPackage.IsEmptyContainerReturnFU
+                                      //)
                                       select myPackage).Count();
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);

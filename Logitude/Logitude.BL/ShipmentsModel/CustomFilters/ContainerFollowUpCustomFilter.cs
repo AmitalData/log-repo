@@ -95,13 +95,15 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                         iQueryableData = (from d in iQueryableData
                                           where d.Tenant == tenant                                      
-                                          && allStatusedIds_DEP.Contains(d.StatusId)                                      
-                                          &&                                      
-                                          (                                      
-                                          d.IsDeliveryFU                                      
-                                          ||                                      
-                                          d.IsEmptyContainerReturnFU                                      
-                                          )
+                                          && allStatusedIds_DEP.Contains(d.StatusId)
+
+                                          // Task 44634: In Transit Query | follow up is not required
+                                          //&&                                      
+                                          //(                                      
+                                          //d.IsDeliveryFU                                      
+                                          //||                                      
+                                          //d.IsEmptyContainerReturnFU                                      
+                                          //)
                                           select d);
                     }
                 }
