@@ -253,6 +253,9 @@
     <Content Include="WarehouseScript\Others\Day 26 [Abed] FillDWHSettingTable.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="WarehouseScript\Others\Function Date.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="WarehouseScript\Others\UpdateObjectFieldCopyToDW.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

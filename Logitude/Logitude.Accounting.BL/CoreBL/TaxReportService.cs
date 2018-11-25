@@ -619,7 +619,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 //create line 
                 string line = "";
-                myStringBuilder.Append("O");
                 line += lineList.LineTypeCode;
 
                 myStringBuilder.Append(FormatString(lineList.VatNumber, 9, paddingDigit: '0'));
