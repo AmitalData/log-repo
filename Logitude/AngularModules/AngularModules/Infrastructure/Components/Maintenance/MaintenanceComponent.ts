@@ -147,6 +147,16 @@ export class MaintenanceComponent {
         this.PageChanged(this.PagesMenu[0]);
     }
     private BuildSystemSettings() {
+
+        if (FeatureLocator.HasFeaturePermession("General", "TERMOFUSERFEATUE")) {
+            var item2 = new MenusTablePM();
+            item2.CategoryTypeCode = "CMS";
+            item2.Icon = "Settings"
+            item2.Code = "TOUS";
+            item2.ObjectTableName = "Terms of Use";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item2));
+        }
+
         if (FeatureLocator.HasFeaturePermession("General", "SYSTEMSETTINGS")) {
             
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyAddress")) {
@@ -158,7 +168,7 @@ export class MaintenanceComponent {
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
 
-        if (SessionLocator.Tenant == 0) {
+            if (SessionLocator.Tenant == 0) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
                 item.Icon = "Settings"
@@ -348,15 +358,6 @@ export class MaintenanceComponent {
             item1.Code = "SYIN";
             item1.ObjectTableName = "System Info";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item1));
-
-            if (FeatureLocator.HasFeaturePermession("General", "TERMOFUSERFEATUE")) {
-                var item2 = new MenusTablePM();
-                item2.CategoryTypeCode = "CMS";
-                item2.Icon = "Settings"
-                item2.Code = "TOUS";
-                item2.ObjectTableName = "Terms of Use";
-                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item2));
-            }
 
             var item3 = new MenusTablePM();
             item3.CategoryTypeCode = "CMS";
@@ -611,7 +612,16 @@ export class MaintenanceComponent {
             itemsSource = this.AllMaintenanceMenu.filter(f => f.CategoryTypeCode.toUpperCase() == this.SelectedMenu.Code.toUpperCase());
         }
 
-        this.ItemsSource = itemsSource;
+
+        //this.ItemsSource = itemsSource;
+
+        itemsSource.forEach(item => {
+            if (AppTool.IsNullOrEmpty(item.TranslatedName)) {
+                item.TranslatedName = "";
+            }
+        });
+
+        this.ItemsSource = itemsSource.sort((a, b) => a.TranslatedName.toLowerCase() !== b.TranslatedName.toLowerCase() ? a.TranslatedName.toLowerCase() < b.TranslatedName.toLowerCase() ? -1 : 1 : 0);
     }
 
     ItemClicked(item: MaintenanceMenuItem) {
