@@ -35,6 +35,7 @@ export class JournalList {
 	LastActivityByUserName: string;
 	LastActivityDate: Date;
 	StatusLocalName: string;
+	TypeLocalName: string;
 	
 }
  

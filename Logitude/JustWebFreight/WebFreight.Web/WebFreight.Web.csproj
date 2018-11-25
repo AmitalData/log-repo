@@ -925,6 +925,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ExternalReconciliationViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountWithholdingTaxViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\PaymentChequeLineViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\PaymentChequeStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\PaymentChequeViewsController.Generated.cs" />
@@ -947,6 +948,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ExternalReconciliationController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountMoreDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountWithholdingTaxController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\OpenFormatReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\PaymentChequeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ReconcileExternalPageController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\BankAccountViewsController.cs" />
