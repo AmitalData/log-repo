@@ -777,8 +777,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 number = 0;
             }
 
+
+            //truncate
+            if (truncateDecimal)
+            {
+                number = Math.Truncate(number.Value);
+            }
+
             //big size
-            if(number.ToString().Length > wordSize)
+            if (number.ToString().Length > wordSize)
             {
                 throw new ApplicationException("There is a number with big value!");
             }
@@ -787,12 +794,6 @@ namespace Logitude.Accounting.BL.CoreBL
             if (includeSign)
             {
                 result += number >= 0 ? '+' : '-';
-            }
-
-            //truncate
-            if (truncateDecimal)
-            {
-                number = Math.Truncate(number.Value);
             }
 
             //abs

@@ -16,7 +16,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             try
             {
                 CountryCityQuery query = new CountryCityQuery(Tenant);
-                var temp = new CountryCityPM();
+                CountryCityPM temp = null;
+
                 if (!string.IsNullOrEmpty(MyEntity.Id))
                 {
                     temp = query.GetSinglePM(MyEntity.Id, Tenant);
@@ -28,7 +29,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 }
                 if (temp == null)
                 {
-                    throw new ApplicationException("CountryCity with Code " + MyEntity.Code + " doesn't exist");
+                    throw new ApplicationException("City with Code " + MyEntity.Code + " doesn't exist");
                 }
                 if (string.IsNullOrEmpty(temp.Id))
                 {
@@ -43,7 +44,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }

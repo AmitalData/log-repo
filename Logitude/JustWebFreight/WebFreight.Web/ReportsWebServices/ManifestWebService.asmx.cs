@@ -962,8 +962,21 @@ namespace WebFreight.Web.ReportsWebServices
 
                     foreach (ShipmentPackage masterPackage in masterPackages)
                     {
+                        PackageType masterPackagetype = (from pa in commonContext.PackageTypes
+                                                   where pa.Id == masterPackage.PackageTypeId
+                                                   select pa).FirstOrDefault();
+
+
                         GroupedContainersClass myBigItem = new GroupedContainersClass();
                         myBigItem.MasterContainerNumber = masterPackage.ContainerNumber;
+                        myBigItem.ContainerType = masterPackagetype == null ? null : masterPackagetype.EnglishName;
+                        myBigItem.ContainerGrossWeight = masterPackage.Weight;
+                        myBigItem.ContainerGrossWeightUnitCode = master.GrossWeightUnitCode;
+                        myBigItem.ContainerVolume = masterPackage.Volume;
+                        myBigItem.ContainerVolumeUnitCode = master.VolumeUnitCode;
+                        myBigItem.ContainerTare = masterPackage.Tare;
+                        myBigItem.ContainerVolumetricWeight = masterPackage.VolumetricWeight;
+                        myBigItem.ContainerVolumetricWeightUnitCode = master.VolumeUnitCode;
                         myBigItem.GroupedShipmentList = new List<GroupedShipmentClass>();
 
                         List<ShipmentPackage> containerPackages = connectedShipmentsPackages.Where(d => d.ContainerNumber == masterPackage.ContainerNumber).ToList();
