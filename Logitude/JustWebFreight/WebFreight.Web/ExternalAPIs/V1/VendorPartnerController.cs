@@ -63,6 +63,24 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
+                        if (entityPM.Addresses.Count == 0)
+                        {
+                            throw new ApplicationException("Missing Main Address");
+                        }
+
+                        else
+                        {
+                            if (entity.MainAddress.Country == null)
+                            {
+                                throw new ApplicationException("Main address country is required");
+                            }
+
+                            if (entity.MainAddress.City == null)
+                            {
+                                throw new ApplicationException("Main address city is required");
+                            }
+                        }
+
                         VendorService service = new VendorService(MyContext, authToken.Tenant);
                         service.Create(entityPM);
                         scope.Complete();
