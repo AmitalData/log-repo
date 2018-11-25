@@ -71,6 +71,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                         else
                         {
+                            if (entity.MainAddress.Country == null)
+                            {
+                                throw new ApplicationException("Main address country is required");
+                            }
+
+                            if (entity.MainAddress.City == null)
+                            {
+                                throw new ApplicationException("Main address city is required");
+                            }
+
                             Tenant myTenant = MyContext.Tenants.Where(d => d.Id == authToken.Tenant).FirstOrDefault();
                             if (myTenant.IsCustomerTelRequired)
                             {
