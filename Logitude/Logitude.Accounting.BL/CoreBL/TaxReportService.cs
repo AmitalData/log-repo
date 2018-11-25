@@ -293,7 +293,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    taxReportLine.LineTypeCode = "C";
+                    taxReportLine.LineTypeCode = "H";
                 }
 
 
