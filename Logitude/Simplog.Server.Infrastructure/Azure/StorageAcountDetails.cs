@@ -391,6 +391,7 @@ namespace Simplog.Server.Infrastructure.Azure
                     result = "Endpoint=sb://logitudetest2.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Uo7BHCCC7xAQIs1gO27hmruaGpFvoXDhwqATqVsH6PY=";
                     //result = "Endpoint=sb://logitudetest1.servicebus.windows.net;SharedSecretIssuer=owner;SharedSecretValue=5iKNFIINnT+5u3Zj5SFkaRou/0QYxx7OWzZL/Wlh7us=";
                     break;
+
             }
 
             return result;

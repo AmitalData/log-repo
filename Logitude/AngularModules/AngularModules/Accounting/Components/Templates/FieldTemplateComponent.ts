@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -88,6 +88,16 @@ export class FieldTemplateComponent {
             }
             else {
                 this.FieldValue = this.Entity.PaymentChequeStatusName;
+            }
+        }
+
+        if (this.ObjectTableName == "TaxDeductionReport" && this.FieldName == "Status") {
+
+            if (SessionLocator.LoggedUserPM.DontShowLocal) {
+                this.FieldValue = this.Entity.Status;
+            }
+            else {
+                this.FieldValue = this.Entity.StatusLocalName;
             }
         }
     }

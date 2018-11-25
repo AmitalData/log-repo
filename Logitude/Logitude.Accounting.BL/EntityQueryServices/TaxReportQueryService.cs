@@ -20,16 +20,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 {
     public partial class TaxReportQueryService
     {
-        public override void GetComposition(EntityKeyFields entityKeys, TaxReportPM entityPM)
-        {
-            IAccountingContext context = MainContext as AccountingContext;
-            TaxReportKeys keys = entityKeys as TaxReportKeys;
-            TaxReportLineQueryService lineQueryService = new TaxReportLineQueryService(context);
-            entityPM.TaxReportLines = lineQueryService.GetMulti(keys, true);
-
-            base.GetComposition(entityKeys, entityPM);
-        }
-
         public TaxReportLinesCounter GetReportLinesCounter(string taxReportId, int tenant)
         {
             TaxReportLineRepository linesRepo = new TaxReportLineRepository(context);

@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .DocumentsButton{
         cursor: pointer;
     }
@@ -60,7 +60,7 @@
                     [disabled]="button.IsDisabled" [class]="button.Style? button.Style:'Button'"
                     [style.width.px]="button.Width"
                     style="margin: 0px 2px;">
-                {{button.LabelTextCodeCode | TextCodeTranslationPipe}}
+               {{button.LabelTextCodeCode | TextCodeTranslationPipe}}
             </button>-->
             <div [style.width.px]="button.MenuButtonType == 'menuitem' ? 0 : button.Width" [style.opacity]="button.IsDisabled?'0.5':'1'" [style.pointer-events]="button.IsDisabled?'none':'all'" *ngIf="button.MenuButtonType=='control' && !button.IsHidden">
                 <MenuButtonsComponentLoader  [EntityPM]="EntityPM" [ObjectTable]="ObjectTable" [MenuButton]="button" *ngIf="button.MenuButtonType=='control' && !button.IsHidden"></MenuButtonsComponentLoader>
@@ -105,24 +105,16 @@
                     <div class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '0', 'right' : 'initial' , top: ToggleButtonTop} : {top: ToggleButtonTop}">
                         <div *ngFor="let menuItem of MenuButtons | MenuButtonsItemsPipe:button.Id; let menuItemIndex=index">
                             <button id="{{ menuItem.LabelTextCodeCode | IdGeneratorPipe}}" *ngIf="menuItem.MenuButtonType=='menuitem' && !menuItem.IsHidden" (click)="OnClick(menuItem)" [disabled]="menuItem.IsDisabled" [ngStyle]="LayoutDirection == 'rtl' ? {'text-align': 'right'} : {'text-align': 'left'}">
-                                {{menuItem.LabelTextCodeCode | TextCodeTranslationPipe}}
+                                <div *ngIf="menuItem.LabelTextCodeCode!=null">{{menuItem.LabelTextCodeCode | TextCodeTranslationPipe}}</div>
+                                <div *ngIf="menuItem.LabelTextCodeCode==null">{{menuItem.DisplayText}}</div>
                             </button>
-
                             <div *ngIf="menuItem.MenuButtonType=='separator'" class="ToggleButtonSeparator">
-
                             </div>
                         </div>
-
                     </div>
-
                     <!-- <img class="LeftCenter" src="Images/ToggleIcon.png" />-->
-
-
                 </div>
             </div>
-
-            
-
         </td>
     </tr>
 </table>

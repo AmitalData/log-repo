@@ -25,7 +25,9 @@ namespace Logitude.Server.Tools.Helpers
                 if (communicationLogCount > tenantEmailSendingQuota)
                 {
                     result.IsQuotaExceeded = true;
-                    result.ExceptionMessage = "Quota exceeded. Can't send more than "+ tenantEmailSendingQuota+ " emails in one hour";
+
+                    var message = tenantEmailSendingQuota == 1 ? "email" : "emails";
+                    result.ExceptionMessage = "Quota exceeded. Can't send more than "+ tenantEmailSendingQuota+ " "+ message + " in one hour";
                 }
             }
 

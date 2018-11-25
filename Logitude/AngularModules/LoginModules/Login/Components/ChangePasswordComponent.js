@@ -174,7 +174,7 @@ var ChangePasswordComponent = (function () {
         if (!result)
             result = this.IsSeries(passwordNumnberList, "Same");
         return result;
-        return result;
+        //return result;
     };
     ChangePasswordComponent.prototype.IsSeries = function (passwordNumnberList, operatorCode) {
         var result = false;

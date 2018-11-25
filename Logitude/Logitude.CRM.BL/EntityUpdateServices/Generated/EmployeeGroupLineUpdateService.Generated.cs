@@ -62,7 +62,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 		    entityPM.Id = IdCounter.GetNumber("EmployeeGroupLine", entityPM.Tenant); 
 					
 	    }
-
+        
 		protected override void FillDefaultValuesOnUpdate(EmployeeGroupLinePM entityPM)
         {       
            

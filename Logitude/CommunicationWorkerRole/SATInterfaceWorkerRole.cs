@@ -391,6 +391,17 @@ namespace CommunicationWorkerRole
                             additional.QRImage = Convert.ToBase64String(resultadoTimbre.CodigoBidimensional);//imagedetail.Id;//
                         }
 
+                        Profact.TimbraCFDI33.Comprobante resultComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoTimbre.Xml);
+                        if (comprobante.Complemento.Any != null)
+                        {
+                            List<System.Xml.XmlElement> myLXmlComplementos = resultComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                            var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                            if (timbreFiscalDigitalElement != null)
+                            {
+                                Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                                payment.SATApprovalDate = digitalTi.FechaTimbrado;
+                            }
+                        }
                         payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
                         payment.SATXML = resultadoTimbre.Xml;
                         payment.SATTransferStatusCode = "TD";
@@ -428,6 +439,18 @@ namespace CommunicationWorkerRole
                         if (resultadoTimbre.CodigoBidimensional != null)
                         {
                             additional.QRImage = Convert.ToBase64String(resultadoTimbre.CodigoBidimensional);//imagedetail.Id;//
+                        }
+
+                        Profact.TimbraCFDI33.Comprobante resultComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoTimbre.Xml);
+                        if (resultComprobante.Complemento.Any != null)
+                        {
+                            List<System.Xml.XmlElement> myLXmlComplementos = resultComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                            var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                            if (timbreFiscalDigitalElement != null)
+                            {
+                                Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                                invoice.SATApprovalDate = digitalTi.FechaTimbrado;
+                            }
                         }
 
                         invoice.SATXML = resultadoTimbre.Xml;
@@ -643,7 +666,16 @@ namespace CommunicationWorkerRole
                         {
                             additional.QRImage = Convert.ToBase64String(resultadoConsulta.CodigoBidimensional);//imagedetail.Id;//
                         }
-                         
+                        if (paymentComprobante.Complemento.Any != null)
+                        {
+                            List<System.Xml.XmlElement> myLXmlComplementos = paymentComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                            var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                            if (timbreFiscalDigitalElement != null)
+                            {
+                                Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                                payment.SATApprovalDate = digitalTi.FechaTimbrado;
+                            }
+                        }
                         payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
                         payment.SATXML = resultadoConsulta.Xml;
                         payment.SATTransferStatusCode = "TD";
@@ -697,6 +729,18 @@ namespace CommunicationWorkerRole
                             additional.QRImage = Convert.ToBase64String(resultadoConsulta.CodigoBidimensional);//imagedetail.Id;//
                         }
 
+                        Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoConsulta.Xml);
+
+                        if (invoiceComprobante.Complemento.Any != null)
+                        {
+                            List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                            var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                            if (timbreFiscalDigitalElement != null)
+                            {
+                                Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                                invoice.SATApprovalDate = digitalTi.FechaTimbrado;
+                            }
+                        }
 
                         string SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString<SATAdditionalFields>(additional);
 
@@ -969,26 +1013,43 @@ namespace CommunicationWorkerRole
                         //No se pudo cancelar, mostramos respuesta
                         //MessageBox.Show(resultadoCancelacion.Descripcion);
                         string transError = resultadoCancelacion.Descripcion;
-                        if (waitingCommLog.Retries == 4)
+                        if (transError == "Comprobante ya está en proceso de cancelación" && resultadoCancelacion.TipoExcepcion == "EstatusSat")
                         {
-                            if (!string.IsNullOrEmpty(resultadoCancelacion.Descripcion) && invoice != null)
+                            waitingCommLog.CommunicationStatusTypeCode = "D";
+                            waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                            waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+                            waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                            waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                            communicationLogRep.Update(waitingCommLog);
+                            communicationLogRep.SubmitChanges();
+
+                            invoice.SATTransferStatusCode = "CS";
+                            arinvoiceRep.Update(invoice);
+                            arinvoiceRep.SubmitChanges();
+                        }
+                        else
+                        {
+                            if (waitingCommLog.Retries == 4)
                             {
-                                transError = resultadoCancelacion.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
-                                if (!string.IsNullOrEmpty(resultadoCancelacion.TipoExcepcion))
+                                if (!string.IsNullOrEmpty(resultadoCancelacion.Descripcion) && invoice != null)
                                 {
-                                    transError += Environment.NewLine + resultadoCancelacion.TipoExcepcion;
-                                }
-                                if (transError != invoice.TransmissionError)
-                                {
-                                    invoice.SATTransferStatusCode = "TE";
-                                    invoice.TransmissionError = transError;
-                                    arinvoiceRep.Update(invoice);
-                                    arinvoiceRep.SubmitChanges();
+                                    transError = resultadoCancelacion.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
+                                    if (!string.IsNullOrEmpty(resultadoCancelacion.TipoExcepcion))
+                                    {
+                                        transError += Environment.NewLine + resultadoCancelacion.TipoExcepcion;
+                                    }
+                                    if (transError != invoice.TransmissionError)
+                                    {
+                                        invoice.SATTransferStatusCode = "TE";
+                                        invoice.TransmissionError = transError;
+                                        arinvoiceRep.Update(invoice);
+                                        arinvoiceRep.SubmitChanges();
+                                    }
                                 }
                             }
-                        }
 
-                        throw new Exception("Failed," + transError);
+                            throw new Exception("Failed," + transError);
+                        }
                     }
 
 
@@ -1069,30 +1130,46 @@ namespace CommunicationWorkerRole
                     else
                     {
                         string transError = resultadoCancelacion.Descripcion;
-                        if (waitingCommLog.Retries == 4)
+                        if (transError == "Comprobante ya está en proceso de cancelación" && resultadoCancelacion.TipoExcepcion == "EstatusSat")
                         {
-                            //No se pudo cancelar, mostramos respuesta
-                            //MessageBox.Show(resultadoCancelacion.Descripcion);
-                            if (!string.IsNullOrEmpty(resultadoCancelacion.Descripcion) && payment != null)
-                            {
-                                transError = resultadoCancelacion.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
-                                if (!string.IsNullOrEmpty(resultadoCancelacion.TipoExcepcion))
-                                {
-                                    transError += Environment.NewLine + resultadoCancelacion.TipoExcepcion;
-                                }
-                                if (transError != payment.TransmissionError)
-                                {
-                                    payment.SATTransferStatusCode = "TE";
-                                    payment.TransmissionError = transError;
+                            waitingCommLog.CommunicationStatusTypeCode = "D";
+                            waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                            waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+                            waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                            waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                            communicationLogRep.Update(waitingCommLog);
+                            communicationLogRep.SubmitChanges();
 
-                                    arPaymentRep.Update(payment);
-                                    arPaymentRep.SubmitChanges();
+                            payment.SATTransferStatusCode = "CS";
+                            arPaymentRep.Update(payment);
+                            arPaymentRep.SubmitChanges();
+                        }
+                        else
+                        {
+                            if (waitingCommLog.Retries == 4)
+                            {
+                                //No se pudo cancelar, mostramos respuesta
+                                //MessageBox.Show(resultadoCancelacion.Descripcion);
+                                if (!string.IsNullOrEmpty(resultadoCancelacion.Descripcion) && payment != null)
+                                {
+                                    transError = resultadoCancelacion.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
+                                    if (!string.IsNullOrEmpty(resultadoCancelacion.TipoExcepcion))
+                                    {
+                                        transError += Environment.NewLine + resultadoCancelacion.TipoExcepcion;
+                                    }
+                                    if (transError != payment.TransmissionError)
+                                    {
+                                        payment.SATTransferStatusCode = "TE";
+                                        payment.TransmissionError = transError;
+
+                                        arPaymentRep.Update(payment);
+                                        arPaymentRep.SubmitChanges();
+                                    }
                                 }
                             }
+
+                            throw new Exception("Failed," + transError);
                         }
-
-                        throw new Exception("Failed," + transError);
-
                     }
 
 

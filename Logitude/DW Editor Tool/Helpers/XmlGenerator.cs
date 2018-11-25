@@ -89,6 +89,8 @@ namespace DW_Editor_Tool.Helpers
                 SetAttribute("IsMeasurement", fieldViewModel.IsMeasurement.ToString().ToLower(), fieldElement);
                 SetAttribute("AggregationTypeCode", GetStringValue(fieldViewModel.AggregationTypeCode), fieldElement);
                 SetAttribute("DisplayInQueryBuilder", fieldViewModel.DisplayInQueryBuilder.ToString().ToLower(), fieldElement);
+                SetAttribute("Category1", GetStringValue(fieldViewModel.Category1), fieldElement);
+                SetAttribute("Category2", GetStringValue(fieldViewModel.Category2), fieldElement);
 
 
 
@@ -177,8 +179,10 @@ namespace DW_Editor_Tool.Helpers
             fieldViewModel.IsMeasurement = GetAttributeBoolValue(fieldNode.Attributes["IsMeasurement"]);
             fieldViewModel.AggregationTypeCode = GetAttributeStringValue(fieldNode.Attributes["AggregationTypeCode"]);
             fieldViewModel.DisplayInQueryBuilder = GetAttributeBoolValueDefaultTrue(fieldNode.Attributes["DisplayInQueryBuilder"]);
-            
-           
+            fieldViewModel.Category1 = GetAttributeStringValue(fieldNode.Attributes["Category1"]);
+            fieldViewModel.Category2 = GetAttributeStringValue(fieldNode.Attributes["Category2"]);
+
+
 
 
 

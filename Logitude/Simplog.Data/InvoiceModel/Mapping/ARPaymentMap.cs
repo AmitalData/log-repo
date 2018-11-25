@@ -112,7 +112,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.CadPago).HasColumnName("CadPago");
             this.Property(t => t.CertPago).HasColumnName("CertPago");
             this.Property(t => t.SelloPago).HasColumnName("SelloPago");
-
+            this.Property(t => t.SATApprovalDate).HasColumnName("SATApprovalDate");
             // Relationships
             this.HasOptional(t => t.ARAccount).WithMany().HasForeignKey(d => d.ARAccountId);
             this.HasOptional(t => t.DebitAccount).WithMany().HasForeignKey(d => d.DebitAccountId);

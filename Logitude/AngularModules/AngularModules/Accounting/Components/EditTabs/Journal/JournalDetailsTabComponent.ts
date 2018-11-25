@@ -55,8 +55,8 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
     OnRowEnded($event) {
         console.log("this.JournalLines.Length : " + this.JournalLines.Length);
-        if (($event) == this.JournalLines.Length) { 
-            this.AddLine(); 
+        if (($event) == this.JournalLines.Length) {
+            this.AddLine();
             //SessionLocator.CurrentSession.ResetRowIndex();
         }
     }
@@ -107,11 +107,11 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 this.journalDisabled = true;
                 this.PointerEvents = 'none';
                 this.Opacity = "1";
-              
+
                 //this.UIProperties.SetEnabled("AccountingDate", "Journal", false);
                 //this.UIProperties.SetEnabled("Reference1", "Journal", false);
                 //this.UIProperties.SetEnabled("Reference2", "Journal", false);
-                //this.UIProperties.SetEnabled("Reference3", "Journal", false); 
+                //this.UIProperties.SetEnabled("Reference3", "Journal", false);
                 //this.UIProperties.SetEnabled("Notes", "Journal", false);
             }
            else if (this.EntityPM.StatusCode == "2") { // 3-Voided and 2-Approved
@@ -149,7 +149,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         // redraw
         SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
             if (isSuccess) {
-                
+                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                 this.CalculateTotals();
                 if ( this.EntityPM.StatusCode == "3") { // 3-Voided and 2-Approved
                     //disable controls
@@ -308,7 +308,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                     this.UIProperties.SetValidity("AccountingDate", this.ObjectTableName, true, "OK");
                 }
 
-                
+
             }
 
             this.EntityPM.AccountingDate = value;
@@ -463,7 +463,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                     this.debitTotal += line.LocalAmount;
                 }
             }
-            
+
 
         }
     }
@@ -538,7 +538,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         console.log("[TEST] ", entity, this.JournalLines);
     }
 
-  
+
 }
 
 
@@ -577,7 +577,7 @@ class JournalLineModel extends BaseComponent {
             var date = new Date(this.AccountingDate.toString());
             this.accDay = date.getDate();
         }
-            
+
 
         this.ratesTableExtendedListService = new RatesTableExtendedListService();
         this._GLAccountExtendedListService = new GLAccountExtendedListService();
@@ -618,7 +618,7 @@ class JournalLineModel extends BaseComponent {
   OnSelectedItemChanged($event) {
     console.log($event);
   }
- 
+
 
     get ActionCode() { return this.JournalLinePM.ActionCode; }
     set ActionCode(value: string) {
@@ -637,7 +637,7 @@ class JournalLineModel extends BaseComponent {
     set ActionName(value: string) {
         if (this.JournalLinePM.ActionName != value) {
             this.JournalLinePM.ActionName = value;
-            //alert(value); 
+            //alert(value);
         }
 
     }
@@ -750,7 +750,7 @@ class JournalLineModel extends BaseComponent {
     isLocalEntered: boolean = false;
     isForeignEntered: boolean = false;
 
-    // [!] 
+    // [!]
     // [!] Warning!! Any changes in one function must done in another function
     // [!]
 
@@ -1071,7 +1071,7 @@ class JournalLineModel extends BaseComponent {
     }
 
     currency: CurrencyList;
-    get Currency() { return this.currency; } 
+    get Currency() { return this.currency; }
     set Currency(value: CurrencyList) {
         if (this.currency != value) {
             this.currency = value;
@@ -1120,7 +1120,7 @@ class JournalLineModel extends BaseComponent {
                                 ////    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.SplittedAccountMsgCredit"));
                                 ////else
                                 ////    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.SplittedAccountMsgDebit"));
-                                
+
                                 ////console.log("DetectChanges");
                                 //////this.parent.DetectChanges();
                                 ////confirmWindow.WindowClosed.subscribe((event: any) => {

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {GeneralDomainService, FieldsTranslations} from '../../../../Infrastructure/Services/GeneralDomainService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -54,7 +54,7 @@ export class CustomFieldsComponent {
 
         this.CustomFieldsCollection = new ObservableCollection(this.loadedFields);
 
-        var fieldsCount = (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master") ? 20 : 10;
+        var fieldsCount = (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master") ? 40 : 10;
         this.IsAddButtonEnabled = this.CustomFieldsCollection.Length < fieldsCount ? true : false;
 
         //var objectTablePM: ObjectTablePM;

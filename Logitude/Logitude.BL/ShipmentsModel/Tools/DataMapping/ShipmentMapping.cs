@@ -396,6 +396,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.Notify2Reference = entityPM.Notify2Reference;
             entityPoco.ShipperNotExporterReference = entityPM.ShipperNotExporterReference;
             entityPoco.ConsigneeNotImporterReference = entityPM.ConsigneeNotImporterReference;
+            entityPoco.ProjectNumber = entityPM.ProjectNumber;
+            entityPoco.ContainerLastStatusDate = entityPM.ContainerLastStatusDate;
+            entityPoco.BasicFreightId = entityPM.BasicFreightId;
+            entityPoco.DestinationPortChargesId = entityPM.DestinationPortChargesId;
+            entityPoco.DestinationHaulageChargesId = entityPM.DestinationHaulageChargesId;
+            entityPoco.AdditionalChargesId = entityPM.AdditionalChargesId;
+            entityPoco.FreightPayerId = entityPM.FreightPayerId;
+            entityPoco.FreightPayerAddressId = entityPM.FreightPayerAddressId;
 
             // No need to map these fields
             // they are computed via PROCEDURE

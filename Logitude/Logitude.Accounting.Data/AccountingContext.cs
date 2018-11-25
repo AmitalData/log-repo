@@ -138,6 +138,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new JournalActionTypeMap());
 	
+            modelBuilder.Configurations.Add(new JournalAdditionalDataMap());
+	
             modelBuilder.Configurations.Add(new JournalLineMap());
 	
             modelBuilder.Configurations.Add(new JournalMoreDataMap());
@@ -149,6 +151,12 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new JournalTypeMap());
 	
             modelBuilder.Configurations.Add(new LedgerTransactionMap());
+	
+            modelBuilder.Configurations.Add(new OpenFormatDateTypeMap());
+	
+            modelBuilder.Configurations.Add(new OpenFormatReportMap());
+	
+            modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
 	
             modelBuilder.Configurations.Add(new PaymentChequeMap());
 	
@@ -772,6 +780,12 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<JournalAdditionalData> JournalAdditionalDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<JournalLine> JournalLines 
 	 {
 	      get; set;
@@ -803,6 +817,24 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<LedgerTransaction> LedgerTransactions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OpenFormatDateType> OpenFormatDateTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OpenFormatReport> OpenFormatReports 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OpenFormatReportStatus> OpenFormatReportStatuses 
 	 {
 	      get; set;
 	 

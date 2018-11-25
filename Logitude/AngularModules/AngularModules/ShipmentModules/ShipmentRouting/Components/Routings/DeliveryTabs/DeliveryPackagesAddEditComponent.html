@@ -1,4 +1,4 @@
-﻿
+
 
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -135,7 +135,24 @@
                                 </td>
 
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'Harmonize'" [Text]="DataContext.Harmonize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div class="MediaFill">
+                                                    <div class="MediaFillRelative">
+                                                        <LogTextBox [ObjectFieldName]="'Harmonize'" [Text]="DataContext.Harmonize" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                        <div class="Value" style="position: absolute; left: 10px; top: 7px;" *ngIf="EntityPM.IsMultiHarmonize">Multi</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="width: 6px;">
+                                                <div></div>
+                                            </td>
+                                            <td style="width: 30px;">
+                                                <Hyperlink (click)="MultiHarmonizeClicked()">Multi</Hyperlink>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
 

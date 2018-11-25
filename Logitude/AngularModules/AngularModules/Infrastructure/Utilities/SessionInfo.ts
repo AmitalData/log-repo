@@ -44,13 +44,10 @@ export class SessionInfo {
     private static keepUserLoggedIn: boolean;
     public static get KeepUserLoggedIn(): boolean { return this.keepUserLoggedIn; }
     public static set KeepUserLoggedIn(newValue: boolean) { this.keepUserLoggedIn = newValue; }
-
-
+    
     private static lastLoginDateTime: Date;
     public static get LastLoginDateTime(): Date { return this.lastLoginDateTime; }
     public static set LastLoginDateTime(newValue: Date) { this.lastLoginDateTime = newValue; }
-
-
 
     private static loggedUserPM: UserPM;
     public static get LoggedUserPM(): UserPM { return this.loggedUserPM; }
@@ -66,11 +63,11 @@ export class SessionInfo {
         }
     }
 
+    private static loggedUserCardId: string;
+    public static get LoggedUserCardId(): string { return this.loggedUserCardId; }
+    public static set LoggedUserCardId(newValue: string) { this.loggedUserCardId = newValue; }
 
-
-
-
-
-
-
+    private static loggedUserCardType: string;
+    public static get LoggedUserCardType(): string { return this.loggedUserCardType; }
+    public static set LoggedUserCardType(newValue: string) { this.loggedUserCardType = newValue; }
 }

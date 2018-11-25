@@ -2202,8 +2202,13 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string INTTRADocumentTypeCode { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastFinalDestination { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstPickupETD { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstPickupETA { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2213,7 +2218,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? INTTRALastStatusDate { get; set; }
 
         public bool IsPaymentRequired { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PaymentRequestXML { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? PaymentDateTime { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2228,19 +2237,59 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ConsigneeNotImporterReference { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ForwardingPartnerId { get; set; }
+
         public bool IsSharedLogisticsMoneyTabEnabled { get; set; }
         public bool IsSharedLogisticsMainCarrierVisible { get; set; }
         public bool IsSharedLogisticsPickDelvCarrierVisible { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstPickupATA { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstPickupATD { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FinalDeliveryETA { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FinalDeliveryETD { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FinalDeliveryATA { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FinalDeliveryATD { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string DeclarationWCOXml { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ProjectNumber { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? ContainerLastStatusDate { get; set; }
+
+        public bool ShipmentContanisDangerousGoods { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string BasicFreightId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string DestinationPortChargesId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string DestinationHaulageChargesId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string AdditionalChargesId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string FreightPayerId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string FreightPayerAddressId { get; set; }
+
     }
 }

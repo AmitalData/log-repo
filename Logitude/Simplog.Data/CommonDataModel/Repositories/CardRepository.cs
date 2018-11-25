@@ -154,6 +154,23 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return cardFromCache;
         }
 
+
+        public List<Card> GetCardsByGLAccountIds(List<string> glaccountIds, int tenant)
+        {
+
+
+
+            List<Card> cards = (from a in context.Cards
+                             where a.Tenant == tenant
+                             && glaccountIds.Contains(a.GLAccountId)
+                             select a).ToList();
+                return cards;
+           
+
+
+           
+        }
+
         public Card GetSingleCardByCode(string code, int tenant, bool getFromCache)
         {
             if (!string.IsNullOrEmpty(code))
@@ -424,6 +441,24 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return entityId;
         }
+
+
+
+        public string GetActiveCardIdByCode(string code, int tenant)
+        {
+        
+            string entityId = (from a in context.Cards
+                        where a.Tenant == tenant && a.Code == code && !a.InActive
+                        select a.Id).FirstOrDefault();
+
+            return entityId;
+        }
+
+
+
+
+
+
 
         public IQueryable<Card> GetCards(List<string> allCardsId, int tenant)
         {

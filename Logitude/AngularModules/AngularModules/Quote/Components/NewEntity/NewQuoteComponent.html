@@ -1,4 +1,4 @@
-﻿<style type="text/css">
+<style type="text/css">
     .NotesBox p {
         font-size: 11px;
         color: #6E7172;
@@ -327,7 +327,7 @@
                                                                                 <div class="ToggleButtonMenu" style="right: -110px;">
                                                                                     <button (click)="AddCustomerClicked('Shipper')">{{'Quote.B.NewQuote.AddShipper' | TextCodeTranslationPipe}}</button>
                                                                                     <button (click)="AddPotentialCustomerClicked('Shipper')">{{'Quote.B.NewQuote.AddPotentialShipper' | TextCodeTranslationPipe}}</button>
-                                                                                    <button (click)="AddAgentClicked('Shipper')" *ngIf="IsAddAgentVisible">Add Agent</button>
+                                                                                    <button (click)="AddAgentClicked('Shipper')" *ngIf="IsAddAgentVisible">{{'Quote.B.NewQuote.AddAgent' | TextCodeTranslationPipe}}</button>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -335,7 +335,7 @@
 
                                                                     <tr class="FormFieldRow" style="height: 80px;" *ngIf="ShipperId">
                                                                         <td [style.width.px]="LabelColumnWidth" style="vertical-align: top; padding-left: 10px; padding-top: 10px;" class="TextTrimming">
-                                                                            <label class="Label" style="vertical-align:top;">Address:</label>
+                                                                            <label class="Label" style="vertical-align:top;">{{'Quote.S.NewQuote.Address' | TextCodeTranslationPipe}}:</label>
                                                                         </td>
 
                                                                         <td [style.width.px]="ControlColumnWidth">
@@ -480,7 +480,7 @@
                                                                                 <div class="ToggleButtonMenu" style="right: -125px;">
                                                                                     <button (click)="AddCustomerClicked('Consignee')">{{'Quote.B.NewQuote.AddConsignee' | TextCodeTranslationPipe}}</button>
                                                                                     <button (click)="AddPotentialCustomerClicked('Consignee')">{{'Quote.B.NewQuote.AddPotentialConsignee' | TextCodeTranslationPipe}}</button>
-                                                                                    <button (click)="AddAgentClicked('Consignee')" *ngIf="IsAddAgentVisible">Add Agent</button>
+                                                                                    <button (click)="AddAgentClicked('Consignee')" *ngIf="IsAddAgentVisible">{{'Quote.B.NewQuote.AddAgent' | TextCodeTranslationPipe}}</button>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
@@ -488,7 +488,7 @@
 
                                                                     <tr class="FormFieldRow" style="height: 80px;" *ngIf="ConsigneeId">
                                                                         <td [style.width.px]="LabelColumnWidth" style="vertical-align: top; padding-left: 10px; padding-top: 10px;" class="TextTrimming">
-                                                                            <label class="Label" style="vertical-align:top;">Address:</label>
+                                                                            <label class="Label" style="vertical-align:top;">{{'Quote.S.NewQuote.Address' | TextCodeTranslationPipe}}:</label>
                                                                         </td>
 
                                                                         <td [style.width.px]="ControlColumnWidth">

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {NumbersPipe} from '../../../../../Infrastructure/Pipes/NumbersPipe';
 import {AppTool, DateTool, ArrayTool, FontTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
@@ -496,14 +496,14 @@ export class GenerateFromPayablesModelData extends BaseComponent {
             }
         }
 
-        if (this.PayablePM.QuoteCostMinPrice != null) {
+        if (this.PayablePM.QuoteCostMinAmount != null) {
             if (myResult == null) {
-                myResult = this.PayablePM.QuoteCostMinPrice;
+                myResult = this.PayablePM.QuoteCostMinAmount;
             }
 
             else {
-                if (myResult < this.PayablePM.QuoteCostMinPrice) {
-                    myResult = this.PayablePM.QuoteCostMinPrice;
+                if (myResult < this.PayablePM.QuoteCostMinAmount) {
+                    myResult = this.PayablePM.QuoteCostMinAmount;
                 }
             }
         }

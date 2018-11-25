@@ -8,7 +8,7 @@ import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Servi
     selector: 'DWQueryBuilderFilters',
     moduleId: module.id,
     templateUrl: './DWQueryBuilderFiltersComponent.html',
-    inputs: ['SelectedFiltersDataSource','DataContext']
+    inputs: ['SelectedFiltersDataSource', 'DataContext','SelectedFiltersDataSourceChanged']
 })
 
 export class DWQueryBuilderFiltersComponent implements OnInit{
@@ -19,6 +19,7 @@ export class DWQueryBuilderFiltersComponent implements OnInit{
     DataContext: any;
     public _DWObjectTablePMService: DWObjectTablePMService;
     public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
+    public SelectedFiltersDataSourceChanged: EventEmitter<any>;
     constructor() {
         
     }
@@ -44,6 +45,13 @@ export class DWQueryBuilderFiltersComponent implements OnInit{
 
             });
         });
+
+        if (this.SelectedFiltersDataSourceChanged) {
+            this.SelectedFiltersDataSourceChanged.subscribe((res) => {
+                this.SelectedFiltersDataSource = res;
+                //alert(res.length);
+            });
+        }
     }
 
     AddFilterToGroup(item) {

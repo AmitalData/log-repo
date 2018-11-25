@@ -88,6 +88,8 @@ export class GLAccountList {
 	AssessingOfficeName: string;
 	DeductionTypeEnglishName: string;
 	TotalOpenChequesInLocalCur: number;
+	AutomaticReconcileLocalName: string;
+	ReconcileMethodLocalName: string;
 	
 }
  

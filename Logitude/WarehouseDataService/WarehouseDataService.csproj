@@ -82,8 +82,8 @@
   <ItemGroup>
     <Compile Include="DayOfWeekClass.cs" />
     <Compile Include="Helper\ApplicationInfo.cs" />
+    <Compile Include="Helper\WarehouseServiceHelper.cs" />
     <Compile Include="Helper\WarehouseDataHelper.cs" />
-    <Compile Include="Helper\WarehouseHelper.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>

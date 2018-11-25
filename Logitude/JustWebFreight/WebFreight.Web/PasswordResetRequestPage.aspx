@@ -310,7 +310,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', end
                                             
                                             <td style="vertical-align:top">
 
-                                               <a style="margin-left:10px;font-size:12px;font-family:Arial;cursor:pointer;float:left;margin-left:60px;margin-top:-10px;vertical-align:top" onclick="backToLoginClick()">Back to login page</a>
+                                               <a style="margin-left:10px;font-size:12px;font-family:Arial;cursor:pointer;float:left;margin-left:60px;margin-top:-10px;vertical-align:top;text-decoration:underline" onclick="backToLoginClick()">Back to login page</a>
                                             </td>
 
 

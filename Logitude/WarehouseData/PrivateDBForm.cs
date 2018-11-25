@@ -110,7 +110,7 @@ namespace WarehouseData
 
                             string tenants = warehouseHelper.ConvertIntgerListToString(relatedTenants);
 
-                            if (type == "Build") warehouseHelper.BuildDataBase(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                            if (type == "Build") warehouseHelper.BuildDataBase("Debug", sourceConnectionString, destinationConnectionString, tenant, tenants);
                             else warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString, tenant, tenants);
 
                             stopWatchPrivateDB.Stop();

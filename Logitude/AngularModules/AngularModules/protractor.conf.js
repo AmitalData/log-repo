@@ -10,16 +10,16 @@ exports.config = {
   // ],
   capabilities: {
     'browserName': 'chrome',
-	'acceptInsecureCerts': true,
+    'acceptInsecureCerts': true,
   },
- seleniumServerJar: './node_modules/selenium-standalone-jar/bin/selenium-server-standalone-3.0.1.jar',
+  seleniumServerJar: './node_modules/selenium-standalone-jar/bin/selenium-server-standalone-3.0.1.jar',
 
   directConnect: true, // Direct connect with the chrome or firefox without running selenium server 
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 300000,
-    print: function() {}
+    print: function () { }
   },
   onPrepare() {
     require('ts-node').register({
@@ -27,15 +27,15 @@ exports.config = {
     });
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   },
-  
+
   suites: {
     // ********************* Login **********************************
     //EditEntity
-    login: 'e2e/Login/**/Login.e2e-spec.ts',
-   NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
-//  EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
+     login: 'e2e/Login/**/Login.e2e-spec.ts',
+    // NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+     EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
     //  ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
 
-   
-},
+
+  },
 };

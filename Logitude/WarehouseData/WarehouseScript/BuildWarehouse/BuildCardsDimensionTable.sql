@@ -25,9 +25,11 @@ CREATE TABLE #DIM_PartnersTemp (
 	[Partner Type]  varchar(20) not null,
 	[Source Tenant]  int,
     [Parent Tenant]  int,
+	[Country Code] varchar(2),
+    [Primary Contact Email] varchar(70),
 
 );
-insert into #DIM_PartnersTemp values ('-1' , 'Not Specified' ,'Not Specified' ,'Not Specified','Not Specified','Not Specified','Not Specified','Not Specified','Not Specified','Not Specified','Not Specified' ,'Not Specified', 0,0)
+insert into #DIM_PartnersTemp values ('-1' , 'Not Specified' ,'Not Specified' ,'Not Specified','Not Specified','Not Specified','Not Specified','Not Specified','Not Specified','Not Specified','Not Specified' ,'Not Specified', 0,0,null,'Not Specified')
 
 --Fill temporal DIM_PartnersTemp
    declare @Id as varchar(15)
@@ -45,10 +47,12 @@ insert into #DIM_PartnersTemp values ('-1' , 'Not Specified' ,'Not Specified' ,'
    declare @SourceTenant int
    declare @ParentTenant int
 
-
+   declare @CountryCode as varchar(2)
+   declare @PrimaryContactEmail as varchar(70)
+ 
 	DECLARE PartnersCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Partners.Id, dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , dw_States.EnglishName , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant
+	SELECT dw_Partners.Id, dw_Partners.EnglishName,dw_Partners.LocalName , dw_Partners.CityName, dw_Partners.CountryName , dw_States.EnglishName , dw_Partners.ZipCode, dw_Contacts.EnglishName ,accountManagerUser.EnglishName, salesmanUser.EnglishName ,dw_Ranks.Name,dw_PartnerTypes.Name, dw_Partners.Tenant, dw_DWHSettings.ParentTenant ,dw_Countries.Code,dw_Contacts.Email
 	From dw_Partners
 	left JOIN dw_Customers ON dw_Partners.Id = dw_Customers.Id
 	inner JOIN dw_Contacts ON dw_Partners.PrimaryContactId = dw_Contacts.Id
@@ -59,14 +63,15 @@ insert into #DIM_PartnersTemp values ('-1' , 'Not Specified' ,'Not Specified' ,'
     left join dw_States  on dw_Addresses.StateId = dw_States.Id
 	inner join dw_PartnerTypes  on dw_Partners.PartnerTypeId=dw_PartnerTypes.Id
 	inner JOIN dw_DWHSettings ON dw_Partners.Tenant = dw_DWHSettings.Tenant
+	inner JOIN dw_Countries ON dw_Partners.CountryId = dw_Countries.Id
 
-	OPEN PartnersCursor FETCH NEXT FROM PartnersCursor INTO @Id , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant
+	OPEN PartnersCursor FETCH NEXT FROM PartnersCursor INTO @Id , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-	insert into #DIM_PartnersTemp values(@Id,@Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant)
+	insert into #DIM_PartnersTemp values(@Id,@Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant,@CountryCode,@PrimaryContactEmail)
 
-	FETCH NEXT FROM PartnersCursor INTO @Id , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant
+	FETCH NEXT FROM PartnersCursor INTO @Id , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail
 		End
 	CLOSE PartnersCursor
 	DEALLOCATE PartnersCursor
@@ -78,60 +83,3 @@ If(OBJECT_ID('tempdb..#DIM_PartnersTemp') Is Not Null) Begin Drop Table #DIM_Par
 
 ALTER TABLE NewDIM_Partners ADD CONSTRAINT PK_NewDIM_Partners_Id_Number PRIMARY KEY CLUSTERED (Id_Number);
 CREATE NONCLUSTERED INDEX [IX_DIM_Partners_Id] ON [dbo].[NewDIM_Partners]([Id])
-
-
-
-
-
---IF OBJECT_ID ('DIM_Partners', 'U')  IS NOT NULL
---begin
---EXEC sp_rename 'DIM_Partners', 'OldDIM_Partners'
-
---end
-
---EXEC sp_rename 'NewDIM_Partners', 'DIM_Partners'
-
---IF OBJECT_ID ('OldDIM_Partners', 'U')  IS NOT NULL
---begin
-
---IF EXISTS (SELECT * 
---  FROM sys.foreign_keys 
---   WHERE object_id = OBJECT_ID(N'dbo.FK_Fact_Shipment_DIM_Partners_Shipper')
---   AND parent_object_id = OBJECT_ID(N'dbo.Fact_Shipments')
---)
--- begin
-
---  ALTER TABLE Fact_Shipments DROP  CONSTRAINT   FK_Fact_Shipment_DIM_Partners_Shipper;
---  ALTER TABLE Fact_Shipments DROP  CONSTRAINT   FK_Fact_Shipment_DIM_Partners_Consignee;
---  ALTER TABLE Fact_Shipments DROP  CONSTRAINT   FK_Fact_Shipment_DIM_Partners_Agent;
---  ALTER TABLE Fact_Shipments DROP  CONSTRAINT   FK_Fact_Shipment_DIM_Partners_Customer;
---  end
-
---   drop table OldDIM_Partners
-
---end
-
-
--- ALTER TABLE DIM_Partners ADD CONSTRAINT PK_DIM_Partners_Id_Number PRIMARY KEY CLUSTERED (Id_Number);
-
---  IF OBJECT_ID ('Fact_Shipments', 'U')  IS NOT NULL
---begin
-
---  --declare @count  as int
---  --set @count = (select  count(*)   from Fact_Shipments  where Shipper not in (select Id_Number from DIM_Partners))  if(@count >0)  begin update  Fact_Shipments set Shipper = 1 where  Shipper not in (select Id_Number from DIM_Partners)  end
---  --set @count = (select  count(*)   from Fact_Shipments  where Consignee not in (select Id_Number from DIM_Partners)) if(@count >0)  begin update  Fact_Shipments set Consignee = 1 where  Consignee not in (select Id_Number from DIM_Partners)  end
---  --set @count = (select count(*)   from Fact_Shipments  where Agent not in (select Id_Number from DIM_Partners))  if(@count >0)  begin update  Fact_Shipments set Agent = 1 where  Agent not in (select Id_Number from DIM_Partners)  end
---  --set @count = (select  count(*)   from Fact_Shipments  where Customer not in (select Id_Number from DIM_Partners)) if(@count >0)  begin update  Fact_Shipments set Customer = 1 where  Customer not in (select Id_Number from DIM_Partners)  end
-
-
--- ALTER TABLE Fact_Shipments ADD CONSTRAINT FK_Fact_Shipment_DIM_Partners_Shipper  FOREIGN KEY (Shipper) REFERENCES DIM_Partners(Id_Number);
--- ALTER TABLE Fact_Shipments ADD CONSTRAINT FK_Fact_Shipment_DIM_Partners_Consignee  FOREIGN KEY (Consignee) REFERENCES DIM_Partners(Id_Number);
--- ALTER TABLE Fact_Shipments ADD CONSTRAINT FK_Fact_Shipment_DIM_Partners_Agent  FOREIGN KEY (Agent) REFERENCES DIM_Partners(Id_Number);
--- ALTER TABLE Fact_Shipments ADD CONSTRAINT FK_Fact_Shipment_DIM_Partners_Customer  FOREIGN KEY (Customer) REFERENCES DIM_Partners(Id_Number);
-
--- end
-
-
-
---CREATE NONCLUSTERED INDEX [IX_DIM_Partners_Id]
---ON [dbo].[DIM_Partners]([Id])

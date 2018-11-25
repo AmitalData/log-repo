@@ -47,10 +47,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
-
                 AirlineRepository myRepository = new AirlineRepository(tenant);
                 string myAirlineId = myRepository.GetAllowedAirlineId(tenant);
-
                 return Request.CreateResponse(HttpStatusCode.OK, myAirlineId);
             }
 

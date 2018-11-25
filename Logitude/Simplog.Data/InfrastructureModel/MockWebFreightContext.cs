@@ -2026,6 +2026,10 @@ namespace Simplog.Data.InfrastructureModel
         {
             get { throw new NotImplementedException(); }
         }
+        public IDbSet<DWSubQuery> DWSubQueries
+        {
+            get { throw new NotImplementedException(); }
+        }
         public IDbSet<DWQueryColumn> DWQueryColumns
         {
             get { throw new NotImplementedException(); }

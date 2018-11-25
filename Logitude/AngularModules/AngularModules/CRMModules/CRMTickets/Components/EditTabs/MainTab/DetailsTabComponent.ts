@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
@@ -29,6 +29,7 @@ import {ContactItemClass} from '../../../../../CommonModules/CommonPartners/Comp
 import {ContactPMService} from '../../../../../Common/Services/StandardPMs/ContactPMService';
 import {CachedDataManager} from '../../../../../Infrastructure/Utilities/CachedDataManager';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+declare var window: any;
 
 @Component({
     selector: 'DetailsTabComponent',
@@ -55,6 +56,7 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
         super();
         //this.Listen();
         this.InitializeServices();
+        
     }
     private Listen() {
         if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
@@ -72,62 +74,11 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
         }
     }
 
-    private selectedFilter: EntityClass = null;
-    get SelectedFilter() {
-        return this.selectedFilter;
-    }
-    set SelectedFilter(value: EntityClass) {
-        if (this.selectedFilter != value) {
-            this.selectedFilter = value;
-            this.UpdateEntityDetails();
-            this.ClearFilterData();
-        }
-    }
-    public UpdateEntityDetails() {
-        if (this.SelectedFilter != null && this.SelectedFilter.Code == "1") {
-            this.EntityObjectTableName = "Shipment";
-            this.EntityNumberTitle = "Shipment Number";
-        }
-        else {
-            this.EntityObjectTableName = "Quote";
-            this.EntityNumberTitle = "Quote Number";
-        }
-    }
     ClearFilterData() {
         this.ShipmentId = null;
         this.ShipmentNumber = null;
         this.QuoteId = null;
         this.QuoteNumber = null;
-    }
-    CreateEntities() {
-        this.EntityList = [];
-        var s_entity = new EntityClass();
-        s_entity.Code = "1";
-        s_entity.Name = "Shipment";
-        this.EntityList.push(s_entity);
-
-        var q_entity = new EntityClass();
-        q_entity.Code = "2";
-        q_entity.Name = "Quote";
-        this.EntityList.push(q_entity);
-
-        if (!AppTool.IsNullOrEmpty(this.QuoteId)) {
-            this.EntityNumberTitle = "Quote Number";
-            this.EntityObjectTableName = "Quote";
-            this.selectedFilter = q_entity;
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.ShipmentId)) {
-            this.EntityNumberTitle = "Shipment Number";
-            this.EntityObjectTableName = "Shipment";
-            this.selectedFilter = s_entity;
-        }
-
-        if (AppTool.IsNullOrEmpty(this.QuoteId) && AppTool.IsNullOrEmpty(this.QuoteId)) {
-            this.EntityNumberTitle = "Shipment Number";
-            this.EntityObjectTableName = "Shipment";
-            this.selectedFilter = s_entity;
-        }
     }
 
     ContactListService: ContactListService;
@@ -150,7 +101,14 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
     InitTab(trigger: TicketMainTabComponent) {
         this.Trigger = trigger;
         this.EntityPM = this.Trigger.EntityPM;
-        this.CreateEntities();
+        var objectTable = window.ObjectTables.filter(d => d.Id === this.Trigger.EntityPM.EntityType)[0];
+        if (objectTable != null) {
+            var objectTableName = window.ObjectTables.filter(d => d.Id === this.Trigger.EntityPM.EntityType)[0].Name;
+            if (objectTableName == "Quote") {
+                this.EntityNumberTitle = "Quote Number";
+            }
+        }
+        
         this.Filters = new ApiQueryFilters();
         this.Filters.PageIndex = 0;
         this.Filters.PageSize = 10;
@@ -188,6 +146,7 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
     public IsTicketEditEnabled = false;
     private SetUIProperties_EntityClosed() {
         this.IsTicketEditEnabled = CRMTool.IsTicketEditEnabled(this.Trigger.EntityPM);
+        this.UIProperties.SetEnabled("ShipmentNumber", this.ObjectTableName, this.IsTicketEditEnabled);
         this.UIProperties.SetEnabled("ShipmentNumber", this.ObjectTableName, this.IsTicketEditEnabled);
         this.UIProperties.SetEnabled("CompanyId", this.ObjectTableName, this.IsTicketEditEnabled);
         this.UIProperties.SetEnabled("ContactId", this.ObjectTableName, this.IsTicketEditEnabled);
@@ -523,10 +482,34 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
         this.SetUIProperties();
     }
 
+    private entityObjectTableName: string;
+    get EntityObjectTableName() { return this.entityObjectTableName; }
+    set EntityObjectTableName(value: string) {
+        if (this.entityObjectTableName != value) {
+            this.entityObjectTableName = value;
+            if (value == "Shipment") {
+                this.EntityNumberTitle = "Shipment Number";
+            }
+            else {
+
+                this.EntityNumberTitle = "Quote Number";
+            }
+            this.GetEntityLinkNumberVisibility();
+        }
+    }
+
+
+    get EntityType() { return this.Trigger.EntityPM.EntityType; }
+    set EntityType(value: string) {
+        if (this.Trigger.EntityPM.EntityType != value) {
+            this.Trigger.EntityPM.EntityType = value;
+        }
+    }
+
     public EntityLinkNumberVisibility = false;
     GetEntityLinkNumberVisibility() {
         var myResult = false;
-        if (!AppTool.IsNullOrEmpty(this.ShipmentNumber) || !AppTool.IsNullOrEmpty(this.QuoteNumber)) {
+        if ((this.EntityObjectTableName == "Shipment" && !AppTool.IsNullOrEmpty(this.ShipmentNumber)) || (this.EntityObjectTableName == "Quote" && !AppTool.IsNullOrEmpty(this.QuoteNumber))) {
             myResult = true;
         }
         this.EntityLinkNumberVisibility = myResult;
@@ -565,7 +548,7 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
             this.CompanyId = entity.CustomerId;
         }
     }
-    EntityObjectTableName: string;
+
     ChooseEntity() {
         if (this.IsTicketEditEnabled) {
             var logWindow = new LogitudeWindow();
