@@ -28,7 +28,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 }
                 if (temp == null)
                 {
-                    throw new ApplicationException("CountryCity with Code " + MyEntity.Code + " doesn't exist");
+                    throw new ApplicationException("City with Code " + MyEntity.Code + " doesn't exist");
                 }
                 if (string.IsNullOrEmpty(temp.Id))
                 {
