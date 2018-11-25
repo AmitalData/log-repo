@@ -855,6 +855,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 CustomerStatusRepository rep = new CustomerStatusRepository(tenant);
                 CustomerStatus status = rep.GetSingleCustomerStatus(entityPM.CustomerStatusCode);
                 entityPM.CustomerStatusName = status.Name;
+                entityPM.ActivationDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.ActivatedByUserId = loggedContact.Id;
                 entityPM.InActive = false;
             }
 
