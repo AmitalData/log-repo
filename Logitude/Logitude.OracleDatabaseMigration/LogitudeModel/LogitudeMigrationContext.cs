@@ -896,6 +896,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<DecisionType> DecisionType { get; set; }
         public IDbSet<SeizureMethodType> SeizureMethodType { get; set; }
         public IDbSet<ClaimsRelatedEntitiesSeizure> ClaimsRelatedEntitiesSeizure { get; set; }
+        public IDbSet<ClaimsRelatedEntitiesRefund> ClaimsRelatedEntitiesRefund { get; set; }
 
         #endregion
 
@@ -3895,6 +3896,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DecisionTypeMap());
             modelBuilder.Configurations.Add(new SeizureMethodTypeMap());
             modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesSeizureMap());
+            modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesRefundMap());
 
             #endregion
 

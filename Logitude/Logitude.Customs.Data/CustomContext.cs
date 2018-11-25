@@ -134,6 +134,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesReasonMap());
 	
+            modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesRefundMap());
+	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesSeizureMap());
 	
             modelBuilder.Configurations.Add(new ClaimsRelatedEntityMap());
@@ -636,6 +638,8 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<ClaimImporterDeclarsPage3B>().Property(x => x.SoldGoodsAmount).HasPrecision(12, 5);
 				
 			modelBuilder.Entity<ClaimsRelatedEntitiesAmount>().Property(x => x.Amount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<ClaimsRelatedEntitiesRefund>().Property(x => x.RefundQuntity).HasPrecision(16, 6);
 				
 			modelBuilder.Entity<ClaimsRelatedEntitiesSeizure>().Property(x => x.SeizureAmount).HasPrecision(16, 2);
 				
@@ -1249,6 +1253,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ClaimsRelatedEntitiesReason> ClaimsRelatedEntitiesReasons 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ClaimsRelatedEntitiesRefund> ClaimsRelatedEntitiesRefunds 
 	 {
 	      get; set;
 	 

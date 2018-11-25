@@ -967,6 +967,41 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedClaimsRelatedEntitiesSeizures = value; }
 	    }
+	  
+	   private List<ClaimsRelatedEntitiesRefundPM> claimsRelatedEntitiesRefunds;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClaimsRelatedEntitiesRefund", "ClaimId,EntityCounterKey","ClaimId,CounterKey")]
+	   [DataMember]
+	   public virtual List<ClaimsRelatedEntitiesRefundPM> ClaimsRelatedEntitiesRefunds  
+	   {
+	        get
+             {
+                 if (claimsRelatedEntitiesRefunds == null)
+                 {
+                     claimsRelatedEntitiesRefunds = new List<ClaimsRelatedEntitiesRefundPM>();
+                 }
+                 return claimsRelatedEntitiesRefunds;
+              }
+             set { claimsRelatedEntitiesRefunds = value; }
+	    }
+		   
+	   private List<ClaimsRelatedEntitiesRefundPM>  deletedClaimsRelatedEntitiesRefunds;
+	   public virtual List<ClaimsRelatedEntitiesRefundPM> DeletedClaimsRelatedEntitiesRefunds  
+	   {
+	        get
+             {
+                 if ( deletedClaimsRelatedEntitiesRefunds == null)
+                 {
+                      deletedClaimsRelatedEntitiesRefunds = new List<ClaimsRelatedEntitiesRefundPM>();
+                 }
+                 return  deletedClaimsRelatedEntitiesRefunds;
+              }
+             set {  deletedClaimsRelatedEntitiesRefunds = value; }
+	    }
 	     }
    
 }

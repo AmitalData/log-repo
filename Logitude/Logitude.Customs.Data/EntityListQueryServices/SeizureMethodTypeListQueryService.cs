@@ -24,22 +24,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<SeizureMethodTypeList> query = (from a in iQueryable
                                             select new SeizureMethodTypeList()
 											{
-                     
 					                          Code = a.Code,
-					
 					                          LocalName = a.LocalName,
-					
+					                          EnglishName = a.EnglishName,
 					                          SearchFields = a.SearchFields,
-					
+                                              Inactive = a.Inactive,
 		                    	            });
             return query;
 		}
 
 		private IQueryable<SeizureMethodType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<SeizureMethodType> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+        }
+	}
 
 
 }

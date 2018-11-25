@@ -256,6 +256,7 @@
     <Compile Include="EntityDataMappings\ClaimImporterDeclarsPage3DataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimsRelatedEntitiesAmountDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimsRelatedEntitiesReasonDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ClaimsRelatedEntitiesRefundDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimsRelatedEntitiesSeizureDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimsRelatedEntityDataMapping.cs" />
     <Compile Include="EntityDataMappings\ClaimImporterDeclarsPage3ADataMapping.cs" />
@@ -409,6 +410,7 @@
     <Compile Include="EntityDataMappings\Generated\ClaimImporterDeclarsPage3DataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimsRelatedEntitiesAmountDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimsRelatedEntitiesReasonDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ClaimsRelatedEntitiesRefundDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimsRelatedEntitiesSeizureDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimsRelatedEntityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ClaimImporterDeclarsPage3ADataMapping.Generated.cs" />
@@ -823,6 +825,7 @@
     <Compile Include="EntityQueryServices\Generated\AgentTalkBackTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoSplitRequestStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CargoStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ClaimsRelatedEntitiesRefundQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ClaimsRelatedEntitiesSeizureQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientDrivingLicenseQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientDrivingLicenseTypeQueryService.Generated.cs" />
@@ -1182,6 +1185,8 @@
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsPage3UpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntitiesAmountUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntitiesReasonUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ClaimsRelatedEntitiesRefundUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ClaimsRelatedEntitiesSeizureUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntityUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntsExpDeclarUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntsReasonsExpUpdateService.cs" />
@@ -1215,6 +1220,7 @@
     <Compile Include="EntityUpdateServices\Generated\AgentTalkBackTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoSplitRequestStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CargoStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ClaimsRelatedEntitiesRefundUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClaimsRelatedEntitiesSeizureUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClientDrivingLicenseTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ClientDrivingLicenseUpdateService.Generated.cs" />

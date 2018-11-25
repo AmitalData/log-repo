@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -565,6 +565,9 @@ export class ClaimsRelatedEntityLineComponent extends BaseComponent {
 
     public get ContinuousMessagesTypeName() { return this.entityPM.ContinuousMessagesTypeName; }
     public set ContinuousMessagesTypeName(newValue: string) { this.entityPM.ContinuousMessagesTypeName = newValue; }
+
+    public get DecisionName() { return this.entityPM.DecisionName; }
+    public set DecisionName(newValue: string) { this.entityPM.DecisionName = newValue; }
 
     public get IsSendClaimsRelatedEntity() { return this.entityPM.IsSendClaimsRelatedEntity; }
     public set IsSendClaimsRelatedEntity(newValue: boolean) { this.entityPM.IsSendClaimsRelatedEntity = newValue; }
