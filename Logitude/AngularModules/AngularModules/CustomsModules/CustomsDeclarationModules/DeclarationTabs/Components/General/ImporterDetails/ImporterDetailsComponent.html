@@ -84,8 +84,9 @@
 
         <td *ngIf="ImporterVisibility">
             <!--<LogTextBox [ObjectFieldName]="'ImporterPassportNumber'" [ObjectTableName]="ObjectTableName"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
-            <SearchBox [ObjectTableName]="'Customs.Client'"
+                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+            <!--[ObjectTableName]="'Customs.Client'"-->
+            <SearchBox [ObjectTableName]="'Client'"
                        [IsQuickSearch]="true"
                        [DropDownWidth]="143"
                        [DisplayMember]="'PassportNumber'"
