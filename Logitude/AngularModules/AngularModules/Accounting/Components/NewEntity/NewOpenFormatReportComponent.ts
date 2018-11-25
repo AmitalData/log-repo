@@ -76,15 +76,15 @@ export class NewOpenFormatReportComponent extends BaseComponent {
 
                     SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
 
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                        SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
-                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                                this.CancelButtonClicked();
-                            });
-                        });
+                    //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
+                    //    SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    //    .then(cmpRef => {
+                    //        cmpRef.instance.ComponentRef = cmpRef;
+                    //        cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
+                    //        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                    //            this.CancelButtonClicked();
+                    //        });
+                    //    });
                     SessionLocator.CurrentSession.StopBusyIndicator();
                 }
 

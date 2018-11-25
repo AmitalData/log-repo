@@ -97,8 +97,8 @@ export class MiscPageComponent implements AfterViewInit {
         //windowArgs.IsNewEntity = true;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 560;
-        logWindow.Height = 370;
+        logWindow.Width = 500;
+        logWindow.Height = 240;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
