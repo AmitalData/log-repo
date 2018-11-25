@@ -328,9 +328,9 @@
                                             <tr>
                                                 <td style="height: 22px;width:40%;">
                                                     <div style="vertical-align:middle;text-align:center;">
-                                                        <div style="width:120px;height:30px;background-color:cornflowerblue;display:inline-block;font-size:13px;padding-top:5px;">
+                                                        <div (click)="OnPayClick()" style="width:120px;height:30px;background-color:cornflowerblue;display:inline-block;font-size:13px;padding-top:5px;">
                                                             <span style="text-align:center;font-size:13px;">
-                                                                <a href="#" style="color:white;font-size:14px;font-family: sans-serif;">לתשלום מאובטח</a>
+                                                                <a style="color:white;font-size:14px;font-family: sans-serif;">לתשלום מאובטח</a>
                                                             </span>
                                                         </div> 
                                                     </div>
@@ -487,5 +487,14 @@
         </td>
     </tr> 
 </table>
+
+<form name='form' action='https://direct.tranzila.com/amitaltest/' method='post' style="width:0px;height:0px;">
+    <input type='hidden' name='sum' [attr.value]="sum">
+    <input type='hidden' name='currency' [attr.value]="currency">
+    <input type='hidden' name='op' [attr.value]="op">
+    <input type='hidden' name='DCdisable' [attr.value]="DCdisable">
+    <input type='hidden' name='DclickTK' [attr.value]="DclickTK">
+    <input type='hidden' name='thtk' [attr.value]="thtk">
+</form>
 
 
