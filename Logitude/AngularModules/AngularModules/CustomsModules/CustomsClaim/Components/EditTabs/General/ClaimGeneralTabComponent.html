@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .FlipImgHoriz {
         visibility: inherit;
         top: 0px;
@@ -568,6 +568,16 @@
                                                             </log-cell-template>
                                                         </log-column>
 
+                                                        <!-- DecisionCode -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntity.F.DecisionCode' | TextCodeTranslationPipe"
+                                                                    [binding]="'DecisionName'" [width]="'300'" [Alignment]="'right'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming" style="text-align:right">
+                                                                    <span>{{item.DecisionName}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'50'" [Alignment]="'right'">
                                                             <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
@@ -586,8 +596,8 @@
                                                             <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming" style="text-align:right">
                                                                     <LogCheckBox style="display: block; float: right; margin-right:3px; margin-top:2px;"
-                                                                                 [ObjectFieldName]="'IsSendClaimsRelatedEntity'" [ObjectTableName]="ObjectTableName" 
-                                                                                 [DataContext]="item" [HideColumns]="true" ></LogCheckBox>
+                                                                                 [ObjectFieldName]="'IsSendClaimsRelatedEntity'" [ObjectTableName]="ObjectTableName"
+                                                                                 [DataContext]="item" [HideColumns]="true"></LogCheckBox>
                                                                 </div>
                                                             </log-cell-template>
                                                         </log-column>

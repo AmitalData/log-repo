@@ -1185,6 +1185,8 @@
     <Compile Include="EntityUpdateServices\ClaimImporterDeclarsPage3UpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntitiesAmountUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntitiesReasonUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ClaimsRelatedEntitiesRefundUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\ClaimsRelatedEntitiesSeizureUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntityUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntsExpDeclarUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClaimsRelatedEntsReasonsExpUpdateService.cs" />

@@ -12,6 +12,7 @@ import {ClaimsRelatedEntitiesAmountPM} from './ClaimsRelatedEntitiesAmountPM';
 import {ClaimsRelatedEntitiesReasonPM} from './ClaimsRelatedEntitiesReasonPM';
 import {ClaimsRelatedEntsExpDeclarPM} from './ClaimsRelatedEntsExpDeclarPM';
 import {ClaimsRelatedEntitiesSeizurePM} from './ClaimsRelatedEntitiesSeizurePM';
+import {ClaimsRelatedEntitiesRefundPM} from './ClaimsRelatedEntitiesRefundPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -342,6 +343,40 @@ export class ClaimsRelatedEntityPM {
         }
     }
     //public ClaimsRelatedEntitiesSeizures: Array<ClaimsRelatedEntitiesSeizurePM>= [];
+      
+	private claimsRelatedEntitiesRefunds: ClaimsRelatedEntitiesRefundPM[];
+    get  ClaimsRelatedEntitiesRefunds() {
+        if (this.claimsRelatedEntitiesRefunds == null) {
+            this.claimsRelatedEntitiesRefunds = [];
+        }
+
+        return this.claimsRelatedEntitiesRefunds;
+    }
+    set  ClaimsRelatedEntitiesRefunds(newValue: ClaimsRelatedEntitiesRefundPM[]) {
+        if (this.claimsRelatedEntitiesRefunds != newValue) {
+            this.claimsRelatedEntitiesRefunds = newValue;
+        }
+    }
+    public AddClaimsRelatedEntitiesRefund(item: ClaimsRelatedEntitiesRefundPM) {
+        if (item != null) {
+            var index = this. ClaimsRelatedEntitiesRefunds.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. ClaimsRelatedEntitiesRefunds.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveClaimsRelatedEntitiesRefund(item: ClaimsRelatedEntitiesRefundPM) {
+        if (item != null) {
+            var index = this. ClaimsRelatedEntitiesRefunds.indexOf(item);
+            if (index > -1) {
+                this. ClaimsRelatedEntitiesRefunds.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public ClaimsRelatedEntitiesRefunds: Array<ClaimsRelatedEntitiesRefundPM>= [];
  
     public OldEntityPM: ClaimsRelatedEntityPM;
 	

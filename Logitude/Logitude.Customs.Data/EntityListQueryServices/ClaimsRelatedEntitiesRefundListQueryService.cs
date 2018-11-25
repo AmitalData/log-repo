@@ -24,20 +24,22 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<ClaimsRelatedEntitiesRefundList> query = (from a in iQueryable
                                             select new ClaimsRelatedEntitiesRefundList()
 											{
-                     
 					                          ClaimId = a.ClaimId,
-					
 					                          Tenant = a.Tenant,
-					
+                                              CounterKey = a.CounterKey,
+                                              RefundQuntityLineNo = a.RefundQuntityLineNo,
+                                              SequenceNumeric = a.SequenceNumeric,
+                                              InvoiceNumber = a.InvoiceNumber,
+                                              RefundQuntity = a.RefundQuntity,
 		                    	            });
             return query;
 		}
 
 		private IQueryable<ClaimsRelatedEntitiesRefund> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ClaimsRelatedEntitiesRefund> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+        }
+	}
 
 
 }

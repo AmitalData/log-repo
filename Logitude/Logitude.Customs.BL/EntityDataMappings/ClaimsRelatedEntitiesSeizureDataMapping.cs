@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -24,7 +25,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(ClaimsRelatedEntitiesSeizurePM entityPM, ClaimsRelatedEntitiesSeizure entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPMProperties.Add(PMPropertyNames.SeizureMethodCode);
+
+            if (entityPOCO.SeizureMethodCode != null)
+            {
+                SeizureMethodTypeQueryService seizureMethodTypeQueryService = new SeizureMethodTypeQueryService(entityPOCO.Tenant);
+                SeizureMethodTypePM seizureMethodTypePM = seizureMethodTypeQueryService.GetSingle(entityPOCO.SeizureMethodCode, false, true);
+                entityPM.SeizureMethodName = seizureMethodTypePM.LocalName;
+            }
         }
    }
 
