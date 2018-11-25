@@ -17,6 +17,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Security;
+using System.Web;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -46,7 +47,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 if (status != null)
                 {
 
-                    ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                    ContactQuery contactQuery = new ContactQuery(entityPM.Tenant);
+                    ContactPM loggedContact = null;
+
+                    if (HttpContext.Current != null)
+                    {
+                        loggedContact = contactQuery.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                    }
+                    else
+                    {
+
+                        loggedContact = contactQuery.GetSingleContactPM(entityPM.CreatedByUserId);
+                    }
+
+
                     if (loggedContact.DontShowLocal)
                     {
                         entityPM.Status = status.EnglishName;

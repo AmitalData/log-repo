@@ -1,10 +1,61 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
 
-</body>
-</html>
+
+
+
+
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="5">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+
+
+    <tr style="height:32px">
+        <td style="width:60px">
+            <LogLabel [ObjectFieldName]="'TaxReportMonth'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+
+        <td style="width:70px">
+            <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedMonth" (SelectedItemChanged)="SelectedMonth=$event"></ComboBox>
+        </td>
+
+        <td></td>
+    </tr>
+    <tr style="height:32px">
+        <td style="width:40px">
+            <LogLabel [ObjectFieldName]="'Year'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width:60px"> <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Year'" [InputType]="'integer'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogTextBox></td>
+
+        <td></td>
+    </tr>
+    <tr></tr>
+    <tr style="height: 32px;">
+        <td colspan="5" style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
