@@ -128,6 +128,10 @@
     <Compile Include="Migrations\201811221311394_AddClaimsRelatedEntitiesSeizure.Designer.cs">
       <DependentUpon>201811221311394_AddClaimsRelatedEntitiesSeizure.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811250603192_AddClaimsRelatedEntitiesRefund.cs" />
+    <Compile Include="Migrations\201811250603192_AddClaimsRelatedEntitiesRefund.Designer.cs">
+      <DependentUpon>201811250603192_AddClaimsRelatedEntitiesRefund.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -206,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811221311394_AddClaimsRelatedEntitiesSeizure.resx">
       <DependentUpon>201811221311394_AddClaimsRelatedEntitiesSeizure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811250603192_AddClaimsRelatedEntitiesRefund.resx">
+      <DependentUpon>201811250603192_AddClaimsRelatedEntitiesRefund.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
