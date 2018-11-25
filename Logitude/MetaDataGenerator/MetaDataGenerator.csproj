@@ -80,10 +80,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Simplog.Data\bin\Debug\Simplog.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Simplog.Data.Global, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\main\Simplog.Data\bin\Debug\Simplog.Data.Global.dll</HintPath>
-    </Reference>
     <Reference Include="Simplog.Server.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Simplog.Server.Infrastructure\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
