@@ -894,7 +894,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen BusinessProcessQueueGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessProcessQueueGeneralTabScreen", Name = "General Tab Screen", ObjectTableId = BusinessProcessQueueObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen BusinessProcessQueueGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessProcessQueue.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = BusinessProcessQueueObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
             ScreenField BusinessProcessQueueGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessProcessQueueGeneralTabScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
@@ -910,7 +910,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
            
 	      
 
-	         Screen BusinessProcessQueueHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessProcessQueueHeaderScreen.HeaderScreen", Name = "Header Screen", ObjectTableId = BusinessProcessQueueObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen BusinessProcessQueueHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessProcessQueue.HeaderScreen.HeaderScreen", Name = "Header Screen", ObjectTableId = BusinessProcessQueueObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
             ScreenField BusinessProcessQueueHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessProcessQueueObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessProcessQueueHeaderScreenScreen1.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	
