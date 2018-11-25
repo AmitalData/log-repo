@@ -14,7 +14,7 @@
                         <!--General Fields -->
                         <tr style="width: 550px; height: 20px;">
                             <td class="TabTitleRow" style="width: 200px;height:20px;">
-                                {{'Customs.Claim.O.ReasonAndExplanations'| TextCodeTranslationPipe}}
+                                {{'Customs.Claim.TH.ClaimDecision'| TextCodeTranslationPipe}}
                             </td>
                         </tr>
                         <tr style="width: 550px; height: 70px">
@@ -22,7 +22,7 @@
                                 <div style="width: 550px; height: 70px;">
                                     <table style="width: 550px; height: 70px">
                                         <tr class="FormFieldRow">
-                                            <td style="width: 120px; ">
+                                            <td style="width: 110px; ">
                                                 <LogLabel [ObjectFieldName]="'DecisionCode'" [ObjectTableName]="ObjectTableName"
                                                           [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -42,7 +42,7 @@
                                         </tr>
 
                                         <tr class="FormFieldRow">
-                                            <td style="width: 120px;">
+                                            <td style="width: 110px;">
                                                 <LogLabel [ObjectFieldName]="'DecisionNote'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td style="width: 150px;">
@@ -50,8 +50,8 @@
                                                             [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                             </td>
 
-                                            <td style="width: 120px;">
-                                                <LogLabel [ObjectFieldName]="'EilatVatRefoundDecision'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            <td style="width: 130px;">
+                                                <div style="margin-right:10px; vertical-align:middle;" [style.text-align]="'right'" class="Label MultiLinesText">{{'Customs.ClaimsRelatedEntity.F.EilatVatRefoundDecision' | TextCodeTranslationPipe }}:</div>
                                             </td>
                                             <td style="width: 150px;">
                                                 <LogTextBox [ObjectFieldName]="'EilatVatRefoundDecision'" [ObjectTableName]="ObjectTableName" [Text]="EilatVatRefoundDecision"
@@ -62,7 +62,7 @@
                                         </tr>
 
                                         <tr class="FormFieldRow">
-                                            <td style="width: 120px; ">
+                                            <td style="width: 110px; ">
                                                 <LogLabel [ObjectFieldName]="'DepositingAmount'" [ObjectTableName]="ObjectTableName"
                                                           [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -71,7 +71,7 @@
                                                             [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                             </td>
 
-                                            <td style="width: 120px;">
+                                            <td style="width: 130px;">
                                                 <LogLabel [ObjectFieldName]="'RefundAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td style="width: 150px;">
@@ -89,7 +89,7 @@
                             <td><div></div></td>
                         </tr>
 
-                        <tr style="height: 1px;"><td><div style="width: 15px;"></div></td></tr>
+                        <tr style="height: 30px;"><td><div></div></td></tr>
                         <!-- Claims Related Entities Seizures -->
                         <tr style="height: 150px; width: 500px; top:0px">
                             <td style="height: 150px; width: 500px;">
@@ -97,7 +97,7 @@
                                     <table style="height: 150px; width: 500px;">
                                         <tr style="height: 30px">
                                             <td class="TabTitleRow" style="width:150px">
-                                                {{'Customs.Claim.O.ClaimsRelatedEntitiesReasons'| TextCodeTranslationPipe}}
+                                                {{'Customs.Claim.O.Seizure'| TextCodeTranslationPipe}}
                                             </td>
                                             <td> <div></div> </td>
                                         </tr>
@@ -152,7 +152,7 @@
                             </td>
                         </tr>
 
-                        <tr style="height: 1px;"><td><div style="width: 15px;"></div></td></tr>
+                        <tr style="height: 1px;"><td><div></div></td></tr>
                         <!-- Claims Related Entities Refunds -->
                         <tr style="height: 150px; width: 500px; top:0px">
                             <td style="height: 150px; width: 500px;">
@@ -160,7 +160,7 @@
                                     <table style="height: 150px; width: 500px;">
                                         <tr style="height: 30px">
                                             <td class="TabTitleRow" style="width:150px">
-                                                {{'Customs.Claim.O.ClaimsRelatedEntitiesReasons'| TextCodeTranslationPipe}}
+                                                {{'Customs.Claim.O.ClaimsRelatedEntitiesRefund'| TextCodeTranslationPipe}}
                                             </td>
 
                                             <td> <div></div> </td>
