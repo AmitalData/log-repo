@@ -84,6 +84,16 @@ export class OpenFormatReportPM {
     public set ErrorMessage(newValue: string) { if (this.errorMessage != newValue) { this.errorMessage = newValue; this.MarkAsDirty("ErrorMessage"); } }
        
 	 
+    private createdByUserName: string;
+    public get CreatedByUserName() { return this.createdByUserName; }
+    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
+       
+	 
+    private status: string;
+    public get Status() { return this.status; }
+    public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
+       
+	 
 
     public OldEntityPM: OpenFormatReportPM;
 		

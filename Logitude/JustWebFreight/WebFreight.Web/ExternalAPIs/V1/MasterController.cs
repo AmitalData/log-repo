@@ -116,7 +116,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             if (!string.IsNullOrEmpty(errorMessage))
                             {
                                 errorMessage = errorMessage.TrimStart(',');
-                                throw new ApplicationException(errorMessage);
+                                throw new ApplicationException("Due to operational closed: " + errorMessage);
                             }
                         }
 
