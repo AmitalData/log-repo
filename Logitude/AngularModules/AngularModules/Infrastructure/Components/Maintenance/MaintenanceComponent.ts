@@ -612,7 +612,6 @@ export class MaintenanceComponent {
             itemsSource = this.AllMaintenanceMenu.filter(f => f.CategoryTypeCode.toUpperCase() == this.SelectedMenu.Code.toUpperCase());
         }
 
-
         //this.ItemsSource = itemsSource;
 
         itemsSource.forEach(item => {
