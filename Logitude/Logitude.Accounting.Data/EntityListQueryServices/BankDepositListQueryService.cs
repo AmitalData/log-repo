@@ -23,8 +23,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private IQueryable<BankDepositList> GetIqueryableList(IQueryable<BankDeposit> iQueryable)
         {
             IQueryable<BankDepositList> query = (from a in iQueryable.Include("CashBook").Include("BankAccount")
-                                                 join jr in context.Journals on a.Id equals jr.AccountingEntityId into r
-                                                 from x in r.DefaultIfEmpty()
+                                                 join jr in context.Journals on a.Id equals jr.AccountingEntityId
                                                  select new BankDepositList()
                                                  {
 
@@ -69,7 +68,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      BankAccountNumber = a.BankAccount.AccountNumber,
                                                      IsCanceled = a.IsCanceled,
 
-                                                     JournalNumber = x.JournalNumber,
+                                                     JournalNumber = jr.JournalNumber,
                                                  });
             return query;
         }
