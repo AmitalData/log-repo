@@ -14,23 +14,43 @@
 
 
     <tr style="height:32px">
-        <td style="width:60px">
-            <LogLabel [ObjectFieldName]="'TaxReportMonth'" [ObjectTableName]="ObjectTableName"
+        <td style="width:100px">
+            <LogLabel [ObjectFieldName]="'DateTypeCode'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
 
-        <td style="width:70px">
-            <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedMonth" (SelectedItemChanged)="SelectedMonth=$event"></ComboBox>
+        <td style="width:100px">
+            <LogLov [ObjectFieldName]="'DateTypeCode'"
+                    [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'OpenFormatDateType'"
+                    (SelectedItemChanged)="OpenFormatDateType = $event"
+                    [HideColumns]="false">
+            </LogLov>
         </td>
-
+        <td></td>
+        <td style="width:100px"></td>
+        <td style="width:100px"></td>
         <td></td>
     </tr>
     <tr style="height:32px">
-        <td style="width:40px">
-            <LogLabel [ObjectFieldName]="'Year'" [ObjectTableName]="ObjectTableName"
+        <td style="width:100px">
+            <LogLabel [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td style="width:60px"> <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Year'" [InputType]="'integer'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"></LogTextBox></td>
+        <td style="width:100px">
+            <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+        </td>
+        <td></td>
+        <td style="width:100px">
+            <LogLabel [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width:100px">
+            <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+        </td>
 
         <td></td>
     </tr>

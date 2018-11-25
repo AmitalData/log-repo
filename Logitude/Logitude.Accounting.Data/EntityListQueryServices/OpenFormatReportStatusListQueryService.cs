@@ -39,8 +39,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<OpenFormatReportStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<OpenFormatReportStatus> iQueryable)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 				private IQueryable<OpenFormatReportStatus> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<OpenFormatReportStatus> iQueryable)
         {
 			return iQueryable;
