@@ -15,13 +15,12 @@ namespace Logitude.CustomsMessaging.Helpers
     public class UnifreightDocumentsFilingService : DocumentsFilingService
     {
 
-        
         public bool FeatureIsOn = true;
 
-        public UnifreightDocumentsFilingService(ICommonDataContext objectContext, int tenant,string NumVersionId = null)
+        public UnifreightDocumentsFilingService(ICommonDataContext objectContext, int tenant,string DeclarationNumVersionId = null)
             :base(objectContext, tenant)
         {
-            base.NumVersionId = NumVersionId;
+            base.DeclarationNumVersionId = DeclarationNumVersionId;
         }
         new public void Update(DocumentsFilingPM theEntityPm, byte[] fileData = null, string loggedUserId = null, bool FromService = false)
         {
