@@ -931,6 +931,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 myCFIDATA_DATA.CasualSupplierName = _DirtyDeclarationPM.CasualSupplierName;
                 myCFIDATA_DATA.CasualSupplierAddress = _DirtyDeclarationPM.CasualSupplierAddress;
                 myCFIDATA_DATA.COUWTVAL = _DirtyDeclarationPM.WeightValue;
+                myCFIDATA_DATA.CasualImporterAddress1 = _DirtyDeclarationPM.CasualImporterAddress1;
+                myCFIDATA_DATA.CasualImporterAddress2 = _DirtyDeclarationPM.CasualImporterAddress2;
+                myCFIDATA_DATA.CasualImporterCity = _DirtyDeclarationPM.CasualImporterCity;
+                myCFIDATA_DATA.CasualImporterZipCode = _DirtyDeclarationPM.CasualImporterZipCode;
+                myCFIDATA_DATA.CasualImporterFax = _DirtyDeclarationPM.CasualImporterFax;
+                myCFIDATA_DATA.CasualImporterEmail = _DirtyDeclarationPM.CasualImporterEmail;
+                myCFIDATA_DATA.CasualImportelTel = _DirtyDeclarationPM.CasualImporterTel;
+                myCFIDATA_DATA.CasualImporterContact = _DirtyDeclarationPM.CasualImporterContact;
+
                 if (_DirtyDeclarationPM.Consignments != null && _DirtyDeclarationPM.Consignments.Count() > 0)
                 {
                     myCFIDATA_DATA.ManifestNumber = _DirtyDeclarationPM.Consignments[0].ManifestNumber;
@@ -948,11 +957,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     if (!string.IsNullOrWhiteSpace(courierMasterPM.AirlineId))
                     {
-                        AirlineRepository airlineRepository = new AirlineRepository(_DirtyDeclarationPM.Tenant);
-                        Airline airline = airlineRepository.GetSingleAirline(courierMasterPM.AirlineId, _DirtyDeclarationPM.Tenant);
+                        //AirlineRepository airlineRepository = new AirlineRepository(_DirtyDeclarationPM.Tenant);
+                        //Airline airline = airlineRepository.GetSingleAirline(courierMasterPM.AirlineId, _DirtyDeclarationPM.Tenant);
+                        CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(_DirtyDeclarationPM.Tenant);
+                        CustomsAirline airline = airlineRepository.GetSingle(courierMasterPM.AirlineId, _DirtyDeclarationPM.Tenant);
                         if (airline != null)
                         {
-                            myCFIDATA_DATA.AirlineId = airline.Prefix;
+                            myCFIDATA_DATA.AirlineId = airline.AirlinePrefix;
                         }
                     }
                 }
@@ -1795,6 +1806,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
+            if (_DirtyDeclarationPM.TransportModeId == "O")
+            {
+                if (!String.IsNullOrWhiteSpace(decConsignment.ThirdCargoID))
+                {
+                    if (decConsignment.CargoTypeCode == "11" || decConsignment.CargoTypeCode == "20")
+                    {
+                        cCUMSHGRPM.HAWB = decConsignment.ThirdCargoID.GetLast(8);
+                        cCUMSHGRPM.HAWB = Regex.Replace(cCUMSHGRPM.HAWB, "[^0-9]", "");
+                        cCUMSHGRPM.HAWBN = decConsignment.ThirdCargoID;
+                    }
+                }
+            }
             cCUMSHGRPM.HAWBDATE = null;
             if (decConsignment.ManifestDate.HasValue && decConsignment.CargoTypeCode != "17")
             {
@@ -1835,6 +1858,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     cCUMSHGRPM.CARNETNUMBER = secondCargoID.Substring(0, Math.Min(9, secondCargoID.Length));
                     cCUMSHGRPM.TRANSPTYPE = "01";
+                    if (decConsignment.CargoTypeCode == "11" || decConsignment.CargoTypeCode == "20")
+                    {
+                        //cCUMSHGRPM.IDENTIFIERNO = decConsignment.;
+                    }
                 }
 
                 if (decConsignment.CargoTypeCode != "8" && decConsignment.CargoTypeCode != "20")

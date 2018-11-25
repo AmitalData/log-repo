@@ -423,13 +423,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 string code = airlineId.Substring(0, index);
                 string prefix = airlineId.Substring(index + 1);
                 CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(ResolvedTenant());
-                CustomsAirline airline = airlineRepository.GetByAirlineAndPrefix(code, prefix, null);
+                CustomsAirline airline = airlineRepository.GetByAirlineAndPrefix(code, prefix, ResolvedTenant());
                 if (airline != null) return airline.Id;
             }
             else
             {
                 CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(ResolvedTenant());
-                CustomsAirline airline = airlineRepository.GetByPrefix(airlineId, null);
+                CustomsAirline airline = airlineRepository.GetByPrefix(airlineId, ResolvedTenant());
                 if (airline != null) return airline.Id;
             }
 

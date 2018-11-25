@@ -132,6 +132,10 @@
     <Compile Include="Migrations\201811250603192_AddClaimsRelatedEntitiesRefund.Designer.cs">
       <DependentUpon>201811250603192_AddClaimsRelatedEntitiesRefund.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811251240447_AddICAOFieldToCustomsAirLines.cs" />
+    <Compile Include="Migrations\201811251240447_AddICAOFieldToCustomsAirLines.Designer.cs">
+      <DependentUpon>201811251240447_AddICAOFieldToCustomsAirLines.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -213,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811250603192_AddClaimsRelatedEntitiesRefund.resx">
       <DependentUpon>201811250603192_AddClaimsRelatedEntitiesRefund.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811251240447_AddICAOFieldToCustomsAirLines.resx">
+      <DependentUpon>201811251240447_AddICAOFieldToCustomsAirLines.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

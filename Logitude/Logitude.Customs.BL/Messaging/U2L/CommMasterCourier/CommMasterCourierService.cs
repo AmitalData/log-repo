@@ -208,13 +208,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 string code = airlineId.Substring(0, index);
                 string prefix = airlineId.Substring(index + 1);
                 CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(ResolvedTenantLocal());
-                CustomsAirline airline = airlineRepository.GetByAirlineAndPrefix(code, prefix, null);
+                CustomsAirline airline = airlineRepository.GetByAirlineAndPrefix(code, prefix, ResolvedTenantLocal());
                 if (airline != null) return airline.Id;
             }
             else
             {
                 CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(ResolvedTenantLocal());
-                CustomsAirline airline = airlineRepository.GetByPrefix(airlineId, null);
+                CustomsAirline airline = airlineRepository.GetByPrefix(airlineId, ResolvedTenantLocal());
                 if (airline != null) return airline.Id;
             }
             
