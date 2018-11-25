@@ -1549,6 +1549,26 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
         }
 
 
+        public HttpResponseMessage GetIsAgentSharedManifests(string agentId , string shipmentNumber)
+        {
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                AgentSharedManifestQuery agentSharedManifestQuery = new AgentSharedManifestQuery(authToken.Tenant);
+                bool result = agentSharedManifestQuery.IsAgentSharedManifests(agentId, shipmentNumber);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 
 
