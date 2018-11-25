@@ -234,6 +234,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
            
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.AirlinePrefix);
            
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ICAO);
+           
            
             entityPM.SearchFields += mySearchFields;
             entityPOCO.SearchFields += mySearchFields;
