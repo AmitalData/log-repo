@@ -1,4 +1,4 @@
-﻿import { NewClaimComponent } from './Components/NewEntity/NewClaimComponent';
+import { NewClaimComponent } from './Components/NewEntity/NewClaimComponent';
 import { PointersFromClaimRelatedEntitiesSelectionComponent } from './Components/Documents/PointersFromClaimRelatedEntitiesSelectionComponent';
 import { ClaimGeneralTabComponent } from './Components/EditTabs/General/ClaimGeneralTabComponent';
 import { ClaimRelatedEntityTabComponent } from './Components/EditTabs/RelatedEntity/ClaimRelatedEntityTabComponent';
@@ -12,7 +12,7 @@ import { ClaimImporterDeclBCTabComponent } from './Components/EditTabs/ImporterD
 import { ClaimRefundDetailsTabComponent } from './Components/EditTabs/Refund/ClaimRefundDetailsTabComponent';
 import { SendClaimComponent } from './Components/SendClaim/SendClaimComponent';
 import { ClaimImporterDeclAP3LoisComponent } from './Components/EditTabs/ImporterDeclaration/ClaimImporterDeclAP3LoisComponent';
-
+import { ClaimRelatedEntityClaimDecisionTabComponent } from './Components/EditTabs/RelatedEntity/ClaimRelatedEntityClaimDecisionTabComponent';
 
 export const Components =
     [
@@ -30,7 +30,7 @@ export const Components =
         ClaimRefundDetailsTabComponent,
         SendClaimComponent,
         ClaimImporterDeclAP3LoisComponent,
-
+        ClaimRelatedEntityClaimDecisionTabComponent,
 
     ];
 
@@ -54,6 +54,7 @@ export class ModuleDeclarations {
             case "ClaimRefundDetailsTabComponent": { myResult = ClaimRefundDetailsTabComponent; break; }
             case "SendClaimComponent": { myResult = SendClaimComponent; break; }
             case "ClaimImporterDeclAP3LoisComponent": { myResult = ClaimImporterDeclAP3LoisComponent; break; }
+            case "ClaimRelatedEntityClaimDecisionTabComponent": { myResult = ClaimRelatedEntityClaimDecisionTabComponent; break; }
         }
 
         return myResult;
