@@ -17,7 +17,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 {
     public class DocumentsFilingMetaDataValueQuery
     {
-        public const string AddOne2VersionId = "AddOne2VersionId";
         DocumentsFilingMetaDataValueRepository repository;
 
         public DocumentsFilingMetaDataValueQuery()
@@ -71,15 +70,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 .FirstOrDefault(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId);
             if (mydocumentsFilingMetaDataVERValuePM != null)
             {
-                if (MetaDataTypeValue == AddOne2VersionId)
-                {
-                    string sVer = mydocumentsFilingMetaDataVERValuePM.MetaDataValue;
-                    int iVer = 0;
-                    int.TryParse(sVer, out iVer);
-                    iVer++;
-                    MetaDataTypeValue = iVer.ToString();
-                }
-
                 if (mydocumentsFilingMetaDataVERValuePM.MetaDataValue == MetaDataTypeValue)
                 {
                     LogMessagingUtil.Instance.AppendLine("mydocumentsFilingMetaDataVERValue.MetaDataValue == DeclarationNumber ");
@@ -104,11 +94,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             else
             {
-                if (MetaDataTypeValue == AddOne2VersionId)
-                {
-                  
-                    MetaDataTypeValue = "1";
-                }
                 var temp = new DocumentsFilingMetaDataValuePM()
                 {
                     DocumentsMetaDataTypeId = documentsMetaDataTypeId,

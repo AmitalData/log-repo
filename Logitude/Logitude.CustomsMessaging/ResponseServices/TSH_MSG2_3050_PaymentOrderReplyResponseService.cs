@@ -592,7 +592,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void AnalyzePaymentDocument(Attachment attachment, NewPaymentRequestParams requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, DocumentsFilingMetaDataValueQuery.AddOne2VersionId);
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             DocumentsFilingPM documentsFilingPM = null;
@@ -645,7 +645,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, NewPaymentRequestParams requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, DocumentsFilingMetaDataValueQuery.AddOne2VersionId);
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
@@ -663,7 +663,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void CreatePaymentDocument(Attachment attachment, NewPaymentRequestParams requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, DocumentsFilingMetaDataValueQuery.AddOne2VersionId);
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
