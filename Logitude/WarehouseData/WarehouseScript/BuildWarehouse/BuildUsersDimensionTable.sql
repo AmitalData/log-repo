@@ -1,26 +1,26 @@
 
 
 
-If(OBJECT_ID('tempdb..#DIM_UsersTemp') Is Not Null)
-Begin
-    Drop Table #DIM_UsersTemp
-End
+--If(OBJECT_ID('tempdb..#DIM_UsersTemp') Is Not Null)
+--Begin
+--    Drop Table #DIM_UsersTemp
+--End
 
 
 
 
-CREATE TABLE #DIM_UsersTemp (
-	Id_Number int not null identity(1,1) primary key,
-    Id varchar(15),
-    Name varchar(60) not null,
-	[Local Name] nvarchar(100),
-    Email varchar(70),
-	Department varchar(40) not null,
-	Branch varchar(40) not null,
-	[Source Tenant]  int,
-    [Parent Tenant]  int,
-);
-insert into #DIM_UsersTemp values ('-1' , 'Not Specified' ,'Not Specified' ,'Not Specified','Not Specified','Not Specified', 0,0)
+--CREATE TABLE #DIM_UsersTemp (
+--	Id_Number int not null identity(1,1) primary key,
+--    Id varchar(15),
+--    Name varchar(60) not null,
+--	[Local Name] nvarchar(100),
+--    Email varchar(70),
+--	Department varchar(40) not null,
+--	Branch varchar(40) not null,
+--	[Source Tenant]  int,
+--    [Parent Tenant]  int,
+--);
+insert into #DIM_UsersTemp (Id,Name,[Local Name],Email, Department ,Branch,  [Source Tenant],[Parent Tenant]) values ('-1' , 'Not Specified' ,'Not Specified' ,'Not Specified','Not Specified','Not Specified', 0,0)
 
 
    declare @Id as varchar(15)
@@ -44,7 +44,7 @@ insert into #DIM_UsersTemp values ('-1' , 'Not Specified' ,'Not Specified' ,'Not
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
-	insert into #DIM_UsersTemp values(@Id,@Name,@LocalName ,@Email,@Department, @Branch, @SourceTenant , @ParentTenant )
+	insert into #DIM_UsersTemp (Id,Name,[Local Name],Email, Department ,Branch,  [Source Tenant],[Parent Tenant]) values(@Id,@Name,@LocalName ,@Email,@Department, @Branch, @SourceTenant , @ParentTenant )
 
 	FETCH NEXT FROM UsersCursor  INTO @Id , @Name, @LocalName , @Email , @Department, @Branch , @SourceTenant , @ParentTenant  
 		End

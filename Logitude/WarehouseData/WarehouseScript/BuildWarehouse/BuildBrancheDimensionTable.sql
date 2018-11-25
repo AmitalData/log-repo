@@ -1,21 +1,21 @@
  
 
-If(OBJECT_ID('tempdb..#DIM_BranchesTemp') Is Not Null)
-Begin
-    Drop Table #DIM_BranchesTemp
-End
+--If(OBJECT_ID('tempdb..#DIM_BranchesTemp') Is Not Null)
+--Begin
+--    Drop Table #DIM_BranchesTemp
+--End
 
-CREATE TABLE #DIM_BranchesTemp (
-	Id_Number int not null identity(1,1) primary key,
-    Id varchar(15) not null , 
-	Name varchar(40)  not null,
-	[Local Name]  nvarchar(40),
-    Code varchar(13),
-	[Source Tenant] int,
-	[Parent Tenant] int,
-);
+--CREATE TABLE #DIM_BranchesTemp (
+--	Id_Number int not null identity(1,1) primary key,
+--    Id varchar(15) not null , 
+--	Name varchar(40)  not null,
+--	[Local Name]  nvarchar(40),
+--    Code varchar(13),
+--	[Source Tenant] int,
+--	[Parent Tenant] int,
+--);
  
- insert into #DIM_BranchesTemp values ('-1' , 'Not Specified' ,'Not Specified' ,'Not Specified', 0,0)
+ insert into #DIM_BranchesTemp (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant]) values ('-1' , 'Not Specified' ,'Not Specified' ,'Not Specified', 0,0)
 
    declare @Id as varchar(15)
    declare @EnglishName as varchar(40)
@@ -33,7 +33,7 @@ CREATE TABLE #DIM_BranchesTemp (
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-    insert into #DIM_BranchesTemp values(@Id,@EnglishName,@LocalName,@Code , @SourceTenant,@ParentTenant)
+    insert into #DIM_BranchesTemp (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant]) values(@Id,@EnglishName,@LocalName,@Code , @SourceTenant,@ParentTenant)
 
 	FETCH NEXT FROM BranchesCursor  INTO @Id , @EnglishName, @LocalName, @Code, @SourceTenant , @ParentTenant
 		End

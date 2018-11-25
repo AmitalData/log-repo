@@ -164,9 +164,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append("a" + setting.DeductionFileNumber.PadLeft(9, '0'));
               }
-
+            myStringBuilder.Append("a96");
             myStringBuilder.Append(taxDeductionReportPM.TaxYear);
-            if(taxDeductionReportPM.IsAdditionalReportExist)
+
+            myStringBuilder.Append(' ',3);
+            myStringBuilder.Append("0");
+            if (taxDeductionReportPM.IsAdditionalReportExist)
             {
                 myStringBuilder.Append("a2");
             }

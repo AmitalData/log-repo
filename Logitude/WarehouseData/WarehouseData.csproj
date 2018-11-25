@@ -154,40 +154,108 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="WarehouseScript\BuildWarehouse\BuildBrancheDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildCardsDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildCurrencyDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildDateDimensionsTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildDepartmentDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildDirectionDimensionsTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildEntityStatusDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildIncotermDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildPortsDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentLevelDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentTypeDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildTenantDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildTransportModeDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildUsersDimensionTable.sql" />
-    <Content Include="WarehouseScript\BuildWarehouse\BuildFactShipmentTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateBrancheDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateCardDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateCurrencyDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateDepartmentDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateDirectionDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateEntityStatusDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactShipmentTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateIncotermDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdatePortsDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentLevelDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentTypeDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateTenantDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateTransportModeDimensionTable.sql" />
-    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateUsersDimensionTable.sql" />
-    <Content Include="WarehouseScript\Others\Day 04 [Abed] AddColumnAutomaticLastUpdateDateAndTriggerToAllTableUsedInWarehouseData.sql" />
-    <Content Include="WarehouseScript\Others\Day 04 [Abed] CreateIndexes.sql" />
-    <Content Include="WarehouseScript\Others\Day 04 [Abed] SetColumnAutomaticLastUpdateDateOnAllTableUsedInWarehouseData.sql" />
-    <Content Include="WarehouseScript\Others\Day 26 [Abed] FillDWHSettingTable.sql" />
-    <Content Include="WarehouseScript\Others\UpdateObjectFieldCopyToDW.sql" />
+    <Content Include="WarehouseScript\BuildWarehouse\BuildBrancheDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildCardsDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildCurrencyDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildDateDimensionsTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildDepartmentDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildDirectionDimensionsTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildEntityStatusDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildIncotermDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildPortsDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentLevelDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildShipmentTypeDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildTenantDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildTransportModeDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildUsersDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\BuildWarehouse\BuildFactShipmentTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateBrancheDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateCardDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateCurrencyDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateDepartmentDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateDirectionDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateEntityStatusDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateFactShipmentTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateIncotermDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdatePortsDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentLevelDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateShipmentTypeDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateTenantDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateTransportModeDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\IncrementalWarehouse\UpdateUsersDimensionTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\Others\Day 04 [Abed] AddColumnAutomaticLastUpdateDateAndTriggerToAllTableUsedInWarehouseData.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\Others\Day 04 [Abed] CreateIndexes.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\Others\Day 04 [Abed] SetColumnAutomaticLastUpdateDateOnAllTableUsedInWarehouseData.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\Others\Day 26 [Abed] FillDWHSettingTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="WarehouseScript\Others\UpdateObjectFieldCopyToDW.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
