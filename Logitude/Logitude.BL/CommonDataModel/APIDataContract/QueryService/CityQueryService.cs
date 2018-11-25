@@ -16,7 +16,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             try
             {
                 CountryCityQuery query = new CountryCityQuery(Tenant);
-                var temp = new CountryCityPM();
+                CountryCityPM temp = null;
+
                 if (!string.IsNullOrEmpty(MyEntity.Id))
                 {
                     temp = query.GetSinglePM(MyEntity.Id, Tenant);
@@ -43,7 +44,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
