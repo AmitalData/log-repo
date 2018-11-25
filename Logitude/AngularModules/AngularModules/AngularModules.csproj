@@ -74,6 +74,7 @@
     <Content Include="Accounting\Components\NewEntity\NewBankAccountComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewChartOfAccountComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewGLAccountComponent.html" />
+    <Content Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewPaymentChequeComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewRevaluationComponent.html" />
     <Content Include="Accounting\Components\NewEntity\NewTaxDeductionReportComponent.html" />
@@ -292,12 +293,19 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
+    <TypeScriptCompile Include="Accounting\EntityLists\OpenFormatReportList.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\JournalAdditionalDataPM.ts" />
+    <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatDateTypePM.ts" />
+    <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatReportPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\JournalAdditionalDataListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatDateTypeListService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardLists\OpenFormatReportListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\JournalAdditionalDataPMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonPartners\Components\EditTabs\CustomAgent\CustomAgentDocsInTabComponent.ts" />

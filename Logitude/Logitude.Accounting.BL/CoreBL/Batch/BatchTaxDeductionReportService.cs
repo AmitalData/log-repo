@@ -1,6 +1,11 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.ExtendedServices;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +32,26 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             PNCFileArgs parameterArgs = serializer.Deserialize(stringReader) as PNCFileArgs;
 
             // Call the service
-           DocumentsFilingPM docFilingPM = TaxDeductionReportService.Create856File(parameterArgs.ReportId, parameterArgs.Tenant);
+
+            TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(parameterArgs.Tenant);
+            TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle(parameterArgs.ReportId, false, false);
+            try
+            {
+                DocumentsFilingPM docFilingPM = TaxDeductionReportService.Create856File(parameterArgs.ReportId, parameterArgs.Tenant);
+            }
+
+            catch (Exception ex)
+            {
+                
+                IContext MainContext = AccountingContext.GetContext(parameterArgs.Tenant);
+            
+                TaxDeductionReportUpdateService taxDeductionReportUpdateService = new TaxDeductionReportUpdateService(MainContext, new Dictionary<string, IContext>(), taxDeductionReportPM.Tenant);
+                taxDeductionReportPM.ErrorMessage = ex.Message;
+                taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);
+                throw;
+
+            }
 
         }
     }

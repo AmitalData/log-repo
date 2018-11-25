@@ -1,0 +1,273 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#"#>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="Microsoft.CSharp.dll" #>
+<#@ Assembly name="$(SolutionDir)packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll" #>
+<#@ Import Namespace="System.Xml" #>
+<#@ Import Namespace="System.Xml.Linq" #>
+<#@ Import Namespace="AmazedSaint.Elastic" #>
+<#@ Import Namespace="AmazedSaint.Elastic.Lib" #>
+<#@ output extension=".cs" #>
+
+<#@ import Namespace="System.IO" #>
+<#@ template debug="true" #>
+<#+
+dynamic pmnamespacestring;
+public void GenerateAllTS(string sourceFolder,string destinationFolder)
+{
+	// System.Diagnostics.Debugger.Launch();
+	Console.WriteLine(destinationFolder);
+ 
+ pmnamespacestring = GetPMNameSpace(destinationFolder);
+ string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+ string sourceFilePath = Path.Combine(templateDirectory, sourceFolder);
+
+foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+{
+
+    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+	Console.WriteLine(fileNameWithoutExtension);
+	GeneratePM(file,destinationFolder+"/Generated/"+fileNameWithoutExtension+"TS.Generated.ts");
+	 
+}
+
+ 
+}
+#>
+
+<#+  
+
+public void GeneratePM(string xmlFilePath,string outputFilePath)
+{
+	if(string.IsNullOrEmpty(pmnamespacestring))
+    {
+	 pmnamespacestring = GetPMNameSpace(outputFilePath);
+    }
+var entity = FromPMFile(xmlFilePath);
+WritePMMethod(entity);
+SavePMOutput(outputFilePath);
+}
+ 
+#>
+
+
+<#+
+
+public dynamic GetPMNameSpace(string destinationFolder)
+{
+	string spacestring = "";
+	string[] path = destinationFolder.Split('/');
+	foreach(string dir in path)
+    {
+		if(dir != "..")
+        {
+			spacestring += dir + ".";
+        }
+    }
+
+	spacestring = spacestring.ToString().Trim('.');
+
+	return spacestring;
+}
+
+#>
+
+<#+
+void SavePMOutput(string outputFileName)
+  {
+      string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+      string outputFilePath = Path.Combine(templateDirectory, outputFileName);
+    
+	   var manager = Manager.Create(Host, GenerationEnvironment);
+	  manager.CreateTestFile(outputFilePath,this.GenerationEnvironment.ToString());
+	  this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+  }
+#>
+
+
+<#+
+string classlevelname = "ClassLevelValidator";
+string validationclassname = "ValidationClass";
+ private void WritePMMethod(dynamic entity)
+{
+	string tableName = entity.ObjectTableName.Trim('"');
+	string dBTableName = entity.DBTableName.Trim('"');
+	string schema ="";
+	 
+	if(tableName.ToString().Trim('"').Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+		schema = entity.ObjectTableName.Trim('"').ToString().Split('.')[0];
+
+		classlevelname= schema + "ClassLevelValidator";
+		validationclassname = schema + "ValidationClass";
+          
+    }
+	else{
+
+		string[] namespacearr = pmnamespacestring.ToString().Split('.');
+		string projectname = namespacearr[1].Replace("Lib","");
+		classlevelname= projectname + "ClassLevelValidator";
+		validationclassname = projectname + "ValidationClass";
+		 
+    }
+
+
+	//Logitude.BookingLib.BL.EntityPMs
+	// string validatorsnamespace =pmnamespacestring.ToString().Substring(0,pmnamespacestring.ToString().LastIndexOf('.')) + ".Validators;";
+
+	 
+
+   #>
+import {UIProperties, UIProperty} from '../../infrastructure/logitude-components/UIProperties';
+export class <#=tableName #>PM {
+{
+      public UIProperties: UIProperties;
+
+      constructor() {
+        this.UIProperties = new UIProperties;
+        this.IsDirty = false;
+      }
+
+      public IsDirty: boolean;
+
+   <#+
+ 	foreach(var field in entity["field"])  //get all classes
+	 { 
+		  if( field.HasPMField.GetType() == typeof(string))
+           {
+             if(field.HasPMField == "false")
+               {
+                  continue;
+               }
+           }
+		   string type = GetDataType(field);
+		   if(type == "List" || (field.IsMulti.GetType() == typeof(string) && field.IsMulti == "true"))
+           {
+			    WritePMList(field);
+           }
+		   else
+           {
+	          WritePMProperty(field);
+
+           }
+	 }
+
+	  
+
+	 #>
+   
+      MarkAsDirty() {
+          this.IsDirty = true;
+      }
+}
+	 <#+
+    
+  }
+
+#>
+
+
+<#+
+public void WritePMProperty(dynamic field)
+{
+	string type = GetDataType(field); 
+    string privatepropname = FirstCharacterToLower(field.FieldName.Trim('"'));
+	string publicpropname = field.FieldName.ToString().Trim('"');
+	#>
+	  private _<#= privatepropname #> :  <#= type #>;
+	  public get <#= publicpropname #> () { return this._<#= privatepropname #>; }
+      public set <#= publicpropname #>(newValue: string) { this._<#= privatepropname #> = newValue; this.MarkAsDirty(); }
+       
+	 
+<#+ 
+  
+ }
+#>
+<#+
+public  string FirstCharacterToLower(string str)
+{
+    if (String.IsNullOrEmpty(str) || Char.IsLower(str, 0))
+        return str;
+
+    return Char.ToLowerInvariant(str[0]).ToString() + str.Substring(1);
+}
+#>
+
+
+<#+
+public void WritePMList(dynamic field)
+{ 
+   
+	
+    string privatepropname = FirstCharacterToLower(field.FieldName.Trim('"'));
+	string publicpropname = field.FieldName.ToString().Trim('"');
+    string multitablename = field.MultiTableName.ToString().Trim('"');
+	#>
+     
+	  public <#= publicpropname #>: Array<<#= multitablename #>PM>;
+ <#+ 
+}
+#>
+
+
+
+<#+
+//Create an elastic object
+private dynamic FromPMFile(string file)
+{
+   var path= Host.ResolvePath(file);
+   return XDocument.Load(path).Root.ToElastic();
+}
+
+#>
+
+<#+
+
+  private string GetDataType(dynamic field)
+        {
+			
+			string typecode = field.FieldsDataType.ToString().Trim('"') as string;
+			string result = "string";
+            if (typecode == "Boolean")
+            {
+                result = "bool";
+            }
+            if (typecode == "Integer" || typecode == "UnsInteger")
+            {
+                result = "int";
+            }
+
+            if (typecode == "Date" || typecode == "DateTime")
+            {
+                result = "DateTime";
+            }
+
+            if (typecode == "Double" || typecode == "SigDouble")
+            {
+                result = "double";
+            }
+
+			 if (typecode == "Decimal" || typecode == "UnsDecimal")
+            {
+                result = "decimal";
+            }
+			if(typecode == "List")
+            {
+				result = typecode;
+            }
+
+            
+          string isNullable = field.IsNullable as string;
+		  if(isNullable == "true" && result != "string")
+		  {
+			  result = result + "?";
+          }
+
+		  return result;
+
+        }
+#>
+
