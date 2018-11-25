@@ -1075,9 +1075,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public void AddToTasksQueue(DocumentsFilingPM extDocPM, bool isnew, string loggedUserId)
         {
-            if (!string.IsNullOrWhiteSpace(this.DeclarationNumVersionId))
+            if (!string.IsNullOrWhiteSpace(this.NumVersionId))
             {
-                DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.DeclarationNumVersionId);
+                DocumentsFilingMetaDataValueQuery.UpSert(extDocPM, "VER", this.NumVersionId);
             }
 
             if (LogitudeSettings.EnableHybridQueue && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
@@ -1304,7 +1304,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
         protected UniFileVerM MyUniFileVerM { get; set; }
-        protected string DeclarationNumVersionId { get; set; }
+        protected string NumVersionId { get; set; }
     }
     public class UniFileVerM
     {
