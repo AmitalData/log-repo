@@ -299,6 +299,10 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                 if (myDifference < 0) {
                     var myDifferencePayablesColor = FontTool.Red;
                 }
+
+                if (AppTool.IsNullOrEmpty(myDifferencePayablesText)) {
+                    myDifferencePayablesText = DecimalFormatter.format(0, 2);
+                }
             }
         }
 
