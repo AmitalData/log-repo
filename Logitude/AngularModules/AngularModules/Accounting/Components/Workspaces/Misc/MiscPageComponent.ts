@@ -5,6 +5,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: module.id,
@@ -88,5 +89,21 @@ export class MiscPageComponent implements AfterViewInit {
             });
         }
     }
+
+
+    RunNewOpenFormatReportWizard() {
+        var windowTitle = "New Open Format Report";
+        //var windowArgs: BookingWizardArgs = new BookingWizardArgs();
+        //windowArgs.IsNewEntity = true;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 560;
+        logWindow.Height = 370;
+        logWindow.Title = windowTitle;
+        //logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./Accounting/Components/NewEntity/NewOpenFormatReportComponent');
+    } 
+
    
 }
