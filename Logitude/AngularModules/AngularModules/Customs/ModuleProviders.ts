@@ -206,6 +206,8 @@ import { TreatmentWayListService } from './Services/StandardLists/TreatmentWayLi
 import { TPGFileTypeListService } from './Services/StandardLists/TPGFileTypeListService';
 import { CustomsAirlineListService } from './Services/StandardLists/CustomsAirlineListService';
 import { PendingErrorPlaceListService } from './Services/StandardLists/PendingErrorPlaceListService';
+import { DecisionTypeListService } from './Services/StandardLists/DecisionTypeListService';
+import { SeizureMethodTypeListService } from './Services/StandardLists/SeizureMethodTypeListService';
 
 //#endregion
 
@@ -536,6 +538,8 @@ export class ModuleProviders {
             case "TPGFileTypeListService": { myResult = new TPGFileTypeListService(); break; }  
             case "CustomsAirlineListService": { myResult = new CustomsAirlineListService(); break; }
             case "PendingErrorPlaceListService": { myResult = new PendingErrorPlaceListService(); break; }
+            case "DecisionTypeListService": { myResult = new DecisionTypeListService(); break; }
+            case "SeizureMethodTypeListService": { myResult = new SeizureMethodTypeListService(); break; }
             //#endregion                
 
             //#region StandardPMs

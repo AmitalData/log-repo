@@ -1,0 +1,224 @@
+
+<table>
+    <tr>
+        <td>
+            <fieldset [disabled]="!IsControlEnabled">
+                <div class="TableHolder">
+                    <table style="width: 550px; height: 400px;padding-top: 10px;">
+                        <tr *ngIf="ValidationErrors != null && ValidationErrors.length > 0" style="height:1px;">
+                            <td colspan="4">
+                                <ValidationSummary [ItemsSource]="ValidationErrors" [SingleLine]="false"></ValidationSummary>
+                            </td>
+                        </tr>
+
+                        <!--General Fields -->
+                        <tr style="width: 550px; height: 20px;">
+                            <td class="TabTitleRow" style="width: 200px;height:20px;">
+                                {{'Customs.Claim.O.ReasonAndExplanations'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr style="width: 550px; height: 70px">
+                            <td style="width: 550px; height: 70px">
+                                <div style="width: 550px; height: 70px;">
+                                    <table style="width: 550px; height: 70px">
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 120px; ">
+                                                <LogLabel [ObjectFieldName]="'DecisionCode'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogLov [ObjectFieldName]="'DecisionCode'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [SelectedValue]="DecisionCode"
+                                                        [DisplayMemberPath]="'LocalName'"
+                                                        [HideAddLink]="true"
+                                                        [HideColumns]="true"
+                                                        [LookUpTableName]="'Customs.DecisionType'">
+                                                </LogLov>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 120px;">
+                                                <LogLabel [ObjectFieldName]="'DecisionNote'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'DecisionNote'" [ObjectTableName]="ObjectTableName" [Text]="DecisionNote"
+                                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 120px;">
+                                                <LogLabel [ObjectFieldName]="'EilatVatRefoundDecision'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'EilatVatRefoundDecision'" [ObjectTableName]="ObjectTableName" [Text]="EilatVatRefoundDecision"
+                                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td><div></div></td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 120px; ">
+                                                <LogLabel [ObjectFieldName]="'DepositingAmount'" [ObjectTableName]="ObjectTableName"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'DepositingAmount'" [ObjectTableName]="ObjectTableName" [Text]="DepositingAmount"
+                                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 120px;">
+                                                <LogLabel [ObjectFieldName]="'RefundAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width: 150px;">
+                                                <LogTextBox [ObjectFieldName]="'RefundAmount'" [ObjectTableName]="ObjectTableName" [Text]="RefundAmount"
+                                                            [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td><div></div></td>
+
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+
+                            <td><div></div></td>
+                        </tr>
+
+                        <tr style="height: 1px;"><td><div style="width: 15px;"></div></td></tr>
+                        <!-- Claims Related Entities Seizures -->
+                        <tr style="height: 150px; width: 500px; top:0px">
+                            <td style="height: 150px; width: 500px;">
+                                <div style="height: 150px; width: 500px;">
+                                    <table style="height: 150px; width: 500px;">
+                                        <tr style="height: 30px">
+                                            <td class="TabTitleRow" style="width:150px">
+                                                {{'Customs.Claim.O.ClaimsRelatedEntitiesReasons'| TextCodeTranslationPipe}}
+                                            </td>
+                                            <td> <div></div> </td>
+                                        </tr>
+
+                                        <tr style="height: 120px; overflow: auto;">
+                                            <td colspan="5">
+                                                <div class="CellContent">
+                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                                        [ItemSource]="ClaimsRelatedEntitiesSeizureslist"
+                                                                        [IsReadOnly]="!IsControlEnabled">
+
+                                                        <!-- SeizureFactorCode -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntitiesSeizure.F.SeizureFactorCode' | TextCodeTranslationPipe"
+                                                                    [width]="'120'" [Alignment]="'right'" [binding]="'SeizureFactorCode'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.SeizureFactorCode}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- SeizureMethodCode -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntitiesSeizure.F.SeizureMethodCode' | TextCodeTranslationPipe"
+                                                                    [width]="'120'" [Alignment]="'right'" [binding]="'SeizureMethodCode'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.SeizureMethodName}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- SeizureAmount -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntitiesSeizure.F.SeizureAmount' | TextCodeTranslationPipe"
+                                                                    [width]="'180'" [Alignment]="'right'" [binding]="'SeizureAmount'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.SeizureAmount}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                    </logitude-edit-grid>
+                                                </div>
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 1px;"><td><div style="width: 15px;"></div></td></tr>
+                        <!-- Claims Related Entities Refunds -->
+                        <tr style="height: 150px; width: 500px; top:0px">
+                            <td style="height: 150px; width: 500px;">
+                                <div style="height: 150px; width: 500px;">
+                                    <table style="height: 150px; width: 500px;">
+                                        <tr style="height: 30px">
+                                            <td class="TabTitleRow" style="width:150px">
+                                                {{'Customs.Claim.O.ClaimsRelatedEntitiesReasons'| TextCodeTranslationPipe}}
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                        </tr>
+
+                                        <tr style="height: 120px; overflow: auto;">
+                                            <td colspan="5">
+                                                <div class="CellContent">
+                                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                                        [ItemSource]="ClaimsRelatedEntitiesRefundslist"
+                                                                        [IsReadOnly]="!IsControlEnabled">
+
+                                                        <!-- InvoiceNumber -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntitiesRefund.F.InvoiceNumber' | TextCodeTranslationPipe"
+                                                                    [width]="'120'" [Alignment]="'right'" [binding]="'InvoiceNumber'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.InvoiceNumber}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- SequenceNumeric -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntitiesRefund.F.SequenceNumeric' | TextCodeTranslationPipe"
+                                                                    [width]="'120'" [Alignment]="'right'" [binding]="'SequenceNumeric'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.SequenceNumeric}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                        <!-- RefundQuntity -->
+                                                        <log-column [header]="'Customs.ClaimsRelatedEntitiesRefund.F.RefundQuntity' | TextCodeTranslationPipe"
+                                                                    [width]="'180'" [Alignment]="'right'" [binding]="'RefundQuntity'">
+                                                            <log-cell-template template="let item" #logcelltemplate>
+                                                                <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
+                                                                    <span>{{item.RefundQuntity}}</span>
+                                                                </div>
+                                                            </log-cell-template>
+                                                        </log-column>
+
+                                                    </logitude-edit-grid>
+                                                </div>
+                                            </td>
+
+                                            <td> <div></div> </td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </fieldset>
+        </td>
+    </tr>
+</table>

@@ -117,6 +117,7 @@
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclBCTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\Refund\ClaimRefundDetailsTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityAdditionalDataTabComponent.html" />
+    <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityClaimDecisionTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityCustomAnswerTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityGeneralTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityReasonsTabComponent.html" />
@@ -269,6 +270,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclBCTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\Refund\ClaimRefundDetailsTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityAdditionalDataTabComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityClaimDecisionTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityCustomAnswerTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityReasonsTabComponent.ts" />
@@ -374,6 +376,8 @@
     <TypeScriptCompile Include="Customs\EntityLists\DecisionTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingErrorPlaceList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SeizureMethodTypeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesRefundPM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesSeizurePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CourierPendingReasonPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAirlinePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsPartnerFtpPM.ts" />
