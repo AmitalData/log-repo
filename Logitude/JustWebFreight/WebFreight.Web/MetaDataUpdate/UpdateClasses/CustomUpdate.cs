@@ -14205,6 +14205,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.CloseClaim", DefaultText = "Claim Closed Successfully", LocalDefaultText = "תביעה נסגרה בהצלחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.CancelCloseClaim", DefaultText = "Cancel Close Claim done Successfully", LocalDefaultText = "ביטול סגירת תביעה בוצע בהצלחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.Seizure", DefaultText = "Seizure", LocalDefaultText = "פירוט עיקולים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ClaimsRelatedEntitiesRefund", DefaultText = "Refund", LocalDefaultText = "כמות שאושרה לסחורה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ImpDeclInUse", 
             //    DefaultText = "Importer's declaration '{0}' is already in use", 
             //    LocalDefaultText = "הצהרת היבואן '{0}' כבר בשימוש ", 
