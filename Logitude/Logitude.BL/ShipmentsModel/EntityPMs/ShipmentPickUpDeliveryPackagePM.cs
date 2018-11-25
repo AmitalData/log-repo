@@ -1,5 +1,7 @@
 ﻿using Simplog.Server.Infrastructure;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
@@ -52,5 +54,45 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string OriginalShipmentPackageId { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
+
+        public bool IsMultiHarmonize { get; set; }
+
+        private List<PickUpDeliveryPackageHarmonizePM> pickUpDeliveryPackageHarmonizes;
+        [Composition]
+        [Include]
+        [Association("PickUpDeliveryPackagePickUpDeliveryPackageHarmonize", "Id", "PackageId")]
+        public virtual List<PickUpDeliveryPackageHarmonizePM> PickUpDeliveryPackageHarmonizes
+        {
+            get
+            {
+                if (pickUpDeliveryPackageHarmonizes == null)
+                {
+                    pickUpDeliveryPackageHarmonizes = new List<PickUpDeliveryPackageHarmonizePM>();
+                }
+
+                return pickUpDeliveryPackageHarmonizes;
+            }
+
+            set { pickUpDeliveryPackageHarmonizes = value; }
+        }
+
+        private List<PickUpDeliveryPackageHarmonizePM> pickUpDeliveryPackageHarmonizesChangeSet;
+        public List<PickUpDeliveryPackageHarmonizePM> PickUpDeliveryPackageHarmonizesChangeSet
+        {
+            get
+            {
+                if (pickUpDeliveryPackageHarmonizesChangeSet == null)
+                {
+                    pickUpDeliveryPackageHarmonizesChangeSet = new List<PickUpDeliveryPackageHarmonizePM>();
+                }
+
+                return pickUpDeliveryPackageHarmonizesChangeSet;
+            }
+
+            set
+            {
+                pickUpDeliveryPackageHarmonizesChangeSet = value;
+            }
+        }
     }
 }

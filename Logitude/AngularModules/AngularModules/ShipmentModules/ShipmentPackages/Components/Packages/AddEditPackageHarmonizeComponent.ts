@@ -33,7 +33,7 @@ export class AddEditPackageHarmonizeComponent {
             if (args) {
                 this.IsEditingEnabled = args['IsEditingEnabled'];
                 this.EntityPM = args['PackagePM'];
-                this.ShipmentPM = this.EntityPM.EntityParentPM;
+                this.ShipmentPM = args['ShipmentPM'];
 
                 this.isPackageDirty = this.EntityPM.IsDirty;
                 this.isShipmentDirty = this.ShipmentPM.IsDirty;
@@ -77,21 +77,17 @@ export class AddEditPackageHarmonizeComponent {
     }
     OkButtonClicked() {
         var errors: string[] = [];
-        Validator.TryValidateObject(this.EntityPM, "ShipmentPackage", errors);
 
         this.ItemsSource.forEach(item => {
-            Validator.TryValidateObject(item, this.ObjectTableName, errors);
+            Validator.TryValidateObject(item.EntityPM, this.ObjectTableName, errors);
         });
 
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-
             var allItemsPM: ShipmentPackageHarmonizePM[] = [];
-            //var allRemoved: ShipmentPackageHarmonizePM[] = [];
-
+            
             this.ItemsSource.forEach((item: HarmonizeItemClass) => {
-
                 var index = this.EntityPM.ShipmentPackageHarmonizes.indexOf(item.EntityPM);
 
                 if (index > -1) {
@@ -110,16 +106,16 @@ export class AddEditPackageHarmonizeComponent {
                 allItemsPM.push(item.EntityPM);
             });
 
+            for (var i = this.EntityPM.ShipmentPackageHarmonizes.length - 1; i >= 0; i--) {
 
-            this.EntityPM.ShipmentPackageHarmonizes.forEach(item => {
-
-                var index = allItemsPM.indexOf(item);
+                var index = allItemsPM.indexOf(this.EntityPM.ShipmentPackageHarmonizes[i]);
 
                 if (index == -1) {
+                    var item = this.EntityPM.ShipmentPackageHarmonizes[i];
                     this.EntityPM.RemoveShipmentPackageHarmonizePM(item);
-                }                
-            });
-
+                } 
+            }
+            
             this.EntityPM.IsMultiHarmonize = this.EntityPM.ShipmentPackageHarmonizes.length > 0 ? true : false;
             if (this.EntityPM.IsMultiHarmonize) {
                 if (this.EntityPM.Harmonize) {

@@ -485,14 +485,17 @@ export class ListComponent implements OnInit, AfterViewInit {
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
             var TommorowDate = DateTool.AddDays((new Date()), 1);
             TommorowDate.setUTCHours(0, 0, 0, 0);
+            //TommorowDate.setHours(0, 0, 0, 0);
             var TodayDate = new Date();
             TodayDate.setUTCHours(0, 0, 0, 0);
             var TodayCustomDate = new Date();
             TodayCustomDate.setHours(0, 0, 0, 0);
             var TodayEndDate = new Date();
-            TodayEndDate.setHours(23, 59, 59, 0);
+            TodayEndDate.setHours(23, 59, 59, 0); 
+            //TodayDate.setHours(0, 0, 0, 0);
             var YesterdayDate = DateTool.AddDays((new Date()), -1);
             YesterdayDate.setUTCHours(0, 0, 0, 0);
+            //YesterdayDate.setHours(0, 0, 0, 0);
             var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
             LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);

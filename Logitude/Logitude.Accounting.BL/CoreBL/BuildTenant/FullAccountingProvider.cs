@@ -20,7 +20,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
   public  class FullAccountingProvider 
     {
         string DefaultVATTypeId = null;
-        private GLAccountRepository _GLAccountRepository;
+        private GLAccountUpdateService _GLAccountRepository;
         private IChartOfAccountProvider _ChartOfAccountProvider;
         int _Counter = 0;
         private DisplayNumberProvider _DisplayNumberProvider;
@@ -363,13 +363,13 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             //pm.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
 
             
-            _GLAccountRepository = _GLAccountRepository ?? new GLAccountRepository(accountingContext);
+            _GLAccountRepository = _GLAccountRepository ?? new GLAccountUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), poco.Tenant);
 
             poco.Id = IdCounter.GetNumber("GLAccount", poco.Tenant);
             poco.InternalNumber= CodeCounter.GetNumber("GLAccount", poco.Tenant).ToString();
             int curr = (++_Counter);
             poco.DisplayNumber = _DisplayNumberProvider.GetDisplayNumber15CHAR(poco.ChartOfAccountsTypeCode, true, curr, poco.Tenant);
-            _GLAccountRepository.Add(poco);
+            _GLAccountRepository.AddPocoFromBuildTenant(poco);
 
             _GLAccountMoreDataRepository = _GLAccountMoreDataRepository ?? new GLAccountMoreDataRepository(accountingContext);
             _GLAccountMoreDataRepository.Add(new GLAccountMoreData() { AccountId = poco.Id, Tenant = poco.Tenant });

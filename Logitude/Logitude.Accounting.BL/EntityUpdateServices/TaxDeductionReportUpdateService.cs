@@ -3,6 +3,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
@@ -25,7 +26,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
             entityPM.StatusTypeCode = "1";
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-            entityPM.ReportNumber =TableCounter.GetNumber(entityPM.Tenant, "TXDC", "TX", null);
+            entityPM.ReportNumber = CodeCounter.GetNumber("TaxDeductionReport", entityPM.Tenant).ToString();
 
             Validate(entityPM);
         }

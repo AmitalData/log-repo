@@ -66,7 +66,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.FullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetARPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments;
-
+       
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EnableMultiCurrency")) {
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyARPayments) {
                 this.IsMultiCurrency = true;
@@ -352,35 +352,64 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ItemsSource.Clear();
 
         if (!AppTool.IsNullOrEmpty(this.BillToId) && this.EntityPM.StatusCode != "VD") {
-            var filters = new ApiQueryFilters();
-            filters.PageIndex = 0;
-            filters.PageSize = 1000;
-            filters.SortBy = "InvoiceDate";
-            filters.SortDirection = "Descending";
-
-            filters.addAdditionalFilter("BillToId", this.EntityPM.BillToId, null, null, "Equals", false, false, false, "string");
-            filters.addAdditionalFilter("StatusCode", "DR,AD,PP,PD", null, null, "InList", false, true, false, "string");
-            filters.addAdditionalFilter("IsConstituentInvoice", false, null, null, "Equals", false, false, false, "Boolean");
-
-            var searchValue = null;
-            if (!AppTool.IsNullOrEmpty(this.searchText)) {
-                searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
-            }
-
-            filters.addAdditionalFilter("ARPaymentInvoicesSearch", searchValue, null, null, "Contains", true, false, false, "string");
-
-            var myService = new ARInvoiceListService();
-            myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    this.FillBaselist(myResponse.Result);
-                }
-            });
+            this.LoadPaymentInvoices_Connected();
         }
 
         else {
             this.UpdateSummary();
             this.IsDataLoaded = true;
         }
+    }
+    LoadPaymentInvoices_Connected() {
+        var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 1000;
+        filters.SortBy = "InvoiceDate";
+        filters.SortDirection = "Descending";
+
+        var searchValue = null;
+        if (!AppTool.IsNullOrEmpty(this.searchText)) {
+            searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
+        }
+
+        filters.addAdditionalFilter("ARPaymentInvoicesSearch", searchValue, null, null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("ARPaymentInvoicesConnected", this.EntityPM.Id, null, null, "Contains", true, false, false, "string");
+
+        var myService = new ARInvoiceListService();
+        myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.FillBaselist(myResponse.Result);
+
+                if (!this.EntityPM.IsClosed) {
+                    this.LoadPaymentInvoices_IsMatched();
+                }
+            }
+        });
+    }
+    LoadPaymentInvoices_IsMatched() {
+        var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 1000;
+        filters.SortBy = "InvoiceDate";
+        filters.SortDirection = "Descending";
+
+        filters.addAdditionalFilter("BillToId", this.EntityPM.BillToId, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("StatusCode", "DR,AD,PP,PD", null, null, "InList", false, true, false, "string");
+        filters.addAdditionalFilter("IsConstituentInvoice", false, null, null, "Equals", false, false, false, "Boolean");
+
+        var searchValue = null;
+        if (!AppTool.IsNullOrEmpty(this.searchText)) {
+            searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
+        }
+
+        filters.addAdditionalFilter("ARPaymentInvoicesSearch", searchValue, null, null, "Contains", true, false, false, "string");
+
+        var myService = new ARInvoiceListService();
+        myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.FillBaselist(myResponse.Result);
+            }
+        });
     }
     FillBaselist(baselist: ARInvoiceList[]) {
         var connectedList: ARPaymentInvoiceArgs[] = [];

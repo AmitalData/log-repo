@@ -1476,7 +1476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewAccount", DefaultText = "New Account", LocalDefaultText = "חשבון חדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Customers", DefaultText = "Customers", LocalDefaultText = "לקוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.GeneralInvoice", DefaultText = "General Invoice", LocalDefaultText = "חשבונית כללית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Payments", DefaultText = "Payments", LocalDefaultText = "תשלומים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Payments", DefaultText = "Payments", LocalDefaultText = "קבלות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.DraftPayments", DefaultText = "Draft Payments", LocalDefaultText = "קבלות בסטטוס טיוטה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OpenPayments", DefaultText = "Open Payments", LocalDefaultText = "קבלות בסטטוס מאושר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AllPayments", DefaultText = "All Payments", LocalDefaultText = "כל הקבלות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1720,7 +1720,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.HigherMonthReport", DefaultText = "There’s a report with a higher month", LocalDefaultText = "קיים כבר דוח עם חודש גבוה יותר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ReportWithClosedMonth", DefaultText = "Report month Month is not closed , please check Accounting Periods", LocalDefaultText = "לא ניתן להפיק דוח מע\" על חודש שעדיין לא נסגר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WantToCancelTaxReport", DefaultText = "Are you sure you want to cancel this report?", LocalDefaultText = "האם אתה בטוח שאתה רוצה לבטל דוח זה؟", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-		    AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Noautorecofoundbymethodchangemethod", DefaultText = "No automatic reconcile found by this method, Please change method or select lines manually", LocalDefaultText = "לא נמצאו תנועות מתאימות לשיטת ההתאמה שנבחרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+		    AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Noautorecofoundbymethodchangemethod", DefaultText = "No automatic reconcile found by this method, Please change method or select lines manually", LocalDefaultText = "לא נמצאו תנועות להתאמה, יש לשנות שיטת התאמה או להתאים ידנית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.EditLine", DefaultText = "Edit Line Number", LocalDefaultText = "ערוך שורה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxReportErrorMsg", DefaultText = "Cannot approve report, there are #Number errors", LocalDefaultText = "קיימות #Number שגיאות - יש לתקנם לפני שידור הדוח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Inactive", DefaultText = "Inactive", LocalDefaultText = "חסום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -3865,40 +3865,40 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         public void CreateCounters(int tenant)
         {
-            objectContext = WebFreightContext.GetContext(tenant);
-            CounterRepository CounterRepository = new CounterRepository(objectContext);
-            CounterDefinitionRepository = new CounterDefinitionRepository(objectContext);
-            List<Counter> zeroCounters = CounterRepository.GetCounters(0).ToList();
-            ObjectTable taxDeductionReportObject = objectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault();
-            #region Tax Deduction Report Counters
+            //objectContext = WebFreightContext.GetContext(tenant);
+            //CounterRepository CounterRepository = new CounterRepository(objectContext);
+            //CounterDefinitionRepository = new CounterDefinitionRepository(objectContext);
+            //List<Counter> zeroCounters = CounterRepository.GetCounters(0).ToList();
+            //ObjectTable taxDeductionReportObject = objectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault();
+            //#region Tax Deduction Report Counters
 
-            if (!zeroCounters.Where(c => c.Code == "TXDC" && c.Tenant == 0).Any())
-            {
-                Counter taxDeductionReportCounter = new Counter()
-                {
-                    Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = taxDeductionReportObject.Id,
-                    Code = "TXDC",
-                    Tenant = 0,
-                    Name = "Tax Deduction Report",
-                };
+            //if (!zeroCounters.Where(c => c.Code == "TXDC" && c.Tenant == 0).Any())
+            //{
+            //    Counter taxDeductionReportCounter = new Counter()
+            //    {
+            //        Id = IdCounter.GetNumber("Counter", 0).ToString(),
+            //        ObjectTableId = taxDeductionReportObject.Id,
+            //        Code = "TXDC",
+            //        Tenant = 0,
+            //        Name = "Tax Deduction Report",
+            //    };
 
-                CounterDefinition taxDeductionReportCounter_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = taxDeductionReportCounter.Id,
-                    Tenant = 0,
-                    StartNumber = 1000,
-                    Parameter1 = "TX",
-                };
+            //    CounterDefinition taxDeductionReportCounter_CounterDef = new CounterDefinition()
+            //    {
+            //        Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+            //        CounterId = taxDeductionReportCounter.Id,
+            //        Tenant = 0,
+            //        StartNumber = 1000,
+            //        Parameter1 = "TX",
+            //    };
 
-                CounterRepository.Add(taxDeductionReportCounter);
-                CounterDefinitionRepository.Add(taxDeductionReportCounter_CounterDef);
+            //    CounterRepository.Add(taxDeductionReportCounter);
+            //    CounterDefinitionRepository.Add(taxDeductionReportCounter_CounterDef);
 
-            }
-            #endregion
+            //}
+            //#endregion
 
-            this.objectContext.SaveChanges();
+            //this.objectContext.SaveChanges();
         }
     }
 }

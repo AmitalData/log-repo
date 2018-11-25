@@ -303,6 +303,99 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
+                if (string.IsNullOrEmpty(entityPM.ShipmentNumber) && !string.IsNullOrEmpty(entityPOCO.ShipmentNumber))
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TSDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = changesXml
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "STDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPOCO.ShipmentId,
+                        ObjectTableName = "Shipment",
+                        Notes = changesXml
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.ShipmentNumber) && string.IsNullOrEmpty(entityPOCO.ShipmentNumber))
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TSCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = changesXml
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "STCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.ShipmentId,
+                        ObjectTableName = "Shipment",
+                        Notes = changesXml
+                    });
+                }
+
+                if (string.IsNullOrEmpty(entityPM.QuoteNumber) && !string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TQDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = changesXml
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "QTDC",
+                        UserId = loggedContactId,
+                        EntityId = entityPOCO.QuoteId,
+                        ObjectTableName = "Quote",
+                        Notes = changesXml
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.QuoteNumber) && string.IsNullOrEmpty(entityPOCO.QuoteNumber))
+                {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "TQCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "Ticket",
+                        Notes = changesXml
+                    });
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "QTCN",
+                        UserId = loggedContactId,
+                        EntityId = entityPM.QuoteId,
+                        ObjectTableName = "Quote",
+                        Notes = changesXml
+                    });
+                }
+
+
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = entityPM.Tenant,

@@ -1,4 +1,4 @@
-﻿import {NewPartnerTamplate} from './Components/Templates/NewPartnerTamplate';
+import {NewPartnerTamplate} from './Components/Templates/NewPartnerTamplate';
 import {ContactsTabComponent} from './Components/EditTabs/ContactsTabComponent';
 import {ContactInputTemplate} from './Components/Templates/ContactInputTemplate';
 import {SearchContactsComponent} from './Components/Templates/SearchContactsComponent';
@@ -19,6 +19,15 @@ import {NewWarehouseComponent} from './Components/NewEntity/NewWarehouseComponen
 import {NewShippingAgentComponent} from './Components/NewEntity/NewShippingAgentComponent';
 import {NewContactComponent} from './Components/NewEntity/NewContactComponent';
 import {NewPotentialCustomerComponent} from './Components/NewEntity/NewPotentialCustomerComponent';
+import { ParticipantGeneralTabComponent } from './Components/EditTabs/Participant/ParticipantGeneralTabComponent';
+import { ParticipantNotifyTabComponent } from './Components/EditTabs/Participant/ParticipantNotifyTabComponent';
+import { ParticipantDocsInTabComponent } from './Components/EditTabs/Participant/ParticipantDocsInTabComponent';
+import { CustomAgentDocsInTabComponent } from './Components/EditTabs/CustomAgent/CustomAgentDocsInTabComponent';
+import { ShippingAgentDocsInTabComponent } from './Components/EditTabs/ShippingAgent/ShippingAgentDocsInTabComponent';
+import { ShippingLineDocsInTabComponent } from './Components/EditTabs/ShippingLine/ShippingLineDocsInTabComponent';
+import { TruckerDocsInTabComponent } from './Components/EditTabs/Trucker/TruckerDocsInTabComponent';
+import { VendorDocsInTabComponent } from './Components/EditTabs/Vendor/VendorDocsInTabComponent';
+import { WarehouseDocsInTabComponent } from './Components/EditTabs/Warehouse/WarehouseDocsInTabComponent';
 
 export const Components =
     [
@@ -42,7 +51,16 @@ export const Components =
         NewWarehouseComponent,
         NewShippingAgentComponent,
         NewContactComponent,   
-        NewPotentialCustomerComponent, 
+        NewPotentialCustomerComponent,
+        ParticipantGeneralTabComponent,
+        ParticipantNotifyTabComponent,
+        ParticipantDocsInTabComponent,
+        CustomAgentDocsInTabComponent,
+        ShippingAgentDocsInTabComponent,
+        ShippingLineDocsInTabComponent,
+        TruckerDocsInTabComponent,
+        VendorDocsInTabComponent,
+        WarehouseDocsInTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -71,7 +89,16 @@ export class ModuleDeclarations {
             case "NewWarehouseComponent": { myResult = NewWarehouseComponent; break; }
             case "NewShippingAgentComponent": { myResult = NewShippingAgentComponent; break; }
             case "NewContactComponent": { myResult = NewContactComponent; break; }
-            case "NewPotentialCustomerComponent": { myResult = NewPotentialCustomerComponent; break; } 
+            case "NewPotentialCustomerComponent": { myResult = NewPotentialCustomerComponent; break; }
+            case "ParticipantGeneralTabComponent": { myResult = ParticipantGeneralTabComponent; break; }
+            case "ParticipantNotifyTabComponent": { myResult = ParticipantNotifyTabComponent; break; }
+            case "ParticipantDocsInTabComponent": { myResult = ParticipantDocsInTabComponent; break; }
+            case "CustomAgentDocsInTabComponent": { myResult = CustomAgentDocsInTabComponent; break; }
+            case "ShippingAgentDocsInTabComponent": { myResult = ShippingAgentDocsInTabComponent; break; }
+            case "ShippingLineDocsInTabComponent": { myResult = ShippingLineDocsInTabComponent; break; }
+            case "TruckerDocsInTabComponent": { myResult = TruckerDocsInTabComponent; break; }
+            case "VendorDocsInTabComponent": { myResult = VendorDocsInTabComponent; break; }
+            case "WarehouseDocsInTabComponent": { myResult = WarehouseDocsInTabComponent; break; }
         }
 
         return myResult;

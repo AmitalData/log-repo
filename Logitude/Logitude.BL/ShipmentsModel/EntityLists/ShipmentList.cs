@@ -488,5 +488,15 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Notify2Reference { get; set; }
         public string ShipperNotExporterReference { get; set; }
         public string ConsigneeNotImporterReference { get; set; }
+        public string ProjectNumber { get; set; }
+        public DateTime? ContainerLastStatusDate { get; set; }
+
+        public string BasicFreightId { get; set; }
+        public string DestinationPortChargesId { get; set; }
+        public string DestinationHaulageChargesId { get; set; }
+        public string AdditionalChargesId { get; set; }
+        public string FreightPayerId { get; set; }
+        public string FreightPayerAddressId { get; set; }
+
     }
 }

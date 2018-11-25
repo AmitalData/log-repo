@@ -353,6 +353,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectField AccountManagerUserObject = ObjectContext.ObjectFields.Where(d => d.FieldName == "AccountManagerUserId" && d.ObjectTableId == ShipmentObject.Id && d.Tenant == 0).FirstOrDefault();
             ObjectField ValueOfGoodsObject = ObjectContext.ObjectFields.Where(d => d.FieldName == "ValueOfGoods" && d.ObjectTableId == ShipmentObject.Id && d.Tenant == 0).FirstOrDefault();
             ObjectField ValueOfGoodsCurrencyObject = ObjectContext.ObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId" && d.ObjectTableId == ShipmentObject.Id && d.Tenant == 0).FirstOrDefault();
+            ObjectField ProjectNumberObject = ObjectContext.ObjectFields.Where(d => d.FieldName == "ProjectNumber" && d.ObjectTableId == ShipmentObject.Id && d.Tenant == 0).FirstOrDefault();
 
             Screen generalTabScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Shipment.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ShipmentObject.Id, NumberOfColumns = 2, NumberOfRows = 10, Tenant = 0 }, ScreensRepository, tenantScreens);
             /*Column[0]*/
@@ -364,6 +365,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ScreenField FreightPrepaidCollectfield = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 5, Column = 0, ObjectFieldId = FreightPrepaidCollectObject.Id, ScreenId = generalTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
             ScreenField OtherPrepaidCollectfield = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 6, Column = 0, ObjectFieldId = OtherPrepaidCollectObject.Id, ScreenId = generalTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
             ScreenField MainHarmonizefield = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 7, Column = 0, ObjectFieldId = MainHarmonizeObject.Id, ScreenId = generalTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField ProjectNumberfield = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 8, Column = 0, ObjectFieldId = ProjectNumberObject.Id, ScreenId = generalTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
 
             /*Column[1]*/
             ScreenField OpenedByUserfield = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 0, Column = 1, ObjectFieldId = OpenedByUserObject.Id, ScreenId = generalTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
@@ -387,12 +389,12 @@ namespace WebFreight.Web.MetaDataUpdate
             ScreenField AMSBLField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 3, Column = 0, ObjectFieldId = AMSBLObject.Id, ScreenId = masterGeneralTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
             ScreenField MasterValueOfGoodsfield = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 4, Column = 0, ObjectFieldId = ValueOfGoodsObject.Id, ScreenId = masterGeneralTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
             ScreenField MasterValueOfGoodsCurrencyfield = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 5, Column = 0, ObjectFieldId = ValueOfGoodsCurrencyObject.Id, ScreenId = masterGeneralTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
+            ScreenField MasterProjectNumberfield = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 6, Column = 0, ObjectFieldId = ProjectNumberObject.Id, ScreenId = masterGeneralTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
 
             /*Column[1]*/
             ScreenField OpenedByUserfield2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 0, Column = 1, ObjectFieldId = OpenedByUserObject.Id, ScreenId = masterGeneralTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
             ScreenField Departmentfield2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 1, Column = 1, ObjectFieldId = DepartmentObject.Id, ScreenId = masterGeneralTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
             ScreenField Branchfield2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Row = 2, Column = 1, ObjectFieldId = BranchObject.Id, ScreenId = masterGeneralTabScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
-
             #endregion
 
             ObjectField MAWBOBLObject = ObjectContext.ObjectFields.Where(d => d.FieldName == "Master" && d.ObjectTableId == ShipmentObject.Id && d.Tenant == 0).FirstOrDefault();

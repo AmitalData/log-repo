@@ -952,6 +952,7 @@
     <Compile Include="Controllers\AccountingModel\BankAccountViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxDeductionReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxReportController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxReportLineController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxWithholdingAssessOfficeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\WithholdingTaxDeductionTypeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountCurrencyController.cs" />
@@ -1490,11 +1491,13 @@
     <Compile Include="Controllers\CustomsModel\WebServices\VendorController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ClientController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationRestoreController.cs" />
+    <Compile Include="Controllers\GlobalModel\Extended\AerolineaseAtlasRegistrationLeadsController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\AgentSharedLogisticsKeysController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\IIGGeneralMessagesController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\PaymentMessagesController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\QuantityTypeController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\TapagMessagesController.cs" />
+    <Compile Include="Controllers\GlobalModel\Extended\LogitudeLeadVerificationController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\TenantManagmentPrivateLabelsController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\BatchServicesDefinitionExtendedController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\SystemMetadataLastUpdateController.cs" />
@@ -2079,6 +2082,7 @@
     <Compile Include="DataProviders\PickUpDeliveryLine.Shared.cs" />
     <Compile Include="DataProviders\RevenueExpenseDataProvider.cs" />
     <Compile Include="DataProviders\ShipmentAssemblyLine.Shared.cs" />
+    <Compile Include="DataProviders\ShipmentDetailsDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipmentInventoryDataProvider.cs" />
     <Compile Include="DataProviders\ShipmentProfitVSQuoteEstimateDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipmentsStocksDataProvider.cs" />
@@ -2112,6 +2116,7 @@
     <Compile Include="ExternalAPIs\V1\DirectController.cs" />
     <Compile Include="ExternalAPIs\V1\DocumentsFilingController.cs" />
     <Compile Include="ExternalAPIs\V1\HouseController.cs" />
+    <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ComputeHelper.cs" />
@@ -2142,6 +2147,7 @@
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
     <Compile Include="Helpers\FlatFileHelper.cs" />
     <Compile Include="Helpers\LogBox\LogBoxMailgunAnalyzer.cs" />
+    <Compile Include="Helpers\LogitudeLeadHelper.cs" />
     <Compile Include="Helpers\PasswordChangeHelper.cs" />
     <Compile Include="Helpers\QueueMessagesWebHelper.cs" />
     <Compile Include="Helpers\ExportToExcelHelper.cs" />
@@ -2153,6 +2159,7 @@
     <Compile Include="Helpers\SecurityDocumentHelper.cs" />
     <Compile Include="Helpers\SendGrid\SendGridAnalyzer.cs" />
     <Compile Include="Helpers\SharedLogisticContactHelper.cs" />
+    <Compile Include="Helpers\SignUpHelper.cs" />
     <Compile Include="Helpers\TableQueryReflector.cs" />
     <Compile Include="Helpers\MessageArgs.cs" />
     <Compile Include="Helpers\TermsofUseArgs.cs" />
@@ -2401,6 +2408,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountMoreDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountTotalDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountWithholdingTaxUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalAdditionalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalMoreDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalReconcileUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LBPTeamMemberUpdateClass.cs" />
@@ -2408,6 +2416,9 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ManifestCargoStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MAWBTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatDateTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PointerLevelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeStatusUpdateClass.cs" />
@@ -2639,7 +2650,6 @@
     <Content Include="SharedDocuments\SharedDocumentsViewModel.js" />
     <Content Include="EntityExternalUpdate.aspx" />
     <Content Include="ShipmentStatuses.aspx" />
-    <Content Include="SignUp.aspx" />
     <Content Include="SignUpVerification.aspx" />
     <Content Include="Stimulsoft\css\demo.css" />
     <Content Include="Stimulsoft\css\stimulsoft.designer.office2013.whiteblue.css" />
@@ -3998,7 +4008,6 @@
     <Content Include="SharedLogistic\InvoicePage.aspx" />
     <Content Include="SharedLogistic\ShipmentMobilePage.aspx" />
     <Content Include="SharedLogistic\ShipmentPage.aspx" />
-    <Content Include="SignUpPage.aspx" />
     <Content Include="ShipmentPackageModel\RegisterShipmentPackageWebService.asmx" />
     <Content Include="Silverlight.js" />
     <Content Include="Simplog.InfrastructureTestPage.aspx" />
@@ -4937,20 +4946,6 @@
     </Compile>
     <Compile Include="SignalRHubs\LogitudeHub.cs" />
     <Compile Include="SignalRStartup.cs" />
-    <Compile Include="SignUp.aspx.cs">
-      <DependentUpon>SignUp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SignUp.aspx.designer.cs">
-      <DependentUpon>SignUp.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="SignUpPage.aspx.cs">
-      <DependentUpon>SignUpPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SignUpPage.aspx.designer.cs">
-      <DependentUpon>SignUpPage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="SignUpVerification.aspx.cs">
       <DependentUpon>SignUpVerification.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

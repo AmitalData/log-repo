@@ -29,6 +29,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.Height = itemPM.Height;
             itemPoco.Length = itemPM.Length;
             itemPoco.OriginalShipmentPackageId = itemPM.OriginalShipmentPackageId;
+            itemPoco.IsMultiHarmonize = itemPM.IsMultiHarmonize;
         }
     }
 }

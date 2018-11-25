@@ -352,6 +352,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new DWObjectFieldMap());
 
             modelBuilder.Configurations.Add(new DWQueryMap());
+            modelBuilder.Configurations.Add(new DWSubQueryMap());
             modelBuilder.Configurations.Add(new DWQueryColumnMap());
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
 
@@ -934,6 +935,12 @@ namespace Simplog.Data.InfrastructureModel
 
 
         public IDbSet<DWQuery> DWQueries
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DWSubQuery> DWSubQueries
         {
             get;
             set;

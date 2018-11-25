@@ -20,6 +20,12 @@ namespace Logitude.Accounting.BL.DataContract
         public List<ByMonthList> ByMonthList { get; set; }
         public List<ByVendorList> ByVendorList { get; set; }
         public List<TotalForCompany> TotalForCompany { get; set; }
+        public double? TotalAmountInLocalCurrency { get; set; }
+        public decimal? TotalDeductionInLocalCurrency { get; set; }
+        public double? TotalAmountInLocalCurrency08 { get; set; }
+        public decimal? TotalTaxDeductionInLocalCurrency08 { get; set; }
+        public decimal? TotalEndBalance  { get; set; }
+
 
     }
 
@@ -27,6 +33,7 @@ namespace Logitude.Accounting.BL.DataContract
     public class ByMonthList
     {
         public int Month { get; set; }
+        public string ReportMonth { get; set; }
         public double? TotalAmountInLocalCurrency { get; set; }
         public decimal? TotalTaxDeductionLocalAmount { get; set; }
         public int TotalVendors { get; set; }
@@ -61,6 +68,7 @@ namespace Logitude.Accounting.BL.DataContract
         public bool IsAutonomy { get; set; }
         public bool IsInternationlPartner { get; set; }
         public string EnglishName { get; set; }
+        public decimal? EndYearBalance { get; set; }
     }
 
     public class TotalForCompany

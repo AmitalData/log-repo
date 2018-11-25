@@ -38,14 +38,16 @@ export class ServiceHelper {
                     }
 
                     if (errorMessage) {
-                        if (errorMessage.indexOf(';') != -1) {
-                            var errArray = errorMessage.split(';');
-                            for (var k in errArray) {
-                                response.ErrorsArray.push(errArray[k]);
+                        if (errorMessage.indexOf('session expiration') == -1) {
+                            if (errorMessage.indexOf(';') != -1) {
+                                var errArray = errorMessage.split(';');
+                                for (var k in errArray) {
+                                    response.ErrorsArray.push(errArray[k]);
+                                }
                             }
-                        }
-                        else {
-                            response.ErrorsArray.push(errorMessage);
+                            else {
+                                response.ErrorsArray.push(errorMessage);
+                            }
                         }
                     }
 
@@ -116,22 +118,30 @@ export class ServiceHelper {
                        
                     }
 
+
                     if (errorMessage) {
-                        if (errorMessage.indexOf(';') != -1) {
-                            var errArray = errorMessage.split(';');
-                            for (var k in errArray) {
-                                response.ErrorsArray.push(errArray[k]);
+                        if (errorMessage.indexOf('session expiration') == -1) {
+
+
+                            if (errorMessage.indexOf(';') != -1) {
+                                var errArray = errorMessage.split(';');
+                                for (var k in errArray) {
+                                    response.ErrorsArray.push(errArray[k]);
+                                }
                             }
-                        }
-                        else {
-                            response.ErrorsArray.push(errorMessage);
+                            else {
+                                response.ErrorsArray.push(errorMessage);
+                            }
                         }
                     }
 
                 }
                 else if (apiException.ErrorType == "AutenticationException") {
                     if (!SessionLocator.IsSiguOut) {
-                        SessionLocator.HomeComponent.SignoutClicked();
+                        if (errorMessage != "") {
+                            SessionLocator.HomeComponent.SignoutClicked();
+                        }
+                    
                     }
                 }
 

@@ -89,7 +89,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 accContext = accContext ?? AccountingContext.GetContext(entityPOCO.Tenant);
                 AccountingEntityQueryService accountingEntityQueryService = new AccountingEntityQueryService(accContext);
                 AccountingEntityPM parent = accountingEntityQueryService.GetSingle(entityPOCO.AccountingEntityCode, false, true);
-                entityPM.AccountingEntityName = parent.EnglishName;
+                ContactPM user = GetLoggedContactData(GetLoggedContactEmail(entityPOCO.Tenant), entityPOCO.Tenant);
+                if (user != null)
+                {
+                    entityPM.AccountingEntityName = user.DontShowLocal ? parent.EnglishName : parent.LocalName;
+                }
+                else
+                {
+                    entityPM.AccountingEntityName = parent.EnglishName;
+                }
             }
 
             if (entityPOCO.TypeCode != null)

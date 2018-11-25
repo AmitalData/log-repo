@@ -242,7 +242,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
 
     }
     DownloadButtonClicked() {
-        DownloadManager.DownloadPage(this.docFilingPM.DocumentId);
+        DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
     }
     ShowError() {
         var msg = this.bteList.ErrorLog;

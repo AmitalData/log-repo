@@ -16,25 +16,15 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Interfaces;
 using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
-using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel;
-using Logitude.BL.CommonDataModel;
-using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.CustomFilters;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -354,6 +344,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   ShipperNotExporterReference = f.ShipperNotExporterReference,
                                   ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                                   MoveTypeName = f.MoveTypeName,
+                                  ContainerLastStatusDate = f.ContainerLastStatusDate,
+                                  BookingConfirmationNumber = f.BookingConfirmationNumber,
                               };
 
             entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);

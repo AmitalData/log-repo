@@ -58,7 +58,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             entityPM.FFRStatusDate = TenantServerConfigration.GetCurrentDateTime(myTenant);
 
             BookingAnswerRepository bookingAnswerRepository = new BookingAnswerRepository(myContext);
-            CommunicationLogRepository commLogRep = new CommunicationLogRepository(myTenant);
             AirlineRepository airlineRepository = new AirlineRepository(myTenant);
 
             List<BookingAnswer> bookingAnswers = bookingAnswerRepository.GetBookingAnswersForBookingTenant(entityPM.Id, myTenant).ToList();
@@ -71,7 +70,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             {
                 foreach (CHAMP17.FlightDetails_FFA item in myFFA.FlightDetails)
                 {
-                    CommunicationLog log = commLogRep.GetSingleCommunicationLog(analyzeQueue.CommunicationLogId, myTenant);
                     Airline airline = airlineRepository.GetSingleAirlineByCode(item.FlightIdentification.CarrierCode, myTenant);
 
                     BookingAnswer answer = new BookingAnswer()
@@ -84,7 +82,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         StatusCode = "WAT",
                         Origin = item.AirportsOfDepartureAndArrival.AirportCityCodeOfOrigin,
                         Destination = item.AirportsOfDepartureAndArrival.AirportCityCodeOfDestination,
-                        CommunicationLogId = log == null ? null : log.Id,
+                        CommunicationLogId = analyzeQueue.CommunicationLogId,
                         FlightNumber = item.FlightIdentification.CarrierCode + item.FlightIdentification.FlightNumber,
                         BookingSpaceAllocationCode = item.SpaceAllocationCode,
                         CarrierId = airline == null ? null : airline.Id,

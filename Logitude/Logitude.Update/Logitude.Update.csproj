@@ -65,6 +65,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo_tr_AVr_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Devart.Data, Version=5.0.895.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
       <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.dll</HintPath>
@@ -263,6 +266,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="bin\Debug\JustWebFreightConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Logitude.Update.Sivug.CustomsBookEntities.datasource" />
     <None Include="Properties\Settings.settings">
@@ -371,7 +377,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\" />
     <Folder Include="Production\" />
     <Folder Include="ZipFiles\" />
   </ItemGroup>
@@ -382,6 +387,7 @@
     <EmbeddedResource Include="Properties\logitude.update.exe.licenses" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="logo_tr_AVr_icon.ico" />
     <Content Include="UpdateSettings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

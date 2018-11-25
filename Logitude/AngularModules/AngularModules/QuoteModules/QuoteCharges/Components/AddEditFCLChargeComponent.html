@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SummarySection {
         overflow: hidden;
@@ -73,6 +73,28 @@
                                             </td>
                                         </tr>
 
+                                        <!-- CostMinAmount -->
+                                        <tr class="FormFieldRow" *ngIf="DataContext.CostMeasurementCode != 'BCNT'">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'CostMinAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'CostMinAmount'" [Text]="DataContext.CostMinAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <!-- CostMaxAmount -->
+                                        <tr class="FormFieldRow" *ngIf="DataContext.CostMeasurementCode != 'BCNT'">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'CostMaxAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'CostMaxAmount'" [Text]="DataContext.CostMaxAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                        </tr>
+
                                         <!-- VatTypeId -->
                                         <tr class="FormFieldRow" *ngIf="IsVATVisible">
                                             <td>
@@ -83,8 +105,7 @@
                                                         [SelectedValue]="DataContext.VatTypeId"
                                                         [ObjectTableName]="ObjectTableName"
                                                         [DataContext]="DataContext"
-                                                        [LookUpTableName]="'VatType'"                                                        
-                                                        >
+                                                        [LookUpTableName]="'VatType'">
                                                 </LogLov>
                                             </td>
 
@@ -116,7 +137,7 @@
                                                         [SelectedValue]="DataContext.CostMeasurementId"
                                                         [ObjectTableName]="ObjectTableName"
                                                         [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Measurement'"  [DependencyFilter2Value]="false">
+                                                        [LookUpTableName]="'Measurement'" [DependencyFilter2Value]="false">
                                                 </LogLov>
                                             </td>
 
@@ -135,12 +156,34 @@
                                                         [SelectedValue]="DataContext.SaleMeasurementId"
                                                         [ObjectTableName]="ObjectTableName"
                                                         [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Measurement'"  [DependencyFilter2Value]="false">
+                                                        [LookUpTableName]="'Measurement'" [DependencyFilter2Value]="false">
                                                 </LogLov>
                                             </td>
 
                                             <td>
                                                 <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- SaleMinAmount -->
+                                        <tr class="FormFieldRow" *ngIf="DataContext.SaleMeasurementCode != 'BCNT'">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'SaleMinAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'SaleMinAmount'" [Text]="DataContext.SaleMinAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <!-- SaleMaxAmount -->
+                                        <tr class="FormFieldRow" *ngIf="DataContext.SaleMeasurementCode != 'BCNT'">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'SaleMaxAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'SaleMaxAmount'" [Text]="DataContext.SaleMaxAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                             </td>
                                         </tr>
 
@@ -401,11 +444,23 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </div>  
+                                        </div>
                                     </log-header-template>
 
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                        {{item.CostTotalAmount | NumbersPipe:'N2'}}
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                        <div style="height: 100%; width: 100%;">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:16px;" *ngIf="item.CostMinMaxIconIsVisibile">
+                                                        <img style="left:-10px;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.CostMinMaxIconTitle" />
+                                                    </td>
+
+                                                    <td style="text-align:right;">
+                                                        {{item.CostTotalAmount | NumbersPipe:'N2'}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </log-cell-template>
                                 </log-column>
 
@@ -702,8 +757,20 @@
                                         </div>
                                     </log-header-template>
 
-                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                        {{item.SaleTotalAmount | NumbersPipe:'N2'}}
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">                                       
+                                        <div style="height: 100%; width: 100%;">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:16px;" *ngIf="item.SaleMinMaxIconIsVisibile">
+                                                        <img style="left:-10px;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.SaleMinMaxIconTitle" />
+                                                    </td>
+
+                                                    <td style="text-align:right;" [ngStyle]="{color: item.SaleTotalAmountColor}">
+                                                        {{item.SaleTotalAmount | NumbersPipe:'N2'}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </log-cell-template>                                    
                                 </log-column>
 
@@ -724,17 +791,17 @@
 
                                     <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                         <div style="height:100%; width: 100%; text-align: right;">
-                                            <table>
+                                            <table [hidden]='item.SaleTotalAmountLocal == null || item.SaleTotalAmountLocal == 0'>
                                                 <tr>
+                                                    <td style="width:16px;" *ngIf="item.SaleMinMaxIconIsVisibile">
+                                                        <img style="left:-10px;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.SaleMinMaxIconTitle" />
+                                                    </td>
+
                                                     <td style="width:16px;" *ngIf="item.IsAllInInfoIconVisible_AmoutLocal">
                                                         <img style="left:-10px;" src="./Images/Icons/A-icon.png" width="16" height="16" title="All In" />
                                                     </td>
 
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-
-                                                    <td style="text-align:right;" [hidden]='item.SaleTotalAmountLocal == null || item.SaleTotalAmountLocal == 0'>
+                                                    <td style="text-align:right;">
                                                         {{item.SaleTotalAmountLocal | NumbersPipe:'N2'}}
                                                     </td>
                                                 </tr>
@@ -773,7 +840,7 @@
                                 </log-column>
 
                                 <!-- VatType -->
-                                <log-column *ngIf="IsVATVisible" [header]="'VAT Type'" [width]="Father.VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
+                                <log-column *ngIf="IsVATVisible" [header]="'QuoteCharge.F.VatTypeId' | TextCodeTranslationPipe" [width]="Father.VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
                                     <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                         <div class="MediaFill">
                                             <table>

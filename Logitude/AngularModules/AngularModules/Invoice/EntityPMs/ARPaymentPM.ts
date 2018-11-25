@@ -382,7 +382,12 @@ export class ARPaymentPM {
     private setReTransfer: boolean;
     public get SetReTransfer() { return this.setReTransfer; }
     public set SetReTransfer(newValue: boolean) { if (this.setReTransfer != newValue) { this.setReTransfer = newValue; this.MarkAsDirty("SetReTransfer"); } }
-       
+
+
+    private setReSendQBO: boolean;
+    public get SetReSendQBO() { return this.setReSendQBO; }
+    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
+
 	 
     private bankAccountId: string;
     public get BankAccountId() { return this.bankAccountId; }
@@ -448,7 +453,10 @@ export class ARPaymentPM {
     public get BranchName() { return this.branchName; }
     public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
-	 
+    private sATApprovalDate: Date;
+    public get SATApprovalDate() { return this.sATApprovalDate; }
+    public set SATApprovalDate(newValue: Date) { if (this.sATApprovalDate != newValue) { this.sATApprovalDate = newValue; this.MarkAsDirty("SATApprovalDate"); } }
+
 
     public OldEntityPM: ARPaymentPM;
 		
