@@ -204,6 +204,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string iCAO ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ICAO  
+	   {
+	    
+	     get
+		{
+		   return iCAO;
+		 }
+		 set
+		 {
+		   if(iCAO != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ICAO",OldValue=iCAO,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   iCAO=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
