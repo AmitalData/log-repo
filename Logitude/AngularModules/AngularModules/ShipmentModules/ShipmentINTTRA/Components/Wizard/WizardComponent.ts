@@ -127,7 +127,13 @@ export class WizardComponent extends BaseComponent {
         this.SetUIProperties_FreightPayerAddress();
     }
     SetUIProperties_BasicFreight() {
-        this.UIProperties.SetRequired("BasicFreightId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.BasicFreightId) ? true : false);
+
+        var isRequired: boolean = false;
+        if (!AppTool.IsNullOrEmpty(this.BasicFreightId)) {
+            isRequired = true;
+        }
+
+        this.UIProperties.SetRequired("BasicFreightId", this.ObjectTableName, isRequired);
     }
     SetUIProperties_FreightPayerAddress() {
 
