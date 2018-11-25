@@ -11525,7 +11525,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Bill to VAT is required",
+                DefaultText = "Bill To VAT is required",
                 FullFieldLable = "IsVatNumberMandatoryInAR",
                 FieldName = "IsVatNumberMandatoryInAR",
                 FieldsDataType = "Boolean",
@@ -11536,7 +11536,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ListFieldLable = "IsVatNumberMandatoryInAR",
-                ListLableDefaultText = "Bill to VAT is required",
+                ListLableDefaultText = "Bill To VAT is required",
                 DisplayInList = true,
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAR",
@@ -11548,7 +11548,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Bill to VAT is required",
+                DefaultText = "Vendor VAT is required",
                 FullFieldLable = "IsVatNumberMandatoryInAP",
                 FieldName = "IsVatNumberMandatoryInAP",
                 FieldsDataType = "Boolean",
@@ -11559,7 +11559,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ListFieldLable = "IsVatNumberMandatoryInAP",
-                ListLableDefaultText = "Bill to VAT is required",
+                ListLableDefaultText = "Vendor VAT is required",
                 DisplayInList = true,
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAP",
