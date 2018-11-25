@@ -71,6 +71,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.SeizureMethodType",
 			      				    IsNew =  true,
 			      				    DBTableName =  "Customs.SeizureMethodTypes",
+			      				    OldDBTableName =  "Customs.SeizureMethodTypes",
 			      				    ObjectTableSingular =  "SeizureMethodType",
 			      				    ObjectTablePlural =  "SeizureMethodTypes",
 			      				    HasCustomFilter =  false,
@@ -104,7 +105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוג עיקול",
 			      				    DefaultText =  "Seizure Method Type",
-			      				    Code =  "fc23",
+			      				    Code =  "3174",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -131,6 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
+					  						OldFieldName =  "Code",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -196,6 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
+					  						OldFieldName =  "LocalName",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -261,6 +264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -281,6 +285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -322,6 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
+					  						OldFieldName =  "EnglishName",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -343,6 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EnglishName",
 					  						ListPropertyPath =  "EnglishName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -386,6 +393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
+					  						OldFieldName =  "Inactive",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -406,6 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Inactive",
 					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -451,14 +460,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup SeizureMethodTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "fc23", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup SeizureMethodTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3174", Name = " Query Group" }, queryGroupRepository);
 	        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable SeizureMethodTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SeizureMethodType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> SeizureMethodTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.SeizureMethodType").ToList();   
 
 			   TextCode SeizureMethodTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SeizureMethodType.Q.SeizureMethodType", DefaultText = "SeizureMethodTypeQuery",LocalDefaultText = null, ObjectTableId = SeizureMethodTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature SeizureMethodTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SeizureMethodType.Q.SeizureMethodType", ObjectTableId = SeizureMethodTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SeizureMethodType.Features.SeizureMethodType", NameTextCodeDefaultText = "SeizureMethodType", FeatureTypeCode = "QUER", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature SeizureMethodTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SeizureMethodType.Q.SeizureMethodType", ObjectTableId = SeizureMethodTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "SeizureMethodType.Features.SeizureMethodType", NameTextCodeDefaultText = "SeizureMethodType", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
