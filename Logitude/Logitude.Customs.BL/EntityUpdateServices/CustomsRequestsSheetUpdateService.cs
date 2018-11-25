@@ -86,9 +86,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void RequestCourier(CustomsRequestsSheet entityPOCO)
         {
-            if (entityPOCO.ObjectTableId1 == ObjectTableRepository.GetObjectTableByName("Customs.CoureirMaster"))
+            if (entityPOCO.InterfaceTypeCode == "2755" || entityPOCO.InterfaceTypeCode == "2750" || entityPOCO.InterfaceTypeCode == "1170")
             {
-
+                if (entityPOCO.ObjectTableId1 == ObjectTableRepository.GetObjectTableByName("Customs.Declaration") && !String.IsNullOrWhiteSpace(entityPOCO.EntityId1))
+                {
+                    var customContext = MainContext as ICustomContext;
+                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
+                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPOCO.EntityId1, false, false);
+                    if (currentDeclarationCourierStatusPM == null)
+                    {
+                        //DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), entityPOCO.Tenant);
+                        //DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(null);
+                        //declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                    }
+                }
             }
         }
 
