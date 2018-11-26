@@ -10373,6 +10373,12 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.Consignee = a.ConsigneeName;
                     myRecord.BookingNumber = a.BookingConfirmationNumber;
 
+                    myRecord.FullStatus = a.StatusName;
+                    if(!string.IsNullOrEmpty(a.StatusLocation))
+                    {
+                        myRecord.FullStatus = a.StatusName + "(" + a.StatusLocation + ")";
+                    }
+
                     if (!string.IsNullOrEmpty(a.ShipmentTypeId))
                     {
                         myRecord.ShipmentType = a.ShipmentTypeId + " " + a.ShipmentLevelName;
@@ -10403,8 +10409,8 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         if (a.ShipmentLevelCode == "H" && a.MasterShipmentDataId == null)
                         {
-                            PortPM fromPort = PortQuery.GetSinglePort(tenant, a.FromPortId, true);
-                            PortPM toPort = PortQuery.GetSinglePort(tenant, a.ToPortId, true);
+                            PortPM fromPort = PortQuery.GetSinglePort(tenant, a.FromPortId, false);
+                            PortPM toPort = PortQuery.GetSinglePort(tenant, a.ToPortId, false);
                             myRoutingField = fromPort.Code + " , " + toPort.Code;
                         }
 
