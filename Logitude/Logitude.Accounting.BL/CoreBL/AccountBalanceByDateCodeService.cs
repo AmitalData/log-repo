@@ -1,4 +1,5 @@
-﻿#if false
+﻿
+using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.Mapping;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
@@ -15,11 +16,13 @@ using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
-    public class AccountBalanceService
+    public class AccountBalanceByDateCodeService
     {
         int _Tenant;
         string _GLAccountId;
-        DateTime _AccoutingDate;
+        DateTime _TheDate;
+        private string _DateTypeCode;
+
         //bool _IncludeChildAccounts;
         //bool _IncludeRelatedCurrenciesAccount;
         private IAccountingContext _AccountingContext;
@@ -29,7 +32,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private IQueryable<string> _ListOfAccountId;
         private Stopwatch _sw;
         private StringBuilder _StringBuilder;
-        public AccountBalanceService(IAccountingContext accountingContext,int tenant, 
+        public AccountBalanceByDateCodeService(IAccountingContext accountingContext, int tenant,
             string GLAccountId,
             //bool IncludeChildAccounts, bool IncludeRelatedCurrenciesAccount
             //List<string> listOfAccountId
@@ -48,12 +51,17 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             //_IncludeChildAccounts = IncludeChildAccounts;
             //_IncludeRelatedCurrenciesAccount = IncludeRelatedCurrenciesAccount;
-            AccountBalance = new AccountBalanceM() { Tenant = _Tenant};
+            AccountBalance = new AccountBalanceM() { Tenant = _Tenant };
             _StringBuilder = new StringBuilder();
         }
-        public void CalculateBalance(DateTime accoutingDate, bool includeAccoutingDateLTransaction = false, bool verbose = false)
+        public void CalculateBalance(string  DateTypeCode,DateTime theDate, bool inclusiveTheDateLTransaction = false, bool verbose = false)
         {
-            _AccoutingDate = accoutingDate;
+            _TheDate = theDate;
+            _DateTypeCode = DateTypeCode;
+            if (string.IsNullOrWhiteSpace(_DateTypeCode))
+            {
+                _DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate;
+            }
             var swFull = Stopwatch.StartNew();
             try
             {
@@ -67,21 +75,21 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     throw new Exception("_ListOfAccountId.Contains(_GLAccountId)");
                 }
-                if (_AccountingContext==null)
+                if (_AccountingContext == null)
                 {
-                    _AccountingContext = AccountingContext.GetContext(_Tenant);    
+                    _AccountingContext = AccountingContext.GetContext(_Tenant);
                 }
-                
+
                 _sw.Restart();
 
-                
+
                 //IncludeRelatedCurrenciesAccount(_ListOfAccountId);
                 //LogIt("IncludeRelatedCurrenciesAccount");
                 //IncludeChildAccounts(_ListOfAccountId);
                 //LogIt("IncludeChildAccounts");
 
 
-                var firstDayOfMonth = new DateTime(_AccoutingDate.Year, _AccoutingDate.Month, 1); ;
+                var firstDayOfMonth = new DateTime(_TheDate.Year, _TheDate.Month, 1); ;
                 var dateLast = firstDayOfMonth.AddMilliseconds(-1);
 
 
@@ -89,7 +97,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
 
                     var myGLAccountTotalByMonthQueryService = new GLAccountTotalByMonthQueryService(_AccountingContext);
-                    var currencySumUntillMounth = myGLAccountTotalByMonthQueryService.GetCurrencySumUntillNotInclude(_ListOfAccountId, _AccoutingDate.Year, _AccoutingDate.Month, _Tenant);
+                    var currencySumUntillMounth = myGLAccountTotalByMonthQueryService.GetCurrencySumUntillNotIncludeDateType(_ListOfAccountId,_DateTypeCode, _TheDate.Year, _TheDate.Month, _Tenant);
                     LogIt("currencySumUntillMounth");
                     if (verbose)
                     {
@@ -97,14 +105,14 @@ namespace Logitude.Accounting.BL.CoreBL
                         AccountBalance.verbose.CurrencySumUntillMounth = currencySumUntillMounth;
                     }
 
-                    var accoutingDateUntillNotInclude = _AccoutingDate.Date;
-                    if (includeAccoutingDateLTransaction)
+                    var DateUntillNotInclude = _TheDate.Date;
+                    if (inclusiveTheDateLTransaction)
                     {
-                        accoutingDateUntillNotInclude = accoutingDateUntillNotInclude.AddDays(1);
+                        DateUntillNotInclude = DateUntillNotInclude.AddDays(1);
                     }
                     var myLedgerTransactionQueryService = new LedgerTransactionQueryService(_AccountingContext);
                     var thisMounthGLAccountTotalByMonthByAccountingDate = myLedgerTransactionQueryService
-                        .CalcGLAccountTotalByMonthByAccountingDate(firstDayOfMonth, accoutingDateUntillNotInclude, _Tenant, _ListOfAccountId);
+                        .CalcGLAccountTotalByMonthByDateType(_DateTypeCode, firstDayOfMonth, DateUntillNotInclude, _Tenant, _ListOfAccountId);
                     var theMounthCurrencySum = thisMounthGLAccountTotalByMonthByAccountingDate.Select(byMounth => new CurrencySum()
                     {
                         AccountId = byMounth.AccountId,
@@ -124,21 +132,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     AccountBalance.HaveAccountingQueued = _HaveAccountingQueued;
 
 
-                    var totals = (from rec in currencySumUntillMounth.Union(theMounthCurrencySum)
+                    var totals = (from rec in currencySumUntillMounth.Concat(theMounthCurrencySum)
                                   group rec by rec.CurrencyId into gCurrencyId
                                   select new CurrencySum()
                                   {
                                       AccountId = _GLAccountId,
                                       CurrencyId = gCurrencyId.Key,
-                                      LocalAmountCredit = gCurrencyId.Sum(rec => rec.LocalAmountCredit ),
-                                      LocalAmountDebit = gCurrencyId.Sum(rec => rec.LocalAmountDebit ),
-                                      ForeignAmountCredit = gCurrencyId.Sum(rec => rec.ForeignAmountCredit ),
-                                      ForeignAmountDebit = gCurrencyId.Sum(rec => rec.ForeignAmountDebit )
+                                      LocalAmountCredit = gCurrencyId.Sum(rec => rec.LocalAmountCredit),
+                                      LocalAmountDebit = gCurrencyId.Sum(rec => rec.LocalAmountDebit),
+                                      ForeignAmountCredit = gCurrencyId.Sum(rec => rec.ForeignAmountCredit),
+                                      ForeignAmountDebit = gCurrencyId.Sum(rec => rec.ForeignAmountDebit)
                                   }
                      ).ToList();
 
                     AccountBalance.Totals = totals;
-                    AccountBalance.TotalLocalAmountDebit =AccountBalance.Totals.Sum(r => r.LocalAmountDebit);
+                    AccountBalance.TotalLocalAmountDebit = AccountBalance.Totals.Sum(r => r.LocalAmountDebit);
                     AccountBalance.TotalLocalAmountCredit = AccountBalance.Totals.Sum(r => r.LocalAmountCredit);
 
 
@@ -256,7 +264,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 throw new Exception("string.IsNullOrWhiteSpace(currencyId)");
             }
             return GetCallBackBalance().Where(r => r.CurrencyId == currencyId).ToList();
-         
+
         }
         internal List<CallBackBalance> GetCallBackBalance()
         {
@@ -304,7 +312,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //}
 
         }
-        
+
         public decimal? GetBalanceOfLocalAmount()
         {
             return (TotalLocalAmountDebit.GetValueOrDefault() - TotalLocalAmountCredit.GetValueOrDefault());
@@ -314,9 +322,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-        
+
     }
-    
+
     public class AccountBalanceverboseM
     {
         public List<CurrencySum> CurrencySumUntillMounth { get; set; }
@@ -360,7 +368,3 @@ ForeignAmountDebit
 Sum the matching  records from GLAccountTotalByMonths +LedgerTransactions and return the totals
 
 */
-
-
-
-#endif
