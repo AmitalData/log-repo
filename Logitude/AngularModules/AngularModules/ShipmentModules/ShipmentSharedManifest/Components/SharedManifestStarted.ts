@@ -102,14 +102,15 @@ export class SharedManifestStarted {
 
                                             } else {
                                                 this.IsEnableButtonSharedManifest = true;
-                                                this.UpdateAgent();
+                                                if (this.EntityPM.IsManifestSentToAgent) this.UpdateAgent();
+                                             
                                             }
                                         }
                                     });
                                 }
                                 else {
                                     this.IsEnableButtonSharedManifest = true;
-                                    this.UpdateAgent();
+                                    if (this.EntityPM.IsManifestSentToAgent) this.UpdateAgent();
                                 }
                                 break;
 
@@ -168,35 +169,24 @@ export class SharedManifestStarted {
                 if (isSaveSuccess) {
                     this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                     if (this.isSharingManifesRequested) {
-                        this.isSharingManifesRequested = false;
                         this.StartSharingManifest();
                     }
 
+                    if (this.isStartUpdateAgentManifest) {
+                        this.StartUpdateAgentManifest();
+                    }
+
+                    this.isSharingManifesRequested = false;
+                    this.isStartUpdateAgentManifest = false;
                 } 
 
 
             });
         }
     }
-
-
-    StartSharingManifest() {
-
-        if (this.IsUpdateSharedAgentButtonVisible) {
-            this.UpdateSharedAgent();
-        }
-        else {
-            this.SharingManifest();
-        }
-
-
-
-    }
+    
 
     IsEditingEnabled: boolean = true;
-
-
-
     public CardListService: CardListService;
     public AddressListService: AddressListService;
     public ContactListService: ContactListService;
@@ -205,10 +195,6 @@ export class SharedManifestStarted {
         this.AddressListService = new AddressListService();
         this.ContactListService = new ContactListService();
     }
-
-
-
-
 
     public AllAddresses: AddressList[] = [];
     public AllContacts: ContactList[] = [];
@@ -230,18 +216,12 @@ export class SharedManifestStarted {
                     logitudeWindow.Show("./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestEditAgentComponent");
                     logitudeWindow.WindowClosed.subscribe(s => {
                         if (s == "OK") {
-                            var windowArgs: any = {};
-                            windowArgs.EntityPM = this.EntityPM;
-                            var logWindow = new LogitudeWindow();
-                            windowArgs.FromSharedManifestEditAgentComponent = true;
-
-                            if (!this.EntityPM.IsManifestSentToAgent) {
-                                logWindow.Width = 600;
-                                logWindow.Height = 350;
+                            if (this.EntityPM.IsDirty) {
+                                this.isStartUpdateAgentManifest = true;
+                                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
                             }
-                            logWindow.Title = "Share Manifest with Updated Agent";
-                            logWindow.WindowArgs = windowArgs;
-                            logWindow.Show("./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestStarted");
+                            else this.StartUpdateAgentManifest();
+                         
                         }
                     });
                     this.CloseButtonClicked();
@@ -251,8 +231,20 @@ export class SharedManifestStarted {
         }
         else {
             this.IsUpdateSharedAgent = true;
+            SessionLocator.CurrentSession.CurrentWindow.Title = "Share Manifest with Updated Agent";
         }
 
+    }
+
+    isStartUpdateAgentManifest: boolean = false;
+    StartUpdateAgentManifest() {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        var logWindow = new LogitudeWindow();
+        windowArgs.FromSharedManifestEditAgentComponent = true;
+        logWindow.Title = "Share Updated Agent";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestStarted");
     }
 
     UpdateSharedAgent() {
@@ -260,7 +252,8 @@ export class SharedManifestStarted {
         messageWindow.Show("ssssss");
     }
 
-     SharingManifest() {
+
+    StartSharingManifest() {
         SessionLocator.CurrentSession.StartBusyIndicator("Sharing Manifest...");
         this._sharedAgentManifestService.ShareAgentManifest(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             SessionLocator.CurrentSession.StopBusyIndicator();
