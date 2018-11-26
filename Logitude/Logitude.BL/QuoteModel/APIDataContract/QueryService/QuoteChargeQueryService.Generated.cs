@@ -121,7 +121,7 @@ using Simplog.Data.QuoteModel;
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
 										   
-					if(temp == null || (temp != null && string.IsNullOrEmpty(item.Id)))
+					if(temp == null)
 					{
 					    throw new ApplicationException("QuoteCharge with Id " + item.Id + " doesn't exist");
 					} 

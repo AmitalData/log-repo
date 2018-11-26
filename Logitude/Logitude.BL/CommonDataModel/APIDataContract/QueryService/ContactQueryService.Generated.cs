@@ -88,7 +88,7 @@ using Simplog.Data.CommonDataModel;
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
 										   
-					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
+					if(temp == null)
 					{
 					    throw new ApplicationException("Contact with Id " + MyEntity.Id + " doesn't exist");
 					} 

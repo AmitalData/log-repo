@@ -80,7 +80,7 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Code);
 					} 					   
-					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
+					if(temp == null)
 					{
 					    throw new ApplicationException("WeightUnit with Code " + MyEntity.Code + " doesn't exist");
 					} 
