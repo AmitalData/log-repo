@@ -7039,7 +7039,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 HelpTextDefaultText = "The digital seal associates the payment. It is a text chain of 64 base format",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
-       
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Metodo Pago",

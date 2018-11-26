@@ -24,7 +24,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             IQueryable<BankDepositList> query = (from a in iQueryable.Include("CashBook").Include("BankAccount")
                                                  join jr in context.Journals on a.Id equals jr.AccountingEntityId into r
-                                                 from x in r.DefaultIfEmpty()
+                                                 from x in r.GroupBy(d => d.AccountingEntityId).Select(d => d.FirstOrDefault())
                                                  select new BankDepositList()
                                                  {
 
@@ -73,6 +73,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                  });
             return query;
         }
+
 
         private IQueryable<BankDeposit> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<BankDeposit> iQueryable, int tenant)
         {
