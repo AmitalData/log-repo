@@ -91,6 +91,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
                                                         DirectionId = myShipment.DirectionId,
                                                         TransportModeId = myShipment.TransportModeId,
+                                                        ShipmentTypeId = myShipment.ShipmentTypeId,
+                                                        IsCancelled = myShipment.IsCancelled,
                                                         ShipmentNumber = myShipment.ShipmentNumber,
                                                         House = myShipment.House,
                                                         ShipmentLevelCode = myShipment.ShipmentLevelCode,
@@ -288,9 +290,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
                                                                      ECRTransportModeCode = f.ECRTransportModeCode,
                                                                      ECRTransportModeName = f.ECRTransportMode == null ? null : f.ECRTransportMode.Name,
-
+                                                                     
                                                                      DirectionId = myShipment.DirectionId,
                                                                      TransportModeId = myShipment.TransportModeId,
+                                                                     ShipmentTypeId = myShipment.ShipmentTypeId,
+                                                                     IsCancelled = myShipment.IsCancelled,
                                                                      ShipmentNumber = myShipment.ShipmentNumber,
                                                                      House = myShipment.House,
                                                                      ShipmentLevelCode = myShipment.ShipmentLevelCode,
@@ -315,7 +319,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
                                                                      ShipmentNotes = myShipment.Notes,
                                                                      VesselName = myShipment.ShipmentMasterData == null ? null : (myShipment.ShipmentMasterData.MainCarriageVessel == null ? null : myShipment.ShipmentMasterData.MainCarriageVessel.EnglishName),
-
                                                                  });
 
 
