@@ -107,6 +107,7 @@
     <Compile Include="Accounting\UniTests\BankAccountOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankAccountOnUpdatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankAccountValidateUpdateServiceUnitTest.cs" />
+    <Compile Include="Accounting\UniTests\Report\LedgerTransactionBalanceServiceUnderTest.DateTypeCode.cs" />
     <Compile Include="Accounting\UniTests\YearTransferUnitTest.cs" />
     <Compile Include="SimplogDataFakeFactory.cs" />
     <Compile Include="TestingTestingUnitTest.cs" />
