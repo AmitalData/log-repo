@@ -33,6 +33,7 @@ namespace WebFreight.Web.DataProviders
         public string CustomerName { get; set; }
         public DateTime? DateOfWork { get; set; }
         public string EmployeeName { get; set; }
+        public string OwnerName { get; set; }
         public string TotalWIWorkedDays_Employee { get; set; }
         public string TotalWIWorkedDays { get; set; }
         public string WINumber { get; set; }
