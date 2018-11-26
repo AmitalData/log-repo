@@ -6845,27 +6845,11 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_FromPortId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFromPortId").FirstOrDefault();
             QueryFilterItem filterItem_FinalDestinationPortId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFinalDestinationPortId").FirstOrDefault();
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
-
-            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            DateTime myStartDate = todayDate.AddMonths(-1);
-
-            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
-            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
-
+            
             string fromPortId = null;
             string finalDestinationPortId = null;
             string customerId = null;
-
-            if (filterItem_FromDate != null)
-            {
-                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
-            }
-
-            if (filterItem_ToDate != null)
-            {
-                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
-            }
-
+            
             if (filterItem_FromPortId != null)
             {
                 if (filterItem_FromPortId.FieldValue != null)
@@ -6893,17 +6877,28 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             #region Base Data Filtered
-
-            if (fromDate != null)
+            if (filterItem_FromDate != null)
             {
-                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                DateTime fromDate;
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+                if (fromDate != null)
+                {
+                    totalData.FromDate = fromDate;
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                }
             }
 
-            if (toDate != null)
+            if (filterItem_ToDate != null)
             {
-                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                DateTime toDate;
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+                if (toDate != null)
+                {
+                    totalData.ToDate = toDate;
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                }
             }
-
+            
             if (!string.IsNullOrEmpty(fromPortId))
             {
                 Port port = portRep.GetSinglePort(tenant, fromPortId);
@@ -6944,10 +6939,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #endregion
 
-            #region Fill Report Data
-
-            totalData.FromDate = fromDate;
-            totalData.ToDate = toDate;
+            #region Fill Report Data            
             totalData.Logo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
 
             if (iQueryable.Count() > 0)
