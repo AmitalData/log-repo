@@ -5,6 +5,7 @@ using MeatadataGeneratorTool.MenuButtons;
 using MeatadataGeneratorTool.QueryModule;
 using MeatadataGeneratorTool.ScreensModule;
 using MeatadataGeneratorTool.TabsModule;
+using MeatadataGeneratorTool.TextCodes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -36,6 +37,8 @@ namespace MeatadataGeneratorTool.Helpers
             List<Row> Data = new List<Row>();
             List<EventTypesViewModel> EventTypes = new List<EventTypesViewModel>();
             List<DataContractViewModel> DataContracts = new List<DataContractViewModel>();
+            List<TextCodesViewModel> TextCodes = new List<TextCodesViewModel>();
+
             foreach (XmlNode fieldNode in entity.ChildNodes)
             {
                 if (fieldNode.Name == "field")
@@ -86,6 +89,13 @@ namespace MeatadataGeneratorTool.Helpers
                     }
 
                 }
+                else if (fieldNode.Name == "AdditionalTextCodes")
+                {
+                    foreach (XmlNode fNode in fieldNode.ChildNodes)
+                    {
+                        TextCodes.Add(BuildTextCode(fNode, objectTable));
+                    }
+                }
 
 
             }
@@ -99,6 +109,7 @@ namespace MeatadataGeneratorTool.Helpers
             objectTable.BuildEventTypesObsList(EventTypes);
             objectTable.BuildMenuButtonsObsList(MenuButtons);
             objectTable.BuildDataContractsObsList(DataContracts);
+            objectTable.BuildAdditionalTextCodesList(TextCodes);
             return objectTable;
         }
 
@@ -724,6 +735,20 @@ namespace MeatadataGeneratorTool.Helpers
             EventType.EntityStatusCode = GetAttributeStringValue(fieldNode.Attributes["EntityStatusCode"]);
 
             return EventType;
+        }
+
+        public TextCodesViewModel BuildTextCode(XmlNode fieldNode, ObjectTableViewModel table)
+        {
+            TextCodesViewModel textCode = new TextCodesViewModel(table, false);
+            textCode.Code = GetAttributeStringValue(fieldNode.Attributes["Code"]);
+            textCode.DefaultText = GetAttributeStringValue(fieldNode.Attributes["DefaultText"]);
+            textCode.LocalDefaultText = GetAttributeStringValue(fieldNode.Attributes["LocalDefaultText"]);
+            textCode.TextCodeTypeCode = GetAttributeStringValue(fieldNode.Attributes["TextCodeTypeCode"]);
+            textCode.IsSpellChecked = GetAttributeBoolValue(fieldNode.Attributes["IsSpellChecked"]);
+            
+           
+
+            return textCode;
         }
 
         public DataContractViewModel BuildDataContract(XmlNode fieldNode, ObjectTableViewModel table)

@@ -20,6 +20,7 @@ using System.Configuration;
 using System.Security.Cryptography;
 using System.IO;
 using MeatadataGeneratorTool.Helpers;
+using MeatadataGeneratorTool.TextCodes;
 
 namespace MeatadataGeneratorTool
 {
@@ -1710,6 +1711,28 @@ namespace MeatadataGeneratorTool
 
                 }
             }
+            #endregion
+
+            #region Event Types Properties
+
+            XmlElement AdditionalTextCodesElement = doc.CreateElement("AdditionalTextCodes");
+            entityElement.AppendChild(TypesElement);
+
+            foreach (TextCodesViewModel f in table.AdditionalTextCodesList)
+            {
+                XmlElement EventElement = doc.CreateElement("TextCode");
+                TypesElement.AppendChild(EventElement);
+
+                SetAttribute("Code", GetStringValue(f.Code), EventElement, null);
+                SetAttribute("DefaultText", GetStringValue(f.DefaultText), EventElement, null);
+                SetAttribute("LocalDefaultText", GetStringValue(f.LocalDefaultText), EventElement, null);
+                SetAttribute("TextCodeTypeCode", GetStringValue(f.TextCodeTypeCode), EventElement, null);
+                SetAttribute("IsSpellChecked", f.IsSpellChecked.ToString().ToLower(), EventElement, null);
+                
+
+
+            }
+
             #endregion
 
             string tableName = table.ObjectTableName;

@@ -22,6 +22,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Path = System.IO.Path;
 //using MeatadataGeneratorTool;
 
 namespace MetaDataGenerator
@@ -55,7 +56,11 @@ namespace MetaDataGenerator
             }
             else
             {
-                string dir = @"C:\LogitudeWorld\main\Logitude.MetaData\EntityFiles\";
+                string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+                DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+                string solutionDirectory = solutionDir.FullName;
+
+                string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles\"; //@"C:\LogitudeWorld\main\Logitude.MetaData\EntityFiles\";
                 DirectoryInfo d = new DirectoryInfo(dir);
 
                 string infradir = dir + "InfrastructureModel";

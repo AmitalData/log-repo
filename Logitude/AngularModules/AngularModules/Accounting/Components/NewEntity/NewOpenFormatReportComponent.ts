@@ -39,7 +39,29 @@ export class NewOpenFormatReportComponent extends BaseComponent {
     }
 
 
+    get DateTypeCode() { return this.entityPM.DateTypeCode; }
+    set DateTypeCode(value: string) {
+        if (this.entityPM.DateTypeCode != value) {
+            this.entityPM.DateTypeCode = value;
+        }
+    }
 
+
+    get FromDate() { return this.entityPM.FromDate; }
+    set FromDate(value: Date) {
+        if (this.entityPM.FromDate != value) {
+            this.entityPM.FromDate = value;
+        }
+    }
+
+
+
+    get ToDate() { return this.entityPM.ToDate; }
+    set ToDate(value: Date) {
+        if (this.entityPM.ToDate != value) {
+            this.entityPM.ToDate = value;
+        }
+    }
 
 
     ValidationErrorsList: string[] = [];
@@ -52,16 +74,6 @@ export class NewOpenFormatReportComponent extends BaseComponent {
        // this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         Validator.TryValidateObject(this.entityPM, this.ObjectTableName, errors);
 
-        //if (AppTool.IsNullOrEmpty(this.entityPM.Year)) {
-        //    var s: string = this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("TaxReport.F.Year"));
-
-        //    errors.push(s);
-        //}
-        //if (this.SelectedMonth == null) {
-        //    var s: string = this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("TaxReport.F.TaxReportMonth"));
-
-        //    errors.push(s);
-        //}
 
 
         this.ValidationErrorsList = errors;
