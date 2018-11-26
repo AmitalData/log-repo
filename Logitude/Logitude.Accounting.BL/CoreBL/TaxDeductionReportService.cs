@@ -131,9 +131,14 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount.Value.ToString().PadLeft(9, '0'));
 
                     myStringBuilder.Append("00000000");
-                    myStringBuilder.Append(item.EndYearBalance.Value.ToString().PadLeft(14, '0'));
+                    myStringBuilder.Append(item.EndYearBalance.Value.ToString().PadLeft(8, '0'));
+                if (item.TaxDeductionPercentage != null)
+                {
+                    if (item.TaxDeductionPercentage.Value.ToString().Length > 2)  item.TaxDeductionPercentage.Value.ToString().Substring(0, 2);
 
-                    myStringBuilder.Append("a" + item.TaxDeductionPercentage);
+                    myStringBuilder.Append("a" + item.TaxDeductionPercentage.Value.ToString().PadLeft(2, '0'));
+                }
+               // myStringBuilder.Append("a" + item.TaxDeductionPercentage.Value.ToString().PadLeft(2, '0'));
 
                     string s = item.AssessingOfficerCode + " " + item.AssessingOfficerName;
                     if (s.Length > 12) s = s.Substring(0, 12);
@@ -279,7 +284,14 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     myStringBuilder.Append("a96");
                     myStringBuilder.Append(taxDeductionReportPM.TaxYear);
+                if (item.Month.ToString().Length < 2)
+                {
+                    myStringBuilder.Append(item.Month.ToString().PadLeft(2, '0'));
+                }
+                else
+                {
                     myStringBuilder.Append(item.Month);
+                }
 
                     myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month).Count());
 
