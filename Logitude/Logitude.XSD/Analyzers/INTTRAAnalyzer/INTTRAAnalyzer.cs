@@ -460,6 +460,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                             {
                                                 string iContainerNumber = equipmentDetails.EquipmentIdentifier.Value;
 
+                                                if (iContainerNumber != null)
+                                                {
+                                                    iContainerNumber = iContainerNumber.Trim();
+                                                }
+
                                                 if (!string.IsNullOrEmpty(iContainerNumber))
                                                 {
                                                     if (!string.IsNullOrEmpty(this.ShipmentNumber))

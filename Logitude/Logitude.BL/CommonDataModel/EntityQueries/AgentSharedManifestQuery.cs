@@ -785,7 +785,26 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return list;
         }
 
-      
+
+
+        public bool IsAgentSharedManifests(string agentId , string agentReference)
+        {
+            string result = (from a in repository.context.AgentSharedManifests
+                             where a.AgentId == agentId
+                             && a.AgentReference == agentReference
+                             select a.AgentId).FirstOrDefault();
+    
+            return !string.IsNullOrEmpty(result) ? true:false;
+        }
+
+
+
+
+
+
+
+
+
 
     }
 }

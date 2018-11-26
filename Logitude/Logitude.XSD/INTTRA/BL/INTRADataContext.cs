@@ -354,7 +354,6 @@ namespace Logitude.XSD.INTTRA.BL
                 this.Errors.Add("Only allowed for Ocean FCL shipments");
             }
 
-
             if (this.Shipment.ShipperId == null)
             {
                 this.Errors.Add("Shipper is required");
@@ -373,6 +372,11 @@ namespace Logitude.XSD.INTTRA.BL
             if (this.Shipment.FreightPrepaidCollectId == null)
             {
                 this.Errors.Add("Freight Prepaid Collect is required");
+            }
+
+            if (this.Shipment.BasicFreightId == null)
+            {
+                this.Errors.Add("Basic Freight is required");
             }
 
             if (this.MasterData.MainCarriageVesselId == null)
@@ -573,7 +577,8 @@ namespace Logitude.XSD.INTTRA.BL
         private Address ConsigneeAddress;
         private Address Notify1Address;
         private Address Notify2Address;
-        private Address FreightForwarderAddress;        
+        private Address FreightForwarderAddress;
+        private Address FreightPayerAddress;        
         private void GetObjects_Partners()
         {
             if (!string.IsNullOrEmpty(this.Shipment.ShipperAddressId))
@@ -660,6 +665,27 @@ namespace Logitude.XSD.INTTRA.BL
                                     this.Errors.Add("Agent Address 1 or Address 2 is required");
                                 }
                             }
+                        }
+                    }
+                }
+            }
+
+            if (this.Shipment.FreightPayerId != null)
+            {
+                if (string.IsNullOrEmpty(this.Shipment.FreightPayerAddressId))
+                {
+                    this.Errors.Add("Freight Payer Address required");
+                }
+
+                else
+                {
+                    this.FreightPayerAddress = (from d in CommonContext.Addresses where d.Id == this.Shipment.FreightPayerAddressId select d).FirstOrDefault();
+
+                    if (this.FreightPayerAddress != null)
+                    {
+                        if (string.IsNullOrEmpty(this.FreightPayerAddress.Address1) && string.IsNullOrEmpty(this.FreightPayerAddress.Address2))
+                        {
+                            this.Errors.Add("Freight Payer Address 1 or Address 2 is required");
                         }
                     }
                 }

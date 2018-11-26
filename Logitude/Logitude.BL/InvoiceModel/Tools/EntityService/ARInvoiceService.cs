@@ -301,18 +301,35 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
-                    List<string> allReceivablesIds = (from d in entityPM.InvoiceLines group d by d.ReceivableId into g select g.Key).ToList();
-
-                    bool isReceivablesConnected = (from d in shipmentRepository.context.ShipmentReceivables
-                                                   where d.Tenant == tenant
-                                                   && d.ARInvoiceId != null
-                                                   && d.ARInvoiceId != this.invoice.Id
-                                                   && allReceivablesIds.Contains(d.Id)
-                                                   select d).Any();
-
-                    if (isReceivablesConnected)
+                    if (entityPM.IsAutoCredit || entityPM.StatusCode == "AC" || entityPM.StatusCode == "AR")
                     {
-                        throw new ApplicationException("Some of invoice lines is already connected to another invoice");
+                        foreach (ARInvoiceLinePM item in entityPM.InvoiceLines)
+                        {
+                            item.EntityId = null;
+                            item.ReceivableId = null;
+
+                            if (item.ChangeSetOp == ChangeSetOperation.None)
+                            {
+                                item.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                        }
+                    }
+
+                    List<string> allReceivablesIds = (from d in entityPM.InvoiceLines where d.ReceivableId != null group d by d.ReceivableId into g select g.Key).ToList();
+
+                    if (allReceivablesIds.Count > 0)
+                    {
+                        bool isReceivablesConnected = (from d in shipmentRepository.context.ShipmentReceivables
+                                                       where d.Tenant == tenant
+                                                       && d.ARInvoiceId != null
+                                                       && d.ARInvoiceId != this.invoice.Id
+                                                       && allReceivablesIds.Contains(d.Id)
+                                                       select d).Any();
+
+                        if (isReceivablesConnected)
+                        {
+                            throw new ApplicationException("Some of invoice lines is already connected to another invoice");
+                        }
                     }
                 }
             }
