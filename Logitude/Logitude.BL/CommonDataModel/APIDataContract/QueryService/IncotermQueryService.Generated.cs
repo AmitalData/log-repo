@@ -125,7 +125,7 @@ using Simplog.Data.CommonDataModel;
 					}
 					
 					   					   
-					if(temp == null)
+					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
 					{
 					    throw new ApplicationException("Incoterm with Code " + MyEntity.Code + " doesn't exist");
 					} 

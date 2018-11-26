@@ -87,7 +87,7 @@ using Simplog.Data.InfrastructureModel;
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
 										   
-					if(temp == null)
+					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
 					{
 					    throw new ApplicationException("MoveType with Id " + MyEntity.Id + " doesn't exist");
 					} 

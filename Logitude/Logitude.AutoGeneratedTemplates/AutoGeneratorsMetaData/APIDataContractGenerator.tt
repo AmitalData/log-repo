@@ -370,7 +370,7 @@ using <#=myspacestring#>
 					   <#+}
 					   }#>
 					   
-					if(temp == null)
+					if(temp == null || (temp != null && string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.Id)))
 					{
 					    throw new ApplicationException("<#=ObjectTableName#> with <#=MyErrorField#> " + <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=MyErrorField#> + " doesn't exist");
 					} <#+

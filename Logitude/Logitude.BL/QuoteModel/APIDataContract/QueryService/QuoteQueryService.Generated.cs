@@ -421,7 +421,7 @@ using Simplog.Data.QuoteModel;
 					{
 						temp = query.GetSinglePMByQuoteNumber(MyEntity.QuoteNumber, Tenant);
 					} 					   
-					if(temp == null)
+					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
 					{
 					    throw new ApplicationException("Quote with QuoteNumber " + MyEntity.QuoteNumber + " doesn't exist");
 					} 

@@ -81,7 +81,7 @@ using Simplog.Data.InfrastructureModel;
 						temp = query.GetSinglePM(MyEntity.Code);
 					} 
 										   
-					if(temp == null)
+					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
 					{
 					    throw new ApplicationException("Direction with Code " + MyEntity.Code + " doesn't exist");
 					} 

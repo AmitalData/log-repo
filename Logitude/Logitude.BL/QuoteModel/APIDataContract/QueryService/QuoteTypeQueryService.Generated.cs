@@ -80,7 +80,7 @@ using Simplog.Data.QuoteModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Code);
 					} 					   
-					if(temp == null)
+					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
 					{
 					    throw new ApplicationException("QuoteType with Code " + MyEntity.Code + " doesn't exist");
 					} 

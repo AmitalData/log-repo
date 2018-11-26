@@ -270,7 +270,7 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant);
 					} 					   
-					if(temp == null)
+					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
 					{
 					    throw new ApplicationException("Shipment with ShipmentNumber " + MyEntity.ShipmentNumber + " doesn't exist");
 					} 
