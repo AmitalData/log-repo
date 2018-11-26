@@ -202,7 +202,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (totalDifference != 0)
             {
-                var msg = TranslateTextsClass.Translate("Accounting.General.O.DifferenceMustEqual0", 0);
+                ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
+                bool showLocal = !loggedContact.DontShowLocal;
+
+                var msg = TranslateTextsClass.Translate("Accounting.General.O.DifferenceMustEqual0",0, showLocal);
                 throw new ApplicationException(msg);
             }
 
