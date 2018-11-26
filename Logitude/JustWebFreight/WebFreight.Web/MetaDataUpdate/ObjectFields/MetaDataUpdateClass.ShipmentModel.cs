@@ -114,7 +114,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "ProjectNumberListLable",
                 Operator = "Equals",
                 ListPropertyPath = "ProjectNumber",
-                PMPropertyPath = "ProjectNumber"
+                PMPropertyPath = "ProjectNumber",
+                DisplayInList = true,
+                ListLableDefaultText = "Project #",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 

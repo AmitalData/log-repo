@@ -129,7 +129,8 @@ export class WizardComponent extends BaseComponent {
     SetUIProperties_BasicFreight() {
 
         var isRequired: boolean = false;
-        if (!AppTool.IsNullOrEmpty(this.BasicFreightId)) {
+
+        if (AppTool.IsNullOrEmpty(this.BasicFreightId)) {
             isRequired = true;
         }
 
@@ -138,19 +139,23 @@ export class WizardComponent extends BaseComponent {
     SetUIProperties_FreightPayerAddress() {
 
         var isEnabled: boolean = false;
+
         if (this.IsEditingEnabled) {
             if (this.FreightPayerId != null) {
                 isEnabled = true;
             }
         }
+
         this.UIProperties.SetEnabled("FreightPayerAddressId", this.ObjectTableName, isEnabled);
 
         var isRequired: boolean = false;
+
         if (!AppTool.IsNullOrEmpty(this.FreightPayerId)) {
             if (AppTool.IsNullOrEmpty(this.FreightPayerAddressId)) {
                 isRequired = true;
             }
         }
+
         this.UIProperties.SetRequired("FreightPayerAddressId", this.ObjectTableName, isRequired);
     }
 
