@@ -231,7 +231,8 @@ namespace MetaDataGenerator
             if (table.IsClosed)
                 GenerateTableDataRecords(doc, entityElement, table, fields);
 
-
+            GenerateAdditionalTextCodes(doc, entityElement, table, fields);
+            GenerateAdditionalFeatures(doc, entityElement, table, fields);
 
             #region Write Xml To file
 
@@ -246,6 +247,95 @@ namespace MetaDataGenerator
             #endregion
 
             return true;
+        }
+
+        private void GenerateAdditionalTextCodes(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields)
+        {
+//            select* from textcodes where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
+ //and textcodetypecode<> 'f' and TextCodeTypeCode<> 'TH'
+//and Code not like '%.MenuButtons.%'
+//and Code not like '%.Features.%'
+//and Id not in (select LabelTextCodeId from MenuButtons where LabelTextCodeId is not null and Tenant = 0 and MenuButtonGroupId in (select Id from MenuButtonGroups where  ObjectTableId in (select id from objecttables where name = 'shipment'))
+//)
+//and(select COUNT(*)   from ObjectFields where Tenant = 0 and ObjectTableId in (select id from objecttables where name = 'shipment')
+//and(ObjectFields.FullNameTextCodeId = textcodes.Id or  textcodes.id = ObjectFields.ListTextCodeId  or textcodes.id = ObjectFields.HelpTextCodeId)) = 0
+//and Id not in (select NameTextCodeId from features where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
+//and Id not in (select NameTextCodeId from Queries where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
+
+            RemoveOldNodes(doc, entityElement, "AdditionalTextCodes");
+            XmlElement additionalTextCodesListXElement = doc.CreateElement("AdditionalTextCodes");
+            entityElement.AppendChild(additionalTextCodesListXElement);
+
+            List<TextCode> additionalTextCodes = (from a in allTextCodes
+                                                  where a.ObjectTableId == table.Id && a.Tenant == 0
+                                                  && a.Id != table.DescriptionTextCodeId
+                                                  && a.Id != table.NewButtonTextCodeId
+                                                  && a.TextCodeTypeCode.ToLower() != "f" && a.TextCodeTypeCode.ToLower() != "th"
+                                                  && !a.Code.Contains(".MenuButtons.")
+                                                  && !a.Code.Contains(".Features.")
+                                                  && !allFeatures.Any(f => f.NameTextCodeId == a.Id)
+                                                  && !allQueries.Any(f => f.NameTextCodeId == a.Id)
+                                                  && !allMenuButtons.Any(f => f.LabelTextCodeId == a.Id)
+                                                  && !tableObjectFields.Any(f => f.FullNameTextCodeId == a.Id || f.ListTextCodeId == a.Id || f.HelpTextCodeId == a.Id)
+                                                  select a).ToList();
+
+            foreach(TextCode tcode in additionalTextCodes)
+            {
+                XmlElement codeXElement = doc.CreateElement("TextCode");
+                additionalTextCodesListXElement.AppendChild(codeXElement);
+
+                SetAttribute("Code", GetStringValue(tcode.Code), codeXElement);
+                SetAttribute("DefaultText", GetStringValue(tcode.DefaultText), codeXElement);
+                SetAttribute("LocalDefaultText", GetStringValue(tcode.LocalDefaultText), codeXElement);
+                SetAttribute("TextCodeTypeCode", GetStringValue(tcode.TextCodeTypeCode), codeXElement);
+                SetAttribute("IsSpellChecked", tcode.IsSpellChecked.ToString().ToLower(), codeXElement);
+              
+            }
+        }
+
+        private void GenerateAdditionalFeatures(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields)
+        {
+//            select* from Features where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
+//and Code<> 'NEW'and Code<> 'UPDATE'and Code<> 'READ'and Code<> 'Module'
+//and Id not in (select FeatureId from MenuButtons where FeatureId is not null and Tenant = 0 and MenuButtonGroupId in (select Id from MenuButtonGroups where  ObjectTableId in (select id from objecttables where name = 'shipment'))
+//)
+//and Id not in (select FeatureId from ObjectTableTabs where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
+//and Id not in (select FeatureId from Queries where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
+
+            RemoveOldNodes(doc, entityElement, "AdditionalFeatures");
+            XmlElement additionalTextCodesListXElement = doc.CreateElement("AdditionalFeatures");
+            entityElement.AppendChild(additionalTextCodesListXElement);
+
+            List<Feature> additionalFeatures = (from a in allFeatures
+                                                  where a.ObjectTableId == table.Id && a.Tenant == 0
+                                                  && a.Code.ToUpper() != "NEW" && a.Code.ToUpper() != "UPDATE" && a.Code.ToUpper() != "READ"
+                                                  && a.Code.ToUpper() != "MODULE"  
+                                                  && !allTabs.Any(f => f.FeatureId == a.Id)
+                                                  && !allQueries.Any(f => f.FeatureId == a.Id)
+                                                  && !allMenuButtons.Any(f => f.FeatureId == a.Id)
+                                                  
+                                                  select a).ToList();
+
+            foreach (Feature feature in additionalFeatures)
+            {
+
+                XmlElement featureXElement = doc.CreateElement("Feature");
+                additionalTextCodesListXElement.AppendChild(featureXElement);
+
+                SetAttribute("Code", GetStringValue(feature.Code), featureXElement);
+                SetAttribute("FeatureTypeCode", GetStringValue(feature.FeatureTypeCode), featureXElement);
+                SetAttribute("IsPackagable", feature.Packagable.ToString().ToLower(), featureXElement);
+                SetAttribute("IsBusinessUnitEnabled", feature.IsBusinessUnitEnabled.ToString().ToLower(), featureXElement);
+                SetAttribute("IsOld", feature.IsOld.ToString().ToLower(), featureXElement);
+                SetAttribute("IsCoreFeature", feature.IsCoreFeature.ToString().ToLower(), featureXElement);
+
+                if (!string.IsNullOrEmpty(feature.NameTextCodeId))
+                {
+                    TextCode featureTextCode = allTextCodes.FirstOrDefault(t => t.Id == feature.NameTextCodeId);
+                    SetAttribute("FeatureTextCodeCode", GetStringValue(featureTextCode.Code), featureXElement);
+                    SetAttribute("FeatureDefaultText", GetStringValue(featureTextCode.DefaultText), featureXElement);
+                }
+            }
         }
 
         private EntityPropertiesInfo GetEntityClassProperities(ObjectTable table)

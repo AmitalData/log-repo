@@ -64,10 +64,10 @@
       <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.WPF45, Version=4.1.27.22784, Culture=neutral, PublicKeyToken=0e27b6f8be9b2ef7, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\DWEditorGalaSoft.1.0.0\lib\Net40\GalaSoft.MvvmLight.Extras.WPF45.dll</HintPath>
+      <HintPath>..\..\..\packages\DWEditorGalaSoft.1.1.0\lib\Net40\GalaSoft.MvvmLight.Extras.WPF45.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.WPF45, Version=4.1.27.22784, Culture=neutral, PublicKeyToken=eabbf6a5f5af5004, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\DWEditorGalaSoft.1.0.0\lib\Net40\GalaSoft.MvvmLight.WPF45.dll</HintPath>
+      <HintPath>..\..\..\packages\DWEditorGalaSoft.1.1.0\lib\Net40\GalaSoft.MvvmLight.WPF45.dll</HintPath>
     </Reference>
     <Reference Include="Logitude.Customs.BL">
       <HintPath>..\..\..\Logitude.Customs.BL\bin\Debug\Logitude.Customs.BL.dll</HintPath>
@@ -76,7 +76,7 @@
       <HintPath>..\..\..\Logitude.Customs.Data\bin\Debug\Logitude.Customs.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\DWEditorGalaSoft.1.0.0\lib\Net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\..\..\packages\DWEditorGalaSoft.1.1.0\lib\Net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\WindowsAzure.ServiceBus.3.4.5\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
@@ -109,7 +109,7 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>C:\Users\ALAA\Desktop\MeatadataGeneratorTool\MeatadataGeneratorTool\MeatadataGeneratorTool\bin\Debug\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\..\..\packages\DWEditorGalaSoft.1.1.0\lib\Net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -146,6 +146,10 @@
       <DependentUpon>EventTypesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="EventTypes\EventTypesViewModel.cs" />
+    <Compile Include="Features\FeaturesControl.xaml.cs">
+      <DependentUpon>FeaturesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Features\FeaturesViewModel.cs" />
     <Compile Include="Helpers\Attached.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\RowIndexConverter.cs" />
@@ -200,6 +204,10 @@
       <DependentUpon>TabsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="TabsModule\TabsViewModel.cs" />
+    <Compile Include="TextCodes\TextCodesControl.xaml.cs">
+      <DependentUpon>TextCodesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TextCodes\TextCodesViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="XmlGeneratorClass.cs" />
@@ -218,6 +226,10 @@
     <Page Include="EventTypes\EventTypesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Features\FeaturesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -282,6 +294,10 @@
     <Page Include="TabsModule\TabsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TextCodes\TextCodesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
