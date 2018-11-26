@@ -54,7 +54,7 @@
                         <table>
                             <tr class="SectionHeader">
                                 <td>
-                                    <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">Misc Queries</label>
+                                    <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{ 'Accounting.General.O.MiscQueries' | TextCodeTranslationPipe }}</label>
                                 </td>
                             </tr>
 
@@ -69,7 +69,7 @@
 
                                          
                                             <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>Open Format Reports</div>
+                                                <div>{{ 'OpenFormatReport' |TextCodeTranslationPipe }}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
                                                     <button class="Button" (click)="RunNewOpenFormatReportWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
@@ -80,7 +80,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink"  (click)="ViewAccountingQuery('AllOpenFormats')"> Open Format Report </p>
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('AllOpenFormats')">{{ 'OpenFormatReport' |TextCodeTranslationPipe }} </p>
                                                                         </td>
                                                                     </tr>
                                                                  
