@@ -327,7 +327,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return this.repository.GetLedgerTransactionSumFromTo(gLAccointId, fromDate, toDate, tenant, currencyId);
         }
 
-
+        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
+        {
+            return this.repository.CalcGLAccountTotalByMonthByDateType(DateTypeCode,fromDate, accoutingDateUntillNotInclude, tenant, listOfAccId);
+        }
 
         public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByAccountingDate(DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
         {

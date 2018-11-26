@@ -142,7 +142,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
         {
             var ledgerTransactionListQueryService = new LedgerTransactionListQueryService(_AccountingContext);
-            var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByAccDateAndId(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, _Param.PageSize, _Param.PageStartAtRecordIndex);
+            var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,"1", _Param.PageSize, _Param.PageStartAtRecordIndex);
             return list;
         }
 

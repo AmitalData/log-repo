@@ -21,6 +21,7 @@ using System.Security.Cryptography;
 using System.IO;
 using MeatadataGeneratorTool.Helpers;
 using MeatadataGeneratorTool.TextCodes;
+using MeatadataGeneratorTool.Features;
 
 namespace MeatadataGeneratorTool
 {
@@ -1713,22 +1714,47 @@ namespace MeatadataGeneratorTool
             }
             #endregion
 
-            #region Event Types Properties
+            #region Additional TextCodes Properties
 
             XmlElement AdditionalTextCodesElement = doc.CreateElement("AdditionalTextCodes");
-            entityElement.AppendChild(TypesElement);
+            entityElement.AppendChild(AdditionalTextCodesElement);
 
             foreach (TextCodesViewModel f in table.AdditionalTextCodesList)
             {
-                XmlElement EventElement = doc.CreateElement("TextCode");
-                TypesElement.AppendChild(EventElement);
+                XmlElement TextCodeElement = doc.CreateElement("TextCode");
+                AdditionalTextCodesElement.AppendChild(TextCodeElement);
 
-                SetAttribute("Code", GetStringValue(f.Code), EventElement, null);
-                SetAttribute("DefaultText", GetStringValue(f.DefaultText), EventElement, null);
-                SetAttribute("LocalDefaultText", GetStringValue(f.LocalDefaultText), EventElement, null);
-                SetAttribute("TextCodeTypeCode", GetStringValue(f.TextCodeTypeCode), EventElement, null);
-                SetAttribute("IsSpellChecked", f.IsSpellChecked.ToString().ToLower(), EventElement, null);
+                SetAttribute("Code", GetStringValue(f.Code), TextCodeElement, null);
+                SetAttribute("DefaultText", GetStringValue(f.DefaultText), TextCodeElement, null);
+                SetAttribute("LocalDefaultText", GetStringValue(f.LocalDefaultText), TextCodeElement, null);
+                SetAttribute("TextCodeTypeCode", GetStringValue(f.TextCodeTypeCode), TextCodeElement, null);
+                SetAttribute("IsSpellChecked", f.IsSpellChecked.ToString().ToLower(), TextCodeElement, null);
                 
+
+
+            }
+
+            #endregion
+
+            #region Additional Features Properties
+
+            XmlElement AdditionalFeaturesElement = doc.CreateElement("AdditionalFeatures");
+            entityElement.AppendChild(AdditionalFeaturesElement);
+
+            foreach (FeaturesViewModel f in table.AdditionalFeaturesList)
+            {
+                XmlElement TextCodeElement = doc.CreateElement("Feature");
+                AdditionalFeaturesElement.AppendChild(TextCodeElement);
+
+                SetAttribute("Code", GetStringValue(f.Code), TextCodeElement, null);
+                SetAttribute("FeatureTypeCode", GetStringValue(f.FeatureTypeCode), TextCodeElement, null);
+                SetAttribute("FeatureTextCodeCode", GetStringValue(f.FeatureTextCodeCode), TextCodeElement, null);
+                SetAttribute("FeatureDefaultText", GetStringValue(f.FeatureDefaultText), TextCodeElement, null);
+                SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), TextCodeElement, null);
+                SetAttribute("IsOld", f.IsOld.ToString().ToLower(), TextCodeElement, null);
+                SetAttribute("IsCoreFeature", f.IsCoreFeature.ToString().ToLower(), TextCodeElement, null);
+                SetAttribute("IsBusinessUnitEnabled", f.IsBusinessUnitEnabled.ToString().ToLower(), TextCodeElement, null);
+
 
 
             }

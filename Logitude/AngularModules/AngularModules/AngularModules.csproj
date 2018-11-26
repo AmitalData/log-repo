@@ -527,6 +527,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLovComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeComponents\DWLogSearchWindowComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\LogitudeCustomComponents\LastSuccessfulLoginComponent.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\MenuButtons\AnalyzeQueueMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomatedBackup.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationCondition.ts" />
@@ -607,6 +608,7 @@
     <Content Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\DeliveryTabs\DeliveryPackagesConnectComponent.html" />
+    <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestEditAgentComponent.html" />
     <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestHeaderComponent.html" />
     <Content Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestsWorkSpaces.html" />
     <Content Include="Common\Components\ShortTitles\DocumentsFilingShortTitleComponent.html" />
@@ -2997,6 +2999,7 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentPackages\Components\Packages\AddEditPackageHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\AddEditPackageHarmonizeComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\Components\Routings\DeliveryTabs\DeliveryPackagesConnectComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestEditAgentComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestHeaderComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\Components\SharedManifestsWorkSpaces.ts" />
     <TypeScriptCompile Include="Common\Components\ShortTitles\DocumentsFilingShortTitleComponent.ts" />

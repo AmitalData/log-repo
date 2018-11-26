@@ -154,7 +154,24 @@ export class SharedAgentManifestService {
         }).catch(ServiceHelper.HandleServiceError);
     }
 
+    GetIsAgentSharedManifests(agentId: string, shipmentNumber: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetIsAgentSharedManifests?' + 'agentId=' + agentId + '&shipmentNumber=' + shipmentNumber , {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
 
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
     get(id: string) {
 

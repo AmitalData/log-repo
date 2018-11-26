@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL.Mapping;
+﻿#if false
+using Logitude.Accounting.BL.CoreBL.Mapping;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
@@ -359,3 +360,7 @@ ForeignAmountDebit
 Sum the matching  records from GLAccountTotalByMonths +LedgerTransactions and return the totals
 
 */
+
+
+
+#endif

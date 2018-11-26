@@ -66,12 +66,12 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
 
                             if (string.IsNullOrEmpty(notes))
                             {
-                                notes = "Package changed to " + entity_Pm.Name;
+                                notes = entity_Pm == null ? "Package changed" : "Package changed to " + entity_Pm.Name;
                             }
 
                             else
                             {
-                                notes = notes + Environment.NewLine + "Package changed to " + entity_Pm.Name;
+                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Package changed" : "Package changed to " + entity_Pm.Name);
                             }
                         }
 
@@ -82,12 +82,12 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
 
                             if (string.IsNullOrEmpty(notes))
                             {
-                                notes = "Recurring period changed to " + entity_Pm.Name;
+                                notes = entity_Pm == null ? "Recurring period changed" : "Recurring period changed to " + entity_Pm.Name;
                             }
 
                             else
                             {
-                                notes = notes + Environment.NewLine + "Recurring period changed to " + entity_Pm.Name;
+                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Recurring period changed" : "Recurring period changed to " + entity_Pm.Name);
                             }
                         }
 
@@ -124,12 +124,12 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
 
                             if (string.IsNullOrEmpty(notes))
                             {
-                                notes = "Payment currency changed to " + entity_Pm.Name;
+                                notes = entity_Pm == null ? "Payment currency changed" : "Payment currency changed to " + entity_Pm.Name;
                             }
 
                             else
                             {
-                                notes = notes + Environment.NewLine + "Payment currency changed to " + entity_Pm.Name;
+                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Payment currency changed" : "Payment currency changed to " + entity_Pm.Name);
                             }
                         }
 
@@ -140,12 +140,12 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
 
                             if (string.IsNullOrEmpty(notes))
                             {
-                                notes = "Payment channel changed to " + entity_Pm.Name;
+                                notes = entity_Pm == null ? "Payment channel changed" : "Payment channel changed to " + entity_Pm.Name;
                             }
 
                             else
                             {
-                                notes = notes + Environment.NewLine + "Payment channel changed to " + entity_Pm.Name;
+                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Payment channel changed" : "Payment channel changed to " + entity_Pm.Name);
                             }
                         }
 
@@ -156,12 +156,12 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
 
                             if (string.IsNullOrEmpty(notes))
                             {
-                                notes = "Payment method changed to " + entity_Pm.Name;
+                                notes = entity_Pm == null ? "Payment method changed" : "Payment method changed to " + entity_Pm.Name;
                             }
 
                             else
                             {
-                                notes = notes + Environment.NewLine + "Payment method changed to " + entity_Pm.Name;
+                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Payment method changed" : "Payment method changed to " + entity_Pm.Name);
                             }
                         }
 
@@ -212,12 +212,12 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
 
                             if (string.IsNullOrEmpty(notes))
                             {
-                                notes = "Bluesnap contract changed to " + entity_Pm.Name;
+                                notes = entity_Pm == null ? "Bluesnap contract changed" : "Bluesnap contract changed to " + entity_Pm.Name;
                             }
 
                             else
                             {
-                                notes = notes + Environment.NewLine + "Bluesnap contract changed to " + entity_Pm.Name;
+                                notes = notes + Environment.NewLine + (entity_Pm == null ? "Bluesnap contract changed" : "Bluesnap contract changed to " + entity_Pm.Name);
                             }
                         }
 

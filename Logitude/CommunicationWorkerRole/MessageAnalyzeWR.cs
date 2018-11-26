@@ -70,26 +70,59 @@ namespace CommunicationWorkerRole
 
                     try
                     {
-                        queueservice = queueservice = new DbQueueService(queueName, 0);
-                        QueueResponse iQueueResponse = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
+                        bool isUsingDbQueueService = false;
 
-                        if(iQueueResponse != null)
+                        var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+                        if (iAppSettings != null)
                         {
-                            //string d1 = iQueueResponse.MessageId;
-                           // string d2 = iQueueResponse.MessageValues;
+                            if (iAppSettings["ChampDbQueueService"] != null)
+                            {
+                                string iValueText = iAppSettings["ChampDbQueueService"].ToString();
+                                if (!string.IsNullOrEmpty(iValueText))
+                                {
+                                    if(iValueText.ToLower() == "true")
+                                    {
+                                        isUsingDbQueueService = true;
+                                    }
+                                }
+                            }
                         }
 
-                        string AnalyzeQueueId = iQueueResponse.MessageValues["AnalyzeQueueId"].ToString();
-                        if (!string.IsNullOrEmpty(AnalyzeQueueId))
+                        if (isUsingDbQueueService)
                         {
-                            queueservice.Complete();
+                            queueservice = queueservice = new DbQueueService(queueName, 0);
+                            QueueResponse iQueueResponse = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
 
+                            string AnalyzeQueueId = iQueueResponse.MessageValues["AnalyzeQueueId"].ToString();
+                            if (!string.IsNullOrEmpty(AnalyzeQueueId))
+                            {
+                                queueservice.Complete();
+
+                                AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+                                AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetSingleAnalyzeQueue(AnalyzeQueueId);
+                                if (analyzeQueue != null)
+                                {
+                                    CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueRepository);
+                                    analyzer.Run();
+                                }
+                            }
+                        }
+
+                        else
+                        {
                             AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
-                            AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetSingleAnalyzeQueue(AnalyzeQueueId);
+                            AnalyzeQueue analyzeQueue = analyzeQueueRepository.GetOpenAnalyzeQueue("Champ");
+                            LastActivity = DateTime.UtcNow;
                             if (analyzeQueue != null)
                             {
                                 CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueRepository);
                                 analyzer.Run();
+                                LogDoneItemInMemory();
+                            }
+
+                            else
+                            {
+                                Thread.Sleep(500);
                             }
                         }
                     }

@@ -22,13 +22,13 @@ export class MiscPageComponent implements AfterViewInit {
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("OpenFormatReport").subscribe((response: any) => {
 
-   
+
          this.isScreenLoaded = true;
          SessionLocator.CurrentSession.StopBusyIndicator();
            });
-       
-            
-   
+
+
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
 
@@ -36,7 +36,7 @@ export class MiscPageComponent implements AfterViewInit {
         this.LoadAllScreenData();
     }
     public LoadAllScreenData() {
-      
+
         this.ReloadUsersQuery();
     }
     ReloadUsersQuery() {
@@ -45,7 +45,7 @@ export class MiscPageComponent implements AfterViewInit {
 
     InitComponent() {
         this.LoadAllScreenData();
-     
+
     }
 
     ViewAccountingQuery(myQueryCode: string) {
@@ -53,30 +53,35 @@ export class MiscPageComponent implements AfterViewInit {
 
             var displayTitle = "";
             var queryCode = myQueryCode;
-        
+
             var filters = new ApiQueryFilters();
+
+            var tableName = "";
+            var listArgs = new ListComponentArgs();
+
             switch (myQueryCode) {
                 case "AllOpenFormats":
                     {
-                        displayTitle = TextCodeTranslator.Translate("OpenFormatReport"); 
-                      
-
-
+                        displayTitle = TextCodeTranslator.Translate("OpenFormatReport");
+                        tableName = "OpenFormatReport";
+                        listArgs.Perspective = "OpenFormatReportMain";
                         break;
                     }
-
-
+                    case "ALLTAXREPORTS":
+                        {
+                            displayTitle = "Tax Reports";
+                            tableName = "TaxReport";
+                            break;
+                        }
 
                 default: { break; }
             }
 
-            var listArgs = new ListComponentArgs();
             listArgs.QueryCode = myQueryCode;
             listArgs.Filters = filters;
-            listArgs.ObjectTableName = "OpenFormatReport";
+            listArgs.ObjectTableName = tableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Main");
-            listArgs.Perspective = "OpenFormatReportMain";
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
@@ -103,7 +108,7 @@ export class MiscPageComponent implements AfterViewInit {
         //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show('./Accounting/Components/NewEntity/NewOpenFormatReportComponent');
-    } 
+    }
 
-   
+
 }

@@ -62,6 +62,7 @@ using Logitude.Server.Tools;
 using Simplog.Global.Data.GlobalModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using System.Threading;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -1622,7 +1623,65 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetResendAnalyzeQueue(string AnalyzeQueueId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
 
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                AnalyzeQueue analyzeQueue = null;
+
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+                    analyzeQueue = analyzeQueueRepository.GetSingleAnalyzeQueue(AnalyzeQueueId);
+
+                    if (analyzeQueue != null)
+                    {
+                        analyzeQueue.Retries = 0;
+                        analyzeQueue.Status = "W";
+                        analyzeQueue.ErrorMessage = null;
+                        analyzeQueue.StackTrace = null;
+                        analyzeQueue.DoneDate = null;
+
+                        analyzeQueue.AckReason = null;
+                        analyzeQueue.AWBNumber = null;
+
+                        analyzeQueue.Tenant = 0;
+                        analyzeQueue.ConnectedToEntity = false;
+                        analyzeQueue.ConnectedToTenant = false;
+                        analyzeQueue.EntityReference = null;
+                        analyzeQueue.CommunicationLogId = null;
+
+                        analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
+
+                        analyzeQueueRepository.Update(analyzeQueue);
+                        analyzeQueueRepository.SubmitChanges();
+                    }
+
+                    scope.Complete();
+                }
+
+                if (analyzeQueue != null)
+                {
+                    DbQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("ChampAnalyzer", tenant);
+                    queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
+                    queueservice.Complete();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 
