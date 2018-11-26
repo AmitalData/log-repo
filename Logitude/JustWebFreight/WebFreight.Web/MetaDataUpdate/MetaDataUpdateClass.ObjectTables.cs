@@ -3479,6 +3479,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 EnableSecurity = true,
                 ClientModuleName = "Infrastructure",
                 DisableSearchBox = true,
+                HasMenuButtons = true,
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
             #endregion
 

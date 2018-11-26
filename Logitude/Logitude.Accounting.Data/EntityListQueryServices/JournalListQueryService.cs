@@ -62,6 +62,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            VoidedByUserName = a.VoidedByUser != null ? a.VoidedByUser.Contact.EnglishName : null,
                                                           
                                                           // VoidedByUserId = a.VoidedByUserId,
+
+                                                           IsVoided = a.IsVoided,
                                                            
                                                         
                                                           

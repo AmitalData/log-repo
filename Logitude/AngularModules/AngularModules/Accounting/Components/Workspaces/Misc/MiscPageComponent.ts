@@ -58,7 +58,7 @@ export class MiscPageComponent implements AfterViewInit {
             switch (myQueryCode) {
                 case "AllOpenFormats":
                     {
-                        displayTitle = "Open Format Report";
+                        displayTitle = TextCodeTranslator.Translate("OpenFormatReport"); 
                       
 
 
@@ -92,7 +92,7 @@ export class MiscPageComponent implements AfterViewInit {
 
 
     RunNewOpenFormatReportWizard() {
-        var windowTitle = "New Open Format Report";
+        var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewOpenFormatReport");
         //var windowArgs: BookingWizardArgs = new BookingWizardArgs();
         //windowArgs.IsNewEntity = true;
 

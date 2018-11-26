@@ -7,15 +7,16 @@
             <button class="Button" (click)="SendToCustomsClicked()">Send to Customs</button>
         </td>
 
-        <td *ngIf="IsShareManifestButtonVisible" style="padding-right: 5px;width:80px">
+        <td *ngIf="IsShareManifestButtonVisible" style="padding-right: 5px;width:130px">
             <!--<button [disabled]="EntityPM && EntityPM.IsManifestSentToAgent"  class="Button" (click)="ShareManifestClicked()">Share Manifest</button>-->
-            <div style="width:80px" tabindex="0" class="ToggleButton">
-                <img style="width:18px;height:18px;margin-right:55px" src="./_Resources/Images/Icons/Share/share.png" />
-                <label style="margin-left:18px">Share</label>
+            <div style="width:130px" tabindex="0" class="ToggleButton">
+                <img style="width:18px;height:18px;margin-right:105px" src="./_Resources/Images/Icons/Share/share.png" />
+                <label style="margin-left:20px">Sharing Actions</label>
                 <img src="./Images/ToggleIcon.png" />
-                <div style="right:-20px;width:80px" class="ToggleButtonMenu">
-                    <button [disabled]="EntityPM && EntityPM.IsManifestSentToAgent" (click)="ShareManifestClicked()">Manifest</button>
-                    <button *ngIf="IsShareDocumentsButtonVisible" (click)="ShareDocumentsClicked()">Documents</button>
+                <div style="right:-2px;width:130px" class="ToggleButtonMenu">
+                    <button [disabled]="EntityPM && EntityPM.IsManifestSentToAgent" (click)="ShareManifestClicked()">Share Manifest</button>
+                    <button *ngIf="IsShareDocumentsButtonVisible" (click)="ShareDocumentsClicked()">Share Documents</button>
+                    <button [disabled]="EntityPM && !EntityPM.IsManifestSentToAgent" *ngIf="IsUpdateSharedAgentButtonVisible" (click)="UpdateSharedAgentClicked()">Update Shared Agent</button>
 
                 </div>
             </div>

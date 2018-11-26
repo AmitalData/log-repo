@@ -112,6 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewOpenFormatReportComponent",
+			      				    LocalDefaultText =  "דוחות מבנה אחיד",
 			      				    DefaultText =  "Open Format Report",
 			      				    Code =  "7d37",
 			      				    Name =  " Query Group",
@@ -845,7 +846,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        ObjectTable OpenFormatReportObjectTable = objectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> OpenFormatReportObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OpenFormatReport").ToList();   
 
-			   TextCode OpenFormatReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", DefaultText = @"All Open Format Reports",LocalDefaultText = "All Open Format Reports", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode OpenFormatReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", DefaultText = @"All Open Format Reports",LocalDefaultText = "כל הדוחות", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature OpenFormatReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReportFeatures.AllOpenFormats", NameTextCodeDefaultText = "AllOpenFormats", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

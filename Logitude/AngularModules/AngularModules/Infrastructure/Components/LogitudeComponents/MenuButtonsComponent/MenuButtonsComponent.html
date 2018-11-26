@@ -9,7 +9,7 @@
         transform: scale(0.9);
     }
 
-    
+
     .DocumentsDropDown{
         background: #f7f7f7;
         /*position: absolute;*/
@@ -65,11 +65,12 @@
             <div [style.width.px]="button.MenuButtonType == 'menuitem' ? 0 : button.Width" [style.opacity]="button.IsDisabled?'0.5':'1'" [style.pointer-events]="button.IsDisabled?'none':'all'" *ngIf="button.MenuButtonType=='control' && !button.IsHidden">
                 <MenuButtonsComponentLoader  [EntityPM]="EntityPM" [ObjectTable]="ObjectTable" [MenuButton]="button" *ngIf="button.MenuButtonType=='control' && !button.IsHidden"></MenuButtonsComponentLoader>
             </div>
-            <button  *ngIf="button.MenuButtonType=='button' && !button.IsHidden" 
-                    type="button" 
+            <button  *ngIf="button.MenuButtonType=='button' && !button.IsHidden"
+                    type="button"
                     id="{{ button.LabelTextCodeCode | IdGeneratorPipe}}"
                     (click)="OnClick(button)"
                     [class]="button.Style == 'RedButtonStyle' ? 'RedButton' : (button.Style == 'ApproveButtonStyle' ? 'GreenButton' : 'Button')"
+                    [class.RedButton]="button.EventCode=='JournalSaveAsDraft' && EntityPM.IsDirty"
                     [disabled]="button.IsDisabled"
                     [style.width.px]="button.Width"
                     style="margin: 0px 2px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
