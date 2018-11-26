@@ -29,6 +29,7 @@ using Logitude.Server.Tools.Helpers;
 using System.Reflection;
 using SilverlightExpressions;
 using WebFreight.Web.Validators;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -118,6 +119,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 errorMessage = errorMessage.TrimStart(',');
                                 throw new ApplicationException("Due to operational closed: " + errorMessage);
                             }
+
+                            entityPM.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                         }
 
                         if (entity.Houses.Count > 0)
@@ -276,6 +279,24 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
+
+                        if (entityPM.IsOperationalClosed)
+                        {
+                            ShipmentRepository entityRepository = new ShipmentRepository(MyContext);
+                            List<Shipment> allHouses = entityRepository.GetHouseShipmentsForMaster(entityPM.Id, authToken.Tenant);
+                            foreach (Shipment item in allHouses)
+                            {
+                                item.IsOperationalClosed = true;
+                                item.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+
+                                if (item.FirstOperationalCloseDate == null)
+                                {
+                                    item.FirstOperationalCloseDate = item.OperationalCloseDate;
+                                }
+                            }
+
+                            entityRepository.SubmitChanges();
+                        }
 
                         scope.Complete();
                     }
