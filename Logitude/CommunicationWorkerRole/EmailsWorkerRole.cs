@@ -426,7 +426,29 @@ namespace CommunicationWorkerRole
                                         case "GLSHK":
                                         case "CHAMP":
                                             {
-                                                if (waitingCommLog.Tenant == 42)
+                                                bool isUsingRestAPI = false;
+
+                                                var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+                                                if (iAppSettings != null)
+                                                {
+                                                    if (iAppSettings["ChampRestAPITenants"] != null)
+                                                    {
+                                                        string iTenantsText = iAppSettings["ChampRestAPITenants"].ToString();
+                                                        if (!string.IsNullOrEmpty(iTenantsText))
+                                                        {
+                                                            string[] iTenantsList = iTenantsText.Split(',');
+
+                                                            foreach (string iTenantString in iTenantsList)
+                                                            {
+                                                                if (waitingCommLog.Tenant.ToString() == iTenantString.Trim()){
+                                                                    isUsingRestAPI = true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                if (isUsingRestAPI)
                                                 {
                                                     SendCommunicationLogToChampAPI(waitingCommLog, xmlfile);
                                                 }

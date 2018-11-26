@@ -8,7 +8,9 @@
         line-height: 18px;
     }
 </style>
-<table>
+
+
+<table *ngIf="!IsUpdateSharedAgent">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -41,7 +43,7 @@
 
                                 </div>
 
-                                <div class="MessageText" *ngIf="IsEnableButtonSharedManifest && !IsSuccessfullySharedManifest && !HasError" style="display:block;margin-right:5px;vertical-align:top;font-size:13px;overflow:hidden">Please notice that this is a one-time sharing, changing details afterwards won’t update the agent</div>
+                                <div class="MessageText" *ngIf="IsEnableButtonSharedManifest && !IsSuccessfullySharedManifest && !HasError && !IsUpdateSharedAgentButtonVisible" style="display:block;margin-right:5px;vertical-align:top;font-size:13px;overflow:hidden">Please notice that this is a one-time sharing, changing details afterwards won’t update the agent</div>
                            
 
 
@@ -70,7 +72,103 @@
                         <div></div>
                     </td>
 
-                    <td *ngIf="!IsSuccessfullySharedManifest" style="width: 57px;">
+                    <td *ngIf="!IsSuccessfullySharedManifest || IsUpdateSharedAgentButtonVisible" style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                 
+                    <td style="width: 57px;">
+                        <button *ngIf="!IsSuccessfullySharedManifest || IsUpdateSharedAgentButtonVisible" [disabled]="!IsEnableButtonSharedManifest"  class="RedButton" (click)="SharingManifesButtonClick()">{{LableShareBoutton}}</button>
+                        <button *ngIf="IsSuccessfullySharedManifest && !IsUpdateSharedAgentButtonVisible" class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+
+<table *ngIf="IsUpdateSharedAgent">
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="'true'"></ValidationSummary>
+        </td>
+    </tr>
+    <tr style="height:30px;">
+        <td colspan="2"></td>
+        </tr>
+
+
+<tr style="height:30px;">
+
+        <td colspan="2" style="vertical-align:top;height:1px">
+
+            <table>
+                <tr>
+                    <td style="width:10px"></td>
+                    <td class="GridViewCell">
+                
+                        <div class="MessageText" style="display:block;margin-right:5px;vertical-align:top;font-size:14px;overflow:hidden">Your manifest will be shared again with the updated agent only if the original shared manifest has not been opened by your partner yet. Click Share if you still want to reshare the manifest with the updated agent.</div>
+
+                    </td>
+
+                    <td></td>
+                </tr>
+            </table>
+
+        </td>
+
+
+    </tr>
+
+
+    <tr style="height:30px;">
+        <td colspan="2"></td>
+    </tr>
+
+
+    <tr style="height:30px;">
+
+        <td colspan="2" style="vertical-align:top;height:1px">
+
+            <table>
+                <tr>
+                    <td style="width:10px"></td>
+                    <td class="GridViewCell">
+
+                        <div class="MessageText" style="display:block;margin-right:5px;vertical-align:top;font-size:14px;overflow:hidden">Click on Share if you stall want to reshare the manifest with the updated agent </div>
+
+                    </td>
+
+                    <td></td>
+                </tr>
+            </table>
+
+        </td>
+
+
+    </tr>
+
+
+
+
+    <tr><td></td></tr>
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td  style="width: 57px;">
                         <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
                     </td>
 
@@ -79,8 +177,8 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button *ngIf="!IsSuccessfullySharedManifest" [disabled]="!IsEnableButtonSharedManifest"  class="RedButton" (click)="SharingManifesButtonClick()">Share</button>
-                        <button *ngIf="IsSuccessfullySharedManifest" class="Button" (click)="CloseButtonClicked()">Close</button>
+                        <button class="RedButton" (click)="UpdateSharedAgent()">Share</button>
+                       
                     </td>
                 </tr>
             </table>

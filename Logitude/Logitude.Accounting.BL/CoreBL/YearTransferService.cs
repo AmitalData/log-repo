@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
@@ -217,12 +218,12 @@ namespace Logitude.Accounting.BL.CoreBL
         /// <returns></returns>
         private List<CurrencySum> GetBalance(IAccountingContext accountingContext, DateTime endOfYearUserInput, int tenant, IQueryable<string> listOfAccountId)
         {
-            var endAccountBalanceService = new AccountBalanceService(accountingContext, tenant, listOfAccountId.First(),
+            var endAccountBalanceService = new AccountBalanceByDateCodeService(accountingContext, tenant, listOfAccountId.First(),
                  listOfAccountId
                 );
 
             var CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1 = endOfYearUserInput.AddDays(1);
-            endAccountBalanceService.CalculateBalance(CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1, false, true);
+            endAccountBalanceService.CalculateBalance(GLAccountTotalDateTypeValues.Accountingdate,CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1, false, true);
 
             var totals = (from rec in endAccountBalanceService.AccountBalance.verbose.CurrencySumUntillMounth.Union(endAccountBalanceService.AccountBalance.verbose.TheMounthCurrencySum)
                           group rec by new
