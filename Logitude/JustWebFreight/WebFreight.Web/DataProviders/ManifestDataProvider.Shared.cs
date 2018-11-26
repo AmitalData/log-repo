@@ -338,6 +338,14 @@ namespace WebFreight.Web.DataProviders
     public class GroupedContainersClass
     {
         public string MasterContainerNumber { get; set; }
+        public string ContainerType { get; set; }
+        public double? ContainerGrossWeight { get; set; }
+        public string ContainerGrossWeightUnitCode { get; set; }
+        public double? ContainerVolume { get; set; }
+        public string ContainerVolumeUnitCode { get; set; }
+        public double? ContainerTare { get; set; }
+        public double? ContainerVolumetricWeight { get; set; }
+        public string ContainerVolumetricWeightUnitCode { get; set; }
         public List<GroupedShipmentClass> GroupedShipmentList { get; set; }
     }
 
