@@ -103,7 +103,10 @@
                 <!-- CashBook -->
                 <div *ngIf="ObjectTableName == 'CashBook'">
                     <div *ngIf="FieldName == 'AccountName'">
-                        <div>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="!IsHeaderScreenTemplate">
+                            {{Entity.AccountName}}
+                        </div>
+                        <div *ngIf="IsHeaderScreenTemplate">
                             {{Entity.AccountName}} (
                             <a href="#" title="Open Account" (click)="OpenGLAccount(Entity.AccountId)">{{Entity.AccountNumber}}</a>)
                         </div>

@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class InsideShipmentPackageUpdateClass
@@ -695,7 +698,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference1",
-					  						MaxLength =  50,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -754,7 +757,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference2",
-					  						MaxLength =  50,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -813,7 +816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference3",
-					  						MaxLength =  50,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -931,7 +934,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference4",
-					  						MaxLength =  50,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -1062,7 +1065,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable InsideShipmentPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InsideShipmentPackage" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageODimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.Dimensions", DefaultText = "Dimensions (L-W-H) (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOVolume = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.Volume", DefaultText = "Volume (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOVolWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.VolWeight", DefaultText = "Volumetric Weight (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOGrossWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.GrossWeight", DefaultText = "Gross Weight (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageFDimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.F.Dimensions", DefaultText = "Dimensions (L-W-H) (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOAddInsidePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.AddInsidePackage", DefaultText = "Add Inside Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOEditInsidePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.EditInsidePackage", DefaultText = "Edit Inside Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage", DefaultText = "Inside Shipment Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

@@ -82,27 +82,27 @@
 
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Vertical">
-                        <TextBox Width="200"
+                        <TextBox Width="300"
                                  Height="25"
                                  Margin="5"
                                  HorizontalAlignment="Left"
                                  VerticalAlignment="Center"
                                  Text="{Binding Code,
                                                 Mode=TwoWay}" />
-                        <TextBox Width="200"
+                        <TextBox Width="300"
                                  Height="25"
                                  Margin="5"
                                  HorizontalAlignment="Left"
                                  VerticalAlignment="Center"
-                                 Text="{Binding DefaultText,
+                                 Text="{Binding FeatureDefaultText,
                                                 Mode=TwoWay}" />
-                        
-                        <TextBox Width="200"
+
+                        <TextBox Width="300"
                                  Height="25"
                                  Margin="5"
                                  HorizontalAlignment="Left"
                                  VerticalAlignment="Center"
-                                 Text="{Binding TextCodeTypeCode,
+                                 Text="{Binding FeatureTypeCode,
                                                 Mode=TwoWay}" />
 
                         <CheckBox Height="25"

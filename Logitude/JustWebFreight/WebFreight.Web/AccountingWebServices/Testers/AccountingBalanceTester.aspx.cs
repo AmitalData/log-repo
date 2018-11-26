@@ -37,6 +37,7 @@ using Logitude.Accounting.BL.CoreBL.BuildTenant;
 using static Logitude.Accounting.Data.EntityListQueryServices.ARPaymentChequeListQueryService;
 using System.Configuration;
 using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
+using Logitude.Accounting.BL.CloseTables;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -168,9 +169,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 param = LogitudeXmlSerializer.DeserializeObject<AccountBalanceParam>(_TextBoxParam.Text);
 
 
-                var ac = new AccountBalanceService(null, param.Tenant, param.GLAccountId, null);
+                var ac = new AccountBalanceByDateCodeService(null, param.Tenant, param.GLAccountId, null);
                 ac.ReSetAccountList(param.IncludeChildAccounts, param.IncludeRelatedCurrenciesAccount);
-                ac.CalculateBalance(param.accoutingDate, param.includeAccoutingDateLTransaction, param.verbose);
+                ac.CalculateBalance(GLAccountTotalDateTypeValues.Accountingdate, param.accoutingDate, param.includeAccoutingDateLTransaction, param.verbose);
                 var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<CurrencySum>>(ac.AccountBalance.Totals);
                 //ac.AccountBalance.Totals
 
@@ -873,7 +874,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 From = DateTime.Now.AddMonths(-1),
                 To = DateTime.Now,
                 CurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(1),
-
+                DateTypeCode="1",
                 GLAccountId = "1-1",
 
                 SearchFields = "",
