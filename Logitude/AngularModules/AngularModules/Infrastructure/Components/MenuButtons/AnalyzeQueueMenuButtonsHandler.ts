@@ -1,14 +1,19 @@
 import { AnalyzeQueuePM } from '../../EntityPMs/AnalyzeQueuePM';
 import { MenuButtonPM } from '../../EntityPMs/MenuButtonPM'
 import { EntityArgs } from '../../DataContracts/EntityArgs';
+import { SessionLocator } from '../../Utilities/SessionLocator';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { InfrastructureDomainService } from '../../Services/InfrastructureDomainService'
 
 export class AnalyzeQueueMenuButtonsHandler {
     public EntityPM: AnalyzeQueuePM;
     public entityArgs: EntityArgs;
     public ObjectTableName: string = "AnalyzeQueue"
+    private iService: InfrastructureDomainService;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
+        this.iService = new InfrastructureDomainService();
         //this.Listen();
     }
 
@@ -56,5 +61,12 @@ export class AnalyzeQueueMenuButtonsHandler {
 
     ResendButtonClicked() {
 
+        SessionLocator.CurrentSession.StartBusyIndicator("Resending...");
+
+        this.iService.ResendAnalyzeQueue(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+
+
+            SessionLocator.CurrentSession.StopBusyIndicator();
+        });
     }
 }
