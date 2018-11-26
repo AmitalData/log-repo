@@ -19,6 +19,8 @@ using System.Windows.Documents;
 using MeatadataGeneratorTool.EventTypes;
 using MeatadataGeneratorTool.MenuButtons;
 using MeatadataGeneratorTool.DataContractsModule;
+using MeatadataGeneratorTool.TextCodes;
+using MeatadataGeneratorTool.Features;
 
 namespace MeatadataGeneratorTool
 {
@@ -120,6 +122,22 @@ namespace MeatadataGeneratorTool
             //    eventTypesObsList = value;
             //    FirePropertyChanged("EventTypesObsList");
             //}
+        }
+
+        private ObservableCollection<TextCodesViewModel> additionalTextCodesList;
+        public ObservableCollection<TextCodesViewModel> AdditionalTextCodesList
+        {
+            get;
+            set;
+           
+        }
+
+        private ObservableCollection<FeaturesViewModel> additionalFeaturesList;
+        public ObservableCollection<FeaturesViewModel> AdditionalFeaturesList
+        {
+            get;
+            set;
+
         }
 
         public ObjectFieldsControl fieldsControl;
@@ -449,6 +467,30 @@ namespace MeatadataGeneratorTool
 
         }
 
+        public void BuildAdditionalTextCodesList(List<TextCodesViewModel> textCodes)
+        {
+            if (AdditionalTextCodesList == null)
+            {
+                AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
+                 
+            }
+            if (AdditionalTextCodesList != null && AdditionalTextCodesList.Count > 0)
+            {
+                AdditionalTextCodesList.Clear();
+            }
+            foreach (var item in textCodes)
+            {
+                AdditionalTextCodesList.Add(item);
+            }
+
+
+
+            TextCodesEditControlVisibility = (AdditionalTextCodesList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+
+            this.SelectedTextCode = AdditionalTextCodesList.FirstOrDefault();
+
+        }
+
         public void BuildDataContractsObsList(List<DataContractViewModel> DataContracts)
         {
             if (DataContractsObsList == null)
@@ -581,6 +623,21 @@ namespace MeatadataGeneratorTool
             set { eventTypesEditControlVisibility = value; FirePropertyChanged("EventTypesEditControlVisibility"); }
         }
 
+        Visibility textCodesEditControlVisibility;
+        public Visibility TextCodesEditControlVisibility
+        {
+            get { return textCodesEditControlVisibility; }
+            set { textCodesEditControlVisibility = value; FirePropertyChanged("TextCodesEditControlVisibility"); }
+        }
+
+
+        Visibility featuresEditControlVisibility;
+        public Visibility FeaturesEditControlVisibility
+        {
+            get { return featuresEditControlVisibility; }
+            set { featuresEditControlVisibility = value; FirePropertyChanged("FeaturesEditControlVisibility"); }
+        }
+
         public void UpdateScreensObsList(ScreensViewModel item)
         {
             if (ScreensObsList == null)
@@ -656,6 +713,38 @@ namespace MeatadataGeneratorTool
 
             this.SelectedEventType = item;
         }
+
+        public void UpdateTextCodesList(TextCodesViewModel item)
+        {
+            if (AdditionalTextCodesList == null)
+            {
+                AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
+            }
+            AdditionalTextCodesList.Add(item);
+
+            FirePropertyChanged("AdditionalTextCodesList");
+
+            TextCodesEditControlVisibility = (AdditionalTextCodesList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+
+            this.SelectedTextCode = item;
+        }
+
+        public void UpdateFeaturesList(FeaturesViewModel item)
+        {
+            if (AdditionalFeaturesList == null)
+            {
+                AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
+            }
+            AdditionalFeaturesList.Add(item);
+
+            FirePropertyChanged("AdditionalFeaturesList");
+
+            FeaturesEditControlVisibility = (AdditionalFeaturesList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+
+            this.SelectedFeature = item;
+        }
+
+
 
         public void UpdateDataContractsObsList(DataContractViewModel item)
         {
@@ -739,6 +828,20 @@ namespace MeatadataGeneratorTool
         {
             get { return selectedEventType; }
             set { selectedEventType = value; FirePropertyChanged("SelectedEventType"); }
+        }
+
+        TextCodesViewModel selectedTextCode;
+        public TextCodesViewModel SelectedTextCode
+        {
+            get { return selectedTextCode; }
+            set { selectedTextCode = value; FirePropertyChanged("SelectedTextCode"); }
+        }
+
+        FeaturesViewModel selectedFeature;
+        public FeaturesViewModel SelectedFeature
+        {
+            get { return selectedFeature; }
+            set { selectedFeature = value; FirePropertyChanged("SelectedFeature"); }
         }
 
         DataContractViewModel selectedDataContract;
@@ -1497,6 +1600,72 @@ namespace MeatadataGeneratorTool
             EventTypesObsList.Remove(DelET);
             FirePropertyChanged("EventTypesObsList");
         }
+
+
+        public TextCodesControl TextCodesControl;
+        public Window TextCodesWindow = new Window();
+        public RelayCommand AddTextCodeCommand
+        {
+            get { return new RelayCommand(() => this.AddTextCodeMethod()); }
+        }
+        private void AddTextCodeMethod()
+        {
+            TextCodesViewModel model = new TextCodesViewModel(this, true);
+            model.ButtonsVisibility = Visibility.Visible;
+            TextCodesControl = new TextCodesControl();
+            TextCodesControl.DataContext = model;
+
+            TextCodesWindow = new Window();
+            TextCodesWindow.Width = 500;
+            TextCodesWindow.Height = 600;
+            TextCodesWindow.Content = TextCodesControl;
+            TextCodesWindow.Show();
+        }
+
+        public RelayCommand<TextCodesViewModel> RemoveTextCodeCommand
+        {
+            get { return new RelayCommand<TextCodesViewModel>(m => this.RemoveTextCodeMethod(m)); }
+        }
+
+        private void RemoveTextCodeMethod(TextCodesViewModel DelET)
+        {
+            AdditionalTextCodesList.Remove(DelET);
+            FirePropertyChanged("AdditionalTextCodesList");
+        }
+
+
+        public FeaturesControl FeaturesControl;
+        public Window FeaturesWindow = new Window();
+        public RelayCommand AddFeatureCommand
+        {
+            get { return new RelayCommand(() => this.AddFeatureMethod()); }
+        }
+        private void AddFeatureMethod()
+        {
+            FeaturesViewModel model = new FeaturesViewModel(this, true);
+            model.ButtonsVisibility = Visibility.Visible;
+            FeaturesControl = new FeaturesControl();
+            FeaturesControl.DataContext = model;
+
+            FeaturesWindow = new Window();
+            FeaturesWindow.Width = 500;
+            FeaturesWindow.Height = 600;
+            FeaturesWindow.Content = FeaturesControl;
+            FeaturesWindow.Show();
+        }
+
+        public RelayCommand<FeaturesViewModel> RemoveFeatureCommand
+        {
+            get { return new RelayCommand<FeaturesViewModel>(m => this.RemoveFeatureMethod(m)); }
+        }
+
+        private void RemoveFeatureMethod(FeaturesViewModel item)
+        {
+            AdditionalFeaturesList.Remove(item);
+            FirePropertyChanged("AdditionalFeaturesList");
+        }
+
+
 
         public RelayCommand<TabsViewModel> RemoveTabCommand
         {
