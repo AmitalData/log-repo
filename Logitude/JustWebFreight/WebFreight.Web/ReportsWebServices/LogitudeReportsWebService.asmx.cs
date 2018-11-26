@@ -9815,7 +9815,7 @@ namespace WebFreight.Web.ReportsWebServices
                             }
 
                             var owner = cardRep.GetSingleCard(project.OwnerId, tenant);
-                            if (card != null)
+                            if (owner != null)
                             {
                                 timSheetItem_Detailed.OwnerName = owner.EnglishName;
                             }
