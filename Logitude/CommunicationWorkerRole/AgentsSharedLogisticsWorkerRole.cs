@@ -111,8 +111,7 @@ namespace CommunicationWorkerRole
                                                     Agent destinationAgent = agentRepository.GetSingleAgentBySharedKey(manifestSL.AgentSharedKey, manifestSL.DestinationAgentTenant);
                                                     Contact systemContact = contactRepository.GetSingleContactByEmail("system@tenant" + manifestSL.DestinationAgentTenant + ".com", manifestSL.DestinationAgentTenant, false);
 
-
-                                               
+                                                    #region Trans Port
                                                     Port fromPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.MainCarriageFromPort.CountryCode + manifestSL.MainCarriageFromPort.Code, manifestSL.DestinationAgentTenant, portRepository);
                                                     Port toPort = null;
                                                     if (manifestSL.FinalDistenationPort != null)
@@ -150,6 +149,38 @@ namespace CommunicationWorkerRole
                                                             manifestSL.ShipmentDelivery.ToPortId = pickUpToPort != null ? pickUpToPort.Id : null;
                                                         }
                                                     }
+                                                    #endregion
+
+                                                    #region Cancel Old Mainfest
+                                                    if (commLog.Subject == "Update Shared Agent")
+                                                    {
+
+                                                        AgentSharedManifestHelper agentSharedManifestHelper = new AgentSharedManifestHelper();
+                                                        ManifestSL oldManifestSL = agentSharedManifestHelper.GetAgentShareManifestSLByEntityId(commLog.EntityId , tenant);
+                                                        if (oldManifestSL != null)
+                                                        {
+                                                            AgentSharedManifestRepository agentSharedManifestRepository = new AgentSharedManifestRepository(tenant);
+                                                            AgentSharedManifest agentSharedManifest = agentSharedManifestRepository.GetSingleAgentSharedManifest(oldManifestSL.AgentSharedManifestId, oldManifestSL.DestinationAgentTenant);
+                                                            if (agentSharedManifest != null)
+                                                            {
+                                                                if (agentSharedManifest.StatusCode == "WAIT")
+                                                                {
+                                                                    agentSharedManifest.StatusCode = "CANC";
+                                                                    agentSharedManifest.CancelledBySenderAgent = true;
+                                                                    agentSharedManifestRepository.Update(agentSharedManifest);
+                                                                    agentSharedManifestRepository.SubmitChanges();
+                                                                }
+                                                                else
+                                                                {  //SendEmail
+                                                                }
+                                                            }
+
+                                                        }
+
+
+                                                    }
+                                                    #endregion
+
 
                                                     AgentSharedManifestService service = new AgentSharedManifestService(agentContext, manifestSL.DestinationAgentTenant);
                                                     AgentSharedManifestPM agentSharedPM = new AgentSharedManifestPM()
