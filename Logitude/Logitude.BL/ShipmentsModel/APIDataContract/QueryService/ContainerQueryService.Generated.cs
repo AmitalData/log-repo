@@ -91,7 +91,7 @@ using Simplog.Data.ShipmentsModel;
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
 										   
-					if(temp == null)
+					if(temp == null || (temp != null && string.IsNullOrEmpty(item.Id)))
 					{
 					    throw new ApplicationException("ShipmentPackage with Id " + item.Id + " doesn't exist");
 					} 

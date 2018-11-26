@@ -175,7 +175,7 @@ using Simplog.Data.InvoiceModel;
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
 										   
-					if(temp == null)
+					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
 					{
 					    throw new ApplicationException("ARInvoice with Id " + MyEntity.Id + " doesn't exist");
 					} 

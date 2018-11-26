@@ -126,7 +126,7 @@ using Simplog.Data.CommonDataModel;
 					}
 					
 					   					   
-					if(temp == null)
+					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
 					{
 					    throw new ApplicationException("User with ExternalCode " + MyEntity.ExternalCode + " doesn't exist");
 					} 
