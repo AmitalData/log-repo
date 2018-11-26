@@ -7,8 +7,8 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
-import {CustomSendOptionsArgs, SendRequestVIA} from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
-import {CourierPendingReasonPM} from '../../../../Customs/EntityPMs/CourierPendingReasonPM';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { CourierPendingReasonPM } from '../../../../Customs/EntityPMs/CourierPendingReasonPM';
 import { CourierPendingReasonPMService } from '../../../../Customs/Services/StandardPMs/CourierPendingReasonPMService';
 import { CourierPendingReasonExtendedListService } from '../../../../Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
@@ -42,6 +42,7 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
                 this.EntityPM.Tenant = SessionLocator.Tenant;
                 this.isWindowMode = true;
                 this.isNewRecord = true;
+
             } else {
                 this.EntityPM = this.entityArgs.EntityPM;
             }
@@ -57,6 +58,7 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
             if (args.FromUnifreight && !AppTool.IsNullOrEmpty(args.UnifreightStatusCode)) {
                 this.isNewRecord = true;
                 this.EntityPM = new CourierPendingReasonPM();
+                this.EntityPM.Tenant = SessionLocator.Tenant;
                 this.UnifreightStatusCode = args.UnifreightStatusCode;
                 this.UIProperties.SetEnabled("UnifreightStatusCode", this.ObjectTableName, false);
 
@@ -89,17 +91,48 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
 
     public get PendingCode() { return this.EntityPM.Code; }
     public set PendingCode(newValue: string) {
-        if (newValue) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-            var saveUnifreightStatusCode: string = this.UnifreightStatusCode;
-            this._CourierPendingReasonPMService.get(newValue).subscribe(response => {
-                if (!response.HasError && response.Result != null) {
+        if (this.isFromUnifreight) {
+            if (this.EntityPM != null && !AppTool.IsNullOrEmpty(this.EntityPM.Code)) {
+                this.EntityPM.UnifreightStatusCode = null;
+                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this._CourierPendingReasonPMService.update(this.EntityPM).subscribe(myResult => {
                     SessionLocator.CurrentSession.StopBusyIndicator();
-                    this.isNewRecord = false;
-                    this.EntityPM = response.Result;
-                    this.EntityPM.UnifreightStatusCode = saveUnifreightStatusCode;
-                }
-            });
+                    if (myResult.HasError) {
+                        this.ValidationErrorsList = [];
+                        this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
+                        return;
+                    }
+                    this.EntityPM = new CourierPendingReasonPM();
+                });
+            }
+            if (newValue) {
+                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this._CourierPendingReasonPMService.get(newValue).subscribe(response => {
+                    if (!response.HasError && response.Result != null) {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        if (!AppTool.IsNullOrEmpty(response.Result.UnifreightStatusCode) && response.Result.UnifreightStatusCode != this.UnifreightStatusCode) {
+                            var confirm = new ConfirmWindow();
+                            confirm.Width = 350;
+                            confirm.Height = 200;
+                            confirm.Title = "קישור Pending לסטטוס";
+                            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+                            confirm.ShowNoButton = true;
+                            confirm.Show("לקוד זה כבר קושר סטטוס " + response.Result.UnifreightStatusCode + " האם להחליף לסטטוס " + this.UnifreightStatusCode + "?");
+                            confirm.WindowClosed.subscribe((event: any) => {
+                                if (confirm.No) {
+                                    confirm.Close();
+                                    this.EntityPM = new CourierPendingReasonPM();
+                                    return;
+                                }
+                                confirm.Close();
+                            });
+                        }
+                        this.isNewRecord = false;
+                        this.EntityPM = response.Result;
+                        this.EntityPM.UnifreightStatusCode = this.UnifreightStatusCode;
+                    }
+                });
+            }
         }
     }
 
@@ -123,9 +156,10 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
         this.EntityPM.ErrorPlace = newValue;
     }
 
-    public get UnifreightStatusCode() { return this.EntityPM.UnifreightStatusCode; }
+    private _UnifreightStatusCode: string;
+    public get UnifreightStatusCode() { return this._UnifreightStatusCode; }
     public set UnifreightStatusCode(newValue: string) {
-        this.EntityPM.UnifreightStatusCode = newValue;
+        this._UnifreightStatusCode = newValue;
     }
 
     //#endregion\
@@ -139,6 +173,10 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
             this.ValidationErrorsList = [];
             this.ValidationErrorsList = errors;
         } else {
+            if (this.EntityPM == null || (this.EntityPM != null && AppTool.IsNullOrEmpty(this.EntityPM.Code))){
+                this.CancelButtonClicked();
+            }
+            this.EntityPM.UnifreightStatusCode = this._UnifreightStatusCode;
             if (this.isNewRecord) {
                 this._CourierPendingReasonPMService.insert(this.EntityPM).subscribe(myResult => {
                     if (myResult.HasError) {
