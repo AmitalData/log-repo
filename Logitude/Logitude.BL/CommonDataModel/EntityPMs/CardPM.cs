@@ -69,6 +69,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public string PartnerTypeName { get; set; }
         public string MainAddressId { get; set; }
+        public string BillingAddressId { get; set; }
         public string Website { get; set; }
         public string InvoiceCurrencyId { get; set; }
         public string VatTypeId { get; set; }
