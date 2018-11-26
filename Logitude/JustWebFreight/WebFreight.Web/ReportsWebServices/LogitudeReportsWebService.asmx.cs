@@ -9627,7 +9627,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-
             if (filterItem_OwnerId != null)
             {
                 if (filterItem_OwnerId.FieldValue != null)
@@ -9635,7 +9634,6 @@ namespace WebFreight.Web.ReportsWebServices
                     ownerId = filterItem_OwnerId.FieldValue.ToString();
                 }
             }
-
 
             if (filterItem_IncludeInnerProject != null)
             {
@@ -9814,6 +9812,12 @@ namespace WebFreight.Web.ReportsWebServices
                             if (card != null)
                             {
                                 timSheetItem_Detailed.CustomerName = card.EnglishName;
+                            }
+
+                            var owner = cardRep.GetSingleCard(project.OwnerId, tenant);
+                            if (owner != null)
+                            {
+                                timSheetItem_Detailed.OwnerName = owner.EnglishName;
                             }
                         }
 
