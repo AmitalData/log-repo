@@ -10983,7 +10983,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
             
            
-            totalData.TotalRevenueExpense = (totalRevenues == null ? 0 : totalRevenues) - (totalExpenses == null ? 0 : totalExpenses);
+            totalData.TotalRevenueExpense = (totalRevenues == null ? 0 : totalRevenues) + (totalExpenses == null ? 0 : totalExpenses);
 
 
             #endregion

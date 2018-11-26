@@ -85,9 +85,93 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         if (this.AccountingDate == null)
             this.AccountingDate = new Date();
 
+
+
+        this.FillGrid();
+        this.SetUIProperties();
+
+
+
+
+        // redraw
+        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
+            if (isSuccess) {
+                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+
+                this.FillGrid();
+                this.SetUIProperties();
+
+            }
+
+        });
+
+
+        this.Listen();
+    }
+
+    public CurrentEditComponentId: string;
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
+    Listen() {
+
+
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+
+            //
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+
+                        this.FillGrid();
+                        this.SetUIProperties();
+                    }
+                });
+            }
+
+            //
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+
+                        this.FillGrid();
+                        this.SetUIProperties();
+                        console.log("Entity Reloaded");
+                    }
+                });
+            }
+        }
+    }
+
+    SetUIProperties() {
+        //Display only
+        if (this.EntityPM.StatusCode == "3") { // 3-Voided and 2-Approved
+            //disable controls
+            this.journalDisabled = true;
+            this.PointerEvents = 'none';
+            this.Opacity = "1";
+        }
+        else if (this.EntityPM.StatusCode == "2") { // 3-Voided and 2-Approved
+            //disable controls
+            this.journalDisabled = true;
+            this.PointerEvents = 'none';
+            this.Opacity = "1";
+            this.referencesDivHeight = 0;
+            this.Approved = true;
+            this.UIProperties.SetVisibility("Reference1", "Journal", false);
+            this.UIProperties.SetVisibility("Reference2", "Journal", false);
+            this.UIProperties.SetVisibility("Reference3", "Journal", false);
+            this.UIProperties.SetVisibility("Notes", "Journal", false);
+        }
+    }
+
+    FillGrid() {
+
         // if entity in edit mode
-        if (this.EntityPM.Id != undefined)
-        {
+        if (this.EntityPM.Id != undefined) {
             var tempItemSource: JournalLineModel[] = [];
             if (this.EntityPM.JournalLines != null) {
                 for (var i = 0; i < this.EntityPM.JournalLines.length; i++) {
@@ -102,34 +186,9 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 //}
             }
             this.CalculateTotals();
-            if ( this.EntityPM.StatusCode == "3") { // 3-Voided and 2-Approved
-                //disable controls
-                this.journalDisabled = true;
-                this.PointerEvents = 'none';
-                this.Opacity = "1";
 
-                //this.UIProperties.SetEnabled("AccountingDate", "Journal", false);
-                //this.UIProperties.SetEnabled("Reference1", "Journal", false);
-                //this.UIProperties.SetEnabled("Reference2", "Journal", false);
-                //this.UIProperties.SetEnabled("Reference3", "Journal", false);
-                //this.UIProperties.SetEnabled("Notes", "Journal", false);
-            }
-           else if (this.EntityPM.StatusCode == "2") { // 3-Voided and 2-Approved
-                //disable controls
-                this.journalDisabled = true;
-                this.PointerEvents = 'none';
-                this.Opacity = "1";
-                this.referencesDivHeight = 0;
-                this.Approved = true;
-                //this.UIProperties.SetEnabled("AccountingDate", "Journal", false);
-                this.UIProperties.SetVisibility("Reference1", "Journal", false);
-                this.UIProperties.SetVisibility("Reference2", "Journal", false);
-                this.UIProperties.SetVisibility("Reference3", "Journal", false);
-                this.UIProperties.SetVisibility("Notes", "Journal", false);
-            }
         }
-        else
-        {
+        else {
             this.EntityPM.StatusCode = "0"; // Draft
             this.EntityPM.TypeCode = "0"; // Manual
             this.EntityPM.AccountingEntityCode = "1"; // Journal
@@ -145,39 +204,6 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.JournalLines.Insert(line);
 
         }
-
-        // redraw
-        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe(isSuccess => {
-            if (isSuccess) {
-                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                this.CalculateTotals();
-                if ( this.EntityPM.StatusCode == "3") { // 3-Voided and 2-Approved
-                    //disable controls
-                    this.journalDisabled = true;
-                    this.PointerEvents = 'none';
-                    this.Opacity = "1";
-                    //this.UIProperties.SetEnabled("AccountingDate", "Journal", false);
-                    //this.UIProperties.SetEnabled("Reference1", "Journal", false);
-                    //this.UIProperties.SetEnabled("Reference2", "Journal", false);
-                    //this.UIProperties.SetEnabled("Reference3", "Journal", false);
-                    //this.UIProperties.SetEnabled("Notes", "Journal", false);
-                }
-                else if (this.EntityPM.StatusCode == "2") {
-                    this.journalDisabled = true;
-                    this.PointerEvents = 'none';
-                    this.Opacity = "1";
-                    this.referencesDivHeight = 0;
-                    this.Approved = true;
-                    //this.UIProperties.SetEnabled("AccountingDate", "Journal", false);
-                    this.UIProperties.SetVisibility("Reference1", "Journal", false);
-                    this.UIProperties.SetVisibility("Reference2", "Journal", false);
-                    this.UIProperties.SetVisibility("Reference3", "Journal", false);
-                    this.UIProperties.SetVisibility("Notes", "Journal", false);
-                }
-            }
-
-        });
-
     }
 
     txt_Reference: string = TextCodeTranslator.Translate("Accounting.General.O.Reference");

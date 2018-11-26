@@ -1,5 +1,7 @@
 ﻿using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -33,90 +35,92 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public static DocumentsFilingPM Create856File(string taxDeductionReportId, int tenant)
         {
-            List<string> linesArray = new List<string>();
             TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(tenant);
             TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle(taxDeductionReportId, false, false);
-            GLAccountQueryService queryService = new GLAccountQueryService(tenant);
-            TaxDeductionReportData data = queryService.GetTaxDeductionReportData(taxDeductionReportPM.TaxYear, tenant);
+         
+                List<string> linesArray = new List<string>();
+              
+                GLAccountQueryService queryService = new GLAccountQueryService(tenant);
+                TaxDeductionReportData data = queryService.GetTaxDeductionReportData(taxDeductionReportPM.TaxYear, tenant);
 
-            StringBuilder myStringBuilder = new StringBuilder();
-          
+                StringBuilder myStringBuilder = new StringBuilder();
 
-            //60s
-            foreach (ByVendorList item in data.ByVendorList)
-            {
-               
-                myStringBuilder.Append("");
-                if (item.DeductionFileNumber != null)
+
+                //60s
+                foreach (ByVendorList item in data.ByVendorList)
                 {
-                    if (item.DeductionFileNumber.Length > 9) item.DeductionFileNumber = item.DeductionFileNumber.Substring(0, 9);
-                    myStringBuilder.Append(item.DeductionFileNumber.PadLeft(9, '0'));
-                }
-                myStringBuilder.Append("a96");
-                myStringBuilder.Append(taxDeductionReportPM.TaxYear);
+
+                    myStringBuilder.Append("");
+                    if (item.DeductionFileNumber != null)
+                    {
+                        if (item.DeductionFileNumber.Length > 9) item.DeductionFileNumber = item.DeductionFileNumber.Substring(0, 9);
+                        myStringBuilder.Append(item.DeductionFileNumber.PadLeft(9, '0'));
+                    }
+                    myStringBuilder.Append("a96");
+                    myStringBuilder.Append(taxDeductionReportPM.TaxYear);
 
 
-                if (item.IsAutonomy)
-                {
-                    myStringBuilder.Append("a2");
+                    if (item.IsAutonomy)
+                    {
+                        myStringBuilder.Append("a2");
 
-                }
-                else if (item.IsInternationlPartner)
-                {
-                    myStringBuilder.Append("a5");
-                }
-                else myStringBuilder.Append("a0");
+                    }
+                    else if (item.IsInternationlPartner)
+                    {
+                        myStringBuilder.Append("a5");
+                    }
+                    else myStringBuilder.Append("a0");
 
-                if (item.DeductionType != null)
-                {
-                    if (item.DeductionType.Length > 1) item.DeductionType.Substring(0, 1);
+                    if (item.DeductionType != null)
+                    {
+                        if (item.DeductionType.Length > 1) item.DeductionType.Substring(0, 1);
 
-                    myStringBuilder.Append("a"+item.DeductionType);
-                }
+                        myStringBuilder.Append("a" + item.DeductionType);
+                    }
 
                 if (item.VATNumber != null)
                 {
                     if (item.VATNumber.Length > 9) item.VATNumber = item.VATNumber.Substring(0, 9);
-                    myStringBuilder.Append("a"+item.VATNumber.PadLeft(9, '0'));
+                    myStringBuilder.Append("a" + item.VATNumber.PadLeft(9, '0'));
                 }
 
 
                 if (item.DisplayNumber != null)
-                {
-                    if (item.DisplayNumber.Length > 14) item.DisplayNumber = item.DisplayNumber.Substring(0, 14);
-                    myStringBuilder.Append("a"+item.DisplayNumber.PadLeft(14, '0'));
-
-                }
-
-
-                if(item.DeductionFileTypeCode == "08")
-                {
-                    if (item.EnglishName != null)
                     {
-                        if (item.EnglishName.Length > 22) item.EnglishName = item.EnglishName.Substring(0, 22);
+                        if (item.DisplayNumber.Length > 14) item.DisplayNumber = item.DisplayNumber.Substring(0, 14);
+                        myStringBuilder.Append("a" + item.DisplayNumber.PadLeft(14, '0'));
 
-                        myStringBuilder.Append("a"+item.EnglishName.ToUpper().PadLeft(22, ' '));
                     }
-                }
-                else
-                {
-                    if (item.GLAccountLocalName != null)
+
+
+                    if (item.DeductionFileTypeCode == "08")
                     {
-                        if (item.GLAccountLocalName.Length > 22) item.GLAccountLocalName = item.GLAccountLocalName.Substring(0, 22);
-                        myStringBuilder.AppendFormat("a"+ item.GLAccountLocalName.ToUpper().PadLeft(22, ' '));
+                        if (item.EnglishName != null)
+                        {
+                            if (item.EnglishName.Length > 22) item.EnglishName = item.EnglishName.Substring(0, 22);
+
+                            myStringBuilder.Append("a" + item.EnglishName.ToUpper().PadLeft(22, ' '));
+                        }
                     }
-                }
+                    else
+                    {
+                        if (item.GLAccountLocalName != null)
+                        {
+                            if (item.GLAccountLocalName.Length > 22) item.GLAccountLocalName = item.GLAccountLocalName.Substring(0, 22);
+                            myStringBuilder.AppendFormat("a" + item.GLAccountLocalName.ToUpper().PadLeft(22, ' '));
+                        }
+                    }
 
                 if (item.VendorAddress != null)
                 {
                     if (item.VendorAddress.Length > 13) item.VendorAddress = item.VendorAddress.Substring(0, 21);
 
-                    myStringBuilder.Append("a"+item.VendorAddress.PadLeft(21, ' '));
+                    myStringBuilder.Append("a" + item.VendorAddress.PadLeft(21, ' '));
                 }
 
-                
 
-                if (item.VendorCity != null) 
+
+                if (item.VendorCity != null)
                 {
                     if (item.VendorCity.Length > 13) item.VendorCity = item.VendorCity.Substring(0, 13);
 
@@ -124,200 +128,207 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 myStringBuilder.Append("a" + item.SumOfAmountInLocalCurrency.Value.ToString().PadLeft(11, '0'));
-                myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount.Value.ToString().PadLeft(9, '0'));
+                    myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount.Value.ToString().PadLeft(9, '0'));
 
-                myStringBuilder.Append("00000000");
-                myStringBuilder.Append(item.EndYearBalance.Value.ToString().PadLeft(14,'0'));
+                    myStringBuilder.Append("00000000");
+                    myStringBuilder.Append(item.EndYearBalance.Value.ToString().PadLeft(14, '0'));
 
-                myStringBuilder.Append("a" + item.TaxDeductionPercentage);
+                    myStringBuilder.Append("a" + item.TaxDeductionPercentage);
 
-                string s = item.AssessingOfficerCode + " " + item.AssessingOfficerName;
-                if ( s.Length > 12) s = s.Substring(0, 12);
-                myStringBuilder.Append("a" + s.PadLeft(12,' '));
+                    string s = item.AssessingOfficerCode + " " + item.AssessingOfficerName;
+                    if (s.Length > 12) s = s.Substring(0, 12);
+                    myStringBuilder.Append("a" + s.PadLeft(12, ' '));
 
-                if (item.Occupation != null)
-                {
-                    if (item.Occupation.Length > 14) item.Occupation = item.Occupation.Substring(0, 14);
-                    myStringBuilder.Append("a" + item.Occupation.PadLeft(14, ' '));
+                    if (item.Occupation != null)
+                    {
+                        if (item.Occupation.Length > 14) item.Occupation = item.Occupation.Substring(0, 14);
+                        myStringBuilder.Append("a" + item.Occupation.PadLeft(14, ' '));
+                    }
+                    myStringBuilder.Append(' ', 52);
+
+                    if (item.DeductionFileTypeCode != null)
+                    {
+                        if (item.DeductionFileTypeCode.Length > 2) item.DeductionFileTypeCode.Substring(0, 2);
+
+                        myStringBuilder.Append("a" + item.DeductionFileTypeCode.PadLeft(2, '0'));
+                    }
+                    myStringBuilder.Append("a60");
+                    myStringBuilder.Append('\n');
+
                 }
-                myStringBuilder.Append(' ', 52);
 
-                if (item.DeductionFileTypeCode != null)
+                //70s
+
+
+
+                FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
+                FullAccountingSettingPM setting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+                if (setting.DeductionFileNumber != null)
                 {
-                    if (item.DeductionFileTypeCode.Length > 2) item.DeductionFileTypeCode.Substring(0, 2);
+                    if (setting.DeductionFileNumber.Length > 9) setting.DeductionFileNumber = setting.DeductionFileNumber.Substring(0, 9);
 
-                    myStringBuilder.Append("a" + item.DeductionFileTypeCode.PadLeft(2, '0'));
-                }
-                myStringBuilder.Append("a60");
-                myStringBuilder.Append('\n');
-
-            }
-
-            //70s
-
-
-
-            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
-            FullAccountingSettingPM setting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
-            if (setting.DeductionFileNumber != null) {
-                if (setting.DeductionFileNumber.Length > 9) setting.DeductionFileNumber = setting.DeductionFileNumber.Substring(0, 9);
-
-                myStringBuilder.Append("a" + setting.DeductionFileNumber.PadLeft(9, '0'));
-              }
-
-            myStringBuilder.Append(taxDeductionReportPM.TaxYear);
-            if(taxDeductionReportPM.IsAdditionalReportExist)
-            {
-                myStringBuilder.Append("a2");
-            }
-            else
-            {
-
-                myStringBuilder.Append("a0");
-            }
-
-            myStringBuilder.Append("a1");
-
-            TenantQuery tenantQuery = new TenantQuery(tenant);
-            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
-            if(tenantPM.VatNumber != null)
-            {
-                if (tenantPM.VatNumber.Length > 9) tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9);
-
-                myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
-
-            }
-
-            if (data.TotalAmountInLocalCurrency08 != null)
-            {
-                if (data.TotalAmountInLocalCurrency08.Value.ToString().Length > 12) data.TotalAmountInLocalCurrency08.Value.ToString().Substring(0, 12);
-
-                myStringBuilder.Append("a" + data.TotalAmountInLocalCurrency08.Value.ToString().PadLeft(12, '0'));
-            }
-
-            if (data.TotalTaxDeductionInLocalCurrency08 != null)
-            {
-                if (data.TotalTaxDeductionInLocalCurrency08.Value.ToString().Length > 10) data.TotalTaxDeductionInLocalCurrency08.Value.ToString().Substring(0, 10);
-
-                myStringBuilder.Append("a" + data.TotalTaxDeductionInLocalCurrency08.Value.ToString().PadLeft(10, '0'));
-            }
-
-            if (data.TotalEndBalance != null)
-            {
-                if (data.TotalEndBalance.Value.ToString().Length > 11) data.TotalEndBalance.Value.ToString().Substring(0, 11);
-
-                myStringBuilder.Append("a" + data.TotalEndBalance.Value.ToString().PadLeft(11, '0'));
-            }
-
-
-            // myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfAmountInLocalCurrency));
-            // myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfTaxDeductionLocalAmount));
-
-
-
-
-            AddressQuery addressQuery = new AddressQuery(tenant);
-            AddressPM address = addressQuery.GetSingleAddressPM(tenantPM.AddressId, tenant);
-            if(address != null)
-            {
-                if(address.PhoneNumber != null)
-                {
-                    if (address.PhoneNumber.Length > 10) address.PhoneNumber = address.PhoneNumber.Substring(0, 10);
-                    myStringBuilder.Append("a" + address.PhoneNumber.PadLeft(10,'0'));
-                }
-                
-            }
-            myStringBuilder.Append(' ', 28);
-            if (data.TotalAmountInLocalCurrency != null)
-            {
-                if (data.TotalAmountInLocalCurrency.Value.ToString().Length > 12) data.TotalAmountInLocalCurrency.Value.ToString().Substring(0, 12);
-
-                myStringBuilder.Append("a" + data.TotalAmountInLocalCurrency.Value.ToString().PadLeft(12, '0'));
-            }
-
-            if (data.TotalDeductionInLocalCurrency != null)
-            {
-                if (data.TotalDeductionInLocalCurrency.Value.ToString().Length > 10) data.TotalDeductionInLocalCurrency.Value.ToString().Substring(0, 10);
-
-                myStringBuilder.Append("a" + data.TotalDeductionInLocalCurrency.Value.ToString().PadLeft(10, '0'));
-            }
-
-          
-            myStringBuilder.Append('0', 9);
-            myStringBuilder.Append(' ', 9);
-            myStringBuilder.Append("a" + data.ByVendorList.Count().ToString().PadLeft(6,'0'));
-            myStringBuilder.Append("a" + data.ByVendorList.Count().ToString().PadLeft(6, '0'));
-
-            if(taxDeductionReportPM.Email != null)
-            {
-                if (taxDeductionReportPM.Email.Length > 50) taxDeductionReportPM.Email = taxDeductionReportPM.Email.Substring(0, 50);
-                myStringBuilder.Append("a" + taxDeductionReportPM.Email.PadLeft(50, ' '));
-            }
-
-            myStringBuilder.Append("בדיקה");
-            myStringBuilder.Append(' ', 6);
-            myStringBuilder.Append("a70");
-            myStringBuilder.Append("\n");
-
-            //80s
-            
-            foreach(ByMonthList item in data.ByMonthList)
-            {
-                if(setting.DeductionFileNumber != null)
-                {
-                    if (setting.DeductionFileNumber.Length > 9) setting.DeductionFileNumber.Substring(0, 9);
                     myStringBuilder.Append("a" + setting.DeductionFileNumber.PadLeft(9, '0'));
-
                 }
                 myStringBuilder.Append("a96");
                 myStringBuilder.Append(taxDeductionReportPM.TaxYear);
-                myStringBuilder.Append(item.Month);
-                
-                myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month== item.Month).Count());
 
-                if (item.TotalPaymentsWithoutDivided != null)
+                myStringBuilder.Append(' ', 3);
+                myStringBuilder.Append("0");
+                if (taxDeductionReportPM.IsAdditionalReportExist)
                 {
-                    if (item.TotalPaymentsWithoutDivided.Value.ToString().Length > 12) item.TotalPaymentsWithoutDivided.Value.ToString().Substring(0, 12);
+                    myStringBuilder.Append("a2");
+                }
+                else
+                {
 
-                    myStringBuilder.Append("a" + item.TotalPaymentsWithoutDivided.Value.ToString().PadLeft(12, '0'));
+                    myStringBuilder.Append("a0");
                 }
 
-                if (item.TotalDeductionsWithoutDivided != null)
-                {
-                    if (item.TotalDeductionsWithoutDivided.Value.ToString().Length > 12) item.TotalDeductionsWithoutDivided.Value.ToString().Substring(0, 12);
+                myStringBuilder.Append("a1");
 
-                    myStringBuilder.Append("a" + item.TotalDeductionsWithoutDivided.Value.ToString().PadLeft(12, '0'));
-                }
-                //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfAmountInLocalCurrency));
-                //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
-                myStringBuilder.Append('0', 12);
-                if (item.TotalDivided != null)
+                TenantQuery tenantQuery = new TenantQuery(tenant);
+                TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+                if (tenantPM.VatNumber != null)
                 {
-                    if (item.TotalDivided.Value.ToString().Length > 12) item.TotalDivided.Value.ToString().Substring(0, 12);
+                    if (tenantPM.VatNumber.Length > 9) tenantPM.VatNumber = tenantPM.VatNumber.Substring(0, 9);
 
-                    myStringBuilder.Append("a" + item.TotalDivided.Value.ToString().PadLeft(12, '0'));
+                    myStringBuilder.Append("a" + tenantPM.VatNumber.PadLeft(9, '0'));
+
                 }
 
-                if (item.TotalDeductionsFromDivided != null)
+                if (data.TotalAmountInLocalCurrency08 != null)
                 {
-                    if (item.TotalDeductionsFromDivided.Value.ToString().Length > 12) item.TotalDeductionsFromDivided.Value.ToString().Substring(0, 12);
+                    if (data.TotalAmountInLocalCurrency08.Value.ToString().Length > 12) data.TotalAmountInLocalCurrency08.Value.ToString().Substring(0, 12);
 
-                    myStringBuilder.Append("a" + item.TotalDeductionsFromDivided.Value.ToString().PadLeft(12, '0'));
+                    myStringBuilder.Append("a" + data.TotalAmountInLocalCurrency08.Value.ToString().PadLeft(12, '0'));
                 }
 
-                //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfAmountInLocalCurrency));
-                //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
-                myStringBuilder.Append(' ', 131);
-                myStringBuilder.Append("a80");
-                myStringBuilder.Append("\n");
-              
+                if (data.TotalTaxDeductionInLocalCurrency08 != null)
+                {
+                    if (data.TotalTaxDeductionInLocalCurrency08.Value.ToString().Length > 10) data.TotalTaxDeductionInLocalCurrency08.Value.ToString().Substring(0, 10);
+
+                    myStringBuilder.Append("a" + data.TotalTaxDeductionInLocalCurrency08.Value.ToString().PadLeft(10, '0'));
+                }
+
+                if (data.TotalEndBalance != null)
+                {
+                    if (data.TotalEndBalance.Value.ToString().Length > 11) data.TotalEndBalance.Value.ToString().Substring(0, 11);
+
+                    myStringBuilder.Append("a" + data.TotalEndBalance.Value.ToString().PadLeft(11, '0'));
+                }
+
+
+                // myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfAmountInLocalCurrency));
+                // myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfTaxDeductionLocalAmount));
+
+
+
+
+                AddressQuery addressQuery = new AddressQuery(tenant);
+                AddressPM address = addressQuery.GetSingleAddressPM(tenantPM.AddressId, tenant);
+            if (address != null)
+            {
+                if (address.PhoneNumber != null)
+                {
+                    if (address.PhoneNumber.Length > 10) address.PhoneNumber = address.PhoneNumber.Substring(0, 10);
+                    myStringBuilder.Append("a" + address.PhoneNumber.PadLeft(10, '0'));
+                }
+
             }
+            myStringBuilder.Append(' ', 28);
+                if (data.TotalAmountInLocalCurrency != null)
+                {
+                    if (data.TotalAmountInLocalCurrency.Value.ToString().Length > 12) data.TotalAmountInLocalCurrency.Value.ToString().Substring(0, 12);
+
+                    myStringBuilder.Append("a" + data.TotalAmountInLocalCurrency.Value.ToString().PadLeft(12, '0'));
+                }
+
+                if (data.TotalDeductionInLocalCurrency != null)
+                {
+                    if (data.TotalDeductionInLocalCurrency.Value.ToString().Length > 10) data.TotalDeductionInLocalCurrency.Value.ToString().Substring(0, 10);
+
+                    myStringBuilder.Append("a" + data.TotalDeductionInLocalCurrency.Value.ToString().PadLeft(10, '0'));
+                }
 
 
-           
-            DocumentsFilingPM docOut = CreateDocumnetFiling( myStringBuilder, taxDeductionReportPM);
+                myStringBuilder.Append('0', 9);
+                myStringBuilder.Append(' ', 9);
+                myStringBuilder.Append("a" + data.ByVendorList.Count().ToString().PadLeft(6, '0'));
+                myStringBuilder.Append("a" + data.ByVendorList.Count().ToString().PadLeft(6, '0'));
 
-            return docOut;
+                if (taxDeductionReportPM.Email != null)
+                {
+                    if (taxDeductionReportPM.Email.Length > 50) taxDeductionReportPM.Email = taxDeductionReportPM.Email.Substring(0, 50);
+                    myStringBuilder.Append("a" + taxDeductionReportPM.Email.PadLeft(50, ' '));
+                }
+
+                myStringBuilder.Append("בדיקה");
+                myStringBuilder.Append(' ', 6);
+                myStringBuilder.Append("a70");
+                myStringBuilder.Append("\n");
+
+                //80s
+
+                foreach (ByMonthList item in data.ByMonthList)
+                {
+                    if (setting.DeductionFileNumber != null)
+                    {
+                        if (setting.DeductionFileNumber.Length > 9) setting.DeductionFileNumber.Substring(0, 9);
+                        myStringBuilder.Append("a" + setting.DeductionFileNumber.PadLeft(9, '0'));
+
+                    }
+                    myStringBuilder.Append("a96");
+                    myStringBuilder.Append(taxDeductionReportPM.TaxYear);
+                    myStringBuilder.Append(item.Month);
+
+                    myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month).Count());
+
+                    if (item.TotalPaymentsWithoutDivided != null)
+                    {
+                        if (item.TotalPaymentsWithoutDivided.Value.ToString().Length > 12) item.TotalPaymentsWithoutDivided.Value.ToString().Substring(0, 12);
+
+                        myStringBuilder.Append("a" + item.TotalPaymentsWithoutDivided.Value.ToString().PadLeft(12, '0'));
+                    }
+
+                    if (item.TotalDeductionsWithoutDivided != null)
+                    {
+                        if (item.TotalDeductionsWithoutDivided.Value.ToString().Length > 12) item.TotalDeductionsWithoutDivided.Value.ToString().Substring(0, 12);
+
+                        myStringBuilder.Append("a" + item.TotalDeductionsWithoutDivided.Value.ToString().PadLeft(12, '0'));
+                    }
+                    //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfAmountInLocalCurrency));
+                    //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
+                    myStringBuilder.Append('0', 12);
+                    if (item.TotalDivided != null)
+                    {
+                        if (item.TotalDivided.Value.ToString().Length > 12) item.TotalDivided.Value.ToString().Substring(0, 12);
+
+                        myStringBuilder.Append("a" + item.TotalDivided.Value.ToString().PadLeft(12, '0'));
+                    }
+
+                    if (item.TotalDeductionsFromDivided != null)
+                    {
+                        if (item.TotalDeductionsFromDivided.Value.ToString().Length > 12) item.TotalDeductionsFromDivided.Value.ToString().Substring(0, 12);
+
+                        myStringBuilder.Append("a" + item.TotalDeductionsFromDivided.Value.ToString().PadLeft(12, '0'));
+                    }
+
+                    //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfAmountInLocalCurrency));
+                    //myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfTaxDeductionLocalAmount));
+                    myStringBuilder.Append(' ', 131);
+                    myStringBuilder.Append("a80");
+                    myStringBuilder.Append("\n");
+
+                }
+
+
+
+                DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, taxDeductionReportPM);
+
+                return docOut;
+            
+
+
         }
 
         public static BatchTaskExecutionPM Create856FileInBatch(string taxReportId, int tenant)

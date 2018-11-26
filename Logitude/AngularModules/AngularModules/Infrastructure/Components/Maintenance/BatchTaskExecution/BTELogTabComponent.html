@@ -12,9 +12,9 @@
                     <tr class="TabTitleRow">
                         <td>{{'BatchTaskExecution.TH.Log' | TextCodeTranslationPipe}} </td>
                     </tr>
-                    
+
                     <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
-                    
+
                     <tr *ngIf="isReady">
                         <td>
                             <table>
@@ -30,7 +30,27 @@
 
                                                 <td [style.text-align]="isRTL ? 'right' : 'left'">
                                                     <LogTextBox [ObjectFieldName]="'ErrorLog'" [InputType]="'nText'" [DataContext]="DataContext"
-                                                                [RowsCount]="30" [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                                                [RowsCount]="15" [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                            </tr>
+
+                                            <!-- CallStack -->
+                                            <tr style="height:20px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <!-- CallStack -->
+                                            <tr class="FormFieldRow">
+                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'CallStack'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogTextBox [ObjectFieldName]="'CallStack'" [InputType]="'nText'" [DataContext]="DataContext"
+                                                                [RowsCount]="20" [ObjectTableName]="ObjectTableName" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
                                                 </td>
 
                                             </tr>

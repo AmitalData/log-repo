@@ -41,7 +41,10 @@ namespace Logitude.Accounting.BL.CoreBL
             _GLAccountId = GLAccountId;
             //_ListOfAccountId = new List<string>(new HashSet<string>(listOfAccountId));
             _ListOfAccountId = listOfAccountId;
-
+            if (_AccountingContext == null)
+            {
+                _AccountingContext = AccountingContext.GetContext(_Tenant);
+            }
             //_IncludeChildAccounts = IncludeChildAccounts;
             //_IncludeRelatedCurrenciesAccount = IncludeRelatedCurrenciesAccount;
             AccountBalance = new AccountBalanceM() { Tenant = _Tenant};

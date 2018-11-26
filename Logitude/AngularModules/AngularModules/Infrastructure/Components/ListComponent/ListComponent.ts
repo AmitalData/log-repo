@@ -2401,9 +2401,17 @@ export class ListComponent implements OnInit, AfterViewInit {
                   }
 
                 case "TaxDeductionReport":
+               
                     {
 
                         logWindow.Width = 400;
+                        logWindow.Height = 240;
+                        break;
+                    }
+                case "OpenFormatReport":
+                    {
+
+                        logWindow.Width = 500;
                         logWindow.Height = 240;
                         break;
                     }

@@ -28,11 +28,10 @@ namespace WarehouseDataService.Helper
                     if (!string.IsNullOrEmpty(ApplicationInfo.WarehouseBuildHours) && ApplicationInfo.WarehouseBuildDays.Count > 0) warehouseDate = GetWarehouseRunDate(DateTime.Now);
 
                     #region DWNextRunTime
-                    WarehouseHelper warehouseHelper = new WarehouseHelper();
                     WarehouseServiceHelper warehouseServiceHelper = new WarehouseServiceHelper();
                
                     string[] sourceConnectionArray = ApplicationInfo.SourceConnection.Split(',');
-                    string sourceConnectionString = warehouseHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
+                    string sourceConnectionString = warehouseServiceHelper.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
                     bool IsBuildNow = false;
 
                     DateTime? DWNextRunTime = warehouseServiceHelper.GetDWNextRunTime(sourceConnectionString);
@@ -80,7 +79,7 @@ namespace WarehouseDataService.Helper
         }
         private void StartBuildWarehouseData()
         {
-            WarehouseHelper warehouseHelper = new WarehouseHelper();
+            WarehouseHelper warehouseHelper = new WarehouseHelper("Service", ApplicationInfo.Mode);
             WarehouseServiceHelper warehouseServiceHelper = new WarehouseServiceHelper();
             string[] sourceConnectionArray = ApplicationInfo.SourceConnection.Split(',');
             string[] destinationConnectionArray = ApplicationInfo.DestinationConnection.Split(',');
@@ -95,8 +94,8 @@ namespace WarehouseDataService.Helper
                 {
                     isBuildStart = true;
                     warehouseServiceHelper.UpdateWarehouseFieldSettings("IsFullBuildDWRunning", true, sourceConnectionString);
-                    warehouseHelper.BuildDataBase(ApplicationInfo.Mode, sourceConnectionString, destinationConnectionString);
-                    warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build", "Service", ApplicationInfo.Mode);
+                    warehouseHelper.BuildDataBase(sourceConnectionString, destinationConnectionString);
+                    warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
                     warehouseServiceHelper.UpdateWarehouseFieldSettings("IsFullBuildDWRunning", false, sourceConnectionString);
                 }
                 else Thread.Sleep(2000);
@@ -111,7 +110,7 @@ namespace WarehouseDataService.Helper
         {
             try
             {
-                WarehouseHelper warehouseHelper = new WarehouseHelper();
+                WarehouseHelper warehouseHelper = new WarehouseHelper("Service", ApplicationInfo.Mode);
                 WarehouseServiceHelper warehouseServiceHelper = new WarehouseServiceHelper();
                 string[] sourceConnectionArray = ApplicationInfo.SourceConnection.Split(',');
                 string[] destinationConnectionArray = ApplicationInfo.DestinationConnection.Split(',');
@@ -124,7 +123,7 @@ namespace WarehouseDataService.Helper
                     {
                         warehouseServiceHelper.UpdateWarehouseFieldSettings("IsIncrementalDWRunning", true, sourceConnectionString);
                         warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString);
-                        warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update", "Service", ApplicationInfo.Mode);
+                        warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update");
                         warehouseServiceHelper.UpdateWarehouseFieldSettings("IsIncrementalDWRunning", false, sourceConnectionString);
 
                         Thread.Sleep(ApplicationInfo.UpdateWarehouseSleepTime);
