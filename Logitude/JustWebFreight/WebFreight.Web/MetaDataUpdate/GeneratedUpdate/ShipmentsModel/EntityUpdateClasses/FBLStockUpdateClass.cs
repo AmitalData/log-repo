@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class FBLStockUpdateClass
@@ -318,7 +321,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable FBLStockObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "FBLStock" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode FBLStockTextCode_FBLStockBRemoveSeries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.B.RemoveSeries", DefaultText = "Remove Series",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStockMDeleteStockNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.M.DeleteStockNumber", DefaultText = "Are you sure you want to delete the stock number",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStockMDeleteStockSeries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.M.DeleteStockSeries", DefaultText = "Are you sure you want to delete the series inserted on",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStockOFBLNumbers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.O.FBLNumbers", DefaultText = "FBL Numbers",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStockONewFBLNumbers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.O.NewFBLNumbers", DefaultText = "New FBL Numbers",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStockOFBLRemainingAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.O.FBLRemainingAmount", DefaultText = "FBL Remaining Amount",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStockOStartNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.O.StartNumber", DefaultText = "Start Number",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStockOEndNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.O.EndNumber", DefaultText = "End Number",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStockOByEndNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.O.ByEndNumber", DefaultText = "By End Number",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStockOByAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.O.ByAmount", DefaultText = "By Amount",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStockOAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.O.Amount", DefaultText = "Amount",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStockORemovingStock = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.O.RemovingStock", DefaultText = "Removing Stock",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FBLStockTextCode_FBLStock = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock", DefaultText = "FBL Stock",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     
