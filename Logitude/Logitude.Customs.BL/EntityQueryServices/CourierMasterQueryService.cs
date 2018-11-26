@@ -155,7 +155,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  MNFR = g.Count(r => (r.CourierManifestStatusCode == "R" )),
                  MNFR_RV = g.Count(r => (r.CourierManifestStatusCode == "R" || r.CourierManifestStatusCode == "V")),
                  DECR = g.Count(r => (r.CourierDeclarationStatusCode == "R" )),
-                 DECR_RV = g.Count(r => (r.CourierManifestStatusCode == "R" || r.CourierManifestStatusCode == "V")),
+                 DECR_RV = g.Count(r => (r.CourierDeclarationStatusCode == "R" || r.CourierDeclarationStatusCode == "V")),
                  HOLD = g.Count(r => (r.CourierPendingReasonCode != null)),
                  ACC = g.Count(),
                  //ACC_W = g.Count(r => (r. == "2")),
@@ -200,8 +200,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             keyValuePairList.Add(new KeyValuePair<string, int>("HOLD", HOLD));
             keyValuePairList.Add(new KeyValuePair<string, int>("DECR", DECR));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNFR", MNFR));
-            keyValuePairList.Add(new KeyValuePair<string, int>("DECR_RV", DECR));
-            keyValuePairList.Add(new KeyValuePair<string, int>("MNFR_RV", MNFR));
+            keyValuePairList.Add(new KeyValuePair<string, int>("DECR_RV", DECR_RV));
+            keyValuePairList.Add(new KeyValuePair<string, int>("MNFR_RV", MNFR_RV));
             keyValuePairList.Add(new KeyValuePair<string, int>("PAY_RL", PAY_RL));
             keyValuePairList.Add(new KeyValuePair<string, int>("ACC", ACC));
         }

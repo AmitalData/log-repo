@@ -90,12 +90,14 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
     public get PendingCode() { return this.EntityPM.Code; }
     public set PendingCode(newValue: string) {
         if (newValue) {
+            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
             var saveUnifreightStatusCode: string = this.UnifreightStatusCode;
             this._CourierPendingReasonPMService.get(newValue).subscribe(response => {
                 if (!response.HasError && response.Result != null) {
+                    SessionLocator.CurrentSession.StopBusyIndicator();
                     this.isNewRecord = false;
                     this.EntityPM = response.Result;
-                    this.UnifreightStatusCode = saveUnifreightStatusCode;
+                    this.EntityPM.UnifreightStatusCode = saveUnifreightStatusCode;
                 }
             });
         }
