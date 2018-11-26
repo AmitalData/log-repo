@@ -113,7 +113,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (item.VendorAddress != null)
                 {
-                    if (item.VendorAddress.Length > 13) item.VendorAddress = item.VendorAddress.Substring(0, 21);
+                    if (item.VendorAddress.Length > 21) item.VendorAddress = item.VendorAddress.Substring(0, 21);
 
                     myStringBuilder.Append("a" + item.VendorAddress.PadLeft(21, ' '));
                 }
