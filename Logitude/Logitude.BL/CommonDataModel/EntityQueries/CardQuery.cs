@@ -128,6 +128,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     myMainAddressId = myMainAddresss.Id;
                 }
 
+                AddressPM myBillingAddress = addressQuery.GetAddressPMByTypeAndCard(id, "B", tenant);
+                string myBillingAddressId = null;
+                if (myBillingAddress != null)
+                {
+                    myBillingAddressId = myBillingAddress.Id;
+                }
+
                 if (HttpContext.Current != null)
                 {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
@@ -153,6 +160,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       VatNumber = a.VatNumber,
                                       Code = a.Code,
                                       MainAddressId = myMainAddressId,
+                                      BillingAddressId = myBillingAddressId,
                                       CountryId = a.CountryId,
                                       CountryCode = a.CountryCode,
                                       CountryName = a.CountryName,
@@ -245,6 +253,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   VatNumber = a.VatNumber,
                                   Code = a.Code,
                                   MainAddressId = myMainAddressId,
+                                  BillingAddressId = myBillingAddressId,
                                   CountryId = a.CountryId,
                                   CountryCode = a.CountryCode,
                                   CountryName = a.CountryName,

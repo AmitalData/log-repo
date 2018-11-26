@@ -1134,7 +1134,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(WorkDaysPerProjectDataProvider));
                         WorkDaysPerProjectDataProvider reportDataProvider = (WorkDaysPerProjectDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        CurrentBusinessObject = new StiBusinessObject() { Category = "WorkDaysPerProject", Name = "WorkDaysPerProjectDataProvider", BusinessObjectValue = reportDataProvider };
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "WorkHoursPerProject", Name = "WorkHoursPerProjectDataProvider", BusinessObjectValue = reportDataProvider };
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
