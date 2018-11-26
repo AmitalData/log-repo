@@ -46,7 +46,8 @@ import { TaxReportLineStatusListService } from './Services/StandardLists/TaxRepo
 import { VatReportStatusListService } from './Services/StandardLists/VatReportStatusListService';
 import { GLAccountMoreDataListService } from './Services/StandardLists/GLAccountMoreDataListService';
 import { TaxDeductionReportListService } from './Services/StandardLists/TaxDeductionReportListService';
-
+import { OpenFormatReportListService } from './Services/StandardLists/OpenFormatReportListService';
+import { OpenFormatDateTypeListService } from './Services/StandardLists/OpenFormatDateTypeListService';
 
 import { TaxReportPMService } from './Services/StandardPMs/TaxReportPMService';
 import {AccountingPeriodPMService} from './Services/StandardPMs/AccountingPeriodPMService';
@@ -169,6 +170,10 @@ export class ModuleProviders {
             case "ExternalReconciliationListService": { myResult = new ExternalReconciliationListService(); break; }
             case "TaxReportListService": { myResult = new TaxReportListService(); break; }
             case "TaxDeductionReportListService": { myResult = new TaxDeductionReportListService(); break; }
+            case "OpenFormatReportListService": { myResult = new OpenFormatReportListService(); break; }
+
+
+                
             case "TaxDeductionReportPMService": { myResult = new TaxDeductionReportPMService(); break; }
 
 
@@ -212,7 +217,7 @@ export class ModuleProviders {
             case "TaxReportLineStatusListService": { myResult = new TaxReportLineStatusListService(); break; }
             case "VatReportStatusListService": { myResult = new VatReportStatusListService(); break; }
             case "GLAccountMoreDataListService": { myResult = new GLAccountMoreDataListService(); break; }
-
+            case "OpenFormatDateTypeListService": { myResult = new OpenFormatDateTypeListService(); break; }
             //#endregion
 
             //Extend Services

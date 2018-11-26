@@ -52,6 +52,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            Tenant = a.Tenant,
                                                            TypeCode = a.TypeCode,
                                                            TypeName = a.JournalType !=null ? a.JournalType.EnglishName : null,
+                                                           TypeLocalName = a.JournalType !=null ? a.JournalType.LocalName : null,
                                                            
                                                            UpdateDate = a.UpdateDate,
                                                          //  UpdatedByUserId = a.UpdatedByUserId,

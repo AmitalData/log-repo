@@ -11525,7 +11525,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Bill to VAT is required",
+                DefaultText = "Bill To VAT is required",
                 FullFieldLable = "IsVatNumberMandatoryInAR",
                 FieldName = "IsVatNumberMandatoryInAR",
                 FieldsDataType = "Boolean",
@@ -11536,7 +11536,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ListFieldLable = "IsVatNumberMandatoryInAR",
-                ListLableDefaultText = "Bill to VAT is required",
+                ListLableDefaultText = "Bill To VAT is required",
                 DisplayInList = true,
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAR",
@@ -11548,7 +11548,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Bill to VAT is required",
+                DefaultText = "Vendor VAT is required",
                 FullFieldLable = "IsVatNumberMandatoryInAP",
                 FieldName = "IsVatNumberMandatoryInAP",
                 FieldsDataType = "Boolean",
@@ -11559,7 +11559,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ListFieldLable = "IsVatNumberMandatoryInAP",
-                ListLableDefaultText = "Bill to VAT is required",
+                ListLableDefaultText = "Vendor VAT is required",
                 DisplayInList = true,
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAP",
@@ -65642,16 +65642,18 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region AnalyzeQueue Features
-            Feature AnalyzeQueueFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature AnalyzeQueueFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueue.Features.Edit", NameTextCodeDefaultText = "Edit Analyze Queue", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MESSAGEBODY", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.MessageBody", NameTextCodeDefaultText = "Message Body", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AllAnalyzeQueues", NameTextCodeDefaultText = "All Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANALYZEQUEUEERRORS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AnalyzeQueueErrors", NameTextCodeDefaultText = "Error", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.PackageFeature", NameTextCodeDefaultText = "Analyze Queue Package Feature", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.TodayAnalyzeQueues", NameTextCodeDefaultText = "Today Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.PackageFeature", NameTextCodeDefaultText = "Analyze Queue Package Feature", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
+            Feature AnalyzeQueueFeature_A01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_A02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_A03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MESSAGEBODY", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.MessageBody", NameTextCodeDefaultText = "Message Body", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_A04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANALYZEQUEUEERRORS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AnalyzeQueueErrors", NameTextCodeDefaultText = "Error", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            Feature AnalyzeQueueFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AllAnalyzeQueues", NameTextCodeDefaultText = "All Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.TodayAnalyzeQueues", NameTextCodeDefaultText = "Today Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            Feature AnalyzeQueueFeature_C01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESEND", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueue.Features.Resend", NameTextCodeDefaultText = "Resend", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 

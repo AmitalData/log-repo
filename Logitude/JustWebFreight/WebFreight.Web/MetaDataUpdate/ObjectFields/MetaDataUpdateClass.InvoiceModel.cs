@@ -2795,6 +2795,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
+                DisplayInList = true,
+                ListFieldLable = "BankAccountLiteListLable",
+                ListLableDefaultText = "Deposit Bank",
                 ListPropertyPath = "BankAccountLiteId",
                 PMPropertyPath = "BankAccountLiteId",
                 FullLocalDefaultText = "בנק להפקדה",
@@ -6956,7 +6959,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "TipoCadenaPago",
                 PMPropertyPath = "TipoCadenaPago",
-                
+                HelpLocalDefaultText = "Clave del tipo de cadena de pago que genera la entidad receptora de pago",
+                HelpTextDefaultText = "Payment Transfer Way",
+
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -6980,6 +6985,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "CertPago",
                 PMPropertyPath = "CertPago",
                 MultiLine = true,
+                HelpLocalDefaultText = "Certificado que corresponde al pago",
+                HelpTextDefaultText = "The certificate that corresponds to the payment. It is a text chain of 64 base format",
 
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -7004,7 +7011,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "CadPago",
                 PMPropertyPath = "CadPago",
-
+                HelpLocalDefaultText = "Cadena Original del Comprobante de Pago generado por la entidad emisora de la cuenta beneficiaria",
+                HelpTextDefaultText = "Payment original chain sent by the beneficiary's bank institution",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -7030,9 +7038,11 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SelloPago",
                 PMPropertyPath = "SelloPago",
                 MultiLine = true,
+                HelpLocalDefaultText = "Sello digital que se asocie el pago",
+                HelpTextDefaultText = "The digital seal associates the payment. It is a text chain of 64 base format",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
-       
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Metodo Pago",
@@ -8131,13 +8141,13 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableName = ARPaymentObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
-                DisplayInList = true,
                 CanFilter = true,
                 ValidForQuerySection1 = "ARPayment",
+                DisplayInList = true,
                 ListFieldLable = "RegisterDateListLable",
                 ListLableDefaultText = "Register Date",
-                Operator = "Equals",
                 ListPropertyPath = "RegisterDate",
+                Operator = "Equals",
                 PMPropertyPath = "RegisterDate",
                 ConverterName = "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
                 FullLocalDefaultText = "תאריך רישום",

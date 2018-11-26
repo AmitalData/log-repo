@@ -190,11 +190,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           StateCode = a.State == null ? null : a.State.Code,
                                           StateEnglishName = a.State == null ? null : a.State.EnglishName,
                                       }).FirstOrDefault();
-
-            CountryCityPM securedEntityPM = new CountryCityPM();
-            SecuredMapping.GetMappedPM(entityPM, securedEntityPM, "CountryCity", tenant);
-
-            return securedEntityPM;
+            
+            return entityPM;
         }
 
         public CountryCityPM GetSinglePMByCode(string code, int tenant)

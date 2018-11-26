@@ -46,6 +46,12 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 {
                                     isContainerExists_Message = true;
                                     ContainerNumber = equipmentDetails.EquipmentIdentifier.Value;
+
+                                    if (ContainerNumber != null)
+                                    {
+                                        ContainerNumber = ContainerNumber.Trim();
+                                    }
+
                                     iContainer = this.shipmentPM.ShipmentPackages.Where(d => d.ContainerNumber == ContainerNumber).FirstOrDefault();
 
                                     if (iContainer != null)

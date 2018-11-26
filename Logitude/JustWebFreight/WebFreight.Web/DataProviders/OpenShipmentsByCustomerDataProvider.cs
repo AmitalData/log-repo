@@ -58,5 +58,6 @@ namespace WebFreight.Web.DataProviders
         public string Consignee { get; set; }
         public int? PackagesCount { get; set; }
         public int? InsidePackagesCount { get; set; }
+        public string FullStatus { get; set; }
     }
 }

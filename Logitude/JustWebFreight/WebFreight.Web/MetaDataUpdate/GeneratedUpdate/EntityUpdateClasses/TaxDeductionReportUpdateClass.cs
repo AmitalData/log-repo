@@ -999,7 +999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature TaxDeductionReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Tab.General", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReportFeatures.TDGN", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode TaxDeductionReportLogTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.TH.Log", DefaultText = "Log",LocalDefaultText = null, ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode TaxDeductionReportLogTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.TH.Log", DefaultText = "Log",LocalDefaultText = "לוג", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature TaxDeductionReportLogFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Tab.Log", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReportFeatures.LOG", NameTextCodeDefaultText = "Log", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  

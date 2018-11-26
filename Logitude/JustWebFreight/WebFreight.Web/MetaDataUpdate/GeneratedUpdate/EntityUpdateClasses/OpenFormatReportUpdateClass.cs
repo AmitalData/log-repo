@@ -90,7 +90,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
-			      				    IsNewWizard =  false,
+			      				    IsNewWizard =  true,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -111,12 +111,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "NewOpenFormatReportComponent",
+			      				    LocalDefaultText =  "דוחות מבנה אחיד",
 			      				    DefaultText =  "Open Format Report",
-			      				    Code =  "91ec",
+			      				    Code =  "7d37",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
 			      				    ServerModuleName =  "Accounting",
+			      				    NewWizardComponentPath =  "./Accounting/Components/NewEntity/NewOpenFormatReportComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -713,10 +716,153 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CreatedByUserName",
+					  						OldFieldName =  "CreatedByUserName",
+					  						ObjectTableName =  "OpenFormatReport",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreatedByUserName",
+					  						ListPropertyPath =  "CreatedByUserName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "OpenFormatReport",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreatedByUserName",
+					  						DefaultText =  "Created By User",
+					  						FullLocalDefaultText =  "נוצר ע\"י",
+					  						ListFieldLable =  "CreatedByUserNameListLable",
+					  						ListLableDefaultText =  "Created By User",
+					  						ListLocalDefaultText =  "נוצר ע\"י",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Status",
+					  						OldFieldName =  "Status",
+					  						ObjectTableName =  "OpenFormatReport",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  100,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Status",
+					  						ListPropertyPath =  "Status",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "OpenFormatReport",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Status",
+					  						DefaultText =  "Status",
+					  						FullLocalDefaultText =  "סטטוס",
+					  						ListFieldLable =  "StatusListLable",
+					  						ListLableDefaultText =  "Status",
+					  						ListLocalDefaultText =  "סטטוס",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup OpenFormatReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "7d37", Name = " Query Group" }, queryGroupRepository);
+						QueryGroup OpenFormatReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d1d0", Name = " Query Group" }, queryGroupRepository);
+				        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable OpenFormatReportObjectTable = objectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> OpenFormatReportObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "OpenFormatReport").ToList();   
+
+			   TextCode OpenFormatReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", DefaultText = @"All Open Format Reports",LocalDefaultText = "כל הדוחות", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature OpenFormatReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpenFormatReport.Q.AllOpenFormats", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpenFormatReportFeatures.AllOpenFormats", NameTextCodeDefaultText = "AllOpenFormats", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query AllOpenFormatsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpenFormatReportTextCode_0.Id, Code = "AllOpenFormats",  QueryGroupCode = "7d37", IndexOrder = 0, Tenant = 0, ObjectTableId = OpenFormatReportObjectTable.Id, QuerySection = "OpenFormatReport", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpenFormatReportFeature_0.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending" }, queriesRepository, tenantQueries);
+	
+			 QueryColumn AllOpenFormatsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id, IndexOrder = 0, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllOpenFormatsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id, IndexOrder = 1, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "ReportNumber" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllOpenFormatsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id, IndexOrder = 2, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllOpenFormatsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpenFormatsQuery.Id, IndexOrder = 3, ObjectFieldId = OpenFormatReportObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == OpenFormatReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)

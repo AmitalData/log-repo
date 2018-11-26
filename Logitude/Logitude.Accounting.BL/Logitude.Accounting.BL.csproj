@@ -487,6 +487,7 @@
     <Compile Include="EntityUpdateServices\GLAccountWithholdingTaxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\IJournalUpdateServiceProvider.cs" />
     <Compile Include="EntityUpdateServices\JournalReconcileUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\OpenFormatReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PaymentChequeLineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PaymentChequeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ReconcileExternalPageLineUpdateService.cs" />

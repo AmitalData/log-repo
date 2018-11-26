@@ -6,7 +6,7 @@ declare var dragger: any;
 export class LogitudeWindow {
     public Width: number = 750;
     public Height: number = 500; 
-    public Title: string = null;
+    //public Title: string = null;
     public TitleIcon: string = null;
     public CustomTitleIcon: string = null;
     public WindowIndex: number = null;
@@ -193,6 +193,18 @@ export class LogitudeWindow {
             this.InstanceComponent.ShowCloseButton = isVisible;
         }
     }
+
+
+    private title: string = null;
+    get Title() { return this.title; }
+    set Title(newValue: string) {
+        this.title = newValue;
+        if (this.InstanceComponent) {
+            this.InstanceComponent.Title = newValue;
+        }
+    }
+
+
 }
 
 @Component({    

@@ -63,6 +63,7 @@ import {BusinessRolePMService} from './Services/StandardPMs/BusinessRolePMServic
 import { BatchTaskExecutionListService } from './Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionPMService } from './Services/StandardPMs/BatchTaskExecutionPMService';
 
+import { AnalyzeQueueMenuButtonsHandler } from './Components/MenuButtons/AnalyzeQueueMenuButtonsHandler';
 import {TenantManagementMenuButtonsHandler} from './Components/MenuButtons/TenantManagementMenuButtonsHandler';
 //
 import {BusinessProcessQueueListService} from  './Services/StandardLists/BusinessProcessQueueListService'; 
@@ -138,7 +139,8 @@ export class ModuleProviders {
             case "ErrorLogListService": { myResult = new ErrorLogListService(); break; }
             case "BatchTaskExecutionListService": { myResult = new BatchTaskExecutionListService(); break; }
             case "ErrorLogPMService": { myResult = new ErrorLogPMService(); break; }
-            case "ApiCredintialsListService": { myResult = new ApiCredintialsListService(); break; }
+            case "ApiCredintialsListService": { myResult = new ApiCredintialsListService(); break; }                
+            case "AnalyzeQueueMenuButtonsHandler": { myResult = new AnalyzeQueueMenuButtonsHandler(); break; }
             case "TenantManagementMenuButtonsHandler": { myResult = new TenantManagementMenuButtonsHandler(); break; }
             case "ErrorLogPMFileLoggerService": { myResult = new ErrorLogPMFileLoggerService(); break; }
             case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }  
