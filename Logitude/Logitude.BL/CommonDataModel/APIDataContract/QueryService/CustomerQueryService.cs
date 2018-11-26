@@ -56,18 +56,18 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     temp = myQuery.GetSinglePM(MyEntity.Id, Tenant);
                 }
 
-                if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
-                {
-                    ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-                    var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode, ComputingPartnerName, "Card");
+                //if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+                //{
+                //    ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+                //    var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode, ComputingPartnerName, "Card");
 
-                    if (string.IsNullOrEmpty(MyCode))
-                    {
-                        throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
-                    }
+                //    if (string.IsNullOrEmpty(MyCode))
+                //    {
+                //        throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+                //    }
 
-                    temp = myQuery.GetSingleCustomerPMByCode(MyCode, Tenant);
-                }
+                //    temp = myQuery.GetSingleCustomerPMByCode(MyCode, Tenant);
+                //}
 
                 if (temp == null)
                 {
