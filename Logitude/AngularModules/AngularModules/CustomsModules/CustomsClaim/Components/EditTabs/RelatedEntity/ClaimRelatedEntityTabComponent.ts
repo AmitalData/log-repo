@@ -83,8 +83,8 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
         this.TabsItemsSource.push(new TabItem("FileData", "Customs.Claim.O.FileData"));
         this.TabsItemsSource.push(new TabItem("ReasonsAndExplanitaions", "Customs.Claim.TH.ReasonsAndExplanitaions"));
         this.TabsItemsSource.push(new TabItem("ExportDeclaration", "Customs.Claim.O.ClaimsRelatedEntityAdditional"));
-        this.TabsItemsSource.push(new TabItem("CustomAnswer", "Customs.Claim.TH.CustomAnswer"));
         this.TabsItemsSource.push(new TabItem("ClaimDecision", "Customs.Claim.TH.ClaimDecision"));
+        this.TabsItemsSource.push(new TabItem("CustomAnswer", "Customs.Claim.TH.CustomAnswer"));
         this.selectedTabCode = "FileData";
     }
 
