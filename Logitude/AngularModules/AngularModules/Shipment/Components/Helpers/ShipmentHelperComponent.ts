@@ -374,13 +374,13 @@ export class ShipmentHelperComponent implements OnDestroy {
 
     isUpdateSharedAgentRequested: boolean = false;
     UpdateSharedAgentClicked() {
-        //if (this.EntityPM.IsDirty) {
-        //    this.isUpdateSharedAgentRequested = true;
-        //    SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-        //}
-        //else {
-        //    this.ShareManifestClicked();
-        //}
+        if (this.EntityPM.IsDirty) {
+            this.isUpdateSharedAgentRequested = true;
+            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        }
+        else {
+            this.ShareManifestClicked();
+        }
 
     }
 

@@ -107,7 +107,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         }
 
+        public CommunicationLog GetCommunicationLogByEntityIdAndQueueNameAndSubject(string entityId, string queueName, string subject)
+        {
+            return (from a in context.CommunicationLogs.Include("Document")
+                    where a.EntityId == entityId && a.QueueName == queueName && a.Subject == subject
+                    select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
 
+        }
 
         public void Add(CommunicationLog entity)
         {

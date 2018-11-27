@@ -20,15 +20,36 @@ export class SharedManifestEditAgentComponent implements OnInit {
     private isMyCustomer: boolean = false;
     private oldCustomerPartnerId: string = null;
     public ValidationErrorsList: string[];
-
+    IsSaveShipment: boolean = false;
 
     constructor() {
-
+        this.Listen();
     }
 
     ngOnInit() {
         this.DataContext.SetUIProperties();
     }
+
+
+
+    Listen() {
+
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    if (this.IsSaveShipment) {
+                        this.Close();
+                    }
+                    this.IsSaveShipment = false;
+                }
+
+
+            });
+        }
+    }
+
+
 
 
     SetDataContext(dataContext: PartnerItem) {
@@ -67,6 +88,62 @@ export class SharedManifestEditAgentComponent implements OnInit {
             }
         }
 
+        if (this.ValidationErrorsList.length == 0) {
+            SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+            this.DataContext.fatherComponent._agentSharedLogisticsKeyPMService.GetSingleByAgentId(this.EntityPM.AgentId).subscribe((myResponse: any) => {
+
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                if (!myResponse.HasError) {
+
+                    var agentSharedKey: any = myResponse.Result;
+                    if (agentSharedKey) {
+                        switch (agentSharedKey.StatusCode) {
+                            case "A":
+
+                                if (this.EntityPM.ShipmentLevelCode == "C") {
+
+                                    this.DataContext.fatherComponent._sharedAgentManifestService.GetCheckIfMasterShipmentHaveHouseWithOtherAgent(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.Tenant).subscribe((myResponse: any) => {
+                                        SessionLocator.CurrentSession.StopBusyIndicator();
+                                        if (!myResponse.HasError) {
+                                            if (myResponse.Result == true) {
+                                                this.ValidationErrorsList.push("One of the houses has agent different from the master shipment");
+                                            } else {
+                                                this.CompleteSave();
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    this.CompleteSave();
+                                }
+
+                                break;
+
+                            case "W":
+
+                                this.ValidationErrorsList.push("Waiting for the Agent’s approval to enable sharing");
+
+                                break;
+
+                            case "I":
+                                this.ValidationErrorsList.push("Please connect with the agent from the agent’s shared logistics tab");
+                                break;
+
+
+                        }
+                    }
+                    else {
+                        this.ValidationErrorsList.push("Please connect with the agent from the agent’s shared logistics tab");
+                    }
+                }
+                else {
+                    this.ValidationErrorsList.push(myResponse.ErrorsArray[0]);
+                }
+
+            });
+        }
+    }
+
+    CompleteSave() {
         if (this.ValidationErrorsList.length == 0) {
             if (this.isMyCustomer) {
                 if (this.EntityPM.ShipmentLevelCode == "C") {
@@ -125,14 +202,29 @@ export class SharedManifestEditAgentComponent implements OnInit {
                     }
                 }
 
-           
+
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
-            SessionLocator.CurrentSession.FireEvent("ShipmentPartnersChanged");
+
+
+            if (this.EntityPM.IsDirty) {
+                this.IsSaveShipment = true;
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            }
+            else this.Close();
+
+
+
+  
         }
     }
 
+
+    Close() {
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+        SessionLocator.CurrentSession.FireEvent("ShipmentPartnersChanged");
+    }
+    
     private myCloner: Cloner;
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);

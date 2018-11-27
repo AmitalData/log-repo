@@ -38,6 +38,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
     public List<Contact> Contacts { get; set; }
     
-    //public GLAccount GLAccount { get; set; }
+    public Address BillingAddress { get; set; }
     }
 } 

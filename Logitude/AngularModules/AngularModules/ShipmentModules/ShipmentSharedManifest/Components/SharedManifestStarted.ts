@@ -41,8 +41,6 @@ export class SharedManifestStarted {
     }
 
     LableShareBoutton: string = "Share";
-    IsUpdateSharedAgentButtonVisible: boolean = false;
-    FromSharedManifestEditAgentComponent: boolean = false;
 
 
     public ValidationErrorsList: string[] = [];
@@ -51,7 +49,12 @@ export class SharedManifestStarted {
     IsSuccessfullySharedManifest: boolean = false;
 
     IsEnableButtonSharedManifest: boolean = false;
+
+
+    FromSharedManifestEditAgentComponent: boolean = false;
     IsUpdateSharedAgent: boolean = false;
+    IsShowUpdateAgentArea: boolean = false;
+
     SetWindowArgs(args: any) {
         this.EntityPM = args.EntityPM;
         this.FromSharedManifestEditAgentComponent = args.FromSharedManifestEditAgentComponent;
@@ -59,7 +62,7 @@ export class SharedManifestStarted {
         if (this.EntityPM) {
             if (this.EntityPM.IsManifestSentToAgent) {
                 this.LableShareBoutton = "Next";
-                this.IsUpdateSharedAgentButtonVisible = true;
+                this.IsUpdateSharedAgent = true;
             }
         }
 
@@ -80,66 +83,67 @@ export class SharedManifestStarted {
       
         if (this.ValidationErrorsList.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+            if (!this.FromSharedManifestEditAgentComponent) {
+                SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+                this._agentSharedLogisticsKeyPMService.GetSingleByAgentId(this.EntityPM.AgentId).subscribe((myResponse: ServiceResponse) => {
 
-            this._agentSharedLogisticsKeyPMService.GetSingleByAgentId(this.EntityPM.AgentId).subscribe((myResponse: ServiceResponse) => {
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    if (!myResponse.HasError) {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                if (!myResponse.HasError) {
+                        var agentSharedKey: AgentSharedLogisticsKey = myResponse.Result;
+                        if (agentSharedKey) {
+                            switch (agentSharedKey.StatusCode) {
+                                case "A":
 
-                    var agentSharedKey: AgentSharedLogisticsKey = myResponse.Result;
-                    if (agentSharedKey) {
-                        switch (agentSharedKey.StatusCode) {
-                            case "A":
+                                    if (this.EntityPM.ShipmentLevelCode == "C") {
+                                        SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
+                                        this._sharedAgentManifestService.GetCheckIfMasterShipmentHaveHouseWithOtherAgent(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
+                                            SessionLocator.CurrentSession.StopBusyIndicator();
+                                            if (!myResponse.HasError) {
+                                                if (myResponse.Result == true) {
+                                                    this.ValidationErrorsList.push("One of the houses has agent different from the master shipment");
 
-                                if (this.EntityPM.ShipmentLevelCode == "C") {
-                                    SessionLocator.CurrentSession.StartBusyIndicator("Loading...");
-                                    this._sharedAgentManifestService.GetCheckIfMasterShipmentHaveHouseWithOtherAgent(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
-                                        SessionLocator.CurrentSession.StopBusyIndicator();
-                                        if (!myResponse.HasError) {
-                                            if (myResponse.Result == true) {
-                                                this.ValidationErrorsList.push("One of the houses has agent different from the master shipment");
+                                                } else {
+                                                    this.IsEnableButtonSharedManifest = true;
+                                                    if (this.EntityPM.IsManifestSentToAgent) this.UpdateAgent();
 
-                                            } else {
-                                                this.IsEnableButtonSharedManifest = true;
-                                                if (this.EntityPM.IsManifestSentToAgent) this.UpdateAgent();
-                                             
+                                                }
                                             }
-                                        }
-                                    });
-                                }
-                                else {
-                                    this.IsEnableButtonSharedManifest = true;
-                                    if (this.EntityPM.IsManifestSentToAgent) this.UpdateAgent();
-                                }
-                                break;
+                                        });
+                                    }
+                                    else {
+                                        this.IsEnableButtonSharedManifest = true;
+                                        if (this.EntityPM.IsManifestSentToAgent) this.UpdateAgent();
+                                    }
+                                    break;
 
-                            case "W":
+                                case "W":
 
-                                this.ValidationErrorsList.push("Waiting for the Agent’s approval to enable sharing");
-                                this.HasError = true;
-                                break;
+                                    this.ValidationErrorsList.push("Waiting for the Agent’s approval to enable sharing");
+                                    this.HasError = true;
+                                    break;
 
-                            case "I":
-                                this.ValidationErrorsList.push("Please connect with the agent from the agent’s shared logistics tab");
-                                this.HasError = true;
-                                break;
+                                case "I":
+                                    this.ValidationErrorsList.push("Please connect with the agent from the agent’s shared logistics tab");
+                                    this.HasError = true;
+                                    break;
 
 
+                            }
+                        }
+                        else {
+                            this.ValidationErrorsList.push("Please connect with the agent from the agent’s shared logistics tab");
+                            this.HasError = true;
                         }
                     }
                     else {
-                        this.ValidationErrorsList.push("Please connect with the agent from the agent’s shared logistics tab");
+                        this.ValidationErrorsList.push(myResponse.ErrorsArray[0]);
                         this.HasError = true;
                     }
-                }
-                else {
-                    this.ValidationErrorsList.push(myResponse.ErrorsArray[0]);
-                    this.HasError = true;
-                }
 
-            });
-
+                });
+            }
+            else  this.UpdateAgent();
         }
         else this.HasError = true;
 
@@ -171,13 +175,8 @@ export class SharedManifestStarted {
                     if (this.isSharingManifesRequested) {
                         this.StartSharingManifest();
                     }
-
-                    if (this.isStartUpdateAgentManifest) {
-                        this.StartUpdateAgentManifest();
-                    }
-
+                    
                     this.isSharingManifesRequested = false;
-                    this.isStartUpdateAgentManifest = false;
                 } 
 
 
@@ -186,22 +185,11 @@ export class SharedManifestStarted {
     }
     
 
-    IsEditingEnabled: boolean = true;
-    public CardListService: CardListService;
-    public AddressListService: AddressListService;
-    public ContactListService: ContactListService;
-    InitializeServices() {
-        this.CardListService = new CardListService();
-        this.AddressListService = new AddressListService();
-        this.ContactListService = new ContactListService();
-    }
-
-    public AllAddresses: AddressList[] = [];
-    public AllContacts: ContactList[] = [];
+  
     UpdateAgent() {
 
         if (!this.FromSharedManifestEditAgentComponent) {
-            this._sharedAgentManifestService.GetIsAgentSharedManifests(this.EntityPM.AgentId, this.EntityPM.ShipmentNumber).subscribe((myResponse: ServiceResponse) => {
+            this._sharedAgentManifestService.GetIsAgentSharedManifests(this.EntityPM.AgentId, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     var isDisableNextButton: boolean = myResponse.Result ? true : false;
@@ -216,12 +204,7 @@ export class SharedManifestStarted {
                     logitudeWindow.Show("./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestEditAgentComponent");
                     logitudeWindow.WindowClosed.subscribe(s => {
                         if (s == "OK") {
-                            if (this.EntityPM.IsDirty) {
-                                this.isStartUpdateAgentManifest = true;
-                                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-                            }
-                            else this.StartUpdateAgentManifest();
-                         
+                            //this.StartUpdateAgentManifest();
                         }
                     });
                     this.CloseButtonClicked();
@@ -230,13 +213,13 @@ export class SharedManifestStarted {
             });
         }
         else {
-            this.IsUpdateSharedAgent = true;
+            this.IsShowUpdateAgentArea = true;
             SessionLocator.CurrentSession.CurrentWindow.Title = "Share Manifest with Updated Agent";
         }
 
     }
 
-    isStartUpdateAgentManifest: boolean = false;
+
     StartUpdateAgentManifest() {
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
@@ -247,22 +230,22 @@ export class SharedManifestStarted {
         logWindow.Show("./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestStarted");
     }
 
-    UpdateSharedAgent() {
-        var messageWindow: MessageWindow = new MessageWindow();
-        messageWindow.Show("ssssss");
-    }
 
 
-    StartSharingManifest() {
+
+    StartSharingManifest(isUpdateAgent: boolean = false) {
         SessionLocator.CurrentSession.StartBusyIndicator("Sharing Manifest...");
-        this._sharedAgentManifestService.ShareAgentManifest(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+        this._sharedAgentManifestService.ShareAgentManifest(this.EntityPM.Id, isUpdateAgent).subscribe((myResponse: ServiceResponse) => {
             SessionLocator.CurrentSession.StopBusyIndicator();
             this.IsEnableButtonSharedManifest = false;
             if (!myResponse.HasError) {
                 this.IsSuccessfullySharedManifest = true;
                 this.EntityPM.IsManifestSentToAgent = true;
-                ServiceLocator.SendTotangoUserActivity("Agents Shared Logistics", "Share Manifests");
 
+                this.IsShowUpdateAgentArea = false;
+                this.IsUpdateSharedAgent = false;
+                var activity: string = !isUpdateAgent ? "Share Manifests" : "Share Updated Agent";
+                ServiceLocator.SendTotangoUserActivity("Agents Shared Logistics", activity);
 
             } else {
 
@@ -280,8 +263,28 @@ export class SharedManifestStarted {
     }
 
     CloseButtonClicked() {
+
         SessionLocator.CurrentSession.CloseCurrentWindow();
+
     }
+
+
+
+    IsEditingEnabled: boolean = true;
+    public CardListService: CardListService;
+    public AddressListService: AddressListService;
+    public ContactListService: ContactListService;
+    InitializeServices() {
+        this.CardListService = new CardListService();
+        this.AddressListService = new AddressListService();
+        this.ContactListService = new ContactListService();
+    }
+
+    public AllAddresses: AddressList[] = [];
+    public AllContacts: ContactList[] = [];
+
+
+
 }
 
 export class PartnerItem extends BaseComponent {
@@ -420,7 +423,7 @@ export class PartnerItem extends BaseComponent {
         if (this.EntityPM.AgentId != newValue) {
             this.EntityPM.AgentId = newValue;
             this.IsDisableNextButton = true;
-            this.fatherComponent._sharedAgentManifestService.GetIsAgentSharedManifests(this.EntityPM.AgentId, this.EntityPM.ShipmentNumber).subscribe((myResponse: ServiceResponse) => {
+            this.fatherComponent._sharedAgentManifestService.GetIsAgentSharedManifests(this.EntityPM.AgentId, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     var isDisableNextButton: boolean = myResponse.Result ? true : false;
                     this.IsDisableNextButton = isDisableNextButton;
