@@ -827,10 +827,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyCode",
 					  						DefaultText =  "Currency",
-					  						FullLocalDefaultText =  "מטבע",
+					  						FullLocalDefaultText =  "קוד מטבע",
 					  						ListFieldLable =  "CurrencyCodeListLable",
 					  						ListLableDefaultText =  "Currency",
-					  						ListLocalDefaultText =  "מטבע",
+					  						ListLocalDefaultText =  "קוד מטבע",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -886,10 +886,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyName",
 					  						DefaultText =  "Currency",
-					  						FullLocalDefaultText =  "מטבע",
+					  						FullLocalDefaultText =  "שם מטבע",
 					  						ListFieldLable =  "CurrencyNameListLable",
 					  						ListLableDefaultText =  "Currency",
-					  						ListLocalDefaultText =  "מטבע",
+					  						ListLocalDefaultText =  "שם מטבע",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1850,7 +1850,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

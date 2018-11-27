@@ -491,6 +491,30 @@ namespace MeatadataGeneratorTool
 
         }
 
+        public void BuildAdditionalFeaturesList(List<FeaturesViewModel> features)
+        {
+            if (AdditionalFeaturesList == null)
+            {
+                AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
+
+            }
+            if (AdditionalFeaturesList != null && AdditionalFeaturesList.Count > 0)
+            {
+                AdditionalFeaturesList.Clear();
+            }
+            foreach (var item in features)
+            {
+                AdditionalFeaturesList.Add(item);
+            }
+
+
+
+            FeaturesEditControlVisibility = (AdditionalFeaturesList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+
+            this.SelectedFeature = AdditionalFeaturesList.FirstOrDefault();
+
+        }
+
         public void BuildDataContractsObsList(List<DataContractViewModel> DataContracts)
         {
             if (DataContractsObsList == null)

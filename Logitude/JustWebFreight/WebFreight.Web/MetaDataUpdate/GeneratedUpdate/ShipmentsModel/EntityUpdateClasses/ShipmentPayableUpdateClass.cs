@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentPayableUpdateClass
@@ -1296,6 +1299,226 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "MinAmount",
+					  						ObjectTableName =  "ShipmentPayable",
+					  						FieldsDataType =  "Double",
+					  						Code =  "MinAmount",
+					  						MaxLength =  1,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "MinAmount",
+					  						ListPropertyPath =  "MinAmount",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "MinAmount",
+					  						DefaultText =  "Min Amount",
+					  						HelpTextCode =  "MinAmount",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MaxAmount",
+					  						ObjectTableName =  "ShipmentPayable",
+					  						FieldsDataType =  "Double",
+					  						Code =  "MaxAmount",
+					  						MaxLength =  1,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "MaxAmount",
+					  						ListPropertyPath =  "MaxAmount",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "MaxAmount",
+					  						DefaultText =  "Max Amount",
+					  						HelpTextCode =  "MaxAmount",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "QuoteCostMinAmount",
+					  						ObjectTableName =  "ShipmentPayable",
+					  						FieldsDataType =  "Double",
+					  						Code =  "QuoteCostMinAmount",
+					  						MaxLength =  1,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "QuoteCostMinAmount",
+					  						ListPropertyPath =  "QuoteCostMinAmount",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "QuoteCostMinAmount",
+					  						DefaultText =  "Quote Cost Min Amount",
+					  						HelpTextCode =  "QuoteCostMinAmount",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "QuoteCostMaxAmount",
+					  						ObjectTableName =  "ShipmentPayable",
+					  						FieldsDataType =  "Double",
+					  						Code =  "QuoteCostMaxAmount",
+					  						MaxLength =  1,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "QuoteCostMaxAmount",
+					  						ListPropertyPath =  "QuoteCostMaxAmount",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "QuoteCostMaxAmount",
+					  						DefaultText =  "Quote Cost Max Amount",
+					  						HelpTextCode =  "QuoteCostMaxAmount",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "VatTypeId",
 					  						ObjectTableName =  "ShipmentPayable",
 					  						FieldsDataType =  "LookUp",
@@ -1430,7 +1653,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ShipmentPayableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentPayable" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ShipmentPayableTextCode_ShipmentPayable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPayable", DefaultText = "Shipment Payable",LocalDefaultText = null, ObjectTableId = ShipmentPayableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

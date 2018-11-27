@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentPackageUpdateClass
@@ -2595,7 +2598,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "ShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference1",
-					  						MaxLength =  150,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -2654,7 +2657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "ShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference2",
-					  						MaxLength =  150,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -2713,7 +2716,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "ShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference3",
-					  						MaxLength =  150,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -3713,7 +3716,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "ShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference4",
-					  						MaxLength =  150,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -4177,7 +4180,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ShipmentPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentPackage" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageMContainNoPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.M.ContainNoPackages", DefaultText = "Connected shipments contain no packages",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageMValueEditedByUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.M.ValueEditedByUser", DefaultText = "Value Edited by User, Double Click to Reset Calculated value",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage", DefaultText = "Shipment Package",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageMPackageTypeIsRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.M.PackageTypeIsRequired", DefaultText = "Package Type is required.",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageMWeightIsRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.M.WeightIsRequired", DefaultText = "Weight is required.",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageODimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.Dimensions", DefaultText = "Dimensions (L-W-H) (%UnitCode)",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageOAdditionalInformations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.AdditionalInformations", DefaultText = "Additional Info",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageODangerouseGoods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.DangerouseGoods", DefaultText = "Dangerous Goods",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageOAddPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.AddPackage", DefaultText = "Add Package",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageOEditPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.EditPackage", DefaultText = "Edit Package",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageOAddContainer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.AddContainer", DefaultText = "Add Container",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentPackageTextCode_ShipmentPackageOEditContainer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.O.EditContainer", DefaultText = "Edit Container",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

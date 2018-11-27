@@ -1,6 +1,7 @@
 ﻿using MeatadataGeneratorTool.CloseTablesData;
 using MeatadataGeneratorTool.DataContractsModule;
 using MeatadataGeneratorTool.EventTypes;
+using MeatadataGeneratorTool.Features;
 using MeatadataGeneratorTool.MenuButtons;
 using MeatadataGeneratorTool.QueryModule;
 using MeatadataGeneratorTool.ScreensModule;
@@ -38,7 +39,7 @@ namespace MeatadataGeneratorTool.Helpers
             List<EventTypesViewModel> EventTypes = new List<EventTypesViewModel>();
             List<DataContractViewModel> DataContracts = new List<DataContractViewModel>();
             List<TextCodesViewModel> TextCodes = new List<TextCodesViewModel>();
-
+            List<FeaturesViewModel> Features = new List<FeaturesViewModel>();
             foreach (XmlNode fieldNode in entity.ChildNodes)
             {
                 if (fieldNode.Name == "field")
@@ -97,6 +98,14 @@ namespace MeatadataGeneratorTool.Helpers
                     }
                 }
 
+                else if (fieldNode.Name == "AdditionalFeatures")
+                {
+                    foreach (XmlNode fNode in fieldNode.ChildNodes)
+                    {
+                        Features.Add(BuildFeature(fNode, objectTable));
+                    }
+                }
+
 
             }
 
@@ -110,6 +119,7 @@ namespace MeatadataGeneratorTool.Helpers
             objectTable.BuildMenuButtonsObsList(MenuButtons);
             objectTable.BuildDataContractsObsList(DataContracts);
             objectTable.BuildAdditionalTextCodesList(TextCodes);
+            objectTable.BuildAdditionalFeaturesList(Features);
             return objectTable;
         }
 
@@ -749,6 +759,21 @@ namespace MeatadataGeneratorTool.Helpers
            
 
             return textCode;
+        }
+
+        public FeaturesViewModel BuildFeature(XmlNode fieldNode, ObjectTableViewModel table)
+        {
+            FeaturesViewModel feature = new FeaturesViewModel(table, false);
+            feature.Code = GetAttributeStringValue(fieldNode.Attributes["Code"]);
+            feature.FeatureTypeCode = GetAttributeStringValue(fieldNode.Attributes["FeatureTypeCode"]);
+            feature.FeatureTextCodeCode = GetAttributeStringValue(fieldNode.Attributes["FeatureTextCodeCode"]);
+            feature.FeatureDefaultText = GetAttributeStringValue(fieldNode.Attributes["FeatureDefaultText"]);
+            feature.IsPackagable = GetAttributeBoolValue(fieldNode.Attributes["IsPackagable"]);
+            feature.IsOld = GetAttributeBoolValue(fieldNode.Attributes["IsOld"]);
+            feature.IsCoreFeature = GetAttributeBoolValue(fieldNode.Attributes["IsCoreFeature"]);
+            feature.IsBusinessUnitEnabled = GetAttributeBoolValue(fieldNode.Attributes["IsBusinessUnitEnabled"]);
+
+            return feature;
         }
 
         public DataContractViewModel BuildDataContract(XmlNode fieldNode, ObjectTableViewModel table)

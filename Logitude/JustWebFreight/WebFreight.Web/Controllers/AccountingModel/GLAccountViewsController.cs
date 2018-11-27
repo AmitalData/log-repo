@@ -454,9 +454,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         private decimal CalculateLocalAmount(decimal amount, string currencyId)
         {
+            if (tenantCurrency == currencyId)
+                return amount;
+
             RatesTableList rateList = ratesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == currencyId);
             var rate = rateList == null ? 0 : rateList.Rate;
-
+            
             return amount * (decimal)rate;
 
         }

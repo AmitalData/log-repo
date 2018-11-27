@@ -177,7 +177,7 @@ namespace MeatadataGeneratorTool.Features
 
         private void CancelBtnMethod()
         {
-            viewModel.TextCodesWindow.Close();
+            viewModel.FeaturesWindow.Close();
         }
 
         private void OkBtnMethod()
@@ -191,7 +191,7 @@ namespace MeatadataGeneratorTool.Features
                 ButtonsVisibility = Visibility.Collapsed;
                 viewModel.UpdateFeaturesList(this);
 
-                viewModel.TextCodesWindow.Close();
+                viewModel.FeaturesWindow.Close();
             }
 
         }
@@ -209,11 +209,17 @@ namespace MeatadataGeneratorTool.Features
                 str.AppendLine("Default Text is Required");
             }
 
-            if (string.IsNullOrEmpty(this.FeatureTextCodeCode))
+            if (string.IsNullOrEmpty(this.FeatureTypeCode))
             {
                 str.AppendLine("Type is Required");
             }
 
+            if (string.IsNullOrEmpty(this.FeatureTextCodeCode))
+            {
+                this.FeatureTextCodeCode = this.viewModel.ObjectTableName + ".Features." + this.Code;
+            }
+
+            
             //if (string.IsNullOrEmpty(this.LocalName))
             //{
             //    str.AppendLine("Local Name is Required");
