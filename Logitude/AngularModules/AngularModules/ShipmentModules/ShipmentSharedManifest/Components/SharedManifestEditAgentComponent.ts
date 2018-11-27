@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="sharedmanifeststarted.ts" />
+
 
 import {Component, OnInit} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -6,11 +7,15 @@ import {PartnerItem} from './SharedManifestStarted';
 import {ShipmentPM} from '../../../Shipment/EntityPMs/ShipmentPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { SharedManifestStarted } from './SharedManifestStarted';
+import { SharedAgentManifestService } from '../../../Shipment/Services/Others/SharedAgentManifestService';
 
 @Component({
     moduleId: module.id,
     selector: 'SharedManifestEditAgentComponent',
     templateUrl: './SharedManifestEditAgentComponent.html',
+    providers: [SharedAgentManifestService],
 })
 
 export class SharedManifestEditAgentComponent implements OnInit {
@@ -18,11 +23,9 @@ export class SharedManifestEditAgentComponent implements OnInit {
     public DataContext: PartnerItem;
     public ObjectTableName: string = "Shipment";
     private isMyCustomer: boolean = false;
-    private oldCustomerPartnerId: string = null;
     public ValidationErrorsList: string[];
     IsSaveShipment: boolean = false;
-
-    constructor() {
+    constructor(public _sharedAgentManifestService: SharedAgentManifestService) {
         this.Listen();
     }
 
@@ -54,13 +57,28 @@ export class SharedManifestEditAgentComponent implements OnInit {
 
     SetDataContext(dataContext: PartnerItem) {
         this.DataContext = dataContext;
-
-        
         this.EntityPM = dataContext.EntityPM;
         this.isMyCustomer = dataContext.IsCustomer;
-        this.oldCustomerPartnerId = this.EntityPM.CustomerId;
         this.Clone();
+        this.IsAgentSharedManifests(dataContext);
     }
+
+
+
+    IsAgentSharedManifests(partnerItem: PartnerItem) {
+
+        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+
+        this._sharedAgentManifestService.GetIsAgentSharedManifests(partnerItem.AgentId, partnerItem.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            if (!myResponse.HasError) {
+                partnerItem.IsDisableNextButton = myResponse.Result ? true : false;;
+            }
+
+        });
+    }
+
+
 
     CancelButtonClicked() {
         this.RejectChanges();
@@ -102,7 +120,7 @@ export class SharedManifestEditAgentComponent implements OnInit {
 
                                 if (this.EntityPM.ShipmentLevelCode == "C") {
 
-                                    this.DataContext.fatherComponent._sharedAgentManifestService.GetCheckIfMasterShipmentHaveHouseWithOtherAgent(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.Tenant).subscribe((myResponse: any) => {
+                                    this._sharedAgentManifestService.GetCheckIfMasterShipmentHaveHouseWithOtherAgent(this.EntityPM.Id, this.EntityPM.AgentId, this.EntityPM.Tenant).subscribe((myResponse: any) => {
                                         SessionLocator.CurrentSession.StopBusyIndicator();
                                         if (!myResponse.HasError) {
                                             if (myResponse.Result == true) {

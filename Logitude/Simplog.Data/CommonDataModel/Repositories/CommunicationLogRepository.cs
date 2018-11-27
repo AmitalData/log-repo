@@ -103,15 +103,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from a in context.CommunicationLogs.Include("Document")
                     where a.EntityId == entityId && a.QueueName == queueName && a.Tenant == tenant && a.Subject == subject
-                    select a).OrderByDescending(d=>d.CreateDate).FirstOrDefault();
+                    select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
 
         }
 
-        public CommunicationLog GetCommunicationLogByEntityIdAndQueueNameAndSubject(string entityId, string queueName, string subject)
+        public List<CommunicationLog> GetShareManifestCommunicationLogByEntityIdAndQueueNameAndSubject(string entityId, string queueName, string subject , string subject2)
         {
             return (from a in context.CommunicationLogs.Include("Document")
-                    where a.EntityId == entityId && a.QueueName == queueName && a.Subject == subject
-                    select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
+                    where a.EntityId == entityId && a.QueueName == queueName && (a.Subject == subject  ||  a.Subject == subject2)
+                    select a).OrderByDescending(d => d.CreateDate).ToList();
 
         }
 
