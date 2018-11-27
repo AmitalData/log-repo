@@ -36,7 +36,11 @@ export class SharedManifestComponent {
     ManifestSL: ManifestSL;
     HousesList: HouseSL[] = [];
     MessageNoHouseFound: string = "No Houses Found";
-    
+
+
+    IsDisableEdit: boolean = false;
+
+
     IsNoHouses: boolean;
     LableMasterCerate: string = "Create";
     LableHouseArea: string = "";
@@ -76,9 +80,16 @@ export class SharedManifestComponent {
                         if (this.ManifestSL.ShipmentLevelCode == 'D') {
                             this.MessageNoHouseFound = "This is a direct shipment";
                         }
-                        if (!AppTool.IsNullOrEmpty(this.ManifestSL.MasterNumber) && this.ManifestSL.TransportModeId == "A") {
+
+                        if (this.CurrentEntity.CancelledBySenderAgent) {
+                            this.ValidationWarningsList = [];
+                            this.ValidationWarningsList.push("The manifest has got cancelled by the sender.You are bot allowed to reactive it.");
+                            this.IsDisableEdit = true;
+                        }
+                        else if (!AppTool.IsNullOrEmpty(this.ManifestSL.MasterNumber) && this.ManifestSL.TransportModeId == "A") {
                             this.CheckIfAnyShipmentHaveMasterNumber(this.ManifestSL.MasterNumber, this.ManifestSL.LongMaster);
                         }
+                    
                   
                         if (this.ManifestSL) {
                             this.HousesList = this.ManifestSL.Houses;
@@ -257,14 +268,13 @@ export class SharedManifestComponent {
     }
 
     ChangeStatusAgentSharedManifest() {
+            var status = this.CurrentEntity.StatusCode == "WAIT" ? "CANC" : "WAIT";
 
-        var status = this.CurrentEntity.StatusCode == "WAIT" ? "CANC" : "WAIT";
-
-        if (status == "CANC") {
-            ServiceLocator.SendTotangoUserActivity("Agents Shared Logistics", "Decline Shared Manifests");
-        }
-
-        this.UpDateAgentSharedManifest(status);
+            if (status == "CANC") {
+                ServiceLocator.SendTotangoUserActivity("Agents Shared Logistics", "Decline Shared Manifests");
+            }
+            this.UpDateAgentSharedManifest(status);
+        
     }
 
     UpDateAgentSharedManifest(status:string) {
