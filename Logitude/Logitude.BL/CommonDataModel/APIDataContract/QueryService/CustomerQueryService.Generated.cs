@@ -93,8 +93,8 @@ using Simplog.Data.CommonDataModel;
 							 			  
 				   if(MyEntityPM.GLAccountId != null)
 				   {
-					   GLAccountQueryService GLAccountService2 = new GLAccountQueryService(Tenant);
-					   					   temp.GLAccount = GLAccountService2.GetGLAccountById(MyEntityPM.GLAccountId,Tenant); 
+					   //GLAccountQueryService GLAccountService2 = new GLAccountQueryService(Tenant);
+					   //					   temp.GLAccount = GLAccountService2.GetGLAccountById(MyEntityPM.GLAccountId,Tenant); 
 			       
 					   				   }
 				   					
@@ -131,7 +131,7 @@ using Simplog.Data.CommonDataModel;
 					}
 					
 					   					   
-					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
+					if(temp == null)
 					{
 					    throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
 					} 
@@ -174,16 +174,16 @@ using Simplog.Data.CommonDataModel;
 						temp.Contacts = ContactService3.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName);
 					}
 
-								 					GLAccountQueryService GLAccountGLAccountService = new GLAccountQueryService(Tenant);
-					if(MyEntity.GLAccount != null)
-					{
-						var myGLAccountPM = GLAccountGLAccountService.GLAccountDataMappingAndValidatin(MyEntity.GLAccount,Tenant,ComputingPartnerName);
-												if(myGLAccountPM != null)
-						{
-							temp.GLAccountId = myGLAccountPM.Id;
-						}
+					//			 					GLAccountQueryService GLAccountGLAccountService = new GLAccountQueryService(Tenant);
+					//if(MyEntity.GLAccount != null)
+					//{
+					//	var myGLAccountPM = GLAccountGLAccountService.GLAccountDataMappingAndValidatin(MyEntity.GLAccount,Tenant,ComputingPartnerName);
+					//							if(myGLAccountPM != null)
+					//	{
+					//		temp.GLAccountId = myGLAccountPM.Id;
+					//	}
 						 
-					}
+					//}
 			
 										   
 					   return temp;

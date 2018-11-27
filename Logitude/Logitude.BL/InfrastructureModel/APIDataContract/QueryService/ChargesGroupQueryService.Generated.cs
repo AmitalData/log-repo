@@ -86,7 +86,7 @@ using Simplog.Data.InfrastructureModel;
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
 										   
-					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
+					if(temp == null)
 					{
 					    throw new ApplicationException("ChargesGroup with Id " + MyEntity.Id + " doesn't exist");
 					} 

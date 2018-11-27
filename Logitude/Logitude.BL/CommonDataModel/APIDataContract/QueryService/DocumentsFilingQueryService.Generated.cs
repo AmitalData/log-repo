@@ -136,7 +136,7 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
 					} 					   
-					if(temp == null || (temp != null && string.IsNullOrEmpty(MyEntity.Id)))
+					if(temp == null)
 					{
 					    throw new ApplicationException("DocumentsFiling with Code " + MyEntity.Code + " doesn't exist");
 					} 
