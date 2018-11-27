@@ -81,12 +81,14 @@ export class SharedManifestComponent {
                             this.MessageNoHouseFound = "This is a direct shipment";
                         }
 
-                        if (this.CurrentEntity.CancelledBySenderAgent) {
-                            this.ValidationWarningsList = [];
-                            this.ValidationWarningsList.push("The manifest has got cancelled by the sender.You are bot allowed to reactive it.");
-                            this.IsDisableEdit = true;
-                        }
-                        else if (!AppTool.IsNullOrEmpty(this.ManifestSL.MasterNumber) && this.ManifestSL.TransportModeId == "A") {
+                        //if (this.CurrentEntity.CancelledBySenderAgent) {
+                        //    this.ValidationWarningsList = [];
+                        //    this.ValidationWarningsList.push("The manifest has got cancelled by the sender.You are bot allowed to reactive it.");
+                        //    this.IsDisableEdit = true;
+                        //}
+                        //else 
+
+                        if (!AppTool.IsNullOrEmpty(this.ManifestSL.MasterNumber) && this.ManifestSL.TransportModeId == "A") {
                             this.CheckIfAnyShipmentHaveMasterNumber(this.ManifestSL.MasterNumber, this.ManifestSL.LongMaster);
                         }
                     
