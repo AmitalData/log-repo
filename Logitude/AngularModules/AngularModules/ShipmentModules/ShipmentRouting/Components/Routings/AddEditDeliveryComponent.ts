@@ -138,7 +138,6 @@ export class AddEditDeliveryComponent implements OnDestroy {
     }
 
 
-    // WarehouseRelease
 
     NewWarehouseReleaseButtonClicked() {
 
@@ -240,8 +239,6 @@ export class AddEditDeliveryComponent implements OnDestroy {
         logWindow.Show("./Warehouse/Components/NewWarehouseReleaseComponent");
 
     }
-    // End
-
 
     private selectedTabCode: string;
     get SelectedTabCode() { return this.selectedTabCode; }
