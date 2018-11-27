@@ -19,6 +19,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 itemPoco.ShipmentId = itemPM.ShipmentId;
             }
 
+            if (itemPM.ContainerNumber != null)
+            {
+                itemPM.ContainerNumber = itemPM.ContainerNumber.Trim();
+            }
+
             itemPoco.ClassNumber = itemPM.ClassNumber;
             itemPoco.ContainerNumber = itemPM.ContainerNumber;
             itemPoco.Description = itemPM.Description;

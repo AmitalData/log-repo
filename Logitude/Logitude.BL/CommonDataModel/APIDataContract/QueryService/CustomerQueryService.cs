@@ -56,18 +56,18 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     temp = myQuery.GetSinglePM(MyEntity.Id, Tenant);
                 }
 
-                if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
-                {
-                    ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-                    var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode, ComputingPartnerName, "Card");
+                //if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+                //{
+                //    ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+                //    var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode, ComputingPartnerName, "Card");
 
-                    if (string.IsNullOrEmpty(MyCode))
-                    {
-                        throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
-                    }
+                //    if (string.IsNullOrEmpty(MyCode))
+                //    {
+                //        throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+                //    }
 
-                    temp = myQuery.GetSingleCustomerPMByCode(MyCode, Tenant);
-                }
+                //    temp = myQuery.GetSingleCustomerPMByCode(MyCode, Tenant);
+                //}
 
                 if (temp == null)
                 {
@@ -93,13 +93,22 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     }
                 }
 
-                AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
+                AddressQueryService AddressAddressService = new AddressQueryService(Tenant);
                 if (MyEntity.MainAddress != null)
                 {
-                    var myMainAddressPM = MainAddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+                    var myMainAddressPM = AddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.MainAddress, Tenant, ComputingPartnerName);
                     if (myMainAddressPM != null)
                     {
                         temp.MainAddressId = myMainAddressPM.Id;
+                    }
+                }
+                
+                if (MyEntity.BillingAddress != null)
+                {
+                    var myBillingAddressPM = AddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
+                    if (myBillingAddressPM != null)
+                    {
+                        temp.BillingAddressId = myBillingAddressPM.Id;
                     }
                 }
 
@@ -120,6 +129,16 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     AddressPM address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
                     address.AddressTypeId = "M";
                     address.Description = "Main Address";
+                    address.Tenant = Tenant;
+                    temp.Addresses.Add(address);
+                }
+
+                if (MyEntity.BillingAddress != null)
+                {
+                    AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
+                    AddressPM address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.BillingAddress, Tenant, ComputingPartnerName);
+                    address.AddressTypeId = "B";
+                    address.Description = "Billing Address";
                     address.Tenant = Tenant;
                     temp.Addresses.Add(address);
                 }

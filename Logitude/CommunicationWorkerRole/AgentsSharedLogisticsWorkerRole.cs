@@ -35,6 +35,7 @@ using Microsoft.Practices.Unity;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 
 namespace CommunicationWorkerRole
 {
@@ -111,8 +112,7 @@ namespace CommunicationWorkerRole
                                                     Agent destinationAgent = agentRepository.GetSingleAgentBySharedKey(manifestSL.AgentSharedKey, manifestSL.DestinationAgentTenant);
                                                     Contact systemContact = contactRepository.GetSingleContactByEmail("system@tenant" + manifestSL.DestinationAgentTenant + ".com", manifestSL.DestinationAgentTenant, false);
 
-
-                                               
+                                                    #region Trans Port
                                                     Port fromPort = WcfServicesHelper.GetPortOrCopyToTenant(manifestSL.MainCarriageFromPort.CountryCode + manifestSL.MainCarriageFromPort.Code, manifestSL.DestinationAgentTenant, portRepository);
                                                     Port toPort = null;
                                                     if (manifestSL.FinalDistenationPort != null)
@@ -150,6 +150,43 @@ namespace CommunicationWorkerRole
                                                             manifestSL.ShipmentDelivery.ToPortId = pickUpToPort != null ? pickUpToPort.Id : null;
                                                         }
                                                     }
+                                                    #endregion
+
+                                                    //#region Cancel Old Mainfest
+                                                    //if (commLog.Subject == "Update Shared Agent")
+                                                    //{
+
+                                                    //    AgentSharedManifestHelper agentSharedManifestHelper = new AgentSharedManifestHelper();
+                                                    //    List<ManifestSL> oldManifestSLLists = agentSharedManifestHelper.GetAgentShareManifestSLByEntityId(commLog.EntityId , tenant);
+                                                    //    foreach(ManifestSL oldManifestSL in oldManifestSLLists)
+                                                    //    {
+                                                    //        if (oldManifestSL.AgentSharedManifestId  != manifestSL.AgentSharedManifestId)
+                                                    //        {
+                                                    //            AgentSharedManifestRepository agentSharedManifestRepository = new AgentSharedManifestRepository(tenant);
+                                                    //            AgentSharedManifest agentSharedManifest = agentSharedManifestRepository.GetSingleAgentSharedManifest(oldManifestSL.AgentSharedManifestId, oldManifestSL.DestinationAgentTenant);
+                                                    //            if (agentSharedManifest != null && !agentSharedManifest.CancelledBySenderAgent)
+                                                    //            {
+                                                    //                ShipmentQuery shipmentQuery = new ShipmentQuery(agentSharedManifest.Tenant);
+                                                    //                bool isCreate = shipmentQuery.CheckIfShipmentCreateFromManinfest(agentSharedManifest.Id, agentSharedManifest.Tenant);
+                                                    //                if (isCreate)
+                                                    //                {
+                                                    //                    agentSharedManifestHelper.SendEmail(manifestSL.AgentSharedKey, manifestSL.ShipmentNumber, tenant);
+                                                    //                }
+                                                    //                else
+                                                    //                {
+                                                    //                    agentSharedManifest.StatusCode = "CANC";
+                                                    //                    agentSharedManifest.CancelledBySenderAgent = true;
+                                                    //                    agentSharedManifestRepository.Update(agentSharedManifest);
+                                                    //                    agentSharedManifestRepository.SubmitChanges();
+                                                    //                }
+                                                    //            }
+                                                    //        }
+                                                    //    }
+
+                                    
+                                                    //}
+                                                    //#endregion
+
 
                                                     AgentSharedManifestService service = new AgentSharedManifestService(agentContext, manifestSL.DestinationAgentTenant);
                                                     AgentSharedManifestPM agentSharedPM = new AgentSharedManifestPM()
