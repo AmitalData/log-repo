@@ -88,5 +88,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public DateTime? MainCarriageATA { get; set; }
     
     public DateTime? MainCarriageATD { get; set; }
+    
+    public bool IsAccountingClosed { get; set; }
     }
 } 

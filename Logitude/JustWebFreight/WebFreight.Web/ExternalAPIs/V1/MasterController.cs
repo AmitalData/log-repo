@@ -30,6 +30,7 @@ using System.Reflection;
 using SilverlightExpressions;
 using WebFreight.Web.Validators;
 using Simplog.Data.Helpers;
+using WebFreight.Web.ShipmentsModel.DomainServices;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -108,7 +109,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             if (requiredFields.Count > 0)
                             {
                                 foreach (ObjectTableRuleField field in requiredFields)
-                                {                                    
+                                {
                                     ObjectField f = ObjectFieldRepository.GetSingleObjectFieldById(field.ObjectFieldId, authToken.Tenant);
                                     errorMessage = errorMessage + ", " + TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
                                 }
@@ -121,6 +122,19 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
 
                             entityPM.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                        }
+
+                        if (entity.IsAccountingClosed)
+                        {
+                            if (!entity.IsOperationalClosed)
+                            {
+                                throw new ApplicationException("Shipment shoud be closed operationally");
+                            }
+
+                            else
+                            {
+                                entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                            }
                         }
 
                         if (entity.Houses.Count > 0)
@@ -242,6 +256,72 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     }
                                 }
 
+                                bool hasOpenPayables = false;
+                                bool hasOpenReceivables = false;
+                                if (entity.IsAccountingClosed && entity.IsOperationalClosed)
+                                {
+                                    List<ShipmentReceivable> houseReceivables = MyContext.ShipmentReceivables.Where(d => d.ShipmentId == myDataBaseShipment.Id).ToList();
+                                    List<ShipmentPayable> housePayables = MyContext.ShipmentPayables.Where(d => d.ShipmentId == myDataBaseShipment.Id).ToList();
+
+                                    if (!hasOpenReceivables)
+                                    {
+                                        #region
+                                        if (houseReceivables.Count > 0)
+                                        {
+                                            foreach (ShipmentReceivable recitem in houseReceivables)
+                                            {
+                                                if (recitem.ShipmentReceivableLineStatusCode != "ACCT" && recitem.ShipmentReceivableLineStatusCode != "EMPT")
+                                                {
+                                                    if (recitem.TotalAmount != null && recitem.TotalAmount != 0)
+                                                    {
+                                                        hasOpenReceivables = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        #endregion
+                                    }
+
+                                    if (!hasOpenPayables)
+                                    {
+                                        #region
+                                        if (housePayables.Count > 0)
+                                        {
+                                            foreach (ShipmentPayable payaitem in housePayables)
+                                            {
+                                                if (payaitem.ShipmentPayableLineStatusCode != "ACCT" && payaitem.ShipmentPayableLineStatusCode != "EMPT" && payaitem.ShipmentPayableParentId == null)
+                                                {
+                                                    if (payaitem.ShipmentPayableAmountTypeCode == "NEXP")
+                                                    {
+                                                        if (payaitem.AccountedAmount != null && payaitem.AccountedAmount != 0)
+                                                        {
+                                                            hasOpenPayables = true;
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    else
+                                                    {
+                                                        if (payaitem.ExpectedAmount != null && payaitem.ExpectedAmount != 0)
+                                                        {
+                                                            hasOpenPayables = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        #endregion
+                                    }
+                                }
+
+                                if (hasOpenPayables || hasOpenReceivables)
+                                {
+                                    isValid = false;
+                                    throw new ApplicationException("Can’t close for accounting: House #" + myDataBaseShipment.ShipmentNumber + " has open receivables/ payables");
+                                }
+
                                 if (isValid)
                                 {
                                     // connect to master
@@ -280,24 +360,35 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
-                        if (entityPM.IsOperationalClosed)
+                        ShipmentRepository entityRepository = new ShipmentRepository(MyContext);
+                        List<Shipment> allHouses = entityRepository.GetHouseShipmentsForMaster(entityPM.Id, authToken.Tenant);
+
+                        if (allHouses.Count > 0)
                         {
-                            ShipmentRepository entityRepository = new ShipmentRepository(MyContext);
-                            List<Shipment> allHouses = entityRepository.GetHouseShipmentsForMaster(entityPM.Id, authToken.Tenant);
                             foreach (Shipment item in allHouses)
                             {
-                                item.IsOperationalClosed = true;
-                                item.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
-
-                                if (item.FirstOperationalCloseDate == null)
+                                if (entityPM.IsOperationalClosed)
                                 {
-                                    item.FirstOperationalCloseDate = item.OperationalCloseDate;
+                                    item.IsOperationalClosed = true;
+                                    item.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+
+                                    if (item.FirstOperationalCloseDate == null)
+                                    {
+                                        item.FirstOperationalCloseDate = item.OperationalCloseDate;
+                                    }
                                 }
+
+                                if (entityPM.IsAccountingClosed)
+                                {
+                                    item.IsAccountingClosed = true;
+                                    item.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                                }
+
+                                entityRepository.Update(item);
                             }
 
                             entityRepository.SubmitChanges();
                         }
-
                         scope.Complete();
                     }
 
