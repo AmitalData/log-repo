@@ -370,7 +370,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         MasterDate = pm.CreateDateTime,
                         MoveTypeCode = pm.MoveTypeCode,
                         MoveTypeName = !string.IsNullOrEmpty(pm.MoveTypeName) ? pm.MoveTypeName : pm.MoveTypeCode,
-                     
+                        OrginalAgentId = pm.AgentId,
 
                     };
 
@@ -1561,15 +1561,35 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 bool result = false;
 
                 AgentSharedManifestHelper agentSharedManifestHelper = new AgentSharedManifestHelper();
-                ManifestSL manifestSL = agentSharedManifestHelper.GetAgentShareManifestSLByEntityId(entityid, authToken.Tenant);
+                List<ManifestSL> manifestSLLists = agentSharedManifestHelper.GetAgentShareManifestSLByEntityId(entityid, authToken.Tenant);
 
-                if (manifestSL != null)
+                if (manifestSLLists.Count> 0)
                 {
-                    AgentRepository agentRepository = new AgentRepository(authToken.Tenant);
-                    Agent agent = agentRepository.GetSingleAgentBySharedKey(manifestSL.AgentSharedKey, authToken.Tenant);
-                    if (agent != null)
+                    var manifestSL = manifestSLLists.Where(d => d.OrginalAgentId == agentId).FirstOrDefault();
+                    if (manifestSL != null)
                     {
-                        if (agent.Id == agentId) result = true;
+                        result = true;
+                    }
+                }
+
+                if (!result)
+                {
+                    foreach (ManifestSL manifestSL in manifestSLLists.Where(d => string.IsNullOrEmpty(d.OrginalAgentId)).ToList())
+                    {
+                        if (manifestSL != null)
+                        {
+                            AgentRepository agentRepository = new AgentRepository(authToken.Tenant);
+                            Agent agent = agentRepository.GetSingleAgentBySharedKey(manifestSL.AgentSharedKey, authToken.Tenant);
+                            if (agent != null)
+                            {
+                                if (agent.Id == agentId)
+                                {
+                                    result = true;
+                                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                                }
+                            }
+
+                        }
                     }
                 }
 

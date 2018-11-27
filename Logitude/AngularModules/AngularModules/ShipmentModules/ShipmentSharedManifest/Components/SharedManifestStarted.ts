@@ -52,18 +52,16 @@ export class SharedManifestStarted {
 
 
     FromSharedManifestEditAgentComponent: boolean = false;
-    IsUpdateSharedAgent: boolean = false;
+    IsShareUpdatedAgent: boolean = false;
     IsShowUpdateAgentArea: boolean = false;
 
     SetWindowArgs(args: any) {
         this.EntityPM = args.EntityPM;
         this.FromSharedManifestEditAgentComponent = args.FromSharedManifestEditAgentComponent;
-        
-        if (this.EntityPM) {
-            if (this.EntityPM.IsManifestSentToAgent) {
-                this.LableShareBoutton = "Next";
-                this.IsUpdateSharedAgent = true;
-            }
+        this.IsShareUpdatedAgent = args.IsShareUpdatedAgent;
+
+        if (this.IsShareUpdatedAgent) {
+            this.LableShareBoutton = "Next";
         }
 
         this.ValidationErrorsList = [];
@@ -189,28 +187,20 @@ export class SharedManifestStarted {
     UpdateAgent() {
 
         if (!this.FromSharedManifestEditAgentComponent) {
-            this._sharedAgentManifestService.GetIsAgentSharedManifests(this.EntityPM.AgentId, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                if (!myResponse.HasError) {
-                    var isDisableNextButton: boolean = myResponse.Result ? true : false;
-                    this.InitializeServices();
-                    var partnerItem: PartnerItem = new PartnerItem(this, "AGENT");
-                    partnerItem.IsDisableNextButton = isDisableNextButton;
+            this.InitializeServices();
 
-                    var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Title = "Share Update Agent";
-                    logitudeWindow.DataContext = partnerItem;
-
-                    logitudeWindow.Show("./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestEditAgentComponent");
-                    logitudeWindow.WindowClosed.subscribe(s => {
-                        if (s == "OK") {
-                            //this.StartUpdateAgentManifest();
-                        }
-                    });
-                    this.CloseButtonClicked();
+            var partnerItem: PartnerItem = new PartnerItem(this, "AGENT");
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Title = "Share Update Agent";
+            logitudeWindow.DataContext = partnerItem;
+            logitudeWindow.Show("./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestEditAgentComponent");
+            logitudeWindow.WindowClosed.subscribe(s => {
+                if (s == "OK") {
+                    this.StartUpdateAgentManifest();
                 }
-
             });
+
+            this.CloseButtonClicked();
         }
         else {
             this.IsShowUpdateAgentArea = true;
@@ -226,6 +216,7 @@ export class SharedManifestStarted {
         var logWindow = new LogitudeWindow();
         windowArgs.FromSharedManifestEditAgentComponent = true;
         logWindow.Title = "Share Updated Agent";
+        windowArgs.IsShareUpdatedAgent = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestStarted");
     }
@@ -234,32 +225,35 @@ export class SharedManifestStarted {
 
 
     StartSharingManifest(isUpdateAgent: boolean = false) {
-        SessionLocator.CurrentSession.StartBusyIndicator("Sharing Manifest...");
-        this._sharedAgentManifestService.ShareAgentManifest(this.EntityPM.Id, isUpdateAgent).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            this.IsEnableButtonSharedManifest = false;
-            if (!myResponse.HasError) {
-                this.IsSuccessfullySharedManifest = true;
-                this.EntityPM.IsManifestSentToAgent = true;
 
-                this.IsShowUpdateAgentArea = false;
-                this.IsUpdateSharedAgent = false;
-                var activity: string = !isUpdateAgent ? "Share Manifests" : "Share Updated Agent";
-                ServiceLocator.SendTotangoUserActivity("Agents Shared Logistics", activity);
+    
+            SessionLocator.CurrentSession.StartBusyIndicator("Sharing Manifest...");
+            this._sharedAgentManifestService.ShareAgentManifest(this.EntityPM.Id, isUpdateAgent).subscribe((myResponse: ServiceResponse) => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.IsEnableButtonSharedManifest = false;
+                if (!myResponse.HasError) {
+                    this.IsSuccessfullySharedManifest = true;
+                    this.EntityPM.IsManifestSentToAgent = true;
 
-            } else {
+                    this.IsShowUpdateAgentArea = false;
+                    this.IsShareUpdatedAgent = false;
+                    var activity: string = !isUpdateAgent ? "Share Manifests" : "Share Updated Agent";
+                    ServiceLocator.SendTotangoUserActivity("Agents Shared Logistics", activity);
 
-                if (myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
-                    myResponse.ErrorsArray.forEach((item) => {
-                        this.ValidationErrorsList.push(item);
-                    });
+                } else {
 
+                    if (myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
+                        myResponse.ErrorsArray.forEach((item) => {
+                            this.ValidationErrorsList.push(item);
+                        });
+
+                    }
+                    this.HasError = true;
                 }
-                this.HasError = true;
-            }
 
 
-        });
+            });
+        
     }
 
     CloseButtonClicked() {

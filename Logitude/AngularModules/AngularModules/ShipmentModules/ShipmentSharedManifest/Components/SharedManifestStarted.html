@@ -43,7 +43,7 @@
 
                                 </div>
 
-                                <div class="MessageText" *ngIf="IsEnableButtonSharedManifest && !IsSuccessfullySharedManifest && !HasError && !IsUpdateSharedAgent" style="display:block;margin-right:5px;vertical-align:top;font-size:13px;overflow:hidden">Please notice that this is a one-time sharing, changing details afterwards won’t update the agent</div>
+                                <div class="MessageText" *ngIf="IsEnableButtonSharedManifest && !IsSuccessfullySharedManifest && !HasError && !IsShareUpdatedAgent" style="display:block;margin-right:5px;vertical-align:top;font-size:13px;overflow:hidden">Please notice that this is a one-time sharing, changing details afterwards won’t update the agent</div>
                            
 
 
@@ -72,7 +72,7 @@
                         <div></div>
                     </td>
 
-                    <td *ngIf="!IsSuccessfullySharedManifest || IsUpdateSharedAgent" style="width: 57px;">
+                    <td *ngIf="!IsSuccessfullySharedManifest || IsShareUpdatedAgent" style="width: 57px;">
                         <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
                     </td>
 
@@ -81,8 +81,8 @@
                     </td>
                  
                     <td style="width: 57px;">
-                        <button *ngIf="!IsSuccessfullySharedManifest || IsUpdateSharedAgent" [disabled]="!IsEnableButtonSharedManifest"  class="RedButton" (click)="SharingManifesButtonClick()">{{LableShareBoutton}}</button>
-                        <button *ngIf="IsSuccessfullySharedManifest && !IsUpdateSharedAgent" class="Button" (click)="CloseButtonClicked()">Close</button>
+                        <button *ngIf="!IsSuccessfullySharedManifest || IsShareUpdatedAgent" [disabled]="!IsEnableButtonSharedManifest"  class="RedButton" (click)="SharingManifesButtonClick()">{{LableShareBoutton}}</button>
+                        <button *ngIf="IsSuccessfullySharedManifest && !IsShareUpdatedAgent" class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
                 </tr>
             </table>

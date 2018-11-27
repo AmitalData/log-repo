@@ -66591,6 +66591,10 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature AgentSharedManifestFeature_07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OceanAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.OceanAgentSharedManifests", NameTextCodeDefaultText = "Ocean Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AgentSharedManifestFeature_08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InlandAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.InlandAgentSharedManifests", NameTextCodeDefaultText = "Inland Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AgentSharedManifestFeature_09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelledAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.CancelledAgentSharedManifests", NameTextCodeDefaultText = "Cancelled Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AgentSharedManifestFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATESHAREDAGENT", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.UpdateSharedAgent", NameTextCodeDefaultText = "Update Shared Agent", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
+
             #endregion
 
             #region ContainerFollowUp
