@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 
 @Component({
@@ -116,15 +116,7 @@ export class FieldTemplateComponent {
         }
 
     }
-
-
-
-
-
-
-
-
-
+    
     public LastShipmentDateColor: string = null;
     public LastShipmentDateValue: string = null;
     private SetLastShipmentDateTemplate() {
@@ -144,7 +136,7 @@ export class FieldTemplateComponent {
                 this.LastShipmentDateColor = "Red";
             }
 
-            var days = DateTool.GetDaysBetweenDates(myFieldDate, DateTool.GetCurrentDateAsUtc());
+            var days = DateTool.GetDaysBetweenDates(myFieldDate, DateTool.GetCurrentDateAsUtc(), true);
 
             if (days == 0) {
                 this.LastShipmentDateValue = "Today";
