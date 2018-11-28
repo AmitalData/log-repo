@@ -36,33 +36,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     }
 
                     #region Authentication
-                   // bool invalidPrimaryKey = false;
+
                     string shipmentId = string.Empty;
                     ShipmentQuery shipmentQuery = new ShipmentQuery(blobInfo.Tenant);
                     if (!string.IsNullOrEmpty(blobInfo.SecurityKey))
                     {
                         shipmentId = shipmentQuery.GetShipmentIdBySecurityKeyAndShipmentNumber(blobInfo.ShipmentNumber, blobInfo.SecurityKey, blobInfo.Tenant);
                     }
-                    //else if (!string.IsNullOrEmpty(blobInfo.PrimaryKey))
-                    //{
-                   
-                    //    APICredentialsHelper helper = new APICredentialsHelper();
-                    //    APICredentialsParameters Key = new APICredentialsParameters();
-                    //    Key.PrimaryKey = blobInfo.PrimaryKey;
-                    //    ApiCredential data = helper.CheckUserState(Key);
-                    //    if (!data.HasError)
-                    //    {
-                    //        shipmentId = shipmentQuery.GetShipmentIdByShipmentNumber(blobInfo.ShipmentNumber, blobInfo.Tenant);
-                    //    }
-                    //    else invalidPrimaryKey = true;
-                    //}
-
-
-
+             
                     if (string.IsNullOrEmpty(shipmentId))
                     {
-                        //if(invalidPrimaryKey) throw new ApplicationException("Invalid primary key");
-
                         bool isExist = shipmentQuery.CheckIfShipmentExistByShipmentNumber(blobInfo.ShipmentNumber, blobInfo.Tenant);
                         if (!isExist) throw new ApplicationException("התיק לא אותר");
                         else throw new ApplicationException("זיהוי משלוח לא תקין- אנא פנה לסוכן מכס");
