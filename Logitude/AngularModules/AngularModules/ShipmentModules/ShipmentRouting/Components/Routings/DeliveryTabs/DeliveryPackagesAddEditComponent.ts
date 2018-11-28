@@ -84,6 +84,11 @@ export class DeliveryPackagesAddEditComponent extends BaseComponent {
         this.myCloner.AddField('Height');
         this.myCloner.AddField('Description');
         this.myCloner.AddEntity(this.EntityPM);
+
+        if (this.DataContext.fatherComponent) {
+            this.myCloner.AddEntity(this.DataContext.fatherComponent.EntityPM);
+            this.myCloner.AddEntity(this.DataContext.fatherComponent.ShipmentPM);
+        }
     }
     private RejectChanges() {
         this.myCloner.RejectChanges();

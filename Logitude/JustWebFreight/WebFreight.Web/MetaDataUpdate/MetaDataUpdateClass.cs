@@ -63955,7 +63955,9 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.ClosedInvoice", DefaultText = "This invoice is closed", LocalDefaultText = "חשבונית זאת סגורה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.NoGLAccount", DefaultText = "The chosen charge type doesn't have GLAccount connected to it", LocalDefaultText = "סעיף החיוב הנבחר לא מקושר לכרטיס הנה''ח", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.VendorNoGLAccount", DefaultText = "The vendor does not have GLAccount", LocalDefaultText = "לספק לא קושר כרטיס הנהלת חשבונות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.InvoiceCurrNotMatch", DefaultText = "The Invoice Currency does not match the vendor GLAccount Currency ", LocalDefaultText = "מטבע החשבונית לא תואם את מטבע הכרטיס של הספק", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
 
+            
             #endregion
 
             ObjectContext.SaveChanges();
@@ -66591,6 +66593,10 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature AgentSharedManifestFeature_07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OceanAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.OceanAgentSharedManifests", NameTextCodeDefaultText = "Ocean Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AgentSharedManifestFeature_08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InlandAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.InlandAgentSharedManifests", NameTextCodeDefaultText = "Inland Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AgentSharedManifestFeature_09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelledAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.CancelledAgentSharedManifests", NameTextCodeDefaultText = "Cancelled Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AgentSharedManifestFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATESHAREDAGENT", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.UpdateSharedAgent", NameTextCodeDefaultText = "Update Shared Agent", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
+
             #endregion
 
             #region ContainerFollowUp

@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, ViewContainerRef, OnInit, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -884,6 +884,12 @@ export class NewViewComponent {
                     }
 
                 }
+                if (field.ObjectField.DataTypeCode == "DateTime" && field.Operation.Code == "Between") {
+                    //if (field.TextValue1 != null ) {
+                        advanceFilter.PredefinedValue2 = field.TextValue1;
+                    //}
+                }
+                
                 this.GeneralEntitiesArgs.AdvancedQueryFilterPMs.push(advanceFilter);
 
             }
@@ -1035,7 +1041,15 @@ export class NewViewComponent {
                         var dt = temp.Year + "-" + temp.Month + "-" + temp.Day;//myDate.getDay() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getFullYear();
                         item.AdvancedQueryFilterPM.PredefinedValue = dt;
                     }
-                    item.AdvancedQueryFilterPM.PredefinedValue2 = null;
+                    if (item.Operation.Code == "Between") {
+                        var myDate: Date = new Date(item.TextValue1.toString());
+                        var temp = DateTool.GetDateParts(myDate);
+                        var dt = temp.Year + "-" + temp.Month + "-" + temp.Day;//myDate.getDay() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getFullYear();
+                        item.AdvancedQueryFilterPM.PredefinedValue2 = dt;
+                    }
+                    else {
+                        item.AdvancedQueryFilterPM.PredefinedValue2 = null;
+                    }
                 }
                 //item.AdvancedQueryFilterPM.PredefinedValue2 = item.TextValue1;
                 item.AdvancedQueryFilterPM.Operator = item.Operation.Code;
@@ -1071,6 +1085,12 @@ export class NewViewComponent {
                     var date = this.FieldsValues.GetFieldValue(item.ObjectField.Id);
                     if (item.TextValue != null && date != null) {
                         advanceFilter.PredefinedValue = date;
+                    }
+                    if (item.Operation.Code == "Between") {
+                        var myDate: Date = new Date(item.TextValue1.toString());
+                        var temp = DateTool.GetDateParts(myDate);
+                        var dt = temp.Year + "-" + temp.Month + "-" + temp.Day;//myDate.getDay() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getFullYear();
+                        advanceFilter.PredefinedValue2 = dt;
                     }
                     //advanceFilter.PredefinedValue = date;
 

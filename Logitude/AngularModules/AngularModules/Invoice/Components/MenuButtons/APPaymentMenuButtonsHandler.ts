@@ -105,6 +105,9 @@ export class APPaymentMenuButtonsHandler {
                             }
                         case "CancelApproval":
                             {
+                                if (SessionLocator.TenantPM.AccountingActivated) {
+                                    button.IsHidden = true;
+                                }
                                 if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD" || (this.EntityPM.StatusCode == "AD" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG"))) {
                                     button.IsDisabled = true;
                                 }

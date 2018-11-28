@@ -64,7 +64,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              ShipmentLevelCode = a.ShipmentLevelCode,
                                                              ShipmentLevelName =(a.ShipmentType != null ? a.ShipmentType.Name : "" )+ " " + (a.ShipmentLevel != null ? a.ShipmentLevel.Name : ""),
                                                              AgentName = a.Agent != null ? a.Agent.Card!=null ? a.Agent.Card .EnglishName : "" : "",
-                                                          
+                                                             CancelledBySenderAgent = a.CancelledBySenderAgent,
                                                          };
        
 
@@ -116,6 +116,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 StatusCode = a.StatusCode,
                                                 TransportModeName = a.TransportModeId == "A" ? "Air" : a.TransportModeId == "I" ? "Inland" : a.TransportModeId == "I" ? "Ocean" : "",
                                                 ShipmentLevelCode = a.ShipmentLevelCode,
+                                                CancelledBySenderAgent = a.CancelledBySenderAgent,
                                             }).FirstOrDefault();
             return entity;
         }
@@ -149,6 +150,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                            TransportModeName = a.TransportModeId == "A" ? "Air" : a.TransportModeId == "I" ? "Inland" : a.TransportModeId == "I" ? "Ocean" : "",
                                                                            ShipmentLevelCode = a.ShipmentLevelCode,
                                                                            ShipmentLevelName =(a.ShipmentType != null ? a.ShipmentType.Name : "") + " " + (a.ShipmentLevel != null ? a.ShipmentLevel.Name : ""),
+                                                                           CancelledBySenderAgent = a.CancelledBySenderAgent,
                                                                        };
             return agentSharedManifestPMs;
         }
@@ -181,7 +183,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                TransportModeName = a.TransportModeId == "A" ? "Air" : a.TransportModeId == "I" ? "Inland" : a.TransportModeId == "I" ? "Ocean" : "",
                                                                                ShipmentLevelCode = a.ShipmentLevelCode,
                                                                                ShipmentLevelName = (a.ShipmentType != null ? a.ShipmentType.Name : "") + " " + (a.ShipmentLevel != null ? a.ShipmentLevel.Name : ""),
-
+                                                                               CancelledBySenderAgent = a.CancelledBySenderAgent,
 
                                                                            };
             return agentSharedManifestLists;
@@ -216,6 +218,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 StatusCode = a.StatusCode,
                                                 TransportModeName = a.TransportModeId == "A" ? "Air" : a.TransportModeId == "I" ? "Inland" : a.TransportModeId == "I" ? "Ocean" : "",
                                                 ShipmentLevelCode = a.ShipmentLevelCode,
+                                                CancelledBySenderAgent = a.CancelledBySenderAgent,
                                             }).FirstOrDefault();
             return entity;
         }
