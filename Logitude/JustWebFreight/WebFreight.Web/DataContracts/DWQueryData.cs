@@ -1,0 +1,16 @@
+﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace WebFreight.Web.DataContracts
+{
+    public class DWQueryData
+    {
+        public DWSubQueryPM SubQueryData { get; set; }
+        public List<DWObjectFieldsDetails> Columns { get; set; }
+        public DWObjectFieldsDetails Filters { get; set; }
+    }
+}
