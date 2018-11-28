@@ -70,14 +70,14 @@ namespace WebFreight.Web.Helpers
             return base64String;
         }
 
-        public bool CheckCaptchaCodeValidated(string code, string Key ,string userCaptchaKey= null)
+        public bool CheckCaptchaCodeValidated(string code, string Key , string userCaptchaKey = null , bool withoutCheckUsed = false)
         {
 
             bool result = false;
             if (!string.IsNullOrEmpty(Key))
             {
                 CaptchaKeyRepository captchaKeyRepository = new CaptchaKeyRepository();
-                CaptchaKey captchaKey = captchaKeyRepository.GetSingleCaptchaKey(Key);
+                CaptchaKey captchaKey = !withoutCheckUsed ? captchaKeyRepository.GetSingleCaptchaKey(Key): captchaKeyRepository.GetSingleCaptchaKeyById(Key);
                 if (captchaKey != null)
                 {
                     if (captchaKey.Id == userCaptchaKey || string.IsNullOrEmpty(userCaptchaKey))

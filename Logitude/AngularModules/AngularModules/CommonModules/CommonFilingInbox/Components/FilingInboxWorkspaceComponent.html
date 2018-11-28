@@ -62,7 +62,7 @@
                         <td *ngIf="!DontShowInboxToolTip" style="width:calc(100%-10px);">
                             <div [style.height.px]="50" style="background-color:#FFF9BA; border:1px solid #FEAC10;  border-radius:3px; -webkit-border-radius:3px; width:calc(100%-10px);">
                                 <table>
-                                    <tr style="height:20px;">
+                                    <tr *ngIf="!IsHebrewSettings" style="height:20px;">
                                         <td style="height:20px;" colspan="2">
                                             <table style="width:170px;height:22px;margin-left:8px;">
                                                 <tr>
@@ -77,6 +77,45 @@
                                             </table>
                                         </td>
                                     </tr>
+
+                                    <tr *ngIf="IsHebrewSettings" style="height:20px;text-align:center;">
+
+                                        <td style="height:20px;text-align:center;" colspan="2">
+                                            <table  dir="rtl" style="height:22px;margin-left:8px;text-align:center;">
+                                                <tr dir="rtl">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width:200px;" >
+                                                        <table>
+                                                            <tr>
+                                                                <td style="margin-left:5px;margin-right:5px;">
+                                                                    להעברת הודעות אימייל מחשבונך השתמש בכתובת  {{SettingsDomain}}
+                                                                </td>
+                               
+                                                                <td style="width:5px;max-width:5px;min-width:5px;">
+                                                                    <div></div>
+                                                                </td>
+                                                                <td style="width:18px;margin-left:5px;margin-right:5px;">
+                                                                    <Hyperlink (click)="CopyDomain()" [FontSize]="12" [Text]="'העתק'"></Hyperlink>
+                                                                </td>
+                                                                <td style="width:5px;max-width:5px;min-width:5px;">
+                                                                    <div></div>
+                                                                </td>
+                                                                <td  style="width:18px;margin-left:5px;margin-right:5px;">
+                                                                    <Hyperlink (click)="ViewUser()" [FontSize]="12" [Text]="'ערוך כתובת'"></Hyperlink>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
                                     <tr style="height:20px;float:right;">
                                         <td>
                                             <table>
