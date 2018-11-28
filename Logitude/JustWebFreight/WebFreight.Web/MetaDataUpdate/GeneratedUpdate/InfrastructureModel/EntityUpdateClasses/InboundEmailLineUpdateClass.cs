@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class InboundEmailLineUpdateClass
@@ -173,9 +176,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
+					  						DefaultText =  @"Create Date",
 					  						ListFieldLable =  "CreateDateLabel",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  @"Create Date",
 					  						HelpTextCode =  "CreateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -231,9 +234,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Sender",
-					  						DefaultText =  "Sender",
+					  						DefaultText =  @"Sender",
 					  						ListFieldLable =  "SenderListLable",
-					  						ListLableDefaultText =  "Subject",
+					  						ListLableDefaultText =  @"Subject",
 					  						HelpTextCode =  "Sender",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -289,9 +292,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Recepient",
-					  						DefaultText =  "Recepient",
+					  						DefaultText =  @"Recepient",
 					  						ListFieldLable =  "RecepientListLable",
-					  						ListLableDefaultText =  "Subject",
+					  						ListLableDefaultText =  @"Subject",
 					  						HelpTextCode =  "Recepient",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -347,9 +350,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Subject",
-					  						DefaultText =  "Subject",
+					  						DefaultText =  @"Subject",
 					  						ListFieldLable =  "SubjectListLable",
-					  						ListLableDefaultText =  "Subject",
+					  						ListLableDefaultText =  @"Subject",
 					  						HelpTextCode =  "Subject",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -406,9 +409,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Direction",
-					  						DefaultText =  "In/Out",
+					  						DefaultText =  @"In/Out",
 					  						ListFieldLable =  "DirectionListLable",
-					  						ListLableDefaultText =  "In/Out",
+					  						ListLableDefaultText =  @"In/Out",
 					  						HelpTextCode =  "Direction",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -463,9 +466,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CCs",
-					  						DefaultText =  "CCs",
+					  						DefaultText =  @"CCs",
 					  						ListFieldLable =  "CCsListLable",
-					  						ListLableDefaultText =  "CCs",
+					  						ListLableDefaultText =  @"CCs",
 					  						HelpTextCode =  "CCs",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -522,7 +525,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CommunicationLogId",
-					  						DefaultText =  "Communication Log",
+					  						DefaultText =  @"Communication Log",
 					  						HelpTextCode =  "CommunicationLogId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -577,9 +580,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Body",
-					  						DefaultText =  "Body",
+					  						DefaultText =  @"Body",
 					  						ListFieldLable =  "BodyListLable",
-					  						ListLableDefaultText =  "Body",
+					  						ListLableDefaultText =  @"Body",
 					  						HelpTextCode =  "Body",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -611,7 +614,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable InboundEmailLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InboundEmailLine" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode InboundEmailLineTextCode_InboundEmailLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmailLine", DefaultText = "Inbound Email Line",LocalDefaultText = null, ObjectTableId = InboundEmailLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

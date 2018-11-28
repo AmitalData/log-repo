@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class DocumentFilingBackupBatchUpdateClass
@@ -172,9 +175,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreateDateTime",
-					  						DefaultText =  "Create Date",
+					  						DefaultText =  @"Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  @"Create Date",
 					  						HelpTextCode =  "CreateDateTime",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -230,9 +233,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DoneDate",
-					  						DefaultText =  "Done Date",
+					  						DefaultText =  @"Done Date",
 					  						ListFieldLable =  "DoneDateListLable",
-					  						ListLableDefaultText =  "DoneDate",
+					  						ListLableDefaultText =  @"DoneDate",
 					  						HelpTextCode =  "DoneDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -288,9 +291,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FromDateTime",
-					  						DefaultText =  "From Date",
+					  						DefaultText =  @"From Date",
 					  						ListFieldLable =  "FromDateTimeListLable",
-					  						ListLableDefaultText =  "From Date",
+					  						ListLableDefaultText =  @"From Date",
 					  						HelpTextCode =  "FromDateTime",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -346,9 +349,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ToDateTime",
-					  						DefaultText =  "To Date",
+					  						DefaultText =  @"To Date",
 					  						ListFieldLable =  "ToDateTimeListLable",
-					  						ListLableDefaultText =  "ToDateTime",
+					  						ListLableDefaultText =  @"ToDateTime",
 					  						HelpTextCode =  "ToDateTime",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -404,7 +407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Status",
-					  						DefaultText =  "Status",
+					  						DefaultText =  @"Status",
 					  						HelpTextCode =  "Status",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -460,7 +463,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BatchNumber",
-					  						DefaultText =  "Batch Number",
+					  						DefaultText =  @"Batch Number",
 					  						HelpTextCode =  "BatchNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -516,7 +519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalFailed",
-					  						DefaultText =  "Total Failed",
+					  						DefaultText =  @"Total Failed",
 					  						HelpTextCode =  "TotalFailed",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -572,7 +575,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalDocuments",
-					  						DefaultText =  "Total Documents",
+					  						DefaultText =  @"Total Documents",
 					  						HelpTextCode =  "TotalDocuments",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -628,7 +631,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalSucceeded",
-					  						DefaultText =  "Total Succeeded",
+					  						DefaultText =  @"Total Succeeded",
 					  						HelpTextCode =  "TotalSucceeded",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -654,7 +657,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature DocumentFilingBackupBatchFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DocumentFilingBackupBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentFilingBackupBatch.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature DocumentFilingBackupBatchFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DocumentFilingBackupBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentFilingBackupBatch.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature DocumentFilingBackupBatchFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DocumentFilingBackupBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentFilingBackupBatch.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DocumentFilingBackupBatchFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = DocumentFilingBackupBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentFilingBackupBatch.Features.PackageFeature", NameTextCodeDefaultText = "DocumentFilingBackupBatch Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature DocumentFilingBackupBatchFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = DocumentFilingBackupBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentFilingBackupBatch.Features.PackageFeature", NameTextCodeDefaultText = "DocumentFilingBackupBatch Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature DocumentFilingBackupBatchFeature_DOCUMENTFILINGBACKUPBATCH = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTFILINGBACKUPBATCH", FeatureTypeCode = "MODL", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentFilingBackupBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentFilingBackupBatch.Features.DocumentFilingBackupBatch", NameTextCodeDefaultText = @"DocumentFilingBackupBatch" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -665,7 +674,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable DocumentFilingBackupBatchObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentFilingBackupBatch" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode DocumentFilingBackupBatchTextCode_DocumentFilingBackupBatch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentFilingBackupBatch", DefaultText = "Document Filing Backup Batch",LocalDefaultText = null, ObjectTableId = DocumentFilingBackupBatchObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

@@ -10,7 +10,7 @@
 </style>
 
 
-<table *ngIf="!IsUpdateSharedAgent">
+<table *ngIf="!IsShowUpdateAgentArea">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -43,7 +43,7 @@
 
                                 </div>
 
-                                <div class="MessageText" *ngIf="IsEnableButtonSharedManifest && !IsSuccessfullySharedManifest && !HasError && !IsUpdateSharedAgentButtonVisible" style="display:block;margin-right:5px;vertical-align:top;font-size:13px;overflow:hidden">Please notice that this is a one-time sharing, changing details afterwards won’t update the agent</div>
+                                <div class="MessageText" *ngIf="IsEnableButtonSharedManifest && !IsSuccessfullySharedManifest && !HasError && !IsShareUpdatedAgent" style="display:block;margin-right:5px;vertical-align:top;font-size:13px;overflow:hidden">Please notice that this is a one-time sharing, changing details afterwards won’t update the agent</div>
                            
 
 
@@ -72,7 +72,7 @@
                         <div></div>
                     </td>
 
-                    <td *ngIf="!IsSuccessfullySharedManifest || IsUpdateSharedAgentButtonVisible" style="width: 57px;">
+                    <td *ngIf="!IsSuccessfullySharedManifest || IsShareUpdatedAgent" style="width: 57px;">
                         <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
                     </td>
 
@@ -81,8 +81,8 @@
                     </td>
                  
                     <td style="width: 57px;">
-                        <button *ngIf="!IsSuccessfullySharedManifest || IsUpdateSharedAgentButtonVisible" [disabled]="!IsEnableButtonSharedManifest"  class="RedButton" (click)="SharingManifesButtonClick()">{{LableShareBoutton}}</button>
-                        <button *ngIf="IsSuccessfullySharedManifest && !IsUpdateSharedAgentButtonVisible" class="Button" (click)="CloseButtonClicked()">Close</button>
+                        <button *ngIf="!IsSuccessfullySharedManifest || IsShareUpdatedAgent" [disabled]="!IsEnableButtonSharedManifest"  class="RedButton" (click)="SharingManifesButtonClick()">{{LableShareBoutton}}</button>
+                        <button *ngIf="IsSuccessfullySharedManifest && !IsShareUpdatedAgent" class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
                 </tr>
             </table>
@@ -92,7 +92,7 @@
 
 
 
-<table *ngIf="IsUpdateSharedAgent">
+<table *ngIf="IsShowUpdateAgentArea">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -113,7 +113,7 @@
                     <td style="width:10px"></td>
                     <td class="GridViewCell">
                 
-                        <div class="MessageText" style="display:block;margin-right:5px;vertical-align:top;font-size:14px;overflow:hidden">Your manifest will be shared again with the updated agent only if the original shared manifest has not been opened by your partner yet. Click Share if you still want to reshare the manifest with the updated agent.</div>
+                        <div class="MessageText" style="display:block;margin-right:5px;vertical-align:top;font-size:14px;overflow:hidden">Your manifest will be shared again with the updated agent only if the original shared manifest has not been opened by your partner yet.</div>
 
                     </td>
 
@@ -177,7 +177,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="UpdateSharedAgent()">Share</button>
+                        <button class="RedButton" (click)="StartSharingManifest(true)">Share</button>
                        
                     </td>
                 </tr>

@@ -254,16 +254,13 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     if (glAccount.CurrencyId != invoiceCurrencyId)
                     {
-                        string msg = "The Invoice Currency does not match the vendor GLAccount Currency " + glAccount.CurrencyCode;
+                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant)  + glAccount.CurrencyCode;
                         errors += msg + ";";
                     }
                 }
 
                 IAccountingContext myContext = AccountingContext.GetContext(tenant);
                 AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
-                //var now = TenantServerConfigration.GetCurrentDateTime(tenant);
-                //if (now != null)
-                //{
                 AccountingPeriodList accountingPeriodList = accountingPeriodQuery.GetByYear(accountingDate.Value.Year, "1", tenant);
                 if (accountingPeriodList != null && accountingDate != null)
                 {
@@ -279,8 +276,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     string msg = "ClosedMonth";
                     errors += msg + ";";
                 }
-                //}
-
                 if (!string.IsNullOrEmpty(errors))
                 {
                     errors = errors.TrimEnd(';');

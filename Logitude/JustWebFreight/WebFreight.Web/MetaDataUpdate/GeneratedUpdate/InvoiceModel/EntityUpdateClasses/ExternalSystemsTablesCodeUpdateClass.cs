@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class ExternalSystemsTablesCodeUpdateClass
@@ -176,9 +179,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
+					  						DefaultText =  @"Code",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
+					  						ListLableDefaultText =  @"Code",
 					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -234,9 +237,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
+					  						DefaultText =  @"Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						ListLableDefaultText =  @"Name",
 					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -292,9 +295,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LogitudeTable",
-					  						DefaultText =  "Logitude Table",
+					  						DefaultText =  @"Logitude Table",
 					  						ListFieldLable =  "LogitudeTableListLable",
-					  						ListLableDefaultText =  "Logitude Table",
+					  						ListLableDefaultText =  @"Logitude Table",
 					  						HelpTextCode =  "LogitudeTable",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -351,9 +354,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreatedDate",
-					  						DefaultText =  "Created Date",
+					  						DefaultText =  @"Created Date",
 					  						ListFieldLable =  "CreatedDateListLable",
-					  						ListLableDefaultText =  "Created Date",
+					  						ListLableDefaultText =  @"Created Date",
 					  						HelpTextCode =  "CreatedDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -410,9 +413,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdatedDate",
-					  						DefaultText =  "Updated Date",
+					  						DefaultText =  @"Updated Date",
 					  						ListFieldLable =  "UpdatedDateListLable",
-					  						ListLableDefaultText =  "Updated Date",
+					  						ListLableDefaultText =  @"Updated Date",
 					  						HelpTextCode =  "UpdatedDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -468,9 +471,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search Code / Name ",
+					  						DefaultText =  @"Search Code / Name ",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: Code \n2: Name \n: Logitude Table",
+					  						HelpTextDefaultText =  @"Searching by :\n1: Code \n2: Name \n: Logitude Table",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -553,7 +556,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		   Feature ExternalSystemsTablesCodeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ExternalSystemsTablesCodeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ExternalSystemsTablesCodeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ExternalSystemsTablesCodeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.PackageFeature", NameTextCodeDefaultText = "ExternalSystemsTablesCode Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature ExternalSystemsTablesCodeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.PackageFeature", NameTextCodeDefaultText = "ExternalSystemsTablesCode Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ExternalSystemsTablesCodeFeature_EXTERNALSYSTEMSTABLESCODES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXTERNALSYSTEMSTABLESCODES", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalSystemsTablesCode.Features.ExternalSystemsTablesCodes", NameTextCodeDefaultText = @"External Tables Codes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -564,7 +573,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ExternalSystemsTablesCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalSystemsTablesCode" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ExternalSystemsTablesCodeTextCode_ExternalSystemsTablesCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalSystemsTablesCode", DefaultText = "External Systems Tables Code",LocalDefaultText = null, ObjectTableId = ExternalSystemsTablesCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

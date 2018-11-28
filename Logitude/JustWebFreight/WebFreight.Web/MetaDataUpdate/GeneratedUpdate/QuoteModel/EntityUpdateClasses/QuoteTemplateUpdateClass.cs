@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteTemplateUpdateClass
@@ -78,7 +81,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuoteTemplate",
 			      				    DBTableName =  "QuoteTemplates",
 			      				    ObjectTableSingular =  "Quote Template",
-			      				    ObjectTablePlural =  "Quote Templates",
 			      				    DefaultText =  "Quote Template",
 			      				    Name =  "QuoteTemplates",
 			      				    IsNewWizard =  true,
@@ -175,9 +177,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "HeaderDocId",
-					  						DefaultText =  "HeaderDocId",
+					  						DefaultText =  @"HeaderDocId",
 					  						ListFieldLable =  "HeaderDocListLable",
-					  						ListLableDefaultText =  "HeaderDocId",
+					  						ListLableDefaultText =  @"HeaderDocId",
 					  						HelpTextCode =  "HeaderDocId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -231,9 +233,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FooterDocId",
-					  						DefaultText =  "FooterDocId",
+					  						DefaultText =  @"FooterDocId",
 					  						ListFieldLable =  "FooterDocIdListLable",
-					  						ListLableDefaultText =  "FooterDocId",
+					  						ListLableDefaultText =  @"FooterDocId",
 					  						HelpTextCode =  "FooterDocId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -287,9 +289,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteTemplateSettingId",
-					  						DefaultText =  "QuoteTemplateSettingId",
+					  						DefaultText =  @"QuoteTemplateSettingId",
 					  						ListFieldLable =  "QuoteTemplateSettingIdListLable",
-					  						ListLableDefaultText =  "QuoteTemplateSettingId",
+					  						ListLableDefaultText =  @"QuoteTemplateSettingId",
 					  						HelpTextCode =  "QuoteTemplateSettingId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -345,9 +347,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
+					  						DefaultText =  @"Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						ListLableDefaultText =  @"Name",
 					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -401,7 +403,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "IsTemplate",
-					  						DefaultText =  "Is Template",
+					  						DefaultText =  @"Is Template",
 					  						HelpTextCode =  "IsTemplate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -455,7 +457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OriginalQuoteTemplateId",
-					  						DefaultText =  "Original Quote Template Id",
+					  						DefaultText =  @"Original Quote Template Id",
 					  						HelpTextCode =  "OriginalQuoteTemplateId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -509,7 +511,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
+					  						DefaultText =  @"Create Date",
 					  						HelpTextCode =  "CreateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -563,7 +565,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  "Update Date",
+					  						DefaultText =  @"Update Date",
 					  						HelpTextCode =  "UpdateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -617,7 +619,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  "Created By UserId",
+					  						DefaultText =  @"Created By UserId",
 					  						HelpTextCode =  "CreatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -671,7 +673,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  "Updated By UserId",
+					  						DefaultText =  @"Updated By UserId",
 					  						HelpTextCode =  "UpdatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -726,7 +728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search..",
+					  						DefaultText =  @"Search..",
 					  						HelpTextCode =  "SearchFields",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -780,9 +782,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "TemplateTypeCode",
-					  						DefaultText =  "Template Type Code",
+					  						DefaultText =  @"Template Type Code",
 					  						ListFieldLable =  "TemplateTypeCodeListLable",
-					  						ListLableDefaultText =  "TemplateTypeCode",
+					  						ListLableDefaultText =  @"TemplateTypeCode",
 					  						HelpTextCode =  "TemplateTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -837,9 +839,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TemplateTypeName",
-					  						DefaultText =  "Template Type",
+					  						DefaultText =  @"Template Type",
 					  						ListFieldLable =  "TemplateTypeNameListLable",
-					  						ListLableDefaultText =  "Template Type",
+					  						ListLableDefaultText =  @"Template Type",
 					  						HelpTextCode =  "TemplateTypeName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -894,9 +896,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsDefault",
-					  						DefaultText =  "Is Default",
+					  						DefaultText =  @"Is Default",
 					  						ListFieldLable =  "IsDefaultListLable",
-					  						ListLableDefaultText =  "Is Default",
+					  						ListLableDefaultText =  @"Is Default",
 					  						HelpTextCode =  "IsDefault",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -951,9 +953,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShowLocalLanguage",
-					  						DefaultText =  "Show Local Language",
+					  						DefaultText =  @"Show Local Language",
 					  						ListFieldLable =  "ShowLocalLanguageListLable",
-					  						ListLableDefaultText =  "Show Local Language",
+					  						ListLableDefaultText =  @"Show Local Language",
 					  						HelpTextCode =  "ShowLocalLanguage",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1008,9 +1010,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  "In Active",
+					  						DefaultText =  @"In Active",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  "In Active",
+					  						ListLableDefaultText =  @"In Active",
 					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1065,9 +1067,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsEnabledForCustomers",
-					  						DefaultText =  "Enabled for Customers",
+					  						DefaultText =  @"Enabled for Customers",
 					  						ListFieldLable =  "IsEnabledForCustomersListLable",
-					  						ListLableDefaultText =  "IsEnabledForCustomers",
+					  						ListLableDefaultText =  @"IsEnabledForCustomers",
 					  						HelpTextCode =  "IsEnabledForCustomers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1122,9 +1124,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsCopiedAtSignup",
-					  						DefaultText =  "Copy at Signup",
+					  						DefaultText =  @"Copy at Signup",
 					  						ListFieldLable =  "IsCopiedAtSignupListLable",
-					  						ListLableDefaultText =  "IsCopiedAtSignup",
+					  						ListLableDefaultText =  @"IsCopiedAtSignup",
 					  						HelpTextCode =  "IsCopiedAtSignup",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1198,7 +1200,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 		   Feature QuoteTemplateFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature QuoteTemplateFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature QuoteTemplateFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature QuoteTemplateFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.PackageFeature", NameTextCodeDefaultText = "QuoteTemplate Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature QuoteTemplateFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.PackageFeature", NameTextCodeDefaultText = "QuoteTemplate Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature QuoteTemplateFeature_COPYATSIGNUP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPYATSIGNUP", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.CopyAtSignup", NameTextCodeDefaultText = @"Copy At Signup" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature QuoteTemplateFeature_ENABLEDFORCUSTOMERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ENABLEDFORCUSTOMERS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.EnabledForCustomers", NameTextCodeDefaultText = @"Enabled For Customers" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature QuoteTemplateFeature_FROMLIBRARY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FROMLIBRARY", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, NameTextCodeCode = "QuoteTemplate.Features.FromLibrary", NameTextCodeDefaultText = @"Add From Library" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -1209,7 +1221,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable QuoteTemplateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteTemplate" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateCHCodeListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.CH.CodeListLable", DefaultText = "HeaderDocId",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate", DefaultText = "Quote Template",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateCHNameIdListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.CH.NameIdListLable", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

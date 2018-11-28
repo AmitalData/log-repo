@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList, OnDestroy} from '@angular/core';
+import {Component, ViewChildren, QueryList, OnDestroy} from '@angular/core';
 import {RoutingHelper} from '../../../../Shipment/Tools';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
@@ -6,7 +6,9 @@ import {ShipmentValidator} from '../../../../Shipment/Validators/ShipmentValidat
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
-import {ShipmentFollowUpPM} from '../../../../Shipment/EntityPMs/ShipmentFollowUpPM';
+import { ShipmentFollowUpPM } from '../../../../Shipment/EntityPMs/ShipmentFollowUpPM';
+import { ShipmentPickUpDeliveryPackagePM } from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
+import { PickUpDeliveryPackageHarmonizePM } from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
@@ -43,8 +45,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
     WareHouseRelaseWareHouseId: string;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private entityResourceService: EntityResourceService) {
-        this.myCardListService = new CardListService();
-   
+        this.myCardListService = new CardListService();   
     }
     
     SetWindowArgs(args: any) {
@@ -137,7 +138,6 @@ export class AddEditDeliveryComponent implements OnDestroy {
     }
 
 
-    // WarehouseRelease
 
     NewWarehouseReleaseButtonClicked() {
 
@@ -239,8 +239,6 @@ export class AddEditDeliveryComponent implements OnDestroy {
         logWindow.Show("./Warehouse/Components/NewWarehouseReleaseComponent");
 
     }
-    // End
-
 
     private selectedTabCode: string;
     get SelectedTabCode() { return this.selectedTabCode; }
@@ -741,6 +739,8 @@ export class AddEditDeliveryComponent implements OnDestroy {
     public isEntityAdded: boolean = false;
     private Clone() {
 
+        this.ClonePackages();
+
         this.ShipmentPM.FollowUps.forEach(item => {
             var oldItem: ShipmentFollowUpPM = new ShipmentFollowUpPM(null);
             oldItem.Id = item.Id;
@@ -825,43 +825,112 @@ export class AddEditDeliveryComponent implements OnDestroy {
         this.myCloner.AddEntity(this.ShipmentPM);
     }
     private RejectChanges() {
+        if (this.EntityPM.IsDirty) {
 
-        var addedItems: any[] = [];
-        var removedItems: any[] = [];
+            this.RejectPackages();
 
-        this.oldFollowups.forEach(item => {
-            var existingItem = this.ShipmentPM.FollowUps.filter(f => f.LegType == item.LegType)[0];
-            if (!existingItem) {
-                removedItems.push(item);
-            }
-        });
+            var addedItems: any[] = [];
+            var removedItems: any[] = [];
 
-        this.ShipmentPM.FollowUps.forEach(item => {
-            var oldItem = this.oldFollowups.filter(f => f.LegType == item.LegType)[0];
-            if (oldItem == null) {
-                addedItems.push(item);
-            }
-        });
-
-        if (addedItems.length > 0 || removedItems.length > 0) {
-            addedItems.forEach(item => {
-                this.ShipmentPM.RemoveShipmentFollowUp(item);
+            this.oldFollowups.forEach(item => {
+                var existingItem = this.ShipmentPM.FollowUps.filter(f => f.LegType == item.LegType)[0];
+                if (!existingItem) {
+                    removedItems.push(item);
+                }
             });
 
-            removedItems.forEach(item => {
-                this.ShipmentPM.AddShipmentFollowUp(item);
+            this.ShipmentPM.FollowUps.forEach(item => {
+                var oldItem = this.oldFollowups.filter(f => f.LegType == item.LegType)[0];
+                if (oldItem == null) {
+                    addedItems.push(item);
+                }
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
-        }
+            if (addedItems.length > 0 || removedItems.length > 0) {
+                addedItems.forEach(item => {
+                    this.ShipmentPM.RemoveShipmentFollowUp(item);
+                });
 
-        if (this.isEntityAdded) {
-            if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                this.ShipmentPM.RemoveDelivery(this.EntityPM);
+                removedItems.forEach(item => {
+                    this.ShipmentPM.AddShipmentFollowUp(item);
+                });
+
+                SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
             }
-        }
 
-        this.myCloner.RejectChanges();
+            if (this.isEntityAdded) {
+                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                    this.ShipmentPM.RemoveDelivery(this.EntityPM);
+                }
+            }
+
+            this.myCloner.RejectChanges();
+        }
+    }
+
+    private oldPackages: ShipmentPickUpDeliveryPackagePM[] = [];
+    private ClonePackages() {
+
+        var PackageFields: string[] = [];
+        PackageFields.push("Id");
+        PackageFields.push("Tenant");
+        PackageFields.push("ContainerNumber");
+        PackageFields.push("PackageTypeId");
+        PackageFields.push("PackageTypeName");
+        PackageFields.push("PackageTypeTEU");
+        PackageFields.push("ShipmentPickUpDeliveryId");
+        PackageFields.push("Quantity");
+        PackageFields.push("Volume");
+        PackageFields.push("Weight");
+        PackageFields.push("Description");
+        PackageFields.push("Harmonize");
+        PackageFields.push("ShipperSeal");
+        PackageFields.push("Width");
+        PackageFields.push("Height");
+        PackageFields.push("Length");
+        PackageFields.push("OriginalShipmentPackageId");
+        PackageFields.push("IsMultiHarmonize");
+        PackageFields.push("IsDirty");
+        PackageFields.push("ChangeSetOp");
+        PackageFields.push("EntityParentPM");
+
+        var PackageHarmonizeFields: string[] = [];
+        PackageHarmonizeFields.push("Id");
+        PackageHarmonizeFields.push("Tenant");
+        PackageHarmonizeFields.push("PackageId");
+        PackageHarmonizeFields.push("Harmonize");
+        PackageHarmonizeFields.push("IsDirty");
+        PackageHarmonizeFields.push("ChangeSetOp");
+        PackageHarmonizeFields.push("EntityParentPM");
+
+        this.EntityPM.ShipmentPickUpDeliveryPackages.forEach((item: ShipmentPickUpDeliveryPackagePM) => {
+
+            var oldItemPackage: ShipmentPickUpDeliveryPackagePM = new ShipmentPickUpDeliveryPackagePM(null);
+
+            PackageFields.forEach((x: string) => {
+                oldItemPackage[x] = item[x];
+            });
+
+            item.PickUpDeliveryPackageHarmonizes.forEach(itemHarmonize => {
+
+                var oldItemPackageHarmonize: PickUpDeliveryPackageHarmonizePM = new PickUpDeliveryPackageHarmonizePM(null);
+
+                PackageHarmonizeFields.forEach((r: string) => {
+                    oldItemPackageHarmonize[r] = itemHarmonize[r];
+                });
+
+                oldItemPackage.PickUpDeliveryPackageHarmonizes.push(oldItemPackageHarmonize);
+            });
+
+            this.oldPackages.push(oldItemPackage);
+        });
+    }
+    private RejectPackages() {
+        this.EntityPM.ShipmentPickUpDeliveryPackages = [];
+
+        this.oldPackages.forEach((item: ShipmentPickUpDeliveryPackagePM) => {
+            this.EntityPM.ShipmentPickUpDeliveryPackages.push(item);
+        });
     }
 }
 class TabItem {

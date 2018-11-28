@@ -174,7 +174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VolumetricWeight",
-					  						DefaultText =  "Volumetric Weight (%WeightCode)",
+					  						DefaultText =  @"Volumetric Weight (%WeightCode)",
 					  						HelpTextCode =  "VolumetricWeight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -230,7 +230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageTypeId",
-					  						DefaultText =  "Package Type",
+					  						DefaultText =  @"Package Type",
 					  						HelpTextCode =  "PackageTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -286,7 +286,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ContainerTypeId",
-					  						DefaultText =  "Container Type",
+					  						DefaultText =  @"Container Type",
 					  						HelpTextCode =  "ContainerTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -341,7 +341,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageTypeName",
-					  						DefaultText =  "Package Type",
+					  						DefaultText =  @"Package Type",
 					  						HelpTextCode =  "PackageTypeName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -396,10 +396,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ContainerNumber",
-					  						DefaultText =  "Container Number",
+					  						DefaultText =  @"Container Number",
 					  						HelpTextCode =  "ContainerNumber",
 					  						ShortFieldLable =  "ContainerNumber",
-					  						ShortFieldLableDefaultText =  "Container #",
+					  						ShortFieldLableDefaultText =  @"Container #",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -453,7 +453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MarksAndNumbers",
-					  						DefaultText =  "Marks and Numbers",
+					  						DefaultText =  @"Marks and Numbers",
 					  						HelpTextCode =  "MarksAndNumbers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -508,7 +508,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Description",
-					  						DefaultText =  "Description",
+					  						DefaultText =  @"Description",
 					  						HelpTextCode =  "Description",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -563,7 +563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Quantity",
-					  						DefaultText =  "Pieces",
+					  						DefaultText =  @"Pieces",
 					  						HelpTextCode =  "Quantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -618,7 +618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Tare",
-					  						DefaultText =  "Tare (%WeightCode)",
+					  						DefaultText =  @"Tare (%WeightCode)",
 					  						HelpTextCode =  "Tare",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -673,7 +673,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Weight",
-					  						DefaultText =  "Gross Weight (%WeightCode)",
+					  						DefaultText =  @"Gross Weight (%WeightCode)",
 					  						HelpTextCode =  "Weight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -728,7 +728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Volume",
-					  						DefaultText =  "Volume (%VolumeCode)",
+					  						DefaultText =  @"Volume (%VolumeCode)",
 					  						HelpTextCode =  "Volume",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -783,7 +783,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Height",
-					  						DefaultText =  "Height",
+					  						DefaultText =  @"Height",
 					  						HelpTextCode =  "Height",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -838,7 +838,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Width",
-					  						DefaultText =  "Width",
+					  						DefaultText =  @"Width",
 					  						HelpTextCode =  "Width",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -893,7 +893,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Length",
-					  						DefaultText =  "Length",
+					  						DefaultText =  @"Length",
 					  						HelpTextCode =  "Length",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -948,7 +948,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UnNumber",
-					  						DefaultText =  "UN Number",
+					  						DefaultText =  @"UN Number",
 					  						HelpTextCode =  "UnNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1003,7 +1003,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IMDGCode",
-					  						DefaultText =  "IMDG Code",
+					  						DefaultText =  @"IMDG Code",
 					  						HelpTextCode =  "IMDGCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1058,7 +1058,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ClassNumber",
-					  						DefaultText =  "Class Number",
+					  						DefaultText =  @"Class Number",
 					  						HelpTextCode =  "ClassNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1113,7 +1113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackagingGroup",
-					  						DefaultText =  "Packaging Group",
+					  						DefaultText =  @"Packaging Group",
 					  						HelpTextCode =  "PackagingGroup",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1168,7 +1168,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FlashPoint",
-					  						DefaultText =  "Flash Point",
+					  						DefaultText =  @"Flash Point",
 					  						HelpTextCode =  "FlashPoint",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1223,7 +1223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MaterialDescription",
-					  						DefaultText =  "Material Description",
+					  						DefaultText =  @"Material Description",
 					  						HelpTextCode =  "MaterialDescription",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1278,7 +1278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Temperature",
-					  						DefaultText =  "Temperature",
+					  						DefaultText =  @"Temperature",
 					  						HelpTextCode =  "Temperature",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1333,7 +1333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Ventilation",
-					  						DefaultText =  "Ventilation",
+					  						DefaultText =  @"Ventilation",
 					  						HelpTextCode =  "Ventilation",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1388,7 +1388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Harmonize",
-					  						DefaultText =  "Harmonize",
+					  						DefaultText =  @"Harmonize",
 					  						HelpTextCode =  "Harmonize",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1443,7 +1443,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsDangerous",
-					  						DefaultText =  "Is Dangerous",
+					  						DefaultText =  @"Is Dangerous",
 					  						HelpTextCode =  "IsDangerous",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1499,7 +1499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CommodityId",
-					  						DefaultText =  "Commodity",
+					  						DefaultText =  @"Commodity",
 					  						HelpTextCode =  "CommodityId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1553,7 +1553,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NumberOfInsidePackages",
-					  						DefaultText =  "Number Of Inside Packages",
+					  						DefaultText =  @"Number Of Inside Packages",
 					  						HelpTextCode =  "NumberOfInsidePackages",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1607,7 +1607,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NumberOfInsidePackagesDetails",
-					  						DefaultText =  "Number Of Inside Packages Details",
+					  						DefaultText =  @"Number Of Inside Packages Details",
 					  						HelpTextCode =  "NumberOfInsidePackagesDetails",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1662,7 +1662,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsDeliveryFU",
-					  						DefaultText =  "Follow up",
+					  						DefaultText =  @"Follow up",
 					  						HelpTextCode =  "IsDeliveryFU",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1718,7 +1718,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryId",
-					  						DefaultText =  "Delivery",
+					  						DefaultText =  @"Delivery",
 					  						HelpTextCode =  "DeliveryId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1772,7 +1772,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryETD",
-					  						DefaultText =  "Expected Departure",
+					  						DefaultText =  @"Expected Departure",
 					  						HelpTextCode =  "DeliveryETD",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1826,7 +1826,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryATD",
-					  						DefaultText =  "Actual Departure",
+					  						DefaultText =  @"Actual Departure",
 					  						HelpTextCode =  "DeliveryATD",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1880,7 +1880,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryETA",
-					  						DefaultText =  "Expected Arrival",
+					  						DefaultText =  @"Expected Arrival",
 					  						HelpTextCode =  "DeliveryETA",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1934,7 +1934,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryATA",
-					  						DefaultText =  "Actual Arrival",
+					  						DefaultText =  @"Actual Arrival",
 					  						HelpTextCode =  "DeliveryATA",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1988,7 +1988,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryPlace",
-					  						DefaultText =  "Place",
+					  						DefaultText =  @"Place",
 					  						HelpTextCode =  "DeliveryPlace",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2043,7 +2043,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsEmptyContainerReturnFU",
-					  						DefaultText =  "Follow up",
+					  						DefaultText =  @"Follow up",
 					  						HelpTextCode =  "IsEmptyContainerReturnFU",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2099,7 +2099,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EmptyContainerReturnId",
-					  						DefaultText =  "Empty Container Return",
+					  						DefaultText =  @"Empty Container Return",
 					  						HelpTextCode =  "EmptyContainerReturnId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2153,7 +2153,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EmptyContainerReturnETD",
-					  						DefaultText =  "Expected Departure",
+					  						DefaultText =  @"Expected Departure",
 					  						HelpTextCode =  "EmptyContainerReturnETD",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2207,7 +2207,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EmptyContainerReturnATD",
-					  						DefaultText =  "Actual Departure",
+					  						DefaultText =  @"Actual Departure",
 					  						HelpTextCode =  "EmptyContainerReturnATD",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2261,7 +2261,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EmptyContainerReturnETA",
-					  						DefaultText =  "Expected Arrival",
+					  						DefaultText =  @"Expected Arrival",
 					  						HelpTextCode =  "EmptyContainerReturnETA",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2315,7 +2315,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EmptyContainerReturnATA",
-					  						DefaultText =  "Actual Arrival",
+					  						DefaultText =  @"Actual Arrival",
 					  						HelpTextCode =  "EmptyContainerReturnATA",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2369,7 +2369,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EmptyContainerReturnPlace",
-					  						DefaultText =  "Place",
+					  						DefaultText =  @"Place",
 					  						HelpTextCode =  "EmptyContainerReturnPlace",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2423,7 +2423,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryFrom",
-					  						DefaultText =  "From",
+					  						DefaultText =  @"From",
 					  						HelpTextCode =  "DeliveryFrom",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2477,7 +2477,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryTo",
-					  						DefaultText =  "To",
+					  						DefaultText =  @"To",
 					  						HelpTextCode =  "DeliveryTo",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2531,7 +2531,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EmptyContainerReturnFrom",
-					  						DefaultText =  "From",
+					  						DefaultText =  @"From",
 					  						HelpTextCode =  "EmptyContainerReturnFrom",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2585,7 +2585,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EmptyContainerReturnTo",
-					  						DefaultText =  "To",
+					  						DefaultText =  @"To",
 					  						HelpTextCode =  "EmptyContainerReturnTo",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2640,12 +2640,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Reference1",
-					  						DefaultText =  "Reference 1",
+					  						DefaultText =  @"Reference 1",
 					  						ListFieldLable =  "Reference1ListLable",
-					  						ListLableDefaultText =  "Reference1",
+					  						ListLableDefaultText =  @"Reference1",
 					  						HelpTextCode =  "Reference1",
 					  						ShortFieldLable =  "Reference1",
-					  						ShortFieldLableDefaultText =  "Ref 1",
+					  						ShortFieldLableDefaultText =  @"Ref 1",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2699,12 +2699,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Reference2",
-					  						DefaultText =  "Reference 2",
+					  						DefaultText =  @"Reference 2",
 					  						ListFieldLable =  "Reference2ListLable",
-					  						ListLableDefaultText =  "Reference2",
+					  						ListLableDefaultText =  @"Reference2",
 					  						HelpTextCode =  "Reference2",
 					  						ShortFieldLable =  "Reference2",
-					  						ShortFieldLableDefaultText =  "Ref 2",
+					  						ShortFieldLableDefaultText =  @"Ref 2",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2758,12 +2758,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Reference3",
-					  						DefaultText =  "Reference 3",
+					  						DefaultText =  @"Reference 3",
 					  						ListFieldLable =  "Reference3ListLable",
-					  						ListLableDefaultText =  "Reference3",
+					  						ListLableDefaultText =  @"Reference3",
 					  						HelpTextCode =  "Reference3",
 					  						ShortFieldLable =  "Reference3",
-					  						ShortFieldLableDefaultText =  "Ref 3",
+					  						ShortFieldLableDefaultText =  @"Ref 3",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2817,12 +2817,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CommodityNumber",
-					  						DefaultText =  "Commodity Number",
+					  						DefaultText =  @"Commodity Number",
 					  						ListFieldLable =  "CommodityNumberListLable",
-					  						ListLableDefaultText =  "CommodityNumber",
+					  						ListLableDefaultText =  @"CommodityNumber",
 					  						HelpTextCode =  "CommodityNumber",
 					  						ShortFieldLable =  "CommodityNumber",
-					  						ShortFieldLableDefaultText =  "Commodity No.",
+					  						ShortFieldLableDefaultText =  @"Commodity No.",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2876,7 +2876,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CeficClass",
-					  						DefaultText =  "Cefic Class",
+					  						DefaultText =  @"Cefic Class",
 					  						HelpTextCode =  "CeficClass",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2931,7 +2931,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "KelmerCode",
-					  						DefaultText =  "Kelmer Code",
+					  						DefaultText =  @"Kelmer Code",
 					  						HelpTextCode =  "KelmerCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2986,7 +2986,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EMS",
-					  						DefaultText =  "EMS",
+					  						DefaultText =  @"EMS",
 					  						HelpTextCode =  "EMS",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3041,7 +3041,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ProperShippingName",
-					  						DefaultText =  "Proper Shipping Name",
+					  						DefaultText =  @"Proper Shipping Name",
 					  						HelpTextCode =  "ProperShippingName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3096,7 +3096,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MarinePollutant",
-					  						DefaultText =  "Marine Pollutant",
+					  						DefaultText =  @"Marine Pollutant",
 					  						HelpTextCode =  "MarinePollutant",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3153,9 +3153,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  "Notes",
+					  						DefaultText =  @"Notes",
 					  						ListFieldLable =  "NotesListLable",
-					  						ListLableDefaultText =  "Notes",
+					  						ListLableDefaultText =  @"Notes",
 					  						HelpTextCode =  "Notes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3209,9 +3209,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VGM",
-					  						DefaultText =  "VGM",
+					  						DefaultText =  @"VGM",
 					  						HelpTextCode =  "VGM",
-					  						HelpTextDefaultText =  "Verified gross mass",
+					  						HelpTextDefaultText =  @"Verified gross mass",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3264,9 +3264,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MethodUsed",
-					  						DefaultText =  "Method Used",
+					  						DefaultText =  @"Method Used",
 					  						HelpTextCode =  "MethodUsed",
-					  						HelpTextDefaultText =  "Method 1: weighed after packing\n Method 2: weighed before packing + tare",
+					  						HelpTextDefaultText =  @"Method 1: weighed after packing\n Method 2: weighed before packing + tare",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3321,7 +3321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TemperatureUnitCode",
-					  						DefaultText =  "Temperature Unit",
+					  						DefaultText =  @"Temperature Unit",
 					  						HelpTextCode =  "TemperatureUnitCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3376,7 +3376,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipperSeal",
-					  						DefaultText =  "Shipper Seal",
+					  						DefaultText =  @"Shipper Seal",
 					  						HelpTextCode =  "ShipperSeal",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3431,7 +3431,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CarrierSeal",
-					  						DefaultText =  "Carrier Seal",
+					  						DefaultText =  @"Carrier Seal",
 					  						HelpTextCode =  "CarrierSeal",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3487,7 +3487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NonActiveContainer",
-					  						DefaultText =  "Non Active Container",
+					  						DefaultText =  @"Non Active Container",
 					  						HelpTextCode =  "NonActiveContainer",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3541,7 +3541,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OnCarriageETD",
-					  						DefaultText =  "Expected Departure",
+					  						DefaultText =  @"Expected Departure",
 					  						HelpTextCode =  "OnCarriageETD",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3595,7 +3595,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OnCarriageATD",
-					  						DefaultText =  "Actual Departure",
+					  						DefaultText =  @"Actual Departure",
 					  						HelpTextCode =  "OnCarriageATD",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3649,7 +3649,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OnCarriageETA",
-					  						DefaultText =  "Expected Arrival",
+					  						DefaultText =  @"Expected Arrival",
 					  						HelpTextCode =  "OnCarriageETA",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3703,7 +3703,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OnCarriageATA",
-					  						DefaultText =  "Actual Arrival",
+					  						DefaultText =  @"Actual Arrival",
 					  						HelpTextCode =  "OnCarriageATA",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3758,10 +3758,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Reference4",
-					  						DefaultText =  "Reference 4",
+					  						DefaultText =  @"Reference 4",
 					  						HelpTextCode =  "Reference4",
 					  						ShortFieldLable =  "Reference4",
-					  						ShortFieldLableDefaultText =  "Ref 4",
+					  						ShortFieldLableDefaultText =  @"Ref 4",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3815,7 +3815,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CommodityName",
-					  						DefaultText =  "Commodity Name",
+					  						DefaultText =  @"Commodity Name",
 					  						HelpTextCode =  "CommodityName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3870,7 +3870,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastStatusCode",
-					  						DefaultText =  "Last Status",
+					  						DefaultText =  @"Last Status",
 					  						HelpTextCode =  "LastStatusCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3925,7 +3925,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastStatusName",
-					  						DefaultText =  "Last Status",
+					  						DefaultText =  @"Last Status",
 					  						HelpTextCode =  "LastStatusName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3980,7 +3980,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastStatusDate",
-					  						DefaultText =  "Last Status Date",
+					  						DefaultText =  @"Last Status Date",
 					  						HelpTextCode =  "LastStatusDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4036,7 +4036,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryTransportModeCode",
-					  						DefaultText =  "Transport Mode",
+					  						DefaultText =  @"Transport Mode",
 					  						HelpTextCode =  "DeliveryTransportModeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4092,7 +4092,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ECRTransportModeCode",
-					  						DefaultText =  "Transport Mode",
+					  						DefaultText =  @"Transport Mode",
 					  						HelpTextCode =  "ECRTransportModeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4148,7 +4148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FlashPointTemperatureUnitCode",
-					  						DefaultText =  "Temperature",
+					  						DefaultText =  @"Temperature",
 					  						HelpTextCode =  "FlashPointTemperatureUnitCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);

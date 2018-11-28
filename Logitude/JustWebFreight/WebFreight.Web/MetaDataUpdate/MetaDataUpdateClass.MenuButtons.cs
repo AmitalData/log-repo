@@ -1673,7 +1673,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 IsActive = true,
                 LabelTextCodeCode = "APPayment.B.Void",
                 LabelTextCodeDefaultText = "Void",
-                LocalDefaultText = "להתעלם", 
+                LocalDefaultText = "ביטול", 
                 ObjectTableId = theAPPaymentObject.Id,
                 Tenant = tenant,
                 MenuButtonGroupId = APPaymentMenuButtonGroup.Id,

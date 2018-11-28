@@ -10,6 +10,7 @@ import { DWQueryBuilderService } from '../../../../Infrastructure/Services/Exten
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { GroupByPipe } from '../../../../Infrastructure/Pipes/GroupByPipe';
+import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
 
 @Component({
     moduleId: module.id,
@@ -893,6 +894,19 @@ export class DWQueryBuilderComponent extends BaseComponent {
     public StopBusyIndicator() {
         this.BusyIndicatorText = null;
         this.ShowBusyIndicator = false;
+    }
+
+    SaveButtonClicked() {
+        var QueryData = new DWQueryData();
+        QueryData.Columns = this.SelectedFieldsDataSource;
+        QueryData.Filters = this.SelectedFiltersDataSource[0];
+        this._DWQueryBuilderService.insert(QueryData).subscribe(myResult => {
+            if (!myResult.HasError) {
+                this.SampleData = myResult.Result;
+                this.StopBusyIndicator();
+            }
+
+        });
     }
 
 }
