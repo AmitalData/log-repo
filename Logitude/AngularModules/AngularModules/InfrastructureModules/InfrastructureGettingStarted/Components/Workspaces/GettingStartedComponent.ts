@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component} from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
