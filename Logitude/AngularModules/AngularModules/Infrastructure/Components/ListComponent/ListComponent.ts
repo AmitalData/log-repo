@@ -2477,10 +2477,20 @@ export class ListComponent implements OnInit, AfterViewInit {
             logWindow.Height = 570;
 
 
-            var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
-            var ChangedText = GeneralText.split('%')[0];
-            var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
-            var FinalText = NewText + " " + ChangedText;
+            //var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+            //var ChangedText = GeneralText.split('%')[0];
+            //var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
+            //var FinalText = NewText + " " + ChangedText;
+            var FinalText = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
+            var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+            if (useLocal == true) {
+                var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+                var ChangedText = GeneralText.split('%')[0];
+                var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
+                FinalText = NewText + " " + ChangedText;
+                
+            }
+           
 
             var windowTitle = FinalText; //TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             logWindow.WindowArgs = args;
