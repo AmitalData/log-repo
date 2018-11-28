@@ -63955,7 +63955,9 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.ClosedInvoice", DefaultText = "This invoice is closed", LocalDefaultText = "חשבונית זאת סגורה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.NoGLAccount", DefaultText = "The chosen charge type doesn't have GLAccount connected to it", LocalDefaultText = "סעיף החיוב הנבחר לא מקושר לכרטיס הנה''ח", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.VendorNoGLAccount", DefaultText = "The vendor does not have GLAccount", LocalDefaultText = "לספק לא קושר כרטיס הנהלת חשבונות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.InvoiceCurrNotMatch", DefaultText = "The Invoice Currency does not match the vendor GLAccount Currency ", LocalDefaultText = "מטבע החשבונית לא תואם את מטבע הכרטיס של הספק", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
 
+            
             #endregion
 
             ObjectContext.SaveChanges();
