@@ -1097,6 +1097,8 @@ export class QuoteChargeItem extends BaseComponent {
         this.IsEnabled_CostUnitPrice = isEnabled_CostUnitPrice;
         this.IsEnabled_CostMinAmount = isEnabled_CostMinAmount;
         this.UIProperties.SetEnabled("CostMeasurementId", this.ObjectTableName, isEnabled_CostMeasurement);
+        this.UIProperties.SetEnabled("CostMinAmount", this.ObjectTableName, isEnabled_CostMinAmount);
+        this.UIProperties.SetEnabled("CostMaxAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.SetUIProperties_CostRate();
     }
     SetUIProperties_CostRate() {
@@ -1186,6 +1188,8 @@ export class QuoteChargeItem extends BaseComponent {
         this.IsEnabled_SaleTotalAmount = isEnabled_SaleTotalAmount;
         this.IsEnabled_SaleTotalAmountLocal = isEnabled_SaleTotalAmountLocal;
         this.UIProperties.SetEnabled("SaleMeasurementId", this.ObjectTableName, isEnabled_SaleMeasurement);
+        this.UIProperties.SetEnabled("SaleMinAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
+        this.UIProperties.SetEnabled("SaleMaxAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
     }
 
     public CostMinMaxIconTitle: string = "";
