@@ -218,6 +218,7 @@
     <Content Include="Images\ArrowLeft.png" />
     <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
+    <Content Include="Images\Flags\XK.png" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessRoleNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Team\TeamGeneralTabComponent.html" />

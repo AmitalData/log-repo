@@ -51,6 +51,18 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select d);
         }
 
+
+
+        public AgentSharedManifest GetSingleAgentSharedManifestByAgentRef(string agentRef, int tenant)
+        {
+            return (from record in context.AgentSharedManifests where record.AgentReference == agentRef && record.Tenant == tenant select record).FirstOrDefault();
+        }
+
+
+
+
+
+
         public void Add(AgentSharedManifest entity)
         {
             context.AgentSharedManifests.Add(entity);

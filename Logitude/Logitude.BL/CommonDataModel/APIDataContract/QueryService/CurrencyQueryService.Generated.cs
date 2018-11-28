@@ -58,6 +58,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public Currency GetCurrencyByCode(string Code,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Currency with Code " + Code + " doesn't exist");
+
+				return CurrencyDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public Currency CurrencyDataMapping(CurrencyPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -86,10 +105,14 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+					
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
+					} 					   
 					if(temp == null)
 					{
-					    throw new ApplicationException("Currency with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("Currency with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
