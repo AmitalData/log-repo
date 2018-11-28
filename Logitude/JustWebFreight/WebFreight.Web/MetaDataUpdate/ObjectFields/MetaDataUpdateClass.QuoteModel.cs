@@ -6079,9 +6079,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Sale Min Amount",
-                FullFieldLable = "SaleMinAmount",
-                FieldName = "SaleMinAmount",
+                DefaultText = "Sale Max Amount",
+                FullFieldLable = "SaleMaxAmount",
+                FieldName = "SaleMaxAmount",
                 FieldsDataType = "Double",
                 MaxLength = 1,
                 MinLength = 0,
@@ -6090,8 +6090,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
-                PMPropertyPath = "SaleMinAmount",
-                ListPropertyPath = "SaleMinAmount",
+                PMPropertyPath = "SaleMaxAmount",
+                ListPropertyPath = "SaleMaxAmount",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             this.ObjectContext.SaveChanges();

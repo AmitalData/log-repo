@@ -73,9 +73,8 @@ namespace WebFreight.Web.Helpers
             if (invitedContact == null) return;
             invitedContactName = invitedContact.EnglishName;
 
-
             string logo = "logo" + tenant;
-            string subject = "Cancel Shipment";
+            string subject = "Mistake in Sharing "+ agentRef + " Manifest";
             string fromEmail = loggedContact.Email;
             StringBuilder HtmlTemplate = new StringBuilder();
             HtmlTemplate.Append("<p style='text-align:left'>");
@@ -85,11 +84,11 @@ namespace WebFreight.Web.Helpers
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Thank you");
 
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("Best Regards,");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append(loggedContact.EnglishName);
+            //HtmlTemplate.Append("<br />");
+            //HtmlTemplate.Append("<br />");
+            //HtmlTemplate.Append("Best Regards,");
+            //HtmlTemplate.Append("<br />");
+            //HtmlTemplate.Append(loggedContact.EnglishName);
             //HtmlTemplate.Append("<br /><br />");
             //HtmlTemplate.Append("<img width='290' height='101' src='cid:" + logo + "' />");
 

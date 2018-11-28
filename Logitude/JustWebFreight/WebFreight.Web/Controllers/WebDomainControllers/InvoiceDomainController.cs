@@ -1419,7 +1419,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 ARPaymentChequeQueryService entityQuery = new ARPaymentChequeQueryService(tenant);
                 ARPaymentChequePM arpaymentCheque = entityQuery.GetSingleByPaymentId(paymentId, tenant);
-                string status = arpaymentCheque!= null ? arpaymentCheque.StatusName : ""; 
+                string status = "";
+                if (arpaymentCheque != null)
+                {
+                    ARPaymentChequeStatusRepository aRPaymentChequeStatusRep = new ARPaymentChequeStatusRepository(tenant);
+                    ARPaymentChequeStatus aRPaymentChequeStatus = aRPaymentChequeStatusRep.GetSingle(arpaymentCheque.StatusCode);
+                    status = aRPaymentChequeStatus != null ? aRPaymentChequeStatus.EnglishName : "";
+                    TenantRepository tenantRepository = new TenantRepository(tenant);
+                    Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+                    if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+                    {
+                        status = aRPaymentChequeStatus != null ? aRPaymentChequeStatus.LocalName : "";
+                    }
+                }
                 return Request.CreateResponse(HttpStatusCode.OK, status);
             }
 

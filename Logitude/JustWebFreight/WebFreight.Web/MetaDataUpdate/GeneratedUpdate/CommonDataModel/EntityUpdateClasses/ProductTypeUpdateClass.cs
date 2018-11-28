@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class ProductTypeUpdateClass
@@ -175,9 +178,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
+					  						DefaultText =  @"Code",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
+					  						ListLableDefaultText =  @"Code",
 					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -233,13 +236,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						FullLocalDefaultText =  "שם",
+					  						DefaultText =  @"Name",
+					  						FullLocalDefaultText =  @"שם",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
-					  						ListLocalDefaultText =  "שם",
+					  						ListLableDefaultText =  @"Name",
+					  						ListLocalDefaultText =  @"שם",
 					  						HelpTextCode =  "Name",
-					  						HelpLocalDefaultText =  "שם",
+					  						HelpLocalDefaultText =  @"שם",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -292,9 +295,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search..",
+					  						DefaultText =  @"Search..",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: name",
+					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -349,9 +352,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  "Inactive",
+					  						DefaultText =  @"Inactive",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  "Inactive",
+					  						ListLableDefaultText =  @"Inactive",
 					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -408,7 +411,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuotationDefaultTemplateId",
-					  						DefaultText =  "Quotation Default Template",
+					  						DefaultText =  @"Quotation Default Template",
 					  						HelpTextCode =  "QuotationDefaultTemplateId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -464,9 +467,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DefaultTemplate",
-					  						DefaultText =  "Default Template",
+					  						DefaultText =  @"Default Template",
 					  						ListFieldLable =  "DefaultTemplateListLable",
-					  						ListLableDefaultText =  "Default Template",
+					  						ListLableDefaultText =  @"Default Template",
 					  						HelpTextCode =  "DefaultTemplate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -589,7 +592,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ProductTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ProductType" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ProductTypeTextCode_ProductType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ProductType", DefaultText = "Product Type",LocalDefaultText = null, ObjectTableId = ProductTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

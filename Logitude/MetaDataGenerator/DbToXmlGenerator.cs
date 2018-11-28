@@ -112,7 +112,8 @@ namespace MetaDataGenerator
                 if (table.IsClosed)
                     GenerateTableDataRecords(doc, entityElement, table, fields);
 
-
+                GenerateAdditionalTextCodes(doc, entityElement, table, fields);
+                GenerateAdditionalFeatures(doc, entityElement, table, fields);
 
                 #region Write Xml To file
 
@@ -195,20 +196,23 @@ namespace MetaDataGenerator
             string qListName = Assembly.CreateQualifiedName("Logitude.BL", "Logitude.BL." + modelName + ".EntityLists." + table.Name + "List");
             System.Type tableListClass = System.Type.GetType(qListName);
 
-            if (tableClass == null)// && tablePMClass == null)
+
+            if (tableClass == null && table.Name != "General")// && tablePMClass == null)
             {
                 return false;
             }
 
-            PropertyInfo[] pocoProperties = tableClass.GetProperties();
+            PropertyInfo[] pocoProperties = { };
             PropertyInfo[] pmClassProperties = { };
             PropertyInfo[] listClassProperties = { };
+            if (tableClass != null)
+            {
+                pocoProperties = tableClass.GetProperties();
+            }
             if (tablePMClass != null)
             {
                 pmClassProperties = tablePMClass.GetProperties();
             }
-
-
             if (tableListClass != null)
             {
                 listClassProperties = tableListClass.GetProperties();
@@ -995,6 +999,7 @@ namespace MetaDataGenerator
 
                 if (f.FullNameTextCode != null)
                 {
+                    
                     //FullNameTextCodeId = objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable;
                     string fullLable = f.FullNameTextCode.Code.Split('.').Length > 2 ? f.FullNameTextCode.Code.Split('.')[2] : f.FullNameTextCode.Code.Split('.')[1];
                     SetAttribute("FullFieldLable", GetStringValue(fullLable), fieldElement, f);
@@ -1551,7 +1556,7 @@ namespace MetaDataGenerator
 
             SetAttribute("Id", GetStringValue(Guid.NewGuid()), entityElement, null);
             SetAttribute("ObjectTableName", GetStringValue(table.Name), entityElement);
-            SetAttribute("DBTableName", GetStringValue(table.DBTableName), entityElement);
+            SetAttribute("DBTableName", (!string.IsNullOrEmpty(table.DBTableName)?GetStringValue(table.DBTableName): GetStringValue("NONE")), entityElement);
 
             TextCode tableTextCode = (from a in tableTextCodes
                                       where a.Tenant == 0 && a.Code == table.Name

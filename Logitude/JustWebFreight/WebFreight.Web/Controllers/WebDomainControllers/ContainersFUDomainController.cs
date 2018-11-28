@@ -101,7 +101,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                       myPackage.Tenant == tenant
                                       && myShipment.Tenant == tenant
                                       && myShipment.IsCancelled == false
-                                      && myShipment.DirectionId == "E"
+                                      && myShipment.DirectionId == "I"
                                       &&
                                           (
                                           myShipment.TransportModeId == "O" && (myShipment.ShipmentTypeId == "FCLD" || myShipment.ShipmentTypeId == "MYGO")

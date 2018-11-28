@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class HybridPartnerUpdateClass
@@ -177,13 +180,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
-					  						FullLocalDefaultText =  "שם",
+					  						DefaultText =  @"Name",
+					  						FullLocalDefaultText =  @"שם",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
-					  						ListLocalDefaultText =  "שם",
+					  						ListLableDefaultText =  @"Name",
+					  						ListLocalDefaultText =  @"שם",
 					  						HelpTextCode =  "Name",
-					  						HelpLocalDefaultText =  "שם",
+					  						HelpLocalDefaultText =  @"שם",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -237,9 +240,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Local Name",
-					  						DefaultText =  "Local Name",
+					  						DefaultText =  @"Local Name",
 					  						ListFieldLable =  "LocalNameListLable",
-					  						ListLableDefaultText =  "Local Name",
+					  						ListLableDefaultText =  @"Local Name",
 					  						HelpTextCode =  "Local Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -295,9 +298,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "PartnerTenant",
-					  						DefaultText =  "Partner Tenant",
+					  						DefaultText =  @"Partner Tenant",
 					  						ListFieldLable =  "PartnerTenantListLable",
-					  						ListLableDefaultText =  "Partner Tenant",
+					  						ListLableDefaultText =  @"Partner Tenant",
 					  						HelpTextCode =  "PartnerTenant",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -352,9 +355,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsMislakaActivated",
-					  						DefaultText =  "Is Mislaka Activated",
+					  						DefaultText =  @"Is Mislaka Activated",
 					  						ListFieldLable =  "IsMislakaActivatedListLable",
-					  						ListLableDefaultText =  "IsMislakaActivated",
+					  						ListLableDefaultText =  @"IsMislakaActivated",
 					  						HelpTextCode =  "IsMislakaActivated",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -410,7 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "HypridPartnerId",
-					  						DefaultText =  "Hyprid Partner",
+					  						DefaultText =  @"Hyprid Partner",
 					  						HelpTextCode =  "HypridPartnerId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -488,7 +491,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable HybridPartnerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HybridPartner" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode HybridPartnerTextCode_HybridPartner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridPartner", DefaultText = "Hybrid Partner",LocalDefaultText = null, ObjectTableId = HybridPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

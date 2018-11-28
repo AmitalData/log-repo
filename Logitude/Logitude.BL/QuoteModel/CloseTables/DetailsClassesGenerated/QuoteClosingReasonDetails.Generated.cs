@@ -25,35 +25,35 @@ namespace Logitude.BL.QuoteModel
             {    
                 Code = "EQ", 
                 Name = "Expensive Quote", 
-                SearchFields = "EQ,Expensive Quote", 
+                SearchFields = "EQ,Expensive Quote,", 
 			});
 			 
             all.Add(new QuoteClosingReasonDetails()
             {    
                 Code = "XQ", 
                 Name = "Expired Quote", 
-                SearchFields = "XQ,Expired Quote", 
+                SearchFields = "XQ,Expired Quote,", 
 			});
 			 
             all.Add(new QuoteClosingReasonDetails()
             {    
                 Code = "GS", 
                 Name = "Given directly to the Shipping Line", 
-                SearchFields = "GS,Given directly to the Shipping Line", 
+                SearchFields = "GS,Given directly to the Shipping Line,", 
 			});
 			 
             all.Add(new QuoteClosingReasonDetails()
             {    
                 Code = "LS", 
                 Name = "Lack of Service in the Last Shipment", 
-                SearchFields = "LS,Lack of Service in the Last Shipment", 
+                SearchFields = "LS,Lack of Service in the Last Shipment,", 
 			});
 			 
             all.Add(new QuoteClosingReasonDetails()
             {    
                 Code = "LC", 
                 Name = "Lost to Competitor", 
-                SearchFields = "LC,Lost to Competitor", 
+                SearchFields = "LC,Lost to Competitor,", 
 			});
 			
             return all;
