@@ -112,8 +112,9 @@ namespace MetaDataGenerator
 
                     case "Infrastructure":
                         tables = (from a in rep.context.ObjectTables
-                                  where !a.Name.Contains(".Customs")
+                                  where (!a.Name.Contains(".Customs")
                                   && (a.ClientModuleName == modelName || (infraFiles.Contains(a.Name))) && !globalFiles.Contains(a.Name) && !commFiles.Contains(a.Name)
+                                  ) || a.Name == "General"
                                   select a).ToList();
                         break;
 

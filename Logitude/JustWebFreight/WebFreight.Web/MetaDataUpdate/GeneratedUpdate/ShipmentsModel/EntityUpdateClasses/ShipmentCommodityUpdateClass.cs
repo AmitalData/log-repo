@@ -175,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipmentId",
-					  						DefaultText =  "Shipment",
+					  						DefaultText =  @"Shipment",
 					  						HelpTextCode =  "ShipmentId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -230,7 +230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DescriptionOfGoods",
-					  						DefaultText =  "Description Of Goods",
+					  						DefaultText =  @"Description Of Goods",
 					  						HelpTextCode =  "DescriptionOfGoods",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -286,7 +286,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "RateClassCode",
-					  						DefaultText =  "Rate Class",
+					  						DefaultText =  @"Rate Class",
 					  						HelpTextCode =  "RateClassCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -341,10 +341,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ChargeableWeight",
-					  						DefaultText =  "Chargeable Weight (%UnitCode)",
+					  						DefaultText =  @"Chargeable Weight (%UnitCode)",
 					  						HelpTextCode =  "ChargeableWeight",
 					  						ShortFieldLable =  "ChargeableWeight",
-					  						ShortFieldLableDefaultText =  "Chargeable Weight (%UnitCode)",
+					  						ShortFieldLableDefaultText =  @"Chargeable Weight (%UnitCode)",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -398,7 +398,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ChargeRate",
-					  						DefaultText =  "Charge Rate",
+					  						DefaultText =  @"Charge Rate",
 					  						HelpTextCode =  "ChargeRate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -453,7 +453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ChargeAmount",
-					  						DefaultText =  "Charge Amount",
+					  						DefaultText =  @"Charge Amount",
 					  						HelpTextCode =  "ChargeAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -508,7 +508,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CommodityNumber",
-					  						DefaultText =  "Commodity No",
+					  						DefaultText =  @"Commodity No",
 					  						HelpTextCode =  "CommodityNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -563,7 +563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NumberOfPackages",
-					  						DefaultText =  "Number Of Packages",
+					  						DefaultText =  @"Number Of Packages",
 					  						HelpTextCode =  "NumberOfPackages",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -618,7 +618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "GrossWeight",
-					  						DefaultText =  "Gross Weight (%UnitCode)",
+					  						DefaultText =  @"Gross Weight (%UnitCode)",
 					  						HelpTextCode =  "GrossWeight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -673,7 +673,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Volume",
-					  						DefaultText =  "Volume (%UnitCode)",
+					  						DefaultText =  @"Volume (%UnitCode)",
 					  						HelpTextCode =  "Volume",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -728,7 +728,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VolumetricWeight",
-					  						DefaultText =  "Volumetric Weight (%UnitCode)",
+					  						DefaultText =  @"Volumetric Weight (%UnitCode)",
 					  						HelpTextCode =  "VolumetricWeight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);

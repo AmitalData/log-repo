@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class ChargesTypeUpdateClass
@@ -179,9 +182,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search codes/ names",
+					  						DefaultText =  @"Search codes/ names",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: english name\n3: local name",
+					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: english name\n3: local name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -236,9 +239,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
+					  						DefaultText =  @"Code",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
+					  						ListLableDefaultText =  @"Code",
 					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -294,9 +297,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "EnglishName",
-					  						DefaultText =  "Name",
+					  						DefaultText =  @"Name",
 					  						ListFieldLable =  "EnglishNameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						ListLableDefaultText =  @"Name",
 					  						HelpTextCode =  "EnglishName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -352,9 +355,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LocalName",
-					  						DefaultText =  "Local Name",
+					  						DefaultText =  @"Local Name",
 					  						ListFieldLable =  "LocalNameListLable",
-					  						ListLableDefaultText =  "Local Name",
+					  						ListLableDefaultText =  @"Local Name",
 					  						HelpTextCode =  "LocalName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -410,7 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ComputedLocalName",
-					  						DefaultText =  "Local Name",
+					  						DefaultText =  @"Local Name",
 					  						HelpTextCode =  "ComputedLocalName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -469,10 +472,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ContainerMeasurementId",
-					  						DefaultText =  "Container Measurement",
+					  						DefaultText =  @"Container Measurement",
 					  						HelpTextCode =  "ContainerMeasurementId",
 					  						ShortFieldLable =  "ContainerMeasurementId",
-					  						ShortFieldLableDefaultText =  "Container Mst.",
+					  						ShortFieldLableDefaultText =  @"Container Mst.",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -530,7 +533,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "MeasurementId",
-					  						DefaultText =  "Measurement",
+					  						DefaultText =  @"Measurement",
 					  						HelpTextCode =  "MeasurementId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -586,9 +589,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MeasurementCode",
-					  						DefaultText =  "Measurement",
+					  						DefaultText =  @"Measurement",
 					  						ListFieldLable =  "MeasurementCodeListLable",
-					  						ListLableDefaultText =  "Measurement",
+					  						ListLableDefaultText =  @"Measurement",
 					  						HelpTextCode =  "MeasurementCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -645,9 +648,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MeasurementShortName",
-					  						DefaultText =  "Measurement",
+					  						DefaultText =  @"Measurement",
 					  						ListFieldLable =  "MeasurementShortNameListLable",
-					  						ListLableDefaultText =  "Measurement",
+					  						ListLableDefaultText =  @"Measurement",
 					  						HelpTextCode =  "MeasurementShortName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -704,7 +707,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VatTypeId",
-					  						DefaultText =  "VAT Type",
+					  						DefaultText =  @"VAT Type",
 					  						HelpTextCode =  "VatTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -761,7 +764,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ChargesGroupCode",
-					  						DefaultText =  "Group Code",
+					  						DefaultText =  @"Group Code",
 					  						HelpTextCode =  "ChargesGroupCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -817,9 +820,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ChargesGroupName",
-					  						DefaultText =  "Group Name",
+					  						DefaultText =  @"Group Name",
 					  						ListFieldLable =  "ChargesGroupNameListLable",
-					  						ListLableDefaultText =  "Group Name",
+					  						ListLableDefaultText =  @"Group Name",
 					  						HelpTextCode =  "ChargesGroupName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -876,7 +879,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DueTypeCode",
-					  						DefaultText =  "Due Type",
+					  						DefaultText =  @"Due Type",
 					  						HelpTextCode =  "DueTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -932,7 +935,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Description",
-					  						DefaultText =  "Description",
+					  						DefaultText =  @"Description",
 					  						HelpTextCode =  "Description",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -988,9 +991,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AddedManually",
-					  						DefaultText =  "Added Manually",
+					  						DefaultText =  @"Added Manually",
 					  						ListFieldLable =  "AddedManuallyListLable",
-					  						ListLableDefaultText =  "Added Manually",
+					  						ListLableDefaultText =  @"Added Manually",
 					  						HelpTextCode =  "AddedManually",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1046,9 +1049,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  "Inactive Charge Type",
+					  						DefaultText =  @"Inactive Charge Type",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  "Inactive",
+					  						ListLableDefaultText =  @"Inactive",
 					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1104,10 +1107,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsReceivable",
-					  						DefaultText =  "Is Receivable",
+					  						DefaultText =  @"Is Receivable",
 					  						HelpTextCode =  "IsReceivable",
 					  						ShortFieldLable =  "IsReceivable",
-					  						ShortFieldLableDefaultText =  "Receivable",
+					  						ShortFieldLableDefaultText =  @"Receivable",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1162,10 +1165,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsPayable",
-					  						DefaultText =  "Is Payable",
+					  						DefaultText =  @"Is Payable",
 					  						HelpTextCode =  "IsPayable",
 					  						ShortFieldLable =  "IsPayable",
-					  						ShortFieldLableDefaultText =  "Payable",
+					  						ShortFieldLableDefaultText =  @"Payable",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1220,9 +1223,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAir",
-					  						DefaultText =  "Air",
+					  						DefaultText =  @"Air",
 					  						ListFieldLable =  "IsAirListLable",
-					  						ListLableDefaultText =  "Air",
+					  						ListLableDefaultText =  @"Air",
 					  						HelpTextCode =  "IsAir",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1278,9 +1281,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsOcean",
-					  						DefaultText =  "Ocean",
+					  						DefaultText =  @"Ocean",
 					  						ListFieldLable =  "IsOceanListLable",
-					  						ListLableDefaultText =  "Ocean",
+					  						ListLableDefaultText =  @"Ocean",
 					  						HelpTextCode =  "IsOcean",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1336,9 +1339,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsInland",
-					  						DefaultText =  "Inland",
+					  						DefaultText =  @"Inland",
 					  						ListFieldLable =  "IsInlandListLable",
-					  						ListLableDefaultText =  "Inland",
+					  						ListLableDefaultText =  @"Inland",
 					  						HelpTextCode =  "IsInland",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1394,10 +1397,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAutoDisplayInShipment",
-					  						DefaultText =  "Auto Display in Shipment",
+					  						DefaultText =  @"Auto Display in Shipment",
 					  						HelpTextCode =  "IsAutoDisplayInShipment",
 					  						ShortFieldLable =  "IsAutoDisplayInShipment",
-					  						ShortFieldLableDefaultText =  "Shipment",
+					  						ShortFieldLableDefaultText =  @"Shipment",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1452,10 +1455,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAutoDisplayInQuote",
-					  						DefaultText =  "Auto Display in Quote",
+					  						DefaultText =  @"Auto Display in Quote",
 					  						HelpTextCode =  "IsAutoDisplayInQuote",
 					  						ShortFieldLable =  "IsAutoDisplayInQuote",
-					  						ShortFieldLableDefaultText =  "Quote",
+					  						ShortFieldLableDefaultText =  @"Quote",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1510,10 +1513,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAutoDisplayInConsolidation",
-					  						DefaultText =  "Auto Display in Consolidation",
+					  						DefaultText =  @"Auto Display in Consolidation",
 					  						HelpTextCode =  "IsAutoDisplayInConsolidation",
 					  						ShortFieldLable =  "IsAutoDisplayInConsolidation",
-					  						ShortFieldLableDefaultText =  "Master",
+					  						ShortFieldLableDefaultText =  @"Master",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1568,10 +1571,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AWBPrintDescription",
-					  						DefaultText =  "AWB Print Description",
+					  						DefaultText =  @"AWB Print Description",
 					  						HelpTextCode =  "AWBPrintDescription",
 					  						ShortFieldLable =  "AWBPrintDescription",
-					  						ShortFieldLableDefaultText =  "AWB Print Desc.",
+					  						ShortFieldLableDefaultText =  @"AWB Print Desc.",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1626,7 +1629,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AccountingVATSplit",
-					  						DefaultText =  "Split by VAT type",
+					  						DefaultText =  @"Split by VAT type",
 					  						HelpTextCode =  "AccountingVATSplit",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1682,9 +1685,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PayableDebitAccount",
-					  						DefaultText =  "Payable Debit Account",
+					  						DefaultText =  @"Payable Debit Account",
 					  						ListFieldLable =  "PayableDebitAccountListLable",
-					  						ListLableDefaultText =  "Payable Debit Account",
+					  						ListLableDefaultText =  @"Payable Debit Account",
 					  						HelpTextCode =  "PayableDebitAccount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1740,9 +1743,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivableCreditAccount",
-					  						DefaultText =  "Receivable Credit Account",
+					  						DefaultText =  @"Receivable Credit Account",
 					  						ListFieldLable =  "ReceivableCreditAccountListLable",
-					  						ListLableDefaultText =  "Receivable Credit Account",
+					  						ListLableDefaultText =  @"Receivable Credit Account",
 					  						HelpTextCode =  "ReceivableCreditAccount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1798,11 +1801,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ViewOrder",
-					  						DefaultText =  "View Order",
+					  						DefaultText =  @"View Order",
 					  						ListFieldLable =  "ViewOrderListLable",
-					  						ListLableDefaultText =  "View Order",
+					  						ListLableDefaultText =  @"View Order",
 					  						HelpTextCode =  "ViewOrder",
-					  						HelpTextDefaultText =  "To determine the order in which charge types will appear in the Receivbles and payables screens, enter a numeric value that represents this charge’s relative position (e.g. 10, 20, 30, 40, etc.).",
+					  						HelpTextDefaultText =  @"To determine the order in which charge types will appear in the Receivbles and payables screens, enter a numeric value that represents this charge’s relative position (e.g. 10, 20, 30, 40, etc.).",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1858,7 +1861,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PayableDebitAccountExternalId",
-					  						DefaultText =  "Payable Debit Account",
+					  						DefaultText =  @"Payable Debit Account",
 					  						HelpTextCode =  "PayableDebitAccountExternalId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1915,7 +1918,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivableCreditAccountExternalId",
-					  						DefaultText =  "Receivable Credit Account",
+					  						DefaultText =  @"Receivable Credit Account",
 					  						HelpTextCode =  "ReceivableCreditAccountExternalId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1972,7 +1975,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ChargesTypeExternalCodeExternalId",
-					  						DefaultText =  "External Code",
+					  						DefaultText =  @"External Code",
 					  						HelpTextCode =  "ChargesTypeExternalCodeExternalId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2029,9 +2032,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IATACodeId",
-					  						DefaultText =  "IATA Code",
+					  						DefaultText =  @"IATA Code",
 					  						HelpTextCode =  "IATACodeId",
-					  						HelpTextDefaultText =  "The corresponding IATA code for the service to be printed in the AWB",
+					  						HelpTextDefaultText =  @"The corresponding IATA code for the service to be printed in the AWB",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2087,9 +2090,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ChargesGroupId",
-					  						DefaultText =  "Group Code",
+					  						DefaultText =  @"Group Code",
 					  						HelpTextCode =  "ChargesGroupId",
-					  						HelpTextDefaultText =  "Select the group to which this charge type belongs. Mandatory field. For example, if it belongs to the FRT-Freight group, then when adding this charge in a shipment Logitude will refer to the system currency defined for the freight group in setup.",
+					  						HelpTextDefaultText =  @"Select the group to which this charge type belongs. Mandatory field. For example, if it belongs to the FRT-Freight group, then when adding this charge in a shipment Logitude will refer to the system currency defined for the freight group in setup.",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2144,10 +2147,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsBackToBack",
-					  						DefaultText =  "Back to back",
+					  						DefaultText =  @"Back to back",
 					  						HelpTextCode =  "IsBackToBack",
 					  						ShortFieldLable =  "IsBackToBack",
-					  						ShortFieldLableDefaultText =  "Back to back",
+					  						ShortFieldLableDefaultText =  @"Back to back",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2202,10 +2205,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAutoDisplayInCustoms",
-					  						DefaultText =  "Auto Display In Customs",
+					  						DefaultText =  @"Auto Display In Customs",
 					  						HelpTextCode =  "IsAutoDisplayInCustoms",
 					  						ShortFieldLable =  "IsAutoDisplayInCustoms",
-					  						ShortFieldLableDefaultText =  "Customs",
+					  						ShortFieldLableDefaultText =  @"Customs",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2260,10 +2263,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsCustoms",
-					  						DefaultText =  "Is Customs",
+					  						DefaultText =  @"Is Customs",
 					  						HelpTextCode =  "IsCustoms",
 					  						ShortFieldLable =  "IsCustoms",
-					  						ShortFieldLableDefaultText =  "Customs",
+					  						ShortFieldLableDefaultText =  @"Customs",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2318,7 +2321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SATExternalId",
-					  						DefaultText =  "SAT External Id",
+					  						DefaultText =  @"SAT External Id",
 					  						HelpTextCode =  "SATExternalId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2374,9 +2377,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsExpense",
-					  						DefaultText =  "Expense Charge",
+					  						DefaultText =  @"Expense Charge",
 					  						ListFieldLable =  "IsExpenseListLable",
-					  						ListLableDefaultText =  "Expense Charge",
+					  						ListLableDefaultText =  @"Expense Charge",
 					  						HelpTextCode =  "IsExpense",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2432,7 +2435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivablesChargesTypeExternalCode",
-					  						DefaultText =  "External Code",
+					  						DefaultText =  @"External Code",
 					  						HelpTextCode =  "ReceivablesChargesTypeExternalCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2578,7 +2581,56 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ChargesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChargesType" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ChargesTypeTextCode_ChargesType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType", DefaultText = "Charges Type",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMLocalLanguageInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.LocalLanguageInvoice", DefaultText = "Used for local language invoice",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMConcentratingIntoGroups = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.ConcentratingIntoGroups", DefaultText = "Used for concentrating the receivables and payables into groups",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMChargesCalculation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.ChargesCalculation", DefaultText = "Used for the charges calculation",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMOoceanInlandShipments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.OoceanInlandShipments", DefaultText = "Used for ocean FCL/ Inland FTL shipments",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMBelongToFreight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.BelongToFreight", DefaultText = "Note that charges that belong to the ( Freight ) group will not be printed on the AWB !!",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMRegionIsLocked = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.RegionIsLocked", DefaultText = "This region is Locked, since this Charge Type wil not be used in Air Transport !!",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMAWBDefaults = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.AWBDefaults", DefaultText = "This section defines the AWB defaults for this charge type",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMDueCarrierAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.DueCarrierAgent", DefaultText = "defines if this charge is due carrier or due agent",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMBillingProperties = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.BillingProperties", DefaultText = "This section defines the charge type billing properties",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMRankingInReceivables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.RankingInReceivables", DefaultText = "Used for ranking the charge in the receivables",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOTransport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.Transport", DefaultText = "Transport",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOUsedIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.UsedIn", DefaultText = "This charge type is used in",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOAutoDisplay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.AutoDisplay", DefaultText = "Auto Display",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMAppearsIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.AppearsIn", DefaultText = "This charge type appears automatically in",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOAWBSettings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.AWBSettings", DefaultText = "AWB settings",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOBilling = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOUsedInRP = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.UsedInRP", DefaultText = "Used In",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

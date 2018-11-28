@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteUpdateClass
@@ -78,7 +81,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "Quote",
 			      				    DBTableName =  "Quotes",
 			      				    ObjectTableSingular =  "Quote",
-			      				    ObjectTablePlural =  "Quotes",
 			      				    DefaultText =  "Quote",
 			      				    Name =  "Queries",
 			      				    IsNewWizard =  true,
@@ -117,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			      				    HasShortTitle =  true,
 			      				    HasMenuButtons =  true,
 			      				    HasFiltersMenu =  true,
-			      				    AllowedInQueues =  false,
+			      				    AllowedInQueues =  true,
 			      				    Code =  "QUOT",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -177,7 +179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalContainers",
-					  						DefaultText =  "Total Containers",
+					  						DefaultText =  @"Total Containers",
 					  						HelpTextCode =  "TotalContainers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -232,9 +234,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search partners / ports / ref.# / notes",
+					  						DefaultText =  @"Search partners / ports / ref.# / notes",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1:quote numbers\n2: References\n3: consignee and shipper names\n4: from port to port",
+					  						HelpTextDefaultText =  @"Searching by :\n1:quote numbers\n2: References\n3: consignee and shipper names\n4: from port to port",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -288,7 +290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsExpiredQuote",
-					  						DefaultText =  "Is Expired Quote",
+					  						DefaultText =  @"Is Expired Quote",
 					  						HelpTextCode =  "IsExpiredQuote",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -346,7 +348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "GrossWeightUnitCode",
-					  						DefaultText =  "Gross Weight Unit Code",
+					  						DefaultText =  @"Gross Weight Unit Code",
 					  						HelpTextCode =  "GrossWeightUnitCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -404,10 +406,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ChargeableWeightUnitCode",
-					  						DefaultText =  "Chargeable Weight Unit Code",
+					  						DefaultText =  @"Chargeable Weight Unit Code",
 					  						HelpTextCode =  "ChargeableWeightUnitCode",
 					  						ShortFieldLable =  "WtMsrUnitCode",
-					  						ShortFieldLableDefaultText =  "Wt / Msr Unit Code",
+					  						ShortFieldLableDefaultText =  @"Wt / Msr Unit Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -463,7 +465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VolumetricWeight",
-					  						DefaultText =  "Volumetric Weight (%ChargWeightCode)",
+					  						DefaultText =  @"Volumetric Weight (%ChargWeightCode)",
 					  						HelpTextCode =  "VolumetricWeight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -518,7 +520,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PickupLocation",
-					  						DefaultText =  "Pickup Location",
+					  						DefaultText =  @"Pickup Location",
 					  						HelpTextCode =  "PickupLocation",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -573,7 +575,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryLocation",
-					  						DefaultText =  "Delivery Location",
+					  						DefaultText =  @"Delivery Location",
 					  						HelpTextCode =  "DeliveryLocation",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -630,9 +632,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DepartmentName",
-					  						DefaultText =  "Department",
+					  						DefaultText =  @"Department",
 					  						ListFieldLable =  "DepartmentNameListLable",
-					  						ListLableDefaultText =  "Department",
+					  						ListLableDefaultText =  @"Department",
 					  						HelpTextCode =  "DepartmentName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -689,9 +691,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BranchName",
-					  						DefaultText =  "Branch",
+					  						DefaultText =  @"Branch",
 					  						ListFieldLable =  "BranchNameListLable",
-					  						ListLableDefaultText =  "Branch",
+					  						ListLableDefaultText =  @"Branch",
 					  						HelpTextCode =  "BranchName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -747,7 +749,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FromPartnerId",
-					  						DefaultText =  "From Partner",
+					  						DefaultText =  @"From Partner",
 					  						HelpTextCode =  "FromPartnerId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -803,7 +805,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ToPartnerId",
-					  						DefaultText =  "To Partner",
+					  						DefaultText =  @"To Partner",
 					  						HelpTextCode =  "ToPartnerId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -859,7 +861,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FromPartnerAddressId",
-					  						DefaultText =  "From Partner Address",
+					  						DefaultText =  @"From Partner Address",
 					  						HelpTextCode =  "FromPartnerAddressId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -915,7 +917,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ToPartnerAddressId",
-					  						DefaultText =  "To Partner Address",
+					  						DefaultText =  @"To Partner Address",
 					  						HelpTextCode =  "ToPartnerAddressId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -970,7 +972,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FromLocation",
-					  						DefaultText =  "From Location",
+					  						DefaultText =  @"From Location",
 					  						HelpTextCode =  "FromLocation",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1025,7 +1027,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ToLocation",
-					  						DefaultText =  "To Location",
+					  						DefaultText =  @"To Location",
 					  						HelpTextCode =  "ToLocation",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1080,7 +1082,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsFixedPrice",
-					  						DefaultText =  "Fixed Price",
+					  						DefaultText =  @"Fixed Price",
 					  						HelpTextCode =  "IsFixedPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1136,7 +1138,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomerContactId",
-					  						DefaultText =  "Customer Contact",
+					  						DefaultText =  @"Customer Contact",
 					  						HelpTextCode =  "CustomerContactId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1190,10 +1192,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostTotalAmountInLocalCurrency",
-					  						DefaultText =  "Cost Total Amount in Local Currency",
+					  						DefaultText =  @"Cost Total Amount in Local Currency",
 					  						HelpTextCode =  "CostTotalAmountInLocalCurrency",
 					  						ShortFieldLable =  "CostTotalAmount",
-					  						ShortFieldLableDefaultText =  "Cost",
+					  						ShortFieldLableDefaultText =  @"Cost",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1246,10 +1248,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleTotalAmountInLocalCurrency",
-					  						DefaultText =  "Sales Total Amount in Local Currency",
+					  						DefaultText =  @"Sales Total Amount in Local Currency",
 					  						HelpTextCode =  "SaleTotalAmountInLocalCurrency",
 					  						ShortFieldLable =  "SaleTotalAmount",
-					  						ShortFieldLableDefaultText =  "Sale",
+					  						ShortFieldLableDefaultText =  @"Sale",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1302,7 +1304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostTotalAmountInSaleCurrency",
-					  						DefaultText =  "Cost Total Amount in Sales Currency",
+					  						DefaultText =  @"Cost Total Amount in Sales Currency",
 					  						HelpTextCode =  "CostTotalAmountInSaleCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1356,7 +1358,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleTotalAmountInSaleCurrency",
-					  						DefaultText =  "Sales Total Amount in Sale Currency",
+					  						DefaultText =  @"Sales Total Amount in Sale Currency",
 					  						HelpTextCode =  "SaleTotalAmountInSaleCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1410,7 +1412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EstimateProfit",
-					  						DefaultText =  "Estimated Profit",
+					  						DefaultText =  @"Estimated Profit",
 					  						HelpTextCode =  "EstimateProfit",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1464,10 +1466,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EstimateProfitInSaleCurrency",
-					  						DefaultText =  "Estimated Profit In Sales Currency",
+					  						DefaultText =  @"Estimated Profit In Sales Currency",
 					  						HelpTextCode =  "EstimateProfitInSaleCurrency",
 					  						ShortFieldLable =  "ProfitInSaleCurrency",
-					  						ShortFieldLableDefaultText =  "Profit In Sale Currency",
+					  						ShortFieldLableDefaultText =  @"Profit In Sale Currency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1521,7 +1523,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipperName",
-					  						DefaultText =  "Shipper Name",
+					  						DefaultText =  @"Shipper Name",
 					  						HelpTextCode =  "ShipperName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1576,7 +1578,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ConsigneeName",
-					  						DefaultText =  "Consignee Name",
+					  						DefaultText =  @"Consignee Name",
 					  						HelpTextCode =  "ConsigneeName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1631,7 +1633,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryAddress",
-					  						DefaultText =  "Delivery Address",
+					  						DefaultText =  @"Delivery Address",
 					  						HelpTextCode =  "DeliveryAddress",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1686,7 +1688,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PickUpAddress",
-					  						DefaultText =  "Pickup Address",
+					  						DefaultText =  @"Pickup Address",
 					  						HelpTextCode =  "PickUpAddress",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1742,7 +1744,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "SaleCurrencyId",
-					  						DefaultText =  "Sales Currency",
+					  						DefaultText =  @"Sales Currency",
 					  						HelpTextCode =  "SaleCurrencyId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1797,7 +1799,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ExchangeRate",
-					  						DefaultText =  "Exchange Rate",
+					  						DefaultText =  @"Exchange Rate",
 					  						HelpTextCode =  "ExchangeRate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1853,9 +1855,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomerName",
-					  						DefaultText =  "Customer Name",
+					  						DefaultText =  @"Customer Name",
 					  						ListFieldLable =  "CustomerNameListLable",
-					  						ListLableDefaultText =  "Customer",
+					  						ListLableDefaultText =  @"Customer",
 					  						HelpTextCode =  "CustomerName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1910,7 +1912,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomerNote",
-					  						DefaultText =  "Customer Note",
+					  						DefaultText =  @"Customer Note",
 					  						HelpTextCode =  "CustomerNote",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1967,7 +1969,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsCancelled",
-					  						DefaultText =  "Canceled",
+					  						DefaultText =  @"Canceled",
 					  						HelpTextCode =  "IsCancelled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2023,9 +2025,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FollowUpOwner",
-					  						DefaultText =  "Follow-Up Owner",
+					  						DefaultText =  @"Follow-Up Owner",
 					  						ListFieldLable =  "FollowUpOwnerListLable",
-					  						ListLableDefaultText =  "F/U Owner",
+					  						ListLableDefaultText =  @"F/U Owner",
 					  						HelpTextCode =  "FollowUpOwner",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2082,7 +2084,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FollowUpOwnerId",
-					  						DefaultText =  "Follow-Up Owner",
+					  						DefaultText =  @"Follow-Up Owner",
 					  						HelpTextCode =  "FollowUpOwnerId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2137,7 +2139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalReceivablesAmount",
-					  						DefaultText =  "Total Receivables Amount",
+					  						DefaultText =  @"Total Receivables Amount",
 					  						HelpTextCode =  "TotalReceivablesAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2194,9 +2196,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteNumber",
-					  						DefaultText =  "Quote No.",
+					  						DefaultText =  @"Quote No.",
 					  						ListFieldLable =  "QuoteListLable",
-					  						ListLableDefaultText =  "Quote No.",
+					  						ListLableDefaultText =  @"Quote No.",
 					  						HelpTextCode =  "QuoteNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2254,12 +2256,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MainCarriageCarrierId",
-					  						DefaultText =  "Carrier",
+					  						DefaultText =  @"Carrier",
 					  						ListFieldLable =  "MainCarriageCarrierIdLable",
-					  						ListLableDefaultText =  "Carrier",
+					  						ListLableDefaultText =  @"Carrier",
 					  						HelpTextCode =  "MainCarriageCarrierId",
 					  						ShortFieldLable =  "CarrierId",
-					  						ShortFieldLableDefaultText =  "Carrier",
+					  						ShortFieldLableDefaultText =  @"Carrier",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2315,9 +2317,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MainCarriageCarrierName",
-					  						DefaultText =  "Carrier",
+					  						DefaultText =  @"Carrier",
 					  						ListFieldLable =  "MainCarriageCarrierNameListLable",
-					  						ListLableDefaultText =  "Carrier",
+					  						ListLableDefaultText =  @"Carrier",
 					  						HelpTextCode =  "MainCarriageCarrierName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2377,9 +2379,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "DirectionId",
-					  						DefaultText =  "Direction",
+					  						DefaultText =  @"Direction",
 					  						ListFieldLable =  "DirectionIdListLable",
-					  						ListLableDefaultText =  "Direction",
+					  						ListLableDefaultText =  @"Direction",
 					  						HelpTextCode =  "DirectionId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2439,12 +2441,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "TransportModeId",
-					  						DefaultText =  "Transport Mode",
+					  						DefaultText =  @"Transport Mode",
 					  						ListFieldLable =  "TransportModeIdListLable",
-					  						ListLableDefaultText =  "Transport Mode",
+					  						ListLableDefaultText =  @"Transport Mode",
 					  						HelpTextCode =  "TransportModeId",
 					  						ShortFieldLable =  "TransportModeId",
-					  						ShortFieldLableDefaultText =  "Transport",
+					  						ShortFieldLableDefaultText =  @"Transport",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2501,9 +2503,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "DepartmentId",
-					  						DefaultText =  "Department",
+					  						DefaultText =  @"Department",
 					  						ListFieldLable =  "DepartmentListLable",
-					  						ListLableDefaultText =  "Department",
+					  						ListLableDefaultText =  @"Department",
 					  						HelpTextCode =  "DepartmentId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2561,9 +2563,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "BranchId",
-					  						DefaultText =  "Branch",
+					  						DefaultText =  @"Branch",
 					  						ListFieldLable =  "BranchListLable",
-					  						ListLableDefaultText =  "Branch",
+					  						ListLableDefaultText =  @"Branch",
 					  						HelpTextCode =  "BranchId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2623,7 +2625,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipmentTypeId",
-					  						DefaultText =  "Shipment Type",
+					  						DefaultText =  @"Shipment Type",
 					  						HelpTextCode =  "ShipmentTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2681,9 +2683,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipmentType",
-					  						DefaultText =  "Shipment Type",
+					  						DefaultText =  @"Shipment Type",
 					  						ListFieldLable =  "ShipmentTypeListFieldLable",
-					  						ListLableDefaultText =  "Type",
+					  						ListLableDefaultText =  @"Type",
 					  						HelpTextCode =  "ShipmentType",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2740,7 +2742,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "QuoteCustomerTypeCode",
-					  						DefaultText =  "Customer Type",
+					  						DefaultText =  @"Customer Type",
 					  						HelpTextCode =  "QuoteCustomerTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2797,7 +2799,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomerId",
-					  						DefaultText =  "Customer",
+					  						DefaultText =  @"Customer",
 					  						HelpTextCode =  "CustomerId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2855,7 +2857,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipperId",
-					  						DefaultText =  "Shipper",
+					  						DefaultText =  @"Shipper",
 					  						HelpTextCode =  "ShipperId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2913,9 +2915,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Shipper",
-					  						DefaultText =  "Shipper",
+					  						DefaultText =  @"Shipper",
 					  						ListFieldLable =  "ShipperListLable",
-					  						ListLableDefaultText =  "Shipper",
+					  						ListLableDefaultText =  @"Shipper",
 					  						HelpTextCode =  "Shipper",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2973,10 +2975,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipperContact",
-					  						DefaultText =  "Shipper Contact",
+					  						DefaultText =  @"Shipper Contact",
 					  						HelpTextCode =  "ShipperContact",
 					  						ShortFieldLable =  "ShipperContactId",
-					  						ShortFieldLableDefaultText =  "Contact",
+					  						ShortFieldLableDefaultText =  @"Contact",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3032,12 +3034,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipperReference1",
-					  						DefaultText =  "Shipper Ref. 1",
+					  						DefaultText =  @"Shipper Ref. 1",
 					  						ListFieldLable =  "ShipperReferenceListLable",
-					  						ListLableDefaultText =  "Shipper Ref.",
+					  						ListLableDefaultText =  @"Shipper Ref.",
 					  						HelpTextCode =  "ShipperReference1",
 					  						ShortFieldLable =  "ShipperReference1",
-					  						ShortFieldLableDefaultText =  "Reference1",
+					  						ShortFieldLableDefaultText =  @"Reference1",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3093,10 +3095,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipperReference2",
-					  						DefaultText =  "Shipper Ref. 2",
+					  						DefaultText =  @"Shipper Ref. 2",
 					  						HelpTextCode =  "ShipperReference2",
 					  						ShortFieldLable =  "ShipperReference2",
-					  						ShortFieldLableDefaultText =  "Shipper Ref 2",
+					  						ShortFieldLableDefaultText =  @"Shipper Ref 2",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3153,7 +3155,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ConsigneeId",
-					  						DefaultText =  "Consignee",
+					  						DefaultText =  @"Consignee",
 					  						HelpTextCode =  "ConsigneeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3211,9 +3213,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Consignee",
-					  						DefaultText =  "Consignee",
+					  						DefaultText =  @"Consignee",
 					  						ListFieldLable =  "ConsigneeListLable",
-					  						ListLableDefaultText =  "Consignee",
+					  						ListLableDefaultText =  @"Consignee",
 					  						HelpTextCode =  "Consignee",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3271,10 +3273,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ConsigneeContactId",
-					  						DefaultText =  "Consignee Contact",
+					  						DefaultText =  @"Consignee Contact",
 					  						HelpTextCode =  "ConsigneeContactId",
 					  						ShortFieldLable =  "ConsigneeContactId",
-					  						ShortFieldLableDefaultText =  "Contact",
+					  						ShortFieldLableDefaultText =  @"Contact",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3330,10 +3332,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ConsigneeReference1",
-					  						DefaultText =  "Consignee Ref. 1",
+					  						DefaultText =  @"Consignee Ref. 1",
 					  						HelpTextCode =  "ConsigneeReference1",
 					  						ShortFieldLable =  "ConsigneeReference1",
-					  						ShortFieldLableDefaultText =  "Reference1",
+					  						ShortFieldLableDefaultText =  @"Reference1",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3389,10 +3391,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ConsigneeReference2",
-					  						DefaultText =  "Consignee Ref. 2",
+					  						DefaultText =  @"Consignee Ref. 2",
 					  						HelpTextCode =  "ConsigneeReference2",
 					  						ShortFieldLable =  "ConsigneeReference2",
-					  						ShortFieldLableDefaultText =  "Consignee Ref 2",
+					  						ShortFieldLableDefaultText =  @"Consignee Ref 2",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3449,10 +3451,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FromPortId",
-					  						DefaultText =  "From Port",
+					  						DefaultText =  @"From Port",
 					  						HelpTextCode =  "FromPortId",
 					  						ShortFieldLable =  "FromPortId",
-					  						ShortFieldLableDefaultText =  "From Port",
+					  						ShortFieldLableDefaultText =  @"From Port",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3508,12 +3510,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FromPortCode",
-					  						DefaultText =  "From Port Code",
+					  						DefaultText =  @"From Port Code",
 					  						ListFieldLable =  "FromPortCodeListLable",
-					  						ListLableDefaultText =  "From",
+					  						ListLableDefaultText =  @"From",
 					  						HelpTextCode =  "FromPortCode",
 					  						ShortFieldLable =  "FromPortCode",
-					  						ShortFieldLableDefaultText =  "From Port Code",
+					  						ShortFieldLableDefaultText =  @"From Port Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3570,10 +3572,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ToPortId",
-					  						DefaultText =  "To Port",
+					  						DefaultText =  @"To Port",
 					  						HelpTextCode =  "ToPortId",
 					  						ShortFieldLable =  "ToPortId",
-					  						ShortFieldLableDefaultText =  "To Port",
+					  						ShortFieldLableDefaultText =  @"To Port",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3629,12 +3631,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ToPortCode",
-					  						DefaultText =  "To Port Code",
+					  						DefaultText =  @"To Port Code",
 					  						ListFieldLable =  "ToPortCodeListLable",
-					  						ListLableDefaultText =  "To",
+					  						ListLableDefaultText =  @"To",
 					  						HelpTextCode =  "ToPortCode",
 					  						ShortFieldLable =  "ToPortCode",
-					  						ShortFieldLableDefaultText =  "To Port Code",
+					  						ShortFieldLableDefaultText =  @"To Port Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3691,9 +3693,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IncotermId",
-					  						DefaultText =  "Incoterm",
+					  						DefaultText =  @"Incoterm",
 					  						HelpTextCode =  "IncotermId",
-					  						HelpTextDefaultText =  "Incoterm",
+					  						HelpTextDefaultText =  @"Incoterm",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3752,7 +3754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SalesmanUserId",
-					  						DefaultText =  "Salesman",
+					  						DefaultText =  @"Salesman",
 					  						HelpTextCode =  "SalesmanUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3810,7 +3812,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  "Opened By",
+					  						DefaultText =  @"Opened By",
 					  						HelpTextCode =  "CreatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3867,9 +3869,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreatedByUser",
-					  						DefaultText =  "Opened By",
+					  						DefaultText =  @"Opened By",
 					  						ListFieldLable =  "CreatedByUserListLable",
-					  						ListLableDefaultText =  "Opened by",
+					  						ListLableDefaultText =  @"Opened by",
 					  						HelpTextCode =  "CreatedByUser",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3927,9 +3929,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "OpenDate",
-					  						DefaultText =  "Open Date",
+					  						DefaultText =  @"Open Date",
 					  						ListFieldLable =  "OpenDateListLable",
-					  						ListLableDefaultText =  "Open Date",
+					  						ListLableDefaultText =  @"Open Date",
 					  						HelpTextCode =  "OpenDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3987,9 +3989,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  "Notes",
+					  						DefaultText =  @"Notes",
 					  						ListFieldLable =  "NotesListLable",
-					  						ListLableDefaultText =  "Notes",
+					  						ListLableDefaultText =  @"Notes",
 					  						HelpTextCode =  "Notes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4046,7 +4048,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DescriptionOfGoods",
-					  						DefaultText =  "Description of Goods",
+					  						DefaultText =  @"Description of Goods",
 					  						HelpTextCode =  "DescriptionOfGoods",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4103,12 +4105,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ChargeableWeight",
-					  						DefaultText =  "Chargeable Weight (%ChargWeightCode)",
+					  						DefaultText =  @"Chargeable Weight (%ChargWeightCode)",
 					  						ListFieldLable =  "ChargeableWeightListLable",
-					  						ListLableDefaultText =  "Charg. Wg.",
+					  						ListLableDefaultText =  @"Charg. Wg.",
 					  						HelpTextCode =  "ChargeableWeight",
 					  						ShortFieldLable =  "WtMsr",
-					  						ShortFieldLableDefaultText =  "Wt / Msr (%ChargWeightCode)",
+					  						ShortFieldLableDefaultText =  @"Wt / Msr (%ChargWeightCode)",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -4165,9 +4167,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "GrossWeight",
-					  						DefaultText =  "Gross Weight (%GrossWeightCode)",
+					  						DefaultText =  @"Gross Weight (%GrossWeightCode)",
 					  						ListFieldLable =  "GrossWeightListLable",
-					  						ListLableDefaultText =  "Gross Weight",
+					  						ListLableDefaultText =  @"Gross Weight",
 					  						HelpTextCode =  "GrossWeight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4224,7 +4226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsClosed",
-					  						DefaultText =  "Closed",
+					  						DefaultText =  @"Closed",
 					  						HelpTextCode =  "IsClosed",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4280,7 +4282,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OpenQuotes",
-					  						DefaultText =  "Open Quotes",
+					  						DefaultText =  @"Open Quotes",
 					  						HelpTextCode =  "OpenQuotes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4335,7 +4337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ClosedQuotes",
-					  						DefaultText =  "Closed Quotes",
+					  						DefaultText =  @"Closed Quotes",
 					  						HelpTextCode =  "ClosedQuotes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4393,7 +4395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LeadingCurrencyId",
-					  						DefaultText =  "Leading Currency",
+					  						DefaultText =  @"Leading Currency",
 					  						HelpTextCode =  "LeadingCurrencyId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4451,7 +4453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DimensionsUnitCode",
-					  						DefaultText =  "Dimension Unit Code",
+					  						DefaultText =  @"Dimension Unit Code",
 					  						HelpTextCode =  "DimensionsUnitCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4508,7 +4510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Volume",
-					  						DefaultText =  "Volume (%VolumeCode)",
+					  						DefaultText =  @"Volume (%VolumeCode)",
 					  						HelpTextCode =  "Volume",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4565,7 +4567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Ratio",
-					  						DefaultText =  "Ratio",
+					  						DefaultText =  @"Ratio",
 					  						HelpTextCode =  "Ratio",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4622,7 +4624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NumberOfPackages",
-					  						DefaultText =  "Number of Packages",
+					  						DefaultText =  @"Number of Packages",
 					  						HelpTextCode =  "NumberOfPackages",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4679,7 +4681,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NumberOfContainers",
-					  						DefaultText =  "Number of Containers",
+					  						DefaultText =  @"Number of Containers",
 					  						HelpTextCode =  "NumberOfContainers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4737,7 +4739,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VolumeUnitCode",
-					  						DefaultText =  "Volume Unit Code",
+					  						DefaultText =  @"Volume Unit Code",
 					  						HelpTextCode =  "VolumeUnitCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4794,9 +4796,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsDangerous",
-					  						DefaultText =  "Dangerous Goods",
+					  						DefaultText =  @"Dangerous Goods",
 					  						ListFieldLable =  "IsDangerousLable",
-					  						ListLableDefaultText =  "Dangerous Goods",
+					  						ListLableDefaultText =  @"Dangerous Goods",
 					  						HelpTextCode =  "IsDangerous",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4853,7 +4855,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExpirationDays",
-					  						DefaultText =  "Expiration Days",
+					  						DefaultText =  @"Expiration Days",
 					  						HelpTextCode =  "ExpirationDays",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4911,9 +4913,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExpirationDate",
-					  						DefaultText =  "Expiration Date",
+					  						DefaultText =  @"Expiration Date",
 					  						ListFieldLable =  "ExpirationDateLable",
-					  						ListLableDefaultText =  "Expiration date",
+					  						ListLableDefaultText =  @"Expiration date",
 					  						HelpTextCode =  "ExpirationDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4970,10 +4972,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsFreightBySteps",
-					  						DefaultText =  "Freight By Steps",
+					  						DefaultText =  @"Freight By Steps",
 					  						HelpTextCode =  "IsFreightBySteps",
 					  						ShortFieldLable =  "IsFreightBySteps",
-					  						ShortFieldLableDefaultText =  "Price by break",
+					  						ShortFieldLableDefaultText =  @"Price by break",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -5029,9 +5031,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OrderNumberOfPackages",
-					  						DefaultText =  "Number of Packages",
+					  						DefaultText =  @"Number of Packages",
 					  						ListFieldLable =  "OrderNumberOfPackagesLable",
-					  						ListLableDefaultText =  "Pieces",
+					  						ListLableDefaultText =  @"Pieces",
 					  						HelpTextCode =  "OrderNumberOfPackages",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5088,7 +5090,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAdhoc",
-					  						DefaultText =  "Adhoc",
+					  						DefaultText =  @"Adhoc",
 					  						HelpTextCode =  "IsAdhoc",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5143,9 +5145,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Reference",
-					  						DefaultText =  "Reference",
+					  						DefaultText =  @"Reference",
 					  						HelpTextCode =  "Reference",
-					  						HelpTextDefaultText =  "Searching by:\n1. Shipper Reference 1\n2. Shipper Reference 2\n3. Consignee Reference 1\n4. Consignee Reference 2\n5. Quote Number",
+					  						HelpTextDefaultText =  @"Searching by:\n1. Shipper Reference 1\n2. Shipper Reference 2\n3. Consignee Reference 1\n4. Consignee Reference 2\n5. Quote Number",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -5199,7 +5201,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FromOrToPort",
-					  						DefaultText =  "From or To Port",
+					  						DefaultText =  @"From or To Port",
 					  						HelpTextCode =  "FromOrToPort",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5256,9 +5258,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FUDate",
-					  						DefaultText =  "Follow-Up Date",
+					  						DefaultText =  @"Follow-Up Date",
 					  						ListFieldLable =  "FollowUpDateListLable",
-					  						ListLableDefaultText =  "F/U Date",
+					  						ListLableDefaultText =  @"F/U Date",
 					  						HelpTextCode =  "FUDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5314,9 +5316,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FUType",
-					  						DefaultText =  "Follow-Up Type",
+					  						DefaultText =  @"Follow-Up Type",
 					  						ListFieldLable =  "FollowUpTypeListLable",
-					  						ListLableDefaultText =  "F/U Type",
+					  						ListLableDefaultText =  @"F/U Type",
 					  						HelpTextCode =  "FUType",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5373,9 +5375,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FollowUpTypeId",
-					  						DefaultText =  "Follow-Up Type",
+					  						DefaultText =  @"Follow-Up Type",
 					  						ListFieldLable =  "FollowUpTypeIdListLable",
-					  						ListLableDefaultText =  "F/U Type",
+					  						ListLableDefaultText =  @"F/U Type",
 					  						HelpTextCode =  "FollowUpTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5429,7 +5431,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TodayFollowUps",
-					  						DefaultText =  "Today's Follow-Ups",
+					  						DefaultText =  @"Today's Follow-Ups",
 					  						HelpTextCode =  "TodayFollowUps",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5483,7 +5485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TomorrowFollowUps",
-					  						DefaultText =  "Tomorrow's Follow-Ups",
+					  						DefaultText =  @"Tomorrow's Follow-Ups",
 					  						HelpTextCode =  "TomorrowFollowUps",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5537,7 +5539,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DueDateFollowUps",
-					  						DefaultText =  "Due Date Follow-Ups",
+					  						DefaultText =  @"Due Date Follow-Ups",
 					  						HelpTextCode =  "DueDateFollowUps",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5591,7 +5593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AllFollowUps",
-					  						DefaultText =  "All Follow-Ups",
+					  						DefaultText =  @"All Follow-Ups",
 					  						HelpTextCode =  "AllFollowUps",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5648,9 +5650,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FUNotes",
-					  						DefaultText =  "Follow-Up Notes",
+					  						DefaultText =  @"Follow-Up Notes",
 					  						ListFieldLable =  "FollowUpNotesListLable",
-					  						ListLableDefaultText =  "Notes",
+					  						ListLableDefaultText =  @"Notes",
 					  						HelpTextCode =  "FUNotes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5708,10 +5710,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageType1Id",
-					  						DefaultText =  "Package Type 1",
+					  						DefaultText =  @"Package Type 1",
 					  						HelpTextCode =  "PackageType1Id",
 					  						ShortFieldLable =  "PackageTypeId",
-					  						ShortFieldLableDefaultText =  "Package Type",
+					  						ShortFieldLableDefaultText =  @"Package Type",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -5768,7 +5770,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageType2Id",
-					  						DefaultText =  "Package Type 2",
+					  						DefaultText =  @"Package Type 2",
 					  						HelpTextCode =  "PackageType2Id",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5826,7 +5828,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageType3Id",
-					  						DefaultText =  "Package Type 3",
+					  						DefaultText =  @"Package Type 3",
 					  						HelpTextCode =  "PackageType3Id",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5884,7 +5886,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageType4Id",
-					  						DefaultText =  "Package Type 4",
+					  						DefaultText =  @"Package Type 4",
 					  						HelpTextCode =  "PackageType4Id",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5942,7 +5944,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageType5Id",
-					  						DefaultText =  "Package Type 5",
+					  						DefaultText =  @"Package Type 5",
 					  						HelpTextCode =  "PackageType5Id",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5999,10 +6001,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageType1Quantity",
-					  						DefaultText =  "Package Type 1 Quantity",
+					  						DefaultText =  @"Package Type 1 Quantity",
 					  						HelpTextCode =  "PackageType1Quantity",
 					  						ShortFieldLable =  "PackageTypeQuantity",
-					  						ShortFieldLableDefaultText =  "Quantity",
+					  						ShortFieldLableDefaultText =  @"Quantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -6058,7 +6060,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageType2Quantity",
-					  						DefaultText =  "Package Type 2 Quantity",
+					  						DefaultText =  @"Package Type 2 Quantity",
 					  						HelpTextCode =  "PackageType2Quantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6115,7 +6117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageType3Quantity",
-					  						DefaultText =  "Package Type 3 Quantity",
+					  						DefaultText =  @"Package Type 3 Quantity",
 					  						HelpTextCode =  "PackageType3Quantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6172,7 +6174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageType4Quantity",
-					  						DefaultText =  "Package Type 4 Quantity",
+					  						DefaultText =  @"Package Type 4 Quantity",
 					  						HelpTextCode =  "PackageType4Quantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6229,7 +6231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageType5Quantity",
-					  						DefaultText =  "Package Type 5 Quantity",
+					  						DefaultText =  @"Package Type 5 Quantity",
 					  						HelpTextCode =  "PackageType5Quantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6286,9 +6288,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteTypeName",
-					  						DefaultText =  "Quote Type",
+					  						DefaultText =  @"Quote Type",
 					  						ListFieldLable =  "QuoteTypeNameListLable",
-					  						ListLableDefaultText =  "Quote Type",
+					  						ListLableDefaultText =  @"Quote Type",
 					  						HelpTextCode =  "QuoteTypeName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6343,7 +6345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MyQuotes",
-					  						DefaultText =  "My Quotes",
+					  						DefaultText =  @"My Quotes",
 					  						HelpTextCode =  "MyQuotes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6397,7 +6399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MyFollowUps",
-					  						DefaultText =  "My Follow Ups",
+					  						DefaultText =  @"My Follow Ups",
 					  						HelpTextCode =  "MyFollowUps",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6452,10 +6454,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FromAddressCity",
-					  						DefaultText =  "From Address City",
+					  						DefaultText =  @"From Address City",
 					  						HelpTextCode =  "FromAddressCity",
 					  						ShortFieldLable =  "FromAddressCity",
-					  						ShortFieldLableDefaultText =  "City",
+					  						ShortFieldLableDefaultText =  @"City",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -6510,10 +6512,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FromAddressCountryId",
-					  						DefaultText =  "From Address Country",
+					  						DefaultText =  @"From Address Country",
 					  						HelpTextCode =  "FromAddressCountryId",
 					  						ShortFieldLable =  "FromAddressCountryId",
-					  						ShortFieldLableDefaultText =  "Country",
+					  						ShortFieldLableDefaultText =  @"Country",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -6567,10 +6569,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FromAddressZipCode",
-					  						DefaultText =  "From Address Zip Code",
+					  						DefaultText =  @"From Address Zip Code",
 					  						HelpTextCode =  "FromAddressZipCode",
 					  						ShortFieldLable =  "FromAddressZipCode",
-					  						ShortFieldLableDefaultText =  "Zip Code",
+					  						ShortFieldLableDefaultText =  @"Zip Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -6624,10 +6626,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ToAddressCity",
-					  						DefaultText =  "To Address City",
+					  						DefaultText =  @"To Address City",
 					  						HelpTextCode =  "ToAddressCity",
 					  						ShortFieldLable =  "ToAddressCity",
-					  						ShortFieldLableDefaultText =  "City",
+					  						ShortFieldLableDefaultText =  @"City",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -6682,10 +6684,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ToAddressCountryId",
-					  						DefaultText =  "To Address Country",
+					  						DefaultText =  @"To Address Country",
 					  						HelpTextCode =  "ToAddressCountryId",
 					  						ShortFieldLable =  "ToAddressCountryId",
-					  						ShortFieldLableDefaultText =  "Country",
+					  						ShortFieldLableDefaultText =  @"Country",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -6739,10 +6741,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ToAddressZipCode",
-					  						DefaultText =  "To Address Zip Code",
+					  						DefaultText =  @"To Address Zip Code",
 					  						HelpTextCode =  "ToAddressZipCode",
 					  						ShortFieldLable =  "ToAddressZipCode",
-					  						ShortFieldLableDefaultText =  "Zip Code",
+					  						ShortFieldLableDefaultText =  @"Zip Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -6797,7 +6799,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AcceptedWithoutShipments",
-					  						DefaultText =  "Accepted Without Shipments",
+					  						DefaultText =  @"Accepted Without Shipments",
 					  						HelpTextCode =  "AcceptedWithoutShipments",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6854,7 +6856,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DimFactor",
-					  						DefaultText =  "Dim Factor",
+					  						DefaultText =  @"Dim Factor",
 					  						HelpTextCode =  "DimFactor",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6910,7 +6912,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsDraftQuote",
-					  						DefaultText =  "Is Draft Quote",
+					  						DefaultText =  @"Is Draft Quote",
 					  						HelpTextCode =  "IsDraftQuote",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6966,7 +6968,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsSentQuote",
-					  						DefaultText =  "Is Sent Quote",
+					  						DefaultText =  @"Is Sent Quote",
 					  						HelpTextCode =  "IsSentQuote",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7022,7 +7024,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAcceptedQuote",
-					  						DefaultText =  "Is Accepted Quote",
+					  						DefaultText =  @"Is Accepted Quote",
 					  						HelpTextCode =  "IsAcceptedQuote",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7077,7 +7079,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IncludePickUp",
-					  						DefaultText =  "Include PickUp",
+					  						DefaultText =  @"Include PickUp",
 					  						HelpTextCode =  "IncludePickUp",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7132,7 +7134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IncludeDelivery",
-					  						DefaultText =  "Include Delivery",
+					  						DefaultText =  @"Include Delivery",
 					  						HelpTextCode =  "IncludeDelivery",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7188,7 +7190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PickUpAddressId",
-					  						DefaultText =  "PickUp Address",
+					  						DefaultText =  @"PickUp Address",
 					  						HelpTextCode =  "PickUpAddressId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7244,7 +7246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeliveryAddressId",
-					  						DefaultText =  "Delivery Address",
+					  						DefaultText =  @"Delivery Address",
 					  						HelpTextCode =  "DeliveryAddressId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7301,7 +7303,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteClosingReasonCode",
-					  						DefaultText =  "Closing Reason",
+					  						DefaultText =  @"Closing Reason",
 					  						HelpTextCode =  "QuoteClosingReasonCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7359,7 +7361,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "QuoteTypeCode",
-					  						DefaultText =  "Quote Type",
+					  						DefaultText =  @"Quote Type",
 					  						HelpTextCode =  "QuoteTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7416,9 +7418,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UsageCount",
-					  						DefaultText =  "Usage Count",
+					  						DefaultText =  @"Usage Count",
 					  						ListFieldLable =  "UsageCountListLable",
-					  						ListLableDefaultText =  "Usage Count",
+					  						ListLableDefaultText =  @"Usage Count",
 					  						HelpTextCode =  "UsageCount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7476,9 +7478,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastUsageDate",
-					  						DefaultText =  "Last Usage Date",
+					  						DefaultText =  @"Last Usage Date",
 					  						ListFieldLable =  "LastUsageDateListLable",
-					  						ListLableDefaultText =  "Last Usage Date",
+					  						ListLableDefaultText =  @"Last Usage Date",
 					  						HelpTextCode =  "LastUsageDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7536,9 +7538,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SentDate",
-					  						DefaultText =  "Sent Date",
+					  						DefaultText =  @"Sent Date",
 					  						ListFieldLable =  "SentDateListLable",
-					  						ListLableDefaultText =  "Sent Date",
+					  						ListLableDefaultText =  @"Sent Date",
 					  						HelpTextCode =  "SentDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7596,9 +7598,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AcceptedDate",
-					  						DefaultText =  "Accepted Date",
+					  						DefaultText =  @"Accepted Date",
 					  						ListFieldLable =  "AcceptedDateListLable",
-					  						ListLableDefaultText =  "Accepted Date",
+					  						ListLableDefaultText =  @"Accepted Date",
 					  						HelpTextCode =  "AcceptedDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7656,9 +7658,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DeclinedDate",
-					  						DefaultText =  "Declined Date",
+					  						DefaultText =  @"Declined Date",
 					  						ListFieldLable =  "DeclinedDateListLable",
-					  						ListLableDefaultText =  "Declined Date",
+					  						ListLableDefaultText =  @"Declined Date",
 					  						HelpTextCode =  "DeclinedDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7714,7 +7716,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BusinessUnitId",
-					  						DefaultText =  "Business Unit",
+					  						DefaultText =  @"Business Unit",
 					  						HelpTextCode =  "BusinessUnitId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7771,9 +7773,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BusinessUnitName",
-					  						DefaultText =  "Business Unit",
+					  						DefaultText =  @"Business Unit",
 					  						ListFieldLable =  "BusinessUnitNameListLable",
-					  						ListLableDefaultText =  "Business Unit",
+					  						ListLableDefaultText =  @"Business Unit",
 					  						HelpTextCode =  "BusinessUnitName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7828,9 +7830,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomerReference1",
-					  						DefaultText =  "Customer Ref 1",
+					  						DefaultText =  @"Customer Ref 1",
 					  						ListFieldLable =  "CustomerReference1ListLable",
-					  						ListLableDefaultText =  "Customer Ref 1",
+					  						ListLableDefaultText =  @"Customer Ref 1",
 					  						HelpTextCode =  "CustomerReference1",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7885,9 +7887,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomerReference2",
-					  						DefaultText =  "Customer Ref 2",
+					  						DefaultText =  @"Customer Ref 2",
 					  						ListFieldLable =  "CustomerReference2ListLable",
-					  						ListLableDefaultText =  "Customer Ref 2",
+					  						ListLableDefaultText =  @"Customer Ref 2",
 					  						HelpTextCode =  "CustomerReference2",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -7945,7 +7947,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "StageId",
-					  						DefaultText =  "Stage",
+					  						DefaultText =  @"Stage",
 					  						HelpTextCode =  "StageId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8003,9 +8005,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "StageName",
-					  						DefaultText =  "Stage",
+					  						DefaultText =  @"Stage",
 					  						ListFieldLable =  "StageNameLable",
-					  						ListLableDefaultText =  "Stage",
+					  						ListLableDefaultText =  @"Stage",
 					  						HelpTextCode =  "StageName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8063,9 +8065,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "StageDueDate",
-					  						DefaultText =  "Stage due date",
+					  						DefaultText =  @"Stage due date",
 					  						ListFieldLable =  "StageDueDateLable",
-					  						ListLableDefaultText =  "Stage due date",
+					  						ListLableDefaultText =  @"Stage due date",
 					  						HelpTextCode =  "StageDueDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8122,7 +8124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "StageMaxDays",
-					  						DefaultText =  "Stage max days",
+					  						DefaultText =  @"Stage max days",
 					  						HelpTextCode =  "StageMaxDays",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8180,7 +8182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "RatingCode",
-					  						DefaultText =  "Rating",
+					  						DefaultText =  @"Rating",
 					  						HelpTextCode =  "RatingCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8237,9 +8239,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "RatingName",
-					  						DefaultText =  "Rating",
+					  						DefaultText =  @"Rating",
 					  						ListFieldLable =  "RatingName",
-					  						ListLableDefaultText =  "Rating",
+					  						ListLableDefaultText =  @"Rating",
 					  						HelpTextCode =  "RatingName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8296,7 +8298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "RatingIndexOrder",
-					  						DefaultText =  "Rating index order",
+					  						DefaultText =  @"Rating index order",
 					  						HelpTextCode =  "RatingIndexOrder",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8354,9 +8356,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastActivityDate",
-					  						DefaultText =  "Last Activity Date",
+					  						DefaultText =  @"Last Activity Date",
 					  						ListFieldLable =  "LastActivityDateLable",
-					  						ListLableDefaultText =  "Last Activity Date",
+					  						ListLableDefaultText =  @"Last Activity Date",
 					  						HelpTextCode =  "LastActivityDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8413,7 +8415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastActivitySubject",
-					  						DefaultText =  "Last Activity Subject",
+					  						DefaultText =  @"Last Activity Subject",
 					  						HelpTextCode =  "LastActivitySubject",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8471,9 +8473,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastActivityTypeCode",
-					  						DefaultText =  "Last Activity",
+					  						DefaultText =  @"Last Activity",
 					  						ListFieldLable =  "LastActivityTypeCodeLable",
-					  						ListLableDefaultText =  "Last Activity",
+					  						ListLableDefaultText =  @"Last Activity",
 					  						HelpTextCode =  "LastActivityTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8532,9 +8534,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NextActivityDate",
-					  						DefaultText =  "Next Activity Date",
+					  						DefaultText =  @"Next Activity Date",
 					  						ListFieldLable =  "NextActivityDateLable",
-					  						ListLableDefaultText =  "Next Activity Date",
+					  						ListLableDefaultText =  @"Next Activity Date",
 					  						HelpTextCode =  "NextActivityDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8591,7 +8593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NextActivitySubject",
-					  						DefaultText =  "Next Activity Subject",
+					  						DefaultText =  @"Next Activity Subject",
 					  						HelpTextCode =  "NextActivitySubject",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8649,9 +8651,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NextActivityTypeCode",
-					  						DefaultText =  "Next Activity",
+					  						DefaultText =  @"Next Activity",
 					  						ListFieldLable =  "NextActivityTypeCodeLable",
-					  						ListLableDefaultText =  "Next Activity",
+					  						ListLableDefaultText =  @"Next Activity",
 					  						HelpTextCode =  "NextActivityTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8709,7 +8711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  "Updated By",
+					  						DefaultText =  @"Updated By",
 					  						HelpTextCode =  "UpdatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8767,9 +8769,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  "Update Date",
+					  						DefaultText =  @"Update Date",
 					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  "Update Date",
+					  						ListLableDefaultText =  @"Update Date",
 					  						HelpTextCode =  "UpdateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8826,9 +8828,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAutomaticallyClosed",
-					  						DefaultText =  "Close automatically as declined after",
+					  						DefaultText =  @"Close automatically as declined after",
 					  						ListFieldLable =  "IsAutomaticallyClosedLable",
-					  						ListLableDefaultText =  "Is Automatically Closed",
+					  						ListLableDefaultText =  @"Is Automatically Closed",
 					  						HelpTextCode =  "IsAutomaticallyClosed",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8886,9 +8888,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AutomaticallyCloseDate",
-					  						DefaultText =  "Close Date",
+					  						DefaultText =  @"Close Date",
 					  						ListFieldLable =  "AutomaticallyCloseDateLable",
-					  						ListLableDefaultText =  "Automatically Close Date",
+					  						ListLableDefaultText =  @"Automatically Close Date",
 					  						HelpTextCode =  "AutomaticallyCloseDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -8945,9 +8947,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AutomaticallyCloseDays",
-					  						DefaultText =  "Close Days",
+					  						DefaultText =  @"Close Days",
 					  						ListFieldLable =  "AutomaticallyCloseDaysLable",
-					  						ListLableDefaultText =  "Automatically Close Days",
+					  						ListLableDefaultText =  @"Automatically Close Days",
 					  						HelpTextCode =  "AutomaticallyCloseDays",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9003,9 +9005,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteClosingReasonName",
-					  						DefaultText =  "Closing Reason",
+					  						DefaultText =  @"Closing Reason",
 					  						ListFieldLable =  "ClosingReasonNameListLable",
-					  						ListLableDefaultText =  "Closing Reason",
+					  						ListLableDefaultText =  @"Closing Reason",
 					  						HelpTextCode =  "QuoteClosingReasonName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9062,7 +9064,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ProductCode",
-					  						DefaultText =  "Product Code",
+					  						DefaultText =  @"Product Code",
 					  						HelpTextCode =  "ProductCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9118,7 +9120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsCreatedQuote",
-					  						DefaultText =  "Is Created Quote",
+					  						DefaultText =  @"Is Created Quote",
 					  						HelpTextCode =  "IsCreatedQuote",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9175,7 +9177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ETDLabel",
-					  						DefaultText =  "ETD Label",
+					  						DefaultText =  @"ETD Label",
 					  						HelpTextCode =  "ETDLabel",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9232,7 +9234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ETALabel",
-					  						DefaultText =  "ETA Label",
+					  						DefaultText =  @"ETA Label",
 					  						HelpTextCode =  "ETALabel",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9289,9 +9291,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TransitTime",
-					  						DefaultText =  "Transit Time",
+					  						DefaultText =  @"Transit Time",
 					  						ListFieldLable =  "TransitTimeLable",
-					  						ListLableDefaultText =  "Transit Time",
+					  						ListLableDefaultText =  @"Transit Time",
 					  						HelpTextCode =  "TransitTime",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9348,9 +9350,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DepartureFrequency",
-					  						DefaultText =  "Departure Frequency",
+					  						DefaultText =  @"Departure Frequency",
 					  						ListFieldLable =  "DepartureFrequencyLable",
-					  						ListLableDefaultText =  "Departure Frequency",
+					  						ListLableDefaultText =  @"Departure Frequency",
 					  						HelpTextCode =  "DepartureFrequency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9407,9 +9409,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ETD",
-					  						DefaultText =  "ETD",
+					  						DefaultText =  @"ETD",
 					  						ListFieldLable =  "ETDListLable",
-					  						ListLableDefaultText =  "ETD",
+					  						ListLableDefaultText =  @"ETD",
 					  						HelpTextCode =  "ETD",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9466,9 +9468,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ETA",
-					  						DefaultText =  "ETA",
+					  						DefaultText =  @"ETA",
 					  						ListFieldLable =  "ETAListLable",
-					  						ListLableDefaultText =  "ETA",
+					  						ListLableDefaultText =  @"ETA",
 					  						HelpTextCode =  "ETA",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9528,7 +9530,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AgentId",
-					  						DefaultText =  "Agent",
+					  						DefaultText =  @"Agent",
 					  						HelpTextCode =  "AgentId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9586,9 +9588,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AgentName",
-					  						DefaultText =  "Agent",
+					  						DefaultText =  @"Agent",
 					  						ListFieldLable =  "AgentNameListLable",
-					  						ListLableDefaultText =  "Agent",
+					  						ListLableDefaultText =  @"Agent",
 					  						HelpTextCode =  "AgentName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9646,10 +9648,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AgentAddressId",
-					  						DefaultText =  "Agent Address",
+					  						DefaultText =  @"Agent Address",
 					  						HelpTextCode =  "AgentAddressId",
 					  						ShortFieldLable =  "AgentAddressId",
-					  						ShortFieldLableDefaultText =  "Address",
+					  						ShortFieldLableDefaultText =  @"Address",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -9706,10 +9708,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AgentContactId",
-					  						DefaultText =  "Agent Contact",
+					  						DefaultText =  @"Agent Contact",
 					  						HelpTextCode =  "AgentContactId",
 					  						ShortFieldLable =  "AgentContactId",
-					  						ShortFieldLableDefaultText =  "Contact",
+					  						ShortFieldLableDefaultText =  @"Contact",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -9766,7 +9768,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Routing",
-					  						DefaultText =  "Routing",
+					  						DefaultText =  @"Routing",
 					  						HelpTextCode =  "Routing",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9823,9 +9825,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SalesmanName",
-					  						DefaultText =  "Salesman",
+					  						DefaultText =  @"Salesman",
 					  						ListFieldLable =  "SalesmanNameLable",
-					  						ListLableDefaultText =  "Salesman",
+					  						ListLableDefaultText =  @"Salesman",
 					  						HelpTextCode =  "SalesmanName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9882,9 +9884,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IncotermCode",
-					  						DefaultText =  "Incoterm",
+					  						DefaultText =  @"Incoterm",
 					  						ListFieldLable =  "IncotermCodeLable",
-					  						ListLableDefaultText =  "Incoterm",
+					  						ListLableDefaultText =  @"Incoterm",
 					  						HelpTextCode =  "IncotermCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9941,9 +9943,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Subject",
-					  						DefaultText =  "Subject",
+					  						DefaultText =  @"Subject",
 					  						ListFieldLable =  "SubjectLable",
-					  						ListLableDefaultText =  "Subject",
+					  						ListLableDefaultText =  @"Subject",
 					  						HelpTextCode =  "Subject",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -9998,7 +10000,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsSubjectEdited",
-					  						DefaultText =  "Is Subject Edited",
+					  						DefaultText =  @"Is Subject Edited",
 					  						HelpTextCode =  "IsSubjectEdited",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10055,9 +10057,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TEU",
-					  						DefaultText =  "TEU",
+					  						DefaultText =  @"TEU",
 					  						ListFieldLable =  "TEUListLable",
-					  						ListLableDefaultText =  "TEU",
+					  						ListLableDefaultText =  @"TEU",
 					  						HelpTextCode =  "TEU",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10117,7 +10119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MoveTypeId",
-					  						DefaultText =  "Move Type",
+					  						DefaultText =  @"Move Type",
 					  						HelpTextCode =  "MoveTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10173,7 +10175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalPerContainer",
-					  						DefaultText =  "Total Per Container",
+					  						DefaultText =  @"Total Per Container",
 					  						HelpTextCode =  "TotalPerContainer",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10229,7 +10231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsQuoteDataExternal",
-					  						DefaultText =  "Is Quote Data External",
+					  						DefaultText =  @"Is Quote Data External",
 					  						HelpTextCode =  "IsQuoteDataExternal",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10285,7 +10287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsQuoteDocumentExternal",
-					  						DefaultText =  "Is Quote Document External",
+					  						DefaultText =  @"Is Quote Document External",
 					  						HelpTextCode =  "IsQuoteDocumentExternal",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10342,9 +10344,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "GrossWeightInKG",
-					  						DefaultText =  "Gross Weight (KG)",
+					  						DefaultText =  @"Gross Weight (KG)",
 					  						ListFieldLable =  "GrossWeightInKGListLable",
-					  						ListLableDefaultText =  "Gross Weight (KG)",
+					  						ListLableDefaultText =  @"Gross Weight (KG)",
 					  						HelpTextCode =  "GrossWeightInKG",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10401,9 +10403,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "GrossWeightPerTon",
-					  						DefaultText =  "Gross Weight per Ton",
+					  						DefaultText =  @"Gross Weight per Ton",
 					  						ListFieldLable =  "GrossWeightPerTonListLable",
-					  						ListLableDefaultText =  "Gross Weight per Ton",
+					  						ListLableDefaultText =  @"Gross Weight per Ton",
 					  						HelpTextCode =  "GrossWeightPerTon",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10460,7 +10462,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SalesTotalAmounts",
-					  						DefaultText =  "Sales Total Amounts",
+					  						DefaultText =  @"Sales Total Amounts",
 					  						HelpTextCode =  "SalesTotalAmounts",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10517,9 +10519,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ValueOfGoods",
-					  						DefaultText =  "Value of Goods",
+					  						DefaultText =  @"Value of Goods",
 					  						ListFieldLable =  "ValueOfGoodsListLable",
-					  						ListLableDefaultText =  "Value of Goods",
+					  						ListLableDefaultText =  @"Value of Goods",
 					  						HelpTextCode =  "ValueOfGoods",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10577,10 +10579,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ValueOfGoodsCurrencyId",
-					  						DefaultText =  "Value of Goods Currency",
+					  						DefaultText =  @"Value of Goods Currency",
 					  						HelpTextCode =  "ValueOfGoodsCurrencyId",
 					  						ShortFieldLable =  "ValueOfGoodsCurrencyId",
-					  						ShortFieldLableDefaultText =  "Value of Goods Currency",
+					  						ShortFieldLableDefaultText =  @"Value of Goods Currency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -10637,7 +10639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NotifyId",
-					  						DefaultText =  "Notify",
+					  						DefaultText =  @"Notify",
 					  						HelpTextCode =  "NotifyId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10695,7 +10697,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NotifyAddressId",
-					  						DefaultText =  "Notify Address",
+					  						DefaultText =  @"Notify Address",
 					  						HelpTextCode =  "NotifyAddressId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10753,7 +10755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NotifyContactId",
-					  						DefaultText =  "Notify Contact",
+					  						DefaultText =  @"Notify Contact",
 					  						HelpTextCode =  "NotifyContactId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10810,9 +10812,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NotifyName",
-					  						DefaultText =  "Notify",
+					  						DefaultText =  @"Notify",
 					  						ListFieldLable =  "NotifyNameListLable",
-					  						ListLableDefaultText =  "Notify",
+					  						ListLableDefaultText =  @"Notify",
 					  						HelpTextCode =  "NotifyName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10868,7 +10870,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalSaleIncludingVATAmountInSaleCurrency",
-					  						DefaultText =  "Total Sale Including VAT Amount In Sale Currency",
+					  						DefaultText =  @"Total Sale Including VAT Amount In Sale Currency",
 					  						HelpTextCode =  "TotalSaleIncludingVATAmountInSaleCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10924,7 +10926,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalSaleIncludingVATAmountInLocalCurrency",
-					  						DefaultText =  "Total Sale Including VAT Amount In Local Currency",
+					  						DefaultText =  @"Total Sale Including VAT Amount In Local Currency",
 					  						HelpTextCode =  "TotalSaleIncludingVATAmountInLocalCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -10981,9 +10983,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NumberOfFollowUps",
-					  						DefaultText =  "Follow Ups",
+					  						DefaultText =  @"Follow Ups",
 					  						ListFieldLable =  "NumberOfFollowUpsLable",
-					  						ListLableDefaultText =  "Number Of Follow Ups",
+					  						ListLableDefaultText =  @"Number Of Follow Ups",
 					  						HelpTextCode =  "NumberOfFollowUps",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -11041,9 +11043,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MoveTypeName",
-					  						DefaultText =  "Move Type",
+					  						DefaultText =  @"Move Type",
 					  						ListFieldLable =  "MoveTypeName",
-					  						ListLableDefaultText =  "Move Type",
+					  						ListLableDefaultText =  @"Move Type",
 					  						HelpTextCode =  "MoveTypeName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -11100,7 +11102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsChargesByVAT",
-					  						DefaultText =  "Charges By VAT",
+					  						DefaultText =  @"Charges By VAT",
 					  						HelpTextCode =  "IsChargesByVAT",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -11154,7 +11156,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsRequired =  false,
 					  						MultiTableName =  "QuotePackage",
 					  						FullFieldLable =  "QuotePackages",
-					  						DefaultText =  "Quote Packages",
+					  						DefaultText =  @"Quote Packages",
 					  						HelpTextCode =  "QuotePackages",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -11208,7 +11210,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsRequired =  false,
 					  						MultiTableName =  "QuoteSalesTotal",
 					  						FullFieldLable =  "QuoteSalesTotals",
-					  						DefaultText =  "Quote Sales Totals",
+					  						DefaultText =  @"Quote Sales Totals",
 					  						HelpTextCode =  "QuoteSalesTotals",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -11262,7 +11264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsRequired =  false,
 					  						MultiTableName =  "QuoteVATsTotal",
 					  						FullFieldLable =  "TotalVATPerQuote",
-					  						DefaultText =  "Total VAT per quote",
+					  						DefaultText =  @"Total VAT per quote",
 					  						HelpTextCode =  "TotalVATPerQuote",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -11319,7 +11321,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsRequired =  false,
 					  						MultiTableName =  "QuoteCharge",
 					  						FullFieldLable =  "QuoteCharges",
-					  						DefaultText =  "Quote Charges",
+					  						DefaultText =  @"Quote Charges",
 					  						HelpTextCode =  "QuoteCharges",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -11373,7 +11375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsRequired =  false,
 					  						MultiTableName =  "QuoteSaleCharge",
 					  						FullFieldLable =  "QuoteSaleCharges",
-					  						DefaultText =  "Quote Sale Charges",
+					  						DefaultText =  @"Quote Sale Charges",
 					  						HelpTextCode =  "QuoteSaleCharges",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -11427,7 +11429,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsRequired =  false,
 					  						MultiTableName =  "QuoteCostCharge",
 					  						FullFieldLable =  "QuoteCostCharges",
-					  						DefaultText =  "Quote Cost Charges",
+					  						DefaultText =  @"Quote Cost Charges",
 					  						HelpTextCode =  "QuoteCostCharges",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -11481,7 +11483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						IsRequired =  false,
 					  						MultiTableName =  "QuotePriceSteps",
 					  						FullFieldLable =  "QuotePriceSteps",
-					  						DefaultText =  "Price Steps",
+					  						DefaultText =  @"Price Steps",
 					  						HelpTextCode =  "QuotePriceSteps",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -11516,12 +11518,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   Feature QuoteFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPIREDQUOTES", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.ExpiredQuotes", NameTextCodeDefaultText = "Expired Quotes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
-			   TextCode QuoteTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AcceptedQuotes", DefaultText = @"Accepted Quotes",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature QuoteFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCEPTEDQUOTES", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.AcceptedQuotes", NameTextCodeDefaultText = "Accepted Quotes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode QuoteTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.FollowUps", DefaultText = @"Follow Ups",LocalDefaultText = "Follow Ups", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature QuoteFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FOLLOWUPS", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Master.Features.FollowUps", NameTextCodeDefaultText = "Follow Ups", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
-			   TextCode QuoteTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.FollowUps", DefaultText = @"Follow Ups",LocalDefaultText = "Follow Ups", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-			   Feature QuoteFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FOLLOWUPS", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Master.Features.FollowUps", NameTextCodeDefaultText = "Follow Ups", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode QuoteTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AcceptedQuotes", DefaultText = @"Accepted Quotes",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature QuoteFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCEPTEDQUOTES", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.AcceptedQuotes", NameTextCodeDefaultText = "Accepted Quotes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
 
 			   TextCode QuoteTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Q.AcceptedWithoutShipmentsQuotes", DefaultText = @"Accepted Without Shipments",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
@@ -11681,7 +11683,35 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
   
 	      
 
-			  Query AcceptedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_4.Id, Code = "Accepted Quotes",  QueryGroupCode = "QUOT", IndexOrder = 4, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query FollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_4.Id, Code = "Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 4, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_4.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn FollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn FollowUpsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn FollowUpsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn FollowUpsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn FollowUpsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn FollowUpsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn FollowUpsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn FollowUpsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn FollowUpsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn FollowUpsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn FollowUpsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn FollowUpsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
+  
+	      
+
+			  Query AcceptedQuotesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_5.Id, Code = "Accepted Quotes",  QueryGroupCode = "QUOT", IndexOrder = 4, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "Quote", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = QuoteFeature_5.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AcceptedQuotesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AcceptedQuotesQuery.Id, IndexOrder = 0, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -11709,34 +11739,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
              AdvancedQueryFilter AcceptedQuotesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "IsAcceptedQuote" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = AcceptedQuotesQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
-  
-	      
-
-			  Query FollowUpsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = QuoteTextCode_5.Id, Code = "Follow Ups",  QueryGroupCode = "QFLU", IndexOrder = 4, Tenant = 0, ObjectTableId = QuoteObjectTable.Id, QuerySection = "QuoteFollowUp", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = QuoteFeature_5.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
-	
-			 QueryColumn FollowUpsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 1, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "TransportModeId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn FollowUpsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 2, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "DirectionId" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 25 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn FollowUpsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 3, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 70 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn FollowUpsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 4, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 115 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn FollowUpsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 5, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpNotes" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn FollowUpsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 6, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn FollowUpsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 7, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FromPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn FollowUpsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 8, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ToPort" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 40 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn FollowUpsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 9, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn FollowUpsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 10, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "QuoteNumber" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 84 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn FollowUpsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 11, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
-
-			 QueryColumn FollowUpsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FollowUpsQuery.Id, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
   
 	      
 
@@ -11860,7 +11862,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn AllFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "10/16/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = AllFollowUpsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "11/25/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = AllFollowUpsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -11893,7 +11895,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			 QueryColumn MyFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 12, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "FollowUpOwner" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 127 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter MyFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MyFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "10/16/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = MyFollowUpsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MyFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = QuoteObjectFields.Where(d => d.FieldName == "MyFollowUps" && d.ObjectTableId == QuoteObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "11/25/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = MyFollowUpsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -12100,7 +12102,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 		   Feature QuoteFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature QuoteFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature QuoteFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature QuoteFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.PackageFeature", NameTextCodeDefaultText = "Quote Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature QuoteFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.PackageFeature", NameTextCodeDefaultText = "Quote Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature QuoteFeature_SETTINGS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETTINGS", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Settings", NameTextCodeDefaultText = @"Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature QuoteFeature_Quote_Followups = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Quote.Followups", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Followups", NameTextCodeDefaultText = @"Follow ups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature QuoteFeature_NEWQUOTE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWQUOTE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.NewQuote", NameTextCodeDefaultText = @"New Quote" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature QuoteFeature_OUTLOOKCONNETION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OUTLOOKCONNETION", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.OutlookConnection", NameTextCodeDefaultText = @"Outlook Connection" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature QuoteFeature_TARIFFS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TARIFFS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Tariffs", NameTextCodeDefaultText = @"Tariffs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature QuoteFeature_QouteEditExchangeRate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QouteEditExchangeRate", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.EditExchangeRate", NameTextCodeDefaultText = @"Edit Exchange Rate" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature QuoteFeature_Actions = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Actions", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.More", NameTextCodeDefaultText = @"More" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -12133,6 +12153,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
                 IsManualEntry =  false,
                 LocalName =  "Quote Disconnected",
                 EnglishName =  "Quote Disconnected",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = QuoteObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "QTCN",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Ticket Connected",
+                EnglishName =  "Ticket Connected",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = QuoteObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "QTDC",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Ticket Disconnected",
+                EnglishName =  "Ticket Disconnected",
                 EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
@@ -12624,25 +12682,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
 			   MenuButton QuoteMenuButton40 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "QuoteBuildShipmentSeparator",
-						Index = 0, 
-						IsActive = true,
-						LabelTextCodeCode = "Quote.MenuButtons.QuoteBuildShipmentSeparator",
-						LabelTextCodeDefaultText = "",
-						Tenant = 0,
-						MenuButtonGroupId = QuoteMenuButtonGroup.Id,
-						ParentMenuButtonId = QuoteMenuButton4.Id,
-						ObjectTableId = QuoteObjectTable.Id,
-						MenuButtonType = "separator",
-						
-						Style = null,
-						LocalDefaultText = null,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	   
-			   MenuButton QuoteMenuButton41 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
 						EventCode = "SetAsSentToCustomer",
-						Index = 1, 
+						Index = 0, 
 						IsActive = true,
 						LabelTextCodeCode = "Quote.B.SetAsSent",
 						LabelTextCodeDefaultText = "Set As Sent to Customer",
@@ -12656,10 +12697,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton QuoteMenuButton42 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton QuoteMenuButton41 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "ReturnToDraft",
-						Index = 2, 
+						Index = 1, 
 						IsActive = true,
 						LabelTextCodeCode = "Quote.B.ReturnToDraft",
 						LabelTextCodeDefaultText = "Return Quote To Draft",
@@ -12673,10 +12714,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton QuoteMenuButton43 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton QuoteMenuButton42 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CopyQuote",
-						Index = 3, 
+						Index = 2, 
 						IsActive = true,
 						LabelTextCodeCode = "Quote.B.CopyQuote",
 						LabelTextCodeDefaultText = "Copy Quote",
@@ -12690,10 +12731,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton QuoteMenuButton44 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton QuoteMenuButton43 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "QuoteCopySeparator",
-						Index = 4, 
+						Index = 3, 
 						IsActive = true,
 						LabelTextCodeCode = "Quote.B.QuoteCopySeparator",
 						LabelTextCodeDefaultText = "",
@@ -12707,10 +12748,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton QuoteMenuButton45 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton QuoteMenuButton44 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CancelQuote",
-						Index = 5, 
+						Index = 4, 
 						IsActive = true,
 						LabelTextCodeCode = "Quote.B.CancelQuote",
 						LabelTextCodeDefaultText = "Cancel Quote",
@@ -12724,10 +12765,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton QuoteMenuButton46 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton QuoteMenuButton45 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "ReactivateQuote",
-						Index = 6, 
+						Index = 5, 
 						IsActive = true,
 						LabelTextCodeCode = "Quote.B.ReactivateQuote",
 						LabelTextCodeDefaultText = "Reactivate Quote",
@@ -12741,7 +12782,430 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable QuoteObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Quote" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode QuoteTextCode_Quote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote", DefaultText = "Quote",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteMinimumFreightCostHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.MinimumFreightCostHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteMinimumFreightSaleHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.MinimumFreightSaleHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBPartnersAddPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Partners.AddPartners", DefaultText = "Add Partners",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOFollowUps = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.FollowUps", DefaultText = "Follow Ups",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.Details", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOPartnersPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Partners.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Charges", DefaultText = "Charges",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteSelectFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.SelectFields", DefaultText = "Select Fields to Copy",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuotePartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteMainCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.MainCarriage", DefaultText = "Main Carriage",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteIncludePickUp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.IncludePickUp", DefaultText = "Include PickUp",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteIncludeDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.IncludeDelivery", DefaultText = "Include Delivery",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Charges", DefaultText = "Charges",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteChargeType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.ChargeType", DefaultText = "Charge Type",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteCost = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Cost", DefaultText = "Cost",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteSale = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Sale", DefaultText = "Sale",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteSetAsMyCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.SetAsMyCustomer", DefaultText = "Set as My Customer",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuotePotentialShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.PotentialShipper", DefaultText = "Potential Shipper",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuotePotentialConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.PotentialConsignee", DefaultText = "Potential Consignee",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBDetailsEditAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Details.EditAddress", DefaultText = "Edit Address",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBChargesByPriceBreak = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Charges.ByPriceBreak", DefaultText = "Price by break",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBChargesAddStep = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Charges.AddStep", DefaultText = "Add Break",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBChargesEditStep = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Charges.EditStep", DefaultText = "Edit Break",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBChargesDeleteStep = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Charges.DeleteStep", DefaultText = "Delete Break",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteMYouCanTypeSalePrice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.YouCanTypeSalePrice", DefaultText = "You can type Sale Price ex:(1000)\nOr\nYou can type Sale Markup ex:(+100) Or (+10%)",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteMUnableToDoAllIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.UnableToDoAllIn", DefaultText = "Unable to do All In..",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteMIfMatchesFrieghtCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.IfMatchesFrieghtCharge", DefaultText = "Only if matches the Frieght Charge UOM and Currency",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSChargesProfitInLocalCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Charges.ProfitInLocalCurrency", DefaultText = "Profit in Local Currency",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesCostMinimum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostMinimum", DefaultText = "Cost Minimum",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesSaleMinimum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleMinimum", DefaultText = "Sale Minimum",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBDetailsMeasurmentsSettings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Details.MeasurmentsSettings", DefaultText = "Measurement Settings",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBDetailsHideMeasurmentsSettings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Details.HideMeasurmentsSettings", DefaultText = "Hide Measurement Settings",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBPartnersAddShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Partners.AddShipper", DefaultText = "Add Shipper",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBPartnersAddConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Partners.AddConsignee", DefaultText = "Add Consignee",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBPartnersAddPotentialShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Partners.AddPotentialShipper", DefaultText = "Add Potential Shipper",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBPartnersAddPotentialConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Partners.AddPotentialConsignee", DefaultText = "Add Potential Consignee",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBChargesAddCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Charges.AddCharge", DefaultText = "Add Charge",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBChargesDeleteCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Charges.DeleteCharge", DefaultText = "Delete Charge",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBNewQuoteAddShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddShipper", DefaultText = "Add Shipper",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBNewQuoteAddConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddConsignee", DefaultText = "Add Consignee",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBNewQuoteAddPotentialShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddPotentialShipper", DefaultText = "Add Potential Shipper",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBNewQuoteAddPotentialConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddPotentialConsignee", DefaultText = "Add Potential Consignee",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteMDeleteThisPartner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisPartner", DefaultText = "Delete This Partner?",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteMDeleteThisCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisCharge", DefaultText = "Delete This Charge?",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsRoutingsDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.RoutingsDetails", DefaultText = "Routing Details",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsQuoteDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.QuoteDetails", DefaultText = "Quote Details",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsExpectedOrderDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.ExpectedOrderDetails", DefaultText = "Expected Order Details",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsQuoteContainersTypes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.QuoteContainersTypes", DefaultText = "Quote Container Types",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsAdhoc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.Adhoc", DefaultText = "Ad hoc",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsPeriodical = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.Periodical", DefaultText = "Periodical",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsGateway = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.Gateway", DefaultText = "Gateway",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsLoadingPort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.LoadingPort", DefaultText = "Loading Port",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsDestination = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.Destination", DefaultText = "Destination",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsDischargePort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.DischargePort", DefaultText = "Discharge Port",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsAirline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.Airline", DefaultText = "Airline",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsShippingline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.Shippingline", DefaultText = "Shipping Line",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsTrucker = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.Trucker", DefaultText = "Trucker",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.Contact", DefaultText = "Contact",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersReference1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.Reference1", DefaultText = "Reference 1",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersReference2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.Reference2", DefaultText = "Reference 2",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersMyCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.MyCustomer", DefaultText = "My Customer",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersAddShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.AddShipper", DefaultText = "Add Shipper",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersAddConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.AddConsignee", DefaultText = "Add Consignee",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersEditShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.EditShipper", DefaultText = "Edit Shipper",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersEditConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.EditConsignee", DefaultText = "Edit Consignee",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesAddCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.AddCharges", DefaultText = "Add Charges",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesEditCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.EditCharges", DefaultText = "Edit Charges",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesCostQuantity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostQuantity", DefaultText = "Cost%nQty",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesCostPrice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostPrice", DefaultText = "Cost%nPrice",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesCostAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostAmount", DefaultText = "Cost%nAmount",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesSaleQuantity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleQuantity", DefaultText = "Sale%nQty",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesSalePrice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SalePrice", DefaultText = "Sale%nPrice (%SaleCurrencyCode)",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesSaleAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleAmount", DefaultText = "Sale%nAmount (%SaleCurrencyCode)",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesSaleAmountLocal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleAmountLocal", DefaultText = "Sale%nAmount (%LocalCurrencyCode)",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesFillExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.FillExchangeRate", DefaultText = "Fill Exchange Rate",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteRoutings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Routings", DefaultText = "Routings",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteExpectedOrderDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.ExpectedOrderDetails", DefaultText = "Expected Order Details",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteAdhoc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Adhoc", DefaultText = "Ad hoc",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuotePeriodical = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Periodical", DefaultText = "Periodical",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteGateway = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Gateway", DefaultText = "Gateway",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteLoadingPort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.LoadingPort", DefaultText = "Loading Port",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.From", DefaultText = "From",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteDestination = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Destination", DefaultText = "Destination",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteDischargePort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.DischargePort", DefaultText = "Discharge Port",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.To", DefaultText = "To",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteCarrier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Carrier", DefaultText = "Carrier",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteAirline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Airline", DefaultText = "Airline",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteShippingline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Shippingline", DefaultText = "Shipping Line",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteTrucker = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Trucker", DefaultText = "Trucker",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteQuantity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Quantity", DefaultText = "Quantity",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuotePackageType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.PackageType", DefaultText = "Package Type",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Shipper", DefaultText = "Shipper",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Consignee", DefaultText = "Consignee",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Contact", DefaultText = "Contact",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteReference1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Reference1", DefaultText = "Reference 1",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteReference2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.Reference2", DefaultText = "Reference 2",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteMyCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.MyCustomer", DefaultText = "My Customer",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesRates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Rates", DefaultText = "Rates",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesCost = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Cost", DefaultText = "Cost",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesSale = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Sale", DefaultText = "Sale",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesSaleCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleCurrency", DefaultText = "Sales Currency (%SaleCurrencyCode)",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesLocalCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.LocalCurrency", DefaultText = "Local Currency (%LocalCurrencyCode)",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSChargesMarkup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Charges.Markup", DefaultText = "Markup",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBSetAsRejected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.SetAsRejected", DefaultText = "Set As Rejected by Customer",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBSetAsNoAnswer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.SetAsNoAnswer", DefaultText = "Set As No Answer",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBReturnInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.ReturnInProgress", DefaultText = "Return Quote in Progress",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsRoutingRates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.RoutingRates", DefaultText = "Routing Rates",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteONewQuoteRoutingRates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.NewQuote.RoutingRates", DefaultText = "Routing Rates",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Create", DefaultText = "Create",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBCopy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Copy", DefaultText = "Copy",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteRoutings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Routings", DefaultText = "Routings",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteExpectedOrderDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.ExpectedOrderDetails", DefaultText = "Expected Order Details",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteAdhoc = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Adhoc", DefaultText = "Ad hoc",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteRoutingRates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.RoutingRates", DefaultText = "Routing Rates",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteGateway = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Gateway", DefaultText = "Gateway",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteLoadingPort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.LoadingPort", DefaultText = "Loading Port",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.From", DefaultText = "From",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteDestination = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Destination", DefaultText = "Destination",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteDischargePort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.DischargePort", DefaultText = "Discharge Port",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.To", DefaultText = "To",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteCarrier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Carrier", DefaultText = "Carrier",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteAirline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Airline", DefaultText = "Airline",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteShippingline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Shippingline", DefaultText = "Shipping line",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteTrucker = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Trucker", DefaultText = "Trucker",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteQuantity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Quantity", DefaultText = "Quantity",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuotePackageType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.PackageType", DefaultText = "Package Type",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteMyCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.MyCustomer", DefaultText = "My Customer",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteSetAsMyCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.SetAsMyCustomer", DefaultText = "Set as My Customer",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteShipperNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.ShipperNotes", DefaultText = "Shipper Notes",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteConsigneeNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.ConsigneeNotes", DefaultText = "Consignee Notes",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteSelectFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.SelectFields", DefaultText = "Select Fields to Copy",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuotePartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteMainCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.MainCarriage", DefaultText = "Main Carriage",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Charges", DefaultText = "Charges",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteChargeType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.ChargeType", DefaultText = "Charges Types",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteCost = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Cost", DefaultText = "Cost",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteSale = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Sale", DefaultText = "Sale",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteORoutings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Routings", DefaultText = "Routings",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBPartnersAddAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Partners.AddAgent", DefaultText = "Add Agent",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersAddAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.AddAgent", DefaultText = "Add Agent",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersEditAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.EditAgent", DefaultText = "Edit Agent",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBChargesTariffs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Charges.Tariffs", DefaultText = "Tariffs",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesNoVat = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.NoVat", DefaultText = "No VAT for this date",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteMDeleteThisPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisPackage", DefaultText = "Delete this package?",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBNewQuoteAddAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.NewQuote.AddAgent", DefaultText = "Add Agent",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPackagesAddPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Packages.AddPackage", DefaultText = "Add Package",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPackagesEditPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Packages.EditPackage", DefaultText = "Edit Package",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBAddPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.AddPackage", DefaultText = "Add Package",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSOverviewActivities = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Overview.Activities", DefaultText = "Activities",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSOverviewNoActivities = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Overview.NoActivities", DefaultText = "No Activities",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsGeneralDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.GeneralDetails", DefaultText = "General Details",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsCloseAutomatically = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.CloseAutomatically", DefaultText = "Close automatically as declined after",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsDays = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.Days", DefaultText = "days",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSDetailsExpirationTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Details.ExpirationTime", DefaultText = "Expiration Time",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteCreateNewQuote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.CreateNewQuote", DefaultText = "Create New Quote",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteSpotRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.SpotRate", DefaultText = "Spot Rate",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteExpirationTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.ExpirationTime", DefaultText = "Expiration Time",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteCloseAutomatically = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.CloseAutomatically", DefaultText = "Close automatically as declined after",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteDays = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Days", DefaultText = "days",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuotePickup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Pickup", DefaultText = "Pickup",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuotePickupAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.PickupAddress", DefaultText = "Pickup Address",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Delivery", DefaultText = "Delivery",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteDeliveryAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.DeliveryAddress", DefaultText = "Delivery Address",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteZipCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.ZipCode", DefaultText = "Zip Code",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteCity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.City", DefaultText = "City",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteCountry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Country", DefaultText = "Country",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteInsertTotals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.InsertTotals", DefaultText = "Please insert totals or",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteFillDimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.FillDimensions", DefaultText = "Fill Dimensions",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteSummary = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.Summary", DefaultText = "Summary",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSNewQuoteIsLocalLanguage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.NewQuote.IsLocalLanguage", DefaultText = "Is Local Language",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSWorkspaceQuoteQueries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Workspace.QuoteQueries", DefaultText = "Quote Queries",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSWorkspaceOthers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Workspace.Others", DefaultText = "Others",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSWorkspaceMyViews = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Workspace.MyViews", DefaultText = "My Views",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSWorkspaceRecentQuotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Workspace.RecentQuotes", DefaultText = "Recent Quotes",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSWorkspaceTopQuotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Workspace.TopQuotes", DefaultText = "Top Quotes",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSWorkspaceSalesFunnel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Workspace.SalesFunnel", DefaultText = "Sales Funnel",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersMainAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.MainAddress", DefaultText = "Main Address",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSRoutingsPickup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Routings.Pickup", DefaultText = "Pickup",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSRoutingsDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Routings.Delivery", DefaultText = "Delivery",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSRoutingsMainCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Routings.MainCarriage", DefaultText = "Main Carriage",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSRoutingsZipCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Routings.ZipCode", DefaultText = "Zip Code",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSRoutingsCity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Routings.City", DefaultText = "City",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSRoutingsCountry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Routings.Country", DefaultText = "Country",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSRoutingsFromPartner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Routings.FromPartner", DefaultText = "From Partner",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSRoutingsToPartner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Routings.ToPartner", DefaultText = "To Partner",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSRoutingsIsLocalLanguage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Routings.IsLocalLanguage", DefaultText = "Is Local Language",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSRoutingsAddAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Routings.AddAddress", DefaultText = "Add Address",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSRoutingsEditAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Routings.EditAddress", DefaultText = "Edit Address",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesFixed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Fixed", DefaultText = "Fixed",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteOChargesSameAsCost = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SameAsCost", DefaultText = "Same as Cost Currency",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteBPartnersAddNotify = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.B.Partners.AddNotify", DefaultText = "Add Notify",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersAddNotify = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.AddNotify", DefaultText = "Add Notify",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteTextCode_QuoteSPartnersEditNotify = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.S.Partners.EditNotify", DefaultText = "Edit Notify",LocalDefaultText = null, ObjectTableId = QuoteObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

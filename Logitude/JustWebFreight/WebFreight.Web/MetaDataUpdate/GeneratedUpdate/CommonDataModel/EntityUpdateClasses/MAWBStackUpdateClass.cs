@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class MAWBStackUpdateClass
@@ -171,7 +174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Number",
-					  						DefaultText =  "Number",
+					  						DefaultText =  @"Number",
 					  						HelpTextCode =  "Number",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -226,7 +229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "InsertionDate",
-					  						DefaultText =  "Insertion Date/Time",
+					  						DefaultText =  @"Insertion Date/Time",
 					  						HelpTextCode =  "InsertionDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -282,7 +285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "AirlineId",
-					  						DefaultText =  "Airline",
+					  						DefaultText =  @"Airline",
 					  						HelpTextCode =  "AirlineId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -337,7 +340,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  "Notes",
+					  						DefaultText =  @"Notes",
 					  						HelpTextCode =  "Notes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -393,7 +396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "AssignedToId",
-					  						DefaultText =  "Assigned To",
+					  						DefaultText =  @"Assigned To",
 					  						HelpTextCode =  "AssignedToId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -430,7 +433,48 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable MAWBStackObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MAWBStack" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode MAWBStackTextCode_MAWBStack = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack", DefaultText = "MAWB Stack",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackONotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.Notes", DefaultText = "Notes",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackOStartNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.StartNumber", DefaultText = "Start Number",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackOEndNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.EndNumber", DefaultText = "End Number",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackOByEndNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.ByEndNumber", DefaultText = "By End Number",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackOByAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.ByAmount", DefaultText = "By Amount",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackOAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.Amount", DefaultText = "Amount",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackORemovingStack = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.RemovingStack", DefaultText = "Removing Stack",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackBRemoveSeries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.B.RemoveSeries", DefaultText = "Remove Series",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackMDeleteStackNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.M.DeleteStackNumber", DefaultText = "Are you sure you want to delete the stack number?",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackMDeleteStackSeries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.M.DeleteStackSeries", DefaultText = "Are you sure you want to delete the series inserted on",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackOAirWayBillNumbers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.AirWayBillNumbers", DefaultText = "AWB Numbers",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackONewAirWayBillNumbers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.NewAirWayBillNumbers", DefaultText = "New AWB Numbers",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode MAWBStackTextCode_MAWBStackOAWBRemainingAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.O.AWBRemainingAmount", DefaultText = "AWB Remaining Amount",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

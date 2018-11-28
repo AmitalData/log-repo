@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class ObjectFieldUpdateClass
@@ -174,10 +177,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FullNameTextCodeDefaultText",
-					  						DefaultText =  "Display Name",
-					  						FullLocalDefaultText =  "Display Name",
+					  						DefaultText =  @"Display Name",
+					  						FullLocalDefaultText =  @"Display Name",
 					  						ListFieldLable =  "FullNameTextCodeDefaultTextListLable",
-					  						ListLableDefaultText =  "Display Name",
+					  						ListLableDefaultText =  @"Display Name",
 					  						HelpTextCode =  "FullNameTextCodeDefaultText",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -233,7 +236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ObjectTableId",
-					  						DefaultText =  "Object Table",
+					  						DefaultText =  @"Object Table",
 					  						HelpTextCode =  "ObjectTableId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -288,7 +291,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CanAutomateSetValue",
-					  						DefaultText =  "Can Automate Set Value",
+					  						DefaultText =  @"Can Automate Set Value",
 					  						HelpTextCode =  "CanAutomateSetValue",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -343,7 +346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AllowedinAutomationConditions",
-					  						DefaultText =  "Allowed in Automation Conditions",
+					  						DefaultText =  @"Allowed in Automation Conditions",
 					  						HelpTextCode =  "AllowedinAutomationConditions",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -399,10 +402,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FieldName",
-					  						DefaultText =  "Field Name",
-					  						FullLocalDefaultText =  "Field Name",
+					  						DefaultText =  @"Field Name",
+					  						FullLocalDefaultText =  @"Field Name",
 					  						ListFieldLable =  "FieldNameListLable",
-					  						ListLableDefaultText =  "Field Name",
+					  						ListLableDefaultText =  @"Field Name",
 					  						HelpTextCode =  "FieldName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -439,7 +442,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ObjectFieldObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ObjectField" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ObjectFieldTextCode_ObjectField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ObjectField", DefaultText = "Object Field",LocalDefaultText = null, ObjectTableId = ObjectFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

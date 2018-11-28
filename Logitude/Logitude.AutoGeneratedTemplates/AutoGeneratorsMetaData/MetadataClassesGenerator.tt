@@ -392,14 +392,14 @@ foreach(XElement featureElement in AdditionalFeatures.Elements("Feature")){
 				    var Code = featureElement.Attributes().Where(a => a.Name == "Code").FirstOrDefault().Value.Trim('"');
 					var FeatureTypeCode = featureElement.Attributes().Where(a => a.Name == "FeatureTypeCode").FirstOrDefault().Value.Trim('"');
 					var FeatureTextCodeCode = featureElement.Attributes().Where(a => a.Name == "FeatureTextCodeCode").FirstOrDefault().Value.Trim('"');
-					var FeatureDefaultText = featureElement.Attributes().Where(a => a.Name == "FeatureDefaultText").FirstOrDefault().Value.Trim('"');
+					var FeatureDefaultText = featureElement.Attributes().Where(a => a.Name == "FeatureDefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "\\\"").Replace("\n",  "\\n");
  					var IsPackagable = featureElement.Attributes().Where(a => a.Name == "IsPackagable").FirstOrDefault().Value;
 					var IsBusinessUnitEnabled = featureElement.Attributes().Where(a => a.Name == "IsBusinessUnitEnabled").FirstOrDefault().Value;
 					var IsOld = featureElement.Attributes().Where(a => a.Name == "IsOld").FirstOrDefault().Value;
 					var IsCoreFeature = featureElement.Attributes().Where(a => a.Name == "IsCoreFeature").FirstOrDefault().Value;
 
 #>
-		   Feature <#= ObjectTbl.Trim('"') #>Feature_<#=Code.Replace(".","_")#> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#=Code#>", FeatureTypeCode = "<#=FeatureTypeCode#>", Packagable = <#=IsPackagable#>, IsBusinessUnitEnabled = <#=IsBusinessUnitEnabled#>, IsOld = <#=IsOld#>, IsCoreFeature = <#=IsCoreFeature#>, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#=FeatureTextCodeCode#>", NameTextCodeDefaultText = "<#=FeatureDefaultText#>" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature <#= ObjectTbl.Trim('"') #>Feature_<#=Code.Replace(".","_")#> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#=Code#>", FeatureTypeCode = "<#=FeatureTypeCode#>", Packagable = <#=IsPackagable#>, IsBusinessUnitEnabled = <#=IsBusinessUnitEnabled#>, IsOld = <#=IsOld#>, IsCoreFeature = <#=IsCoreFeature#>, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#=FeatureTextCodeCode#>", NameTextCodeDefaultText = @"<#=FeatureDefaultText#>" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 <#+
 	  
@@ -486,8 +486,8 @@ foreach(XElement featureElement in AdditionalFeatures.Elements("Feature")){
 <#+
 foreach(XElement textCodeElement in AdditionalTextCodes.Elements("TextCode")){
 				    var Code = textCodeElement.Attributes().Where(a => a.Name == "Code").FirstOrDefault().Value.Trim('"');
-					var DefaultText = (textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault() != null?textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "\\\""):"null");
-					var LocalDefaultText = (textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault() != null?textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value:"null");
+					var DefaultText = (textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault() != null?textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "\\\"").Replace("\n",  "\\n"):"null");
+					var LocalDefaultText = (textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault() != null?   (!textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value.Trim('"').Contains("\"")? "@":"") +'"' + (textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "\\\"").Replace("\n",  "\\n")) +'"'  :"null");
 					var TextCodeTypeCode = textCodeElement.Attributes().Where(a => a.Name == "TextCodeTypeCode").FirstOrDefault().Value;
  					var IsSpellChecked = textCodeElement.Attributes().Where(a => a.Name == "IsSpellChecked").FirstOrDefault().Value;
 		
@@ -542,13 +542,19 @@ foreach(XElement textCodeElement in AdditionalTextCodes.Elements("TextCode")){
 <#+
 private void WriteAddFieldMethod(XElement entity,XElement field)
 { 
+	bool isCustomField = false;
+	if(field.Attribute(XName.Get("IsCustom")) != null)
+    {
+		isCustomField = (field.Attribute(XName.Get("IsCustom")).Value.ToLower() == "true");
+    }
+
 	bool noObjectField = false;
 	if(field.Attribute(XName.Get("NoMetaDataField")) != null)
     {
 		noObjectField = (field.Attribute(XName.Get("NoMetaDataField")).Value.ToLower() == "true");
     }
 
-	if(field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" || noObjectField)
+	if(field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" || noObjectField || isCustomField)
     {
 		return;
     }
@@ -573,6 +579,10 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 					if(!string.IsNullOrEmpty(p.Value.Trim('"')))
 					{
 					   var propValue = p.Value.Replace("\n",@"\n");
+					   if(propValue.StartsWith("\"") && propValue.EndsWith("\"") && p.Name.ToString().Contains("DefaultText"))
+					   {
+					     propValue =  (!propValue.Trim('"').Contains("\"")? "@":"") + '"'  + propValue.Trim('"').Replace("\"",  "\\\"") + '"';
+					   }
 						if(p.Name == "IsRequired" ||p.Name == "SystemRequired")
 						{
 							propValue = objectFieldNotRequired ? "false":propValue;

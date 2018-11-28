@@ -177,10 +177,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PrepaidCollectId",
-					  						DefaultText =  "Prepaid/Collect",
+					  						DefaultText =  @"Prepaid/Collect",
 					  						HelpTextCode =  "PrepaidCollectId",
 					  						ShortFieldLable =  "PrepaidCollectId",
-					  						ShortFieldLableDefaultText =  "P/C",
+					  						ShortFieldLableDefaultText =  @"P/C",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -233,7 +233,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AWBPrint",
-					  						DefaultText =  "Print in AWB",
+					  						DefaultText =  @"Print in AWB",
 					  						HelpTextCode =  "AWBPrint",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -289,7 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DueTypeCode",
-					  						DefaultText =  "Due Type",
+					  						DefaultText =  @"Due Type",
 					  						HelpTextCode =  "DueTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -345,7 +345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ShipmentPayableLineStatusCode",
-					  						DefaultText =  "Status Type",
+					  						DefaultText =  @"Status Type",
 					  						HelpTextCode =  "ShipmentPayableLineStatusCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -401,10 +401,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MeasurementId",
-					  						DefaultText =  "Measurement",
+					  						DefaultText =  @"Measurement",
 					  						HelpTextCode =  "MeasurementId",
 					  						ShortFieldLable =  "MeasurementId",
-					  						ShortFieldLableDefaultText =  "UOM",
+					  						ShortFieldLableDefaultText =  @"UOM",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -457,7 +457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Quantity",
-					  						DefaultText =  "Quantity",
+					  						DefaultText =  @"Quantity",
 					  						HelpTextCode =  "Quantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -511,10 +511,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Rate",
-					  						DefaultText =  "Exchange Rate",
+					  						DefaultText =  @"Exchange Rate",
 					  						HelpTextCode =  "Rate",
 					  						ShortFieldLable =  "Rate",
-					  						ShortFieldLableDefaultText =  "Rate",
+					  						ShortFieldLableDefaultText =  @"Rate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -567,7 +567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UnitPrice",
-					  						DefaultText =  "Unit Price",
+					  						DefaultText =  @"Unit Price",
 					  						HelpTextCode =  "UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -621,10 +621,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalAmount",
-					  						DefaultText =  "Amount (%CurrencyCode)",
+					  						DefaultText =  @"Amount (%CurrencyCode)",
 					  						HelpTextCode =  "TotalAmount",
 					  						ShortFieldLable =  "Amount",
-					  						ShortFieldLableDefaultText =  "Expected Amount",
+					  						ShortFieldLableDefaultText =  @"Expected Amount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -677,10 +677,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalAmountLocal",
-					  						DefaultText =  "Amount (%LocalCurrencyCode)",
+					  						DefaultText =  @"Amount (%LocalCurrencyCode)",
 					  						HelpTextCode =  "TotalAmountLocal",
 					  						ShortFieldLable =  "LocalAmount",
-					  						ShortFieldLableDefaultText =  "Local Amount",
+					  						ShortFieldLableDefaultText =  @"Local Amount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -733,7 +733,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  "Notes",
+					  						DefaultText =  @"Notes",
 					  						HelpTextCode =  "Notes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -789,7 +789,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ChargesType",
-					  						DefaultText =  "Charge Type",
+					  						DefaultText =  @"Charge Type",
 					  						HelpTextCode =  "ChargesType",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -843,7 +843,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VendorId",
-					  						DefaultText =  "Vendor",
+					  						DefaultText =  @"Vendor",
 					  						HelpTextCode =  "VendorId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -899,7 +899,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IATACodeId",
-					  						DefaultText =  "IATA Code",
+					  						DefaultText =  @"IATA Code",
 					  						HelpTextCode =  "IATACodeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -954,10 +954,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsBackToBack",
-					  						DefaultText =  "Back to back",
+					  						DefaultText =  @"Back to back",
 					  						HelpTextCode =  "IsBackToBack",
 					  						ShortFieldLable =  "IsBackToBack",
-					  						ShortFieldLableDefaultText =  "Back to back",
+					  						ShortFieldLableDefaultText =  @"Back to back",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1011,9 +1011,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivableId",
-					  						DefaultText =  "Receivable",
+					  						DefaultText =  @"Receivable",
 					  						ListFieldLable =  "ReceivableIdListLable",
-					  						ListLableDefaultText =  "ReceivableId",
+					  						ListLableDefaultText =  @"ReceivableId",
 					  						HelpTextCode =  "ReceivableId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1069,9 +1069,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CurrencyId",
-					  						DefaultText =  "Currency",
+					  						DefaultText =  @"Currency",
 					  						ListFieldLable =  "CurrencyIdListFieldLable",
-					  						ListLableDefaultText =  "Curr",
+					  						ListLableDefaultText =  @"Curr",
 					  						HelpTextCode =  "CurrencyId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1125,7 +1125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AmountInProfitCurrency",
-					  						DefaultText =  "Amount (%ProfitCurrencyCode)",
+					  						DefaultText =  @"Amount (%ProfitCurrencyCode)",
 					  						HelpTextCode =  "AmountInProfitCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1179,9 +1179,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExpectedAmount",
-					  						DefaultText =  "Amount (%CurrencyCode)",
+					  						DefaultText =  @"Amount (%CurrencyCode)",
 					  						HelpTextCode =  "ExpectedAmount",
-					  						HelpTextDefaultText =  "Unit priceXQuantity in specified currency.",
+					  						HelpTextDefaultText =  @"Unit priceXQuantity in specified currency.",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1234,9 +1234,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExpectedAmountLocal",
-					  						DefaultText =  "Amount (%LocalCurrencyCode)",
+					  						DefaultText =  @"Amount (%LocalCurrencyCode)",
 					  						HelpTextCode =  "ExpectedAmountLocal",
-					  						HelpTextDefaultText =  "Unit priceXQuantity in local currency.",
+					  						HelpTextDefaultText =  @"Unit priceXQuantity in local currency.",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1289,9 +1289,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExpectedAmountInProfitCurrency",
-					  						DefaultText =  "Amount (%ProfitCurrencyCode)",
+					  						DefaultText =  @"Amount (%ProfitCurrencyCode)",
 					  						HelpTextCode =  "ExpectedAmountInProfitCurrency",
-					  						HelpTextDefaultText =  "Unit priceXQuantity in profit currency.",
+					  						HelpTextDefaultText =  @"Unit priceXQuantity in profit currency.",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1345,7 +1345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MinAmount",
-					  						DefaultText =  "Min Amount",
+					  						DefaultText =  @"Min Amount",
 					  						HelpTextCode =  "MinAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1400,7 +1400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MaxAmount",
-					  						DefaultText =  "Max Amount",
+					  						DefaultText =  @"Max Amount",
 					  						HelpTextCode =  "MaxAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1455,7 +1455,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteCostMinAmount",
-					  						DefaultText =  "Quote Cost Min Amount",
+					  						DefaultText =  @"Quote Cost Min Amount",
 					  						HelpTextCode =  "QuoteCostMinAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1510,7 +1510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteCostMaxAmount",
-					  						DefaultText =  "Quote Cost Max Amount",
+					  						DefaultText =  @"Quote Cost Max Amount",
 					  						HelpTextCode =  "QuoteCostMaxAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1566,7 +1566,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VatTypeId",
-					  						DefaultText =  "VAT Type",
+					  						DefaultText =  @"VAT Type",
 					  						HelpTextCode =  "VatTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1621,7 +1621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UOMPercentage",
-					  						DefaultText =  "UOM Percentage",
+					  						DefaultText =  @"UOM Percentage",
 					  						HelpTextCode =  "UOMPercentage",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);

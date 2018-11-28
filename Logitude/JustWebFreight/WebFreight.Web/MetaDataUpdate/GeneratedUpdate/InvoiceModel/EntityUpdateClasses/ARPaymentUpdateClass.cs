@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class ARPaymentUpdateClass
@@ -176,11 +179,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentNo",
-					  						DefaultText =  "Payment No.",
-					  						FullLocalDefaultText =  "מספר קבלה",
+					  						DefaultText =  @"Payment No.",
+					  						FullLocalDefaultText =  @"מספר קבלה",
 					  						ListFieldLable =  "PaymentNoListLable",
-					  						ListLableDefaultText =  "#",
-					  						ListLocalDefaultText =  "מספר קבלה",
+					  						ListLableDefaultText =  @"#",
+					  						ListLocalDefaultText =  @"מספר קבלה",
 					  						HelpTextCode =  "PaymentNo",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -237,13 +240,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תאריך יצירה",
+					  						DefaultText =  @"Create Date",
+					  						FullLocalDefaultText =  @"תאריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						ListLableDefaultText =  @"Create Date",
+					  						ListLocalDefaultText =  @"תאריך יצירה",
 					  						HelpTextCode =  "CreateDate",
-					  						HelpLocalDefaultText =  "תאריך יצירה",
+					  						HelpLocalDefaultText =  @"תאריך יצירה",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -299,10 +302,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "יוצר",
+					  						DefaultText =  @"Created By",
+					  						FullLocalDefaultText =  @"יוצר",
 					  						HelpTextCode =  "CreatedByUserId",
-					  						HelpLocalDefaultText =  "יוצר",
+					  						HelpLocalDefaultText =  @"יוצר",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -357,13 +360,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreatedByUserName",
-					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "יוצר",
+					  						DefaultText =  @"Created By",
+					  						FullLocalDefaultText =  @"יוצר",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
-					  						ListLableDefaultText =  "Created By",
-					  						ListLocalDefaultText =  "יוצר",
+					  						ListLableDefaultText =  @"Created By",
+					  						ListLocalDefaultText =  @"יוצר",
 					  						HelpTextCode =  "CreatedByUserName",
-					  						HelpLocalDefaultText =  "יוצר",
+					  						HelpLocalDefaultText =  @"יוצר",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -419,11 +422,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PrintDate",
-					  						DefaultText =  "Print Date",
-					  						FullLocalDefaultText =  "תאריך הדפסה",
+					  						DefaultText =  @"Print Date",
+					  						FullLocalDefaultText =  @"תאריך הדפסה",
 					  						ListFieldLable =  "PrintDateListLable",
-					  						ListLableDefaultText =  "Print Date",
-					  						ListLocalDefaultText =  "תאריך הדפסה",
+					  						ListLableDefaultText =  @"Print Date",
+					  						ListLocalDefaultText =  @"תאריך הדפסה",
 					  						HelpTextCode =  "PrintDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -480,8 +483,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PrintByUserId",
-					  						DefaultText =  "Print By User",
-					  						FullLocalDefaultText =  "הודפס ע''י",
+					  						DefaultText =  @"Print By User",
+					  						FullLocalDefaultText =  @"הודפס ע''י",
 					  						HelpTextCode =  "PrintByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -538,8 +541,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "LocalCurrencyId",
-					  						DefaultText =  "Local Currency",
-					  						FullLocalDefaultText =  "מטבע מקומי",
+					  						DefaultText =  @"Local Currency",
+					  						FullLocalDefaultText =  @"מטבע מקומי",
 					  						HelpTextCode =  "LocalCurrencyId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -596,11 +599,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "AmountInLocalCurrency",
-					  						DefaultText =  "Amount (Local Currency)",
-					  						FullLocalDefaultText =  "סכום(במטבע מקומי)",
+					  						DefaultText =  @"Amount (Local Currency)",
+					  						FullLocalDefaultText =  @"סכום(במטבע מקומי)",
 					  						ListFieldLable =  "AmountInLocalCurrencyListLable",
-					  						ListLableDefaultText =  "Amount (Local Currency)",
-					  						ListLocalDefaultText =  "סכום(במטבע מקומי)",
+					  						ListLableDefaultText =  @"Amount (Local Currency)",
+					  						ListLocalDefaultText =  @"סכום(במטבע מקומי)",
 					  						HelpTextCode =  "AmountInLocalCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -657,8 +660,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "BranchId",
-					  						DefaultText =  "Branch",
-					  						FullLocalDefaultText =  "סניף",
+					  						DefaultText =  @"Branch",
+					  						FullLocalDefaultText =  @"סניף",
 					  						HelpTextCode =  "BranchId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -715,8 +718,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "BillToId",
-					  						DefaultText =  "Bill To",
-					  						FullLocalDefaultText =  "לקוח",
+					  						DefaultText =  @"Bill To",
+					  						FullLocalDefaultText =  @"לקוח",
 					  						HelpTextCode =  "BillToId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -772,11 +775,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BillToName",
-					  						DefaultText =  "Bill To",
-					  						FullLocalDefaultText =  "לקוח",
+					  						DefaultText =  @"Bill To",
+					  						FullLocalDefaultText =  @"לקוח",
 					  						ListFieldLable =  "BillToNameListLable",
-					  						ListLableDefaultText =  "Bill To",
-					  						ListLocalDefaultText =  "לקוח",
+					  						ListLableDefaultText =  @"Bill To",
+					  						ListLocalDefaultText =  @"לקוח",
 					  						HelpTextCode =  "BillToName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -833,10 +836,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ARAccountId",
-					  						DefaultText =  "Account",
-					  						FullLocalDefaultText =  "חשבון",
+					  						DefaultText =  @"Account",
+					  						FullLocalDefaultText =  @"חשבון",
 					  						ListFieldLable =  "ARAccountIdListLable",
-					  						ListLableDefaultText =  "Account Id",
+					  						ListLableDefaultText =  @"Account Id",
 					  						HelpTextCode =  "ARAccountId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -893,10 +896,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "StatusCode",
-					  						DefaultText =  "Status",
-					  						FullLocalDefaultText =  "סטטוס",
+					  						DefaultText =  @"Status",
+					  						FullLocalDefaultText =  @"סטטוס",
 					  						HelpTextCode =  "StatusCode",
-					  						HelpLocalDefaultText =  "סטטוס",
+					  						HelpLocalDefaultText =  @"סטטוס",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -951,13 +954,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "StatusName",
-					  						DefaultText =  "Status",
-					  						FullLocalDefaultText =  "סטטוס",
+					  						DefaultText =  @"Status",
+					  						FullLocalDefaultText =  @"סטטוס",
 					  						ListFieldLable =  "StatusNameListLable",
-					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultText =  "סטטוס",
+					  						ListLableDefaultText =  @"Status",
+					  						ListLocalDefaultText =  @"סטטוס",
 					  						HelpTextCode =  "StatusName",
-					  						HelpLocalDefaultText =  "סטטוס",
+					  						HelpLocalDefaultText =  @"סטטוס",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1013,10 +1016,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsClosed",
-					  						DefaultText =  "Is Closed",
-					  						FullLocalDefaultText =  "סגור",
+					  						DefaultText =  @"Is Closed",
+					  						FullLocalDefaultText =  @"סגור",
 					  						ListFieldLable =  "IsClosedListLable",
-					  						ListLableDefaultText =  "Is Closed",
+					  						ListLableDefaultText =  @"Is Closed",
 					  						HelpTextCode =  "IsClosed",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1073,10 +1076,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "PaymentCurrencyId",
-					  						DefaultText =  "Payment Currency",
-					  						FullLocalDefaultText =  "מטבע קבלה",
+					  						DefaultText =  @"Payment Currency",
+					  						FullLocalDefaultText =  @"מטבע קבלה",
 					  						ListFieldLable =  "PaymentCurrencyIdListLable",
-					  						ListLableDefaultText =  "Payment Currency Id",
+					  						ListLableDefaultText =  @"Payment Currency Id",
 					  						HelpTextCode =  "PaymentCurrencyId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1132,11 +1135,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentCurrencyCode",
-					  						DefaultText =  "Currency",
-					  						FullLocalDefaultText =  "מטבע",
+					  						DefaultText =  @"Currency",
+					  						FullLocalDefaultText =  @"מטבע",
 					  						ListFieldLable =  "PaymentCurrencyCodeListLable",
-					  						ListLableDefaultText =  "Currency",
-					  						ListLocalDefaultText =  "מטבע",
+					  						ListLableDefaultText =  @"Currency",
+					  						ListLocalDefaultText =  @"מטבע",
 					  						HelpTextCode =  "PaymentCurrencyCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1193,11 +1196,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  true,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "AmountInPaymentCurrency",
-					  						DefaultText =  "Payment Amount",
-					  						FullLocalDefaultText =  "סכום קבלה",
+					  						DefaultText =  @"Payment Amount",
+					  						FullLocalDefaultText =  @"סכום קבלה",
 					  						ListFieldLable =  "AmountInPaymentCurrencyListLable",
-					  						ListLableDefaultText =  "Payment Amount",
-					  						ListLocalDefaultText =  "סכום קבלה",
+					  						ListLableDefaultText =  @"Payment Amount",
+					  						ListLocalDefaultText =  @"סכום קבלה",
 					  						HelpTextCode =  "AmountInPaymentCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1253,11 +1256,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaidBy",
-					  						DefaultText =  "Paid By",
-					  						FullLocalDefaultText =  "שולם ע''י",
+					  						DefaultText =  @"Paid By",
+					  						FullLocalDefaultText =  @"שולם ע''י",
 					  						ListFieldLable =  "PaidByListLable",
-					  						ListLableDefaultText =  "Paid By",
-					  						ListLocalDefaultText =  "שולם ע''י",
+					  						ListLableDefaultText =  @"Paid By",
+					  						ListLocalDefaultText =  @"שולם ע''י",
 					  						HelpTextCode =  "PaidBy",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1313,8 +1316,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ARPaymentMethodCode",
-					  						DefaultText =  "Payment Method",
-					  						FullLocalDefaultText =  "אמצעי תשלום",
+					  						DefaultText =  @"Payment Method",
+					  						FullLocalDefaultText =  @"אמצעי תשלום",
 					  						HelpTextCode =  "ARPaymentMethodCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1371,10 +1374,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreditAccountId",
-					  						DefaultText =  "Credit Account",
-					  						FullLocalDefaultText =  "כרטיס זכות",
+					  						DefaultText =  @"Credit Account",
+					  						FullLocalDefaultText =  @"כרטיס זכות",
 					  						ListFieldLable =  "CreditAccountIdListLable",
-					  						ListLableDefaultText =  "Credit Account Id",
+					  						ListLableDefaultText =  @"Credit Account Id",
 					  						HelpTextCode =  "CreditAccountId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1430,11 +1433,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PrintNotes",
-					  						DefaultText =  "Print Notes",
-					  						FullLocalDefaultText =  "הערות הדפסה",
+					  						DefaultText =  @"Print Notes",
+					  						FullLocalDefaultText =  @"הערות הדפסה",
 					  						ListFieldLable =  "PrintNotesListLable",
-					  						ListLableDefaultText =  "Print Notes",
-					  						ListLocalDefaultText =  "הערות הדפסה",
+					  						ListLableDefaultText =  @"Print Notes",
+					  						ListLocalDefaultText =  @"הערות הדפסה",
 					  						HelpTextCode =  "PrintNotes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1490,11 +1493,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "InternalNotes",
-					  						DefaultText =  "Notes",
-					  						FullLocalDefaultText =  "הערות",
+					  						DefaultText =  @"Notes",
+					  						FullLocalDefaultText =  @"הערות",
 					  						ListFieldLable =  "InternalNotesListLable",
-					  						ListLableDefaultText =  "Notes",
-					  						ListLocalDefaultText =  "הערות",
+					  						ListLableDefaultText =  @"Notes",
+					  						ListLocalDefaultText =  @"הערות",
 					  						HelpTextCode =  "InternalNotes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1550,11 +1553,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "PaymentCurrencyExchangeRate",
-					  						DefaultText =  "Exchange Rate",
-					  						FullLocalDefaultText =  "שער",
+					  						DefaultText =  @"Exchange Rate",
+					  						FullLocalDefaultText =  @"שער",
 					  						ListFieldLable =  "PaymentCurrencyExchangeRateListLable",
-					  						ListLableDefaultText =  "Exchange Rate",
-					  						ListLocalDefaultText =  "שער",
+					  						ListLableDefaultText =  @"Exchange Rate",
+					  						ListLocalDefaultText =  @"שער",
 					  						HelpTextCode =  "PaymentCurrencyExchangeRate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1611,11 +1614,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExchangeRateDate",
-					  						DefaultText =  "Exchange Date",
-					  						FullLocalDefaultText =  "תאריך שער חליפין",
+					  						DefaultText =  @"Exchange Date",
+					  						FullLocalDefaultText =  @"תאריך שער חליפין",
 					  						ListFieldLable =  "ExchangeRateDateListLable",
-					  						ListLableDefaultText =  "Exchange Date",
-					  						ListLocalDefaultText =  "תאריך שער חליפין",
+					  						ListLableDefaultText =  @"Exchange Date",
+					  						ListLocalDefaultText =  @"תאריך שער חליפין",
 					  						HelpTextCode =  "ExchangeRateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1672,10 +1675,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "BillToAddressId",
-					  						DefaultText =  "Bill To Address",
-					  						FullLocalDefaultText =  "כתובת לחיוב",
+					  						DefaultText =  @"Bill To Address",
+					  						FullLocalDefaultText =  @"כתובת לחיוב",
 					  						ListFieldLable =  "BillToAddressIdListLable",
-					  						ListLableDefaultText =  "Bill To Address Id",
+					  						ListLableDefaultText =  @"Bill To Address Id",
 					  						HelpTextCode =  "BillToAddressId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1732,9 +1735,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentDate",
-					  						DefaultText =  "Payment Date",
+					  						DefaultText =  @"Payment Date",
 					  						ListFieldLable =  "PaymentDateListLable",
-					  						ListLableDefaultText =  "Payment Date",
+					  						ListLableDefaultText =  @"Payment Date",
 					  						HelpTextCode =  "PaymentDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1789,11 +1792,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search Payment # / Bill to / Reference",
-					  						FullLocalDefaultText =  "חיפוש לפי תשלום  / כרטיס / אסמכתא",
+					  						DefaultText =  @"Search Payment # / Bill to / Reference",
+					  						FullLocalDefaultText =  @"חיפוש לפי מספר קבלה\לקוח",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1:Payment # \n2:Bill to \n3:Reference",
-					  						HelpLocalDefaultText =  "חיפוש לפי תשלום  / כרטיס / אסמכתא",
+					  						HelpTextDefaultText =  @"Searching by :\n1:Payment # \n2:Bill to \n3:Reference",
+					  						HelpLocalDefaultText =  @"חיפוש לפי מספר קבלה\לקוח",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1848,10 +1851,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ARAccountName",
-					  						DefaultText =  "Account",
-					  						FullLocalDefaultText =  "חשבון",
+					  						DefaultText =  @"Account",
+					  						FullLocalDefaultText =  @"חשבון",
 					  						ListFieldLable =  "ARAccountNameListLable",
-					  						ListLableDefaultText =  "Account",
+					  						ListLableDefaultText =  @"Account",
 					  						HelpTextCode =  "ARAccountName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1907,10 +1910,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreditAccountName",
-					  						DefaultText =  "Credit Account",
-					  						FullLocalDefaultText =  "כרטיס זכות",
+					  						DefaultText =  @"Credit Account",
+					  						FullLocalDefaultText =  @"כרטיס זכות",
 					  						ListFieldLable =  "CreditAccountNameListLable",
-					  						ListLableDefaultText =  "Credit Account",
+					  						ListLableDefaultText =  @"Credit Account",
 					  						HelpTextCode =  "CreditAccountName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1967,11 +1970,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  true,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "OpenAmount",
-					  						DefaultText =  "Open Amount",
-					  						FullLocalDefaultText =  "סכום פתוח",
+					  						DefaultText =  @"Open Amount",
+					  						FullLocalDefaultText =  @"סכום פתוח",
 					  						ListFieldLable =  "OpenAmountListLable",
-					  						ListLableDefaultText =  "Open Amount",
-					  						ListLocalDefaultText =  "סכום פתוח",
+					  						ListLableDefaultText =  @"Open Amount",
+					  						ListLocalDefaultText =  @"סכום פתוח",
 					  						HelpTextCode =  "OpenAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2029,11 +2032,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ValueDate",
-					  						DefaultText =  "Value Date",
-					  						FullLocalDefaultText =  "תאריך ערך",
+					  						DefaultText =  @"Value Date",
+					  						FullLocalDefaultText =  @"תאריך ערך",
 					  						ListFieldLable =  "ValueDateListLable",
-					  						ListLableDefaultText =  "Value Date",
-					  						ListLocalDefaultText =  "תאריך ערך",
+					  						ListLableDefaultText =  @"Value Date",
+					  						ListLocalDefaultText =  @"תאריך ערך",
 					  						HelpTextCode =  "ValueDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2088,8 +2091,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OpenPayments",
-					  						DefaultText =  "OpenPayments",
-					  						FullLocalDefaultText =  "קבלות פתוחות",
+					  						DefaultText =  @"OpenPayments",
+					  						FullLocalDefaultText =  @"קבלות פתוחות",
 					  						HelpTextCode =  "OpenPayments",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2144,8 +2147,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DraftPayments",
-					  						DefaultText =  "DraftPayments",
-					  						FullLocalDefaultText =  "טיוטת חשבונית ספק",
+					  						DefaultText =  @"DraftPayments",
+					  						FullLocalDefaultText =  @"טיוטת חשבונית ספק",
 					  						HelpTextCode =  "DraftPayments",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2201,11 +2204,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ChequeOrPaymentRef",
-					  						DefaultText =  "Cheque Or Payment Ref",
-					  						FullLocalDefaultText =  "אסמכתא שיק או חשבונית ספק",
+					  						DefaultText =  @"Cheque Or Payment Ref",
+					  						FullLocalDefaultText =  @"אסמכתא שיק או חשבונית ספק",
 					  						ListFieldLable =  "ChequeOrPaymentRefListLable",
-					  						ListLableDefaultText =  "Cheque Or Payment Ref",
-					  						ListLocalDefaultText =  "אסמכתא שיק או חשבונית ספק",
+					  						ListLableDefaultText =  @"Cheque Or Payment Ref",
+					  						ListLocalDefaultText =  @"אסמכתא שיק או חשבונית ספק",
 					  						HelpTextCode =  "ChequeOrPaymentRef",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2261,8 +2264,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Bank",
-					  						DefaultText =  "Bank",
-					  						FullLocalDefaultText =  "בנק",
+					  						DefaultText =  @"Bank",
+					  						FullLocalDefaultText =  @"בנק",
 					  						HelpTextCode =  "Bank",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2318,8 +2321,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BankBranch",
-					  						DefaultText =  "Bank Branch",
-					  						FullLocalDefaultText =  "סניף בנק",
+					  						DefaultText =  @"Bank Branch",
+					  						FullLocalDefaultText =  @"סניף בנק",
 					  						HelpTextCode =  "BankBranch",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2375,8 +2378,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Account",
-					  						DefaultText =  "Account",
-					  						FullLocalDefaultText =  "חשבון",
+					  						DefaultText =  @"Account",
+					  						FullLocalDefaultText =  @"חשבון",
 					  						HelpTextCode =  "Account",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2433,11 +2436,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "RegisterDate",
-					  						DefaultText =  "Register Date",
-					  						FullLocalDefaultText =  "תאריך רישום",
+					  						DefaultText =  @"Register Date",
+					  						FullLocalDefaultText =  @"תאריך רישום",
 					  						ListFieldLable =  "RegisterDateListLable",
-					  						ListLableDefaultText =  "Register Date",
-					  						ListLocalDefaultText =  "תאריך רישום",
+					  						ListLableDefaultText =  @"Register Date",
+					  						ListLocalDefaultText =  @"תאריך רישום",
 					  						HelpTextCode =  "RegisterDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2494,8 +2497,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreditCardTypeId",
-					  						DefaultText =  "Credit Card Type",
-					  						FullLocalDefaultText =  "סוג כרטיס אשראי",
+					  						DefaultText =  @"Credit Card Type",
+					  						FullLocalDefaultText =  @"סוג כרטיס אשראי",
 					  						HelpTextCode =  "CreditCardTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2551,8 +2554,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LocalCurrencyCode",
-					  						DefaultText =  "Local Currency",
-					  						FullLocalDefaultText =  "מטבע מקומי",
+					  						DefaultText =  @"Local Currency",
+					  						FullLocalDefaultText =  @"מטבע מקומי",
 					  						HelpTextCode =  "LocalCurrencyCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2608,13 +2611,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "InvoiceNumber",
-					  						DefaultText =  "Invoice No.",
-					  						FullLocalDefaultText =  "מספר חשבונית",
+					  						DefaultText =  @"Invoice No.",
+					  						FullLocalDefaultText =  @"מספר חשבונית",
 					  						ListFieldLable =  "InvoiceNumberListLable",
-					  						ListLableDefaultText =  "Invoice No.",
-					  						ListLocalDefaultText =  "מספר חשבונית",
+					  						ListLableDefaultText =  @"Invoice No.",
+					  						ListLocalDefaultText =  @"מספר חשבונית",
 					  						HelpTextCode =  "InvoiceNumber",
-					  						HelpLocalDefaultText =  "מספר חשבונית",
+					  						HelpLocalDefaultText =  @"מספר חשבונית",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2669,11 +2672,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipmentNumber",
-					  						DefaultText =  "Shipment No.",
-					  						FullLocalDefaultText =  "מספר משלוח",
+					  						DefaultText =  @"Shipment No.",
+					  						FullLocalDefaultText =  @"מספר משלוח",
 					  						ListFieldLable =  "ShipmentNumberListLable",
-					  						ListLableDefaultText =  "Shipment No.",
-					  						ListLocalDefaultText =  "מספר משלוח",
+					  						ListLableDefaultText =  @"Shipment No.",
+					  						ListLocalDefaultText =  @"מספר משלוח",
 					  						HelpTextCode =  "ShipmentNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2730,10 +2733,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SATPaymentMethodCode",
-					  						DefaultText =  "Forma Pago",
-					  						FullLocalDefaultText =  "Forma Pago",
+					  						DefaultText =  @"Forma Pago",
+					  						FullLocalDefaultText =  @"Forma Pago",
 					  						HelpTextCode =  "SATPaymentMethodCode",
-					  						HelpTextDefaultText =  "Payment Method",
+					  						HelpTextDefaultText =  @"Payment Method",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2789,11 +2792,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  "Update Date",
-					  						FullLocalDefaultText =  "תאריך עדכון",
+					  						DefaultText =  @"Update Date",
+					  						FullLocalDefaultText =  @"תאריך עדכון",
 					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  "Update Date",
-					  						ListLocalDefaultText =  "תאריך עדכון",
+					  						ListLableDefaultText =  @"Update Date",
+					  						ListLocalDefaultText =  @"תאריך עדכון",
 					  						HelpTextCode =  "UpdateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2850,8 +2853,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  "Updated By",
-					  						FullLocalDefaultText =  "עודכן ע''י",
+					  						DefaultText =  @"Updated By",
+					  						FullLocalDefaultText =  @"עודכן ע''י",
 					  						HelpTextCode =  "UpdatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2908,7 +2911,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SATTransferStatusCode",
-					  						DefaultText =  "SAT Transfer Status",
+					  						DefaultText =  @"SAT Transfer Status",
 					  						HelpTextCode =  "SATTransferStatusCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2964,9 +2967,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SATTransferStatusName",
-					  						DefaultText =  "SAT Transfer Status",
+					  						DefaultText =  @"SAT Transfer Status",
 					  						ListFieldLable =  "SATTransferStatusNameListLable",
-					  						ListLableDefaultText =  "SAT Transfer Status",
+					  						ListLableDefaultText =  @"SAT Transfer Status",
 					  						HelpTextCode =  "SATTransferStatusName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3023,8 +3026,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BankAccountLiteId",
-					  						DefaultText =  "Bank Account",
-					  						FullLocalDefaultText =  "חשבון בנק",
+					  						DefaultText =  @"Bank Account",
+					  						FullLocalDefaultText =  @"חשבון בנק",
 					  						HelpTextCode =  "BankAccountLiteId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3081,11 +3084,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TransmissionError",
-					  						DefaultText =  "Transmission Error",
-					  						FullLocalDefaultText =  "שגיאת העברה",
+					  						DefaultText =  @"Transmission Error",
+					  						FullLocalDefaultText =  @"שגיאת העברה",
 					  						ListFieldLable =  "TransmissionErrorListLable",
-					  						ListLableDefaultText =  "Transmission Error",
-					  						ListLocalDefaultText =  "שגיאת העברה",
+					  						ListLableDefaultText =  @"Transmission Error",
+					  						ListLocalDefaultText =  @"שגיאת העברה",
 					  						HelpTextCode =  "TransmissionError",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3141,8 +3144,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BankAccountId",
-					  						DefaultText =  "BankAccount",
-					  						FullLocalDefaultText =  "חשבון בנק",
+					  						DefaultText =  @"BankAccount",
+					  						FullLocalDefaultText =  @"חשבון בנק",
 					  						HelpTextCode =  "BankAccountId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3198,8 +3201,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "InvoiceNumbers",
-					  						DefaultText =  "Invoice Numbers",
-					  						FullLocalDefaultText =  "מספרי חשבוניות לקוח",
+					  						DefaultText =  @"Invoice Numbers",
+					  						FullLocalDefaultText =  @"מספרי חשבוניות לקוח",
 					  						HelpTextCode =  "InvoiceNumbers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3256,11 +3259,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TransferError",
-					  						DefaultText =  "Transfer Error",
-					  						FullLocalDefaultText =  "שגיאת העברה",
+					  						DefaultText =  @"Transfer Error",
+					  						FullLocalDefaultText =  @"שגיאת העברה",
 					  						ListFieldLable =  "TransferErrorListLable",
-					  						ListLableDefaultText =  "Transfer Error",
-					  						ListLocalDefaultText =  "שגיאת העברה",
+					  						ListLableDefaultText =  @"Transfer Error",
+					  						ListLocalDefaultText =  @"שגיאת העברה",
 					  						HelpTextCode =  "TransferError",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3316,8 +3319,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TransferTries",
-					  						DefaultText =  "Transfer tries",
-					  						FullLocalDefaultText =  "נסיונות העברה",
+					  						DefaultText =  @"Transfer tries",
+					  						FullLocalDefaultText =  @"נסיונות העברה",
 					  						HelpTextCode =  "TransferTries",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3373,8 +3376,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsTransferStarted",
-					  						DefaultText =  "Is Transfer Started",
-					  						FullLocalDefaultText =  "החלה העברה",
+					  						DefaultText =  @"Is Transfer Started",
+					  						FullLocalDefaultText =  @"החלה העברה",
 					  						HelpTextCode =  "IsTransferStarted",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3430,8 +3433,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TransferStatusCode",
-					  						DefaultText =  "Transfer Status",
-					  						FullLocalDefaultText =  "סטטוס העברה",
+					  						DefaultText =  @"Transfer Status",
+					  						FullLocalDefaultText =  @"סטטוס העברה",
 					  						HelpTextCode =  "TransferStatusCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3486,11 +3489,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TransferStatusName",
-					  						DefaultText =  "Transfer Status",
-					  						FullLocalDefaultText =  "סטטוס העברה",
+					  						DefaultText =  @"Transfer Status",
+					  						FullLocalDefaultText =  @"סטטוס העברה",
 					  						ListFieldLable =  "TransferStatusName",
-					  						ListLableDefaultText =  "Transfer Status",
-					  						ListLocalDefaultText =  "סטטוס העברה",
+					  						ListLableDefaultText =  @"Transfer Status",
+					  						ListLocalDefaultText =  @"סטטוס העברה",
 					  						HelpTextCode =  "TransferStatusName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3547,11 +3550,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReadyForTransfer",
-					  						DefaultText =  "Ready For Transfer",
-					  						FullLocalDefaultText =  "מוכן להעברה",
+					  						DefaultText =  @"Ready For Transfer",
+					  						FullLocalDefaultText =  @"מוכן להעברה",
 					  						ListFieldLable =  "ReadyForTransfer",
-					  						ListLableDefaultText =  "Ready",
-					  						ListLocalDefaultText =  "מוכן להעברה",
+					  						ListLableDefaultText =  @"Ready",
+					  						ListLocalDefaultText =  @"מוכן להעברה",
 					  						HelpTextCode =  "ReadyForTransfer",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3606,8 +3609,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NotReadyPayments",
-					  						DefaultText =  "Not Ready Payments",
-					  						FullLocalDefaultText =  "קבלות לא מוכנות",
+					  						DefaultText =  @"Not Ready Payments",
+					  						FullLocalDefaultText =  @"קבלות לא מוכנות",
 					  						HelpTextCode =  "NotReadyPayments",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3662,8 +3665,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MarkedAsBlockedForTransfer",
-					  						DefaultText =  "Marked as blocked for transfer",
-					  						FullLocalDefaultText =  "סמן כחסום להעברה",
+					  						DefaultText =  @"Marked as blocked for transfer",
+					  						FullLocalDefaultText =  @"סמן כחסום להעברה",
 					  						HelpTextCode =  "MarkedAsBlockedForTransfer",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3720,8 +3723,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "AccountingPaymentMethodId",
-					  						DefaultText =  "Payment Method",
-					  						FullLocalDefaultText =  "אמצעי תשלום",
+					  						DefaultText =  @"Payment Method",
+					  						FullLocalDefaultText =  @"אמצעי תשלום",
 					  						HelpTextCode =  "AccountingPaymentMethodId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3777,8 +3780,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AccountingPaymentMethodCode",
-					  						DefaultText =  "Payment Method",
-					  						FullLocalDefaultText =  "אמצעי תשלום",
+					  						DefaultText =  @"Payment Method",
+					  						FullLocalDefaultText =  @"אמצעי תשלום",
 					  						HelpTextCode =  "AccountingPaymentMethodCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3834,11 +3837,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentMethodName",
-					  						DefaultText =  "Payment Method",
-					  						FullLocalDefaultText =  "אמצעי תשלום",
+					  						DefaultText =  @"Payment Method",
+					  						FullLocalDefaultText =  @"אמצעי תשלום",
 					  						ListFieldLable =  "PaymentMethodNameListLable",
-					  						ListLableDefaultText =  "Payment Method",
-					  						ListLocalDefaultText =  "אמצעי תשלום",
+					  						ListLableDefaultText =  @"Payment Method",
+					  						ListLocalDefaultText =  @"אמצעי תשלום",
 					  						HelpTextCode =  "PaymentMethodName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3895,11 +3898,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MetodoPagoCode",
-					  						DefaultText =  "Metodo Pago",
+					  						DefaultText =  @"Metodo Pago",
 					  						ListFieldLable =  "MetodoPagoCodeListLable",
-					  						ListLableDefaultText =  "Metodo Pago",
+					  						ListLableDefaultText =  @"Metodo Pago",
 					  						HelpTextCode =  "MetodoPagoCode",
-					  						HelpTextDefaultText =  "Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
+					  						HelpTextDefaultText =  @"Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -3954,8 +3957,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TipoCadenaPago",
-					  						DefaultText =  "Tipo Cadena Pago",
+					  						DefaultText =  @"Tipo Cadena Pago",
 					  						HelpTextCode =  "TipoCadenaPago",
+					  						HelpTextDefaultText =  @"Payment Transfer Way",
+					  						HelpLocalDefaultText =  @"Clave del tipo de cadena de pago que genera la entidad receptora de pago",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -4010,8 +4015,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CertPago",
-					  						DefaultText =  "Cert Pago",
+					  						DefaultText =  @"Cert Pago",
 					  						HelpTextCode =  "CertPago",
+					  						HelpTextDefaultText =  @"The certificate that corresponds to the payment. It is a text chain of 64 base format",
+					  						HelpLocalDefaultText =  @"Certificado que corresponde al pago",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -4066,8 +4073,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CadPago",
-					  						DefaultText =  "Cad Pago",
+					  						DefaultText =  @"Cad Pago",
 					  						HelpTextCode =  "CadPago",
+					  						HelpTextDefaultText =  @"Payment original chain sent by the beneficiary's bank institution",
+					  						HelpLocalDefaultText =  @"Cadena Original del Comprobante de Pago generado por la entidad emisora de la cuenta beneficiaria",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -4122,8 +4131,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SelloPago",
-					  						DefaultText =  "Sello Pago",
+					  						DefaultText =  @"Sello Pago",
 					  						HelpTextCode =  "SelloPago",
+					  						HelpTextDefaultText =  @"The digital seal associates the payment. It is a text chain of 64 base format",
+					  						HelpLocalDefaultText =  @"Sello digital que se asocie el pago",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -4178,11 +4189,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BranchName",
-					  						DefaultText =  "Branch",
-					  						FullLocalDefaultText =  "סניף",
+					  						DefaultText =  @"Branch",
+					  						FullLocalDefaultText =  @"סניף",
 					  						ListFieldLable =  "BranchNameListLable",
-					  						ListLableDefaultText =  "Branch",
-					  						ListLocalDefaultText =  "סניף",
+					  						ListLableDefaultText =  @"Branch",
+					  						ListLocalDefaultText =  @"סניף",
 					  						HelpTextCode =  "BranchName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4508,7 +4519,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		   Feature ARPaymentFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ARPaymentFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ARPaymentFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ARPaymentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.PackageFeature", NameTextCodeDefaultText = "ARPayment Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature ARPaymentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.PackageFeature", NameTextCodeDefaultText = "ARPayment Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ARPaymentFeature_RecalculateExternals = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RecalculateExternals", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.RecalculateExternals", NameTextCodeDefaultText = @"Recalculate External IDs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ARPaymentFeature_EnableMultiCurrency = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiCurrency", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.EnableMultiCurrency", NameTextCodeDefaultText = @"Enable multi-currency" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ARPaymentFeature_ARPaymentEditExchangeRate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARPaymentEditExchangeRate", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.EditExchangeRate", NameTextCodeDefaultText = @"Edit Exchange Rate" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -4683,12 +4704,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
       
     
-			   Feature ARPaymentFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Actions", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature ARPaymentFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKSATSTATUS", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.CheckSATStatus", NameTextCodeDefaultText = "Check SAT Status", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-			   Feature ARPaymentFeature_MB20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCELAPPROVAL", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.CancelApproval", NameTextCodeDefaultText = "Cancel Approval", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ARPaymentFeature_MB21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableReTransfer", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.EnableReTransfer", NameTextCodeDefaultText = "Enable accounting re-transfer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ARPaymentFeature_MB22 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VOID", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.Void", NameTextCodeDefaultText = "Void", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-             			   Feature ARPaymentFeature_MB23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDToSAT", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.SendToSAT", NameTextCodeDefaultText = "Send to SAT", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+      
+    
+			   Feature ARPaymentFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Actions", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+			   Feature ARPaymentFeature_MB30 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCELAPPROVAL", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.CancelApproval", NameTextCodeDefaultText = "Cancel Approval", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ARPaymentFeature_MB31 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableReTransfer", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.EnableReTransfer", NameTextCodeDefaultText = "Enable accounting re-transfer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ARPaymentFeature_MB32 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VOID", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.Void", NameTextCodeDefaultText = "Void", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ARPaymentFeature_MB33 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDToSAT", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.SendToSAT", NameTextCodeDefaultText = "Send to SAT", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature ARPaymentFeature_MB34 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.SendToQBO", NameTextCodeDefaultText = "Send To QBO", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -4737,8 +4763,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
    
 			   MenuButton ARPaymentMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "Actions",
+						EventCode = "CheckSATStatus",
 						Index = 2, 
+						IsActive = true,
+						LabelTextCodeCode = "ARPayment.B.CheckSATStatus",
+						LabelTextCodeDefaultText = "Check SAT Status",
+						Tenant = 0,
+						MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
+						ObjectTableId = ARPaymentObjectTable.Id,
+						MenuButtonType = "button",
+						FeatureId = ARPaymentFeature_MB2.Id,
+						Style = null,
+						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+       
+   
+			   MenuButton ARPaymentMenuButton3 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "Actions",
+						Index = 3, 
 						IsActive = true,
 						LabelTextCodeCode = "ARPayment.B.Actions",
 						LabelTextCodeDefaultText = "More",
@@ -4746,12 +4789,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
 						ObjectTableId = ARPaymentObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = ARPaymentFeature_MB2.Id,
+						FeatureId = ARPaymentFeature_MB3.Id,
 						Style = null,
-						LocalDefaultText = "ביטול",
+						LocalDefaultText = "Send To QBO",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
-			   MenuButton ARPaymentMenuButton20 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ARPaymentMenuButton30 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CancelApproval",
 						Index = 0, 
@@ -4760,15 +4803,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						LabelTextCodeDefaultText = "Cancel Approval",
 						Tenant = 0,
 						MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
-						ParentMenuButtonId = ARPaymentMenuButton2.Id,
+						ParentMenuButtonId = ARPaymentMenuButton3.Id,
 						ObjectTableId = ARPaymentObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  ARPaymentFeature_MB20.Id,
+						FeatureId=  ARPaymentFeature_MB30.Id,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton ARPaymentMenuButton21 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ARPaymentMenuButton31 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "ReTransfer",
 						Index = 1, 
@@ -4777,15 +4820,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						LabelTextCodeDefaultText = "Enable accounting re-transfer",
 						Tenant = 0,
 						MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
-						ParentMenuButtonId = ARPaymentMenuButton2.Id,
+						ParentMenuButtonId = ARPaymentMenuButton3.Id,
 						ObjectTableId = ARPaymentObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  ARPaymentFeature_MB21.Id,
+						FeatureId=  ARPaymentFeature_MB31.Id,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton ARPaymentMenuButton22 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ARPaymentMenuButton32 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "VoidARPaymentOperationsSeparator",
 						Index = 2, 
@@ -4794,7 +4837,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						LabelTextCodeDefaultText = "",
 						Tenant = 0,
 						MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
-						ParentMenuButtonId = ARPaymentMenuButton2.Id,
+						ParentMenuButtonId = ARPaymentMenuButton3.Id,
 						ObjectTableId = ARPaymentObjectTable.Id,
 						MenuButtonType = "separator",
 						
@@ -4802,7 +4845,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton ARPaymentMenuButton23 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ARPaymentMenuButton33 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "VoidARPayemnt",
 						Index = 3, 
@@ -4811,15 +4854,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						LabelTextCodeDefaultText = "Void",
 						Tenant = 0,
 						MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
-						ParentMenuButtonId = ARPaymentMenuButton2.Id,
+						ParentMenuButtonId = ARPaymentMenuButton3.Id,
 						ObjectTableId = ARPaymentObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  ARPaymentFeature_MB22.Id,
+						FeatureId=  ARPaymentFeature_MB32.Id,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-			   MenuButton ARPaymentMenuButton24 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+			   MenuButton ARPaymentMenuButton34 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "SENDToSAT",
 						Index = 4, 
@@ -4828,15 +4871,129 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						LabelTextCodeDefaultText = "Send to SAT",
 						Tenant = 0,
 						MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
-						ParentMenuButtonId = ARPaymentMenuButton2.Id,
+						ParentMenuButtonId = ARPaymentMenuButton3.Id,
 						ObjectTableId = ARPaymentObjectTable.Id,
 						MenuButtonType = "button",
-						FeatureId=  ARPaymentFeature_MB23.Id,
+						FeatureId=  ARPaymentFeature_MB33.Id,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-	    }     
+			   MenuButton ARPaymentMenuButton35 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "SendToQBO",
+						Index = 5, 
+						IsActive = true,
+						LabelTextCodeCode = "ARPayment.B.SendToQBO",
+						LabelTextCodeDefaultText = "Send To QBO",
+						Tenant = 0,
+						MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
+						ParentMenuButtonId = ARPaymentMenuButton3.Id,
+						ObjectTableId = ARPaymentObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  ARPaymentFeature_MB34.Id,
+						Style = null,
+						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ARPaymentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARPayment" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMNoChequeCashBookCurr = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.NoChequeCashBookCurr", DefaultText = "There is no cheque cash book in",LocalDefaultText = @"אין שיק מזומן במאגר", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMPaymentInvoicesHaveErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.PaymentInvoicesHaveErrors", DefaultText = "Payment Invoices have errors",LocalDefaultText = @" יש שגיאה בתשלומי חשבוניות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment", DefaultText = "A/R Payment",LocalDefaultText = @"קבלת לקוח", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMCantSetZeroAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CantSetZeroAmount", DefaultText = "Can't set Payment Amount to Zero",LocalDefaultText = @"לא ניתן להגדיר סכום לתשלום בערך אפס", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMCantSetMinusAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CantSetMinusAmount", DefaultText = "Can't set Payment Amount to minus amount",LocalDefaultText = @"לא ניתן להגדיר סכום לתשלום בערך שלילי", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMCantSetFutureDatePayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CantSetFutureDatePayment", DefaultText = "Can't create payment with future date",LocalDefaultText = @"לא ניתן ליצור תשלום עם תאריך עתידי", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMPaymentInvoicesHasErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.PaymentInvoicesHasErrors", DefaultText = "Payment Invoices has errors",LocalDefaultText = null, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMPaymentAmountPaidCantBeMinus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.PaymentAmountPaidCantBeMinus", DefaultText = "Payment Amount Paid can't be negative",LocalDefaultText = @"לא ניתן להגדיר סכום לתשלום בערך שלילי", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMPaymentAmountPaidCantBeBigger = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.PaymentAmountPaidCantBeBigger", DefaultText = "Payment Amount Paid can't be bigger than Payment Amount",LocalDefaultText = @"סכום התשלום ששולם לא יכול להיות גדול מסכום התשלום ", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMAccountingSettingsDontAllowVoid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.AccountingSettingsDontAllowVoid", DefaultText = "Accounting Settings doesn't allow void A/R Payment",LocalDefaultText = @"ע''פ הגדרות מערכת הנהח''ש לא ניתן להתעלם מקבלה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMDisconnectInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.DisconnectInvoices", DefaultText = "Please disconnect all invoices",LocalDefaultText = @"אנא נתק את כל החשבוניות המקושרות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMConfirmVoid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ConfirmVoid", DefaultText = "Once you void or delete a payment, the change is permanent. If you void or delete a payment and want to restore it later, you'll have to create a new payment.",LocalDefaultText = @"האם אתה בטוח שברצונך לבטל את הקבלה ?", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMNoTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.NoTemplate", DefaultText = "A/R Payment document has no template!",LocalDefaultText = @"אין תבנית הדפסה למסמך קבלה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMOnlyMinusValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.OnlyMinusValue", DefaultText = "Only negative value allowed",LocalDefaultText = @"מותר רק ערך שלילי", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMAmountPaidNotLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.AmountPaidNotLess", DefaultText = "Amount Paid can't be less than",LocalDefaultText = @"הסכום ששולם אינו יכול להיות נמוך מ", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMCantPayMinusValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CantPayMinusValue", DefaultText = "Can't pay minus value",LocalDefaultText = @"''לא ניתן לשלם ערך שלילי או לא ניתן לשלם סכום שלילי (לא תרגום מדוייק אבל יותר נכון)''", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMAmountPaidLessOrEqual = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.AmountPaidLessOrEqual", DefaultText = "Amount Paid must be less than or equal to",LocalDefaultText = @"הסכום ששולם חייב להיות קטן או שווה ל", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.Details", DefaultText = "Details",LocalDefaultText = @"פרטים", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.Rate", DefaultText = "Rate",LocalDefaultText = @"שער", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsCurrencyDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.CurrencyDetails", DefaultText = "Currency Details",LocalDefaultText = @"נתוני מטבע", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.NotMatched", DefaultText = "Not Matched",LocalDefaultText = @"לא מותאם", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsTotals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.Totals", DefaultText = "Totals",LocalDefaultText = @"סה''כ", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsARInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.ARInvoices", DefaultText = "A/R Invoices",LocalDefaultText = @"חשבונית לקוח", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsPaymentRef = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.PaymentRef", DefaultText = "Payment Ref",LocalDefaultText = @"אסמכתא קבלה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsChequeRef = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.ChequeRef", DefaultText = "Cheque Ref",LocalDefaultText = @"אסמכתא המחאה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsAmountToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.AmountToPay", DefaultText = "Amount To Pay",LocalDefaultText = @"סכום לתשלום", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.Cheque", DefaultText = "Cheque",LocalDefaultText = @"המחאה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsBankTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.BankTransfer", DefaultText = "Bank Transfer",LocalDefaultText = @"העברה בנקאית", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSDetailsCreditCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.Details.CreditCard", DefaultText = "Credit Card",LocalDefaultText = @"כרטיס זכות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSNoInvoicesFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.NoInvoicesFound", DefaultText = "No Invoices Found",LocalDefaultText = @"לא נמצאו חשבוניות", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMARPaymentCashbook = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ARPaymentCashbook", DefaultText = "There is no appropriate Cashbook for this payment, You have to create one",LocalDefaultText = @"לא קיימת קופה המתאימה למטבע הקבלה , יש לקים קופה למטבע זה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMBillToGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.BillToGLAccount", DefaultText = "The bill to doesn’t have GLAccount connected to it",LocalDefaultText = @"הלקוח לא מקושר לכרטיס הנה''ח", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMBillToGLAccountCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.BillToGLAccountCurrency", DefaultText = "The ARPayment Currency does not match the bill to GLAccount Currency ",LocalDefaultText = @"מטבע הקבלה לא תואם את מטבע כרטיס הנה''ח של הלקוח", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMBanckAccountGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.BanckAccountGLAccount", DefaultText = "The currency of the bank account GLAccount (%) is different from ARPayment curreny",LocalDefaultText = @"המטבע של כרטיס הבנק (%) לא תואם את מטבע הקבלה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ClosedMonth", DefaultText = "Closed Month",LocalDefaultText = @"חודש סגור", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMValueDateCantBeFutureDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ValueDateCantBeFutureDate", DefaultText = "Value date can't be future date",LocalDefaultText = @"תאריך ערך לא יכול להיות תאריך עתידי", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMSearchByMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.SearchByMsg", DefaultText = "Search by Invoice #/ Bill To",LocalDefaultText = @"חפש לפי חשבונית", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentCHShipmentNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.CH.ShipmentNo", DefaultText = "Shipment #",LocalDefaultText = @"משלוח", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentARPaymentMethodIdHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.ARPaymentMethodIdHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentSShortTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.S.ShortTitle", DefaultText = "A/R Payment",LocalDefaultText = @"קבלה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMARpaymentValueHigherThanCashbookValue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ARpaymentValueHigherThanCashbookValue", DefaultText = "ARpayment Value is higher than Cashbook Value",LocalDefaultText = @"לא ניתן לבטל קבלה - סכום הקבלה גדול מהיתרה בקופה", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARPaymentTextCode_ARPaymentMCANTCancelARPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CANTCancelARPayment", DefaultText = "Can't Cancel this ARPayment because at least one of the cheques is not in the cashbook: ",LocalDefaultText = @"לא ניתן לבטל קבלה , חלק מהצ’יקים אינם בקופה: ", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     
