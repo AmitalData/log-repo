@@ -97,7 +97,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                                           where
                                           d.Tenant == tenant
                                           && d.IsCancelled == false
-                                          && d.DirectionId == "E"
+                                          && d.DirectionId == "I"
                                           &&
                                           (
                                           d.TransportModeId == "O" && (d.ShipmentTypeId == "FCLD" || d.ShipmentTypeId == "MYGO")
