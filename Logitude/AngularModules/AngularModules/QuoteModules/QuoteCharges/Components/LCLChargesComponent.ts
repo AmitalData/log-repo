@@ -1969,7 +1969,7 @@ export class QuoteChargeItem extends BaseComponent {
 
         var value = ivalue;
 
-        if (value) {
+        if (value != null) {
             if (this.SaleMinAmount != null) {
                 if (value < this.SaleMinAmount) {
                     value = this.SaleMinAmount;
@@ -2011,7 +2011,7 @@ export class QuoteChargeItem extends BaseComponent {
 
         var value = ivalue;
 
-        if (value) {
+        if (value != null) {
             var iTotalAmount = null;
 
             if (!AppTool.IsNullOrEmpty(value)) {
