@@ -8,13 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-require('rxjs/add/operator/map');
-require('rxjs/add/operator/catch');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
+require("rxjs/add/operator/map");
+require("rxjs/add/operator/catch");
 //import {Http, Headers, Response} from '@angular/http';
-var SessionInfo_1 = require('./SessionInfo');
-var LoginService = (function () {
+var SessionInfo_1 = require("./SessionInfo");
+var LoginService = /** @class */ (function () {
     function LoginService(_http) {
         this._http = _http;
         this.logitudeURL = null;
@@ -254,25 +255,25 @@ var LoginService = (function () {
         });
     };
     LoginService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.Http])
     ], LoginService);
     return LoginService;
 }());
 exports.LoginService = LoginService;
-var LoginParameters = (function () {
+var LoginParameters = /** @class */ (function () {
     function LoginParameters() {
     }
     return LoginParameters;
 }());
 exports.LoginParameters = LoginParameters;
-var LoginTokenParameter = (function () {
+var LoginTokenParameter = /** @class */ (function () {
     function LoginTokenParameter() {
     }
     return LoginTokenParameter;
 }());
 exports.LoginTokenParameter = LoginTokenParameter;
-var ChangePasswordParameter = (function () {
+var ChangePasswordParameter = /** @class */ (function () {
     function ChangePasswordParameter() {
     }
     return ChangePasswordParameter;

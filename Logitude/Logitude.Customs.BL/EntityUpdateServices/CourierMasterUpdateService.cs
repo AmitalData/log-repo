@@ -211,6 +211,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 OpenUnifreighTask(entityPM, "LMC2U", "RSH", true, "");
             }
+
+            if (entityPM.AirlineId != null)
+            {
+                CustomsAirlineQueryService customsAirlineQueryService = new CustomsAirlineQueryService(entityPM.Tenant);
+                CustomsAirlinePM customsAirline = customsAirlineQueryService.GetSingle(entityPM.AirlineId, false, true);
+                    if (customsAirline != null)
+                {
+                    entityPM.AirlinePrefix = customsAirline.AirlinePrefix;
+                    entityPM.AirlineName = customsAirline.LocalName;
+                }
+            }
+
+            if (entityPM.GatewayPortCode != null)
+            {
+                InternationalSiteQueryService internationalSiteQueryService = new InternationalSiteQueryService(entityPM.Tenant);
+                InternationalSitePM internationalSitePM = internationalSiteQueryService.GetSingle(entityPM.GatewayPortCode, false, true);
+                if (internationalSitePM != null)
+                {
+                    entityPM.GatewayPortName = internationalSitePM.LocalName;
+                }
+            }
         }
 
 
