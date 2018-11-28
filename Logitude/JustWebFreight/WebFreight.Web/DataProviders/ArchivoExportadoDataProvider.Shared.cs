@@ -42,5 +42,6 @@ namespace WebFreight.Web.DataProviders
         public string ChargeTypeCode { get; set; }
         public string ChargeTypeName { get; set; }
         public string ChargeTypeLocalName { get; set; }
+        public string Salesman { get; set; }
     }
 }

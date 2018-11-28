@@ -1,0 +1,75 @@
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="color:#1B90CB; font-size:15px; line-height: 15px;">Filter By:</td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td>
+            <table>
+                <tr>
+                    <!-- From Date -->
+                    <td style="width: 1px; padding-right: 5px;" class="Label">From Date:</td>
+                    <td style="width: 180px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [SelectedDateValue]="FromDate" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <!-- To Date -->
+                    <td style="width: 1px; padding-right: 5px;" class="Label">To Date:</td>
+                    <td style="width: 180px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [SelectedDateValue]="ToDate" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <!-- Currency -->
+                    <td style="width: 1px;  padding-right: 5px;" class="Label">Currency:</td>
+                    <td style="width: 66px;">
+                        <ul class="FiltersMenu">
+                            <li (click)="SelectedCurrencyCode = ProfitCurrencyCode" [class.SelectedFilter]="SelectedCurrencyCode === ProfitCurrencyCode" style="width:33px;">
+                                {{ProfitCurrencyCode}}
+                            </li>
+                            <li (click)="SelectedCurrencyCode = LocalCurrencyCode" [class.SelectedFilter]="SelectedCurrencyCode === LocalCurrencyCode" style="width:33px;">
+                                {{LocalCurrencyCode}}
+                            </li>
+                        </ul>
+                    </td>
+
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 1px;">
+                        <CheckBox [IsChecked]="IncludeDraftInvoices" (Checked)="IncludeDraftInvoices = $event" [Text]="'Include Draft invoices'"></CheckBox>
+                    </td>
+
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 1px;">
+                        <CheckBox [IsChecked]="IncludeEstimations" (Checked)="IncludeEstimations = $event" [Text]="'Include estimations'"></CheckBox>
+                    </td>
+
+                    <!--<td style="width: 1px; padding-left: 10px;">
+                        <CheckBox [IsChecked]="SplitByCharges" (Checked)="SplitByCharges = $event" [Text]="'Split By Charges'"></CheckBox>
+                    </td>-->
+                    <td style="width:10px"><div></div></td>
+                    <td style="width: 90px;">
+                        <button class="GreenButton" (click)="RunButtonClicked()">Run Report</button>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
