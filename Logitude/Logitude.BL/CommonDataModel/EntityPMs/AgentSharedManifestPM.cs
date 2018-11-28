@@ -38,7 +38,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string TransportModeName { get; set; }
         public string ShipmentLevelCode { get; set; }
         public string ShipmentLevelName { get; set; }
-        
+        public bool CancelledBySenderAgent { get; set; }
         public List<SharedManifestTranslationPM> SharedManifestTranslations
         {
             get

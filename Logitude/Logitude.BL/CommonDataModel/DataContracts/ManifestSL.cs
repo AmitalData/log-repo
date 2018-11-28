@@ -71,8 +71,8 @@ namespace Logitude.BL.CommonDataModel.DataContracts
         public string ShipmentTypeName { get; set; }
    
         public string AgentName { get; set; }
+        public string OrginalAgentId { get; set; }
 
-  
         public string AgentReference1 { get; set; }
         public string AgentReference2 { get; set; }
 

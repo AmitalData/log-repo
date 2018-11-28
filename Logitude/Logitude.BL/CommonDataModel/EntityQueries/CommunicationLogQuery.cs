@@ -460,5 +460,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        });
             return commlogs;
         }
+
+
+        public string GetCommunicationLogsDocumentIdByEntityId(string entityId, int tenant)
+        {
+            return (from a in repository.context.CommunicationLogs
+                    where a.EntityId == entityId && a.Subject == "Shared Manifest"
+                    select a.DocumentId).FirstOrDefault();
+        }
+
+
     }
 }

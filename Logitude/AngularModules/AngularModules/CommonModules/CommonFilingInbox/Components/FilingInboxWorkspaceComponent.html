@@ -62,7 +62,7 @@
                         <td *ngIf="!DontShowInboxToolTip" style="width:calc(100%-10px);">
                             <div [style.height.px]="50" style="background-color:#FFF9BA; border:1px solid #FEAC10;  border-radius:3px; -webkit-border-radius:3px; width:calc(100%-10px);">
                                 <table>
-                                    <tr style="height:20px;">
+                                    <tr *ngIf="!IsHebrewSettings" style="height:20px;">
                                         <td style="height:20px;" colspan="2">
                                             <table style="width:170px;height:22px;margin-left:8px;">
                                                 <tr>
@@ -77,6 +77,45 @@
                                             </table>
                                         </td>
                                     </tr>
+
+                                    <tr *ngIf="IsHebrewSettings" style="height:20px;text-align:center;">
+
+                                        <td style="height:20px;text-align:center;" colspan="2">
+                                            <table  dir="rtl" style="height:22px;margin-left:8px;text-align:center;">
+                                                <tr dir="rtl">
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width:200px;" >
+                                                        <table>
+                                                            <tr>
+                                                                <td style="margin-left:5px;margin-right:5px;">
+                                                                    להעברת הודעות אימייל מחשבונך השתמש בכתובת  {{SettingsDomain}}
+                                                                </td>
+                               
+                                                                <td style="width:5px;max-width:5px;min-width:5px;">
+                                                                    <div></div>
+                                                                </td>
+                                                                <td style="width:18px;margin-left:5px;margin-right:5px;">
+                                                                    <Hyperlink (click)="CopyDomain()" [FontSize]="12" [Text]="'העתק'"></Hyperlink>
+                                                                </td>
+                                                                <td style="width:5px;max-width:5px;min-width:5px;">
+                                                                    <div></div>
+                                                                </td>
+                                                                <td  style="width:18px;margin-left:5px;margin-right:5px;">
+                                                                    <Hyperlink (click)="ViewUser()" [FontSize]="12" [Text]="'ערוך כתובת'"></Hyperlink>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
                                     <tr style="height:20px;float:right;">
                                         <td>
                                             <table>
@@ -570,11 +609,11 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="MediaFill" style="background:#DEEBEF;vertical-align:top;overflow-x:auto;">
+                                        <div class="MediaFill" style="background:#DEEBEF;vertical-align:top;">
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <div *ngIf="IsVisible" class="MediaFixedPadding5">
+                                                        <div *ngIf="IsVisible" class="MediaFixedPadding5" style="overflow-x:auto;">
                                                             <table style="min-width:1300px">
                                                                 <tr style="height:1px;vertical-align:top;">
                                                                     <td>
@@ -754,7 +793,7 @@
                                                                                                 <td style="width:5px;">
                                                                                                     <div></div>
                                                                                                 </td>
-                                                                                                <td *ngIf="SelectedConnectToFilter == 'M' && IsHouseVisible == true" style="width:250px;">
+                                                                                                <td *ngIf="SelectedConnectToFilter == 'M' && IsHouseVisible == true" style="width:210px;">
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:50px;float:left;vertical-align:central">
@@ -820,6 +859,10 @@
                                                                                                 </td>
                                                                                                 <td *ngIf="IsDigitallySignVisible && IsPDF" style="width:120px;float:left;vertical-align:central;" [class.Disable]="IsDigitallySignDisabled">
                                                                                                     <LogCheckBox [Checked]="SelectedAttachment.IsDigitallySign" [Text]="'Digitally Sign'" [NoObjectField]="true" [ObjectFieldName]="'IsDigitallySign'" [HideColumns]="true" [DataContext]="SelectedAttachment.DataContext"></LogCheckBox>
+                                                                                                </td>
+                                      
+                                                                                                <td  *ngIf="IsDSVConnectVisible"  style="width:100px;float:right;vertical-align:central; text-align:center;">
+                                                                                                    <button class="Button" (click)="DSVConnectClicked()">DSV Connect</button>
                                                                                                 </td>
                                                                                                 <td>
                                                                                                     <div></div>
@@ -890,7 +933,7 @@
                                                                 </td>
 
                                                                 <td style="width: 57px;">
-                                                                    <button [disabled]="!IsFilingButtonEnabled" class="RedButton" (click)="FileAndDeleteButtonClicked()">File & Delete</button>
+                                                                    <button [disabled]="!IsFilingButtonEnabled" class="RedButton" (click)="FileAndDeleteButtonClicked(false)">File & Delete</button>
                                                                 </td>
 
                                                                 <td style="width: 5px;">

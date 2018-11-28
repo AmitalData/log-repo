@@ -65,6 +65,7 @@ export class AnalyzeQueueMenuButtonsHandler {
 
         this.iService.ResendAnalyzeQueue(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
 
+            this.StopFlags();
 
             SessionLocator.CurrentSession.StopBusyIndicator();
         });
