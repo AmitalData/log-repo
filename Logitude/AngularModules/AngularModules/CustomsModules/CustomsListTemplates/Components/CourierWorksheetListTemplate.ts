@@ -1,4 +1,4 @@
-
+ConfirmWindow
 declare var window: any;
 import { EditComponent } from "../../../Infrastructure/Components/EditComponent/EditComponent";
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';

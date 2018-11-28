@@ -8,13 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-var DynamicLoaderTSC_1 = require('./Utilities/DynamicLoaderTSC');
-var SessionInfo_1 = require('./SessionInfo');
-var Tools_1 = require('./Utilities/Tools');
-var ExternalParams_1 = require('./Utilities/ExternalParams');
-var RootComponent = (function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
+var DynamicLoaderTSC_1 = require("./Utilities/DynamicLoaderTSC");
+var SessionInfo_1 = require("./SessionInfo");
+var Tools_1 = require("./Utilities/Tools");
+var ExternalParams_1 = require("./Utilities/ExternalParams");
+var RootComponent = /** @class */ (function () {
     //DynamicLoader: DynamicLoaderTSC;
     function RootComponent(compiler, resolver, http) {
         this.http = http;
@@ -151,15 +152,15 @@ var RootComponent = (function () {
             .then(function (cmpRef) { });
     };
     __decorate([
-        core_1.ViewChild("Child", { read: core_1.ViewContainerRef }), 
-        __metadata('design:type', core_1.ViewContainerRef)
+        core_1.ViewChild("Child", { read: core_1.ViewContainerRef }),
+        __metadata("design:type", core_1.ViewContainerRef)
     ], RootComponent.prototype, "location", void 0);
     RootComponent = __decorate([
         core_1.Component({
             selector: 'RootComponent',
             template: "\n        <div class=\"MediaFillRelative\">\n            <div #Child></div>\n        </div>\n    ",
-        }), 
-        __metadata('design:paramtypes', [core_1.Compiler, core_1.ComponentFactoryResolver, http_1.Http])
+        }),
+        __metadata("design:paramtypes", [core_1.Compiler, core_1.ComponentFactoryResolver, http_1.Http])
     ], RootComponent);
     return RootComponent;
 }());
