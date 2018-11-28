@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList} from '@angular/core';
+import {Component, ViewChildren, QueryList} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -215,6 +215,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "New Line";
         var args: any = {};
+        args.IsNew = true;
         args.LocationCode = this.LocationCode;
         args.EmployeeUserId = this.EmployeeUserId;
         args.Father = this;
@@ -242,6 +243,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         }
         args.DateOfWork = date;
         args.Father = this;
+        args.IsNew = true;
         args.WINumber = item.WINumber;
         args.ProjectId = item.ProjectId;
         args.Description = item.Description;
@@ -304,7 +306,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var itemsChanges: ItemSourceItem[] = this.ItemSource.Collection.filter(f => f.HasChanges == true);
         if (itemsChanges.length > 0) {
 
-            if (items.filter(f => f.TimeInMinutes == 0|| AppTool.IsNullOrEmpty(f.Description)).length > 0) {
+            if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
                 this.IsValid = false;
                 this.ShowMessage("Time and Description fields are required for each line");
             }
@@ -360,39 +362,51 @@ export class DailyTimeSheetComponent extends BaseComponent {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 if (item != null) {
-                   // var isValid = true;
+                    // var isValid = true;
                     //if (this.ItemSource.Collection.filter(f => AppTool.IsNullOrEmpty(f.ProjectId) || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
                     //    isValid = false;
                     //    this.ShowMessage("Project and Description fields are required for each line");
                     //}
-                   // if (isValid) {
-                        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-                        this.HasChanges = false;
-                        if (this.myDomainService == null) {
-                            this.myDomainService = new TimeManagementDomainService();
+                    // if (isValid) {
+                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    this.HasChanges = false;
+                    if (this.myDomainService == null) {
+                        this.myDomainService = new TimeManagementDomainService();
+                    }
+                    this.myDomainService.DeleteTimeSheetItem(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, item.LocationCode, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        if (!myResponse.HasError) {
+                            this.OnDataLoaded(myResponse.Result);
                         }
-                        this.myDomainService.DeleteTimeSheetItem(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, item.LocationCode, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
-                            if (!myResponse.HasError) {
-                                this.OnDataLoaded(myResponse.Result);
-                            }
-                        });
+                    });
                     //}
                 }
             }
         });
+    }
+    EditLineClicked(item: ItemSourceItem) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Edit Line";
+        var args: any = {};
+        args.EntityPM = item.entityPM;
+        args.Father = this;
+        args.IsNew = false;
+        logWindow.WindowArgs = args;
+        logWindow.Show('./TimeManagement/Components/NewEntity/NewLineComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
     }
 }
 
 export class ItemSourceItem extends BaseComponent {
     public DataContext = this;
     public Index: number;
-  
+    public entityPM: TMEmployeeTimePM;
     public IsCopy: boolean = false;
     private TMProjectListService: TMProjectListService;
 
     constructor(public entity: TMEmployeeTimePM, private father: DailyTimeSheetComponent, index: number) {
         super();
+        this.entityPM = entity;
         this.TMProjectListService = new TMProjectListService();
         this.Index = index;
         this.DayDateFormat = this.ApplyTimeFormat(this.TimeInMinutes);
@@ -426,6 +440,13 @@ export class ItemSourceItem extends BaseComponent {
     set Id(value: string) {
         if (this.entity.Id != value) {
             this.entity.Id = value;
+        }
+    }
+
+    get SprintId() { return this.entity.SprintId; }
+    set SprintId(value: string) {
+        if (this.entity.SprintId != value) {
+            this.entity.SprintId = value;
         }
     }
 

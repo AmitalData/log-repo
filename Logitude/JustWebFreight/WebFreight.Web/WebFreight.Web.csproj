@@ -110,8 +110,8 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="evohtmltopdf, Version=7.5.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EvoHtmlToPdf_x64.7.5.0\lib\net40\evohtmltopdf.dll</HintPath>
+    <Reference Include="evohtmltopdf, Version=5.17.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EvoHtmlToPDF5.5.1.8\lib\Net40\evohtmltopdf.dll</HintPath>
     </Reference>
     <Reference Include="FormulaEngineLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\FormulaEngineLib.dll</HintPath>
@@ -122,8 +122,8 @@
     <Reference Include="HtmlAgilityPack, Version=1.8.8.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\HtmlAgilityPack.1.8.8\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=1.0.0.999, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\SharpZipLib.1.0.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Intuit.Ipp.Core, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\Intuit.Ipp.Core.dll</HintPath>
@@ -247,6 +247,9 @@
     <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Tools, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceModel.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Tools.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
     </Reference>
@@ -340,7 +343,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Profact3.3.1.0.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\..\packages\Profact3.3.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid.SmtpApi, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
@@ -348,6 +351,9 @@
     </Reference>
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.2.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StackExchange.Redis.1.2.5\lib\net45\StackExchange.Redis.dll</HintPath>
     </Reference>
     <Reference Include="Stimulsoft.Base, Version=2017.1.11.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\StimulsoftNew.1.0.0\lib\Net40\Stimulsoft.Base.dll</HintPath>
@@ -391,6 +397,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http">
       <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Net.Http.dll</HintPath>
@@ -417,14 +424,14 @@
     </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.DomainServices.EntityFramework">
-      <HintPath>..\..\General\Dlls\System.ServiceModel.DomainServices.EntityFramework.dll</HintPath>
+    <Reference Include="System.ServiceModel.DomainServices.EntityFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="System.ServiceModel.DomainServices.Hosting">
-      <HintPath>..\..\General\Dlls\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
+      <HintPath>..\..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -837,6 +844,7 @@
     <Content Include="HtmlHelpers\Kendo.2013.2.918\kendo.default.min.css" />
     <Content Include="HtmlHelpers\Kendo.2013.2.918\kendo.mobile.all.min.css" />
     <Content Include="images\primaryContact.png" />
+    <Content Include="LinksGateway.aspx" />
     <Content Include="LogBoxMailgunWebPage.aspx" />
     <Content Include="LogInUserControls\DsvLoginUC.ascx" />
     <Content Include="MailgunWebPage.aspx" />
@@ -861,6 +869,7 @@
     <Compile Include="AccountingModel\DomainServices\Generated\ARPaymentChequeStatusDomainService.Generated.cs" />
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequeDataProvider.cs" />
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequePrintService.cs" />
+    <Compile Include="AccountingModel\Reports\TaxDeductionReport\TaxDeductionReportPrintService.cs" />
     <Compile Include="AccountingWebServices\Testers\TrailReport.aspx.cs">
       <DependentUpon>TrailReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -886,6 +895,7 @@
     <Content Include="App_Code\DirectApiV1Controller.cs" />
     <Content Include="App_Code\WarehouseDataController.cs" />
     <Content Include="App_Code\ActivityMobileLogController.cs" />
+    <Content Include="App_Code\ResetPasswordController.cs" />
     <Compile Include="AtlasRegistrationPage.aspx.cs">
       <DependentUpon>AtlasRegistrationPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -915,6 +925,9 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ExternalReconciliationViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountWithholdingTaxViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatDateTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\PaymentChequeLineViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\PaymentChequeStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\PaymentChequeViewsController.Generated.cs" />
@@ -937,11 +950,13 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ExternalReconciliationController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountMoreDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountWithholdingTaxController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\OpenFormatReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\PaymentChequeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ReconcileExternalPageController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\BankAccountViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxDeductionReportController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxReportController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxReportLineController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TaxWithholdingAssessOfficeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\WithholdingTaxDeductionTypeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountCurrencyController.cs" />
@@ -951,6 +966,7 @@
     <Compile Include="Controllers\AccountingModel\ReconcileExternalPageController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationController.cs" />
     <Compile Include="Controllers\AccountingModel\RevaluationOpController.cs" />
+    <Compile Include="Controllers\AccountingModel\TaxDeductionReportFileController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxReportOpController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxReportController.cs" />
     <Compile Include="Controllers\BookingModel\Extended\BookingProductsExtendedController.cs" />
@@ -1479,11 +1495,13 @@
     <Compile Include="Controllers\CustomsModel\WebServices\VendorController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\ClientController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationRestoreController.cs" />
+    <Compile Include="Controllers\GlobalModel\Extended\AerolineaseAtlasRegistrationLeadsController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\AgentSharedLogisticsKeysController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\IIGGeneralMessagesController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\PaymentMessagesController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\QuantityTypeController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\TapagMessagesController.cs" />
+    <Compile Include="Controllers\GlobalModel\Extended\LogitudeLeadVerificationController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\TenantManagmentPrivateLabelsController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\BatchServicesDefinitionExtendedController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\SystemMetadataLastUpdateController.cs" />
@@ -1790,6 +1808,8 @@
       <DependentUpon>OpenAccessWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
+    <Compile Include="DataContracts\DWQueryData.cs" />
     <Compile Include="DataContracts\ShipmentTestData.cs" />
     <Compile Include="DataProviders\CrossDockEntryDataProvider.cs" />
     <Compile Include="DataContracts\EventTypeArgs.cs" />
@@ -2068,8 +2088,11 @@
     <Compile Include="DataProviders\PickUpDeliveryLine.Shared.cs" />
     <Compile Include="DataProviders\RevenueExpenseDataProvider.cs" />
     <Compile Include="DataProviders\ShipmentAssemblyLine.Shared.cs" />
+    <Compile Include="DataProviders\ShipmentDetailsDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipmentInventoryDataProvider.cs" />
     <Compile Include="DataProviders\ShipmentProfitVSQuoteEstimateDataProvider.Shared.cs" />
+    <Compile Include="DataProviders\ShipmentsStocksDataProvider.cs" />
+    <Compile Include="DataProviders\TasksWithoutProjectsDataProvider.cs" />
     <Compile Include="DataProviders\UsersByTenantDataProvider.cs" />
     <Compile Include="DataProviders\WorkHoursPerProjectDataProvider.cs" />
     <Compile Include="DropBoxAuth.aspx.cs">
@@ -2090,6 +2113,7 @@
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />
     <Compile Include="ExternalAPIs\V1\BlobInfoController.cs" />
+    <Compile Include="ExternalAPIs\V1\CustomerController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountController.cs" />
     <Compile Include="ExternalAPIs\V1\MasterController.cs" />
     <Compile Include="ExternalAPIs\V1\JournalController.cs" />
@@ -2098,7 +2122,9 @@
     <Compile Include="ExternalAPIs\V1\DirectController.cs" />
     <Compile Include="ExternalAPIs\V1\DocumentsFilingController.cs" />
     <Compile Include="ExternalAPIs\V1\HouseController.cs" />
+    <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
+    <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ComputeHelper.cs" />
     <Compile Include="Helpers\APIHelpers\DateHelper.cs" />
@@ -2114,11 +2140,13 @@
     <Compile Include="Helpers\APIHelpers\UserLicenseUpdateHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ValidateShipmentMasterArgs.cs" />
     <Compile Include="Helpers\AutomationHelper.cs" />
+    <Compile Include="Helpers\CaptchaHelper.cs" />
     <Compile Include="Helpers\ConvertTemplateHelper.cs" />
     <Compile Include="Helpers\CustomUserIdProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockEntryDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\CrossDockReleaseDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentInventoryDataProviderHelper.cs" />
+    <Compile Include="Helpers\DataProviderHelpers\ShipmentsStocksDataProviderHelper.cs" />
     <Compile Include="Helpers\DataProviderHelpers\UsersByTenantDataProviderHelper.cs" />
     <Compile Include="Helpers\DocumentHelper.cs" />
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
@@ -2126,6 +2154,7 @@
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
     <Compile Include="Helpers\FlatFileHelper.cs" />
     <Compile Include="Helpers\LogBox\LogBoxMailgunAnalyzer.cs" />
+    <Compile Include="Helpers\LogitudeLeadHelper.cs" />
     <Compile Include="Helpers\PasswordChangeHelper.cs" />
     <Compile Include="Helpers\QueueMessagesWebHelper.cs" />
     <Compile Include="Helpers\ExportToExcelHelper.cs" />
@@ -2133,9 +2162,11 @@
     <Compile Include="Helpers\QuoteTemplateHelper.cs" />
     <Compile Include="Helpers\QuoteTemplateReportHelper.cs" />
     <Compile Include="Helpers\ReportHelper.cs" />
+    <Compile Include="Helpers\ResetPasswordHelper.cs" />
     <Compile Include="Helpers\SecurityDocumentHelper.cs" />
     <Compile Include="Helpers\SendGrid\SendGridAnalyzer.cs" />
     <Compile Include="Helpers\SharedLogisticContactHelper.cs" />
+    <Compile Include="Helpers\SignUpHelper.cs" />
     <Compile Include="Helpers\TableQueryReflector.cs" />
     <Compile Include="Helpers\MessageArgs.cs" />
     <Compile Include="Helpers\TermsofUseArgs.cs" />
@@ -2144,6 +2175,13 @@
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.BankAccountLite.cs" />
+    <Compile Include="LinksGateway.aspx.cs">
+      <DependentUpon>LinksGateway.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinksGateway.aspx.designer.cs">
+      <DependentUpon>LinksGateway.aspx</DependentUpon>
+    </Compile>
     <Compile Include="LogBoxMailgunWebPage.aspx.cs">
       <DependentUpon>LogBoxMailgunWebPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2377,6 +2415,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountMoreDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountTotalDateTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\GLAccountWithholdingTaxUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalAdditionalDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalMoreDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalReconcileUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LBPTeamMemberUpdateClass.cs" />
@@ -2384,6 +2423,9 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ManifestCargoStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MAWBTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatDateTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PointerLevelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeStatusUpdateClass.cs" />
@@ -2556,6 +2598,7 @@
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
+    <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
     <Content Include="Monitoring\FailedTokenLog.aspx" />
     <Content Include="Monitoring\ForwarderShipmentDocumentQueue.aspx" />
@@ -2576,6 +2619,13 @@
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceLineAction.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.SATPaymentMethod.cs" />
     <Compile Include="CommonDataModel\DomainServices\PartnersDomainService.WarehouseType.cs" />
+    <Content Include="JustWebFreightappSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="JustWebFreightConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
     <None Include="Resources\Stimulsoft Reports.Ultimate 2013.1 Trial A252_020150909133627201254900033002.mrt.txt" />
@@ -2606,7 +2656,7 @@
     <Content Include="SharedDocuments.aspx" />
     <Content Include="SharedDocuments\SharedDocumentsViewModel.js" />
     <Content Include="EntityExternalUpdate.aspx" />
-    <Content Include="SignUp.aspx" />
+    <Content Include="ShipmentStatuses.aspx" />
     <Content Include="SignUpVerification.aspx" />
     <Content Include="Stimulsoft\css\demo.css" />
     <Content Include="Stimulsoft\css\stimulsoft.designer.office2013.whiteblue.css" />
@@ -3965,7 +4015,6 @@
     <Content Include="SharedLogistic\InvoicePage.aspx" />
     <Content Include="SharedLogistic\ShipmentMobilePage.aspx" />
     <Content Include="SharedLogistic\ShipmentPage.aspx" />
-    <Content Include="SignUpPage.aspx" />
     <Content Include="ShipmentPackageModel\RegisterShipmentPackageWebService.asmx" />
     <Content Include="Silverlight.js" />
     <Content Include="Simplog.InfrastructureTestPage.aspx" />
@@ -4565,6 +4614,13 @@
     <Compile Include="Monitoring\AnalyzeQueue.aspx.designer.cs">
       <DependentUpon>AnalyzeQueue.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.cs">
+      <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.designer.cs">
+      <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Monitoring\FailedLoginLog.aspx.cs">
       <DependentUpon>FailedLoginLog.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4888,22 +4944,15 @@
     <Compile Include="Monitoring\ChampStatus.aspx.designer.cs">
       <DependentUpon>ChampStatus.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ShipmentStatuses.aspx.cs">
+      <DependentUpon>ShipmentStatuses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShipmentStatuses.aspx.designer.cs">
+      <DependentUpon>ShipmentStatuses.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SignalRHubs\LogitudeHub.cs" />
     <Compile Include="SignalRStartup.cs" />
-    <Compile Include="SignUp.aspx.cs">
-      <DependentUpon>SignUp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SignUp.aspx.designer.cs">
-      <DependentUpon>SignUp.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="SignUpPage.aspx.cs">
-      <DependentUpon>SignUpPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SignUpPage.aspx.designer.cs">
-      <DependentUpon>SignUpPage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="SignUpVerification.aspx.cs">
       <DependentUpon>SignUpVerification.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5906,6 +5955,7 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
+    <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
     <Folder Include="MobileApplication\Views\DeclarationVehicleModification\" />
@@ -6110,45 +6160,8 @@
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ mkdir  $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\ mkdir  $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Js" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AOTScripts\ mkdir  $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AOTScripts\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\AOTScripts" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AOTScripts\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Appcss\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Appcss\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Appcss" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Appcss\" /Y /E 
- 
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AppStyles\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AppStyles\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\AppStyles" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\AppStyles\" /Y /E 
-
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Froala\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Froala\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Froala" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Froala\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\font-awesome\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\font-awesome\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\font-awesome" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\font-awesome\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Images\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Images\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Images" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Images\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\Js" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\Js\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\styles\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\styles\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\styles" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\styles\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\dist\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\dist" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\" /Y /E 
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ApplicationStyles\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ApplicationStyles\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\ApplicationStyles" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\ApplicationStyles\" /Y /E
-
-if not exist $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\_Resources\ mkdir   $(SolutionDir)JustWebFreight\$(ProjectName)\Angular\_Resources\
-XCOPY  "$(SolutionDir)AngularModules\AngularModules\_Resources" "$(SolutionDir)JustWebFreight\$(ProjectName)\Angular\_Resources\" /Y /E
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!--<Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.4\tools\Microsoft.Bcl.Build.targets" />-->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -326,7 +326,6 @@ namespace CommunicationWorkerRole
                         communicationLogRep.SubmitChanges();
                     }
                 }
-                    throw;
                 
                 }            
             
@@ -360,7 +359,10 @@ namespace CommunicationWorkerRole
                 {
                     if (context != null)
                     {
-                        SendingFail(cl, tenant, "Failed To Send , Check your Translations", null);
+                        StringBuilder sb = new StringBuilder();
+                        sb.AppendLine(cl.ExceptionMessage);
+                        sb.AppendLine("Failed To Send , Check your Translations");
+                        SendingFail(cl, tenant, sb.ToString(), null, null);
                     }
 
                 }
@@ -395,11 +397,10 @@ namespace CommunicationWorkerRole
                         communicationLogRep.SubmitChanges();
                     }
                 }
-                throw;
             }
         }
 
-        private void SendingFail(CommunicationLog waitingCommLog, int tenant,string message,string QBOId) {
+        private void SendingFail(CommunicationLog waitingCommLog, int tenant,string message,string QBOId,string Id) {
 
          
 
@@ -416,7 +417,7 @@ namespace CommunicationWorkerRole
             if (type == "APInvoice" || type=="VendorCredit")
             {
                 APInvoiceRepository repository = new APInvoiceRepository(tenant);
-                APInvoice invoice = repository.GetAPInvoiceByInvoiceNumber(tenant, waitingCommLog.EntityReference);
+                APInvoice invoice = repository.GetSingleAPInvoice(Id,tenant);
                 invoice.TransferError = null;
                 invoice.TransferStatusCode = "ET";
                 invoice.IsTransferStarted = false;
@@ -480,7 +481,7 @@ namespace CommunicationWorkerRole
                 myResult[0].Line = payment.Line;
                 myResult[0].PaymentMethodRef = payment.PaymentMethodRef;
                 Payment final = service.Update(myResult[0]) as Payment;
-                SendingSuccessfully(waitingCommLog, tenant, final.Id,null);                
+                SendingSuccessfully(waitingCommLog, tenant, final.Id,null,null);                
             }
 
         }
@@ -496,7 +497,7 @@ namespace CommunicationWorkerRole
                 myResult[0].AnyIntuitObject = payment.AnyIntuitObject;
                 myResult[0].Line = payment.Line==null ? new List<Line>().ToArray():payment.Line;
                 BillPayment final = service.Update(myResult[0]) as BillPayment;
-                SendingSuccessfully(waitingCommLog, tenant, final.Id, null);
+                SendingSuccessfully(waitingCommLog, tenant, final.Id, null,null);
             }
 
         }
@@ -515,12 +516,12 @@ namespace CommunicationWorkerRole
                 if(final==null)
                     throw new Exception("Failed to Void");
 
-                SendingSuccessfully(waitingCommLog, tenant, final.Id, null);
+                SendingSuccessfully(waitingCommLog, tenant, final.Id, null,null);
 
             }
             else
             {
-                SendingFail(waitingCommLog, tenant, "This Invoice doesn't exist on quickbooks online to be voided .", null);
+                SendingFail(waitingCommLog, tenant, "This Invoice doesn't exist on quickbooks online to be voided .", null,null);
 
             }
 
@@ -538,12 +539,12 @@ namespace CommunicationWorkerRole
                 if (final == null)
                     throw new Exception("Failed to Void");
 
-                SendingSuccessfully(waitingCommLog, tenant, final.Id, null);
+                SendingSuccessfully(waitingCommLog, tenant, final.Id, null,null);
 
             }
             else
             {
-                SendingFail(waitingCommLog, tenant, "This Invoice doesn't exist on quickbooks online to be voided .", null);
+                SendingFail(waitingCommLog, tenant, "This Invoice doesn't exist on quickbooks online to be voided .", null,null);
 
             }
 
@@ -580,7 +581,7 @@ namespace CommunicationWorkerRole
                     }                   
                     if (!String.IsNullOrEmpty(ErrorMessage))
                     {
-                        SendingFail(waitingCommLog, tenant, ErrorMessage,null);
+                        SendingFail(waitingCommLog, tenant, ErrorMessage,null,null);
                     }
                     else
                     {
@@ -593,12 +594,12 @@ namespace CommunicationWorkerRole
                                 throw new Exception("Failed to Send");
                             else
                             {
-                                SendingSuccessfully(waitingCommLog, tenant, Result.Id,null);
+                                SendingSuccessfully(waitingCommLog, tenant, Result.Id,null,null);
                             }
                         }
                         else
                         {
-                            SendingSuccessfully(waitingCommLog, tenant,null,"The Invoice number already exists in your Quickbooks online invoices");
+                            SendingSuccessfully(waitingCommLog, tenant,null,"The Invoice number already exists in your Quickbooks online invoices",null);
                         }
                     }
                 }
@@ -628,7 +629,7 @@ namespace CommunicationWorkerRole
                     }                  
                     if (!String.IsNullOrEmpty(ErrorMessage))
                     {
-                        SendingFail(waitingCommLog, tenant, ErrorMessage,null);
+                        SendingFail(waitingCommLog, tenant, ErrorMessage,null,null);
                     }
                     else
                     {
@@ -641,12 +642,12 @@ namespace CommunicationWorkerRole
                                 throw new Exception("Failed to Send");
                             else
                             {
-                                SendingSuccessfully(waitingCommLog, tenant, Result.Id,null);
+                                SendingSuccessfully(waitingCommLog, tenant, Result.Id,null, null);
                             }
                         }
                         else
                         {
-                            SendingSuccessfully(waitingCommLog, tenant,null, "The Credit Note number already exists in your Quickbooks online Credit Notes");
+                            SendingSuccessfully(waitingCommLog, tenant,null, "The Credit Note number already exists in your Quickbooks online Credit Notes", null);
                         }
                     }
 
@@ -665,7 +666,10 @@ namespace CommunicationWorkerRole
                     ARInvoiceHelper  APService = new ARInvoiceHelper();
                     List<Intuit.Ipp.Data.Vendor> vendor = APService.GetQuickBooksOnlineVendorByText("Select * from Vendor where Id='" + final.VendorRef.Value + "'", tenant + "");
                     if (vendor.Count != 0)
-                        ExternalTableIdCustomerCurrencyRef = vendor[0].CurrencyRef.Value;
+                    {
+                        if (vendor[0].CurrencyRef != null)
+                            ExternalTableIdCustomerCurrencyRef = vendor[0].CurrencyRef.Value;
+                    }
                     else
                     {
                         ErrorMessage = "The Vendor Reference doesn't exists in your Quickbooks online company ";
@@ -679,19 +683,20 @@ namespace CommunicationWorkerRole
                     }                  
                     if (!String.IsNullOrEmpty(ErrorMessage))
                     {
-                        SendingFail(waitingCommLog, tenant, ErrorMessage,null);
+                        SendingFail(waitingCommLog, tenant, ErrorMessage,null, null);
                     }
                     else
                     {
                         ServiceContext serviceContext = getServiceContext(tenant + "");
                         DataService service = new DataService(serviceContext);
-                       
+                        string Id = final.Id;
+                        final.Id = null;
                             Bill Result = service.Add(final) as Bill;
                             if (Result == null)
-                                SendingFail(waitingCommLog, tenant, "Failed to Send", null);
+                                SendingFail(waitingCommLog, tenant, "Failed to Send", null, Id);
                             else
                             {
-                                SendingSuccessfully(waitingCommLog, tenant, Result.Id,null);
+                                SendingSuccessfully(waitingCommLog, tenant, Result.Id,null, Id);
                             }                        
                     }
 
@@ -723,19 +728,20 @@ namespace CommunicationWorkerRole
                         }
                     if (!String.IsNullOrEmpty(ErrorMessage))
                     {
-                        SendingFail(waitingCommLog, tenant, ErrorMessage, null);
+                        SendingFail(waitingCommLog, tenant, ErrorMessage, null, null);
                     }
                     else
                     {
                         ServiceContext serviceContext = getServiceContext(tenant + "");
                         DataService service = new DataService(serviceContext);
-
+                        string Id = final.Id;
+                        final.Id = null;
                         VendorCredit Result = service.Add(final) as VendorCredit;
                         if (Result == null)
-                            SendingFail(waitingCommLog, tenant, "Failed to Send", null);
+                            SendingFail(waitingCommLog, tenant, "Failed to Send", null, Id);
                         else
                         {
-                            SendingSuccessfully(waitingCommLog, tenant, Result.Id, null);
+                            SendingSuccessfully(waitingCommLog, tenant, Result.Id, null, Id);
                         }
                     }
 
@@ -767,7 +773,7 @@ namespace CommunicationWorkerRole
                     }
                     if (!String.IsNullOrEmpty(ErrorMessage))
                     {
-                        SendingFail(waitingCommLog, tenant, ErrorMessage, null);
+                        SendingFail(waitingCommLog, tenant, ErrorMessage, null, null);
                     }
                     else
                     {
@@ -782,7 +788,7 @@ namespace CommunicationWorkerRole
                                 throw new Exception("Failed to Send");
                             else
                             {
-                                SendingSuccessfully(waitingCommLog, tenant, Result.Id,null);
+                                SendingSuccessfully(waitingCommLog, tenant, Result.Id,null, null);
                             }
                         }
                         
@@ -815,7 +821,7 @@ namespace CommunicationWorkerRole
                     }
                 if (!String.IsNullOrEmpty(ErrorMessage))
                 {
-                    SendingFail(waitingCommLog, tenant, ErrorMessage, null);
+                    SendingFail(waitingCommLog, tenant, ErrorMessage, null, null);
                 }
                 else
                 {
@@ -830,7 +836,7 @@ namespace CommunicationWorkerRole
                             throw new Exception("Failed to Send");
                         else
                         {
-                            SendingSuccessfully(waitingCommLog, tenant, Result.Id, null);
+                            SendingSuccessfully(waitingCommLog, tenant, Result.Id, null, null);
                         }
                     }
 
@@ -898,13 +904,12 @@ namespace CommunicationWorkerRole
                         communicationLogRep.SubmitChanges();
                     }
                 }
-                throw;
                 
             }
 
         }
 
-        private void SendingSuccessfully(CommunicationLog waitingCommLog,int tenant,string QBOId,string Exception){
+        private void SendingSuccessfully(CommunicationLog waitingCommLog,int tenant,string QBOId,string Exception,string Id){
         
          CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
                     waitingCommLog.CommunicationStatusTypeCode = "D";
@@ -919,7 +924,7 @@ namespace CommunicationWorkerRole
             if (type == "APInvoice" || type == "VendorCredit")
             {
                 APInvoiceRepository repository = new APInvoiceRepository(tenant);
-                APInvoice invoice = repository.GetAPInvoiceByInvoiceNumber(tenant, waitingCommLog.EntityReference);
+                APInvoice invoice = repository.GetSingleAPInvoice(Id,tenant);
                 invoice.TransferError = null;
                 invoice.TransferStatusCode = "TR";
                 invoice.IsTransferStarted = false;

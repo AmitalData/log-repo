@@ -61,7 +61,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() Placeholder: string = "";
     @Input() AlignTextToRight: boolean = false;
     public DontAllowAutoSelect: boolean = false;
-    @Input() AddCommasToNumbers: boolean = false;
+    @Input() AddCommasToNumbers: boolean = true;
     @Input() Max: number;
     @Input() Min: number;
     @Input() RowsCount: number = 2;
@@ -114,9 +114,23 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         else if (this.textValue && (newValue == "" || newValue == null || newValue == undefined)) {
             this.HasValue.emit(false);
         }
-        
+       
         this.textValue = newValue;
         if (this.IsPasted) {
+            switch (this.InputType && this.InputType.toLowerCase()) {
+                case 'text':
+                case 'ntext':
+                    {
+                        break;
+                    }
+                default: {
+                    if (newValue && newValue.indexOf(',') > -1) {
+                        newValue = newValue.replace(',', '');
+                    }
+                }
+                    
+            }
+            this.textValue = newValue;
             this.TextValueChanges(newValue);
         }
 
@@ -1058,13 +1072,17 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
                         }
                         else {
-                            val = Number(this.TextValue);
-                            if (this.AddCommasToNumbers) {
-                                if ((this.TextValue + "").indexOf(',') > -1) {
-                                    var txtval = this.TextValue.replace(',', "");
-                                    val = Number(txtval);
-                                }
+                            if((this.TextValue + "").indexOf(',') == -1)
+                            {
+                                val = Number(this.TextValue);
                             }
+                            if (this.AddCommasToNumbers) {
+                               if ((this.TextValue + "").indexOf(',') > -1) {
+                                   var txtval = this.TextValue.replace(/,/g, "");
+                                   val = Number(txtval);
+                               }
+                            }
+                           
                         }
 
 
@@ -1076,9 +1094,19 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 this.TextValue = val.toFixed(this.DigitsAfterPoint);
                             }
                         }
-                        if (this.AddCommasToNumbers) {
 
-                            if (this.DataContext[this.ObjectFieldName] + "" != this.TextValue) {
+                        if (this.AddCommasToNumbers) {
+                            var txtNum:number;
+
+                            if ((this.TextValue + "").indexOf(',') > -1) {
+                                var txtval = this.TextValue.replace(/,/g, "");
+                                txtNum = Number(txtval);
+                            }
+                            else{
+                                txtNum = Number(this.TextValue);
+                            }
+
+                            if (this.DataContext[this.ObjectFieldName] != txtNum) {
                                 this.TextValueChanges(this.TextValue);
                             }
                             var textWithCommas: string = numberWithCommas(this.TextValue);
@@ -1089,11 +1117,12 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 if (afterDot.indexOf(',') > -1) {
                                     afterDot = afterDot.replace(',', "");
                                 }
-                                textWithCommas = beforeDot + afterDot;
+                                textWithCommas = beforeDot + '.' + afterDot;
                             }
 
                             this.TextValue = textWithCommas;
                         }
+
                         break;
                     }
                 case 'unsinteger':
@@ -1109,12 +1138,12 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                         
                         var val: number;
                         val = Number(this.TextValue);
-                        if (this.AddCommasToNumbers) {
-                            if ((this.TextValue + "").indexOf(',') > -1) {
-                                var txtval = this.TextValue.replace(',', "");
-                                val = Number(txtval);
-                            }
-                        }
+                        //if (this.AddCommasToNumbers) {
+                        //    if ((this.TextValue + "").indexOf(',') > -1) {
+                        //        var txtval = this.TextValue.replace(',', "");
+                        //        val = Number(txtval);
+                        //    }
+                        //}
                         
                        
                         if (isNaN(val) || !isSignOk) {
@@ -1382,7 +1411,41 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ValidateField(emitPropertyChanged: boolean = true) {
-        if (!this.NoValidation && this.uiProperty != null) {
+        var suppressValidation: boolean = false;
+        if (this.InputType) {
+            switch (this.InputType.toLowerCase()) {
+                case 'text':
+                case 'ntext':
+                    {
+                        break;
+                    }
+                default: {
+                    var val:number;
+
+                    if((this.TextValue + "").indexOf(',') == -1) {
+                      val = Number(this.TextValue);
+                    }
+                    if (this.AddCommasToNumbers) {
+                        if ((this.TextValue + "").indexOf(',') > -1) {
+                            var txtval = this.TextValue.replace(/,/g, "");
+                            val = Number(txtval);
+                        }
+                     }       
+
+                    if (isNaN(Number(val))) {
+                        this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
+                        suppressValidation = true;
+                    }
+                    else {
+                        this.SetValidity(true, null);
+                        suppressValidation = false;
+                    }
+                }
+
+            }
+        }
+
+        if (!this.NoValidation && this.uiProperty != null && !suppressValidation) {
             var errors = null;
             var table = window.ObjectTables.filter(d => d.Name === this.uiProperty.ObjectTableName)[0];
             if (table) {

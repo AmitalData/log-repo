@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -134,17 +134,16 @@ export class ARPaymentMenuButtonsHandler {
                         case "CancelApproval":
                             {
                                 if (SessionLocator.TenantPM.AccountingActivated) {
-                                    button.IsHidden = true; 
+                                    button.IsHidden = true;
                                 }
-                                else {
-                                    if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD" || (this.EntityPM.StatusCode == "AD" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG"))) {
-                                        button.IsDisabled = true;
-                                    }
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD" || (this.EntityPM.StatusCode == "AD" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG"))) {
+                                    button.IsDisabled = true;
+                                }
 
-                                    else {
-                                        button.IsDisabled = false;
-                                    }
+                                else {
+                                    button.IsDisabled = false;
                                 }
+
                                 break;
                             }
                         case "VoidARPayemnt":
@@ -209,6 +208,48 @@ export class ARPaymentMenuButtonsHandler {
                                 // }
                                 break;
                             }
+
+                        case "CheckSATStatus":
+                            {
+                                if (this.EntityPM.SATTransferStatusCode == "CS") {
+                                    button.IsDisabled = false;
+                                }
+                                else {
+                                    button.IsDisabled = true;
+                                }
+                                if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
+                                    button.IsHidden = true;
+                                }
+
+
+                                break;
+                            }
+
+
+                        case "SendToQBO":
+                            {
+                                if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+                                    button.IsHidden = false;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                                if (this.EntityPM.TransferStatusCode == "RD" || this.EntityPM.TransferStatusCode == "NR") {
+                                    button.DisplayText = "Send to QBO";
+                                }
+                                else if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+                                    button.LabelTextCodeCode = null;
+                                    button.DisplayText = "Resend to QBO";
+                                }
+                                if (this.EntityPM.StatusCode == "DR") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+
+                                break;
+                            }
                     }
                 }
             }
@@ -250,7 +291,60 @@ export class ARPaymentMenuButtonsHandler {
                     this.SaveSendToSAT();
                     break;
                 }
+            case "CheckSATStatus":
+                {
+                    this.CheckSATStatus();
+                    break;
+                }
+
+            case "SendToQBO":
+                {
+                    this.SendToQBO();
+                    break;
+                }
         }
+    }
+
+
+
+    SendToQBO() {
+        if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+            var myConfirmWindow = new ConfirmWindow();
+            myConfirmWindow.Width = 400;
+            myConfirmWindow.Show("Resend this [payment] to QBO?");
+            myConfirmWindow.WindowClosed.subscribe(s => {
+                this.ResetAllFlags();
+                if (myConfirmWindow.Yes) {
+                    this.SendToQBOApproved("Resending Invoice to QBO");
+
+                }
+            });
+        }
+
+        else {
+            this.SendToQBOApproved("Sending Invoice to QBO");
+            this.ResetAllFlags();
+        }
+    }
+
+    SendToQBOApproved(Text: string) {
+        this.EntityPM.SetReSendQBO = true;
+        this.EntityPM.SetVoided = false;
+        this.EntityPM.SetApproved = false;
+        this.EntityPM.SetReTransfer = false;
+        this.EntityPM.SetCancelApproval = false;
+
+        this.entityArgs.EditComponent.SaveChanges(Text);
+    }
+
+
+
+    CheckSATStatus() {
+        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.GetARPaymentSATCancellationStatus(this.EntityPM.Id).subscribe(response => {
+
+        });
     }
 
     RunSendToSAT() {
@@ -331,18 +425,45 @@ export class ARPaymentMenuButtonsHandler {
 
     // [Approval]
     ApprovalMethod() {
-        if (this.EntityPM.AccountingPaymentMethodCode == "FS" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Show("This payments with payment method Offsetting will not be transfered to quickbooks online , transfer it manually");
-            messageWindow.WindowClosed.subscribe(a => {
-                this.ApprovingLogic();
-            });
-        }
-        else {
-            this.ApprovingLogic();
-        }        
+        
+            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+                var FlagNotTransfered: boolean = false;
+                this.EntityPM.PaymentInvoices.forEach(item => {
+                    if (item.ARInvoiceTransferStatusCode != "TR") {
+                        FlagNotTransfered = true;
+                    }
+                });
+
+                if (FlagNotTransfered) {
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("Invoices that were not transferred to QBO will not be connected to the payment at QBO");
+                    window.WindowClosed.subscribe((event: any) => {
+                        this.CompleteApprove();
+                    });
+                }
+                else {
+                    this.CompleteApprove();
+                }
+
+            }
+            else {
+                this.CompleteApprove();
+            }
+        
     }
 
+private CompleteApprove(){
+    if (this.EntityPM.AccountingPaymentMethodCode == "FS" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
+        var messageWindow = new MessageWindow();
+        messageWindow.Show("This payments with payment method Offsetting will not be transfered to quickbooks online , transfer it manually");
+        messageWindow.WindowClosed.subscribe(a => {
+            this.ApprovingLogic();
+        });
+    }
+    else {
+        this.ApprovingLogic();
+    }        
+}
     private ApprovingLogic() {
         var message = "";
         if (!FeatureLocator.HasEntityPermessions("ARPayment", "UPDT",true)) {
@@ -358,6 +479,8 @@ export class ARPaymentMenuButtonsHandler {
             this.EntityPM.SetVoided = false;
             this.EntityPM.SetApproved = true;
             this.EntityPM.SetCancelApproval = false;
+            this.EntityPM.SetReSendQBO = false;
+
             if (this.CurrentDocument != null) {
                 this.CurrentDocument.NeedsRebuild = true;
                 //CommonContext.SubmitChanges();
@@ -412,6 +535,7 @@ export class ARPaymentMenuButtonsHandler {
         if (isValid) {
             this.EntityPM.SetVoided = false;
             this.EntityPM.SetApproved = false;
+            this.EntityPM.SetReSendQBO = false;
             this.EntityPM.SetCancelApproval = true;
             if (this.CurrentDocument != null) {
                 this.CurrentDocument.NeedsRebuild = true;
@@ -507,6 +631,7 @@ export class ARPaymentMenuButtonsHandler {
                         this.EntityPM.SetVoided = true;
                         this.EntityPM.SetApproved = false;
                         this.EntityPM.SetCancelApproval = false;
+                        this.EntityPM.SetReSendQBO = false;
                         if (this.CurrentDocument != null) {
                             this.CurrentDocument.NeedsRebuild = true;
                             //CommonContext.SubmitChanges();
@@ -528,7 +653,7 @@ export class ARPaymentMenuButtonsHandler {
             this.EntityPM.SetApproved = false;
             this.EntityPM.SetReTransfer = true;
             this.EntityPM.SetCancelApproval = false;
-
+            this.EntityPM.SetReSendQBO = false;
             this.entityArgs.EditComponent.SaveChanges();
         }
     }

@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class ShipmentUpdateClass
@@ -103,7 +106,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    EnableSecurity =  true,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  10,
+			      				    MaxNumberOfCustomFields =  40,
 			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  true,
 			      				    HasDocuments =  true,
@@ -1641,7 +1644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
+					  						AllowedinAutomationConditions =  true,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -22045,7 +22048,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "Text",
 					  						Code =  "AccountManagerUserName",
-					  						MaxLength =  40,
+					  						MaxLength =  60,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -22496,7 +22499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "Text",
 					  						Code =  "SalesmanUserName",
-					  						MaxLength =  40,
+					  						MaxLength =  60,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -27343,7 +27346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -27541,7 +27544,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ValidForQuerySection1 =  "Shipment",
 					  						ValidForQuerySection2 =  "ShipmentFollowUp",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
@@ -31800,6 +31803,872 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "FirstPickupATA",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "DateTime",
+					  						Code =  "FirstPickupATA",
+					  						MaxLength =  15,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "FirstPickupATA",
+					  						ListPropertyPath =  "FirstPickupATA",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "FirstPickupATA",
+					  						DefaultText =  "First Pickup ATA",
+					  						HelpTextCode =  "FirstPickupATA",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FirstPickupATD",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "DateTime",
+					  						Code =  "FirstPickupATD",
+					  						MaxLength =  15,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "FirstPickupATD",
+					  						ListPropertyPath =  "FirstPickupATD",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "FirstPickupATD",
+					  						DefaultText =  "First Pickup ATD",
+					  						HelpTextCode =  "FirstPickupATD",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FinalDeliveryETA",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "DateTime",
+					  						Code =  "FinalDeliveryETA",
+					  						MaxLength =  15,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "FinalDeliveryETA",
+					  						ListPropertyPath =  "FinalDeliveryETA",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "FinalDeliveryETA",
+					  						DefaultText =  "Final Delivery ETA",
+					  						HelpTextCode =  "FinalDeliveryETA",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FinalDeliveryETD",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "DateTime",
+					  						Code =  "FinalDeliveryETD",
+					  						MaxLength =  15,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "FinalDeliveryETD",
+					  						ListPropertyPath =  "FinalDeliveryETD",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "FinalDeliveryETD",
+					  						DefaultText =  "Final Delivery ETD",
+					  						HelpTextCode =  "FinalDeliveryETD",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FinalDeliveryATA",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "DateTime",
+					  						Code =  "FinalDeliveryATA",
+					  						MaxLength =  15,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "FinalDeliveryATA",
+					  						ListPropertyPath =  "FinalDeliveryATA",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "FinalDeliveryATA",
+					  						DefaultText =  "Final Delivery ATA",
+					  						HelpTextCode =  "FinalDeliveryATA",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FinalDeliveryATD",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "DateTime",
+					  						Code =  "FinalDeliveryATD",
+					  						MaxLength =  15,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "FinalDeliveryATD",
+					  						ListPropertyPath =  "FinalDeliveryATD",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "FinalDeliveryATD",
+					  						DefaultText =  "Final Delivery ATD",
+					  						HelpTextCode =  "FinalDeliveryATD",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ProjectNumber",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Text",
+					  						Code =  "ProjectNumber",
+					  						MaxLength =  100,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "ProjectNumber",
+					  						ListPropertyPath =  "ProjectNumber",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "ProjectNumber",
+					  						DefaultText =  "Project #",
+					  						HelpTextCode =  "ProjectNumber",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ContainerStatusLast7Days",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Constant",
+					  						Code =  "ContainerStatusLast7Days",
+					  						MaxLength =  15,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  true,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "ContainerStatusLast7Days",
+					  						DefaultText =  "Container Status - last 7 days",
+					  						HelpTextCode =  "ContainerStatusLast7Days",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShipmentContanisDangerousGoods",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "Boolean",
+					  						Code =  "ShipmentContanisDangerousGoods",
+					  						MaxLength =  15,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "ShipmentContanisDangerousGoods",
+					  						ListPropertyPath =  "ShipmentContanisDangerousGoods",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "ShipmentContanisDangerousGoods",
+					  						DefaultText =  "Shipment Contanis Dangerous Goods",
+					  						HelpTextCode =  "ShipmentContanisDangerousGoods",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "BasicFreightId",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "PrepaidCollect",
+					  						Code =  "BasicFreightId",
+					  						MaxLength =  1,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "BasicFreightId",
+					  						ListPropertyPath =  "BasicFreightId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1Value =  "True",
+					  						DependencyFilter1Type =  "Constant",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "BasicFreightId",
+					  						DefaultText =  "Basic Freight",
+					  						HelpTextCode =  "BasicFreightId",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DestinationPortChargesId",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "PrepaidCollect",
+					  						Code =  "DestinationPortChargesId",
+					  						MaxLength =  1,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "DestinationPortChargesId",
+					  						ListPropertyPath =  "DestinationPortChargesId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1Value =  "True",
+					  						DependencyFilter1Type =  "Constant",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "DestinationPortChargesId",
+					  						DefaultText =  "Destination Port Charges",
+					  						HelpTextCode =  "DestinationPortChargesId",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DestinationHaulageChargesId",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "PrepaidCollect",
+					  						Code =  "DestinationHaulageChargesId",
+					  						MaxLength =  1,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "DestinationHaulageChargesId",
+					  						ListPropertyPath =  "DestinationHaulageChargesId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1Value =  "True",
+					  						DependencyFilter1Type =  "Constant",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "DestinationHaulageChargesId",
+					  						DefaultText =  "Destination Haulage Charges",
+					  						HelpTextCode =  "DestinationHaulageChargesId",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "AdditionalChargesId",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "PrepaidCollect",
+					  						Code =  "AdditionalChargesId",
+					  						MaxLength =  1,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "AdditionalChargesId",
+					  						ListPropertyPath =  "AdditionalChargesId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1Value =  "True",
+					  						DependencyFilter1Type =  "Constant",
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "AdditionalChargesId",
+					  						DefaultText =  "Additional Charges",
+					  						HelpTextCode =  "AdditionalChargesId",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FreightPayerId",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Card",
+					  						Code =  "FreightPayerId",
+					  						MaxLength =  15,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "FreightPayerId",
+					  						ListPropertyPath =  "FreightPayerId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "FreightPayerId",
+					  						DefaultText =  "Freight Payer",
+					  						HelpTextCode =  "FreightPayerId",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "FreightPayerAddressId",
+					  						ObjectTableName =  "Shipment",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Address",
+					  						Code =  "FreightPayerAddressId",
+					  						MaxLength =  15,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "FreightPayerAddressId",
+					  						ListPropertyPath =  "FreightPayerAddressId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Shipment",
+					  						ValidForQuerySection2 =  "ShipmentFollowUp",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						FullFieldLable =  "FreightPayerAddressId",
+					  						DefaultText =  "Freight Payer Address",
+					  						HelpTextCode =  "FreightPayerAddressId",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "OperationalDate",
 					  						ObjectTableName =  "Shipment",
 					  						FieldsDataType =  "DateTime",
@@ -32489,6 +33358,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			   TextCode ShipmentTextCode_16 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ShippingInstructionsLast7Days", DefaultText = @"Shipping Instructions - last 7 days",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ShipmentFeature_16 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShippingInstructionsLast7Days", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ShippingInstructionsLast7Days", NameTextCodeDefaultText = "Shipping Instructions - last 7 days", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode ShipmentTextCode_17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.ContainerStatusLast7Days", DefaultText = @"Container Status - last 7 days",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature ShipmentFeature_17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ContainerStatusLast7Days", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ContainerStatusLast7Days", NameTextCodeDefaultText = "Container Status - last 7 days", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -32718,7 +33591,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn AllFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFollowUpsQuery.Id, IndexOrder = 12, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter AllFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "10/14/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = AllFollowUpsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter AllFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AllFollowUps" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "11/25/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = AllFollowUpsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -32751,7 +33624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 			 QueryColumn MyFollowUpsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyFollowUpsQuery.Id, IndexOrder = 12, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 92 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter MyFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MyFollowUps" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "10/14/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = MyFollowUpsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter MyFollowUpsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MyFollowUps" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "11/25/2018 12:00:00 AM",PredefinedValue2 = null, QueryId = MyFollowUpsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -33023,6 +33896,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
              AdvancedQueryFilter ShippingInstructionsLast7DaysQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShippingInstructionsLast7Days" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "True",PredefinedValue2 = null, QueryId = ShippingInstructionsLast7DaysQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
+  
+	      
+
+			  Query ContainerStatusLast7DaysQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_17.Id, Code = "ContainerStatusLast7Days",  SpotlightDataTemplate = "ShipmentSpotlightDataTemplate",  QueryGroupCode = "SHIP", IndexOrder = 17, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_17.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn ContainerStatusLast7DaysQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRALastStatusDate" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ContainerStatusLast7DaysQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentNumber" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ContainerStatusLast7DaysQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "LongMaster" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ContainerStatusLast7DaysQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 4, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MainCarriageETD" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ContainerStatusLast7DaysQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 5, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ContainerStatusLast7DaysQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 6, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Routing" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ContainerStatusLast7DaysQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 7, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ShipmentType" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ContainerStatusLast7DaysQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 8, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Shipper" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ContainerStatusLast7DaysQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 9, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "Consignee" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ContainerStatusLast7DaysQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContainerStatusLast7DaysQuery.Id, IndexOrder = 10, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "INTTRASIError" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 500 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter ContainerStatusLast7DaysQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ContainerStatusLast7Days" && d.ObjectTableId == ShipmentObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "True",PredefinedValue2 = null, QueryId = ContainerStatusLast7DaysQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
 	   
 	    }
 
@@ -33104,21 +34004,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
          
             ScreenField ShipmentShipmentGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "MainHarmonize").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AccountManagerUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "SalesmanUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "AccountManagerUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField12 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "SpecialServicesTypeId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField13 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField14 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField14 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "SpecialServicesTypeId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentShipmentGeneralTabScreenScreenField15 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 7, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField15 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 6, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoods").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField ShipmentShipmentGeneralTabScreenScreenField16 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 7, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen3.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 	      
 
@@ -33176,11 +34078,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
          
             ScreenField ShipmentMasterGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ValueOfGoodsCurrencyId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "ProjectNumber").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "CreatedByUserId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
-            ScreenField ShipmentMasterGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField ShipmentMasterGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "DepartmentId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField ShipmentMasterGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ObjectFieldId = ShipmentObjectFields.Where(d => d.FieldName == "BranchId").FirstOrDefault().Id, ScreenId = ShipmentGeneralTabScreenScreen6.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
            
 
 	    }
@@ -33316,7 +34220,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature ShipmentFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ShipmentFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature ShipmentFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature ShipmentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.PackageFeature", NameTextCodeDefaultText = "Shipment Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature ShipmentFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.PackageFeature", NameTextCodeDefaultText = "Shipment Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ShipmentFeature_AIREXPORTONLY = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AIREXPORTONLY", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AirExportOnly", NameTextCodeDefaultText = "Air-Export-Only" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_ALLTRANSPORTMODES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTRANSPORTMODES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AllTransportModes", NameTextCodeDefaultText = "AllTransportModes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_SENDAWB = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDAWB", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendAWB", NameTextCodeDefaultText = "Send-AWB" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_ALLMASTERS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLMASTERS", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AllMasters", NameTextCodeDefaultText = "All Masters" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_Shipment_Followups = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Followups", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Followups", NameTextCodeDefaultText = "Follow ups" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_Shipment_Profit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Profit", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Profit", NameTextCodeDefaultText = "Profit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_SendMacoXML = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendMacoXML", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendMacoXML", NameTextCodeDefaultText = "Send MACO XML" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_SendToCustoms = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToCustoms", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendToCustoms", NameTextCodeDefaultText = "Send to Customs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_NEWSHIPMENT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWSHIPMENT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.NewShipment", NameTextCodeDefaultText = "New Shipment" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_Shipment_ConnectedTo = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.ConnectedTo", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ConnectedTo", NameTextCodeDefaultText = "Connected To" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_OUTLOOKCONNETION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OUTLOOKCONNETION", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.OutlookConnection", NameTextCodeDefaultText = "Outlook Connection" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_AgentSharedManifest = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AgentSharedManifest", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AgentSharedManifest", NameTextCodeDefaultText = "Agent Shared Manifest" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_Shipment_Action_SendToAirlineTenant = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Action.SendToAirlineTenant", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendToAirlineTenant", NameTextCodeDefaultText = "Send to airline tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_Shipment_Action_AllowPayables = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Action.AllowPayables", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AllowPayables", NameTextCodeDefaultText = "Allow editing payables after operational closure" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_Shipment_Action_AllowReceivables = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Shipment.Action.AllowReceivables", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AllowReceivables", NameTextCodeDefaultText = "Allow editing receivables after operational closure" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_CREATENEWCUSTOMSINVOICE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATENEWCUSTOMSINVOICE", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CreateNewCustomsInvoice", NameTextCodeDefaultText = "Create New Customs Invoice" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_CREATENEWCUSTOMSCREDIT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATENEWCUSTOMSCREDIT", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CreateNewCustomsCredit", NameTextCodeDefaultText = "Create New Customs Credit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_Area_ContainersFU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Area.ContainersFU", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ContainersFU", NameTextCodeDefaultText = "Containers F/U" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_AUTOMATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOMATION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.Automation", NameTextCodeDefaultText = "Automation" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_SendToArtemus = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToArtemus", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendToArtemus", NameTextCodeDefaultText = "Send to Artemus" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_SENDTOAES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDTOAES", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.SendToAES", NameTextCodeDefaultText = "Send to AES" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_ShipmentCustomsTransmission = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentCustomsTransmission", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ShipmentCustomsTransmission", NameTextCodeDefaultText = "Send to Customs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_DisconnectQuote = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DisconnectQuote", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.DisconnectQuote", NameTextCodeDefaultText = "Disconnect Quote" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_ShipmentEditExchangeRate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentEditExchangeRate", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.EditExchangeRate", NameTextCodeDefaultText = "Edit Exchange Rate" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_ShippingInstructions = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShippingInstructions", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.ShippingInstructions", NameTextCodeDefaultText = "Send Shipping Instructions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_COMMODITYNUMBER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMODITYNUMBER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CommodityNumber", NameTextCodeDefaultText = "Commodity Number" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_COMMODITYNAME = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMODITYNAME", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.CommodityName", NameTextCodeDefaultText = "Commodity Name" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_INTTRASimulator = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INTTRASimulator", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.INTTRASimulator", NameTextCodeDefaultText = "INTTRA Simulator" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -33420,6 +34384,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 IsFollowUp =  false,
                 ObjectTableId = ShipmentObjectTable.Id,
                 EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "ETA").FirstOrDefault().Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "STCN",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Ticket Connected",
+                EnglishName =  "Ticket Connected",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "STDC",
+                ShortView =  false,
+                IsManualEntry =  false,
+                LocalName =  "Ticket Disconnected",
+                EnglishName =  "Ticket Disconnected",
+                EventTypeCategoryCode =  "OPE",
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -35528,7 +36530,1076 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ShipmentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Shipment" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ShipmentTextCode_ShipmentBCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Create", DefaultText = "Create",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMOrdersHasLocalCharacters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Orders.HasLocalCharacters", DefaultText = "Some fields has local characters. Proccess?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSReceivablesReceivable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Receivables.Receivable", DefaultText = "Receivable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSReceivablesPayable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Receivables.Payable", DefaultText = "Payable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSReceivablesSummary = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Receivables.Summary", DefaultText = "Summary",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSReceivablesProfit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Receivables.Profit", DefaultText = "Profit",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBPrepaidCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.PrepaidCharge", DefaultText = "Prepaid Charge",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBCollectCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.CollectCharge", DefaultText = "Collect Charge",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBPrepaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.Prepaid", DefaultText = "Prepaid",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBCollect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.Collect", DefaultText = "Collect",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentShipperNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.ShipperNotes", DefaultText = "Shipper Notes",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentConsigneeNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.ConsigneeNotes", DefaultText = "Consignee Notes",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentField1ListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Field1ListLable", DefaultText = "Custom Date12",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddIssuingCarrierAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddIssuingCarrierAgent", DefaultText = "Add Issuing Carrier's Agent",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddIssuingCarrierAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.AddIssuingCarrierAgent", DefaultText = "Add Issuing Carrier's Agent",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersEditIssuingCarrierAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.EditIssuingCarrierAgent", DefaultText = "Edit Issuing Carrier's Agent",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutings10DischargePort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.10DischargePort", DefaultText = "Discharge Port",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsCannotGetMAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.CannotGetMAWB", DefaultText = "Cannot Get MAWB",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentCannotGetMAWBHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.CannotGetMAWBHelpText", DefaultText = "Cannot get MAWB from the stack in the Import shipments !",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBCopy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Copy", DefaultText = "Copy",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentLastWeeksUpdateHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.LastWeeksUpdateHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsCutOff = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.CutOff", DefaultText = "Cut-Off Date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentLastWeekUpdatesHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.LastWeekUpdatesHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentLastWeekUpdateHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.LastWeekUpdateHelpText", DefaultText = "null",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentODefaultValues = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.DefaultValues", DefaultText = "Default Values",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentDefaultValuesHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.DefaultValuesHelpText", DefaultText = "You can define default values from \"Maintenance->Billing->Charge Type Table",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBTotalPrepaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.TotalPrepaid", DefaultText = "Total Prepaid",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBTotalCollect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.TotalCollect", DefaultText = "Total Collect",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBTotalOtherChargesDueAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.TotalOtherChargesDueAgent", DefaultText = "Total Other Charges Due Agent",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBTotalOtherChargesDueCarrier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.TotalOtherChargesDueCarrier", DefaultText = "Total Other Charges Due Carrier",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMAllAWBPrintOnliesMustMatchShipmentAWBCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintOnliesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print Shipment Onlies must match the Shipment AWB Currency",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBWeightCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.WeightCharge", DefaultText = "Weight Charge",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBValuationCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.ValuationCharge", DefaultText = "Valuation Charge",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.Tax", DefaultText = "Tax",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBRoutingsEditMainCarriageLegs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Routings.EditMainCarriageLegs", DefaultText = "Edit Main Carriage Legs",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesAdd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Add", DefaultText = "Add",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesMarkup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Markup", DefaultText = "Markup",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesGenerateReceivablesFromPayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.GenerateReceivablesFromPayables", DefaultText = "Generate Receivables From Payables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentCHVolumeInKGLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.CH.VolumeInKGLable", DefaultText = "Volumetric weight",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBAWBPrintHAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.AWB.PrintHAWB", DefaultText = "Print HAWB",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOpenShipmentsHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.OpenShipmentsHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentAccountingOpenHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.AccountingOpenHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentAWBPrintSpecificationCodeHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.AWBPrintSpecificationCodeHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddPartners", DefaultText = "Add Partners",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBRoutingsAddRoute = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Routings.AddRoute", DefaultText = "Add Route",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesRebuild = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.Rebuild", DefaultText = "Rebuild Packages",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesNewManifestInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.NewManifestInvoice", DefaultText = "New Manifest Invoice",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPayablesReceiveInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Payables.ReceiveInvoice", DefaultText = "Receive Invoice",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPayablesGenerateFromQuoteReceivablesOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Payables.GenerateFromQuoteReceivablesOnly", DefaultText = "Generate From Quote (Receivables only)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPayablesGenerateFromQuoteReceivablesAndPayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Payables.GenerateFromQuoteReceivablesAndPayables", DefaultText = "Generate From Quote (Receivables and Payables)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBMasterViewMaster = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Master.ViewMaster", DefaultText = "View Master",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMAWBNoPayablesReceivables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AWB.NoPayablesReceivables", DefaultText = "No Payables / Receivables found. You can add them manually to the table !",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsCantProceedAddingPickUp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.CantProceedAddingPickUp", DefaultText = "This shipment has validation errors you cant proceed adding shipment pick up!",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsPickUpDepartureLessThanArrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.PickUpDepartureLessThanArrival", DefaultText = "Pick Up Departure must be less than Pick Up Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsPickUpArrivalLessThanPreCarriageDeparture = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.PickUpArrivalLessThanPreCarriageDeparture", DefaultText = "Pick Up Arrival must be less than Pre Carriage Departure",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsPickUpArrivalLessThanMainCarriageDeparture = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.PickUpArrivalLessThanMainCarriageDeparture", DefaultText = "Pick Up Arrival must be less than Main Carriage Departure",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOFollowUps = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.FollowUps", DefaultText = "Follow Ups",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOMaster = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Master", DefaultText = "Master",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewOverview = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Overview", DefaultText = "Overview",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewCargoInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.CargoInformation", DefaultText = "Cargo Information",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewMoneyInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.MoneyInformation", DefaultText = "Money Information",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewShipment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Shipment", DefaultText = "Shipment",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewMaster = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Master", DefaultText = "Master",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewGrossWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.GrossWeight", DefaultText = "Gross Weight",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewVolume = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Volume", DefaultText = "Volume",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewChargeableWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.ChargeableWeight", DefaultText = "Chargeable Weight",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewARInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.ARInvoices", DefaultText = "A/R Invoices",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewAPInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.APInvoices", DefaultText = "A/P Invoices",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewOpenReceivables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.OpenReceivables", DefaultText = "Open Receivables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewOpenPayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.OpenPayables", DefaultText = "Open Payables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewFollowUp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.FollowUp", DefaultText = "Follow Up",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewContainerType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.ContainerType", DefaultText = "Container Type",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewNotConnectedToAMaster = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.NotConnectedToAMaster", DefaultText = "Not connected to a Master",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewProfit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Profit", DefaultText = "Profit",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewMAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.MAWB", DefaultText = "MAWB",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewOBL = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.OBL", DefaultText = "OBL",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewFlight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Flight", DefaultText = "Flight",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewVoyage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Voyage", DefaultText = "Voyage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewTrucker = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Trucker", DefaultText = "Trucker",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewFlightNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.FlightNo", DefaultText = "Flight No",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewVoyageNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.VoyageNo", DefaultText = "Voyage No",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewTruckerNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.TruckerNo", DefaultText = "Trucker No",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewFlightDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.FlightDate", DefaultText = "Flight Date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewVoyageDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.VoyageDate", DefaultText = "Voyage Date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewTruckerDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.TruckerDate", DefaultText = "Trucker Date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Shipper", DefaultText = "Shipper",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Consignee", DefaultText = "Consignee",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Agent", DefaultText = "Agent",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewCustomAgentExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.CustomAgentExport", DefaultText = "Custom Agent Export",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewCustomAgentImport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.CustomAgentImport", DefaultText = "Custom Agent Import",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewNotify1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Notify1", DefaultText = "Notify1",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewNotify2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.Notify2", DefaultText = "Notify2",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewConsigneeNotImporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.ConsigneeNotImporter", DefaultText = "Consignee Not Importer",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewShipperNotExporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.ShipperNotExporter", DefaultText = "Shipper Not Exporter",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSOrdersOrderBookingDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Orders.OrderBookingDetails", DefaultText = "Order/Booking Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSOrdersDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Orders.Details", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSOrdersBookingConfirmation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Orders.BookingConfirmation", DefaultText = "Booking Confirmation",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSOrdersPickupDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Orders.PickupDetails", DefaultText = "Pickup Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMOrdersNoPickupEntered = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Orders.NoPickupEntered", DefaultText = "No pickup entered, to add new pickup go to routings",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSOrdersInstructions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Orders.Instructions", DefaultText = "Instructions",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSOrdersCutOffTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Orders.CutOffTime", DefaultText = "Cut-Off Time",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSOrdersBooking = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Orders.Booking", DefaultText = "Booking",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSOrdersOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Orders.Order", DefaultText = "Order",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPartnersPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Partners.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsRoutings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Routings", DefaultText = "Routings",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsHAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.HAWB", DefaultText = "HAWB",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsMAWBDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.MAWBDate", DefaultText = "MAWB Date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsOBLDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.OBLDate", DefaultText = "OBL Date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPackagesPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Packages.Packages", DefaultText = "Packages",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPackagesDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Packages.Details", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPackagesSummary = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Packages.Summary", DefaultText = "Summary",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesApproved = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Approved", DefaultText = "Approved",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesOpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.OpenAmount", DefaultText = "Open Amount",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesAccounted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Accounted", DefaultText = "Closed",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesDraft = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Draft", DefaultText = "Draft",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesChargeType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.ChargeType", DefaultText = "Charge Type",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesInvoiceNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.InvoiceNo", DefaultText = "Invoice #",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Open", DefaultText = "Open",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.DueDate", DefaultText = "Due Date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesCreditNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.CreditNotes", DefaultText = "Credit Notes",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesCreatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.CreatedBy", DefaultText = "Created by",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesCreateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.CreateDate", DefaultText = "Create date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesUpdatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.UpdatedBy", DefaultText = "Updated by",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesUpdateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.UpdateDate", DefaultText = "Update date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesApproved = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.Approved", DefaultText = "Approved",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesNoInvoiceNeeded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.NoInvoiceNeeded", DefaultText = "No Invoice Needed",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesOpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.OpenAmount", DefaultText = "Open Amount",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesAccounted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.Accounted", DefaultText = "Closed",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesPartiallyPaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.PartiallyPaid", DefaultText = "Partially Paid",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesAccountedAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.AccountedAmount", DefaultText = "Accounted Amount",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesAccruals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.Accruals", DefaultText = "Accruals",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesAccountedPayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.AccountedPayables", DefaultText = "Accounted Payables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesOpenPayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.OpenPayables", DefaultText = "Open Payables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesCreatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.CreatedBy", DefaultText = "Created by",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesCreateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.CreateDate", DefaultText = "Create date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesUpdatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.UpdatedBy", DefaultText = "Updated by",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesUpdateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.UpdateDate", DefaultText = "Update date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBAaiwayBill = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.AaiwayBill", DefaultText = "Airway Bill",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBFrtDisburs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.FrtDisburs", DefaultText = "Freight and Disbursements",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBAdditional = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.Additional", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBAWBFillExRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.AWB.FillExRate", DefaultText = "Fill Exchange Rate",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBEditShipmentAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.EditShipmentAWB", DefaultText = "Edit Shipment AWB Print Only",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBAddShipmentAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.AddShipmentAWB", DefaultText = "Add Shipment AWB Print Only",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentSetAsMyCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.SetAsMyCustomer", DefaultText = "Set as My Customer",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentAddNewShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.AddNewShipper", DefaultText = "Add new Shipper",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentAddNewConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.AddNewConsignee", DefaultText = "Add new Consignee",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentSelectFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.SelectFields", DefaultText = "Select Fields to Copy",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Agent", DefaultText = "Agent",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentCustomAgentImport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.CustomAgentImport", DefaultText = "Customs Agent Import",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentCustomgAgentExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.CustomgAgentExport", DefaultText = "Customg Agent Export",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentNotify1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Notify1", DefaultText = "Notify 1",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentNotify2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Notify2", DefaultText = "Notify 2",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentShipperNotExporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.ShipperNotExporter", DefaultText = "Shipper Not Exporter",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentConsigneeNotImporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.ConsigneeNotImporter", DefaultText = "Consignee Not Importer",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentFreightForward = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.FreightForward", DefaultText = "Freight Forward",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentMainCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.MainCarriage", DefaultText = "Main Carriage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentIncludePackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.IncludePackages", DefaultText = "Include Packages",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentCopy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Copy", DefaultText = "Copy",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentOtherPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.OtherPartners", DefaultText = "Other Partners",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentOtherDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.OtherDetails", DefaultText = "Other Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentTipOrderDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Tip.OrderDetails", DefaultText = " These are the ordered quantities and dimensions. The actual package details are managed via the Packages tab.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesGenerateFromQuoteReceivablesOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.GenerateFromQuoteReceivablesOnly", DefaultText = "Generate From Quote (Receivables only)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesGenerateFromQuoteReceivablesAndPayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.GenerateFromQuoteReceivablesAndPayables", DefaultText = "Generate From Quote (Receivables and Payables)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMShipmentConvertedDToH = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ShipmentConvertedDToH", DefaultText = "Shipment Converted From Direct To House...",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMMasterAWBNumberTakenFromStack = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.MasterAWBNumberTakenFromStack", DefaultText = "The master AWB number is taken from stack please return it to stack then try to convert again.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMShipmentConvertedHtoD = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ShipmentConvertedHtoD", DefaultText = "Shipment Converted From House To Direct...",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMShipmentReactivated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ShipmentReactivated", DefaultText = "Shipment Reactivated...",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMShipmentCancelled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ShipmentCancelled", DefaultText = "Shipment Cancelled...",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMMAWBMustBeCleared = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.MAWBMustBeCleared", DefaultText = "MAWB Field Must Be Cleared!",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMShipmentAccountingReopened = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ShipmentAccountingReopened", DefaultText = "Shipment Accounting Reopened...",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMCheckingRequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.CheckingRequiredFields", DefaultText = "Checking Required Fields in Shipment...",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDoesntContainInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DoesntContainInvoice", DefaultText = "This Shipment Doesn't Contain Any Invoice...",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMShipmentOperationalReopened = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ShipmentOperationalReopened", DefaultText = "Shipment Operational Reopened...",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMReceivablesGrossWeightNotSameAsQuote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.GrossWeightNotSameAsQuote", DefaultText = "Gross Weight is not same as Quote",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMReceivablesChargeableWeightNotSameAsQuote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.ChargeableWeightNotSameAsQuote", DefaultText = "Chargeable Weight is not same as Quote",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMReceivablesShipmentDoesntContainContainers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.ShipmentDoesntContainContainers", DefaultText = "This shipment doesn't contain any containers",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMPayablesGrossWeightNotSameAsQuote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.GrossWeightNotSameAsQuote", DefaultText = "Gross Weight is not same as Quote",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMPayablesChargeableWeightNotSameAsQuote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.ChargeableWeightNotSameAsQuote", DefaultText = "Chargeable Weight is not same as Quote",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsCantProceedAddingDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.CantProceedAddingDelivery", DefaultText = "This shipment has validation errors you cant proceed adding shipment delivery!",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsDeliverypDepartureLessThanArrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.DeliverypDepartureLessThanArrival", DefaultText = "Delivery Departure must be less than Delivery Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsDeliveryDepartureBiggetThanOnCarriageArrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.DeliveryDepartureBiggetThanOnCarriageArrival", DefaultText = "Delivery Departure must be bigger than On Carriage Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsDeliveryDepartureBiggerThanTransshipment3Arrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.DeliveryDepartureBiggerThanTransshipment3Arrival", DefaultText = "Delivery Departure must be bigger than Transshipment3 Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsDeliveryDepartureBiggerThanTransshipment2Arrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.DeliveryDepartureBiggerThanTransshipment2Arrival", DefaultText = "Delivery Departure must be bigger than Transshipment2 Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsDeliveryDepartureBiggerThanTransshipment1Arrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.DeliveryDepartureBiggerThanTransshipment1Arrival", DefaultText = "Delivery Departure must be bigger than Transshipment1 Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsDeliveryDepartureBiggerThanMainCarriageArrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.DeliveryDepartureBiggerThanMainCarriageArrival", DefaultText = "Delivery Departure must be bigger than Main Carriage Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsPreCarriageDepartureLessThanPreCarriageArrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.PreCarriageDepartureLessThanPreCarriageArrival", DefaultText = "Pre Carriage Departure must be less than Pre Carriage Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsPreCarriageArrivalLessThanMainCarriageDeparture = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.PreCarriageArrivalLessThanMainCarriageDeparture", DefaultText = "Pre Carriage Arrival must be less than Main Carriage Departure",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsOnCarriageDepartureLessThanOnCarriageArrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.OnCarriageDepartureLessThanOnCarriageArrival", DefaultText = "On Carriage Departure must be less than On Carriage Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsOnCarriageDepartureBiggerThanTransshipment3Arrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.OnCarriageDepartureBiggerThanTransshipment3Arrival", DefaultText = "On Carriage Departure must be bigger than Transshipment3 Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsOnCarriageDepartureBiggerThanTransshipment2Arrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.OnCarriageDepartureBiggerThanTransshipment2Arrival", DefaultText = "On Carriage Departure must be bigger than Transshipment2 Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsOnCarriageDepartureBiggerThanTransshipment1Arrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.OnCarriageDepartureBiggerThanTransshipment1Arrival", DefaultText = "On Carriage Departure must be bigger than Transshipment1 Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsOnCarriageDepartureBiggerThanMainCarriageArrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.OnCarriageDepartureBiggerThanMainCarriageArrival", DefaultText = "On Carriage Departure must be bigger than Main Carriage Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsActualArrivalDateSetToFutureDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.ActualArrivalDateSetToFutureDate", DefaultText = "Actual arrival date is set to future date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMRoutingsActualDepartureDateSetToFutureDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Routings.ActualDepartureDateSetToFutureDate", DefaultText = "Actual departure date is set to future date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsEditMainCarriagePorts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.EditMainCarriagePorts", DefaultText = "Edit Main Carriage Ports",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsAddNewFollowUp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddNewFollowUp", DefaultText = "Add New Follow Up",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesGenerateFromQuotesList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.GenerateFromQuotesList", DefaultText = "Generate From Quotes List",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesNewManifestInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.NewManifestInvoice", DefaultText = "Create new Manifest Invoice",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesNewCreditInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.NewCreditInvoice", DefaultText = "Create new Credit Invoice",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesNewInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.NewInvoice", DefaultText = "Create new Invoice",LocalDefaultText = "יצירת חשבונית חדשה", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesUpdateCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.UpdateCurrencyRate", DefaultText = "Update Currency Rate",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesUpdateCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.UpdateCurrencyRate", DefaultText = "Update Currency Rate",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBOk = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Ok", DefaultText = "OK",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Cancel", DefaultText = "Cancel",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBAdd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Add", DefaultText = "Add",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBEdit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Edit", DefaultText = "Edit",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBDelete = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Delete", DefaultText = "Delete",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentTruckerNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.TruckerNo", DefaultText = "Trucker No.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentIncludePickUp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.IncludePickUp", DefaultText = "Include Pickup",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentPickUpAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.PickUpAddress", DefaultText = "Pickup Address",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentIncludeDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.IncludeDelivery", DefaultText = "Include Delivery",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesUOM = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.UOM", DefaultText = "UOM",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Currency", DefaultText = "Curr",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesUnitPrice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.UnitPrice", DefaultText = "Unit Price",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Amount", DefaultText = "Amount",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesAmountLocal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.AmountLocal", DefaultText = "Amount (%LocalCurrencyCode)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesReceivables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Receivables", DefaultText = "Receivables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesReceivable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Receivable", DefaultText = "Receivable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesPayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Payables", DefaultText = "Payables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesPayable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Payable", DefaultText = "Payable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesSummary = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Summary", DefaultText = "Summary",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesChargeTypeSummary = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.ChargeTypeSummary", DefaultText = "Charge Type Summary",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Difference", DefaultText = "Difference",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesProfit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Profit", DefaultText = "Profit",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesEstimateProfit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.EstimateProfit", DefaultText = "Estimated Profit",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Invoices", DefaultText = "Invoices",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesAddPayable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.AddPayable", DefaultText = "Add Payable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesEditPayable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.EditPayable", DefaultText = "Edit Payable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.Code", DefaultText = "Code",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesAmountLocal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.AmountLocal", DefaultText = "Amount (%LocalCurrencyCode)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesReceivables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.Receivables", DefaultText = "Receivables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesReceivable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.Receivable", DefaultText = "Receivable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesPayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.Payables", DefaultText = "Payables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesPayable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.Payable", DefaultText = "Payable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesSummary = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.Summary", DefaultText = "Summary",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.Difference", DefaultText = "Difference",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesProfit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.Profit", DefaultText = "Profit",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSProfitProfitDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Profit.ProfitDetails", DefaultText = "Profit Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSProfitChargeType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Profit.ChargeType", DefaultText = "Charge Type",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSProfitReceivables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Profit.Receivables", DefaultText = "Receivables (%LocalCurrencyCode)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSProfitPayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Profit.Payables", DefaultText = "Payables (%LocalCurrencyCode)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSProfitProfit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Profit.Profit", DefaultText = "Profit",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSProfitEstimateProfit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Profit.EstimateProfit", DefaultText = "Estimated Profit",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSProfitDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Profit.Difference", DefaultText = "Difference",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBDisbursement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.Disbursement", DefaultText = "Disbursement",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBTotals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.Totals", DefaultText = "Totals",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.Type", DefaultText = "Type",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSAWBName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.AWB.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentRoutings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Routings", DefaultText = "Routings",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentExpectedOrderDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.ExpectedOrderDetails", DefaultText = "Expected Order Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentMyCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.MyCustomer", DefaultText = "My Customer",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentGateway = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Gateway", DefaultText = "Gateway",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentLoadingPort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.LoadingPort", DefaultText = "Loading Port",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.From", DefaultText = "From",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentDestination = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Destination", DefaultText = "Destination",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentDischargePort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.DischargePort", DefaultText = "Discharge Port",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.To", DefaultText = "To",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentAirline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Airline", DefaultText = "Airline",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentShippingline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Shippingline", DefaultText = "Shipping Line",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentTrucker = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Trucker", DefaultText = "Trucker",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentCarrier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Carrier", DefaultText = "Airline",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentQuantity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.Quantity", DefaultText = "Quantity",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentPackageType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.PackageType", DefaultText = "Package Type",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentHAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.HAWB", DefaultText = "HAWB",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentFBL = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.FBL", DefaultText = "FBL",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentMAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.MAWB", DefaultText = "MAWB",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentOBL = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.OBL", DefaultText = "OBL",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.No", DefaultText = "No.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentFlightNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.FlightNo", DefaultText = "Flight No.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentVoyageNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.VoyageNo", DefaultText = "Voyage No.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_Shipment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment", DefaultText = "Shipment",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.Contact", DefaultText = "Contact",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersReference1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.Reference1", DefaultText = "Reference 1",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersReference2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.Reference2", DefaultText = "Reference 2",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersMyCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.MyCustomer", DefaultText = "My Customer",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.AddShipper", DefaultText = "Add Shipper",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.AddConsignee", DefaultText = "Add Consignee",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.AddAgent", DefaultText = "Add Agent",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddCustomAgentExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.AddCustomAgentExport", DefaultText = "Add Customs Agent Export",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddCustomAgentImport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.AddCustomAgentImport", DefaultText = "Add Customs Agent Import",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddNotify1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.AddNotify1", DefaultText = "Add Notify 1",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddNotify2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.AddNotify2", DefaultText = "Add Notify 2",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddShipperNotExporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.AddShipperNotExporter", DefaultText = "Add Shipper Not Exporter",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddConsigneeNotImporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.AddConsigneeNotImporter", DefaultText = "Add Consignee Not Importer",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersAddFreightForwarder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.AddFreightForwarder", DefaultText = "Add Freight Forwarder",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersEditShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.EditShipper", DefaultText = "Edit Shipper",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersEditConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.EditConsignee", DefaultText = "Edit Consignee",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersEditAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.EditAgent", DefaultText = "Edit Agent",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersEditCustomAgentExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.EditCustomAgentExport", DefaultText = "Edit Custom Agent Export",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersEditCustomAgentImport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.EditCustomAgentImport", DefaultText = "Edit Custom Agent Import",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersEditNotify1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.EditNotify1", DefaultText = "Edit Notify 1",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersEditNotify2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.EditNotify2", DefaultText = "Edit Notify 2",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersEditShipperNotExporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.EditShipperNotExporter", DefaultText = "Edit Shipper Not Exporter",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersEditConsigneeNotImporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.EditConsigneeNotImporter", DefaultText = "Edit Consignee Not Importer",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersEditFreightForwarder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.EditFreightForwarder", DefaultText = "Edit Freight Forwarder",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsPickup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Pickup", DefaultText = "Pickup",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Delivery", DefaultText = "Delivery",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsPreCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.PreCarriage", DefaultText = "Pre-Carriage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsOnCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.OnCarriage", DefaultText = "On Carriage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsMainCarriageLeg1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.MainCarriageLeg1", DefaultText = "Main Carriage Leg 1",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsMainCarriageLeg2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.MainCarriageLeg2", DefaultText = "Main Carriage Leg 2",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsMainCarriageLeg3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.MainCarriageLeg3", DefaultText = "Main Carriage Leg 3",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsMainCarriageLeg4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.MainCarriageLeg4", DefaultText = "Main Carriage Leg 4",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsTransshipment1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Transshipment1", DefaultText = "Transshipment 1",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsTransshipment2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Transshipment2", DefaultText = "Transshipment 2",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsTransshipment3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Transshipment3", DefaultText = "Transshipment 3",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsAddPickup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddPickup", DefaultText = "Add Pickup",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsAddDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddDelivery", DefaultText = "Add Delivery",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsAddPreCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddPreCarriage", DefaultText = "Add Pre-Carriage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsAddOnCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddOnCarriage", DefaultText = "Add On Carriage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsAddEditMainCarriageLegs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddEditMainCarriageLegs", DefaultText = "Edit Main Carriage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsEditPickup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.EditPickup", DefaultText = "Edit Pickup",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsEditDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.EditDelivery", DefaultText = "Edit Delivery",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsEditPreCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.EditPreCarriage", DefaultText = "Edit Pre-Carriage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsEditOnCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.EditOnCarriage", DefaultText = "Edit On Carriage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsNoPickup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.NoPickup", DefaultText = "No Pickup",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsNoDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.NoDelivery", DefaultText = "No Delivery",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsDeparture = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Departure", DefaultText = "Departure",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsArrival = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Arrival", DefaultText = "Arrival",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsCarrier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Carrier", DefaultText = "Carrier",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.No", DefaultText = "No.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsCarrierNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.CarrierNo", DefaultText = "Carrier No.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsVessel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Vessel", DefaultText = "Vessel",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.From", DefaultText = "From",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.To", DefaultText = "To",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsTransportMode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.TransportMode", DefaultText = "Trans. Mode",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsETD = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.ETD", DefaultText = "ETD",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsETA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.ETA", DefaultText = "ETA",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsATD = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.ATD", DefaultText = "ATD",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsATA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.ATA", DefaultText = "ATA",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsVia1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Via1", DefaultText = "Via 1",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsVia2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Via2", DefaultText = "Via 2",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsVia3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Via3", DefaultText = "Via Port 3",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsGateway = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Gateway", DefaultText = "Gateway",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsLoadingPort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.LoadingPort", DefaultText = "Loading Port",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsDestination = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Destination", DefaultText = "Destination",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsDischargePort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.DischargePort", DefaultText = "Discharge Port",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsAirline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Airline", DefaultText = "Airline",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsShippingline = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Shippingline", DefaultText = "Shipping Line",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsTrucker = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Trucker", DefaultText = "Trucker",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsFlightNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.FlightNo", DefaultText = "Flight No.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsVoyageNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.VoyageNo", DefaultText = "Voyage No.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsTruckNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.TruckNo", DefaultText = "Truck No.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsMainCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.MainCarriage", DefaultText = "Main Carriage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsMAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.MAWB", DefaultText = "MAWB",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsOBL = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.OBL", DefaultText = "OBL",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPackagesVolume = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Packages.Volume", DefaultText = "Volume (%UnitCode)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPackagesGrossWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Packages.GrossWeight", DefaultText = "Gross Weight (%UnitCode)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPackagesDimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Packages.Dimensions", DefaultText = "Dimensions (L-W-H) (%UnitCode)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPackagesVolWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Packages.VolWeight", DefaultText = "Volumetric Weight (%UnitCode)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPackagesDangerouseGoods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Packages.DangerouseGoods", DefaultText = "Dangerous Goods",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPackagesEditDangerousGoods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Packages.EditDangerousGoods", DefaultText = "Edit Dangerous Goods",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOGenerateFromOrderPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.GenerateFromOrderPackages", DefaultText = "Generate from Order Packages (%Number Packages)",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesAddReceivable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.AddReceivable", DefaultText = "Add Receivable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesEditReceivable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.EditReceivable", DefaultText = "Edit Receivable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Code", DefaultText = "Code",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesPC = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.PC", DefaultText = "P/C",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesDue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Due", DefaultText = "Due",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesQuantity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.Quantity", DefaultText = "Quantity",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBClose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Close", DefaultText = "Close",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Search", DefaultText = "Search",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBFinish = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Finish", DefaultText = "Finish",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBOrderAddOrderPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Order.AddOrderPackage", DefaultText = "Add Order Package",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBOrderDeleteOrderPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Order.DeleteOrderPackage", DefaultText = "Delete Order Package",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBOrderMeasurmentsSettings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Order.MeasurmentsSettings", DefaultText = "Measurement Settings",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBOrderHideMeasurmentsSettings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Order.HideMeasurmentsSettings", DefaultText = "Hide Measurement Settings",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddShipper", DefaultText = "Add Shipper",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddConsignee", DefaultText = "Add Consignee",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddCustomer", DefaultText = "Add Customer",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddAgent", DefaultText = "Add Agent",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddCustomsAgentExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddCustomsAgentExport", DefaultText = "Add Customs Agent Export",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddCustomsAgentImport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddCustomsAgentImport", DefaultText = "Add Customs Agent Import",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddOtherPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddOtherPartners", DefaultText = "Add Other Partners",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddNotify1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddNotify1", DefaultText = "Add Notify 1",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddNotify2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddNotify2", DefaultText = "Add Notify 2",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddShipperNotExporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddShipperNotExporter", DefaultText = "Add Shipper Not Exporter",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddConsigneeNotImporter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddConsigneeNotImporter", DefaultText = "Add Consignee Not Importer",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPartnersAddFreightForwarder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Partners.AddFreightForwarder", DefaultText = "Add Freight Forwarder",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBRoutingsAddEditMainCarriageLegs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Routings.AddEditMainCarriageLegs", DefaultText = "Add/Edit Main Carriage Legs",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBRoutingsAddPickUp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Routings.AddPickUp", DefaultText = "Add Pickup",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBRoutingsAddPreCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Routings.AddPreCarriage", DefaultText = "Add Pre-Carriage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBRoutingsAddOnCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Routings.AddOnCarriage", DefaultText = "Add On Carriage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBRoutingsAddDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Routings.AddDelivery", DefaultText = "Add Delivery",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBRoutingsGet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Routings.Get", DefaultText = "Get",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBRoutingsSetAsActual = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Routings.SetAsActual", DefaultText = "Set As Actual",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesAddPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.AddPackage", DefaultText = "Add Package",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesDeletePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.DeletePackage", DefaultText = "Delete Package",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesAddContainer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.AddContainer", DefaultText = "Add Container",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesDeleteContainer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.DeleteContainer", DefaultText = "Delete Container",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesAddInsidePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.AddInsidePackage", DefaultText = "Add Inside Package",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesDeleteInsidePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.DeleteInsidePackage", DefaultText = "Delete Inside Package",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesMeasurmentsSettings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.MeasurmentsSettings", DefaultText = "Measurement Settings",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesHideMeasurmentsSettings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.HideMeasurmentsSettings", DefaultText = "Hide Measurement Settings",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesBuildMarksAndNumbers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.BuildMarksAndNumbers", DefaultText = "Build",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesDangerouseGoodsDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.DangerouseGoodsDetails", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesAddReceivable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.AddReceivable", DefaultText = "Add Receivable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesDeleteReceivable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.DeleteReceivable", DefaultText = "Delete Receivable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesNewInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.NewInvoice", DefaultText = "New Invoice",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesNewTaxInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.NewTaxInvoice", DefaultText = "New Tax Invoice",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesNewCreditNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.NewCreditNote", DefaultText = "New Credit Note",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesShowQuote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.ShowQuote", DefaultText = "Show Quote",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesGenerateAutoDisplay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.GenerateAutoDisplay", DefaultText = "Generate Auto Display",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesGenerateFromPayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.GenerateFromPayables", DefaultText = "Generate from Payables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesGenerateFromQuote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.GenerateFromQuote", DefaultText = "Generate from Quote",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBReceivablesFillExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Receivables.FillExchangeRate", DefaultText = "Fill Exchange Rate",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPayablesAddPayable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Payables.AddPayable", DefaultText = "Add Payable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPayablesDeletePayable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Payables.DeletePayable", DefaultText = "Delete Payable",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPayablesProfit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Payables.Profit", DefaultText = "Profit",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPayablesShowQuote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Payables.ShowQuote", DefaultText = "Show Quote",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPayablesGenerateAutoDisplay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Payables.GenerateAutoDisplay", DefaultText = "Generate Auto Display",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPayablesGenerateFromQuote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Payables.GenerateFromQuote", DefaultText = "Generate from Quote",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPayablesFillExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Payables.FillExchangeRate", DefaultText = "Fill Exchange Rate",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBAWBAddPrintAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.AWB.AddPrintAWB", DefaultText = "Add Charge",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBAWBDeletePrintAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.AWB.DeletePrintAWB", DefaultText = "Delete Print AWB Only",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBAWBPrintAWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.AWB.PrintAWB", DefaultText = "Print AWB",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBNewShipmentAddShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.NewShipment.AddShipper", DefaultText = "Add Shipper",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBNewShipmentAddConsignee = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.NewShipment.AddConsignee", DefaultText = "Add Consignee",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMNoOpenedAmounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.NoOpenedAmounts", DefaultText = "No open amounts",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMNoOpenedMinusAmounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.NoOpenedMinusAmounts", DefaultText = "No open minus amounts",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDeleteThisOrderPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisOrderPackage", DefaultText = "Delete this order package?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDeleteThisPartner = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisPartner", DefaultText = "Delete this partner?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDeleteThisPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisPackage", DefaultText = "Delete this package?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDeleteThisRecievable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisRecievable", DefaultText = "Delete this recievable?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDeleteThisPayable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisPayable", DefaultText = "Delete this payable?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDeleteThisPickup = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisPickup", DefaultText = "Delete this pickup?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDeleteThisDelivery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisDelivery", DefaultText = "Delete this delivery?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDeleteThisPreCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisPreCarriage", DefaultText = "Delete Pre-Carriage?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDeleteThisOnCarriage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisOnCarriage", DefaultText = "Delete On Carriage?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMThereAreNoPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ThereAreNoPackages", DefaultText = "There are no packages! Process Generating?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMGenerateIsAvailableAfterQuoteApproval = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.GenerateIsAvailableAfterQuoteApproval", DefaultText = "Generation is possible after quote approval?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMReceivablesShowProfitDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.ShowProfitDetails", DefaultText = "Show Profit Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMReceivablesPricedueQuoteCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.PricedueQuoteCharge", DefaultText = "Price is due to Quote Charge Sales Price Steps",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMReceivablesAmountdueQuoteMinimum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.AmountdueQuoteMinimum", DefaultText = "Amount is due to Quote minimum amount",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMReceivablesForeignAmountsetasFixed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.ForeignAmountsetasFixed", DefaultText = "Foreign amount set as Fixed",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMPayablesShowProfitDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.ShowProfitDetails", DefaultText = "Show Profit Details",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMPayablesPricedueQuoteCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.PricedueQuoteCharge", DefaultText = "Price is due to Quote Charge Cost Price Steps",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMPayablesAmountdueQuoteMinimum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueQuoteMinimum", DefaultText = "Amount is due to Quote minimum amount",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMPayablesAmountdueTarrifChargeMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueTarrifChargeMax", DefaultText = "Amount is due to Tarrif Charge Max Amount",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMPayablesAmountdueTarrifChargeMin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueTarrifChargeMin", DefaultText = "Amount is due to Tarrif Charge Min Amount",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMThisAirlineMAWBStackFoundInStack = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ThisAirlineMAWBStackFoundInStack", DefaultText = "This airline MAWB Stack is found in the stack",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMThisAirlineMAWBStackNotExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ThisAirlineMAWBStackNotExists", DefaultText = "This airline MAWB Stack doesn't exist",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMCantDeleteThisReceivable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.CantDeleteThisReceivable", DefaultText = "Can't delete this receivable.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMAllAWBPrintReceivablesMustMatchShipmentAWBCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintReceivablesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print shipment receivables must match the shipment AWB currency",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMAllAWBPrintPayablesMustMatchShipmentAWBCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.AllAWBPrintPayablesMustMatchShipmentAWBCurrency", DefaultText = "All AWB Print shipment payables must match the shipment AWB currency.",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentQExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.Export", DefaultText = "Export",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentQImport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.Import", DefaultText = "Import",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentQDirectionAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.DirectionAll", DefaultText = "Export & Import",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentQAir = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.Air", DefaultText = "Air",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentQOcean = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.Ocean", DefaultText = "Ocean",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentQInland = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.Inland", DefaultText = "Inland",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentQTransportAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.Q.TransportAll", DefaultText = "Air & Ocean & InLand",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentONotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Notes", DefaultText = "Notes",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSOrdersAddOrderPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Orders.AddOrderPackage", DefaultText = "Add Order Package",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSOrdersEditOrderPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Orders.EditOrderPackage", DefaultText = "Edit Order Package",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPayablesTariffs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Payables.Tariffs", DefaultText = "Tariffs",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBCustomsFileViewCustomsFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.CustomsFile.ViewCustomsFile", DefaultText = "View Customs File",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOCustomsFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.CustomsFile", DefaultText = "Customs File",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOFreightFiles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.FreightFiles", DefaultText = "Freight Files",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMExceptionResolved = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ExceptionResolved", DefaultText = "Exception Resolved...",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentCMRRWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.CMR/RWB#", DefaultText = "CMR/RWB#/PRO#",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersColoaderRef = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.ColoaderRef", DefaultText = "Co-loader Ref",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersNotify = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.Notify", DefaultText = "Notify",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPartnersIssuingCarrierColoader = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Partners.IssuingCarrierColoader", DefaultText = "Issuing Carrier's Agent / Coloader",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewCMRRWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.CMR/RWB#", DefaultText = "CMR/RWB#/PRO#",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewTruckNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.TruckNo", DefaultText = "Truck No",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsCMRRWB = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.CMR/RWB#", DefaultText = "CMR/RWB#/PRO#",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsCMRRWBDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.CMR/RWBDate", DefaultText = "CMR/RWB Date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOOverviewShippingLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Overview.ShippingLine", DefaultText = "Shipping Line",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsEditWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.EditWarehouseLeg", DefaultText = "Edit Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLeg", DefaultText = "Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLegWarehouseId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLegWarehouseId", DefaultText = "Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLegAddressId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLegAddressId", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLegFirmCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLegFirmCode", DefaultText = "Firm Code",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLegRemarks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLegRemarks", DefaultText = "Remarks",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLegExpectedEntryDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLegExpectedEntryDate", DefaultText = "Expected Entry",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLegExpectedReleaseDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLegExpectedReleaseDate", DefaultText = "Expected Release",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLegActualEntryDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLegActualEntryDate", DefaultText = "Actual Entry",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLegActualReleaseDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLegActualReleaseDate", DefaultText = "Actual Release",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsTerminalAvailable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.TerminalAvailable", DefaultText = "Terminal Available",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsEntry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Entry", DefaultText = "Entry",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsRelease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.Release", DefaultText = "Release",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLegLastFreeDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLegLastFreeDate", DefaultText = "Last Free Date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLegReference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLegReference", DefaultText = "Reference",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsNoWarehouseTerminal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.NoWarehouseTerminal", DefaultText = "No Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsAddWarehouseLeg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddWarehouseLeg", DefaultText = "Add Warehouse / Terminal",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBSendToArtemusVoyage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.SendToArtemusVoyage", DefaultText = "Send Voyage",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBSendToArtemusBill = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.SendToArtemusBill", DefaultText = "Send Bill of Lading",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSReceivablesConnectedToMaster = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Receivables.ConnectedToMaster", DefaultText = "This receivable is connected to master",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSReceivablesCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Receivables.Customs", DefaultText = "Customs",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSReceivablesInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Receivables.Invoice", DefaultText = "Invoice",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSReceivablesCreditNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Receivables.CreditNote", DefaultText = "Credit Note",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesOpenAmountHelp = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.OpenAmountHelp", DefaultText = "Remaining not accounted amount",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesPayableInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.PayableInvoices", DefaultText = "Payable Invoices",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.DueDate", DefaultText = "Due Date",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBSendToCustoms = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.SendToCustoms", DefaultText = "Send to Customs",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMThisFBLStockFoundInStack = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ThisFBLStockFoundInStack", DefaultText = "This FBL is found in the stock",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMThisFBLStockNotExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ThisFBLStockNotExists", DefaultText = "This airline FBLStock doesn't exists",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesNewCustomsInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.NewCustomsInvoice", DefaultText = "Create new Customs Invoice",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDeleteThisEmptyCR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisEmptyCR", DefaultText = "Delete this empty container return?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsEmptyCR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.EmptyCR", DefaultText = "Empty Container Return",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsAddEmptyCR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.AddEmptyCR", DefaultText = "Add Empty Container Return",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsEditEmptyCR = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.EditEmptyCR", DefaultText = "Edit Empty Container Return",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOReceivablesNewCustomsCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Receivables.NewCustomsCredit", DefaultText = "Create new Customs Credit Invoice",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentUpdateByUserIdHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.UpdateByUserIdHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSReceivablesNoCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Receivables.NoCharges", DefaultText = "No charges in Quote",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSReceivablesRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Receivables.Rate", DefaultText = "Rate",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesNoCharges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.NoCharges", DefaultText = "No charges in Quote",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSPayablesConnectedToMaster = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Payables.ConnectedToMaster", DefaultText = "This payable is connected to master",LocalDefaultText = "התשלום מחובר לג'וב", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentIncludeReceivables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.IncludeReceivables", DefaultText = "Include Receivables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentIncludePayables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.IncludePayables", DefaultText = "Include Payables",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMDeleteThisReceivable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.DeleteThisReceivable", DefaultText = "Delete this receivable?",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSNewShipmentCustomAgentExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.CustomAgentExport", DefaultText = "Customs Agent Export",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsCutOffTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.CutOffTime", DefaultText = "Cut-Off Time",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentOPayablesPartiallyAccounted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Payables.PartiallyAccounted", DefaultText = "Partially Accounted",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSRoutingsDocumentsClosingTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Routings.DocumentsClosingTime", DefaultText = "Documents Closing Time",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentORoutingsWarehouseLegTerminalCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.Routings.WarehouseLegTerminalCode", DefaultText = "Terminal Code",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentSCustomsAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.Customs.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMReceivablesAmountdueQuoteMaximum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Receivables.AmountdueQuoteMaximum", DefaultText = "Amount is due to Quote maximum amount",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentMPayablesAmountdueQuoteMaximum = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.Payables.AmountdueQuoteMaximum", DefaultText = "Amount is due to Quote maximum amount",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

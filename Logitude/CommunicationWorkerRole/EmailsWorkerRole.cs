@@ -34,7 +34,10 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.QueueService;
-
+using System.Xml;
+using System.Net.Http;
+using Newtonsoft.Json;
+using Logitude.Server.Tools.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -126,11 +129,20 @@ namespace CommunicationWorkerRole
                                     }
                                     else
                                     {
-                                        SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
-                                        queueservice.Complete();
+                                        var sendingEmailQuotaResult = EmailLimitationHelper.CheckEmailSendingQuotaForTenant(tenant);
+                                        if (sendingEmailQuotaResult.IsQuotaExceeded)
+                                        {
+                                            cl.CommunicationStatusTypeCode = "F";
+                                            cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
+                                            cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
+                                            communicationLogRep.Update(cl);
+                                            communicationLogRep.SubmitChanges();
+                                        }
+                                        else SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
 
+                                        queueservice.Complete();
                                         LogDoneItemInMemory();
-                                        
+
                                     }
                                 }
                                 else
@@ -414,7 +426,38 @@ namespace CommunicationWorkerRole
                                         case "GLSHK":
                                         case "CHAMP":
                                             {
-                                                SendCommunicationLogToChamp(waitingCommLog, xmlfile);
+                                                bool isUsingRestAPI = false;
+
+                                                var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+                                                if (iAppSettings != null)
+                                                {
+                                                    if (iAppSettings["ChampRestAPITenants"] != null)
+                                                    {
+                                                        string iTenantsText = iAppSettings["ChampRestAPITenants"].ToString();
+                                                        if (!string.IsNullOrEmpty(iTenantsText))
+                                                        {
+                                                            string[] iTenantsList = iTenantsText.Split(',');
+
+                                                            foreach (string iTenantString in iTenantsList)
+                                                            {
+                                                                if (waitingCommLog.Tenant.ToString() == iTenantString.Trim()){
+                                                                    isUsingRestAPI = true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                if (isUsingRestAPI)
+                                                {
+                                                    SendCommunicationLogToChampAPI(waitingCommLog, xmlfile);
+                                                }
+
+                                                else
+                                                {
+                                                    SendCommunicationLogToChamp(waitingCommLog, xmlfile);
+                                                }
+
                                                 break;
                                             }
 
@@ -436,6 +479,8 @@ namespace CommunicationWorkerRole
 
             }
         }
+
+
 
         private void SendHtmlDocumentByEmail(byte[] filedata, List<CommunicationAttachment> attachmentsList, CommunicationLog currentLog)
         {
@@ -905,6 +950,43 @@ namespace CommunicationWorkerRole
             }
 
             return gateWay;
+        }
+
+        private async void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfileText)
+        {
+            // https://stackoverflow.com/questions/25352462/how-to-send-xml-content-with-httpclient-postasync
+
+            string iSendingURL = "https://community.champ.aero:8444/logitude/test/NO_WAIT";
+
+            StringContent content = new StringContent(xmlfileText, Encoding.UTF8, "application/xml");
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("password", "logitudett");
+
+                //var iResponse = client.PostAsync(iSendingURL, content);
+                //System.Threading.Tasks.Task iResponse = client.PostAsync(iSendingURL, content);
+                //System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> iResponse = client.PostAsync(iSendingURL, content);
+
+                System.Net.Http.HttpResponseMessage iResponse = await client.PostAsync(iSendingURL, content);
+
+                if (iResponse != null)
+                {
+                    if (iResponse.StatusCode == HttpStatusCode.OK)
+                    {
+                        waitingCommLog.CommunicationStatusTypeCode = "D";
+                        waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                        waitingCommLog.DoneDateUTC = DateTime.UtcNow;
+                        waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                        waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+
+                        CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+
+                        commLogrepository.Update(waitingCommLog);
+                        commLogrepository.SubmitChanges();
+                    }                   
+                }
+            }
         }
     }
 }

@@ -123,6 +123,9 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature BusinessRoleFeature = tenantFeatures.Where(d => d.Code == "General.Features.BusinessProcessBusinessRole" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature TeamFeature = tenantFeatures.Where(d => d.Code == "General.Features.BusinessProcessTeam" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature TasksFeature = tenantFeatures.Where(d => d.Code == "TASKS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+
+            Feature sharedShipmentsFeature = tenantFeatures.Where(d => d.Code == "SHAREDSHIPMENTS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature sharedInvoicesFeature = tenantFeatures.Where(d => d.Code == "SHAREDINVOICES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             #endregion
 
             #region Main Menus
@@ -151,6 +154,10 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "AIRD", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 25, CategoryTypeCode = null, TextCode = "General.MH.AirlineDashboard", Icon = "DashboardPath", FeatureId = airlineDashboardFeature.Id, }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "LTML", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 26, CategoryTypeCode = null, TextCode = "General.MH.LogitudeMessagesTransmissionLog", Icon = "DashboardPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "LogitudeMessagesTransmissionLog").FirstOrDefault().Id, FeatureId = LogitudeMessagesTransmissionLogFeature.Id, }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TASK", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 27, CategoryTypeCode = null, TextCode = "General.MH.Tasks", Icon = "DashboardPath", FeatureId = TasksFeature.Id, }, MenusTablesRepository, tenantMenusTables);
+
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SSHT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 28, CategoryTypeCode = null, TextCode = "General.MH.Shipments", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault().Id, FeatureId = sharedShipmentsFeature.Id }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "SINV", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 29, CategoryTypeCode = null, TextCode = "General.MH.Invoices", Icon = "AccountingPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ARInvoice").FirstOrDefault().Id, FeatureId = sharedInvoicesFeature.Id }, MenusTablesRepository, tenantMenusTables);
+
             #endregion
 
             #region Maintenance Menus
@@ -224,7 +231,10 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTAS", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 23, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.AirlineStatistics", Icon = "AirlineStatistics.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "AirlineStatistics").FirstOrDefault().Id, FeatureId = AirlineStatisticsFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTTL", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 24, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.LogitudeMessagesTransmissionLog", Icon = "LogitudeMessagesTransmissionLog.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "LogitudeMessagesTransmissionLog").FirstOrDefault().Id, FeatureId = LogitudeMessagesTransmissionLogFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTFS", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 25, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.FBLStock", Icon = "FBLStock.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "FBLStock").FirstOrDefault().Id, FeatureId = fblStockFeature.Id }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "BTEX", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 25, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.BTEX", Icon = "DocumentTypes.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "BatchTaskExecution").FirstOrDefault().Id, FeatureId = btexFeature.Id }, MenusTablesRepository, tenantMenusTables);
+            if (/*LogitudeSettings.IsCostomsDeploy*/ tenantObjectTables.Where(o => o.Name == "BatchTaskExecution").Any())
+            {
+                AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "BTEX", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 25, CategoryTypeCode = "Oth", TextCode = "General.MC.Others.BTEX", Icon = "DocumentTypes.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "BatchTaskExecution").FirstOrDefault().Id, FeatureId = btexFeature.Id }, MenusTablesRepository, tenantMenusTables);
+            }
             #endregion
 
             #region CRM

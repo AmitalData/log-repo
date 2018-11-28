@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .ContainerFUWizardHeader td {
         vertical-align: middle;
@@ -66,7 +66,8 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="Label">{{'ContainerFollowUp.F.ShipmentNumber' | TextCodeTranslationPipe}}:</td>
-                                                        <td class="Value">{{ShipmentPM.ShipmentNumber}}</td>
+                                                        <!--<td class="Value">{{ShipmentPM.ShipmentNumber}}</td>-->
+                                                        <td><Hyperlink (click)="ViewShipmentClicked()">{{ShipmentPM.ShipmentNumber}}</Hyperlink></td>
                                                     </tr>
                                                 </table>
                                             </div>

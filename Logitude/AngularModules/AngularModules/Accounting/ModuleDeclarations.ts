@@ -29,7 +29,8 @@ import {AccountingPeriodsComponent} from './Components/Maintenance/AccountingPer
 import {EditAccountingPeriodComponent} from './Components/Maintenance/EditAccountingPeriodComponent';
 import {AccountingPeriodEventComponent} from './Components/Maintenance/AccountingPeriodEventComponent';
 import {YearTransferComponent} from './Components/Maintenance/YearTransferComponent';
-import { NewTaxReportComponent} from './Components/NewEntity/NewTaxReportComponent';
+import { NewTaxReportComponent } from './Components/NewEntity/NewTaxReportComponent';
+import { NewOpenFormatReportComponent } from './Components/NewEntity/NewOpenFormatReportComponent';
 
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
@@ -53,6 +54,7 @@ import {ReconcileExternalPageListTemplate} from './Components/ListTemplates/Reco
 import {ReconcileExternalPageLineListTemplate} from './Components/ListTemplates/ReconcileExternalPageLineListTemplate';
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {ManageReconciliationListTemplate} from './Components/ListTemplates/ManageReconciliationListTemplate';
+import {TaxReportListTemplate} from './Components/ListTemplates/TaxReportListTemplate';
 
 import {ReconcileComponent} from './Components/Others/ReconcileComponent';
 import {ReconciledMessage} from './Components/Others/ReconciledMessage';
@@ -106,6 +108,7 @@ export const Components =
         AddEditRecoExPageComponent,
         NewConnectedGLAccountComponent,
         NewPaymentChequeComponent,
+        NewOpenFormatReportComponent,
         //Maintenance
         NewCategory1Component,
         NewCategory2Component,
@@ -147,7 +150,8 @@ export const Components =
         ReconcileExternalPageListTemplate,
         ReconcileExternalPageLineListTemplate,
         FieldTemplateComponent,
-        ManageReconciliationListTemplate, 
+        ManageReconciliationListTemplate,
+        TaxReportListTemplate,
         //Others
         ReconcileComponent,
         ReconciledMessage,
@@ -201,6 +205,7 @@ export class ModuleDeclarations {
             case "NewPaymentChequeComponent": { myResult = NewPaymentChequeComponent; break; }
             case "NewTaxReportComponent": { myResult = NewTaxReportComponent; break; }
             case "NewTaxDeductionReportComponent": { myResult = NewTaxDeductionReportComponent; break; }
+            case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             //Maintenance
             case "NewCategory1Component": { myResult = NewCategory1Component; break; }
             case "NewCategory2Component": { myResult = NewCategory2Component; break; }
@@ -220,12 +225,12 @@ export class ModuleDeclarations {
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
             case "JournalDetailsTabComponent": { myResult = JournalDetailsTabComponent; break; }
             case "CashBookDetailsTabComponent": { myResult = CashBookDetailsTabComponent; break; }
-            case "CashBookManageDepoTabComponent": { myResult = CashBookManageDepoTabComponent; break; } 
-            case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; } 
-            case "BankDepositDetailsTabComponent": { myResult = BankDepositDetailsTabComponent; break; } 
-            case "BankAccountGeneralTabComponent": { myResult = BankAccountGeneralTabComponent; break; } 
-            case "BankPagesTabComponent": { myResult = BankPagesTabComponent; break; } 
-            case "ManageRecoTabComponent": { myResult = ManageRecoTabComponent; break; } 
+            case "CashBookManageDepoTabComponent": { myResult = CashBookManageDepoTabComponent; break; }
+            case "ChartOfAccountGeneralTabComponent": { myResult = ChartOfAccountGeneralTabComponent; break; }
+            case "BankDepositDetailsTabComponent": { myResult = BankDepositDetailsTabComponent; break; }
+            case "BankAccountGeneralTabComponent": { myResult = BankAccountGeneralTabComponent; break; }
+            case "BankPagesTabComponent": { myResult = BankPagesTabComponent; break; }
+            case "ManageRecoTabComponent": { myResult = ManageRecoTabComponent; break; }
             case "ReconciliationDetailsTabComponent": { myResult = ReconciliationDetailsTabComponent; break; }
             case "RevaluationDetailsComponent": { myResult = RevaluationDetailsComponent; break; }
             case "ExternalRecoDetailsTabComponent": { myResult = ExternalRecoDetailsTabComponent; break; }
@@ -242,6 +247,7 @@ export class ModuleDeclarations {
             case "ReconcileExternalPageLineListTemplate": { myResult = ReconcileExternalPageLineListTemplate; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
             case "ManageReconciliationListTemplate": { myResult = ManageReconciliationListTemplate; break; }
+            case "TaxReportListTemplate": { myResult = TaxReportListTemplate; break; }
             //Others
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }
             case "ReconciledMessage": { myResult = ReconciledMessage; break; }

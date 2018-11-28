@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .ItemBox {
         height: 40px;
@@ -209,6 +209,7 @@
                         <td>
                             <div class="MediaFill">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemSource">
+
                                     <!-- ProjectName -->
                                     <log-column [width]="'150'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.ProjectName' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate>
@@ -236,15 +237,21 @@
                                     </log-column>
 
                                     <!-- Hours -->
-                                    <log-column [width]="'120'" [Alignment]="'center'" [header]="'Hours' ">
+                                    <log-column [width]="'120'" [Alignment]="'center'" [header]="'Hours'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <TimeInput [TotalMinutes]="item.TimeInMinutes" (TotalMinutesChanged)="item.TimeInMinutes = $event" [InputValue]="item.DayDateFormat" [DisplayValue]="item.DayDateFormat" (Changed)="item.DayDateFormat = $event"></TimeInput>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: center;">
+                                                {{item.TimeInMinutes | MinutesToTimePipe}}
+                                            </div>
+
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <TimeInput [FocusOnMe]="true" [TotalMinutes]="item.TimeInMinutes" (TotalMinutesChanged)="item.TimeInMinutes = $event" [InputValue]="item.DayDateFormat" [DisplayValue]="item.DayDateFormat" (Changed)="item.DayDateFormat = $event"></TimeInput>
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- WINumber -->
                                     <log-column [width]="'120'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.WINumber' | TextCodeTranslationPipe ">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <Hyperlink [FontSize]="14" (click)="item.ViewWI(item.WINumber)" [Text]="item.WINumber"></Hyperlink>
                                         </log-cell-template>
                                     </log-column>
@@ -278,6 +285,14 @@
                                                         <td style="width:18px;">
                                                             <div style="width: 18px; height: 18px;">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteLineClicked(item)"></IconButton>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width:2px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:18px;">
+                                                            <div style="width: 18px; height: 18px;">
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditLineClicked(item)"></IconButton>
                                                             </div>
                                                         </td>
                                                         <td>

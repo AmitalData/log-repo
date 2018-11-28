@@ -1,4 +1,4 @@
-﻿
+
 <table>
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -106,11 +106,21 @@
                     <td>
                         <LogLabel [NoObjectField]="true"  [ObjectFieldName]="'Time'" [Text]="'Time'" [DataContext]="DataContext"></LogLabel>
                     </td>
+
                     <td>
-                        <div class="MediaFill" style="width:100px;max-width:100px;float:left;margin-left:-5px;">
-                            <TimeInput [TextAlign]="'left'" [TotalMinutes]="DateOfWorkMinutes" (TotalMinutesChanged)="DateOfWorkMinutes = $event" [InputValue]="DateOfWorkDateFormat" [IsNew]="true" [DisplayValue]="DateOfWorkDateFormat" (Changed)="DateOfWorkDateFormat = $event" [IsShowText]="false"></TimeInput>
-                        </div>
+                        <table>
+                            <tr>
+                                <td style="width: 100px;">
+                                    <TimeInput [TextAlign]="'left'" [TotalMinutes]="DateOfWorkMinutes" (TotalMinutesChanged)="DateOfWorkMinutes = $event" [InputValue]="DateOfWorkDateFormat" [IsNew]="true" [DisplayValue]="DateOfWorkDateFormat" (Changed)="DateOfWorkDateFormat = $event" [IsShowText]="false"></TimeInput>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>                        
                     </td>
+
                     <td>
                         <div></div>
                     </td>

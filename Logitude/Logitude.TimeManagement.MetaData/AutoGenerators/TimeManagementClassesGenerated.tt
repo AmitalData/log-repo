@@ -1,6 +1,6 @@
 <#@ template debug="false" hostspecific="true" language="C#"  #>
 <#@ Assembly Name="Microsoft.CSharp.dll" #>
-<#@ Assembly name="$(SolutionDir)General\Dlls\AmazedSaint.Elastic.dll" #>
+<#@ Assembly name="$(SolutionDir)packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll" #>
 <#@ Import Namespace="AmazedSaint.Elastic" #>
 <#@ Import Namespace="AmazedSaint.Elastic.Lib" #>
 <#@ output extension=".cs" #>

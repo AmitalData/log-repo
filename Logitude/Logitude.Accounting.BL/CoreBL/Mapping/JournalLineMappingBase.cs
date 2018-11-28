@@ -193,8 +193,15 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             MyLedgerTransaction.CreateDate = _JournalPM.CreateDate;
             MyLedgerTransaction.AccountId = null;
 
-            MyLedgerTransaction.AccountingDate = _JournalPM.AccountingDate;
-            MyLedgerTransaction.DocumentDate = _JournalLine.DocumentDate;
+            //MyLedgerTransaction.AccountingDate = _JournalPM.AccountingDate;
+            if (_JournalLine.AccountingDate == DateTime.MinValue)
+            {
+                throw new Exception("_JournalLine.AccountingDate is must");//20180111-Bug 44298: באג בתאריך חשבונאי בהעברת פקודת יומן לתנועה
+            }
+            MyLedgerTransaction.AccountingDate = _JournalLine.AccountingDate;//20180111-Bug 44298: באג בתאריך חשבונאי בהעברת פקודת יומן לתנועה
+            
+
+                MyLedgerTransaction.DocumentDate = _JournalLine.DocumentDate;
             MyLedgerTransaction.DueDate = //(DateTime)
                 _JournalLine.DueDate;
             MyLedgerTransaction.CurrencyId = _JournalLine.CurrencyId;
@@ -221,7 +228,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             AddIfNotNull(refs, _JournalLine.Reference2);
             AddIfNotNull(refs, _JournalLine.Reference3);
             MyLedgerTransaction.SearchFields= string.Join(",", refs.ToArray());
-
+            
 
             return MyLedgerTransaction;
         }
@@ -241,7 +248,24 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
         protected IGLAccountDataProvider _GLAccountPMProvider;
         //public virtual GLAccountPM GetGLAccountPM(string AccountId, int Tenant);
-        
+
+        protected void MapExternalOpenAmount()
+        {
+            if (_JournalLine.ExternalOpenAmount.HasValue)
+            {
+                if (_JournalLine.ExternalOpenAmount.GetValueOrDefault() == 0)
+                {
+                    MyLedgerTransaction.IsReconciled = true;
+                    MyLedgerTransaction.OpenAmount = 0;
+                }
+                else
+                {
+                    MyLedgerTransaction.IsReconciled = false;
+                    MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
+                }
+
+            }
+        }
     }
 
 }

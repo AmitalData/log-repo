@@ -1,4 +1,4 @@
-﻿declare var System: any, window: any;
+declare var System: any, window: any;
 import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {Http, Response} from '@angular/http';
@@ -944,6 +944,7 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
                                             this.ShipmentPM.ShipperReference1 = this.ShipmentPM.CustomerReference1;
                                             this.ShipmentPM.ShipperReference2 = this.ShipmentPM.CustomerReference2;
                                             this.ShipmentPM.ShipperId = this.ShipmentPM.CustomerId;
+                                            this.ShipmentPM.DontAddToForwarderQueue = true;
                                             this._ShipmentPMService.update(this.ShipmentPM).subscribe(myResult => {
                                                 if (!myResult.HasError) {
                                                     this.DisableAddDocumentButton = true;

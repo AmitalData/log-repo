@@ -128,6 +128,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     myMainAddressId = myMainAddresss.Id;
                 }
 
+                AddressPM myBillingAddress = addressQuery.GetAddressPMByTypeAndCard(id, "B", tenant);
+                string myBillingAddressId = null;
+                if (myBillingAddress != null)
+                {
+                    myBillingAddressId = myBillingAddress.Id;
+                }
+
                 if (HttpContext.Current != null)
                 {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
@@ -153,6 +160,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       VatNumber = a.VatNumber,
                                       Code = a.Code,
                                       MainAddressId = myMainAddressId,
+                                      BillingAddressId = myBillingAddressId,
                                       CountryId = a.CountryId,
                                       CountryCode = a.CountryCode,
                                       CountryName = a.CountryName,
@@ -245,6 +253,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   VatNumber = a.VatNumber,
                                   Code = a.Code,
                                   MainAddressId = myMainAddressId,
+                                  BillingAddressId = myBillingAddressId,
                                   CountryId = a.CountryId,
                                   CountryCode = a.CountryCode,
                                   CountryName = a.CountryName,
@@ -1760,7 +1769,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return Cards;
         }
 
-        public List<CardList> GetCardListForInventoryReportsByCardIds(List<string> CardIds, int tenant)
+        public List<CardList> GetCardListsByCardIds(List<string> CardIds, int tenant)
         {
             List<CardList> Cards = (from a in repository.context.Cards
                                     where CardIds.Contains(a.Id) && a.Tenant == tenant
@@ -1771,6 +1780,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         Tenant = a.Tenant,
                                         EnglishName = a.EnglishName,
                                         Code = a.Code,
+                                        
                                     }).ToList();
             return Cards;
         }

@@ -118,6 +118,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int MNFR = 0;
             int DECR = 0;
             int PAY_RL = 0;
+            int ACC = 0;
 
             var totQ =
             (from dStatus in q
@@ -140,7 +141,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  MNFR = g.Count(r => (r.CourierManifestStatusCode == "R" )),
                  DECR = g.Count(r => (r.CourierDeclarationStatusCode == "R" )),
                  HOLD = g.Count(r => (r.CourierPendingReasonCode != null)),
-
+                 ACC = g.Count(r => (r.CourierPendingReasonCode != null)), // TODO!!!
              });
 
             var tot =totQ.FirstOrDefault();
@@ -162,6 +163,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 MNFR = tot.MNFR;
                 DECR = tot.DECR;
                 PAY_RL = tot.PAY_RL;
+                ACC = tot.ACC;
             }
 
             keyValuePairList.Add(new KeyValuePair<string, int>("ALL", ALL));
@@ -180,7 +182,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             keyValuePairList.Add(new KeyValuePair<string, int>("DECR", DECR));
             keyValuePairList.Add(new KeyValuePair<string, int>("MNFR", MNFR));
             keyValuePairList.Add(new KeyValuePair<string, int>("PAY_RL", PAY_RL));
-
+            keyValuePairList.Add(new KeyValuePair<string, int>("ACC", PAY_RL));
         }
 
         public IQueryable<DeclarationPM> GetNotConnectedDeclaratins(QueryOperations queryOperations, int tenant)

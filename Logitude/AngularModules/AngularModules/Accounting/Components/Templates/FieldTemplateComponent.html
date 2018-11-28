@@ -30,21 +30,32 @@
                     <div *ngIf="FieldName == 'VatNumber'">
                         <div>{{ FieldValue }}</div>
                     </div>
+                    <div *ngIf="FieldName == 'AutomaticReconcileName'">
+                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">{{  showLocal ? Entity["AutomaticReconcileLocalName"] : Entity["AutomaticReconcileName"] }}</div>
+                    </div>
+
+                    <div *ngIf="FieldName == 'ReconcileMethodName'">
+                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">{{  showLocal ? Entity["ReconcileMethodLocalName"] : Entity["ReconcileMethodName"] }}</div>
+                    </div>
                 </div>
 
                 <!-- Journal -->
                 <div *ngIf="ObjectTableName == 'Journal'">
-                    <div *ngIf="FieldName == 'StatusName'">
-                        <div *ngIf="FieldValue == 'Draft'">{{ Entity.StatusLocalName}}</div>
-                        <div *ngIf="FieldValue == 'Waiting for Approval'" style="color: darkorange;">{{ Entity.StatusLocalName}}</div>
-                        <div *ngIf="FieldValue == 'Approved'" style="color: green;">{{ Entity.StatusLocalName }}</div>
-                        <div *ngIf="FieldValue == 'Voided'" style="color: darkred;">{{ Entity.StatusLocalName }}</div>
+                    <div *ngIf="FieldName == 'StatusName'"  [style.text-align]="isRTL ? 'right' : 'left'" >
+                        <div *ngIf="FieldValue == 'Draft'">{{ showLocal ? Entity.StatusLocalName : Entity.StatusName }}</div>
+                        <div *ngIf="FieldValue == 'Waiting for Approval'" style="color: darkorange;">{{ showLocal ? Entity.StatusLocalName : Entity.StatusName }}</div>
+                        <div *ngIf="FieldValue == 'Approved'" style="color: green;">{{ showLocal ? Entity.StatusLocalName : Entity.StatusName  }}</div>
+                        <div *ngIf="FieldValue == 'Voided'" style="color: darkred;">{{ showLocal ? Entity.StatusLocalName : Entity.StatusName  }}</div>
                     </div>
                     <div *ngIf="FieldName == 'AccountingEntityReference'">
                         <div *ngIf="IsHeaderScreenTemplate">
                             <a href="javascript:;" (click)="OpenSource(Entity.AccountingEntityId)">{{FieldValue}}</a>
                         </div>
                         <div [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="!IsHeaderScreenTemplate">{{FieldValue}}</div>
+                    </div>
+
+                    <div *ngIf="FieldName == 'TypeName'">
+                        <div style="padding-right: 3px;" [style.text-align]="isRTL ? 'right' : 'left'">{{  showLocal ? Entity["TypeLocalName"] : Entity["TypeName"] }}</div>
                     </div>
                 </div>
 
@@ -92,7 +103,10 @@
                 <!-- CashBook -->
                 <div *ngIf="ObjectTableName == 'CashBook'">
                     <div *ngIf="FieldName == 'AccountName'">
-                        <div>
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="!IsHeaderScreenTemplate">
+                            {{Entity.AccountName}}
+                        </div>
+                        <div *ngIf="IsHeaderScreenTemplate">
                             {{Entity.AccountName}} (
                             <a href="#" title="Open Account" (click)="OpenGLAccount(Entity.AccountId)">{{Entity.AccountNumber}}</a>)
                         </div>
@@ -163,7 +177,7 @@
                         <div [style.text-align]="isRTL ? 'right' : 'left'">{{ FieldValue | DateToMonthPipe  }} </div>
 
                     </div>
-                    <div *ngIf="FieldName == 'Status'">
+                    <div *ngIf="FieldName == 'StatusEnglishName'">
                         <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;" [style.color]="fontColor">{{ FieldValue  }}</div>
                         <div *ngIf="!IsHeaderScreenTemplate" style="text-align: right; padding-left: 3px;">{{ FieldValue  }}</div>
                     </div>
@@ -199,8 +213,6 @@
                     </div>
                 </div>
 
-
-
                 <!-- TaxDeductionReport -->
                 <div *ngIf="ObjectTableName == 'TaxDeductionReport'">
                     <div *ngIf="FieldName == 'TaxYear'">
@@ -211,6 +223,14 @@
                         <div *ngIf="!IsHeaderScreenTemplate">
                             <div [style.text-align]="isRTL ? 'right' : 'left'">{{ FieldValue}}</div>
                         </div>
+                    </div>
+
+
+
+                    <div *ngIf="FieldName == 'Status'">
+                        <div *ngIf="!IsHeaderScreenTemplate" [style.text-align]="isRTL ? 'right' : 'left'" style="padding-right: 3px;">{{ FieldValue  }}</div>
+                        <div *ngIf="IsHeaderScreenTemplate" style="padding-left: 3px;">{{ FieldValue  }}</div>
+
                     </div>
                 </div>
 

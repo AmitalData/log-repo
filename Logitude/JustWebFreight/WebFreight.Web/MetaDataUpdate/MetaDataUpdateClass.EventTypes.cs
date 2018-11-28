@@ -134,6 +134,32 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region Quote eventTypes
+
+            #region Ticket Events 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "QTCN",
+                EnglishName = "Ticket Connected",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "Ticket Connected",
+                ObjectTableId = quoteObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "OPE",
+            }, EventTypeRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "QTDC",
+                EnglishName = "Ticket Disconnected",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "Ticket Disconnected",
+                ObjectTableId = quoteObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "OPE",
+            }, EventTypeRepository, tenantEventTypes);
+            #endregion 
+
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "UPQT",
@@ -377,6 +403,32 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region Shipment
+
+            #region Ticket Events 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "STCN",
+                EnglishName = "Ticket Connected",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "Ticket Connected",
+                ObjectTableId = shipmentObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "OPE",
+            }, EventTypeRepository, tenantEventTypes);
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "STDC",
+                EnglishName = "Ticket Disconnected",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "Ticket Disconnected",
+                ObjectTableId = shipmentObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "OPE",
+            }, EventTypeRepository, tenantEventTypes);
+
+            #endregion 
 
             #region With Status
             AddEventTypes.AddEventType(new EventTypeDetails()

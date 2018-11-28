@@ -827,7 +827,11 @@ div#two {
                         <asp:Button ID="_ButtonIsApprovedJournalTOTZero" runat="server" Text="IsApprovedJournalTOTZero" OnClick="_ButtonIsApprovedJournalTOTZero_Click" />
                     </li>
                     </li>
-                    <li><asp:Button ID="_ButtonReverseDueDate" runat="server" Text="ReverseDueDate" OnClick="_ButtonReverseDueDate_Click" /></li>
+                    <li>
+                        <asp:Button ID="_ButtonReverseDueDate" runat="server" Text="ReverseDueDate" OnClick="_ButtonReverseDueDate_Click" />
+                        <asp:Button ID="_ButtonDueLocalBalance" runat="server" Text="FixDueLocalBalance" OnClick="_ButtonDueLocalBalance_Click"/>
+                    </li>
+                
                 <li>
                     FIX PRA PRA 
                     <asp:Button ID="_ButtonReverseTotalFIX" runat="server" Text="FIX TOTAL from  Ledger " OnClick="_ButtonReverseTotalFIX_Click" />
@@ -868,7 +872,7 @@ div#two {
                 <li><asp:Button ID="_ButtonAging" runat="server" Text="Aging" OnClick="_ButtonAging_Click" />
                     <asp:Button ID="_ButtonCurrBalanceByType" runat="server" Text="GetGLAccountsLocalBalanceGByChartOfAccountsTypeCode" OnClick="_ButtonCurrBalanceByType_Click" />
                     <asp:Button ID="_ButtonTreeMapCOA" runat="server" Text="TreeMapGLAccountsLocalBalanceGByChartOfAccountsTypeCode" OnClick="_ButtonTreeMapCOA_Click" />
-                    <asp:Button ID="_ButtonDueLocalBalance" runat="server" Text="DueLocalBalance" OnClick="_ButtonDueLocalBalance_Click"/>
+                    
                     
                 </li>
                 <li><asp:Button ID="_ButtonCheckBalance" runat="server" Text="Check Balance" OnClick="_ButtonCheckBalance_Click" />

@@ -69,9 +69,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string StatusLocalName  { get; set; }
        [DataMember]
-       public string TaxReportId  { get; set; }
-       [DataMember]
-       public string TaxReportStatusCode  { get; set; }
+       public string TypeLocalName  { get; set; }
    }
 
 }

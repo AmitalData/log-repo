@@ -603,11 +603,12 @@ export class TenantPM {
     private defaultSLAId: string;
     public get DefaultSLAId() { return this.defaultSLAId; }
     public set DefaultSLAId(newValue: string) { if (this.defaultSLAId != newValue) { this.defaultSLAId = newValue; this.MarkAsDirty("DefaultSLAId"); } }
-
+       
+	 
     private stockTypeCode: string;
     public get StockTypeCode() { return this.stockTypeCode; }
     public set StockTypeCode(newValue: string) { if (this.stockTypeCode != newValue) { this.stockTypeCode = newValue; this.MarkAsDirty("StockTypeCode"); } }
-      
+       
 	 
 
     public OldEntityPM: TenantPM;

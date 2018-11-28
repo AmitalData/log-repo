@@ -27,6 +27,7 @@ import {ReconciliationListService} from './Services/StandardLists/Reconciliation
 import {RevenueExpenseTypeListService} from './Services/StandardLists/RevenueExpenseTypeListService';
 import {TestEntityListService} from './Services/StandardLists/TestEntityListService';
 import { TaxReportListService } from './Services/StandardLists/TaxReportListService';
+import {TaxReportLineExtendedListService} from './Services/ExtendedLists/TaxReportLineExtendedListService';
 
 import {BankCodeListService} from './Services/StandardLists/BankCodeListService';
 import {BankAccountListService} from './Services/StandardLists/BankAccountListService';
@@ -45,7 +46,8 @@ import { TaxReportLineStatusListService } from './Services/StandardLists/TaxRepo
 import { VatReportStatusListService } from './Services/StandardLists/VatReportStatusListService';
 import { GLAccountMoreDataListService } from './Services/StandardLists/GLAccountMoreDataListService';
 import { TaxDeductionReportListService } from './Services/StandardLists/TaxDeductionReportListService';
-
+import { OpenFormatReportListService } from './Services/StandardLists/OpenFormatReportListService';
+import { OpenFormatDateTypeListService } from './Services/StandardLists/OpenFormatDateTypeListService';
 
 import { TaxReportPMService } from './Services/StandardPMs/TaxReportPMService';
 import {AccountingPeriodPMService} from './Services/StandardPMs/AccountingPeriodPMService';
@@ -80,7 +82,7 @@ import { GLAccountMoreDataPMService } from './Services/StandardPMs/GLAccountMore
 import { TaxDeductionReportPMService } from './Services/StandardPMs/TaxDeductionReportPMService';
 
 
-//#endregion 
+//#endregion
 import {AccountingPeriodExtendedListService} from './Services/ExtendedLists/AccountingPeriodExtendedListService';
 import {AccountingPeriodExtendedPMService} from './Services/ExtendedPMs/AccountingPeriodExtendedPMService';
 import {GLAccountExtendedListService} from './Services/ExtendedLists/GLAccountExtendedListService';
@@ -114,7 +116,7 @@ import {BankAccountMenuButtonsHandler} from './Components/MenuButtons/BankAccoun
 import {ReconciliationMenuButtonsHandler} from './Components/MenuButtons/ReconciliationMenuButtonsHandler';
 import { ExternalReconciliationMenuButtonsHandler } from './Components/MenuButtons/ExternalReconciliationMenuButtonsHandler';
 import { TaxReportMenuButtonsHandler } from './Components/MenuButtons/TaxReportMenuButtonsHandler';
-
+import { TaxDeductionReportMenuButtonsHandler } from './Components/MenuButtons/TaxDeductionReportMenuButtonsHandler';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -138,6 +140,7 @@ export class ModuleProviders {
             case "GLAccountBalanceByYearListService": { myResult = new GLAccountBalanceByYearListService(); break; }
             case "GLAccountListService": { myResult = new GLAccountListService(); break; }
             case "GLAccountTotalByMonthListService": { myResult = new GLAccountTotalByMonthListService(); break; }
+            case "TaxReportLineExtendedListService": { myResult = new TaxReportLineExtendedListService(); break; }
             case "GLAccountTypeListService": { myResult = new GLAccountTypeListService(); break; }
             case "JournalActionTypeListService": { myResult = new JournalActionTypeListService(); break; }
             case "JournalListService": { myResult = new JournalListService(); break; }
@@ -158,7 +161,7 @@ export class ModuleProviders {
             case "CashBookListService": { myResult = new CashBookListService(); break; }
             case "CashBookTypeListService": { myResult = new CashBookTypeListService(); break; }
             case "RevaluationListService": { myResult = new RevaluationListService(); break; }
-                
+
             case "PaymentChequeListService": { myResult = new PaymentChequeListService(); break; }
             case "AccountingCompanyTypeListService": { myResult = new AccountingCompanyTypeListService(); break; }
             case "WithholdingTaxDeductionTypeListService": { myResult = new WithholdingTaxDeductionTypeListService(); break; }
@@ -167,6 +170,10 @@ export class ModuleProviders {
             case "ExternalReconciliationListService": { myResult = new ExternalReconciliationListService(); break; }
             case "TaxReportListService": { myResult = new TaxReportListService(); break; }
             case "TaxDeductionReportListService": { myResult = new TaxDeductionReportListService(); break; }
+            case "OpenFormatReportListService": { myResult = new OpenFormatReportListService(); break; }
+
+
+                
             case "TaxDeductionReportPMService": { myResult = new TaxDeductionReportPMService(); break; }
 
 
@@ -197,7 +204,7 @@ export class ModuleProviders {
             case "CashBookPMService": { myResult = new CashBookPMService(); break; }
             case "RevaluationPMService": { myResult = new RevaluationPMService(); break; }
             case "TaxWithholdingAssessOfficePMService": { myResult = new TaxWithholdingAssessOfficePMService(); break; }
-          
+
             case "AccountingCompanyTypePMService": { myResult = new AccountingCompanyTypePMService(); break; }
             case "WithholdingTaxDeductionTypePMService": { myResult = new WithholdingTaxDeductionTypePMService(); break; }
             case "ExternalReconciliationPMService": { myResult = new ExternalReconciliationPMService(); break; }
@@ -210,7 +217,7 @@ export class ModuleProviders {
             case "TaxReportLineStatusListService": { myResult = new TaxReportLineStatusListService(); break; }
             case "VatReportStatusListService": { myResult = new VatReportStatusListService(); break; }
             case "GLAccountMoreDataListService": { myResult = new GLAccountMoreDataListService(); break; }
-                
+            case "OpenFormatDateTypeListService": { myResult = new OpenFormatDateTypeListService(); break; }
             //#endregion
 
             //Extend Services
@@ -235,15 +242,16 @@ export class ModuleProviders {
             //Menu Buttons
             case "JournalMenuButtonsHandler": { myResult = new JournalMenuButtonsHandler; break; }
             case "GLAccountMenuButtonsHandler": { myResult = new GLAccountMenuButtonsHandler; break; }
-            case "CashBookMenuButtonsHandler": { myResult = new   CashBookMenuButtonsHandler; break; } 
-            case "BankDepositMenuButtonsHandler": { myResult = new BankDepositMenuButtonsHandler; break; } 
+            case "CashBookMenuButtonsHandler": { myResult = new   CashBookMenuButtonsHandler; break; }
+            case "BankDepositMenuButtonsHandler": { myResult = new BankDepositMenuButtonsHandler; break; }
             case "PaymentChequeMenuButtonsHandler": {
                 myResult = new PaymentChequeMenuButtonsHandler; break
             }
-            case "BankAccountMenuButtonsHandler": { myResult = new BankAccountMenuButtonsHandler; break; } 
-            case "ReconciliationMenuButtonsHandler": { myResult = new ReconciliationMenuButtonsHandler; break; } 
-            case "ExternalReconciliationMenuButtonsHandler": { myResult = new ExternalReconciliationMenuButtonsHandler; break; } 
-            case "TaxReportMenuButtonsHandler": { myResult = new TaxReportMenuButtonsHandler; break; } 
+            case "BankAccountMenuButtonsHandler": { myResult = new BankAccountMenuButtonsHandler; break; }
+            case "ReconciliationMenuButtonsHandler": { myResult = new ReconciliationMenuButtonsHandler; break; }
+            case "ExternalReconciliationMenuButtonsHandler": { myResult = new ExternalReconciliationMenuButtonsHandler; break; }
+            case "TaxReportMenuButtonsHandler": { myResult = new TaxReportMenuButtonsHandler; break; }
+            case "TaxDeductionReportMenuButtonsHandler": { myResult = new TaxDeductionReportMenuButtonsHandler; break; }
 
         }
 

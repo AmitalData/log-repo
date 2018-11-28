@@ -56,6 +56,8 @@ namespace Logitude.TimeManagement.Data.EntityMapping
             this.Property(t => t.CategoryId).HasColumnName("CategoryId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsProrated).HasColumnName("IsProrated");
+
+            this.Property(t => t.ExternalProjectNumber).HasColumnName("ExternalProjectNumber").HasMaxLength(10).IsUnicode(false);
         }
     }
 }

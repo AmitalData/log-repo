@@ -87,5 +87,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsBackToBack { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsExpense { get; set; }
+        public string AutoCreditDummyReceivableId { get; set; }
     }
 }

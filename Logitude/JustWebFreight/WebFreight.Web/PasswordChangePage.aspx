@@ -624,12 +624,11 @@
         }
 
 
-        // contain series(5 letters / numbers)
-        if (IsPasswordContainsSeries(password)) {
-            messageError = "Password can't contain series (5 letters/numbers)";
-            return messageError;
-
-        }
+         var seriesError = IsPasswordContainsSeries(password);
+            if (seriesError) {
+                messageError = seriesError;
+                return messageError;
+            }
 
         return "";
            
@@ -637,7 +636,7 @@
         }
 
        function IsPasswordContainsSeries(password) {
-
+        var error = "";
         var result = false;
         if (password) password = password.toUpperCase();
 
@@ -655,41 +654,77 @@
             passwordNumnberList.push(x);
         }
 
-        var seriesNumnberCount= 0;
-        var seriesNumnberList =  [];
-        passwordNumnberList.forEach((item) => {
-            var IsNotSeriesNumnber = false;
-            if (item <= 9 || ((item >= 65 && item <= 90))) {
-                if (seriesNumnberList.length == 0) {
-                    seriesNumnberList.push(item);
-                }
-                else {
-                    if (seriesNumnberList[seriesNumnberList.length - 1] + 1 == item) {
-                        seriesNumnberList.push(item);
-                        seriesNumnberCount += 1;
-                    } else {
-                        IsNotSeriesNumnber = true;
-                    }
-                }
+           result = IsSeries(passwordNumnberList ,"+");
+           if (!result) result = IsSeries(passwordNumnberList, "-");
 
-            } else IsNotSeriesNumnber = true;
+           if (result) error = "Password should not contain more than 3 following characters";
 
+           if (!result) {
+               result = IsSeries(passwordNumnberList, "Same");
+               if (result) error = "Password should not contain more then 3 consecutive repeating characters";
+           }
 
-            if (seriesNumnberCount == 4) {
-                result = true;
-                return;
-            }
-
-            if (IsNotSeriesNumnber) {
-                seriesNumnberCount = 0;
-                seriesNumnberList = [];
-            }
-
-        });
-
-        return result;
+      
+        return error;
     }
 
+   
+        function IsSeries(passwordNumnberList , operatorCode) {
+
+              var result = false;
+
+            var seriesNumnberCount = 0;
+            var seriesNumnberList = [];
+            passwordNumnberList.forEach((item) => {
+                var IsNotSeriesNumnber = false;
+                if (item <= 9 || ((item >= 65 && item <= 90))) {
+                    if (seriesNumnberList.length == 0) {
+                        seriesNumnberList.push(item);
+                    }
+
+                    else {
+
+                        if (operatorCode == "+") {
+                            if (seriesNumnberList[seriesNumnberList.length - 1] + 1 == item) {
+                                seriesNumnberList.push(item);
+                                seriesNumnberCount += 1;
+                            } else IsNotSeriesNumnber = true;
+                        }
+
+                        else if (operatorCode == "-") {
+                            if (seriesNumnberList[seriesNumnberList.length - 1] - 1 == item) {
+                                seriesNumnberList.push(item);
+                                seriesNumnberCount += 1;
+                            } else IsNotSeriesNumnber = true;
+                        }
+
+                        else if (operatorCode == "Same") {
+                            if (seriesNumnberList[seriesNumnberList.length - 1] == item) {
+                                seriesNumnberList.push(item);
+                                seriesNumnberCount += 1;
+                            } else IsNotSeriesNumnber = true;
+                        }
+                    }
+
+                } else IsNotSeriesNumnber = true;
+
+
+                if (seriesNumnberCount == 3) {
+                    result = true;
+                    return;
+                }
+
+                if (IsNotSeriesNumnber) {
+                    seriesNumnberCount = 0;
+                    seriesNumnberList = [];
+                    seriesNumnberList.push(item);
+                }
+
+            });
+
+
+            return result;
+        }
         
         function changepassword(email, currentPassword, requestNumber, newPassword, isResetRequest) {
 

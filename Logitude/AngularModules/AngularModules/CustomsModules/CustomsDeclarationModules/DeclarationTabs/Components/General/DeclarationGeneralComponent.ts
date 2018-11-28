@@ -57,7 +57,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
-        
+
         this.EntityResourceService.getEntityResourceByTableName("Customs.Consignment").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.ConsignmentPackage").subscribe(response => {
@@ -67,14 +67,14 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                                 this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe(response => {
                                     this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
                                         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
-                                        
+
                         this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.Listen();
                 //var tab;
                 console.log("DeclarationGeneralComponent/EntityPM ", this.EntityPM);
                 if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
-                    // create consignment tabs from entity 
+                    // create consignment tabs from entity
                     //for (let item of this.EntityPM.Consignments) {
 
                     //    tab = new LogTab();
@@ -130,7 +130,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
                     this.BuildConsignments();  // [!] in the pilot branch, you should enable this line to work!!
                     //this.ConsigmentTabs = [];
-                    //// create consignment tabs from entity 
+                    //// create consignment tabs from entity
                     //for (let item of this.EntityPM.Consignments) {
                     //    var tab;
                     //    tab = new LogTab();
@@ -158,7 +158,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 // initialize consignment tabs
                 if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
                     this.BuildConsignments();
-                    //// create consignment tabs from entity 
+                    //// create consignment tabs from entity
                     //for (let item of this.EntityPM.Consignments) {
                     //    var tab;
                     //    tab = new LogTab();
@@ -187,7 +187,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             }
 
             var errors = [];
-            var xmlErrors = error.Description.split(/,|:/); 
+            var xmlErrors = error.Description.split(/,|:/);
             for (var xmlError in xmlErrors)
             {
                 errors.push(xmlErrors[xmlError]);
@@ -225,7 +225,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
             for (var tab of this.ConsigmentTabs) {
                 tab.DecErrors = amendment;
-                
+
                 if (!AppTool.IsNullOrEmpty(amendment.Field)) {
                     tab.EntityPM.UIProperties.SetValidity(amendment.Field, "Customs.Consignment", false, amendment.Description);
                 }
@@ -276,9 +276,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 this.IsTransferImporterEnabled = false;
 
             }
-        
+
         if (!AppTool.IsNullOrEmpty(this.EntitleImporterCode))
-            if (this.EntitleImporterCode.includes("F") || this.EntitleImporterCode.includes("P")) 
+            if (this.EntitleImporterCode.includes("F") || this.EntitleImporterCode.includes("P"))
                     this.IsEntitleImporterEnabled = false;
 
 
@@ -287,10 +287,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     ngOnDestroy() {
         console.log("DeclarationGeneralComponent:ngOnDestroy():ConsigmentTabs")
         this.ConsigmentTabs.forEach((tab) => {
-            
+
             if (tab.ComponentReference && tab.ComponentReference.ngOnDestroy) {
                 tab.ComponentReference.ngOnDestroy();
-                
+
             }
             tab.ComponentReference = null;
         });
@@ -394,7 +394,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     public set ImporterCode(newValue: string)
     {
         if (this.EntityPM.ImporterCode != newValue) {
-           
+
             this.EntityPM.ImporterCode = newValue;
             this.EntityPM.ImporterTypeCode = "1";
             this.EntityPM.ImporterTypeName = "IL";
@@ -412,7 +412,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     public get CalculatedImporterName() {
         if (this.EntityPM.ImporterCode == null && this.EntityPM.ImporterName != null)
             return this.EntityPM.ImporterName;
-        else 
+        else
         return this.EntityPM.CalculatedImporterName;
 
     }
@@ -427,7 +427,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
             this.EntityPM.TransferImporterCode = newValue;
 
-            
+
             this.EntityPM.TransferImporterTypeCode = "1";
             this.EntityPM.TransferImporterTypeName = "IL";
 
@@ -442,7 +442,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     public get CalculatedTransferImporterName() {
         if (this.EntityPM.TransferImporterCode == null && this.EntityPM.TransferImporterName != null)
             return this.EntityPM.TransferImporterName;
-        else 
+        else
         return this.EntityPM.CalculatedTransferImporterName;
     }
     public set CalculatedTransferImporterName(newValue: string) { this.EntityPM.CalculatedTransferImporterName = newValue; }
@@ -452,7 +452,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
         if (this.EntityPM.EntitleImporterCode != newValue) {
             this.EntityPM.EntitleImporterCode = newValue;
-            
+
             this.EntityPM.EntitleImporterTypeCode = "1";
             this.EntityPM.EntitleImporterTypeName = "IL";
             this.EntityPM.ImporterEntitlementTypeCode = null;
@@ -526,7 +526,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 }
             }
         }
-  
+
     }
 
 
@@ -615,8 +615,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                     }
                     this.ImporterCode = item;
                     this.EntityPM.ImporterId = null;
-                    
-                    if (this.EntityPM.ImporterName) 
+
+                    if (this.EntityPM.ImporterName)
                     {
                         this.CalculatedImporterName = this.EntityPM.ImporterName
                     }
@@ -631,7 +631,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
 
                     this.TransferImporterCode = item;
                     this.EntityPM.TransferImporterId = null;
-                   
+
                     if (this.EntityPM.TransferImporterName) {
                         this.CalculatedTransferImporterName = this.EntityPM.TransferImporterName;
                     }
@@ -659,7 +659,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 }
             }
         //}
-        
+
     }
 
 
@@ -694,7 +694,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
         SessionLocator.CurrentSession.StopBusyIndicator();
-      
+
         var importerCode: string;
         var passportNumber: string;
         var passportTypeCode: string;
@@ -767,7 +767,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         logWindow.ShowCloseButton = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnCustomFilesScreenWindowClosed(type, $event));
-        logWindow.Show('./Customs/Components/Client/NewClient/NewClientComponent');
+        logWindow.Show('./CustomsModules/CustomsClient/Components/NewClient/NewClientComponent');
 
     }
 
@@ -814,8 +814,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
-      
-      
+
+
     }
 
     EditEntitleImporter() {
@@ -839,8 +839,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
-     
-       
+
+
     }
 
     SetFieldsDisabled(message: string) {
@@ -876,7 +876,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             }
         }
     }
-    
+
     //#endregion
 
     //#region Tabs Component code
@@ -912,7 +912,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         consignment.IsLastReleaseFromWarehous = "F";
         consignment.SequenceNumeric = ++this.consignmentIndex;
         consignment.ConsignmentNumber = ++this.consignmentNumber;
-        this.EntityPM.AddConsignment(consignment); 
+        this.EntityPM.AddConsignment(consignment);
 
         // new tab
         var tab = new LogTab();

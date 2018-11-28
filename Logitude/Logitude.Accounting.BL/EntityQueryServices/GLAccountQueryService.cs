@@ -9,6 +9,19 @@ using System.Linq;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityDataMappings;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.InvoiceModel;
+using Logitude.Accounting.BL.DataContract;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityLists;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.BL.CoreBL.Reports;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -443,6 +456,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<GLAccountPM> GetByInternalNumber(string internalNumber, int tenant)
         {
+          
+
+
             List<GLAccount> pocos = this.repository.GetByInternalNumber(internalNumber, tenant);
             return pocos.Select(rec => this.GetEntityPM(rec)).ToList();
         }
@@ -545,6 +561,247 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                };
             return Accounts;
         }
+
+        public TaxDeductionReportData GetTaxDeductionReportData(int? reportYear, int tenant)
+        {
+            Simplog.Data.CommonDataModel.ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+            IInvoiceContext invoicecontext = InvoiceContext.GetContext(tenant);
+            TaxDeductionReportData taxDeduction = new TaxDeductionReportData();
+            taxDeduction.TaxYear = reportYear;
+            // 1- get ap payments by year and status ad
+            // 2- group appayments by vendorId and percentage
+            // 3- Get Cards by list of vendorids from step 2
+            // 4- Get GlAccounts by list of glaccountids from step 3
+            // 5- GetAddresses by card ids from step 3 with filter of main address.
+            taxDeduction.ByVendorList = new List<ByVendorList>();
+            List<APPayment> payments = (from a in invoicecontext.APPayments
+                                     
+                                        where a.RegisterDate.Value.Year == reportYear && a.Tenant == tenant && a.StatusCode == "AD"
+                                        
+                                        select a).ToList();
+            List<APPaymentList> groupedpayments = (from a in payments
+                                               group a by
+                            new { a.VendorId, a.TaxDeductionPercentage } into g
+                                               select new APPaymentList
+                                               {
+                                                   VendorId = g.Key.VendorId,
+                                                   TaxDeductionPercentage = g.Key.TaxDeductionPercentage,
+                                                   AmountInLocalCurrency = g.Sum(s => s.AmountInLocalCurrency),
+                                                   TaxDeductionLocalAmount = g.Sum(s => s.TaxDeductionLocalAmount),
+                                                   RegisterDate= g.Select(s => s.RegisterDate).FirstOrDefault(),
+                                               } into s
+                                               select s).ToList();
+
+          
+
+            List<string> vendorIds = groupedpayments.Select(d => d.VendorId).ToList();
+            List<CardList> vendors = (from a in commoncontext.Cards
+
+                                      join d in commoncontext.Addresses on a.Id equals d.CardId
+                                      join dt in commoncontext.AddressTypes on d.AddressTypeId equals dt.Id
+
+                                      where d.AddressTypeId == "M" && vendorIds.Contains(a.Id) && a.CountryCode == "IL"
+                                      select new CardList()
+                                      {
+                                          Id = a.Id,
+                                          CityName = a.CityName,
+                                          MainAddressId = d.Name,
+                                          GLAccountId = a.GLAccountId,
+                                          IsAutonomy = a.IsAutonomy,
+                                          IsInternationalPartner = a.IsInternationalPartner,
+                                          EnglishName= a.EnglishName,
+                                          VatNumber = a.VatNumber,
+                                          
+                                  }
+                                      ).ToList();
+
+            List<GLAccountList> glaccounts = (from a in context.GLAccounts.Include("AccountingCompanyType").Include("TaxWithholdingAssessOffice").Include("WithholdingTaxDeductionType")
+                                        where a.AccountTypeCode=="3" && a.ExcludeFromDeductionReport==false
+                                        
+                                          select new GLAccountList()
+                                          {
+                                              Id= a.Id,
+                                              DisplayNumber = a.DisplayNumber,
+                                              Occupation = a.Occupation,
+                                              LocalName = a.LocalName,
+                                              DeductionTypeId = a.AccountingCompanyType != null ? a.AccountingCompanyType.Code : null,
+                                              
+                                              DeductionFileTypeCode = a.WithholdingTaxDeductionType != null? a.WithholdingTaxDeductionType.Code :null,
+                                              DeductionFileTypeName = a.WithholdingTaxDeductionType!= null? a.WithholdingTaxDeductionType.LocalName : null,
+                                              AssessingOfficeCode = a.TaxWithholdingAssessOffice != null ? a.TaxWithholdingAssessOffice.Code :null,
+                                              AssessingOfficeName = a.TaxWithholdingAssessOffice != null? a.TaxWithholdingAssessOffice.LocalName:null,
+                                              EnglishName = a.EnglishName,
+                                              DeductionTypeEnglishName = a.AccountingCompanyType != null ? a.AccountingCompanyType.EnglishName:null,
+                                              DeductionFileNumber= a.DeductionFileNumber
+                                          }
+                                          ).ToList();
+
+            groupedpayments = (from a in groupedpayments
+                               join v in vendors on a.VendorId equals v.Id
+                               join g in glaccounts on v.GLAccountId equals g.Id
+                               select a).ToList();
+
+            //payments = (from a in payments
+            //                   join v in vendors on a.VendorId equals v.Id
+            //                   join g in glaccounts on v.GLAccountId equals g.Id
+            //                   select a).ToList();
+            //taxDeduction.TotalAmountInLocalCurrency = payments.Sum(d => d.AmountInLocalCurrency);
+            var groupedByMonthpayments = (from a in groupedpayments
+                                          group a by
+                                           new { a.RegisterDate.Value.Month } into g
+                                          select new
+                                          {
+
+                                              g.Key
+                                          });
+            groupedByMonthpayments = groupedByMonthpayments.ToList();
+
+
+            glaccounts = (from a in glaccounts
+                          join v in vendors on a.Id equals v.GLAccountId
+                          select a).ToList();
+
+           
+            
+            foreach (APPaymentList item in groupedpayments)
+            {
+                ByVendorList  byVendorList= new ByVendorList()
+                {
+                    Month= item.RegisterDate.Value.Month,
+                    TaxDeductionPercentage = item.TaxDeductionPercentage,
+                    VendorId = item.VendorId,
+                   
+
+                };
+
+                CardList selectedVendor = (from a in vendors
+                                              where a.Id == item.VendorId
+                                              select a).FirstOrDefault();
+                if (selectedVendor != null)
+                {
+                    GLAccountList gLAccount = (from a in glaccounts
+                                               where a.Id == selectedVendor.GLAccountId
+                                               select a).FirstOrDefault();
+                    if (gLAccount != null)
+                    {
+                        byVendorList.DisplayNumber = gLAccount.DisplayNumber;
+
+                        byVendorList.Occupation = gLAccount.Occupation;
+                        byVendorList.GLAccountLocalName = gLAccount.LocalName;
+                        byVendorList.AssessingOfficerCode = gLAccount.AssessingOfficeCode;
+                        byVendorList.AssessingOfficerName = gLAccount.AssessingOfficeName;
+                        byVendorList.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
+                        byVendorList.DeductionFileNumber = gLAccount.DeductionFileNumber;
+                        byVendorList.DeductionType = gLAccount.DeductionTypeId;
+                        byVendorList.EnglishName = gLAccount.EnglishName;
+
+                        LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
+
+
+                        LTBFilter.PageSize = 10;
+                        LTBFilter.PageStartAtRecordIndex = 0;
+                        LTBFilter.Tenant = tenant;
+
+
+
+                        LTBFilter.GLAccountId = gLAccount.Id;
+                        LTBFilter.From = new DateTime((int)reportYear, 1, 1);
+                        LTBFilter.To = new DateTime((int)reportYear, 12, 31);
+                        LTBFilter.IncludeRelatedCurrenciesAccount = false;
+                        LTBFilter.IncludeChildAccounts = false;
+
+                        var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(context, LTBFilter);
+                        ledgerTransactionBalanceService.Run();
+                        //LTBFilter.CallBack = new LedgerTransactionBalanceFilterCallBack()
+                        //{
+                        //    //EndBalanceForeign = ledgerTransactionBalanceService.Response.EndBalanceForeign,
+                        //    EndBalanceForeignList = ledgerTransactionBalanceService.Response.EndBalanceForeignList,
+                        //    EndBalanceLocal = ledgerTransactionBalanceService.Response.EndBalanceLocal,
+                        //    Have1CurrencyIdInPeriod = ledgerTransactionBalanceService.Response.Have1CurrencyIdInPeriod,
+                        //    MaxCreateAt = ledgerTransactionBalanceService.Response.MaxCreateAt,
+
+                        //    //StartBalanceForeign = ledgerTransactionBalanceService.Response.StartBalanceForeign,
+                        //    StartBalanceForeignList = ledgerTransactionBalanceService.Response.StartBalanceForeignList,
+                        //    StartBalanceLocal = ledgerTransactionBalanceService.Response.StartBalanceLocal,
+                        //    TotalRowCount = ledgerTransactionBalanceService.Response.TotalRowCount,
+                        //    SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionBalanceService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
+
+                        //};
+                        byVendorList.EndYearBalance = ledgerTransactionBalanceService.Response.EndBalanceLocal != null ? ledgerTransactionBalanceService.Response.EndBalanceLocal :0 ;
+                        
+                      
+                    }
+
+
+                    if (byVendorList.EndYearBalance == null)
+                    {
+                        byVendorList.EndYearBalance = 0;
+                    }
+                    
+                        byVendorList.VATNumber = selectedVendor.VatNumber;
+                        byVendorList.VendorName = selectedVendor.EnglishName;
+                        byVendorList.VendorAddress = selectedVendor.MainAddressId;
+                        byVendorList.VendorCity = selectedVendor.CityName;
+                        byVendorList.IsAutonomy = selectedVendor.IsAutonomy;
+                        byVendorList.IsInternationlPartner = selectedVendor.IsInternationalPartner;
+                    
+                }
+                byVendorList.SumOfAmountInLocalCurrency = item.AmountInLocalCurrency;
+                byVendorList.SumOfTaxDeductionLocalAmount = item.TaxDeductionLocalAmount;
+
+
+              
+                taxDeduction.ByVendorList.Add(byVendorList);
+
+            }
+
+            taxDeduction.ByMonthList = new List<ByMonthList>();
+            foreach (var item in groupedByMonthpayments)
+            {
+                var month = item.Key.Month;
+              //  var year = item.Key.RegisterDate.Value.Year.ToString().Substring(2, 2);
+                ByMonthList byMonthList = new ByMonthList()
+                {
+                    Month = month,
+                    TotalVendors = taxDeduction.ByVendorList.Where(d => d.Month == month).Count(),
+                    TotalPaymentsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfAmountInLocalCurrency),
+                    TotalDeductionsWithoutDivided = taxDeduction.ByVendorList.Where(d => d.Month == month && d.DeductionFileTypeCode != "18").Sum(d => d.SumOfTaxDeductionLocalAmount),
+                    TotalDivided = taxDeduction.ByVendorList.Where(d => d.Month == month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfAmountInLocalCurrency),
+                    TotalDeductionsFromDivided = taxDeduction.ByVendorList.Where(d => d.Month == month && d.DeductionFileTypeCode == "18").Sum(d => d.SumOfTaxDeductionLocalAmount),
+                    ReportMonth = month + "." + reportYear,
+                };
+
+
+              
+                taxDeduction.ByMonthList.Add(byMonthList);
+            }
+
+
+            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
+            FullAccountingSettingPM setting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
+            TotalForCompany companyTotal = new TotalForCompany()
+            {
+                DeductionFileNumber = setting.DeductionFileNumber,
+                CompanyName = tenantPM.Company,
+                TotalDeductions = taxDeduction.ByVendorList.Sum(d => d.SumOfTaxDeductionLocalAmount),
+                TotalPayments = taxDeduction.ByVendorList.Sum(d => d.SumOfAmountInLocalCurrency),
+            };
+            taxDeduction.TotalForCompany = new List<TotalForCompany>();
+            taxDeduction.TotalForCompany.Add(companyTotal);
+
+            taxDeduction.TotalAmountInLocalCurrency = taxDeduction.ByVendorList.Sum(d => d.SumOfAmountInLocalCurrency);
+            taxDeduction.TotalDeductionInLocalCurrency = taxDeduction.ByVendorList.Sum(d => d.SumOfTaxDeductionLocalAmount);
+            taxDeduction.TotalAmountInLocalCurrency08 = taxDeduction.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfAmountInLocalCurrency);
+            taxDeduction.TotalTaxDeductionInLocalCurrency08 = taxDeduction.ByVendorList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.SumOfTaxDeductionLocalAmount);
+            taxDeduction.TotalEndBalance = taxDeduction.ByVendorList.Sum(d => d.EndYearBalance);
+            return taxDeduction;
+
+
+        }
+
+        
     }
     public class GLAccountCurrencyBalance
     {

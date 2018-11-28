@@ -64,7 +64,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DeductionTypeId, 
 	         ConsolidationVat, 
 	         IsEquipmentVendor, 
-	         IsPartOfDeductionReport,
+	         ExcludeFromDeductionReport,
 	      }
 
 
@@ -152,7 +152,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TaxWithholdingLastLine, 
 	         ReconcilationCount, 
 	         IsEquipmentVendor, 
-	         IsPartOfDeductionReport,
+	         ExcludeFromDeductionReport, 
+	         Parent, 
+	         DeductionTypeName, 
+	         DeductionFileTypeCode, 
+	         DeductionFileTypeName, 
+	         AssessingOfficeName, 
+	         DeductionTypeEnglishName, 
+	         TotalOpenChequesInLocalCur,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -366,9 +373,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.IsEquipmentVendor = entityPM.IsEquipmentVendor;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPartOfDeductionReport))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromDeductionReport))
             {
-				entityPOCO.IsPartOfDeductionReport = entityPM.IsPartOfDeductionReport;
+				entityPOCO.ExcludeFromDeductionReport = entityPM.ExcludeFromDeductionReport;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -587,9 +594,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.IsEquipmentVendor = entityPOCO.IsEquipmentVendor;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPartOfDeductionReport))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExcludeFromDeductionReport))
             {
-					entityPM.IsPartOfDeductionReport = entityPOCO.IsPartOfDeductionReport;
+					entityPM.ExcludeFromDeductionReport = entityPOCO.ExcludeFromDeductionReport;
             }
 
 		}
@@ -803,9 +810,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.IsEquipmentVendor = entityPM.IsEquipmentVendor;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPartOfDeductionReport))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromDeductionReport))
             {
-                oldEntityPM.IsPartOfDeductionReport = entityPM.IsPartOfDeductionReport;
+                oldEntityPM.ExcludeFromDeductionReport = entityPM.ExcludeFromDeductionReport;
             }
 			
 		}

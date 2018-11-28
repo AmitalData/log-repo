@@ -18,7 +18,8 @@ import {UserPMService} from '../../../Common/Services/StandardPMs/UserPMService'
 import {TenantPMService} from '../../../Common/Services/StandardPMs/TenantPMService';
 import {TenantManagementPMService} from '../../Services/StandardPMs/TenantManagementPMService';
 import {AccountingSettingPMService} from '../../../Common/Services/StandardPMs/AccountingSettingPMService';
-import {CustomsInterfaceSettingPMService} from '../../../Common/Services/StandardPMs/CustomsInterfaceSettingPMService';
+import { CustomsInterfaceSettingPMService } from '../../../Common/Services/StandardPMs/CustomsInterfaceSettingPMService';
+import { SharedLogisticsSettingPMService } from '../../Services/StandardPMs/SharedLogisticsSettingPMService';
 import {CreditLimitSettingPMService} from '../../../Common/Services/StandardPMs/CreditLimitSettingPMService';
 import {LogitudeApplicationService} from '../../Services/WebServices/LogitudeApplicationService';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
@@ -218,9 +219,12 @@ export class LoginComponent implements OnInit {
             SessionInfo.Token = userData.Token;
             SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
             SessionInfo.SessionTimeout = userData.SessionTimeout;
-            SessionInfo.WebTokenExpirationWarning = userData.WebTokenExpirationWarning;
-            SessionInfo.WebTokenLifeTime = userData.WebTokenLifeTime;
+            SessionInfo.WebTokenExpirationWarningInMinutes = userData.WebTokenExpirationWarningInMinutes;
+            SessionInfo.WebTokenLifeTimeInMinutes = userData.WebTokenLifeTimeInMinutes;
             SessionInfo.KeepUserLoggedIn = userData.KeepUserLoggedIn;
+            SessionInfo.LastLoginDateTime = userData.LastLoginDateTime;
+            
+
 
             AmitalGatewayUtil.Instance.AmitalBrowserInUse = userData.AmitalBrowserInUse;
             this.authHeader.append('token', userData.Token);
@@ -421,8 +425,10 @@ export class LoginComponent implements OnInit {
 
             var f = { valid: true };
             this.ChooseTenant(f, null);
-        }
 
+            SessionInfo.LoggedUserCardId = this.SelectedCompany.CardId;
+            SessionInfo.LoggedUserCardType = this.SelectedCompany.CardType;
+        }
     }
     ChooseTenant(f, values) {
         if (f.valid) {
@@ -665,6 +671,15 @@ export class LoginComponent implements OnInit {
                     }
 
                     this.IncreaseProgressBar();                    
+                });
+
+                this.loginService.GetSharedLogisticsSetting().subscribe(myResult => {
+                    if (myResult) {
+                        var mySharedLogisticsSettingPMService = new SharedLogisticsSettingPMService();
+                        ObjectsUpdater.UpdateSharedLogisticsSettingPM(mySharedLogisticsSettingPMService.MapJsonToEntityPM(myResult));
+                    }
+
+                    this.IncreaseProgressBar();
                 });
 
                 this.loginService.GetGlobalSetting().subscribe(myResult => {  

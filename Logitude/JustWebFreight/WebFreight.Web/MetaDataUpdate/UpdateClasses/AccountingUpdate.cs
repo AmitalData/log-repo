@@ -55,7 +55,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         private ObjectTableRuleRepository objectTableRuleRepository;
         private ObjectTableRuleFieldRepository objectTableRuleFieldRepository;
         private RuleConditionFieldRepository ruleConditionFieldRepository;
-
+        public CounterDefinitionRepository CounterDefinitionRepository;
         private EventTypeRepository eventTypesRepository;
         #endregion
 
@@ -1449,7 +1449,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.MainQueries", DefaultText = "Main Queries", LocalDefaultText = "שאילתות ראשיות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RecentGLAccounts", DefaultText = "Recent GL Accounts", LocalDefaultText = "כרטיסים אחרונים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.GLAccount", DefaultText = "GL Account", LocalDefaultText = "כרטיסים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-           // AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Journals", DefaultText = "Journals", LocalDefaultText = "פקודות יומן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            // AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Journals", DefaultText = "Journals", LocalDefaultText = "פקודות יומן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.MiscQueries", DefaultText = "Misc Queries", LocalDefaultText = "שאילתות שונות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewOpenFormatReport", DefaultText = "New Open Format Report", LocalDefaultText = "דוח מבנה אחיד חדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.User", DefaultText = "User", LocalDefaultText = "משתמש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountManager", DefaultText = "Account Manager", LocalDefaultText = "מנהל חשבון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1476,7 +1478,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NewAccount", DefaultText = "New Account", LocalDefaultText = "חשבון חדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Customers", DefaultText = "Customers", LocalDefaultText = "לקוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.GeneralInvoice", DefaultText = "General Invoice", LocalDefaultText = "חשבונית כללית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Payments", DefaultText = "Payments", LocalDefaultText = "תשלומים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Payments", DefaultText = "Payments", LocalDefaultText = "קבלות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.DraftPayments", DefaultText = "Draft Payments", LocalDefaultText = "קבלות בסטטוס טיוטה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OpenPayments", DefaultText = "Open Payments", LocalDefaultText = "קבלות בסטטוס מאושר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AllPayments", DefaultText = "All Payments", LocalDefaultText = "כל הקבלות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1558,7 +1560,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Reconciled", DefaultText = "Reconciled", LocalDefaultText = "התואם", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Reconciliation", DefaultText = "Reconciliation", LocalDefaultText = "התאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.wascreatedsuccessfully", DefaultText = "was created successfully", LocalDefaultText = "נוצרה בהצלחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.cashbookDetails", DefaultText = "Cashbook details", LocalDefaultText = "נוצרה בהצלחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.cashbookDetails", DefaultText = "Cashbook details", LocalDefaultText = "כללי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Amount", DefaultText = "Amount", LocalDefaultText = "סכום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NoChequesintheCashbook", DefaultText = "No Cheques in the Cashbook", LocalDefaultText = "אין צ'קים בקופות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1572,6 +1574,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ManageReconciliation", DefaultText = "Manage reconciliations", LocalDefaultText = "ניהול התאמות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ZeroDeposit", DefaultText = "The deposit amount must be bigger than zero", LocalDefaultText = "הסכום להפקדה חייב להיות גדול מאפס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.minusDepositNotAllowed", DefaultText = "Cannot deposit a minus value", LocalDefaultText = "Cannot deposit minus value", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AllFieldsRequired", DefaultText = "All Fields Required", LocalDefaultText = "כל השדות נדרשים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Currencydifferent", DefaultText = "The currency of the bank account and the cashbook is different", LocalDefaultText = "המטבע של חשבון הבנק והקופה שונים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1634,6 +1637,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WithZeroBalance", DefaultText = "GLAccount with balance equal to zero", LocalDefaultText = "כלול כרטיסים ללא תנועות עם יתרה 0", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Run", DefaultText = "Run", LocalDefaultText = "הרץ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.FutureDate", DefaultText = "Future Date", LocalDefaultText = "תאריך עתיד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PostdatedChequeRedemption", DefaultText = "Postdated Cheque Redemption", LocalDefaultText = "פרעון שיק דחוי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WithTransaction", DefaultText = "With Transaction", LocalDefaultText = "עם תנועות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WithoutTransaction", DefaultText = "Without Transaction", LocalDefaultText = "בלי תנועות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.FilterBy", DefaultText = "Filter by:", LocalDefaultText = "סנן לפי:", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1714,21 +1718,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.InputsOther", DefaultText = "Inputs - Other", LocalDefaultText = "תשומות - אחר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Included", DefaultText = "Included", LocalDefaultText = "לכלול", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Line", DefaultText = "Line", LocalDefaultText = "שורה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.CurrencyDetailed", DefaultText = "Currency detailed", LocalDefaultText = "פירוט לפי מטבעות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.CurrencyDetailed", DefaultText = "Currency detailed", LocalDefaultText = "פירוט לפי מטבעות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ReportExist", DefaultText = "There is already report for the chosen month", LocalDefaultText = "ישנו דוח לחודש הנבחר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.HigherMonthReport", DefaultText = "There’s a report with a higher month", LocalDefaultText = "קיים כבר דוח עם חודש גבוה יותר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ReportWithClosedMonth", DefaultText = "Report month Month is not closed , please check Accounting Periods", LocalDefaultText = "לא ניתן להפיק דוח מע\" על חודש שעדיין לא נסגר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WantToCancelTaxReport", DefaultText = "Are you sure you want to cancel this report?", LocalDefaultText = "האם אתה בטוח שאתה רוצה לבטל דוח זה؟", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-		    AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Noautorecofoundbymethodchangemethod", DefaultText = "No automatic reconcile found by this method, Please change method or select lines manually", LocalDefaultText = "לא נמצאו תנועות מתאימות לשיטת ההתאמה שנבחרה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+		    AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Noautorecofoundbymethodchangemethod", DefaultText = "No automatic reconcile found by this method, Please change method or select lines manually", LocalDefaultText = "לא נמצאו תנועות להתאמה, יש לשנות שיטת התאמה או להתאים ידנית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.EditLine", DefaultText = "Edit Line Number", LocalDefaultText = "ערוך שורה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxReportErrorMsg", DefaultText = "Cannot approve report, there are #Number errors", LocalDefaultText = "קיימות #Number שגיאות - יש לתקנם לפני שידור הדוח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Inactive", DefaultText = "Inactive", LocalDefaultText = "חסום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
-                        #region MainMenu
+            #region MainMenu
 
 
-                        #endregion
-                        objectContext.SaveChanges();
+            #endregion
+            objectContext.SaveChanges();
         }
         #endregion
 
@@ -1831,6 +1836,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Date", DefaultText = "Date", LocalDefaultText = "תאריך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Collecting", DefaultText = "Collecting", LocalDefaultText = "גביה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Accounting", DefaultText = "Accounting", LocalDefaultText = "חשבונאית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MustBeMultiCurrency", DefaultText = "Parent GLAccount must be multi currency", LocalDefaultText = "כרטיס אב חייב להיות רב מטבעי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
 
@@ -1859,6 +1865,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.ReconcileMethodNameLabel", DefaultText = "Reconcile Method: ", LocalDefaultText = "שיטת התאמה: ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.InternalNumberLabel", DefaultText = "System No.: ", LocalDefaultText = "מספר מערכת: ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.FutureDateForbidden", DefaultText = "Future date is not allowed", LocalDefaultText = "לא ניתן להגדיר תאריך עתידי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.Revaluation", DefaultText = "Revaluation", LocalDefaultText = "שערוך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.RevaluationError", DefaultText = "Revaluation error: ", LocalDefaultText = "שגיאת התאמה: ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.RateNotFound", DefaultText = " exchange rate not found for ", LocalDefaultText = " שער המרה לא נמצא לתאריך ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.DiffAccountNotDefined", DefaultText = "Difference account not defined", LocalDefaultText = "לא מודגר חשבון להפרשים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
@@ -3855,5 +3862,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         #endregion
 
         #endregion
+
+
+     
+
+        public void CreateCounters(int tenant)
+        {
+            //objectContext = WebFreightContext.GetContext(tenant);
+            //CounterRepository CounterRepository = new CounterRepository(objectContext);
+            //CounterDefinitionRepository = new CounterDefinitionRepository(objectContext);
+            //List<Counter> zeroCounters = CounterRepository.GetCounters(0).ToList();
+            //ObjectTable taxDeductionReportObject = objectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault();
+            //#region Tax Deduction Report Counters
+
+            //if (!zeroCounters.Where(c => c.Code == "TXDC" && c.Tenant == 0).Any())
+            //{
+            //    Counter taxDeductionReportCounter = new Counter()
+            //    {
+            //        Id = IdCounter.GetNumber("Counter", 0).ToString(),
+            //        ObjectTableId = taxDeductionReportObject.Id,
+            //        Code = "TXDC",
+            //        Tenant = 0,
+            //        Name = "Tax Deduction Report",
+            //    };
+
+            //    CounterDefinition taxDeductionReportCounter_CounterDef = new CounterDefinition()
+            //    {
+            //        Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+            //        CounterId = taxDeductionReportCounter.Id,
+            //        Tenant = 0,
+            //        StartNumber = 1000,
+            //        Parameter1 = "TX",
+            //    };
+
+            //    CounterRepository.Add(taxDeductionReportCounter);
+            //    CounterDefinitionRepository.Add(taxDeductionReportCounter_CounterDef);
+
+            //}
+            //#endregion
+
+            //this.objectContext.SaveChanges();
+        }
     }
 }

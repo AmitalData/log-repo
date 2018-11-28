@@ -1,4 +1,4 @@
-﻿export class QuoteSettingPM {
+export class QuoteSettingPM {
     public Id: number;
     public Tenant: number;
     public CopyShipper: boolean;
@@ -12,4 +12,5 @@
     public EditMainCarriage: boolean;
     public CopyAgent: boolean;
     public CopyNotify: boolean;
+    public IsSaleAsCostCurrency: boolean;
 }

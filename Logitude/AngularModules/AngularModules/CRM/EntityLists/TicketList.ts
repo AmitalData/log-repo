@@ -123,6 +123,7 @@ export class TicketList {
 	ContactTel: string;
 	SLAName: string;
 	SLAId: string;
+	EntityType: string;
 	
 }
  

@@ -23,7 +23,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         private IQueryable<BankDepositList> GetIqueryableList(IQueryable<BankDeposit> iQueryable)
         {
             IQueryable<BankDepositList> query = (from a in iQueryable.Include("CashBook").Include("BankAccount")
-                                                 join jr in context.Journals on a.Id equals jr.AccountingEntityId
+                                                 join jr in context.Journals on a.Id equals jr.AccountingEntityId into r
+                                                 from x in r.GroupBy(d => d.AccountingEntityId).Select(d => d.FirstOrDefault())
                                                  select new BankDepositList()
                                                  {
 
@@ -66,12 +67,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
 
                                                      BankAccountNumber = a.BankAccount.AccountNumber,
-                                                     IsCanceled=a.IsCanceled,
+                                                     IsCanceled = a.IsCanceled,
 
-                                                     JournalNumber=jr.JournalNumber,
+                                                     JournalNumber = x.JournalNumber,
                                                  });
             return query;
         }
+
 
         private IQueryable<BankDeposit> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<BankDeposit> iQueryable, int tenant)
         {
@@ -102,8 +104,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             foreach (EntityLastActivity lastActivity in lastActivities)
             {
                 BankDeposit a = (from d in entities.Include("CashBook").Include("Currency")
-                             where d.Id == lastActivity.EntityId
-                             select d).FirstOrDefault();
+                                 where d.Id == lastActivity.EntityId
+                                 select d).FirstOrDefault();
 
                 if (a != null)
                 {
@@ -166,8 +168,65 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return entityList;
         }
 
+        public BankDepositList GetLastBankDepositByIdList(int tenant, List<string> depositIdList)
+        {
+            BankDepositRepository repository = new BankDepositRepository(tenant);
+            IQueryable<BankDeposit> entities = entities = repository.GetAll(tenant);
+
+            BankDeposit a = (from d in entities.Include("CashBook").Include("Currency")
+                             where depositIdList.Contains(d.Id)
+                             select d).OrderByDescending(o => o.DepositDate).FirstOrDefault();
+            if (a != null)
+            {
+                BankDepositList list = new BankDepositList()
+                {
+                    Id = a.Id,
+
+                    Tenant = a.Tenant,
+
+                    CreateDate = a.CreateDate,
+
+                    CreatedByUserId = a.CreatedByUserId,
+
+                    UpdateDate = a.UpdateDate,
+
+                    UpdatedByUserId = a.UpdatedByUserId,
+
+                    SearchFields = a.SearchFields,
+
+                    AccountingDate = a.AccountingDate,
+
+                    CashBookId = a.CashBook != null ? a.CashBook.Id : null,
+
+                    DepositBankAccountId = a.DepositBankAccountId,
+
+                    DepositCurrencyId = a.Currency.Code,
+
+                    DepositDate = a.DepositDate,
+
+                    DepositNumber = a.DepositNumber,
+
+                    ForeignAmount = a.ForeignAmount,
+
+                    LocalDepositAmount = a.LocalDepositAmount,
+
+                    DepositCurrencyCode = a.Currency.Code,
+
+                    CashBookName = a.CashBook.EnglishName,
+
+                    IsCashDeposit = a.CashBook.CashBookTypeCode == "1",
+                };
+
+                return list;
+            }
+            else
+            {
+                return null;
+            }
+
+
+        }
+
     }
-
-
 }
 	

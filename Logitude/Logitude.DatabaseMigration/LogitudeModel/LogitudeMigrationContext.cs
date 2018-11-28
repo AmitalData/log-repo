@@ -1376,6 +1376,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
+        public IDbSet<DWSubQuery> DWSubQueries
+        {
+            get;
+            set;
+        }
+
         public IDbSet<DWQueryColumn> DWQueryColumns
         {
             get;
@@ -1601,6 +1607,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ShipmentContainerStatus> ShipmentContainerStatuses { get; }
         public IDbSet<PickUpDeliveryTransportMode> PickUpDeliveryTransportModes { get; }
         public IDbSet<INTTRADocumentType> INTTRADocumentTypes { get; }
+        public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
+
         #endregion
 
         #region Invoice Context
@@ -3306,7 +3314,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<VatReportStatus> VatReportStatuses { get; set; }
         public IDbSet<TaxDeductionReport> TaxDeductionReports { get; set; }
         public IDbSet<TaxDeductionReportStatus> TaxDeductionReportStatuses { get; set; }
+        public IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; set; }
 
+        public IDbSet<OpenFormatReport> OpenFormatReports { get; set; }
+        public IDbSet<OpenFormatReportStatus> OpenFormatReportStatuses { get; set; }
+    //    public IDbSet<OpenFormatDateType> OpenFormatReportStatuses { get; set; }
 
         #endregion
 
@@ -4139,8 +4151,10 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new VatReportStatusMap());
             modelBuilder.Configurations.Add(new TaxDeductionReportMap());
             modelBuilder.Configurations.Add(new TaxDeductionReportStatusMap());
-
-
+            modelBuilder.Configurations.Add(new JournalAdditionalDataMap());
+            modelBuilder.Configurations.Add(new OpenFormatReportMap());
+            modelBuilder.Configurations.Add(new OpenFormatDateTypeMap());
+            modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
             #endregion
 
 
@@ -4702,6 +4716,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWQueryMap());
             modelBuilder.Configurations.Add(new DWQueryColumnMap());
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
+            modelBuilder.Configurations.Add(new ShipmentPackageHarmonizeMap());
+            modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
 
             base.OnModelCreating(modelBuilder);
         }

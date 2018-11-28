@@ -1,3 +1,4 @@
+import { LedgerTransactionList } from './../../../EntityLists/LedgerTransactionList';
 import {Component, ChangeDetectorRef}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -16,7 +17,6 @@ import { LedgerTransactionExtendedListService } from '../../../Services/Extended
 import { ReconcileEventManager } from '../../../Utilities/ReconcileEventManager';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { LedgerTransactionList } from '../../../EntityLists/LedgerTransactionList';
 import { GLAccountSummary } from '../../../DataContracts/AccountingSummery';
 import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
 import { PeriodM } from '../../../DataContracts/PeriodM';
@@ -53,6 +53,46 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.chartId = "CustomerOverview_" + SessionLocator.CurrentSession.GetChartId();
 
         this.LoadAllData();
+
+        this.Listen();
+    }
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
+    Listen() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            if (this.SaveCompletedEvent == null) {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.LoadAllData();
+                    }
+                });
+            }
+
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        console.log("Entity Reloaded");
+                        this.LoadAllData();
+                    }
+                });
+            }
+
+
+            //
+            if (this.TabSelectedEvent == null) {
+                this.TabSelectedEvent = SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (tabCode == "GAOV") {
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.LoadAllData();
+                    }
+                });
+            }
+        }
     }
 
     LoadAllData() {
@@ -80,7 +120,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                this.GLAccountMoreData = mm.Result; 
+                this.GLAccountMoreData = mm.Result;
             }
             else {
             }
@@ -115,7 +155,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         //    this.ChartOfAccountsId = this.AccountPM.ChartOfAccountsId;
         //    this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
         //}
-        
+
     }
 
     //#region Balance Section
@@ -173,13 +213,33 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./Accounting/Components/Others/ReconcileComponent');
                 logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                    if ($event == 'ok') {
-                        // show alert
-                    }
+                    // this.LoadAllData();
+                    this.GetNonReconciledTransactionsCount();
 
                 });
 
             }
+        });
+    }
+
+    GetNonReconciledTransactionsCount() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe(myResult => {
+
+
+            if (!AppTool.IsNullOrEmpty(myResult)) {
+
+                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.ReconcilationCount = myResult;
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(($event) => {
+                    if ($event == true) {
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                });
+            }
+
         });
     }
     getScreenHeight() {
@@ -215,6 +275,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
     GetAmountLabel() {
         var msg = this.txtcode_Amount + " (" + SessionLocator.TenantPM.CurrencyCode + ")";
         return msg;
+    }
+    GetTransAmount(transaction: LedgerTransactionList) {
+        return transaction.LocalAmountDebit ? transaction.LocalAmountDebit : transaction.LocalAmountCredit;
     }
     GetIconText(line: LedgerTransactionList) {
         var iconTxt = "";
@@ -430,12 +493,20 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         }
     }
+    GetIndicatorText(transaction)
+    {
+        var showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        if(transaction['OpenAmount'] != this.CalculateOriginalAmount(transaction))
+            return showLocal ? 'סכום פתוח חלקית' : 'Partial transaction';
+        else
+            return showLocal ? 'סכום פתוח ' : 'Open transaction';
+    }
 
 
     //#endregion
 
     //#region Aging Details
-    chartId: string = ""; 
+    chartId: string = "";
 
     GetAgingHeader() {
         var txt = this.txtcode_AgingDetails;
@@ -455,7 +526,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.LoadChartData();
     }
 
-    // Filter Methods 
+    // Filter Methods
     public DateFilterSelectedValue: string = 'filter_Collecting';
     DateFilterItemClicked(itemValue: string) {
         if (this.DateFilterSelectedValue != itemValue) {
@@ -486,7 +557,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             case '12mo': {
                 numberOfmonthsbackwards = 12;
                 break;
-            } 
+            }
         }
 
         var args = new AgingReportParameters();
@@ -607,7 +678,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         });
 
         var poisition = this.isRTL == true ? "right" : "left";
-        
+
         makeAmBarChart(this.chartId, Graphs, DataProvider, max, null, null, null, null, poisition);
 
     }

@@ -801,5 +801,31 @@ namespace Simplog.Data.ShipmentsModel.Mocks
                 throw new NotImplementedException();
             }
         }
+        public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<PickUpDeliveryPackageHarmonize> PickUpDeliveryPackageHarmonizes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
     }
 }

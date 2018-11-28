@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .CodeMessage {
         font-size: 14px;
@@ -73,9 +73,22 @@
                                                        [DropDownWidth]="490"
                                                        [IsSimilarPartner]="true"
                                                        [PartnerTypeId]="PartnerTypeId"
-                                                       [Header]="SimilaryCardsHeader"
-                                                       >
+                                                       [Header]="SimilaryCardsHeader">
                                             </SearchBox>
+                                        </td>
+                                    </tr>
+
+
+
+                                    <!-- Local Name -->
+                                    <tr class="FormFieldRow">
+
+                                        <td style="width: 110px;">
+                                            <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customer.O.CompanyLocalName'"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" ></LogTextBox>                                        
                                         </td>
                                     </tr>
 

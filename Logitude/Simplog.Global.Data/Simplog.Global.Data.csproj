@@ -72,14 +72,14 @@
     <Reference Include="Devart.Data.Oracle.Web, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
       <HintPath>..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\General\Dlls\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Tools, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceModel.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Tools.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -88,8 +88,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\JustWebFreight\WebFreight.Web\bin\System.ServiceModel.DomainServices.Server.dll</HintPath>
+      <HintPath>..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
@@ -109,11 +108,13 @@
     <Compile Include="GlobalModel\EntityPOCOs\AWBMessagesCCSType.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BatchServicesDefinition.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BluesnapContract.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\CaptchaKey.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ChangePasswordLog.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ContactMobileDevice.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ContactPassword.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ConvertProgramInfo.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BatchServicesDefinitionMods.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\InvalidEmailResetPassword.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\SessionPolicy.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\TenantManagmentPrivateLabels.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\GlobalContact.cs" />
@@ -148,12 +149,14 @@
     <Compile Include="GlobalModel\Mapping\AWBMessagesCCSTypeMap.cs" />
     <Compile Include="GlobalModel\Mapping\BatchServicesDefinitionMap.cs" />
     <Compile Include="GlobalModel\Mapping\BluesnapContractMap.cs" />
+    <Compile Include="GlobalModel\Mapping\CaptchaKeyMap.cs" />
     <Compile Include="GlobalModel\Mapping\ChangePasswordLogMap.cs" />
     <Compile Include="GlobalModel\Mapping\ContactMobileDeviceMap.cs" />
     <Compile Include="GlobalModel\Mapping\ContactPasswordMap.cs" />
     <Compile Include="GlobalModel\Mapping\ConvertProgramInfoMap.cs" />
     <Compile Include="GlobalModel\Mapping\ApiCredintialsMap.cs" />
     <Compile Include="GlobalModel\Mapping\BatchServicesDefinitionModsMap.cs" />
+    <Compile Include="GlobalModel\Mapping\InvalidEmailResetPasswordMap.cs" />
     <Compile Include="GlobalModel\Mapping\SessionPolicyMap.cs" />
     <Compile Include="GlobalModel\Mapping\TenantManagmentPrivateLabelsMap.cs" />
     <Compile Include="GlobalModel\Mapping\GlobalContactMap.cs" />
@@ -184,12 +187,14 @@
     <Compile Include="GlobalModel\Repositories\AWBMessagesCCSTypeRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BatchServicesDefinitionRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BluesnapContractRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\CaptchaKeyRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ChangePasswordLogRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ContactMobileDeviceRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ContactPasswordRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ConvertProgramInfoRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ApiCredintialsRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BatchServicesDefinitionModsRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\InvalidEmailResetPasswordRepository.cs" />
     <Compile Include="GlobalModel\Repositories\SessionPolicyRepository.cs" />
     <Compile Include="GlobalModel\Repositories\TenantManagmentPrivateLabelsRepository.cs" />
     <Compile Include="GlobalModel\Repositories\GlobalContactRepository.cs" />
@@ -224,6 +229,42 @@
     <Compile Include="Migrations\201810150949517_IncreaseTenantNotesFieldLength_Samar.Designer.cs">
       <DependentUpon>201810150949517_IncreaseTenantNotesFieldLength_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810240810162_AbedAddNewTableCaptchaKey.cs" />
+    <Compile Include="Migrations\201810240810162_AbedAddNewTableCaptchaKey.Designer.cs">
+      <DependentUpon>201810240810162_AbedAddNewTableCaptchaKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs" />
+    <Compile Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.Designer.cs">
+      <DependentUpon>201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810280818131_AbedAddTableInvalidEmailResetPassword.cs" />
+    <Compile Include="Migrations\201810280818131_AbedAddTableInvalidEmailResetPassword.Designer.cs">
+      <DependentUpon>201810280818131_AbedAddTableInvalidEmailResetPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810280913468_AbedAddNewFieldIPToChangePasswordLog.cs" />
+    <Compile Include="Migrations\201810280913468_AbedAddNewFieldIPToChangePasswordLog.Designer.cs">
+      <DependentUpon>201810280913468_AbedAddNewFieldIPToChangePasswordLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810281007451_AbedAddNewFieldActivityToCaptchaKey.cs" />
+    <Compile Include="Migrations\201810281007451_AbedAddNewFieldActivityToCaptchaKey.Designer.cs">
+      <DependentUpon>201810281007451_AbedAddNewFieldActivityToCaptchaKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810300620134_AbedAddDWNextRunTimeToTableSetting.cs" />
+    <Compile Include="Migrations\201810300620134_AbedAddDWNextRunTimeToTableSetting.Designer.cs">
+      <DependentUpon>201810300620134_AbedAddDWNextRunTimeToTableSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811010618518_ChangeFieldNameInTableSessionPolicies.cs" />
+    <Compile Include="Migrations\201811010618518_ChangeFieldNameInTableSessionPolicies.Designer.cs">
+      <DependentUpon>201811010618518_ChangeFieldNameInTableSessionPolicies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.cs" />
+    <Compile Include="Migrations\201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.Designer.cs">
+      <DependentUpon>201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131835452_AbedAddCaptchaKeyToContactPassword.cs" />
+    <Compile Include="Migrations\201811131835452_AbedAddCaptchaKeyToContactPassword.Designer.cs">
+      <DependentUpon>201811131835452_AbedAddCaptchaKeyToContactPassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -251,6 +292,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810150526331_AbedAddNewTableSessionPolicy.resx">
       <DependentUpon>201810150526331_AbedAddNewTableSessionPolicy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810240810162_AbedAddNewTableCaptchaKey.resx">
+      <DependentUpon>201810240810162_AbedAddNewTableCaptchaKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.resx">
+      <DependentUpon>201810250926264_AbedAddNewFieldEmailSendingQuotaToSettingTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810280818131_AbedAddTableInvalidEmailResetPassword.resx">
+      <DependentUpon>201810280818131_AbedAddTableInvalidEmailResetPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810280913468_AbedAddNewFieldIPToChangePasswordLog.resx">
+      <DependentUpon>201810280913468_AbedAddNewFieldIPToChangePasswordLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810281007451_AbedAddNewFieldActivityToCaptchaKey.resx">
+      <DependentUpon>201810281007451_AbedAddNewFieldActivityToCaptchaKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810300620134_AbedAddDWNextRunTimeToTableSetting.resx">
+      <DependentUpon>201810300620134_AbedAddDWNextRunTimeToTableSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811010618518_ChangeFieldNameInTableSessionPolicies.resx">
+      <DependentUpon>201811010618518_ChangeFieldNameInTableSessionPolicies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.resx">
+      <DependentUpon>201811131811377_AbedAddFieldIsUsedOnTableCaptchaKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131835452_AbedAddCaptchaKeyToContactPassword.resx">
+      <DependentUpon>201811131835452_AbedAddCaptchaKeyToContactPassword.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

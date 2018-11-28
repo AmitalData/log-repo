@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ElementRef}  from '@angular/core';
+import {Component, OnInit, ElementRef}  from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -48,10 +48,26 @@ export class ReportComponent {
                     reportService.GetReportListsByGroupId(item.Id, SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             var myResult: ReportList[] = myResponse.Result;
-
+                            
                             myResult.forEach((item) => {
-                                if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
-                                    this.reportList.push(item);
+                                if (item.Code == "AREX") {
+                                    if (SessionLocator.Tenant == 1212) {
+                                        this.reportList.push(item);
+                                    }
+                                }
+
+                                else if (item.Code == "DSCA") {
+                                    if (SessionLocator.Tenant != 1212) {
+                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                            this.reportList.push(item);
+                                        }
+                                    }
+                                }
+
+                                else {
+                                    if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                        this.reportList.push(item);
+                                    }
                                 }
                             });
 
@@ -194,7 +210,9 @@ export class ReportsGrpupClass {
 
         else {
             myReports.forEach((item) => {
-                if (!AppTool.IsNullOrEmpty(item.Name) && item.Name.toUpperCase().indexOf(this.fatherComponent.mySearchText.toUpperCase()) > -1) {
+                if (!AppTool.IsNullOrEmpty(item.Name) && item.Name.toUpperCase().indexOf(this.fatherComponent.mySearchText.toUpperCase()) > -1
+                    ||
+                    !AppTool.IsNullOrEmpty(item.LocalName) && item.LocalName.toUpperCase().indexOf(this.fatherComponent.mySearchText.toUpperCase()) > -1) {
                     this.ItemsSource.push(item);
                 }
             });

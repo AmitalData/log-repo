@@ -204,7 +204,18 @@ using Simplog.Data.ShipmentsModel;
 					 temp.Houses = HouseService16.HouseCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentConsoleShipments,Tenant);
 				}
 
-							 					
+							 
+				   temp.IsOperationalClosed = MyEntityPM.IsOperationalClosed;			  
+				   if(MyEntityPM.MainCarriageVesselId != null)
+				   {
+					   VesselQueryService VesselService16 = new VesselQueryService(Tenant);
+					   					   temp.Vessel = VesselService16.GetVesselById(MyEntityPM.MainCarriageVesselId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.MainCarriageATA = MyEntityPM.MainCarriageATA;
+				   temp.MainCarriageATD = MyEntityPM.MainCarriageATD;
+				   temp.IsAccountingClosed = MyEntityPM.IsAccountingClosed;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -409,15 +420,15 @@ using Simplog.Data.ShipmentsModel;
 					
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService16 = new DeliveryQueryService(Tenant);
-						temp.ShipmentDeliveries = DeliveryService16.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
+						DeliveryQueryService DeliveryService17 = new DeliveryQueryService(Tenant);
+						temp.ShipmentDeliveries = DeliveryService17.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService16 = new PickUpQueryService(Tenant);
-						temp.ShipmentPickUps = PickUpService16.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
+						PickUpQueryService PickUpService17 = new PickUpQueryService(Tenant);
+						temp.ShipmentPickUps = PickUpService17.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -430,11 +441,26 @@ using Simplog.Data.ShipmentsModel;
 					
 					if(MyEntity.Houses != null && MyEntity.Houses.Count > 0)
 					{
-						HouseQueryService HouseService16 = new HouseQueryService(Tenant);
-						temp.ShipmentConsoleShipments = HouseService16.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
+						HouseQueryService HouseService17 = new HouseQueryService(Tenant);
+						temp.ShipmentConsoleShipments = HouseService17.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
 					}
 
-								 					   
+								 
+					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;					VesselQueryService VesselVesselService = new VesselQueryService(Tenant);
+					if(MyEntity.Vessel != null)
+					{
+						var myVesselPM = VesselVesselService.VesselDataMappingAndValidatin(MyEntity.Vessel,Tenant,ComputingPartnerName);
+												if(myVesselPM != null)
+						{
+							temp.MainCarriageVesselId = myVesselPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.MainCarriageATA = MyEntity.MainCarriageATA;
+					temp.MainCarriageATD = MyEntity.MainCarriageATD;
+					temp.IsAccountingClosed = MyEntity.IsAccountingClosed;					   
 					   return temp;
 		    }
             catch (Exception ex)

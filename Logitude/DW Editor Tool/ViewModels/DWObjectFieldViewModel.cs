@@ -73,6 +73,20 @@ namespace DW_Editor_Tool.ViewModels
             set { aggregationTypeCode = value; FirePropertyChanged("AggregationTypeCode"); }
         }
 
+        string category1;
+        public string Category1
+        {
+            get { return category1; }
+            set { category1 = value; FirePropertyChanged("Category1"); }
+        }
+
+        string category2;
+        public string Category2
+        {
+            get { return category2; }
+            set { category2 = value; FirePropertyChanged("Category2"); }
+        }
+
         // is Measurement , Aggregation Type
 
         public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension" }; } }
@@ -218,6 +232,13 @@ namespace DW_Editor_Tool.ViewModels
             ((Window)control.Parent).Close();
 
 
+        }
+
+        bool displayInQueryBuilder = true;
+        public bool DisplayInQueryBuilder
+        {
+            get { return displayInQueryBuilder; }
+            set { displayInQueryBuilder = value; FirePropertyChanged("DisplayInQueryBuilder"); }
         }
 
 

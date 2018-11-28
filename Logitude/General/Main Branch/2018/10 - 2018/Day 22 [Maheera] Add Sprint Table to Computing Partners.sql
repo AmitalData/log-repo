@@ -1,0 +1,1 @@
+update objecttables set CodeField = 'Name', NameField = 'Name', AllowedForComputingPartners = 1  where  name='sprint'

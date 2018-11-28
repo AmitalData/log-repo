@@ -23,6 +23,8 @@ export class BatchTaskExecutionList {
 	ProgressPercentage: number;
 	StatusName: string;
 	CreatedByUserName: string;
+	Subject: string;
+	CallStack: string;
 	
 }
  

@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -14,152 +14,243 @@
         </td>
     </tr>
 
-    <tr>
-        <td>
-            <div class="MediaFill">
-                <table>
-                    <tr>
-                        <td>
-                            <table>
-
-                                <!-- EmergencyContactId -->
-                                <tr class="FormFieldRow">
-                                    <td style="width: 130px;">
-                                        <LogLabel [ObjectFieldName]="'EmergencyContactId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'EmergencyContactId'"
-                                                [SelectedValue]="EmergencyContactId"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'Contact'">
-                                        </LogLov>
-                                    </td>
-                                </tr>
-
-                                <!-- INTTRAContractNumber -->
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'INTTRAContractNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'INTTRAContractNumber'" [Text]="INTTRAContractNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                    </td>
-                                </tr>
-
-                                <!-- INTTRADocumentTypeCode -->
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'INTTRADocumentTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'INTTRADocumentTypeCode'"
-                                                [SelectedValue]="INTTRADocumentTypeCode"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'INTTRADocumentType'">
-                                        </LogLov>
-                                    </td>
-                                </tr>
-
-                                <!-- INTTRADocumentQTY -->
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'INTTRADocumentQTY'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'INTTRADocumentQTY'" [Text]="INTTRADocumentQTY" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                    </td>
-                                </tr>
-
-                                <!-- INTTRAIsFreighted -->
-                                <tr class="FormFieldRow">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'INTTRAIsFreighted'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <LogCheckBox [ObjectFieldName]="'INTTRAIsFreighted'" [Checked]="INTTRAIsFreighted" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="2">
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-
-                        <td style="width: 15px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width: 370px;">
-                            <table>
-
-                                <!-- SIHasAttachList -->
-                                <!--<tr class="FormFieldRow">
-                                    <td style="width: 130px;">
-                                        <LogLabel [ObjectFieldName]="'SIHasAttachList'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <LogCheckBox [ObjectFieldName]="'SIHasAttachList'" [Checked]="SIHasAttachList" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                    </td>
-                                </tr>-->
-                                <!-- INTTRAInstructions -->
-                                <tr class="FormFieldRow" style="height: 85px;">
-                                    <td style="width: 90px;">
-                                        <LogLabel [ObjectFieldName]="'INTTRAInstructions'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <div class="MediaFill">
-                                            <LogTextBox [ObjectFieldName]="'INTTRAInstructions'" [Text]="INTTRAInstructions" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr style="height: 10px;">
-                                    <td colspan="2">
-                                        <div></div>
-                                    </td>
-                                </tr>
-
-                                <!-- INTTRAComments -->
-                                <tr class="FormFieldRow" style="height: 85px;">
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'INTTRAComments'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <div class="MediaFill">
-                                            <LogTextBox [ObjectFieldName]="'INTTRAComments'" [Text]="INTTRAComments" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="2">
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+    <tr style="height: 1px;" *ngIf="ResultMessage">
+        <td style="text-align: center; vertical-align: middle; font-size: 14px; color: #009161;">
+            {{ResultMessage}}
         </td>
     </tr>
 
-    <tr style="height: 150px;">
-        <td style="text-align: center; vertical-align: middle; font-size: 14px; color: #009161;">
-            {{ResultMessage}}
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <ScrollViewer>
+                    <table>
+                        <tr>
+                            <td>
+                                <table>
+
+                                    <!-- EmergencyContactId -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 170px;">
+                                            <LogLabel [ObjectFieldName]="'EmergencyContactId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'EmergencyContactId'"
+                                                    [SelectedValue]="EmergencyContactId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Contact'">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <!-- INTTRAContractNumber -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'INTTRAContractNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'INTTRAContractNumber'" [Text]="INTTRAContractNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                    </tr>
+
+                                    <!-- INTTRADocumentTypeCode -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'INTTRADocumentTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'INTTRADocumentTypeCode'"
+                                                    [SelectedValue]="INTTRADocumentTypeCode"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'INTTRADocumentType'">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <!-- INTTRADocumentQTY -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'INTTRADocumentQTY'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogTextBox [ObjectFieldName]="'INTTRADocumentQTY'" [Text]="INTTRADocumentQTY" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        </td>
+                                    </tr>
+
+                                    <!-- INTTRAIsFreighted -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'INTTRAIsFreighted'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogCheckBox [ObjectFieldName]="'INTTRAIsFreighted'" [Checked]="INTTRAIsFreighted" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        </td>
+                                    </tr>
+
+                                    <!-- FreightPayerId -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'FreightPayerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'FreightPayerId'"
+                                                    [SelectedValue]="FreightPayerId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Card'"
+                                                    [DependencyFilter1Value]="'CS,AG'"
+                                                    [DependencyFilter1IsList]="true">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <!-- FreightPayerAddressId -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'FreightPayerAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'FreightPayerAddressId'"
+                                                    [SelectedValue]="FreightPayerAddressId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Address'"
+                                                    [DependencyFilter1Value]="FreightPayerId">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <!-- BasicFreightId -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'BasicFreightId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'BasicFreightId'"
+                                                    [SelectedValue]="BasicFreightId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'PrepaidCollect'">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <!-- DestinationPortChargesId -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'DestinationPortChargesId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'DestinationPortChargesId'"
+                                                    [SelectedValue]="DestinationPortChargesId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'PrepaidCollect'">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <!-- DestinationHaulageChargesId -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'DestinationHaulageChargesId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'DestinationHaulageChargesId'"
+                                                    [SelectedValue]="DestinationHaulageChargesId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'PrepaidCollect'">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <!-- AdditionalChargesId -->
+                                    <tr class="FormFieldRow">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'AdditionalChargesId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <LogLov [ObjectFieldName]="'AdditionalChargesId'"
+                                                    [SelectedValue]="AdditionalChargesId"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'PrepaidCollect'">
+                                            </LogLov>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td style="width: 15px;">
+                                <div></div>
+                            </td>
+
+                            <td style="width: 350px;">
+                                <table>
+
+                                    <!-- INTTRAInstructions -->
+                                    <tr class="FormFieldRow" style="height: 85px;">
+                                        <td style="width: 90px;">
+                                            <LogLabel [ObjectFieldName]="'INTTRAInstructions'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <div class="MediaFill">
+                                                <LogTextBox [ObjectFieldName]="'INTTRAInstructions'" [Text]="INTTRAInstructions" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height: 10px;">
+                                        <td colspan="2">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- INTTRAComments -->
+                                    <tr class="FormFieldRow" style="height: 85px;">
+                                        <td>
+                                            <LogLabel [ObjectFieldName]="'INTTRAComments'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td>
+                                            <div class="MediaFill">
+                                                <LogTextBox [ObjectFieldName]="'INTTRAComments'" [Text]="INTTRAComments" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </ScrollViewer>
+            </div>
         </td>
     </tr>
 

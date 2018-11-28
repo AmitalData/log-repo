@@ -3,7 +3,7 @@
 <#@ Assembly Name="System.Xml.Linq.dll" #>
 <#@ Assembly Name="System.Core.dll" #>
 <#@ Assembly Name="Microsoft.CSharp.dll" #>
-<#@ Assembly name="$(SolutionDir)General\Dlls\AmazedSaint.Elastic.dll" #>
+<#@ Assembly name="$(SolutionDir)packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll" #>
 <#@ Import Namespace="System.Xml" #>
 <#@ Import Namespace="System.Xml.Linq" #>
 <#@ Import Namespace="AmazedSaint.Elastic" #>
@@ -12,6 +12,8 @@
 <#@ Assembly Name="System.Linq.dll" #>
 <#@ Import Namespace="System.Linq" #>
 <#@ import Namespace="System.IO" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+
 <#
 	//GenerateAllUpdateClasses("../EntityFiles","../.../Logitude.Customs.MetaData/EntityUpdateClasses");
 	//GenerateUpdateClass("../generatedXmls/CheckEntityType.lxml","../EntityUpdateClasses/CheckEntityTypeUpdateClass.cs");
@@ -375,6 +377,34 @@ namespace <#= UpdateClassnamespacestring #>
 
 <#+
 		}
+
+		var AdditionalFeatures = entity.Elements("AdditionalFeatures").FirstOrDefault();
+        if (AdditionalFeatures != null && AdditionalFeatures.Elements("Feature").Count() > 0)
+		{
+
+#>
+
+
+		   		   //--------------> Additional Features <--------------\\
+
+<#+
+foreach(XElement featureElement in AdditionalFeatures.Elements("Feature")){
+				    var Code = featureElement.Attributes().Where(a => a.Name == "Code").FirstOrDefault().Value.Trim('"');
+					var FeatureTypeCode = featureElement.Attributes().Where(a => a.Name == "FeatureTypeCode").FirstOrDefault().Value.Trim('"');
+					var FeatureTextCodeCode = featureElement.Attributes().Where(a => a.Name == "FeatureTextCodeCode").FirstOrDefault().Value.Trim('"');
+					var FeatureDefaultText = featureElement.Attributes().Where(a => a.Name == "FeatureDefaultText").FirstOrDefault().Value.Trim('"');
+ 					var IsPackagable = featureElement.Attributes().Where(a => a.Name == "IsPackagable").FirstOrDefault().Value;
+					var IsBusinessUnitEnabled = featureElement.Attributes().Where(a => a.Name == "IsBusinessUnitEnabled").FirstOrDefault().Value;
+					var IsOld = featureElement.Attributes().Where(a => a.Name == "IsOld").FirstOrDefault().Value;
+					var IsCoreFeature = featureElement.Attributes().Where(a => a.Name == "IsCoreFeature").FirstOrDefault().Value;
+
+#>
+		   Feature <#= ObjectTbl.Trim('"') #>Feature_<#=Code.Replace(".","_")#> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#=Code#>", FeatureTypeCode = "<#=FeatureTypeCode#>", Packagable = <#=IsPackagable#>, IsBusinessUnitEnabled = <#=IsBusinessUnitEnabled#>, IsOld = <#=IsOld#>, IsCoreFeature = <#=IsCoreFeature#>, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#=FeatureTextCodeCode#>", NameTextCodeDefaultText = "<#=FeatureDefaultText#>" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+<#+
+	  
+				}
+		}
 		 #>   
 	    
 		}
@@ -436,7 +466,46 @@ namespace <#= UpdateClassnamespacestring #>
 	     
 	#>
 
-	    } <#+ 
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  <#+
+	    
+
+		var AdditionalTextCodes = entity.Elements("AdditionalTextCodes").FirstOrDefault();
+        if (AdditionalTextCodes != null && AdditionalTextCodes.Elements("TextCode").Count() > 0)
+		{
+
+#>
+
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault(); 
+
+<#+
+foreach(XElement textCodeElement in AdditionalTextCodes.Elements("TextCode")){
+				    var Code = textCodeElement.Attributes().Where(a => a.Name == "Code").FirstOrDefault().Value.Trim('"');
+					var DefaultText = (textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault() != null?textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "\\\""):"null");
+					var LocalDefaultText = (textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault() != null?textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value:"null");
+					var TextCodeTypeCode = textCodeElement.Attributes().Where(a => a.Name == "TextCodeTypeCode").FirstOrDefault().Value;
+ 					var IsSpellChecked = textCodeElement.Attributes().Where(a => a.Name == "IsSpellChecked").FirstOrDefault().Value;
+		
+		Regex regex = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
+        var className = regex.Replace(Code, "");					 
+
+#>
+ 		   TextCode <#= ObjectTbl.Trim('"') #>TextCode_<#=className#> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= Code #>", DefaultText = "<#= DefaultText #>",LocalDefaultText = <#= LocalDefaultText #>, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = <#= TextCodeTypeCode #>, IsSpellChecked = <#= IsSpellChecked #> }, TextCodeRepository, TextCodes);
+
+<#+
+	  
+				}
+		}
+#>   
+	    
+}
+
+<#+ 
 	var CloseTableCode = entity.Attribute(XName.Get("CloseTableCode"));
 	var CloseTableName = entity.Attribute(XName.Get("CloseTableName"));
 	string originalTableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
@@ -991,8 +1060,11 @@ private void WriteAddScreenMethod(XElement entity,XElement ScreenAtt,string TblN
        { 
 		   Code += ".HeaderScreen";
        }
+	   else  if (IsHeaderScreen.ToLower() == "true" && TblName != "Shipment"){
+		  Code = "HeaderScreen";
+	   }
 	   //ScreenDBCode
-		string screenCode = TblName.Trim('"').Replace(" ","") + Code.Trim('"').Replace(" ","");
+		string screenCode = TblName.Trim('"').Replace(" ","") + "." + Code.Trim('"').Replace(" ","");
 	    var ScreenDBCode = ScreenAtt.Attributes().Where(a => a.Name == "Code").FirstOrDefault();
 		if(ScreenDBCode != null)
 		   screenCode  = ScreenDBCode.Value.ToString().Trim('"');
@@ -1289,6 +1361,7 @@ namespace <#= UpdateClassnamespacestring #>
 		    this.ObjectContext.SaveChanges();
 
 			CreateAllFeatures();
+			CreateAdditionalTextCodes();
 		    this.ObjectContext.SaveChanges();
 		    this.CommonContext.SaveChanges();
 
@@ -1576,7 +1649,34 @@ public void GenerateAddFieldMethods(string sourceFilePath)
 	#>
 
         }
+		public void CreateAdditionalTextCodes()
+        {
+   <#+
+    foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
+    {
+	 
+	 var path= Host.ResolvePath(file);
+     XElement entity = XDocument.Load(path).Root;
+	 string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
+	string dBTableName = entity.Attribute(XName.Get("DBTableName")).Value.ToString();
+	if(tableName.Contains("."))
+    {
+		tableName = tableName.ToString().Split('.')[1];
+		dBTableName = dBTableName.ToString().Split('.')[1];
+          
+    }
+	string classname = tableName + "UpdateClass";
+	 
+	 
+		 #><#=""#>
+	   <#+
+    #>
+	   <#=classname #>.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	<#+
+    }
+	#>
 
+        }
 		public void CreateAllMenuButtons()
         {
    <#+

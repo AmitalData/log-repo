@@ -19,6 +19,18 @@ using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using WebFreight.Web.Helpers.APIHelpers;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Logitude.Server.Tools.Helpers;
+using System.Reflection;
+using SilverlightExpressions;
+using WebFreight.Web.Validators;
+using Simplog.Data.Helpers;
+using WebFreight.Web.ShipmentsModel.DomainServices;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -43,7 +55,25 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-
+        //public HttpResponseMessage GetSingleMasterByNumber(string number)
+        //{
+        //    try
+        //    {
+        //        string token = HttpContext.Current.Request.Headers["Token"];
+        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //        int tenant = authToken.Tenant;
+        //        MasterQueryService Service = new MasterQueryService(tenant);
+        //        ServiceResponse response = new ServiceResponse();
+        //        var Result = Service.GetMasterByMaster(number, tenant);
+        //        //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
+        //        return Request.CreateResponse(HttpStatusCode.OK, Result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+        //        return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+        //    }
+        //}
         public HttpResponseMessage Post(Master entity)
         {
             if (ModelState.IsValid)
@@ -66,6 +96,47 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
+                        if (entity.IsOperationalClosed)
+                        {
+                            string errorMessage = "";
+
+                            RulesValidator validator = new RulesValidator();
+                            validator.Initialize(authToken.Tenant);
+                            List<ObjectTableRuleField> requiredFields = validator.ValidateAllRequiredFieldRules(entityPM, "Shipment", authToken.Tenant);
+
+                            IWebFreightContext webFreightContext = WebFreightContext.GetContext(authToken.Tenant);
+                            ObjectFieldRepository ObjectFieldRepository = new ObjectFieldRepository(webFreightContext);
+                            if (requiredFields.Count > 0)
+                            {
+                                foreach (ObjectTableRuleField field in requiredFields)
+                                {
+                                    ObjectField f = ObjectFieldRepository.GetSingleObjectFieldById(field.ObjectFieldId, authToken.Tenant);
+                                    errorMessage = errorMessage + ", " + TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(errorMessage))
+                            {
+                                errorMessage = errorMessage.TrimStart(',');
+                                throw new ApplicationException("Due to operational closed: " + errorMessage);
+                            }
+
+                            entityPM.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                        }
+
+                        if (entity.IsAccountingClosed)
+                        {
+                            if (!entity.IsOperationalClosed)
+                            {
+                                throw new ApplicationException("Shipment shoud be closed operationally");
+                            }
+
+                            else
+                            {
+                                entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                            }
+                        }
+
                         if (entity.Houses.Count > 0)
                         {
                             ShipmentRepository shipmentRepository = new ShipmentRepository(authToken.Tenant);
@@ -92,12 +163,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     isValid = false;
                                     throw new ApplicationException("Shipment with ShipmentNumber " + item.ShipmentNumber + " doesn't exist");
                                 }
-                                
+
                                 if (!string.IsNullOrEmpty(item.Id) && !string.IsNullOrEmpty(item.ShipmentNumber))
-                                {    
-                                    if(myDataBaseShipment != null)
+                                {
+                                    if (myDataBaseShipment != null)
                                     {
-                                        if(myDataBaseShipment.ShipmentNumber != item.ShipmentNumber)
+                                        if (myDataBaseShipment.ShipmentNumber != item.ShipmentNumber)
                                         {
                                             isValid = false;
                                             throw new ApplicationException("The sent Id and Shipment Number are not matching");
@@ -105,7 +176,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     }
                                 }
 
-                                else if(myDataBaseShipment.ShipmentLevelCode != "H")
+                                else if (myDataBaseShipment.ShipmentLevelCode != "H")
                                 {
                                     isValid = false;
                                     throw new ApplicationException("The sent shipment is not house");
@@ -159,13 +230,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     throw new ApplicationException("You can't connect operational closed house");
                                 }
 
-                                else if(!string.IsNullOrEmpty(entityPM.ShipmentTypeId))
+                                else if (!string.IsNullOrEmpty(entityPM.ShipmentTypeId))
                                 {
                                     switch (entityPM.ShipmentTypeId.ToUpper())
                                     {
                                         case "MYGO":
                                             {
-                                                if(myDataBaseShipment.ShipmentTypeId != "LCLD")
+                                                if (myDataBaseShipment.ShipmentTypeId != "LCLD")
                                                 {
                                                     isValid = false;
                                                     throw new ApplicationException("The sent shipment type should be LCL");
@@ -185,7 +256,73 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     }
                                 }
 
-                                if(isValid)
+                                bool hasOpenPayables = false;
+                                bool hasOpenReceivables = false;
+                                if (entity.IsAccountingClosed && entity.IsOperationalClosed)
+                                {
+                                    List<ShipmentReceivable> houseReceivables = MyContext.ShipmentReceivables.Where(d => d.ShipmentId == myDataBaseShipment.Id).ToList();
+                                    List<ShipmentPayable> housePayables = MyContext.ShipmentPayables.Where(d => d.ShipmentId == myDataBaseShipment.Id).ToList();
+
+                                    if (!hasOpenReceivables)
+                                    {
+                                        #region
+                                        if (houseReceivables.Count > 0)
+                                        {
+                                            foreach (ShipmentReceivable recitem in houseReceivables)
+                                            {
+                                                if (recitem.ShipmentReceivableLineStatusCode != "ACCT" && recitem.ShipmentReceivableLineStatusCode != "EMPT")
+                                                {
+                                                    if (recitem.TotalAmount != null && recitem.TotalAmount != 0)
+                                                    {
+                                                        hasOpenReceivables = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        #endregion
+                                    }
+
+                                    if (!hasOpenPayables)
+                                    {
+                                        #region
+                                        if (housePayables.Count > 0)
+                                        {
+                                            foreach (ShipmentPayable payaitem in housePayables)
+                                            {
+                                                if (payaitem.ShipmentPayableLineStatusCode != "ACCT" && payaitem.ShipmentPayableLineStatusCode != "EMPT" && payaitem.ShipmentPayableParentId == null)
+                                                {
+                                                    if (payaitem.ShipmentPayableAmountTypeCode == "NEXP")
+                                                    {
+                                                        if (payaitem.AccountedAmount != null && payaitem.AccountedAmount != 0)
+                                                        {
+                                                            hasOpenPayables = true;
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    else
+                                                    {
+                                                        if (payaitem.ExpectedAmount != null && payaitem.ExpectedAmount != 0)
+                                                        {
+                                                            hasOpenPayables = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        #endregion
+                                    }
+                                }
+
+                                if (hasOpenPayables || hasOpenReceivables)
+                                {
+                                    isValid = false;
+                                    throw new ApplicationException("Can’t close for accounting: House #" + myDataBaseShipment.ShipmentNumber + " has open receivables/ payables");
+                                }
+
+                                if (isValid)
                                 {
                                     // connect to master
                                     ConsoleShipmentPM myConsole = new ConsoleShipmentPM()
@@ -208,7 +345,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                             }
                         }
-                        
+
                         if (entityPM.ShipmentPackages.Count > 0)
                         {
                             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
@@ -223,14 +360,41 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
+                        ShipmentRepository entityRepository = new ShipmentRepository(MyContext);
+                        List<Shipment> allHouses = entityRepository.GetHouseShipmentsForMaster(entityPM.Id, authToken.Tenant);
+
+                        if (allHouses.Count > 0)
+                        {
+                            foreach (Shipment item in allHouses)
+                            {
+                                if (entityPM.IsOperationalClosed)
+                                {
+                                    item.IsOperationalClosed = true;
+                                    item.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+
+                                    if (item.FirstOperationalCloseDate == null)
+                                    {
+                                        item.FirstOperationalCloseDate = item.OperationalCloseDate;
+                                    }
+                                }
+
+                                if (entityPM.IsAccountingClosed)
+                                {
+                                    item.IsAccountingClosed = true;
+                                    item.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                                }
+
+                                entityRepository.Update(item);
+                            }
+
+                            entityRepository.SubmitChanges();
+                        }
                         scope.Complete();
                     }
-
 
                     var result = mappingService.GetMasterById(entityPM.Id, authToken.Tenant);
                     APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Master API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
-
                 }
 
                 catch (Exception ex)

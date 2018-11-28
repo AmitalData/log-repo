@@ -72,11 +72,15 @@
     </None>
     <None Include="EntityFiles\GLAccountMoreData.lxml" />
     <None Include="EntityFiles\GLAccountWithholdingTax.lxml" />
+    <None Include="EntityFiles\JournalAdditionalData.lxml" />
     <None Include="EntityFiles\JournalMoreData.lxml" />
     <None Include="EntityFiles\JournalReconcile.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\BankPageEntryType.lxml" />
+    <None Include="EntityFiles\OpenFormatDateType.lxml" />
+    <None Include="EntityFiles\OpenFormatReport.lxml" />
+    <None Include="EntityFiles\OpenFormatReportStatus.lxml" />
     <None Include="EntityFiles\PaymentCheque.lxml" />
     <None Include="EntityFiles\PaymentChequeLine.lxml" />
     <None Include="EntityFiles\PaymentChequeStatus.lxml" />

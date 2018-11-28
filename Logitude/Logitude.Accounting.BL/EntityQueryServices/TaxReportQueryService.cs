@@ -14,22 +14,28 @@ using Logitude.Accounting.BL.EntityDataMappings;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.DataContract;
+
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
     public partial class TaxReportQueryService
     {
-        public override void GetComposition(EntityKeyFields entityKeys, TaxReportPM entityPM)
+        public TaxReportLinesCounter GetReportLinesCounter(string taxReportId, int tenant)
         {
-            IAccountingContext context = MainContext as AccountingContext;
-            TaxReportKeys keys = entityKeys as TaxReportKeys;
-            TaxReportLineQueryService lineQueryService = new TaxReportLineQueryService(context);
-            entityPM.TaxReportLines = lineQueryService.GetMulti(keys, true);
+            TaxReportLineRepository linesRepo = new TaxReportLineRepository(context);
 
-            base.GetComposition(entityKeys, entityPM);
+            IQueryable<TaxReportLine> lines = linesRepo.GetByReportId(taxReportId, tenant);
+
+            TaxReportLinesCounter reportCounters = new TaxReportLinesCounter();
+            reportCounters.TaxableTransactions = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Count();
+            reportCounters.ExcemptTransactions = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount == 0).Count();
+            reportCounters.InputEquipments = lines.Where(d => d.OutputOrInput == "I" && d.IsEquipment == true).Count();
+            reportCounters.InputOthers = lines.Where(d => d.OutputOrInput == "I" && d.IsEquipment == false).Count();
+
+            return reportCounters;
         }
 
 
-
-
     }
+
 }

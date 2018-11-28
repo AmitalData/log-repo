@@ -4,6 +4,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -20,40 +21,44 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     public partial class TaxReportLineUpdateService
     {
 
-        protected override void OnCreating(TaxReportLinePM entityPM, TaxReportPM entityParentPM)
+        protected override void OnCreating(TaxReportLinePM entityPM, EntityPM entityParentPM)
         {
-            entityPM.TaxReportId = entityParentPM.Id;
-            entityParentPM.TaxReportLineLastLine += 1;
-            entityPM.Line = entityParentPM.TaxReportLineLastLine;
+            entityPM.IsManuallyChanged = true;
+
+            base.OnCreating(entityPM, entityParentPM);
         }
 
         protected override void OnUpdating(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
         {
             Validate(entityPM);
             // TASK 43057
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-            {
+            //if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            //{
                 if (entityPM.IsManuallyChanged == true)
                 {
                     JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
-
+                    JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(entityPM.Tenant);
                     IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                    JournalUpdateService journalUpdateService = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 
                     JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
+                    JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(journalPM.Id, false,false);
                     if (journalPM != null)
                     {
                         if (entityPM.TransmitStatusCode == "1") // 1- For transmit
-                            journalPM.TaxReportId = entityPM.TaxReportId;
+                        journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
                         else if (entityPM.TransmitStatusCode == "3") // 3- Not for transmit at all
-                            journalPM.TaxReportId = "1111";
+                        journalAdditionalDataPM.TaxReportId = "1111";
 
-                        //update
-                        journalPM.ChangeSetOp = ChangeSetOperation.Update;
-                        journalUpdateService.Update(journalPM, true);
+                    //update
+
+                    journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                    journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
+                        entityPM.IsManuallyChanged = false;
+
                     }
 
-                }
+                //}
             }
 
           
@@ -154,9 +159,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         entityPM.StatusCode = "3";
                     }
+                    else
+                    {
+                        entityPM.StatusCode = "6";
+                    }
+
                 }
 
-                else { entityPM.StatusCode = "6"; }
+                else
+                {
+                    entityPM.StatusCode = "6";
+                }
+
 
 
             }

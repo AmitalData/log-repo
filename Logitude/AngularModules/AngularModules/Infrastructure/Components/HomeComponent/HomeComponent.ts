@@ -38,6 +38,7 @@ export class HomeComponent {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("ApplicationLocation", { read: ViewContainerRef }) ApplicationLocation: ViewContainerRef;
     SettingBtnVisibility: boolean = false;
+    IsShowLastSuccessfulLoginComponent: boolean = true;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         this.Tenant = SessionLocator.Tenant;
@@ -64,7 +65,7 @@ export class HomeComponent {
 
             // tokenExpiration
             var tokenExpiration: DetectUserInActivity = new DetectUserInActivity(true);
-            tokenExpiration.Start(SessionInfo.WebTokenLifeTime, SessionInfo.WebTokenExpirationWarning , "M");//(3, 1, "M")
+            tokenExpiration.Start(SessionInfo.WebTokenLifeTimeInMinutes, SessionInfo.WebTokenExpirationWarningInMinutes , "M");//(3, 1, "M")
 
 
         }
@@ -692,6 +693,9 @@ export class HomeComponent {
         this.SelectionChanged(this.Tabs[this.Tabs.length - 1]);
         this.Retries = 0;
         this.RunComponentTimer();
+
+        if (this.Tabs.length > 4) this.IsShowLastSuccessfulLoginComponent = false;
+  
     }
     SelectionChanged(clickdTab: SessionTabItem) {
         if (clickdTab != null) {
@@ -773,6 +777,10 @@ export class HomeComponent {
 
             tabItem.SessionComponent.DestroySession();
             tabItem = null;
+
+            if (this.Tabs.length <= 4) {
+                if (!this.IsShowLastSuccessfulLoginComponent) this.IsShowLastSuccessfulLoginComponent = true;
+            }
         }
     }
     RunSignupWizard() {
@@ -956,9 +964,19 @@ export class HomeComponent {
         }
     }
     ManageBluesnapAccountClicked() {
-        var link = "https://cp.bluesnap.com/jsp/account_login.jsp";
-        var win = window.open(link, '_blank');
-        win.focus();
+
+
+        var myService: CommonDomainService = new CommonDomainService();
+        myService.GetBlueSnapToken(SessionLocator.TenantManagementPM.BluesnapAccount).subscribe((myResult) => {
+            var temp = myResult.Result;
+            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+            var link = "https://cp.bluesnap.com/jsp/account_login.jsp";
+            if (!AppTool.IsNullOrEmpty(temp)) {         
+                link = "https://www.bluesnap.com/jsp/entrance.jsp?target=cp&token=" + temp + "&pageToShow=my_account.jsp"
+            }
+            var win = window.open(link, '_blank');
+            win.focus();
+        });        
     }
     HelpButtonClicked() {
         ServiceLocator.SendTotangoUserActivity("Help Center", "Help Icon");

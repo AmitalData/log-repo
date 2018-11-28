@@ -89,6 +89,9 @@ namespace WebFreight.Web.DataProviders
             public DateTime? RegisterDate { get; set; }
             public DateTime? ValueDate { get; set; }
             public string PaymentMethod { get; set; }
+
+            public string Shipper { get; set; }
+            public string Consignee { get; set; }
         }
 
         public string Name { get; set; }

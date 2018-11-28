@@ -2795,11 +2795,128 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
-                ListPropertyPath = "BankAccountLiteId",
                 PMPropertyPath = "BankAccountLiteId",
                 FullLocalDefaultText = "בנק להפקדה",
                 ListLocalDefaultText = "בנק להפקדה",
                 ShortLocalDefaultText = "בנק להפקדה",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            // Full Accounting 
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+
+                FieldName = "JournalNumber",
+                OldFieldName = "JournalNumber",
+                ObjectTableId = InvoiceObject.Id,
+                ObjectTableName = InvoiceObject.Name,
+                FieldsDataType = "Text",
+                MinLength = 0,
+                MaxLength = 15,
+                IsRequired = false,
+                DisplayOnLookUp = false,
+                CanFilter = false,
+                DisplayOnly = false,
+                SystemRequired = false,
+                SystemMaxLength = 15,
+                DisplayInList = true,
+                IsCustomFilter = false,
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                PMPropertyPath = "JournalNumber",
+                ListPropertyPath = "JournalNumber",
+                DisplayInLookUpIndex = 0,
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                ValidForQuerySection1 = InvoiceObject.Name,
+                IsRestrictable = false,
+                DisplayInEntityVariables = false,
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInSearchWindowFilters = false,
+                DisplayInSearchWindowFiltersIndex = 0,
+                DisplayInDocumentReferences = false,
+                InActive = false,
+                DisplayLongName = false,
+                FullFieldLable = "JournalNumber",
+                DefaultText = "Journal No.",
+                FullLocalDefaultText = "פקודת יומן",
+                ListFieldLable = "JournalNumberListLable",
+                ListLableDefaultText = "Journal No.",
+                ListLocalDefaultText = "מספר פקודת יומן",
+                IsMaxLength = false,
+                IsFixedLength = false,
+                EnableAutoFill = false,
+                IncludeInSearchField = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                HasTemplate = true,
+                IsCustom = false,
+
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+
+                FieldName = "JournalId",
+                OldFieldName = "JournalId",
+                ObjectTableId = InvoiceObject.Id,
+                ObjectTableName = InvoiceObject.Name,
+                ValidForQuerySection1 = InvoiceObject.Name,
+                FieldsDataType = "Text",
+                MinLength = 0,
+                MaxLength = 15,
+                IsRequired = false,
+                DisplayOnLookUp = false,
+                CanFilter = false,
+                DisplayOnly = false,
+                SystemRequired = false,
+                SystemMaxLength = 15,
+                DisplayInList = false,
+                IsCustomFilter = false,
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                PMPropertyPath = "JournalId",
+                ListPropertyPath = "JournalId",
+                DisplayInLookUpIndex = 0,
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                IsRestrictable = false,
+                DisplayInEntityVariables = false,
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInSearchWindowFilters = false,
+                DisplayInSearchWindowFiltersIndex = 0,
+                DisplayInDocumentReferences = false,
+                InActive = false,
+                DisplayLongName = false,
+                FullFieldLable = "JournalId",
+                DefaultText = "Journal ",
+                FullLocalDefaultText = "פקודת יומן",
+                ListFieldLable = "JournalIdListLable",
+                ListLableDefaultText = "Journal ",
+                ListLocalDefaultText = "פקודת יומן",
+                IsMaxLength = false,
+                IsFixedLength = false,
+                EnableAutoFill = false,
+                IncludeInSearchField = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                HasTemplate = true,
+                IsCustom = false,
+
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             // end of Invoice
@@ -6838,7 +6955,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "TipoCadenaPago",
                 PMPropertyPath = "TipoCadenaPago",
-                
+                HelpLocalDefaultText = "Clave del tipo de cadena de pago que genera la entidad receptora de pago",
+                HelpTextDefaultText = "Payment Transfer Way",
+
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -6862,6 +6981,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "CertPago",
                 PMPropertyPath = "CertPago",
                 MultiLine = true,
+                HelpLocalDefaultText = "Certificado que corresponde al pago",
+                HelpTextDefaultText = "The certificate that corresponds to the payment. It is a text chain of 64 base format",
 
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -6886,7 +7007,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "CadPago",
                 PMPropertyPath = "CadPago",
-
+                HelpLocalDefaultText = "Cadena Original del Comprobante de Pago generado por la entidad emisora de la cuenta beneficiaria",
+                HelpTextDefaultText = "Payment original chain sent by the beneficiary's bank institution",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -6912,9 +7034,11 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SelloPago",
                 PMPropertyPath = "SelloPago",
                 MultiLine = true,
+                HelpLocalDefaultText = "Sello digital que se asocie el pago",
+                HelpTextDefaultText = "The digital seal associates the payment. It is a text chain of 64 base format",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
-       
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Metodo Pago",
@@ -6982,8 +7106,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ValidForQuerySection1 = "ARPayment",
                 ListFieldLable = "BankAccountLiteIdListLable",
-                ListLableDefaultText = "Bank Account Lite Id",
+                ListLableDefaultText = "Bank Account",
                 Operator = "Equals",
+                DisplayInList = true,
                 ListPropertyPath = "BankAccountLiteId",
                 PMPropertyPath = "BankAccountLiteId",
                 FullLocalDefaultText = "חשבון בנק",
@@ -8013,13 +8138,13 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableName = ARPaymentObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
-                DisplayInList = true,
                 CanFilter = true,
                 ValidForQuerySection1 = "ARPayment",
+                DisplayInList = true,
                 ListFieldLable = "RegisterDateListLable",
                 ListLableDefaultText = "Register Date",
-                Operator = "Equals",
                 ListPropertyPath = "RegisterDate",
+                Operator = "Equals",
                 PMPropertyPath = "RegisterDate",
                 ConverterName = "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
                 FullLocalDefaultText = "תאריך רישום",
@@ -8047,10 +8172,10 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "Contains",
                 HelpTextDefaultText = "Searching by :\n1:Payment # \n2:Bill to \n3:Reference",
                 HelpTextCode = "SearchFields",
-                FullLocalDefaultText = "חיפוש לפי תשלום  / כרטיס / אסמכתא",
-                ListLocalDefaultText = "חיפוש לפי תשלום  / כרטיס / אסמכתא",
-                ShortLocalDefaultText = "חיפוש לפי תשלום  / כרטיס / אסמכתא",
-                HelpLocalDefaultText = "חיפוש לפי תשלום  / כרטיס / אסמכתא",
+                FullLocalDefaultText = "חיפוש לפי מספר קבלה\\לקוח",
+                ListLocalDefaultText = "חיפוש לפי מספר קבלה\\לקוח",
+                ShortLocalDefaultText = "חיפוש לפי מספר קבלה\\לקוח",
+                HelpLocalDefaultText = "חיפוש לפי מספר קבלה\\לקוח",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -9867,10 +9992,10 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "Contains",
                 HelpTextDefaultText = "Searching by :\n1:Payment # \n2:Vendor \n3:Reference",
                 HelpTextCode = "SearchFields",
-                FullLocalDefaultText = "חיפוש חשבונית ספק\\ספק\\אסמכתא",
-                ListLocalDefaultText = "חיפוש חשבונית ספק\\ספק\\אסמכתא",
-                ShortLocalDefaultText = "חיפוש חשבונית ספק\\ספק\\אסמכתא",
-                HelpLocalDefaultText = "חיפוש חשבונית ספק\\ספק\\אסמכתא",
+                FullLocalDefaultText = "חיפוש לפי מספר תשלום\\ספק",
+                ListLocalDefaultText = "חיפוש לפי מספר תשלום\\ספק",
+                ShortLocalDefaultText = "חיפוש לפי מספר תשלום\\ספק",
+                HelpLocalDefaultText = "חיפוש לפי מספר תשלום\\ספק",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -10675,6 +10800,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInList = true,
                 CanFilter = true,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
 
             this.ObjectContext.SaveChanges();
         }

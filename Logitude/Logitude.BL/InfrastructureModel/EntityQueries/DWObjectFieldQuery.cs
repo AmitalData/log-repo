@@ -47,6 +47,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2
                     }).FirstOrDefault();
         }
 
@@ -70,6 +73,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2
                     }
                   );
         }
@@ -93,8 +99,69 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2
                     }
                   );
+        }
+
+        public List<DWObjectFieldPM> GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(int tenant, string dwotCode)
+        {
+            var TempList = (from a in repository.webFreightContext.DWObjectFields
+                            where a.Tenant == tenant && a.DWObjectTableCode == dwotCode
+                            select new DWObjectFieldPM()
+                            {
+                                Id = a.Id,
+                                Tenant = a.Tenant,
+                                Name = a.Name,
+                                Code = a.Code,
+                                DimensionTableCode = a.DimensionTableCode,
+                                DataTypeCode = a.DataTypeCode,
+                                DWObjectTableCode = a.DWObjectTableCode,
+                                IsRequiered = a.IsRequired,
+                                MaxLength = a.MaxLength,
+                                MinLength = a.MinLength,
+                                IsPrimaryKey = a.IsPrimaryKey,
+                                IsMeasurement = a.IsMeasurement,
+                                AggregationTypeCode = a.AggregationTypeCode,
+                                DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                                DisplayName = a.Name,
+                                Category1 = a.Category1,
+                                Category2 = a.Category2
+
+                            }
+                  );
+            var Parents = TempList.Where(a => a.DimensionTableCode != null).ToList();
+            var FinalList = TempList.Where(a => a.DimensionTableCode == null).ToList();
+            foreach (var item in Parents)
+            {
+                var TempInnerList = (from a in repository.webFreightContext.DWObjectFields
+                                     where a.Tenant == tenant && a.DWObjectTableCode == item.DimensionTableCode
+                                     select new DWObjectFieldPM()
+                                     {
+                                         Id = a.Id,
+                                         Tenant = a.Tenant,
+                                         Name = a.Name,
+                                         Code = a.Code,
+                                         DimensionTableCode = a.DimensionTableCode,
+                                         DataTypeCode = a.DataTypeCode,
+                                         DWObjectTableCode = a.DWObjectTableCode,
+                                         IsRequiered = a.IsRequired,
+                                         MaxLength = a.MaxLength,
+                                         MinLength = a.MinLength,
+                                         IsPrimaryKey = a.IsPrimaryKey,
+                                         IsMeasurement = a.IsMeasurement,
+                                         AggregationTypeCode = a.AggregationTypeCode,
+                                         DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                                         DisplayName = a.DWObjectTableCode.Replace("DIM_","") + "." + a.Name,
+                                         Category1 = a.Category1,
+                                         Category2 = a.Category2
+                                     }
+                  ).ToList();
+                FinalList = FinalList.Concat(TempInnerList).ToList();
+            }
+            return FinalList;
         }
 
         public DWObjectFieldPM GetSinglePM(string id, int tenant)
@@ -114,6 +181,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         MaxLength = a.MaxLength,
                         MinLength = a.MinLength,
                         IsPrimaryKey = a.IsPrimaryKey,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2
                     }).FirstOrDefault();
         }
 
@@ -136,6 +206,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         IsPrimaryKey = a.IsPrimaryKey,
                         IsMeasurement = a.IsMeasurement,
                         AggregationTypeCode = a.AggregationTypeCode,
+                        DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                        Category1 = a.Category1,
+                        Category2 = a.Category2
                     });
         }
 
@@ -156,6 +229,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        MinLength = a.MinLength,
                                                        IsMeasurement = a.IsMeasurement,
                                                        AggregationTypeCode = a.AggregationTypeCode,
+                                                       DisplayInQueryBuilder = a.DisplayInQueryBuilder,
+                                                       Category1 = a.Category1,
+                                                       Category2 = a.Category2
                                                    };
 
             return result;

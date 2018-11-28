@@ -71,6 +71,8 @@ namespace Logitude.TimeManagement.Data.EntityPOCOs
         public virtual TMProjectCategory TMProjectCategory { get; set; }
         [Column("IsProrated")]
 	    public bool IsProrated { get; set; }
+        [Column("ExternalProjectNumber")]
+	    public string ExternalProjectNumber { get; set; }
     }
 }
 	 

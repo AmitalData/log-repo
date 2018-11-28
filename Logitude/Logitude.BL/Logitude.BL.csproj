@@ -160,6 +160,9 @@
     <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Tools, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceModel.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Tools.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
     </Reference>
@@ -182,7 +185,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Profact3.3.1.0.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\packages\Profact3.3.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
@@ -196,8 +199,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\JustWebFreight\WebFreight.Web\bin\System.ServiceModel.DomainServices.Server.dll</HintPath>
+      <HintPath>..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -231,25 +233,39 @@
     <Compile Include="CommonDataModel\APIDataContract\Branch.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Card.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\ChargesType.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\City.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Contact.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Country.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Currency.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\Customer.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\CustomField.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Department.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\DimensionsUnit.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\DocumentsFiling.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Incoterm.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Measurement.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\PaymentTerm.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\PODBlobInfo.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\AddressQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\BranchQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CardQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\ChargesTypeQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CityQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CityQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\ContactQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CurrencyQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomerQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\CustomFieldQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\DocumentsFilingQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\PaymentTermQueryService.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\UserQueryService.cs" />
     <Compile Include="CommonDataModel\APIDataContract\QueryService\VatTypeQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\VendorQueryService.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\VendorQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\QueryService\VesselQueryService.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\Vendor.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\Vessel.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AccountingSystemDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CommunicationLogTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CommunicationStatusTypeDetails.Generated.cs" />
@@ -310,6 +326,8 @@
     <Compile Include="CommonDataModel\CloseTables\EnumGenerated\WeightUnitStruct.Generated.cs" />
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
+    <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
+    <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />
     <Compile Include="CommonDataModel\DataContracts\UsersByTenantData.cs" />
     <Compile Include="CommonDataModel\EntityLists\DocumentFilingBackupBatchList.cs" />
     <Compile Include="CommonDataModel\EntityLists\DocumentFilingBackupSettingList.cs" />
@@ -1424,6 +1442,7 @@
     <Compile Include="InfrastructureModel\EntityLists\DWObjectTableList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DWQueryColumnList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DWQueryFilterList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DWSubQueryList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DWQueryList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EmailAlertSettingList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EntityStatusList.cs" />
@@ -1473,6 +1492,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\DWObjectTablePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DWQueryColumnPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DWQueryFilterPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DWSubQueryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DWQueryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EmailAlertSettingPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EntityLastAccessPM.cs" />
@@ -1589,6 +1609,7 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\DWObjectTableMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DWQueryColumnMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DWQueryFilterMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DWSubQueryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DWQueryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\VolumeUnitMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\TransportModeMapping.cs" />
@@ -1639,6 +1660,7 @@
     <Compile Include="InfrastructureModel\Tools\EntityService\DWObjectTableService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DWQueryColumnService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DWQueryFilterService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DWSubQueryService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DWQueryService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\VolumeUnitService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\TransportModeService.cs" />
@@ -1812,6 +1834,7 @@
     <Compile Include="InvoiceModel\EntityLists\APPaymentList.cs" />
     <Compile Include="InvoiceModel\EntityLists\APPaymentMethodList.cs" />
     <Compile Include="InvoiceModel\EntityLists\APPaymentStatusList.cs" />
+    <Compile Include="InvoiceModel\EntityLists\APPaymentTransferStatusList.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARInvoiceEntityList.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARInvoiceLineActionList.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARInvoiceList.cs" />
@@ -1862,6 +1885,7 @@
     <Compile Include="InvoiceModel\EntityPMs\APPaymentMethodPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\APPaymentPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\APPaymentStatusPM.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\APPaymentTransferStatusPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARInvoiceChargePM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARInvoiceEntityPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARInvoiceLinePM.cs" />
@@ -1906,6 +1930,7 @@
     <Compile Include="InvoiceModel\EntityQueries\APPaymentMethodQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\APPaymentQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\APPaymentStatusQuery.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\APPaymentTransferStatusQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARInvoiceEntityQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARInvoiceLineActionQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARInvoiceLineQuery.cs" />
@@ -2277,6 +2302,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusesPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OtherParticipantIdPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\PickUpDeliveryFromToTypePM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\PickUpDeliveryPackageHarmonizePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\PickUpDeliveryTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentAPInvoicePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentARInvoiceMoneyPM.cs" />
@@ -2292,6 +2318,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentLevelPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentMobilePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentOrderPackagePM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ShipmentPackageHarmonizePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPackageItemPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPackagePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\ShipmentPartnerPM.cs" />
@@ -2331,6 +2358,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\NextLegQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\OtherParticipantIdQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryFromToTypeQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryPackageHarmonizeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryTransportModeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\PickUpDeliveryTypeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentAssemblyQuery.cs" />
@@ -2343,6 +2371,7 @@
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentCustomsTransmissionQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentLevelQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentOrderPackageQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentPackageHarmonizeQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPackageItemQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPackageQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentPayableAmountTypeQuery.cs" />

@@ -58,7 +58,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
 
                     // dates
-                    var createDateFilter = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
+                    var createDateFilter = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault();
                     if (createDateFilter != null)
                     {
                         var from = createDateFilter.FieldValue.ToString();
@@ -150,8 +150,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
                     var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
                     var glAccountId = filters_list.Where(d => d.FieldName == "GLAccountId").FirstOrDefault().FieldValue.ToString();
-                    var from = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldValue;
-                    var to = filters_list.Where(d => d.FieldName == "CreateDate").FirstOrDefault().FieldValue2;
+                    var from = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue;
+                    var to = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue2;
                     var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
                     var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
 

@@ -151,6 +151,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     bool hasFollowupsFeature = SecurityUtility.CheckTableContactFeature("Shipment", "MYFOLLOWUPS", tenant) || SecurityUtility.CheckTableContactFeature("Shipment", "ALLFOLLOWUPS", tenant);
                     bool hasExpDepNotTransmittedFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ExpectedDeparturesNotTransmitted", tenant);
                     bool hasShippingInstructionsLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ShippingInstructionsLast7Days", tenant);
+                    bool hasContainerStatusLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ContainerStatusLast7Days", tenant);
 
                     //ShipmentsSummary myResult= RunStoredProcedureClass.GetShipmentsCounts(tenant, myDirectionId, myTransportModeId, loggedUserEmail, hasETDFeature, hasFollowupsFeature);
 
@@ -164,7 +165,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
-                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature);
+                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -1608,8 +1609,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             item.IsFromQuote = false;
                             item.QuoteChargeId = null;
-                            item.QuoteSaleMinPrice = null;
-
+                            item.QuoteSaleMinAmount = null;
+                            item.QuoteSaleMaxAmount = null;
                             receivableRepository.Update(item);
                         }                        
                     }
@@ -1620,7 +1621,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             item.IsFromQuote = false;
                             item.QuoteChargeId = null;
-                            item.QuoteCostMinPrice = null;
+                            item.QuoteCostMinAmount = null;
+                            item.QuoteCostMaxAmount = null;
 
                             payableRepository.Update(item);
                         }

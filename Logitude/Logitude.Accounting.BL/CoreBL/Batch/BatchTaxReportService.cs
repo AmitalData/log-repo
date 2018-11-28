@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Logitude.Accounting.BL.TestService
+namespace Logitude.Accounting.BL.CoreBL.Batch
 {
     public class BatchTaxReportService : BatchTaskExecutionsService
     {

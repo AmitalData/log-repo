@@ -18,7 +18,7 @@ import {DateTimeToBackgroundPipe} from './Pipes/DateTimeToBackgroundPipe';
 import {ExchangeRateDatePipe} from './Pipes/ExchangeRateDatePipe';
 import {LogBoxStatusForegroundPipe} from './Pipes/LogBoxStatusForegroundPipe';
 import {InvoiceDueDateForegroundPipe} from './Pipes/InvoiceDueDateForegroundPipe';
-import {CustomNumbersPipe} from './Pipes/CustomNumbersPipe'
+import {CustomNumbersPipe} from './Pipes/CustomNumbersPipe';
 import {RatesNumbersPipe} from './Pipes/RatesNumbersPipe';
 import {DateTimeToMSDYDatePipe} from './Pipes/DateTimeToMSDYDatePipe';
 import {FollowUpDatePipe} from './Pipes/FollowUpDatePipe';
@@ -90,10 +90,7 @@ import {QueryListComponent} from './Components/LogitudeComponents/QueryListCompo
 import {LogitudeListBoxComponent} from './Components/LogitudeComponents/LogitudeListBox/LogitudeListBoxComponent';
 import {GeneralTabComponent} from './GenericComponents/GeneralTabComponent';
 import {GeneratedComponent} from './GenericComponents/GeneratedComponent';
-
-
-
-
+import { LastSuccessfulLoginComponent } from './Components/LogitudeCustomComponents/LastSuccessfulLoginComponent';
 
 import {TipsComponent} from './Components/LogitudeComponents/TipsComponent/TipsComponent';
 
@@ -108,7 +105,7 @@ import {AuditAutomationTabComponent} from './Components/Maintenance/Automation/A
 import {SelectDocumentTypesComponent} from './Components/Maintenance/Automation/SelectDocumentTypesComponent';
 
 import {NewViewComponent} from './Components/NewViewComponent/NewViewComponent';
-import {Export2ExcelControl} from './Components/Export2ExcelControl/Export2ExcelControl'
+import {Export2ExcelControl} from './Components/Export2ExcelControl/Export2ExcelControl';
 import {QueryColumnsEditComponent} from './Components/QueryColumnsComponents/QueryColumnsEditComponent';
 import {btnComponent} from './Components/QueryColumnsComponents/btnComponent';
 import {ToComponent} from './Components/QueryColumnsComponents/ToComponent';
@@ -152,6 +149,7 @@ import {DocsOutTabComponent} from './Components/Documents/DocsOutTabComponent';
 import {DocsInTabComponent} from './Components/Documents/DocsInTabComponent';
 import { BTEGeneralTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEGeneralTabComponent';
 import { BTELogTabComponent } from './Components/Maintenance/BatchTaskExecution/BTELogTabComponent';
+import { BTEParameterTabComponent } from './Components/Maintenance/BatchTaskExecution/BTEParameterTabComponent/BTEParameterTabComponent';
 
 export const Directives =
     [
@@ -242,6 +240,7 @@ export const ControlsComponents =
         FroalaEditorComponent,
         DocsOutTabComponent,
         DocsInTabComponent,
+        LastSuccessfulLoginComponent,
     ];
 export const Components =
     [
@@ -270,7 +269,7 @@ export const Components =
         AddEditAutomationsComponent,
         DelayAutomationconditionsComponent,
         ViewAutomationHistoryComponent,
-       
+
 
         NewViewComponent,
         Export2ExcelControl,
@@ -280,18 +279,18 @@ export const Components =
         NewEntityComponent,
         LogSearchWindowComponent,
         DWLogSearchWindowComponent,
-       
-       
+
+
         InfrastructureFieldTemplateComponent,
-       
+
         LogSearchWindowButtonsComponent,
         DWLogSearchWindowFieldsComponent,
         AddFollowupComponent,
         AddDocumentFollowupComponent,
         DropBoxLogin,
-       
+
         StimulsoftDesigner,
-       
+
         ExportSettingAdvanceComponent,
 
         AuditAutomationTabComponent,
@@ -300,7 +299,7 @@ export const Components =
         WizardAddressCompnent,
         WizardAccountingComponent,
         SelectDocumentTypesComponent,
-      
+
         AutomationsConditionAreaComponent,
 
         EraseTenantManagementDataComponent,
@@ -310,95 +309,101 @@ export const Components =
         DocsInTabComponent,
         BTEGeneralTabComponent,
         BTELogTabComponent,
+        BTEParameterTabComponent,
+        LastSuccessfulLoginComponent,
     ];
 
 export class ModuleDeclarations {
     public static Get(name: string) {
 
-        var myResult: any = null;
+        let myResult: any = null;
 
         switch (name) {
-            case "RootComponent": { myResult = RootComponent; break; }
-            case "RootComponent_Cust": { myResult = RootComponent_Cust; break; }
-            case "LoginComponent": { myResult = LoginComponent; break; }
-            case "DSVLoginProcessComponent": { myResult = DSVLoginProcessComponent; break; }
-            case "DSVMobileLoginProcessComponent": { myResult = DSVMobileLoginProcessComponent; break; }
-            case "BlockScreenComponent": { myResult = BlockScreenComponent; break; }
-            case "HomeComponent": { myResult = HomeComponent; break; }
-            case "SessionComponent": { myResult = SessionComponent; break; }
-            case "MainMenuComponent": { myResult = MainMenuComponent; break; }
-            case "EditComponent": { myResult = EditComponent; break; }
-            case "EditTabComponent": { myResult = EditTabComponent; break; }
-            case "ListComponent": { myResult = ListComponent; break; }
-            case "MaintenanceComponent": { myResult = MaintenanceComponent; break; }
-            case "MenuButtonsComponent": { myResult = MenuButtonsComponent; break; }
-            case "MenuButtonsComponentLoader": { myResult = MenuButtonsComponentLoader; break; }
-            case "AdvanceSearchComponent": { myResult = AdvanceSearchComponent; break; }
-            case "QueryListComponent": { myResult = QueryListComponent; break; }
-            case "LogitudeListBoxComponent": { myResult = LogitudeListBoxComponent; break; }
-            case "GeneralTabComponent": { myResult = GeneralTabComponent; break; }
-            case "GeneratedComponent": { myResult = GeneratedComponent; break; }
+            case 'RootComponent': { myResult = RootComponent; break; }
+            case 'RootComponent_Cust': { myResult = RootComponent_Cust; break; }
+            case 'LoginComponent': { myResult = LoginComponent; break; }
+            case 'DSVLoginProcessComponent': { myResult = DSVLoginProcessComponent; break; }
+            case 'DSVMobileLoginProcessComponent': { myResult = DSVMobileLoginProcessComponent; break; }
+            case 'BlockScreenComponent': { myResult = BlockScreenComponent; break; }
+            case 'HomeComponent': { myResult = HomeComponent; break; }
+            case 'SessionComponent': { myResult = SessionComponent; break; }
+            case 'MainMenuComponent': { myResult = MainMenuComponent; break; }
+            case 'EditComponent': { myResult = EditComponent; break; }
+            case 'EditTabComponent': { myResult = EditTabComponent; break; }
+            case 'ListComponent': { myResult = ListComponent; break; }
+            case 'MaintenanceComponent': { myResult = MaintenanceComponent; break; }
+            case 'MenuButtonsComponent': { myResult = MenuButtonsComponent; break; }
+            case 'MenuButtonsComponentLoader': { myResult = MenuButtonsComponentLoader; break; }
+            case 'AdvanceSearchComponent': { myResult = AdvanceSearchComponent; break; }
+            case 'QueryListComponent': { myResult = QueryListComponent; break; }
+            case 'LogitudeListBoxComponent': { myResult = LogitudeListBoxComponent; break; }
+            case 'GeneralTabComponent': { myResult = GeneralTabComponent; break; }
+            case 'GeneratedComponent': { myResult = GeneratedComponent; break; }
 
 
 
-            case "ImageComponent": { myResult = ImageComponent; break; }
-            case "TextDesignComponent": { myResult = TextDesignComponent; break; }
+            case 'ImageComponent': { myResult = ImageComponent; break; }
+            case 'TextDesignComponent': { myResult = TextDesignComponent; break; }
 
-            case "MainMenuAutomationComponent": { myResult = MainMenuAutomationComponent; break; }
-            case "AutomationsSettingsComponent": { myResult = AutomationsSettingsComponent; break; }
-            case "AddEditAutomationsComponent": { myResult = AddEditAutomationsComponent; break; }
-            case "DelayAutomationconditionsComponent": { myResult = DelayAutomationconditionsComponent; break; }
-            case "ViewAutomationHistoryComponent": { myResult = ViewAutomationHistoryComponent; break; }
+            case 'MainMenuAutomationComponent': { myResult = MainMenuAutomationComponent; break; }
+            case 'AutomationsSettingsComponent': { myResult = AutomationsSettingsComponent; break; }
+            case 'AddEditAutomationsComponent': { myResult = AddEditAutomationsComponent; break; }
+            case 'DelayAutomationconditionsComponent': { myResult = DelayAutomationconditionsComponent; break; }
+            case 'ViewAutomationHistoryComponent': { myResult = ViewAutomationHistoryComponent; break; }
 
-         
 
-            case "NewViewComponent": { myResult = NewViewComponent; break; }
-            case "Export2ExcelControl": { myResult = Export2ExcelControl; break; }
-            case "QueryColumnsEditComponent": { myResult = QueryColumnsEditComponent; break; }
-            case "btnComponent": { myResult = btnComponent; break; }
-            case "ToComponent": { myResult = ToComponent; break; }
-            case "NewEntityComponent": { myResult = NewEntityComponent; break; }
-            case "LogSearchWindowComponent": { myResult = LogSearchWindowComponent; break; }
-            case "DWLogSearchWindowComponent": { myResult = DWLogSearchWindowComponent; break; }
-            case "StimulsoftViewerComponent": { myResult = StimulsoftViewerComponent; break; }
-            case "TipsComponent": { myResult = TipsComponent; break; }
-          
-            case "ChooseDatesComponent": { myResult = ChooseDatesComponent; break; }
-            case "InfrastructureFieldTemplateComponent": { myResult = InfrastructureFieldTemplateComponent; break; }
-            
-            case "GeneralSendComponent": { myResult = GeneralSendComponent; break; }
-            case "LogSearchWindowButtonsComponent": { myResult = LogSearchWindowButtonsComponent; break; }
-            case "DWLogSearchWindowFieldsComponent": { myResult = DWLogSearchWindowFieldsComponent; break; }
-            case "AddFollowupComponent": { myResult = AddFollowupComponent; break; }
-            case "AddDocumentFollowupComponent": { myResult = AddDocumentFollowupComponent; break; }
-            case "DropBoxLogin": { myResult = DropBoxLogin; break; }
-              case "StimulsoftDesigner": { myResult = StimulsoftDesigner; break; }
 
-         
+            case 'NewViewComponent': { myResult = NewViewComponent; break; }
+            case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }
+            case 'QueryColumnsEditComponent': { myResult = QueryColumnsEditComponent; break; }
+            case 'btnComponent': { myResult = btnComponent; break; }
+            case 'ToComponent': { myResult = ToComponent; break; }
+            case 'NewEntityComponent': { myResult = NewEntityComponent; break; }
+            case 'LogSearchWindowComponent': { myResult = LogSearchWindowComponent; break; }
+            case 'DWLogSearchWindowComponent': { myResult = DWLogSearchWindowComponent; break; }
+            case 'StimulsoftViewerComponent': { myResult = StimulsoftViewerComponent; break; }
+            case 'TipsComponent': { myResult = TipsComponent; break; }
 
-           
-            case "ObjectFieldComponent": { myResult = ObjectFieldComponent; break; }
-            case "ExportSettingAdvanceComponent": { myResult = ExportSettingAdvanceComponent; break; }
-            case "AuditAutomationTabComponent": { myResult = AuditAutomationTabComponent; break; }
-            case "SocialComponent": { myResult = SocialComponent; break; }           
-            case "LogTabsComponent": { myResult = LogTabsComponent; break; }
-            case "LogWaterMarkComponent": { myResult = LogWaterMarkComponent; break; }
+            case 'ChooseDatesComponent': { myResult = ChooseDatesComponent; break; }
+            case 'InfrastructureFieldTemplateComponent': { myResult = InfrastructureFieldTemplateComponent; break; }
 
-            case "EntityFollowComponent": { myResult = EntityFollowComponent; break; }                
-            case "WizardBaseComponent": { myResult = WizardBaseComponent; break; }
-            case "WizardAddressCompnent": { myResult = WizardAddressCompnent; break; }
-            case "WizardAccountingComponent": { myResult = WizardAccountingComponent; break; }
-            case "SelectDocumentTypesComponent": { myResult = SelectDocumentTypesComponent; break; } 
-            case "StimulsoftDesignerComponent": { myResult = StimulsoftDesignerComponent; break; } 
-              case "AutomationsConditionAreaComponent": { myResult = AutomationsConditionAreaComponent; break; }                 
- 
-            case "EraseTenantManagementDataComponent": { myResult = EraseTenantManagementDataComponent; break; }
- 
-            case "FroalaEditorComponent": { myResult = FroalaEditorComponent; break; }
-            case "DocsInTabComponent": { myResult = DocsInTabComponent; break; }
-            case "DocsOutTabComponent": { myResult = DocsOutTabComponent; break; }
-            case "BTEGeneralTabComponent": { myResult = BTEGeneralTabComponent; break; }
-            case "BTELogTabComponent": { myResult = BTELogTabComponent; break; }
+            case 'GeneralSendComponent': { myResult = GeneralSendComponent; break; }
+            case 'LogSearchWindowButtonsComponent': { myResult = LogSearchWindowButtonsComponent; break; }
+            case 'DWLogSearchWindowFieldsComponent': { myResult = DWLogSearchWindowFieldsComponent; break; }
+            case 'AddFollowupComponent': { myResult = AddFollowupComponent; break; }
+            case 'AddDocumentFollowupComponent': { myResult = AddDocumentFollowupComponent; break; }
+            case 'DropBoxLogin': { myResult = DropBoxLogin; break; }
+              case 'StimulsoftDesigner': { myResult = StimulsoftDesigner; break; }
+
+
+
+
+            case 'ObjectFieldComponent': { myResult = ObjectFieldComponent; break; }
+            case 'ExportSettingAdvanceComponent': { myResult = ExportSettingAdvanceComponent; break; }
+            case 'AuditAutomationTabComponent': { myResult = AuditAutomationTabComponent; break; }
+            case 'SocialComponent': { myResult = SocialComponent; break; }
+            case 'LogTabsComponent': { myResult = LogTabsComponent; break; }
+            case 'LogWaterMarkComponent': { myResult = LogWaterMarkComponent; break; }
+
+            case 'EntityFollowComponent': { myResult = EntityFollowComponent; break; }
+            case 'WizardBaseComponent': { myResult = WizardBaseComponent; break; }
+            case 'WizardAddressCompnent': { myResult = WizardAddressCompnent; break; }
+            case 'WizardAccountingComponent': { myResult = WizardAccountingComponent; break; }
+            case 'SelectDocumentTypesComponent': { myResult = SelectDocumentTypesComponent; break; }
+            case 'StimulsoftDesignerComponent': { myResult = StimulsoftDesignerComponent; break; }
+              case 'AutomationsConditionAreaComponent': { myResult = AutomationsConditionAreaComponent; break; }
+
+            case 'EraseTenantManagementDataComponent': { myResult = EraseTenantManagementDataComponent; break; }
+
+            case 'FroalaEditorComponent': { myResult = FroalaEditorComponent; break; }
+            case 'DocsInTabComponent': { myResult = DocsInTabComponent; break; }
+            case 'DocsOutTabComponent': { myResult = DocsOutTabComponent; break; }
+            case 'BTEGeneralTabComponent': { myResult = BTEGeneralTabComponent; break; }
+            case 'BTELogTabComponent': { myResult = BTELogTabComponent; break; }
+            case 'BTEParameterTabComponent': { myResult = BTEParameterTabComponent; break; }
+            case 'LastSuccessfulLoginComponent': { myResult = LastSuccessfulLoginComponent; break; }
+
+                
         }
 
         return myResult;

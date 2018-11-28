@@ -62,6 +62,7 @@ using Logitude.Server.Tools;
 using Simplog.Global.Data.GlobalModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using System.Threading;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -262,16 +263,57 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     allowedPackages = inf.PackagesCodes;
                 }
 
-                FeatureQuery featureQuery = new FeatureQuery(tenant);
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+                FeatureRepository iFeatureRepository = new FeatureRepository(commonDataContext);
+
+                FeatureQuery featureQuery = new FeatureQuery(iFeatureRepository);
                 List<FeaturePM> myResult = featureQuery.GetSelectedAndUnSelectedFeatures(RoleId, allowedPackages, tenant);
+
+
+                Tenant iTenant = (from d in commonDataContext.Tenants where d.Id == tenant select d).FirstOrDefault();
+                List<string> allTextCodesIds = myResult.Where(d=> d.NameTextCodeId != null).Select(s => s.NameTextCodeId).ToList();
+                List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesIds.Contains(d.Id) select d).ToList();
+                List<Translation> allTranslations = new List<Translation>();
+
+                if (iTenant.Language != null)
+                {
+                    TranslationHeader iTranslationHeader = (from d in webFreightContext.TranslationHeaders where d.Code == iTenant.Language select d).FirstOrDefault();
+                    if(iTranslationHeader != null)
+                    {
+                        allTranslations = (from d in webFreightContext.Translations
+                                           where d.TranslationHeaderCode == iTranslationHeader.Code
+                                           && d.Tenant == tenant
+                                           && allTextCodesIds.Contains(d.TextCodeId)
+                                           select d).ToList();
+                    }
+                }
 
                 foreach (FeaturePM item in myResult)
                 {
-                    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
+                    if (!string.IsNullOrEmpty(item.NameTextCodeId))
                     {
-                        item.TranslatedName = TranslateTextsClass.Translate(item.NameTextCodeCode, tenant);
+                        TextCode iTextCode = allTextCodes.Where(d => d.Id == item.NameTextCodeId).FirstOrDefault();
+                        if (iTextCode != null)
+                        {
+                            item.TranslatedName = iTextCode.DefaultText;
+
+                            Translation iTranslation = allTranslations.Where(d => d.TextCodeId == item.NameTextCodeId).FirstOrDefault();
+                            if(iTranslation != null)
+                            {
+                                item.TranslatedName = iTranslation.TranslatedText;
+                            }
+                        }
                     }
                 }
+
+                //foreach (FeaturePM item in myResult)
+                //{
+                //    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
+                //    {
+                //        item.TranslatedName = TranslateTextsClass.Translate(item.NameTextCodeCode, tenant);
+                //    }
+                //}
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1581,7 +1623,65 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetResendAnalyzeQueue(string AnalyzeQueueId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
 
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                AnalyzeQueue analyzeQueue = null;
+
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    AnalyzeQueueRepository analyzeQueueRepository = new AnalyzeQueueRepository();
+                    analyzeQueue = analyzeQueueRepository.GetSingleAnalyzeQueue(AnalyzeQueueId);
+
+                    if (analyzeQueue != null)
+                    {
+                        analyzeQueue.Retries = 0;
+                        analyzeQueue.Status = "W";
+                        analyzeQueue.ErrorMessage = null;
+                        analyzeQueue.StackTrace = null;
+                        analyzeQueue.DoneDate = null;
+
+                        analyzeQueue.AckReason = null;
+                        analyzeQueue.AWBNumber = null;
+
+                        analyzeQueue.Tenant = 0;
+                        analyzeQueue.ConnectedToEntity = false;
+                        analyzeQueue.ConnectedToTenant = false;
+                        analyzeQueue.EntityReference = null;
+                        analyzeQueue.CommunicationLogId = null;
+
+                        analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
+
+                        analyzeQueueRepository.Update(analyzeQueue);
+                        analyzeQueueRepository.SubmitChanges();
+                    }
+
+                    scope.Complete();
+                }
+
+                if (analyzeQueue != null)
+                {
+                    DbQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("ChampAnalyzer", tenant);
+                    queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
+                    queueservice.Complete();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 

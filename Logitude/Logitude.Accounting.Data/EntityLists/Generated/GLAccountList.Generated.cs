@@ -161,7 +161,23 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public bool IsEquipmentVendor  { get; set; }
        [DataMember]
-       public bool IsPartOfDeductionReport  { get; set; }
+       public bool ExcludeFromDeductionReport  { get; set; }
+       [DataMember]
+       public string DeductionTypeName  { get; set; }
+       [DataMember]
+       public string DeductionFileTypeCode  { get; set; }
+       [DataMember]
+       public string DeductionFileTypeName  { get; set; }
+       [DataMember]
+       public string AssessingOfficeName  { get; set; }
+       [DataMember]
+       public string DeductionTypeEnglishName  { get; set; }
+       [DataMember]
+       public decimal? TotalOpenChequesInLocalCur  { get; set; }
+       [DataMember]
+       public string AutomaticReconcileLocalName  { get; set; }
+       [DataMember]
+       public string ReconcileMethodLocalName  { get; set; }
    }
 
 }

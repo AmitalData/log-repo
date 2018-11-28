@@ -89,7 +89,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 accContext = accContext ?? AccountingContext.GetContext(entityPOCO.Tenant);
                 AccountingEntityQueryService accountingEntityQueryService = new AccountingEntityQueryService(accContext);
                 AccountingEntityPM parent = accountingEntityQueryService.GetSingle(entityPOCO.AccountingEntityCode, false, true);
-                entityPM.AccountingEntityName = parent.EnglishName;
+                ContactPM user = GetLoggedContactData(GetLoggedContactEmail(entityPOCO.Tenant), entityPOCO.Tenant);
+                if (user != null)
+                {
+                    entityPM.AccountingEntityName = user.DontShowLocal ? parent.EnglishName : parent.LocalName;
+                }
+                else
+                {
+                    entityPM.AccountingEntityName = parent.EnglishName;
+                }
             }
 
             if (entityPOCO.TypeCode != null)
@@ -170,8 +178,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         private static void BuildSearchFields(JournalPM entityPM, Journal poco, bool isNewEntity)
         {
             string result = "";
+            
 
-           
+
             if (!string.IsNullOrEmpty(entityPM.JournalNumber))
             {
                 if (!(result.Split(',').Contains(entityPM.JournalNumber)))
@@ -181,8 +190,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
             
             result = AddRef(result, entityPM.ExternalNo);
+            var jlMap = new JournalLineDataMapping();
+
+            //entityPM.JournalLines.ToList().Select(r => jlMap.EncodeBase64NVARCHARFields(r));
             foreach (JournalLinePM item in entityPM.JournalLines)
             {
+                jlMap.EncodeBase64NVARCHARFields(item);
                 if (!string.IsNullOrEmpty(item.Reference1))
                 {
 

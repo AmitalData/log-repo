@@ -1,4 +1,4 @@
-﻿import {SharedLogisticsMainComponent} from './Components/SharedLogisticsMainComponent';
+import {SharedLogisticsMainComponent} from './Components/SharedLogisticsMainComponent';
 import {SharedLogisticsSettingComponent} from './Components/SharedLogisticsSettingComponent';
 import {SharedLogisticsWizardComponent} from './Components/SharedLogisticsWizardComponent';
 import {SharedLogisticsEventPermissiosComponent} from './Components/SharedLogisticsEventPermissiosComponent';
@@ -15,15 +15,18 @@ import {EditRelatedCustomerComponent} from './Components/EditRelatedCustomerComp
 import {AddCustomerBatchComponent} from './Components/AddCustomerBatchComponent';
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {TenantAccessSettingsComponent} from './Components/TenantAccessSettingsComponent';
-
-
-
+import { SharedLogisticsMoneyPermissiosComponent } from './Components/SharedLogisticsMoneyPermissiosComponent';
+import { SharedLogisticsPartnersPermissiosComponent } from './Components/SharedLogisticsPartnersPermissiosComponent';
+import { SharedInvoicesWorkspaceComponent } from './Components/Workspaces/SharedInvoicesWorkspaceComponent';
+import { SharedShipmentsWorkspaceComponent } from './Components/Workspaces/SharedShipmentsWorkspaceComponent';
 
 export const ControlsComponents =
     [
         SharedLogisticsSettingComponent,
         SharedLogisticsEventPermissiosComponent,
-        SharedLogisticsDocumentPermissiosComponent,        
+        SharedLogisticsDocumentPermissiosComponent,
+        SharedLogisticsMoneyPermissiosComponent,
+        SharedLogisticsPartnersPermissiosComponent,        
     ];
 
 
@@ -46,7 +49,10 @@ export const Components =
         AddCustomerBatchComponent,
         FieldTemplateComponent,
         TenantAccessSettingsComponent,
-
+        SharedLogisticsMoneyPermissiosComponent,
+        SharedLogisticsPartnersPermissiosComponent,
+        SharedInvoicesWorkspaceComponent,
+        SharedShipmentsWorkspaceComponent,
     ];
 
 export class ModuleDeclarations {
@@ -72,8 +78,10 @@ export class ModuleDeclarations {
             case "AddCustomerBatchComponent": { myResult = AddCustomerBatchComponent; break; }      
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }      
             case "TenantAccessSettingsComponent": { myResult = TenantAccessSettingsComponent; break; } 
-
-                
+            case "SharedLogisticsMoneyPermissiosComponent": { myResult = SharedLogisticsMoneyPermissiosComponent; break; } 
+            case "SharedLogisticsPartnersPermissiosComponent": { myResult = SharedLogisticsPartnersPermissiosComponent; break; }
+            case "SharedInvoicesWorkspaceComponent": { myResult = SharedInvoicesWorkspaceComponent; break; }
+            case "SharedShipmentsWorkspaceComponent": { myResult = SharedShipmentsWorkspaceComponent; break; } 
         }
 
         return myResult;

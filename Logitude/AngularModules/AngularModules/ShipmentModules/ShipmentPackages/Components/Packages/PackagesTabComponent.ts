@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter, OnDestroy}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
@@ -10,11 +10,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {PortList} from '../../../../Common/EntityLists/PortList';
-import {AddressList} from '../../../../Common/EntityLists/AddressList';
 import {PackageTypeList} from '../../../../Common/EntityLists/PackageTypeList';
-import {PortListService} from '../../../../Common/Services/StandardLists/PortListService';
-import {AddressListService} from '../../../../Common/Services/StandardLists/AddressListService';
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
@@ -26,6 +22,7 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliveryPM';
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import {WarehouseReleasePackageListExtendedService} from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleasePackageListExtendedService';
+import {PickUpDeliveryPackageHarmonizePM} from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 
 @Component({
     moduleId: module.id,
@@ -198,7 +195,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         if (this.IsFCLEntity) {
             if (FeatureLocator.HasFeaturePermession("Shipment", "ShippingInstructions")) {
-                if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "E") {
+                if (this.EntityPM.TransportModeId == "O" && (this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "I")) {
                     if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C") {
                         this.IsShippingInstructionsVisible = true;
                     }
@@ -1430,6 +1427,7 @@ export class ShipmentPackageItem extends BaseComponent {
         this.SetUIProperties_Container();
         this.SetUIProperties_Dangerous();
         this.SetUIProperties_BuildButton();
+        this.SetUIProperties_Harmonize();
     }
     SetUIProperties_Package() {
         if (this.ShipmentPM.TransportModeId == "A") {
@@ -1507,7 +1505,6 @@ export class ShipmentPackageItem extends BaseComponent {
             this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
             this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Tare", this.ObjectTableName, this.IsEditingFieldsEnabled);
-            this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("MarksAndNumbers", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingFieldsEnabled);
             this.UIProperties.SetEnabled("Reference1", this.ObjectTableName, this.IsEditingFieldsEnabled);
@@ -1631,6 +1628,20 @@ export class ShipmentPackageItem extends BaseComponent {
         }
 
         this.UIProperties.SetEnabled("NonActiveContainer", this.ObjectTableName, isFieldEnabled);
+    }
+    SetUIProperties_Harmonize() {
+
+        var isFieldEnabled: boolean = true;
+        if (this.IsEditingEnabled) {
+
+            isFieldEnabled = true;
+
+            if (this.IsMultiHarmonize == true) {
+                isFieldEnabled = false;
+            }
+        }
+
+        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
     }
 
     public PackageTypeList: PackageTypeList;
@@ -1863,7 +1874,7 @@ export class ShipmentPackageItem extends BaseComponent {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
                 if (this.Width == null || this.Height == null || this.Length == null) {
                     this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.EntityPM.Weight);
-                    this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.Weight, this.ShipmentPM.Ratio);
+                    this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
 
                     this.SetUIProperties();
                     this.fatherComponent.ResetTotalEditedValues();
@@ -1985,6 +1996,13 @@ export class ShipmentPackageItem extends BaseComponent {
     set Harmonize(newValue: string) {
         if (this.EntityPM.Harmonize != newValue) {
             this.EntityPM.Harmonize = newValue;
+        }
+    }
+
+    get IsMultiHarmonize() { return this.EntityPM.IsMultiHarmonize }
+    set IsMultiHarmonize(newValue: boolean) {
+        if (this.EntityPM.IsMultiHarmonize != newValue) {
+            this.EntityPM.IsMultiHarmonize = newValue;
         }
     }
 
@@ -2645,6 +2663,15 @@ export class ShipmentPackageItem extends BaseComponent {
         newDeliveryPackagePM.Length = this.EntityPM.Length;
         newDeliveryPackagePM.Harmonize = this.EntityPM.Harmonize;
         newDeliveryPackagePM.OriginalShipmentPackageId = this.EntityPM.Id;
+        newDeliveryPackagePM.IsMultiHarmonize = this.EntityPM.IsMultiHarmonize;
+
+        this.EntityPM.ShipmentPackageHarmonizes.forEach(harmonizeItem => {
+            var harmonize = new PickUpDeliveryPackageHarmonizePM(null);
+            harmonize.Harmonize = harmonizeItem.Harmonize;
+            harmonize.Tenant = harmonizeItem.Tenant;
+            newDeliveryPackagePM.AddPickUpDeliveryPackageHarmonizePM(harmonize);
+        });
+
         newDeliveryPM.AddPackage(newDeliveryPackagePM);
 
         var logitudeWindow = new LogitudeWindow();
@@ -2934,7 +2961,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
             if (this.Width == null || this.Height == null || this.Length == null) {
                 this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.EntityPM.Weight);
-                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.Weight, this.ShipmentPM.Ratio);
+                this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
 
                 this.SetUIProperties();
 

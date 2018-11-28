@@ -911,8 +911,16 @@ namespace WebFreight.Web.ReportsWebServices
                     else
                     {
                         invoicedataprovider.FromLocation = mainCarriageFromPort.Code + " " + mainCarriageFromPort.EnglishName;
+                        invoicedataprovider.FromLocation_PortName = mainCarriageFromPort.EnglishName;
+                        invoicedataprovider.FromLocation_CountryName = mainCarriageFromPort.Country == null ? null : mainCarriageFromPort.Country.EnglishName;
+
                         invoicedataprovider.ToLocation = mainCarriageToPort.Code + " " + mainCarriageToPort.EnglishName;
+                        invoicedataprovider.ToLocation_PortName = mainCarriageToPort.EnglishName;
+                        invoicedataprovider.ToLocation_CountryName = mainCarriageToPort.Country == null ? null : mainCarriageToPort.Country.EnglishName;
+
                         invoicedataprovider.FinalLocation = finalDistinationPort != null ? (finalDistinationPort.Code + " " + finalDistinationPort.EnglishName) : "";
+                        invoicedataprovider.FinalLocation_PortName = finalDistinationPort != null ? finalDistinationPort.EnglishName : "";
+                        invoicedataprovider.FinalLocation_CountryName = finalDistinationPort != null ? (finalDistinationPort.Country == null ? null : finalDistinationPort.Country.EnglishName) : "";
                     }
 
                     if (shipment.Transshipment1FromPortId == null && shipment.Transshipment2FromPortId == null && shipment.Transshipment3FromPortId == null && finalDistinationPort == null)

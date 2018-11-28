@@ -1,4 +1,4 @@
-﻿import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 
 export class APPaymentInvoicePM {
@@ -57,6 +57,13 @@ export class APPaymentInvoicePM {
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue; this.MarkAsDirty(); }
+
+
+    private aPInvoiceTransferStatusCode: string;
+    public get APInvoiceTransferStatusCode() { return this.aPInvoiceTransferStatusCode; }
+    public set APInvoiceTransferStatusCode(newValue: string) { this.aPInvoiceTransferStatusCode = newValue; this.MarkAsDirty(); }
+
+    
 
     public OldEntityPM: APPaymentInvoicePM;
 

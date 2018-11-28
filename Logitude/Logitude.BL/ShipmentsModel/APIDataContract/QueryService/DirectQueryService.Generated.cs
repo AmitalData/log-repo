@@ -58,6 +58,25 @@ using Simplog.Data.ShipmentsModel;
             }
         }
 		
+		public Direct GetDirectByShipmentNumber(string ShipmentNumber,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByShipmentNumber(ShipmentNumber,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Shipment with ShipmentNumber " + ShipmentNumber + " doesn't exist");
+
+				return DirectDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public Direct DirectDataMapping(ShipmentPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -223,6 +242,25 @@ using Simplog.Data.ShipmentsModel;
 				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"Shipment");
 				temp.CustomFields = customFieldService.CustomFieldCustomDataMapping(MyEntityPM, Tenant);
 				 
+				   
+				   temp.IsOperationalClosed = MyEntityPM.IsOperationalClosed;			  
+				   if(MyEntityPM.MainCarriageVesselId != null)
+				   {
+					   VesselQueryService VesselService16 = new VesselQueryService(Tenant);
+					   					   temp.Vessel = VesselService16.GetVesselById(MyEntityPM.MainCarriageVesselId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.MainCarriageATA = MyEntityPM.MainCarriageATA;
+				   temp.MainCarriageATD = MyEntityPM.MainCarriageATD;
+				   temp.IsAccountingClosed = MyEntityPM.IsAccountingClosed;
+				   temp.ValueOfGoods = MyEntityPM.ValueOfGoods;			  
+				   if(MyEntityPM.ValueOfGoodsCurrencyId != null)
+				   {
+					   CurrencyQueryService CurrencyService17 = new CurrencyQueryService(Tenant);
+					   					   temp.ValueOfGoodsCurrency = CurrencyService17.GetCurrencyById(MyEntityPM.ValueOfGoodsCurrencyId,Tenant); 
+			       
+					   				   }
 				   					
 				   return temp;
 			}
@@ -242,10 +280,14 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+					
+					if (!string.IsNullOrEmpty(MyEntity.ShipmentNumber))
+					{
+						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant);
+					} 					   
 					if(temp == null)
 					{
-					    throw new ApplicationException("Shipment with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("Shipment with ShipmentNumber " + MyEntity.ShipmentNumber + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -390,22 +432,22 @@ using Simplog.Data.ShipmentsModel;
 					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService16 = new AirPackageQueryService(Tenant);
-						temp.ShipmentPackages = AirPackageService16.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+						AirPackageQueryService AirPackageService18 = new AirPackageQueryService(Tenant);
+						temp.ShipmentPackages = AirPackageService18.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService16 = new OceanOrInlandPackageQueryService(Tenant);
-						temp.ShipmentPackages = OceanOrInlandPackageService16.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService18 = new OceanOrInlandPackageQueryService(Tenant);
+						temp.ShipmentPackages = OceanOrInlandPackageService18.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService16 = new ContainerQueryService(Tenant);
-						temp.ShipmentPackages = ContainerService16.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+						ContainerQueryService ContainerService18 = new ContainerQueryService(Tenant);
+						temp.ShipmentPackages = ContainerService18.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -454,15 +496,15 @@ using Simplog.Data.ShipmentsModel;
 					
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService16 = new DeliveryQueryService(Tenant);
-						temp.ShipmentDeliveries = DeliveryService16.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
+						DeliveryQueryService DeliveryService18 = new DeliveryQueryService(Tenant);
+						temp.ShipmentDeliveries = DeliveryService18.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService16 = new PickUpQueryService(Tenant);
-						temp.ShipmentPickUps = PickUpService16.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
+						PickUpQueryService PickUpService18 = new PickUpQueryService(Tenant);
+						temp.ShipmentPickUps = PickUpService18.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -471,6 +513,33 @@ using Simplog.Data.ShipmentsModel;
 				{
 					 customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
 				}		
+			
+					
+					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;					VesselQueryService VesselVesselService = new VesselQueryService(Tenant);
+					if(MyEntity.Vessel != null)
+					{
+						var myVesselPM = VesselVesselService.VesselDataMappingAndValidatin(MyEntity.Vessel,Tenant,ComputingPartnerName);
+												if(myVesselPM != null)
+						{
+							temp.MainCarriageVesselId = myVesselPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.MainCarriageATA = MyEntity.MainCarriageATA;
+					temp.MainCarriageATD = MyEntity.MainCarriageATD;
+					temp.IsAccountingClosed = MyEntity.IsAccountingClosed;
+					temp.ValueOfGoods = MyEntity.ValueOfGoods;					CurrencyQueryService ValueOfGoodsCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					if(MyEntity.ValueOfGoodsCurrency != null)
+					{
+						var myValueOfGoodsCurrencyPM = ValueOfGoodsCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.ValueOfGoodsCurrency,Tenant,ComputingPartnerName);
+												if(myValueOfGoodsCurrencyPM != null)
+						{
+							temp.ValueOfGoodsCurrencyId = myValueOfGoodsCurrencyPM.Id;
+						}
+						 
+					}
 			
 										   
 					   return temp;

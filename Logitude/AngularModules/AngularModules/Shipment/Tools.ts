@@ -1,4 +1,4 @@
-﻿import {AppTool, DateTool, ArrayTool} from '../Infrastructure/Tools';
+import {AppTool, DateTool, ArrayTool} from '../Infrastructure/Tools';
 import {Validator} from '../Infrastructure/Validators/Validator';
 import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
@@ -2359,16 +2359,23 @@ export class ShipmentGenerator {
             }
         }
 
-        if (this.IsRoutingRate) {
-            if (!AppTool.IsNullOrZero(myRecordPM.QuoteCostMinPrice)) {
+        // MinMax
+        if (!AppTool.IsNullOrZero(myRecordPM.QuoteCostMinAmount)) {
+            if (AppTool.IsNullOrEmpty(myComputedAmount)) {
+                myComputedAmount = myRecordPM.QuoteCostMinAmount;
+            }
 
-                if (AppTool.IsNullOrEmpty(myComputedAmount)) {
-                    myComputedAmount = myRecordPM.QuoteCostMinPrice;
-                }
+            else if (myComputedAmount < myRecordPM.QuoteCostMinAmount) {
+                myComputedAmount = myRecordPM.QuoteCostMinAmount;
+            }
+        }
+        if (!AppTool.IsNullOrZero(myRecordPM.QuoteCostMaxAmount)) {
+            if (AppTool.IsNullOrEmpty(myComputedAmount)) {
+                myComputedAmount = myRecordPM.QuoteCostMaxAmount;
+            }
 
-                else if (myComputedAmount < myRecordPM.QuoteCostMinPrice) {
-                    myComputedAmount = myRecordPM.QuoteCostMinPrice;
-                }
+            else if (myComputedAmount > myRecordPM.QuoteCostMaxAmount) {
+                myComputedAmount = myRecordPM.QuoteCostMaxAmount;
             }
         }
 
@@ -2440,7 +2447,8 @@ export class ShipmentGenerator {
         myRecordPM.VendorId = item.VendorId;
         myRecordPM.VendorName = item.VendorName;
         myRecordPM.QuoteChargeId = item.Id;
-        myRecordPM.QuoteCostMinPrice = item.CostMinAmount;
+        myRecordPM.QuoteCostMinAmount = item.CostMinAmount;
+        myRecordPM.QuoteCostMaxAmount = item.CostMaxAmount;
         myRecordPM.IsChargeBySteps = item.IsChargeBySteps;
         myRecordPM.Rate = this.GetCurrencyRate(item.CostCurrencyId);
         myRecordPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
@@ -2996,16 +3004,23 @@ export class ShipmentGenerator {
             }
         }
 
-        if (this.IsRoutingRate) {
-            if (!AppTool.IsNullOrZero(myRecordPM.QuoteSaleMinPrice)) {
+        // MinMax
+        if (!AppTool.IsNullOrZero(myRecordPM.QuoteSaleMinAmount)) {
+            if (AppTool.IsNullOrEmpty(myComputedAmount)) {
+                myComputedAmount = myRecordPM.QuoteSaleMinAmount;
+            }
 
-                if (AppTool.IsNullOrEmpty(myComputedAmount)) {
-                    myComputedAmount = myRecordPM.QuoteSaleMinPrice;
-                }
+            else if (myComputedAmount < myRecordPM.QuoteSaleMinAmount) {
+                myComputedAmount = myRecordPM.QuoteSaleMinAmount;
+            }
+        }
+        if (!AppTool.IsNullOrZero(myRecordPM.QuoteSaleMaxAmount)) {
+            if (AppTool.IsNullOrEmpty(myComputedAmount)) {
+                myComputedAmount = myRecordPM.QuoteSaleMaxAmount;
+            }
 
-                else if (myComputedAmount < myRecordPM.QuoteSaleMinPrice) {
-                    myComputedAmount = myRecordPM.QuoteSaleMinPrice;
-                }
+            else if (myComputedAmount > myRecordPM.QuoteSaleMaxAmount) {
+                myComputedAmount = myRecordPM.QuoteSaleMaxAmount;
             }
         }
 
@@ -3071,7 +3086,8 @@ export class ShipmentGenerator {
         myRecordPM.MeasurementShortName = QuoteCharge.SaleMeasurementShortName;
         myRecordPM.Notes = QuoteCharge.Notes;
         myRecordPM.IsExchangeRateFixed = QuoteCharge.SaleIsFixedRate;
-        myRecordPM.QuoteSaleMinPrice = QuoteCharge.SaleMinAmount;
+        myRecordPM.QuoteSaleMinAmount = QuoteCharge.SaleMinAmount;
+        myRecordPM.QuoteSaleMaxAmount = QuoteCharge.SaleMaxAmount;
         myRecordPM.QuoteChargeId = QuoteCharge.Id;
         myRecordPM.IsChargeBySteps = QuoteCharge.IsChargeBySteps;
         myRecordPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
@@ -3155,7 +3171,8 @@ export class ShipmentGenerator {
             myRecordPM.IsExchangeRateFixed = OriginItemPM.IsExchangeRateFixed;
             myRecordPM.IsFixedPrice = OriginItemPM.IsFixedPrice;
             myRecordPM.UnitPrice = OriginItemPM.UnitPrice;
-            myRecordPM.QuoteSaleMinPrice = OriginItemPM.QuoteSaleMinPrice;
+            myRecordPM.QuoteSaleMinAmount = OriginItemPM.QuoteSaleMinAmount;
+            myRecordPM.QuoteSaleMaxAmount = OriginItemPM.QuoteSaleMaxAmount;
             myRecordPM.IsBackToBack = OriginItemPM.IsBackToBack;
             myRecordPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
             myRecordPM.IsExpense = OriginItemPM.IsExpense;

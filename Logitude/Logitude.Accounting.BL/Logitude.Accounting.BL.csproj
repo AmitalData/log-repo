@@ -138,6 +138,8 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\GLAccountTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalStatusTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\OpenFormatDateTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\OpenFormatReportStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PaymentChequeStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PeriodTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReconcileExternalPageStatusDetails.Generated.cs" />
@@ -157,10 +159,12 @@
     <Compile Include="CloseTables\EnumGenerated\JournalStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ReconcileExternalPageStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\GLAccountTotalDateTypeEnum.cs" />
+    <Compile Include="CoreBL\AccountBalanceByDateCodeService.cs" />
     <Compile Include="CoreBL\AccountBalanceService.cs" />
     <Compile Include="CoreBL\AccountingSettingResolver.cs" />
     <Compile Include="CoreBL\AutomaticExternalReconcileService.cs" />
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
+    <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxReportService.cs" />
     <Compile Include="CoreBL\BuildTenant\ClearTenant.cs" />
     <Compile Include="CoreBL\BuildTenant\DummyTenantProvider.cs" />
@@ -214,7 +218,10 @@
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckGLAccount.cs" />
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckTotals.cs" />
+    <Compile Include="CoreBL\TaxDeductionReportService.cs" />
     <Compile Include="CoreBL\YearTransferService.cs" />
+    <Compile Include="DataContract\TaxDeductionReportData.cs" />
+    <Compile Include="DataContract\TaxReportLinesCounter.cs" />
     <Compile Include="EntityDataMappings\AccountingCompanyTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingEntityDataMapping.cs" />
     <Compile Include="EntityDataMappings\AccountingEntityService.cs" />
@@ -277,6 +284,7 @@
     <Compile Include="EntityDataMappings\Generated\GLAccountTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\GLAccountWithholdingTaxDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalActionTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\JournalAdditionalDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalLineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalMoreDataDataMapping.Generated.cs" />
@@ -284,6 +292,9 @@
     <Compile Include="EntityDataMappings\Generated\JournalStatusTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LedgerTransactionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpenFormatDateTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpenFormatReportDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OpenFormatReportStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PaymentChequeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PaymentChequeLineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PaymentChequeStatusDataMapping.Generated.cs" />
@@ -317,6 +328,7 @@
     <Compile Include="EntityDataMappings\GLAccountTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\GLAccountWithholdingTaxDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalActionTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\JournalAdditionalDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalLineDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalMoreDataDataMapping.cs" />
@@ -324,6 +336,9 @@
     <Compile Include="EntityDataMappings\JournalStatusTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\LedgerTransactionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OpenFormatDateTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OpenFormatReportDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OpenFormatReportStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\PaymentChequeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PaymentChequeLineDataMapping.cs" />
     <Compile Include="EntityDataMappings\PaymentChequeStatusDataMapping.cs" />
@@ -365,6 +380,7 @@
     <Compile Include="EntityQueryServices\AutomaticReconcileQueryService.cs" />
     <Compile Include="EntityQueryServices\BankAccountQueryService.cs" />
     <Compile Include="EntityQueryServices\BankCodeQueryService.cs" />
+    <Compile Include="EntityQueryServices\BankDepositLineQueryService.cs" />
     <Compile Include="EntityQueryServices\Category1QueryService.cs" />
     <Compile Include="EntityQueryServices\Category2QueryService.cs" />
     <Compile Include="EntityQueryServices\Category3QueryService.cs" />
@@ -381,8 +397,12 @@
     <Compile Include="EntityQueryServices\Generated\GLAccountMoreDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountTotalDateTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\GLAccountWithholdingTaxQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\JournalAdditionalDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalMoreDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalReconcileQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpenFormatDateTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpenFormatReportQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OpenFormatReportStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PaymentChequeLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PaymentChequeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PaymentChequeStatusQueryService.Generated.cs" />
@@ -404,6 +424,7 @@
     <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
+    <Compile Include="EntityQueryServices\JournalMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalStatusTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\PaymentChequeLineQueryService.cs" />
@@ -439,8 +460,12 @@
     <Compile Include="EntityUpdateServices\Generated\GLAccountMoreDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountTotalDateTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\GLAccountWithholdingTaxUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\JournalAdditionalDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\JournalMoreDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\JournalReconcileUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpenFormatDateTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpenFormatReportStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OpenFormatReportUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PaymentChequeLineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PaymentChequeStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PaymentChequeUpdateService.Generated.cs" />
@@ -462,6 +487,7 @@
     <Compile Include="EntityUpdateServices\GLAccountWithholdingTaxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\IJournalUpdateServiceProvider.cs" />
     <Compile Include="EntityUpdateServices\JournalReconcileUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\OpenFormatReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PaymentChequeLineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PaymentChequeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ReconcileExternalPageLineUpdateService.cs" />

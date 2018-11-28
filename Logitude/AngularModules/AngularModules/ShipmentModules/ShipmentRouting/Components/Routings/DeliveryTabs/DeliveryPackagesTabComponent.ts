@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, FormatTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -253,6 +253,7 @@ export class DeliveryPackageItem extends BaseComponent {
         this.UIProperties.SetVisibility("Width", this.ObjectTableName, this.IsLCLEntity);
         this.UIProperties.SetVisibility("Height", this.ObjectTableName, this.IsLCLEntity);
         this.SetUIProperties_IsContainer();
+        this.SetUIProperties_Harmonize();
 
         if (!AppTool.IsNullOrEmpty(this.PackageTypeId)) {
             var myService: PackageTypeListService = new PackageTypeListService();
@@ -270,8 +271,7 @@ export class DeliveryPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("PackageTypeId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ContainerNumber", this.ObjectTableName, this.IsEditingEnabled);        
         this.UIProperties.SetEnabled("Weight", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingEnabled);
-        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, this.IsEditingEnabled);  
+        this.UIProperties.SetEnabled("ShipperSeal", this.ObjectTableName, this.IsEditingEnabled); 
         this.UIProperties.SetEnabled("Description", this.ObjectTableName, this.IsEditingEnabled);              
     }
     SetUIProperties_IsContainer() {
@@ -310,6 +310,16 @@ export class DeliveryPackageItem extends BaseComponent {
         else {
             this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
         }
+    }
+    SetUIProperties_Harmonize() {
+        var isFieldEnabled: boolean = true;
+        if (this.IsEditingEnabled) {
+            isFieldEnabled = true;
+            if (this.IsMultiHarmonize == true) {
+                isFieldEnabled = false;
+            }
+        }
+        this.UIProperties.SetEnabled("Harmonize", this.ObjectTableName, isFieldEnabled);
     }
 
     get PackageTypeId() { return this.EntityPM.PackageTypeId; }
@@ -374,6 +384,13 @@ export class DeliveryPackageItem extends BaseComponent {
         if (this.EntityPM.ContainerNumber != value) {
             this.EntityPM.ContainerNumber = value;
             this.ValidateContainerNumber(value);
+        }
+    }
+
+    get IsMultiHarmonize() { return this.EntityPM.IsMultiHarmonize }
+    set IsMultiHarmonize(newValue: boolean) {
+        if (this.EntityPM.IsMultiHarmonize != newValue) {
+            this.EntityPM.IsMultiHarmonize = newValue;
         }
     }
 

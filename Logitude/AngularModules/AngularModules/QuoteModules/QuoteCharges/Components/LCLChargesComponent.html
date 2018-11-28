@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr>
         <td>
@@ -158,7 +158,7 @@
                                     </log-column>
 
                                     <!-- Cost Min Amount -->
-                                    <log-column [width]="'100'" *ngIf="IsRoutingRate">
+                                    <log-column [width]="'100'">
                                         <log-header-template template="let item">
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
@@ -183,6 +183,32 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- Cost Max Amount -->
+                                    <log-column [width]="'100'">
+                                        <log-header-template template="let item">
+                                            <div class="GridHeaderCellTemplate">
+                                                <table>
+                                                    <tr>
+                                                        <td style="text-align: center;">
+                                                            <div style="font-size:11px;">Cost</div>
+                                                            <div style="font-size:11px;">Max Amount</div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-header-template>
+
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_CostMinAmount">
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                                                {{item.CostMaxAmount | NumbersPipe:'N3'}}
+                                            </div>
+
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CostMaxAmount'" [Text]="item.CostMaxAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
                                     <!-- Cost Amount -->
                                     <log-column [width]="'100'" *ngIf="IsAdhoc">
                                         <log-header-template template="let item">
@@ -202,8 +228,8 @@
                                             <div style="height: 100%; width: 100%; position: relative;">
                                                 <table>
                                                     <tr>
-                                                        <td style="width:16px;" *ngIf="item.FromTarrifIconIsVisibile">
-                                                            <img style="left:-10px;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.FromTarrifIconTitle" />
+                                                        <td style="width:16px;" *ngIf="item.CostMinMaxIconIsVisibile">
+                                                            <img style="left:-10px;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.CostMinMaxIconTitle" />
                                                         </td>
 
                                                         <td>
@@ -294,7 +320,7 @@
                                     </log-column>
 
                                     <!-- Sale Min Amount -->
-                                    <log-column [width]="'100'" [header]="'Sale Min Amount'" *ngIf="IsRoutingRate">
+                                    <log-column [width]="'100'" [header]="'Sale Min Amount'">
                                         <log-header-template template="let item">
                                             <div class="GridHeaderCellTemplate">
                                                 <table>
@@ -319,6 +345,32 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- Sale Max Amount -->
+                                    <log-column [width]="'100'" [header]="'Sale Max Amount'">
+                                        <log-header-template template="let item">
+                                            <div class="GridHeaderCellTemplate">
+                                                <table>
+                                                    <tr>
+                                                        <td style="text-align: center;">
+                                                            <div style="font-size:11px;">Sale</div>
+                                                            <div style="font-size:11px;">Max Amount</div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-header-template>
+
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_SaleMinAmount">
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                                                {{item.SaleMaxAmount | NumbersPipe:'N3'}}
+                                            </div>
+
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'SaleMaxAmount'" [Text]="item.SaleMaxAmount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
                                     <!-- Sale Amount -->
                                     <log-column [width]="'100'" *ngIf="IsAdhoc">
                                         <log-header-template template="let item">
@@ -334,9 +386,19 @@
                                             </div>
                                         </log-header-template>
 
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_SaleTotalAmount">
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" [ngStyle]="{color: item.SaleTotalAmountColor}" class="TextTrimming" [attr.title]="item.SaleTotalAmount | NumbersPipe:'N2'">
-                                                {{item.SaleTotalAmount | NumbersPipe:'N2'}}
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEnabled_SaleTotalAmount">                                            
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:16px;" *ngIf="item.SaleMinMaxIconIsVisibile">
+                                                            <img style="left:-10px;" src="./Images/Icons/M-icon.png" width="16" height="16" [title]="item.SaleMinMaxIconTitle" />
+                                                        </td>
+
+                                                        <td style="text-align:right;" [ngStyle]="{color: item.SaleTotalAmountColor}">
+                                                            {{item.SaleTotalAmount | NumbersPipe:'N2'}}
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
 
                                             <div *ngIf="logcelltemplate.IsEditMode">
@@ -411,7 +473,7 @@
                                     </log-column>
 
                                     <!-- VatType -->
-                                    <log-column *ngIf="IsAdhoc && IsChargesByVAT" [header]="'VAT Type'" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
+                                    <log-column *ngIf="IsAdhoc && IsChargesByVAT" [header]="'QuoteCharge.F.VatTypeId' | TextCodeTranslationPipe" [width]="VATColumnWidth + ''" [Editable]="false" [Alignment]="'left'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                                             <div class="MediaFill">
                                                 <table>

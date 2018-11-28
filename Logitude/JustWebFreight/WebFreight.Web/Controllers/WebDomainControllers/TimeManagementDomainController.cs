@@ -15,6 +15,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -90,11 +91,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
-                TMEmployeeTimeUpdateService service = new TMEmployeeTimeUpdateService(myContext);
+                TMEmployeeTimeUpdateService service = new TMEmployeeTimeUpdateService(myContext, new Dictionary<string, IContext>(), tenant);
                 TMEmployeeTimeRepository repository = new TMEmployeeTimeRepository(myContext);
+                TMEmployeeTimeQueryService queryService = new TMEmployeeTimeQueryService(myContext);
 
                 if (args != null)
                 {
@@ -110,22 +111,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         foreach (TMEmployeeTimePM itemChanged in args.ItemsPM)
                         {
-                            //    List<TMEmployeeTime> dbList = repository.GetMulti(itemChanged.ProjectId_db, itemChanged.Description_db, itemChanged.WINumber_db, tenant).ToList();
-
-                            //    foreach (TMEmployeeTime itemPOCO in dbList)
-                            //    {
-                            //        itemPOCO.ProjectId = itemChanged.ProjectId;
-                            //        itemPOCO.Description = itemChanged.Description;
-                            //        itemPOCO.WINumber = itemChanged.WINumber;
-                            //        repository.Update(itemPOCO);
-                            //    }
-                            TMEmployeeTime itemPOCO = repository.GetSingle(itemChanged.Id, tenant);
+                            TMEmployeeTimePM itemPOCO = queryService.GetSingle(itemChanged.Id, true, false);
                             if (itemPOCO != null && !(itemPOCO.ProjectId == itemChanged.ProjectId && itemPOCO.Description == itemChanged.Description && itemPOCO.WINumber == itemChanged.WINumber))
                             {
                                 itemPOCO.ProjectId = itemChanged.ProjectId;
                                 itemPOCO.Description = itemChanged.Description;
                                 itemPOCO.WINumber = itemChanged.WINumber;
-                                repository.Update(itemPOCO);
+                                //repository.Update(itemPOCO);
+                                itemPOCO.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                                service.Update(itemPOCO, true);
                             }
 
                             if (itemChanged.TimeInMinutes != itemChanged.TimeInMinutes_db)
@@ -134,12 +128,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (itemPOCO != null)
                                 {
                                     itemPOCO.TimeInMinutes = itemChanged.TimeInMinutes;
-                                    repository.Update(itemPOCO);
+                                    //repository.Update(itemPOCO);
+
+                                    itemPOCO.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                                    service.Update(itemPOCO, true);
                                 }
 
                                 else
                                 {
-                                    itemPOCO = new TMEmployeeTime()
+                                    itemPOCO = new TMEmployeeTimePM()
                                     {
                                         Id = IdCounter.GetNumber("TMEmployeeTime", tenant),
                                         Tenant = tenant,
@@ -154,12 +151,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         LocationCode = itemChanged.LocationCode,
                                         UpdatedByUserId = loggedUserId,
                                         CreatedByUserId = loggedUserId,
+                                        SprintId = itemChanged.SprintId,
                                     };
-                                    repository.Add(itemPOCO);
+                                    //repository.Add(itemPOCO);
+
+                                    itemPOCO.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                                    service.Update(itemPOCO, true);
                                 }
                             }
                         }
-                        repository.SubmitChanges();
+                        //repository.SubmitChanges();
                     }
                 }
 
@@ -373,6 +374,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                  WINumber_db = a.WINumber,
                                                  ProjectId = a.ProjectId,
                                                  ProjectId_db = a.ProjectId,
+                                                 SprintId=a.SprintId,
                                                  ProjectName = (allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault() != null ? allProjects.Where(d => d.Id == a.ProjectId).FirstOrDefault().Name : null),
                                              }).ToList();
 
@@ -455,7 +457,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
         private string updateTimeProjectNumber(string MainId,string id,int tenant) {
             myContext = TimeManagementContext.GetContext(tenant);
             TMProjectRepository repository = new TMProjectRepository(myContext);
@@ -499,7 +500,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return MainProject.ProjectNumber;
 
         }
-
         private string GenerateNewProjectNumber(TMProject entity) {
             TMProjectRepository entityRepository = new TMProjectRepository(entity.Tenant);
             List<string> ProjectNumbers = entityRepository.GetInnerTMProjectByNumber(entity.ProjectNumber, entity.Tenant);
@@ -515,7 +515,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return ProjectId + "";            
         }
-
         private IQueryable<TMProject> GETTMProjectsStartsWithProjectNumber(string ProjectNumber, int tenant)
         {
            
@@ -523,7 +522,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     where a.ProjectNumber.StartsWith(ProjectNumber) && a.Tenant == tenant && a.ProjectNumber != ProjectNumber
                     select a);
         }
-
         private List<TMOfficeHour> GetTimeOffice(string employeeUserId, string FromDate, string ToDate, int tenant)
         {
 
@@ -668,7 +666,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return myResult;
         }
-
         public HttpResponseMessage GetTMProjects(string employeeUserId, string locationCode, string periodStartDate)
         {
 
@@ -718,7 +715,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
     }
 
     public class TimeManagementAPIHelper

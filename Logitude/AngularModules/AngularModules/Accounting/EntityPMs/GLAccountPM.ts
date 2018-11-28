@@ -464,9 +464,44 @@ export class GLAccountPM {
     public set IsEquipmentVendor(newValue: boolean) { if (this.isEquipmentVendor != newValue) { this.isEquipmentVendor = newValue; this.MarkAsDirty("IsEquipmentVendor"); } }
        
 	 
-    private isPartOfDeductionReport: boolean;
-    public get IsPartOfDeductionReport() { return this.isPartOfDeductionReport; }
-    public set IsPartOfDeductionReport(newValue: boolean) { if (this.isPartOfDeductionReport != newValue) { this.isPartOfDeductionReport = newValue; this.MarkAsDirty("IsPartOfDeductionReport"); } }
+    private excludeFromDeductionReport: boolean;
+    public get ExcludeFromDeductionReport() { return this.excludeFromDeductionReport; }
+    public set ExcludeFromDeductionReport(newValue: boolean) { if (this.excludeFromDeductionReport != newValue) { this.excludeFromDeductionReport = newValue; this.MarkAsDirty("ExcludeFromDeductionReport"); } }
+       
+	 
+    private parent: string;
+    public get Parent() { return this.parent; }
+    public set Parent(newValue: string) { if (this.parent != newValue) { this.parent = newValue; this.MarkAsDirty("Parent"); } }
+       
+	 
+    private deductionTypeName: string;
+    public get DeductionTypeName() { return this.deductionTypeName; }
+    public set DeductionTypeName(newValue: string) { if (this.deductionTypeName != newValue) { this.deductionTypeName = newValue; this.MarkAsDirty("DeductionTypeName"); } }
+       
+	 
+    private deductionFileTypeCode: string;
+    public get DeductionFileTypeCode() { return this.deductionFileTypeCode; }
+    public set DeductionFileTypeCode(newValue: string) { if (this.deductionFileTypeCode != newValue) { this.deductionFileTypeCode = newValue; this.MarkAsDirty("DeductionFileTypeCode"); } }
+       
+	 
+    private deductionFileTypeName: string;
+    public get DeductionFileTypeName() { return this.deductionFileTypeName; }
+    public set DeductionFileTypeName(newValue: string) { if (this.deductionFileTypeName != newValue) { this.deductionFileTypeName = newValue; this.MarkAsDirty("DeductionFileTypeName"); } }
+       
+	 
+    private assessingOfficeName: string;
+    public get AssessingOfficeName() { return this.assessingOfficeName; }
+    public set AssessingOfficeName(newValue: string) { if (this.assessingOfficeName != newValue) { this.assessingOfficeName = newValue; this.MarkAsDirty("AssessingOfficeName"); } }
+       
+	 
+    private deductionTypeEnglishName: string;
+    public get DeductionTypeEnglishName() { return this.deductionTypeEnglishName; }
+    public set DeductionTypeEnglishName(newValue: string) { if (this.deductionTypeEnglishName != newValue) { this.deductionTypeEnglishName = newValue; this.MarkAsDirty("DeductionTypeEnglishName"); } }
+       
+	 
+    private totalOpenChequesInLocalCur: number;
+    public get TotalOpenChequesInLocalCur() { return this.totalOpenChequesInLocalCur; }
+    public set TotalOpenChequesInLocalCur(newValue: number) { if (this.totalOpenChequesInLocalCur != newValue) { this.totalOpenChequesInLocalCur = newValue; this.MarkAsDirty("TotalOpenChequesInLocalCur"); } }
        
 	 
 

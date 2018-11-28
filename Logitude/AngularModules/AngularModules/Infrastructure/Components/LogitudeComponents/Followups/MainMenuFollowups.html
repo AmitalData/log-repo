@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .FollowupItem:hover {
         background: -moz-linear-gradient(50% 106.14% 90deg,rgba(133, 203, 237, 1) 0%,rgba(150, 211, 240, 1) 22.59%,rgba(196, 231, 248, 1) 67.37%,rgba(232, 247, 255, 1) 100%);
@@ -59,7 +59,7 @@
                         <div></div>
                     </td>
 
-                    <td style="font-size: 13px; color: #464A4B;">
+                    <td style="font-size: 13px; color: #464A4B;" [hidden]="IsMainSidebarCollapsed">
                         {{'General.O.FollowUps' | TextCodeTranslationPipe}}
                     </td>
 
@@ -83,7 +83,7 @@
 
     <tr>
         <td>
-            <div class="MediaFill">
+            <div class="MediaFill" [hidden]="IsMainSidebarCollapsed">
                 <div class="MediaFillAbsolute" style="left: 3px; right: 1px;">
                     <ScrollViewer [Small]="true">
                         <ul class="MediaFillAbsolute" style="right: 3px;">

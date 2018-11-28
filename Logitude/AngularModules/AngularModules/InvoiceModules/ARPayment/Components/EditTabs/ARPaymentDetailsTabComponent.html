@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .customtrclass td {
         text-align: left;
@@ -273,7 +273,8 @@
 
                                                 <td *ngIf="FullAccounting  && IsCashBookValid">
                                                     <div [style.text-align]="isRTL ? 'right' : 'left'" [style.float]="isRTL ? 'right' : 'left'" style="display: block;">
-                                                         Cashbook: {{CashBookName}} (<span (click)="EditGLAccount('CB')" class="hyperlink"> {{BranchGLAccountNumber}} </span>)
+                                                        Cashbook: {{CashBookName}} (
+                                                        <span (click)="EditGLAccount('CB')" class="hyperlink"> {{BranchGLAccountNumber}} </span>)
                                                     </div>
                                                 </td>
                                             </tr>
@@ -343,6 +344,10 @@
                                                     <LogLabel [ObjectFieldName]="'Account'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
+                                                <td *ngIf="FullAccounting" style="width:150px; left: -10px;">
+                                                    <div></div>
+                                                </td>
+
                                                 <td>
                                                     <div></div>
                                                 </td>
@@ -392,6 +397,10 @@
                                                     <LogTextBox [ObjectFieldName]="'Account'" [Text]="Account" [InputType]="'text'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
 
+                                                <td *ngIf="FullAccounting" style="width:150px;" [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px;">
+                                                    {{ARPaymentChequeStatus}}
+                                                </td>
+
                                                 <td>
                                                     <div></div>
                                                 </td>
@@ -417,7 +426,17 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td>{{'ARPayment.S.Details.ARInvoices' | TextCodeTranslationPipe}}</td>
+                                    <td style="width: 1px;">
+                                        {{'ARPayment.S.Details.ARInvoices' | TextCodeTranslationPipe}}
+                                    </td>
+
+                                    <td style="width: 1px; padding-left: 5px;">
+                                        ({{ItemsSource.Length}})
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
 
                                     <td style="width:200px;">
                                         <SearchTextBox [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="SearchTextKeyUp($event)" [PlaceHolder]="'ARPayment.M.SearchByMsg' | TextCodeTranslationPipe"></SearchTextBox>

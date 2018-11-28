@@ -673,7 +673,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen BusinessRoleBusinessRoleHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessRoleBusinessRoleHeaderScreen", Name = "BusinessRoleHeaderScreen", ObjectTableId = BusinessRoleObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen BusinessRoleBusinessRoleHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BusinessRole.HeaderScreen", Name = "BusinessRoleHeaderScreen", ObjectTableId = BusinessRoleObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
             ScreenField BusinessRoleBusinessRoleHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = BusinessRoleObjectFields.Where(d => d.FieldName == "Name").FirstOrDefault().Id, ScreenId = BusinessRoleBusinessRoleHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          	

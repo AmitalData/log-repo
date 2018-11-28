@@ -213,19 +213,18 @@ export class ChangePasswordComponent {
         }
 
 
-        // contain series(5 letters / numbers)
-        if (this.IsPasswordContainsSeries(this.NewPassword)) {
-            messageError = "Password can't contain series (5 letters/numbers)";
+        var seriesMessage: string = this.IsPasswordContainsSeries(this.NewPassword);
+        if (seriesMessage) {
+            messageError = seriesMessage;
             return messageError;
-
         }
-
+        
         return "";
 
     }
 
     IsPasswordContainsSeries(password: string) {
-
+        var messageError: string = "";
         var result = false;
         if (password) password = password.toUpperCase();
 
@@ -233,50 +232,80 @@ export class ChangePasswordComponent {
         for (var i = 0; i < password.length; i++) {
             var char = password.charAt(i);
             var x = 0;
-            if ('0123456789'.indexOf(char) !== -1) {
-                x = Number(char);
-
-            } else {
-                x = char.charCodeAt(0);
-            }
-
+            if ('0123456789'.indexOf(char) !== -1) x = Number(char);
+            else x = char.charCodeAt(0);
+            
             passwordNumnberList.push(x);
         }
 
+        result = this.IsSeries(passwordNumnberList, "+");
+        if (!result) result = this.IsSeries(passwordNumnberList, "-");
+        if (result) messageError = "Password should not contain more than 3 following characters";
+        if (!result) {
+            result = this.IsSeries(passwordNumnberList, "Same");
+            if (result) messageError = "Password should not contain more then 3 consecutive repeating characters";
+        }
+
+        return messageError;
+
+
+
+        //return result;
+    }
+    IsSeries(passwordNumnberList: any, operatorCode: string) {
+
+        var result = false;
         var seriesNumnberCount: number = 0;
         var seriesNumnberList: any = [];
         passwordNumnberList.forEach((item) => {
             var IsNotSeriesNumnber = false;
             if (item <= 9 || ((item >= 65 && item <= 90))) {
-                if (seriesNumnberList.length == 0) {
-                    seriesNumnberList.push(item);
-                }
+                if (seriesNumnberList.length == 0) seriesNumnberList.push(item);
+
                 else {
-                    if (seriesNumnberList[seriesNumnberList.length - 1] + 1 == item) {
-                        seriesNumnberList.push(item);
-                        seriesNumnberCount += 1;
-                    } else {
-                        IsNotSeriesNumnber = true;
+
+                    if (operatorCode == "+") {
+                        if (seriesNumnberList[seriesNumnberList.length - 1] + 1 == item) {
+                            seriesNumnberList.push(item);
+                            seriesNumnberCount += 1;
+                        } else IsNotSeriesNumnber = true;
+                    }
+
+                    else if (operatorCode == "-") {
+                        if (seriesNumnberList[seriesNumnberList.length - 1] - 1 == item) {
+                            seriesNumnberList.push(item);
+                            seriesNumnberCount += 1;
+                        } else IsNotSeriesNumnber = true;
+                    }
+
+                    else if (operatorCode == "Same") {
+                        if (seriesNumnberList[seriesNumnberList.length - 1] == item) {
+                            seriesNumnberList.push(item);
+                            seriesNumnberCount += 1;
+                        } else IsNotSeriesNumnber = true;
                     }
                 }
 
             } else IsNotSeriesNumnber = true;
 
 
-            if (seriesNumnberCount == 4) {
+            if (seriesNumnberCount == 3) {
                 result = true;
                 return;
             }
-
             if (IsNotSeriesNumnber) {
                 seriesNumnberCount = 0;
                 seriesNumnberList = [];
+                seriesNumnberList.push(item);
+
             }
 
         });
 
         return result;
     }
+
+    
 
     ChangePassword() {
         var params = {

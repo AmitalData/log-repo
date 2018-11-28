@@ -479,7 +479,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
 
                     double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
-                    double? lineInvoiceAmount_Computed = MethodHelper.Round(item.LocalCurrencyAmount / entityPM.InvoiceCurrencyExchangeRate, 2);
+                    double? exchangeRate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
+                    double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
                     if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
                     {
                         if (lineInvoiceAmount != lineForiegnAmount)
@@ -660,6 +661,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                 #region Local Amount
                 double? localAmount = MethodHelper.Round(entityPM.AmountInLocalCurrency, 2);
+             //   double? rate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
                 double? localAmount_Computed = MethodHelper.Round(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate, 2);
                 if (localAmount != localAmount_Computed)
                 {
@@ -820,7 +822,15 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             {
                                 if (entityPM.InvoiceDate < lastChronologicalDate)
                                 {
-                                    string dateString = lastChronologicalDate.Value.ToString("d", CultureInfo.CurrentCulture);
+                                    ICommonDataContext context = CommonDataContext.GetContext(entityPM.Tenant);
+                                    Tenant currentTenant = context.Tenants.Where(t => t.Id == entityPM.Tenant).FirstOrDefault();
+                                    string datetimeformat = @"dd\/MM\/yyyy";
+                                    if (!string.IsNullOrEmpty(currentTenant.DateTimeFormat))
+                                    {
+                                        datetimeformat = currentTenant.DateTimeFormat;
+                                    }
+
+                                    string dateString = lastChronologicalDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
 
                                     string msg = TranslateTextsClass.Translate("ARInvoice.M.ChronologicalDate", entityPM.Tenant) + " " + dateString;
                                     throw new ApplicationException(msg);
@@ -852,7 +862,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         if (glAccount.CurrencyId != invoiceCurrencyId)
                         {
-                            string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceCurrencyGLAccount" + " " + glAccount.CurrencyCode, tenant);
+                            string msg = TranslateTextsClass.Translate("ARInvoice.M.InvoiceCurrencyGLAccount", tenant) + " " + glAccount.CurrencyCode;
                             errors += msg + ";";
                             //throw new ApplicationException(msg);
                         }

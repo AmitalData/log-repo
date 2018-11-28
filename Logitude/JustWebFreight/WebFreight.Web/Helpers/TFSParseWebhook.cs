@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Counters;
+using Logitude.TimeManagement.BL.EntityPMs;
+using Logitude.TimeManagement.BL.EntityUpdateServices;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
@@ -65,7 +67,7 @@ namespace WebFreight.Web.Helpers
             string accountUri = "https://logitudeteam.visualstudio.com";
             var personalAccessToken = "qcxofyaix25ph4bxun4n2pzmicxhp3d3t2w6bgissmpgsjwn4egq";
             int workItemId = wi;
-           
+
             // new VssOAuthAccessTokenCredential(personalAccessToken)
             VssConnection connection = new VssConnection(new Uri(accountUri), new VssBasicCredential("logitudo@live.com", personalAccessToken));
             // Get an instance of the work item tracking client
@@ -87,7 +89,7 @@ namespace WebFreight.Web.Helpers
                 }
                 if (projectNo == null)
                 {
-                   
+
                     var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
                     if (relation != null)
                     {
@@ -184,7 +186,7 @@ namespace WebFreight.Web.Helpers
             var projectId = tmProjectRepository.GetTMProjectByNumber(Details.ProjectNumber, Tenant);
             if (assignedToUser != null && updatedByUser != null)
             {
-                if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null)
+                if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && (Details.TaskState == "In Progress" || Details.TaskState == "Committed"))
                 {
                     var newItem = new TMEmployeeTime();
                     newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
@@ -201,6 +203,11 @@ namespace WebFreight.Web.Helpers
                     newItem.UpdatedByUserId = updatedByUser.Id;
                     newItem.CreatedByUserId = updatedByUser.Id;
                     newItem.AnalyzeQueueId = this.AnalyzeQueueId;
+                    newItem.NeedsProrating = true;
+                    var sprint = computingPartnerHelper.GetLogitudeCodeTranslation(Details.IterationPath, "G-TFS", "Sprint");
+                    SprintRepository sprintRepository = new SprintRepository(Tenant);
+                    var sprintPOCO = sprintRepository.GetSprintByName(sprint, Tenant);
+                    newItem.SprintId = sprintPOCO != null ? sprintPOCO.Id : null;
                     tmEmployeeTimeRepository.Add(newItem);
                     tmEmployeeTimeRepository.SubmitChanges();
                 }

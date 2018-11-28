@@ -134,7 +134,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     onSearchTextChangeEvent(searchtext) {
         console.log("Search");
-        if (this.searchFields != searchtext) {
+        if ((this.searchFields != searchtext) && !(searchtext == null && this.searchFields == "")) {
             this.searchFields = searchtext;
             if (this.timerToken) {
                 clearTimeout(this.timerToken);
@@ -485,10 +485,17 @@ export class ListComponent implements OnInit, AfterViewInit {
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
             var TommorowDate = DateTool.AddDays((new Date()), 1);
             TommorowDate.setUTCHours(0, 0, 0, 0);
+            //TommorowDate.setHours(0, 0, 0, 0);
             var TodayDate = new Date();
             TodayDate.setUTCHours(0, 0, 0, 0);
+            var TodayCustomDate = new Date();
+            TodayCustomDate.setHours(0, 0, 0, 0);
+            var TodayEndDate = new Date();
+            TodayEndDate.setHours(23, 59, 59, 0); 
+            //TodayDate.setHours(0, 0, 0, 0);
             var YesterdayDate = DateTool.AddDays((new Date()), -1);
             YesterdayDate.setUTCHours(0, 0, 0, 0);
+            //YesterdayDate.setHours(0, 0, 0, 0);
             var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
             LastSevenDaysDate.setUTCHours(0, 0, 0, 0);
             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
@@ -503,8 +510,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             LastYearToDate.setUTCHours(0, 0, 0, 0);
 
             if (filters.TextValue == "Today") {
-                filters.TextValue = TodayDate;
-                filters.TextValue1 = TommorowDate;
+                filters.TextValue = TodayCustomDate;
+                filters.TextValue1 = TodayEndDate;
                 filters.MyName = "Today";
             }
             else if (filters.TextValue == "Yesterday") {
@@ -2394,9 +2401,17 @@ export class ListComponent implements OnInit, AfterViewInit {
                   }
 
                 case "TaxDeductionReport":
+               
                     {
 
                         logWindow.Width = 400;
+                        logWindow.Height = 240;
+                        break;
+                    }
+                case "OpenFormatReport":
+                    {
+
+                        logWindow.Width = 500;
                         logWindow.Height = 240;
                         break;
                     }
@@ -2470,10 +2485,20 @@ export class ListComponent implements OnInit, AfterViewInit {
             logWindow.Height = 570;
 
 
-            var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
-            var ChangedText = GeneralText.split('%')[0];
-            var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
-            var FinalText = NewText + " " + ChangedText;
+            //var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+            //var ChangedText = GeneralText.split('%')[0];
+            //var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
+            //var FinalText = NewText + " " + ChangedText;
+            var FinalText = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
+            var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+            if (useLocal == true) {
+                var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+                var ChangedText = GeneralText.split('%')[0];
+                var NewText = TextCodeTranslator.TranslateTable(this.ObjectTableName);
+                FinalText = NewText + " " + ChangedText;
+                
+            }
+           
 
             var windowTitle = FinalText; //TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate(this.ObjectTableName));
             logWindow.WindowArgs = args;

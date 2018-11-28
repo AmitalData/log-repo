@@ -1,0 +1,235 @@
+<table *ngIf="IsResourcesReady">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:100%;vertical-align:top">
+        <td>
+            <table>
+                <tr style="height:20px">
+                    <td>
+                        <table>
+                            <tr>
+                                <td><span style="color:gray;font-size:11px;vertical-align:top;width:300px">In this screen you choose which partners can be viewed by the customer.</span></td>
+                                <td><span><SearchTextBox style="float: right;margin-top:0px;margin-right:0px;width:200px" [PlaceHolder]="'Search'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox></span></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr style="height:15px">
+                    <td></td>
+                </tr>
+
+                <tr style="height:100%">
+                    <td class="CellStretch">
+                        <div style="border:1px solid lightGray;height:100%">
+                            <table>
+                                <tr style="height:5px;"><td></td></tr>
+                                <tr style="height:100%">
+
+                                    <td style="margin-left:5px;margin-right:5px;">
+
+                                        <table>
+                                            <!-- Partners -->
+                                            <tr style="height:60%">
+                                                <td style="width:5px;"></td>
+
+                                                <td>
+                                                    <div class="SimpleGridView">
+                                                        <div class="SimpleGridViewHeader">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 100%; min-width: 100%;text-align:center">Partner Type</td>
+                                                                    <td style="width: 100px; min-width: 100px;text-align:center">Suggested</td>
+                                                                    <td style="width:70px; min-width:70px;text-align:center ">Choose</td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+
+                                                        <div class="SimpleGridViewBody">
+                                                            <table>
+                                                                <tr style="height: 1px;">
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of PartnersList">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr style="height:25px;">
+                                                                                            <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;">
+                                                                                                <div style="text-align:left">{{item.PartnerName}}</div>
+                                                                                            </td>
+
+                                                                                            <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+                                                                                                <table>
+                                                                                                    <tr>
+                                                                                                        <td style="width:45px;"><div></div></td>
+
+                                                                                                        <td>
+                                                                                                            <CheckBox [IsEnabled]="false" [IsChecked]="item.SuggestedIsChecked" (Checked)="item.SuggestedIsChecked = $event"></CheckBox>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>                                                                                                
+                                                                                            </td>
+
+                                                                                            <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
+                                                                                                <table>
+                                                                                                    <tr>
+                                                                                                        <td style="width:30px;"><div></div></td>
+
+                                                                                                        <td>
+                                                                                                            <CheckBox [IsEnabled]="item.IsEnabled" [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>                                                                                                
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr><td colspan="10"></td></tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width:5px;"></td>
+                                            </tr>
+
+                                            <tr style="height:10px;">
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Carriers -->
+                                            <tr style="height:80px;">
+                                                <td style="width:5px;"></td>
+
+                                                <td>
+                                                    <div class="SimpleGridView">
+                                                        <div class="SimpleGridViewHeader">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 100%; min-width: 100%;text-align:center">Shipment Carriers</td>
+                                                                    <td style="width: 100px; min-width: 100px;text-align:center">Suggested</td>
+                                                                    <td style="width:70px; min-width:70px;text-align:center ">Choose</td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+
+                                                        <div class="SimpleGridViewBody SimpleGridViewBody2">
+                                                            <table>
+                                                                <tr style="height: 1px;">
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of CarriersList">
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr style="height:25px;">
+                                                                                            <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;">
+                                                                                                <div style="text-align:left">{{item.PartnerName}}</div>
+                                                                                            </td>
+
+                                                                                            <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+                                                                                                <table>
+                                                                                                    <tr>
+                                                                                                        <td style="width:45px;"><div></div></td>
+
+                                                                                                        <td>
+                                                                                                            <CheckBox [IsEnabled]="false" [IsChecked]="item.SuggestedIsChecked" (Checked)="item.SuggestedIsChecked = $event"></CheckBox>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>                                                                                                
+                                                                                            </td>
+
+                                                                                            <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
+                                                                                                <table>
+                                                                                                    <tr>
+                                                                                                        <td style="width:30px;"><div></div></td>
+
+                                                                                                        <td>
+                                                                                                            <CheckBox [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>                                                                                                
+                                                                                            </td>
+                                                                                        </tr>
+
+                                                                                        <tr><td colspan="10"></td></tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width:5px;"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><div></div></td>
+                                            </tr>
+
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                                <tr style="height:5px;"><td></td></tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -83,6 +83,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private ShipmentReceivableRepository shipmentReceivableRepository;
         private ShipmentPayableRepository shipmentPayableRepository;
         private ShipmentPackageItemRepository shipmentPackageItemRepository;
+        private ShipmentPackageHarmonizeRepository shipmentPackageHarmonizeRepository;
+        private PickUpDeliveryPackageHarmonizeRepository pickUpDeliveryPackageHarmonizeRepository;
         private ShipmentCarrierStatusRepository shipmentCarrierStatusRepository;
         private AWBOCIRepository aWBOCIRepository;
         private ShipmentCommodityRepository shipmentCommodityRepository;
@@ -124,6 +126,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             this.shipmentReceivableRepository = new ShipmentReceivableRepository(objectContext);
             this.shipmentPayableRepository = new ShipmentPayableRepository(objectContext);
             this.shipmentPackageItemRepository = new ShipmentPackageItemRepository(objectContext);
+            this.shipmentPackageHarmonizeRepository = new ShipmentPackageHarmonizeRepository(objectContext);
+            this.pickUpDeliveryPackageHarmonizeRepository = new PickUpDeliveryPackageHarmonizeRepository(objectContext);
             this.shipmentCarrierStatusRepository = new ShipmentCarrierStatusRepository(objectContext);
             this.followUpRepository = new FollowUpRepository(tenant);
             this.cardRepository = new CardRepository(myCommonContext);
@@ -319,11 +323,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         itemPM.InsideShipmentPackagesChangeSet = itemPM.InsideShipmentPackages;
                         itemPM.ShipmentPackageItemsChangeSet = itemPM.ShipmentPackageItems;
+                        itemPM.ShipmentPackageHarmonizesChangeSet = itemPM.ShipmentPackageHarmonizes;
                     }
 
                     foreach (var itemPM in this.entityPM.ShipmentPickUps)
                     {
                         itemPM.ShipmentPickUpPackagesChangeSet = itemPM.ShipmentPickUpDeliveryPackages;
+
+                        foreach (var item in itemPM.ShipmentPickUpDeliveryPackages)
+                        {
+                            item.PickUpDeliveryPackageHarmonizesChangeSet = item.PickUpDeliveryPackageHarmonizes;
+                        }
                     }
 
                     foreach (var itemPM in this.entityPM.ShipmentDeliveries)
@@ -1030,7 +1040,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, null, entityPM.CustomerId);
                         }
                     }
-                    if (loggedTenant.IsDocumentsArchive && ((entityPM.StatusName.ToLower() == "in progress" && string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber)) || entityPM.SendUpdatesToAgentEnabled))
+                    if (loggedTenant.IsDocumentsArchive && !entityPM.DontAddToForwarderQueue && ((entityPM.StatusName.ToLower() == "in progress" && string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber)) || entityPM.SendUpdatesToAgentEnabled))
                     {
                         IQueueService queueservice = new DbQueueService();
                         queueservice.InitializeQueue("ForwarderShipmentQueue", 0);
@@ -2329,7 +2339,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 entityPM.ShipmentPayableStatusCode = "NOPA";
 
                 entityPM.INTTRASIStatusCode = "NSEN";
-                entityPM.INTTRASIStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
                 if (entityPM.ProfitExchangeRate == null)
                 {
@@ -2437,6 +2446,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 shipmentAdditionalCloudData.Tenant = entityPM.Tenant;
                 shipmentAdditionalCloudData.IsImporterApprovalRequried = entityPM.IsImporterApprovalRequired;
                 shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
+                shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
+                if (!string.IsNullOrEmpty(entityPM.DeclarationWCOXml))
+                {
+                    shipmentAdditionalCloudData.DeclarationXmlData = null;
+                }
                 shipmentAdditionalCloudData.VersionApproved = entityPM.VersionApproved;
                 shipmentAdditionalCloudData.ApproveDateTime = entityPM.ApproveDateTime;
                 if (entityPM.UpdateSendUpdatesToAgentEnabledField)
@@ -2512,6 +2526,46 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     this.InitializeHouseField();
                 }
 
+                entityPM.BasicFreightId = entityPM.FreightPrepaidCollectId;
+                entityPM.DestinationPortChargesId = entityPM.OtherPrepaidCollectId;
+                entityPM.DestinationHaulageChargesId = entityPM.OtherPrepaidCollectId;
+                entityPM.AdditionalChargesId = entityPM.OtherPrepaidCollectId;
+
+                if (entityPM.FreightPrepaidCollectId == "P")
+                {
+                    if (entityPM.ShipperId != null)
+                    {
+                        entityPM.FreightPayerId = entityPM.ShipperId;
+                        entityPM.FreightPayerAddressId = entityPM.ShipperAddressId;
+
+                        if (entityPM.FreightPayerAddressId == null)
+                        {
+                            Address address = myAddressRepository.GetSingleAddressByCardIdAndTypeId(entityPM.ShipperId, "M", entityPM.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.FreightPayerAddressId = address.Id;
+                            }
+                        }
+                    }
+                }
+
+                else if (entityPM.FreightPrepaidCollectId == "C")
+                {
+                    if (entityPM.AgentId != null)
+                    {
+                        entityPM.FreightPayerId = entityPM.AgentId;
+                        entityPM.FreightPayerAddressId = entityPM.AgentAddressId;
+
+                        if (entityPM.FreightPayerAddressId == null)
+                        {
+                            Address address = myAddressRepository.GetSingleAddressByCardIdAndTypeId(entityPM.AgentId, "M", entityPM.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.FreightPayerAddressId = address.Id;
+                            }
+                        }
+                    }
+                }
                 #endregion
             }
 
@@ -2662,13 +2716,21 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     {
                         shipmentAdditionalCloudData.ApprovedByUserName = entityPM.ApprovedBy;
                     }
+                   
+                   
                     if (entityPM.DeclarationXMLData != shipmentAdditionalCloudData.DeclarationXmlData && !string.IsNullOrEmpty(entityPM.DeclarationXMLData) && entityPM.CustomsClearanceDate == null)
                     {
-                        shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData;
+                        shipmentAdditionalCloudData.DeclarationXmlData = entityPM.DeclarationXMLData; 
                         shipmentAdditionalCloudData.IsImporterApprovalRequried = true;
                         shipmentAdditionalCloudData.ApprovedByUserName = null;
                         shipmentAdditionalCloudData.ApproveDateTime = null;
                         shipmentAdditionalCloudData.DenyReason = null;
+                    }
+
+                    if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml && !string.IsNullOrEmpty(entityPM.DeclarationWCOXml))
+                    {
+                        shipmentAdditionalCloudData.DeclarationWCOXml = entityPM.DeclarationWCOXml;
+                        shipmentAdditionalCloudData.DeclarationXmlData = null;
                     }
 
 
@@ -2781,77 +2843,85 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 //{
-                    ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
-                    CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
-                    DocumentRepository documentrepository = new DocumentRepository(commonContext);
-                    ObjectTableRepository objecttableRep = new ObjectTableRepository(entityPM.Tenant);
-                    ObjectTable objectTable = null;
+                ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
+                CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
+                DocumentRepository documentrepository = new DocumentRepository(commonContext);
+                ObjectTableRepository objecttableRep = new ObjectTableRepository(entityPM.Tenant);
+                ObjectTable objectTable = null;
 
-                    objectTable = objecttableRep.GetObjectTableByName("Shipment", 0, true);
+                objectTable = objecttableRep.GetObjectTableByName("Shipment", 0, true);
 
-                    List<QueueTask> tasks = new List<QueueTask>();
-                    tasks.Add(new QueueTask()
-                    {
-                        Action = "StatusUpdate",
-                        Parameters = new List<Logitude.Server.Tools.Parameter>() {
+                List<QueueTask> tasks = new List<QueueTask>();
+                tasks.Add(new QueueTask()
+                {
+                    Action = "StatusUpdate",
+                    Parameters = new List<Logitude.Server.Tools.Parameter>() {
                 new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = entityPM.ShipmentNumber},
                 new Logitude.Server.Tools.Parameter { Name = "Code", Value = "VPR"},
-               
+                new Logitude.Server.Tools.Parameter { Name = "Direction", Value = entityPM.DirectionId},
+
                 }
-                    });
-                    var ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
-                    Document document = new Document()
-                    {
-                        CreateDate = DateTime.Now,
-                        Extension = "xml",
-                        FileSize = ByteData.Length,
-                        Tenant = Convert.ToInt32(entityPM.Tenant),
-                        Id = IdCounter.GetNumber("Document", entityPM.Tenant),
-                        HasFile = true,
-                        Folder = "ExternalTasksQueue",
-                    };
-                    documentrepository.Add(document);
-                    documentrepository.SubmitChanges();
-                    var commLog = new CommunicationLog()
-                    {
-                        Id = IdCounter.GetNumber("CommunicationLog", entityPM.Tenant),
-                        LastStatusDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
-                        InOut = "O",
-                        ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
-                        Subject = "Status Update",
-                        Tenant = entityPM.Tenant,
-                        CommunicationLogTypeCode = "Q",
-                        CommunicationStatusTypeCode = "W",
-                        CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
-                        DocumentId = document.Id,
-                        CreateDateUTC = DateTime.UtcNow,
-                        LastStatusDateUTC = DateTime.UtcNow,
-                        QueueName = "externaltasksqueue" + entityPM.Tenant + 1,
-                        Priority = 1,
+                });
 
-                    };
 
-                    communicationLogRepository.Add(commLog);
-                    communicationLogRepository.SubmitChanges();
-                    string filename = document.Id + "." + document.Extension;
-                    string filePath = "tenant" + commLog.Tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
-                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                    BlobFileInfo fileInfo = new BlobFileInfo()
-                    {
-                        FileName = document.Id,
-                        FolderName = document.Folder,
-                        Extension = document.Extension,
-                        Tenant = entityPM.Tenant,
-                        FileSize = ByteData.Length,
 
-                    };
 
-                    storageservice.Write(ByteData, fileInfo);
-                     
+                var ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
+                Document document = new Document()
+                {
+                    CreateDate = DateTime.Now,
+                    Extension = "xml",
+                    FileSize = ByteData.Length,
+                    Tenant = Convert.ToInt32(entityPM.Tenant),
+                    Id = IdCounter.GetNumber("Document", entityPM.Tenant),
+                    HasFile = true,
+                    Folder = "ExternalTasksQueue",
+                };
+                documentrepository.Add(document);
+                documentrepository.SubmitChanges();
+                var commLog = new CommunicationLog()
+                {
+                    Id = IdCounter.GetNumber("CommunicationLog", entityPM.Tenant),
+                    LastStatusDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
+                    InOut = "O",
+                    ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
+                    Subject = "Status Update",
+                    Tenant = entityPM.Tenant,
+                    CommunicationLogTypeCode = "Q",
+                    CommunicationStatusTypeCode = "W",
+                    CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
+                    DocumentId = document.Id,
+                    CreateDateUTC = DateTime.UtcNow,
+                    LastStatusDateUTC = DateTime.UtcNow,
+                    QueueName = "externaltasksqueue" + entityPM.Tenant + 1,
+                    Priority = 1,
+
+                };
+
+                communicationLogRepository.Add(commLog);
+                communicationLogRepository.SubmitChanges();
+                string filename = document.Id + "." + document.Extension;
+                string filePath = "tenant" + commLog.Tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = entityPM.Tenant,
+                    FileSize = ByteData.Length,
+
+                };
+
+                storageservice.Write(ByteData, fileInfo);
+                Communications.SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, commLog.Tenant);
+
                 //    scope.Complete();
                 //}
             }
         }
+
+      
         private void InitializeFCL_LCL()
         {
             var isFCL = false;
@@ -4510,6 +4580,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
+            if (itemPM.ShipmentPackageHarmonizes != null)
+            {
+                foreach (ShipmentPackageHarmonizePM itemHarmonizePM in itemPM.ShipmentPackageHarmonizes)
+                {
+                    this.CreateShipmentPackageHarmonize(itemHarmonizePM, itemPM.Id);
+                }
+            }
+
             calculateProfit = true;
             calculatePayables = true;
             calculateReceivables = true;
@@ -4616,6 +4694,35 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
+            if (itemPM.ShipmentPackageHarmonizesChangeSet != null)
+            {
+                foreach (ShipmentPackageHarmonizePM itemHarmonizePM in itemPM.ShipmentPackageHarmonizesChangeSet)
+                {
+                    switch (itemHarmonizePM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateShipmentPackageHarmonize(itemHarmonizePM, itemPM.Id);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateShipmentPackageHarmonize(itemHarmonizePM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteShipmentPackageHarmonize(itemHarmonizePM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+
             calculateProfit = true;
             calculatePayables = true;
             calculateReceivables = true;
@@ -4629,18 +4736,27 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 List<InsideShipmentPackage> list = insideShipmentPackageRepository.GetInsidePackagesByShipmentPackageId(itemPoco.Id, itemPoco.Tenant).ToList();
                 if (list != null)
                 {
-                    foreach (InsideShipmentPackage insideItemPoco in list)
+                    foreach (InsideShipmentPackage item in list)
                     {
-                        insideShipmentPackageRepository.Remove(insideItemPoco);
+                        insideShipmentPackageRepository.Remove(item);
                     }
                 }
 
-                List<ShipmentPackageItem> itemsList = shipmentPackageItemRepository.GetShipmentPackageItemsbyPackageId(itemPoco.Id, itemPoco.Tenant).ToList();
-                if (itemsList != null)
+                List<ShipmentPackageItem> list2 = shipmentPackageItemRepository.GetShipmentPackageItemsbyPackageId(itemPoco.Id, itemPoco.Tenant).ToList();
+                if (list2 != null)
                 {
-                    foreach (ShipmentPackageItem packageItemPoco in itemsList)
+                    foreach (ShipmentPackageItem item in list2)
                     {
-                        shipmentPackageItemRepository.Remove(packageItemPoco);
+                        shipmentPackageItemRepository.Remove(item);
+                    }
+                }
+
+                List<ShipmentPackageHarmonize> list3 = shipmentPackageHarmonizeRepository.GetShipmentPackageHarmonizesByShipmentPackageId(itemPoco.Id, itemPoco.Tenant).ToList();
+                if (list3 != null)
+                {
+                    foreach (ShipmentPackageHarmonize item in list3)
+                    {
+                        shipmentPackageHarmonizeRepository.Remove(item);
                     }
                 }
 
@@ -4732,6 +4848,78 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if (poco != null)
             {
                 shipmentPackageItemRepository.Remove(poco);
+            }
+        }
+
+        private void CreateShipmentPackageHarmonize(ShipmentPackageHarmonizePM itemPM, string shipmentPackageId)
+        {
+            itemPM.Id = IdCounter.GetNumber("ShipmentPackageHarmonize", tenant).ToString();
+            itemPM.PackageId = shipmentPackageId;
+            itemPM.Tenant = tenant;
+
+            ShipmentPackageHarmonize itemPoco = new ShipmentPackageHarmonize()
+            {
+                Id = itemPM.Id,
+                Tenant = itemPM.Tenant,
+                PackageId = itemPM.PackageId,
+                Harmonize = itemPM.Harmonize,
+            };
+
+            shipmentPackageHarmonizeRepository.Add(itemPoco);
+        }
+        private void UpdateShipmentPackageHarmonize(ShipmentPackageHarmonizePM itemPM)
+        {
+            ShipmentPackageHarmonize itemPoco = shipmentPackageHarmonizeRepository.GetSingleShipmentPackageHarmonize(itemPM.Id, tenant);
+
+            if (itemPoco != null)
+            {
+                itemPoco.Harmonize = itemPM.Harmonize;
+                shipmentPackageHarmonizeRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteShipmentPackageHarmonize(ShipmentPackageHarmonizePM itemPM)
+        {
+            ShipmentPackageHarmonize itemPoco = shipmentPackageHarmonizeRepository.GetSingleShipmentPackageHarmonize(itemPM.Id, tenant);
+
+            if (itemPoco != null)
+            {
+                shipmentPackageHarmonizeRepository.Remove(itemPoco);
+            }
+        }
+
+        private void CreatePickUpDeliveryPackageHarmonize(PickUpDeliveryPackageHarmonizePM itemPM, string shipmentPackageId)
+        {
+            itemPM.Id = IdCounter.GetNumber("PickUpDeliveryPackageHarmonize", tenant).ToString();
+            itemPM.PackageId = shipmentPackageId;
+            itemPM.Tenant = tenant;
+
+            PickUpDeliveryPackageHarmonize itemPoco = new PickUpDeliveryPackageHarmonize()
+            {
+                Id = itemPM.Id,
+                Tenant = itemPM.Tenant,
+                PackageId = itemPM.PackageId,
+                Harmonize = itemPM.Harmonize,
+            };
+
+            pickUpDeliveryPackageHarmonizeRepository.Add(itemPoco);
+        }
+        private void UpdatePickUpDeliveryPackageHarmonize(PickUpDeliveryPackageHarmonizePM itemPM)
+        {
+            PickUpDeliveryPackageHarmonize itemPoco = pickUpDeliveryPackageHarmonizeRepository.GetSinglePickUpDeliveryPackageHarmonize(itemPM.Id, tenant);
+
+            if (itemPoco != null)
+            {
+                itemPoco.Harmonize = itemPM.Harmonize;
+                pickUpDeliveryPackageHarmonizeRepository.Update(itemPoco);
+            }
+        }
+        private void DeletePickUpDeliveryPackageHarmonize(PickUpDeliveryPackageHarmonizePM itemPM)
+        {
+            PickUpDeliveryPackageHarmonize itemPoco = pickUpDeliveryPackageHarmonizeRepository.GetSinglePickUpDeliveryPackageHarmonize(itemPM.Id, tenant);
+
+            if (itemPoco != null)
+            {
+                pickUpDeliveryPackageHarmonizeRepository.Remove(itemPoco);
             }
         }
 
@@ -5219,12 +5407,49 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             ShipmentMapping.MapPickUpDeliveryPackage(insideItemPM, insideItemPoco, true);
             shipmentPickUpDeliveryPackageRepository.Add(insideItemPoco);
+
+            if (insideItemPM.PickUpDeliveryPackageHarmonizes != null)
+            {
+                foreach (PickUpDeliveryPackageHarmonizePM itemHarmonizePM in insideItemPM.PickUpDeliveryPackageHarmonizes)
+                {
+                    this.CreatePickUpDeliveryPackageHarmonize(itemHarmonizePM, insideItemPM.Id);
+                }
+            }
         }
         private void UpdateShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM insideItemPM)
         {
             ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(insideItemPM.Id);
             ShipmentMapping.MapPickUpDeliveryPackage(insideItemPM, insideItemPoco, false);
             shipmentPickUpDeliveryPackageRepository.Update(insideItemPoco);
+
+            if (insideItemPM.PickUpDeliveryPackageHarmonizesChangeSet != null)
+            {
+                foreach (PickUpDeliveryPackageHarmonizePM itemHarmonizePM in insideItemPM.PickUpDeliveryPackageHarmonizesChangeSet)
+                {
+                    switch (itemHarmonizePM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreatePickUpDeliveryPackageHarmonize(itemHarmonizePM, insideItemPM.Id);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdatePickUpDeliveryPackageHarmonize(itemHarmonizePM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeletePickUpDeliveryPackageHarmonize(itemHarmonizePM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
         }
         private void DeleteShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM insideItemPM)
         {
@@ -6098,7 +6323,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
             }
 
-            else if (!string.IsNullOrEmpty(this.entityPM.WarehouseLegWarehouseId))
+            else if (this.entityPM.DirectionId == "I" && !string.IsNullOrEmpty(this.entityPM.WarehouseLegWarehouseId))
             {
                 Card warehouse = cardRepository.GetSingleCard(this.entityPM.WarehouseLegWarehouseId, tenant);
                 if (warehouse != null)

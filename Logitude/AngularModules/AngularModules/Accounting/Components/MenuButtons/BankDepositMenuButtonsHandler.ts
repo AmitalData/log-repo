@@ -76,6 +76,8 @@ export class BankDepositMenuButtonsHandler {
                             {
                                 if (!this.EntityPM.Id)
                                     button.IsDisabled = true;
+                                else if (this.EntityPM.JournalQueueId == null)
+                                    button.IsDisabled = true;
                                 else
                                     button.IsDisabled = false;
 
@@ -97,8 +99,8 @@ export class BankDepositMenuButtonsHandler {
 
         if (!this.EntityPM.CreateDate) {
             // will override in server, its required even on client!!
-            this.EntityPM.CreateDate = new Date(); 
-            this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId; 
+            this.EntityPM.CreateDate = new Date();
+            this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
             this.EntityPM.UpdateDate = new Date();
             this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         }
@@ -106,7 +108,7 @@ export class BankDepositMenuButtonsHandler {
 
 
         switch (menuButton.EventCode) {
-            
+
             case "BankDepositApprove":
                 {
                     this.entityArgs.EditComponent.ValidationErrorsList = [];
@@ -117,6 +119,13 @@ export class BankDepositMenuButtonsHandler {
                         if (this.EntityPM.LocalDepositAmount == 0)
                         {
                             var msg = TextCodeTranslator.Translate("Accounting.General.O.ZeroDeposit");
+                            this.entityArgs.EditComponent.ValidationErrorsList = [];
+                            this.entityArgs.EditComponent.ValidationErrorsList.push(msg);
+                            return;
+                        }
+                        else if (this.EntityPM.LocalDepositAmount < 0)
+                        {
+                            var msg = TextCodeTranslator.Translate("Accounting.O.minusDepositNotAllowed");
                             this.entityArgs.EditComponent.ValidationErrorsList = [];
                             this.entityArgs.EditComponent.ValidationErrorsList.push(msg);
                             return;
@@ -166,7 +175,7 @@ export class BankDepositMenuButtonsHandler {
 
             this.entityArgs.EditComponent.SaveChanges();
         }
-  
+
     }
 
     private StartBusyIndicator(message: string) {

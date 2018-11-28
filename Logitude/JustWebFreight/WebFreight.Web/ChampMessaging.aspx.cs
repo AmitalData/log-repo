@@ -1,16 +1,21 @@
 ﻿using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
+using Newtonsoft.Json;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Xml;
 
 namespace WebFreight.Web
 {
@@ -20,53 +25,109 @@ namespace WebFreight.Web
         {
             try
             {
-                HttpRequest iRequest = this.Request;
-
-                if (iRequest != null)
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    string values = "";
+                    HttpRequest iRequest = this.Request;
 
-                    using (var reader = new StreamReader(Request.InputStream))
+                    if (iRequest != null)
                     {
-                        values = reader.ReadToEnd();
+                        string iString = "";
+
+                        using (var reader = new StreamReader(Request.InputStream))
+                        {
+                            iString = reader.ReadToEnd();
+                        }
+
+                        //string jsonData = HttpUtility.UrlDecode(iString);
+
+                        //XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Envelope\":" + jsonData, "Root");
+
+                        //string xmlString = System.Xml.Linq.XElement.Parse(doc.OuterXml).ToString();
+
+                        if (!string.IsNullOrEmpty(iString))
+                        {
+                            this.SaveMessageToAnalyzeQueue(iString);
+                        }
                     }
+
+                    scope.Complete();
+
+                    Response.Clear();                    
+                    Response.ContentType = "text/xml";
+                    Response.Write("<status>OK</status>");
+
+                    //Response.StatusCode = 200;
+                    //Response.StatusDescription = "Success";
+                    Response.End();
                 }
             }
 
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "ChampMessageInWR : SaveMessageToAnalyzeQueue Method", null);
+                if (ex.Message == "Thread was being aborted.")
+                {
 
-                //if (message != null)
-                //{
-                //    message.Abandon();
-                //}
+                }
 
-                //Thread.Sleep(10000);
+                else
+                {
+
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "ChampMessaging Page", "Page_Load Method", null);
+
+                    Response.Clear();
+                    Response.ContentType = "text/xml";
+                    Response.Write("<status>Fail</status>");
+                    Response.Write("<message>" + ex.Message + "</message>");
+
+                    //Response.StatusCode = 404;
+                    //Response.StatusDescription = ex.Message;
+                    Response.End();
+                }
             }
         }
-
-        private void SaveMessageToAnalyzeQueue(string messageData)
+        protected override void Render(HtmlTextWriter writer)
         {
-            AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
-            byte[] messageBytes = Encoding.ASCII.GetBytes(messageData);
+            base.Render(writer);
+            Response.TrySkipIisCustomErrors = true;
+            //Response.StatusCode = 200;
+        }
 
-            AnalyzeQueue analyzeQueue = new AnalyzeQueue()
+        private void SaveMessageToAnalyzeQueue(string xmlfileText)
+        {
+            AnalyzeQueue analyzeQueue = null;
+
+            using (TransactionScope scope2 = TransactionFactory.GetNewTransaction())
             {
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
-                From = "Champ",
-                Id = IdCounter.GetNumber("AnalyzeQueue", 0),
-                MessageBody = messageBytes,
-                Status = "W",
-                Retries = 0,
-                ConnectedToEntity = false,
-                ConnectedToTenant = false,
-                FileSize = messageData.Length,
-            };
+                AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+                byte[] messageBytes = Encoding.ASCII.GetBytes(xmlfileText);
 
-            analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
-            analyzeQueueReposiory.Add(analyzeQueue);
-            analyzeQueueReposiory.SubmitChanges();
+                analyzeQueue = new AnalyzeQueue()
+                {
+                    CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
+                    From = "Champ",
+                    Id = IdCounter.GetNumber("AnalyzeQueue", 0),
+                    MessageBody = messageBytes,
+                    Status = "W",
+                    Retries = 0,
+                    ConnectedToEntity = false,
+                    ConnectedToTenant = false,
+                    FileSize = xmlfileText.Length,
+                };
+
+                analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
+                analyzeQueueReposiory.Add(analyzeQueue);
+                analyzeQueueReposiory.SubmitChanges();
+
+                scope2.Complete();
+            }
+
+            if (analyzeQueue != null)
+            {
+                DbQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ChampAnalyzer", 0);
+                queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
+                queueservice.Complete();
+            }
         }
     }
 }

@@ -162,7 +162,10 @@
         opacity: 0.5;
         pointer-events: none;
     }
-
+    .DisabledItem {
+        opacity: 0.5;
+        pointer-events: none;
+    }
     .LogLovInputDiv {
         height: 100%;
         width: 100%;
@@ -451,7 +454,7 @@
                             <table>
                                 <tr>
                                     <td style="position:relative">
-                                        <input [id]="ElementId" 
+                                        <input [id]="ElementId" class="DisabledItem"
                                                [(ngModel)]="SearchTextNgModel"
                                                (keydown)="OnSearchIputKeyDown($event)"
                                                (keyup)="OnSearchInputKeyUP($event)"
@@ -479,7 +482,7 @@
                                         <div></div>
                                     </td>
 
-                                    <td (click)="OnToggleClicked()" style="width: 10px; cursor:pointer">
+                                    <td *ngIf="false" (click)="OnToggleClicked()" style="width: 10px; cursor:pointer">
                                         <img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" src="Images/ToggleIcon.png"/>
                                     </td>
                                       

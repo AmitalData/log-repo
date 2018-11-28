@@ -261,7 +261,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             bool fast_butShowDiffDueRoundISBad = false;
             if (fast_butShowDiffDueRoundISBad)
             {
-                var qReport = qNotinJournalLine.Union(qNotinLedgerTrans).Union(qDiff);
+                var qReport =
+                    //qNotinJournalLine.Union(qNotinLedgerTrans).Union(qDiff);
+                    qNotinJournalLine.Concat(qNotinLedgerTrans).Concat(qDiff);
                 return qReport.ToList();
             }
             else
@@ -269,7 +271,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 var rqNotinJournalLine = qNotinJournalLine.ToList();
                 var rqNotinLedgerTrans = qNotinLedgerTrans.ToList();
                 var rqDiff = qDiff.ToList();
-                return rqNotinJournalLine.Union(rqNotinLedgerTrans).Union(rqDiff).ToList();
+                return //rqNotinJournalLine.Union(rqNotinLedgerTrans).Union(rqDiff).ToList();
+                rqNotinJournalLine.Concat(rqNotinLedgerTrans).Concat(rqDiff).ToList();
             }
         }
 
@@ -324,7 +327,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return this.repository.GetLedgerTransactionSumFromTo(gLAccointId, fromDate, toDate, tenant, currencyId);
         }
 
-
+        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
+        {
+            return this.repository.CalcGLAccountTotalByMonthByDateType(DateTypeCode,fromDate, accoutingDateUntillNotInclude, tenant, listOfAccId);
+        }
 
         public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByAccountingDate(DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
         {

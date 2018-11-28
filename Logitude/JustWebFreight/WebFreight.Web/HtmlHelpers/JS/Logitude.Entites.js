@@ -39,6 +39,7 @@ var LogitudeRoutingClass = function () {
     this.CarrierHasWebSite = false;
     this.Master = "";
     this.MasterVisibility = "visible";
+    this.CarrierVisibility = "visible";
     this.Vissel = "";
     this.VisselVisibility = "collapse";
     this.RoutingImageSRC = "images/Icons/Routing.A.png";
@@ -704,6 +705,14 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
             leg.ToDateTimeVisibility = ($.trim(value.ETA) != "" || $.trim(value.ATA) != "") ? "visible" : "collapse";
             leg.Carrier = $.trim($.trim(value.CarrierCode) + " " + $.trim(value.CarrierName));
             leg.CarrierNumber = $.trim(value.CarrierNumber);
+
+            if (!shipment.IsSharedLogisticsPickDelvCarrierVisible) {
+                leg.CarrierVisibility = "collapse";
+            }
+            else {
+                leg.CarrierVisibility = "visible";   
+            }
+                        
             leg.CarrierWebSite = $.trim(value.CarrierWebSite) == "" ? "" : ($.trim(value.CarrierWebSite).indexOf("http://") == -1 ? "http://" + $.trim(value.CarrierWebSite) : $.trim(value.CarrierWebSite));
             leg.CarrierHasWebSite = $.trim(value.CarrierWebSite) != "";
             leg.RoutingImageSRC = "../HtmlHelpers/images/Icons/Routing.I.png";
@@ -780,6 +789,14 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
     leg.ToDateTimeIsActual = $.trim(shipment.MainCarriageATA) != "";
     leg.Carrier = $.trim($.trim(shipment.MainCarriageCarrierCode) + " " + $.trim(shipment.MainCarriageCarrierName));
     leg.CarrierNumber = $.trim(shipment.MainCarriageCarrierNumber);
+
+    if(!shipment.IsSharedLogisticsMainCarrierVisible) {
+        leg.CarrierVisibility = "collapse";         
+    }
+    else {
+        leg.CarrierVisibility = "visible";
+    }
+        
     leg.CarrierWebSite = $.trim(shipment.MainCarriageCarrierWebSite) == "" ? "" : ($.trim(shipment.MainCarriageCarrierWebSite).indexOf("http://") == -1 ? "http://" + $.trim(shipment.MainCarriageCarrierWebSite) : $.trim(shipment.MainCarriageCarrierWebSite));
     leg.CarrierHasWebSite = $.trim(shipment.MainCarriageCarrierWebSite) != "";
     leg.Master = $.trim(shipment.LongMaster);
@@ -827,6 +844,13 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
         leg.VisselVisibility = $.trim(shipment.TransportModeId) == "O" ? "visible" : "collapse";
         leg.RoutingImageSRC = "../HtmlHelpers/images/Icons/Routing." + shipment.TransportModeId + ".png";
 
+        if (!shipment.IsSharedLogisticsMainCarrierVisible) {
+            leg.CarrierVisibility = "collapse";
+        }
+        else {
+            leg.CarrierVisibility = "visible";
+        }
+
         if ($.trim(leg.FromDate) == "") {
             leg.FromDate = "No Date";
             leg.FromDateColor = "#6E7172";
@@ -867,6 +891,13 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
         leg.VisselVisibility = $.trim(shipment.TransportModeId) == "O" ? "visible" : "collapse";
         leg.RoutingImageSRC = "../HtmlHelpers/images/Icons/Routing." + shipment.TransportModeId + ".png";
 
+        if (!shipment.IsSharedLogisticsMainCarrierVisible) {
+            leg.CarrierVisibility = "collapse";
+        }
+        else {
+            leg.CarrierVisibility = "visible";
+        }
+
         if ($.trim(leg.FromDate) == "") {
             leg.FromDate = "No Date";
             leg.FromDateColor = "#6E7172";
@@ -906,6 +937,13 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
         leg.Vissel = $.trim(shipment.Transshipment3VesselName);
         leg.VisselVisibility = $.trim(shipment.TransportModeId) == "O" ? "visible" : "collapse";
         leg.RoutingImageSRC = "../HtmlHelpers/images/Icons/Routing." + shipment.TransportModeId + ".png";
+
+        if (!shipment.IsSharedLogisticsMainCarrierVisible) {
+            leg.CarrierVisibility = "collapse";
+        }
+        else {
+            leg.CarrierVisibility = "visible";
+        }
 
         if ($.trim(leg.FromDate) == "") {
             leg.FromDate = "No Date";
@@ -997,6 +1035,14 @@ function BuildRoutingLegs(shipment, TenantDateTimeFormat) {
             leg.ToDateTimeVisibility = ($.trim(value.ETA) != "" || $.trim(value.ATA) != "") ? "visible" : "collapse";
             leg.Carrier = $.trim($.trim(value.CarrierCode) + " " + $.trim(value.CarrierName));
             leg.CarrierNumber = $.trim(value.CarrierNumber);
+
+            if (!shipment.IsSharedLogisticsPickDelvCarrierVisible) {
+                leg.CarrierVisibility = "collapse";                  
+            }
+            else {
+                leg.CarrierVisibility = "visible";
+            }
+            
             leg.CarrierWebSite = $.trim(value.CarrierWebSite) == "" ? "" : ($.trim(value.CarrierWebSite).indexOf("http://") == -1 ? "http://" + $.trim(value.CarrierWebSite) : $.trim(value.CarrierWebSite));
             leg.CarrierHasWebSite = $.trim(value.CarrierWebSite) != "";
             leg.RoutingImageSRC = "../HtmlHelpers/images/Icons/Routing.I.png";

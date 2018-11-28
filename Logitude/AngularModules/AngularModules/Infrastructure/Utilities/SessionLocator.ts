@@ -1,4 +1,4 @@
-﻿import {ViewContainerRef} from '@angular/core';
+import {ViewContainerRef} from '@angular/core';
 import {UserPM} from '../../Common/EntityPMs/UserPM';
 import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 import {TenantManagementPM} from '../EntityPMs/TenantManagementPM';
@@ -92,6 +92,7 @@ export class SessionLocator {
     public static StoreLogedComputerId(computerId: string) {
         LocalStorageManager.SetItem("UserLastLoginComputerID", computerId);  
     }
+    public static IsMainSidebarCollapsed: boolean = false;
 
 }
 

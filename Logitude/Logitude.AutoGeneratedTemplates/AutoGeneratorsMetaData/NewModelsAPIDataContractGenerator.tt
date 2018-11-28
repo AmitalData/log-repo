@@ -4,7 +4,7 @@
 <#@ Assembly Name="System.Core.dll" #>
 <#@ Assembly Name="Microsoft.CSharp.dll" #>
 <#@ Assembly Name="System.Linq.dll" #> 
-<#@ Assembly name="$(SolutionDir)General\Dlls\AmazedSaint.Elastic.dll" #>
+<#@ Assembly name="$(SolutionDir)packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll" #>
 <#@ Import Namespace="System.Xml" #>
 <#@ Import Namespace="System.Xml.Linq" #>
 <#@ Import Namespace="System.Linq" #>
@@ -343,8 +343,29 @@ using <#=myspacestring#>
 				foreach (var item in MyEntity)
 				{
 					   <#+}#>
-					var temp = new <#=ObjectTableName#>PM();<#+
+
+					var temp = new <#=ObjectTableName#>PM();
+					<#+
 					var MyErrorField = "";
+					var Keys = new List<string>();
+					var Count = 0;
+					var HasCompositKey = "false";
+					var KeysAsParam = "";
+					   foreach(var field in ((XElement)entity).Elements("DCField"))  //get all classes
+					   {
+					       var IsCompositKey = "false";
+					       var CompositKey = ((XElement)field).Attributes().Where(a => a.Name == "IsCompositKey").FirstOrDefault();
+						   if(CompositKey != null){
+						      IsCompositKey = ((XElement)field).Attributes().Where(a => a.Name == "IsCompositKey").FirstOrDefault().Value;
+						   }
+						   var FieldName = ((XElement)field).Attributes().Where(a => a.Name == "FieldName").FirstOrDefault().Value.Trim('"');
+						   if(IsCompositKey == "true"){
+						        Count = Count + 1;
+								HasCompositKey = "true";
+								if(IsComposition == "true"){KeysAsParam = KeysAsParam + "item." + FieldName + ",";}else{KeysAsParam = KeysAsParam + "MyEntity." + FieldName + ",";}
+						        Keys.Add(FieldName);
+						   }
+					   }
 					   foreach(var field in ((XElement)entity).Elements("DCField"))  //get all classes
 					   {
 						var FieldName = ((XElement)field).Attributes().Where(a => a.Name == "FieldName").FirstOrDefault().Value.Trim('"');
@@ -356,23 +377,35 @@ using <#=myspacestring#>
 						var DCFieldName = ((XElement)field).Attributes().Where(a => a.Name == "DCFieldName").FirstOrDefault().Value.Trim('"');
 						var IsKey = ((XElement)field).Attributes().Where(a => a.Name == "IsKey").FirstOrDefault().Value;
 						var IsSpecialField = ((XElement)field).Attributes().Where(a => a.Name == "IsSpecialField").FirstOrDefault().Value;
+						var IsCompositKey = "false";
+					       var CompositKey = ((XElement)field).Attributes().Where(a => a.Name == "IsCompositKey").FirstOrDefault();
+						   if(CompositKey != null){
+						      IsCompositKey = ((XElement)field).Attributes().Where(a => a.Name == "IsCompositKey").FirstOrDefault().Value;
+						   }
 				
-								  if(FieldName == "Id"){
+						     if(FieldName == "Id" && (Keys == null || Keys.Count == 0)){
 								  MyErrorField = DCFieldName;#>
-								  
+							  
 					if (!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#+if(FieldName.Contains("Code") || DCFieldName.Contains("Code") || IsCloseField == "true"){#>Code<#+}else{#>Id<#+}#>))
 					{
 						temp = query.GetSinglePM(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#+if(FieldName.Contains("Code") || DCFieldName.Contains("Code") || IsCloseField == "true"){#>Code<#+}else{#>Id<#+}#><#+if(IsClosed == "false"){#>, Tenant<#+}#>);
 					} 
 					<#+}
-								  if(IsKey == "true" && IsSpecialField == "false" && FieldName != "Id"){
+								  if(IsKey == "true" && IsSpecialField == "false" && FieldName != "Id" && (Keys == null || Keys.Count == 0)){
 								  MyErrorField = DCFieldName;#>
-
 					if (!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>))
 					{
 						temp = query.GetSinglePM<#+if(IsClosed == "false"){#>By<#=FieldName#><#+}#>(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#><#+if(IsClosed == "false"){#>, Tenant<#+}#>);
 					} <#+}
+					 if(IsCompositKey == "true" && IsSpecialField == "false" &&  Keys != null && Keys.Count > 0 && HasCompositKey == "true"){
+					  MyErrorField = KeysAsParam;#>
 
+					if (!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>))
+					{
+						temp = query.GetSingle(<#=KeysAsParam#>false,false);
+					}
+					<#+}
+					HasCompositKey = "false";
 					if(IsSpecialField == "true"){#>
 
 					if (!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>))
@@ -392,8 +425,23 @@ using <#=myspacestring#>
 					   }#>
 					   
 					if(temp == null)
-					{
+					{<#+
+					     if(Keys.Count == 0)
+						 {
+					#>
+
 					    throw new ApplicationException("<#=ObjectTableName#> with <#=MyErrorField#> " + <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=MyErrorField#> + " doesn't exist");
+						<#+
+						}
+						else
+						{
+						#>
+
+						throw new ApplicationException("<#=ObjectTableName#> with provided keys doesn't exist");
+						<#+
+						}
+						#>
+
 					} <#+
 			     
 								 foreach(var field in ((XElement)entity).Elements("DCField"))  //get all classes

@@ -72,18 +72,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 List<LedgerTransactionPM> LedgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(LedgerTransactionIds, entityPM.Tenant);
                 List<ReconcileExternalPageLinePM> PageLines = pageLineQuery.GetPageLinesPMsByIdList(PageLineIds, entityPM.Tenant);
 
+                BankDepositQueryService bankDepositQueryService = new BankDepositQueryService(entityPM.Tenant);
                 foreach (var transactionPM in LedgerTransactions)
                 {
                     transactionPM.ChangeSetOp = ChangeSetOperation.Update;
                     transactionPM.IsExternalReconcile = true;
-                    if (transactionPM.SourceTypeCode == "3")
+                    if (transactionPM.SourceTypeCode == "6")
                     {
-                        ARPaymentChequePM aRPaymentChequePM = aRPaymentChequeQueryService.GetSingle(transactionPM.SourceId, false, false);
-                        if (aRPaymentChequePM != null)
+                        List<ARPaymentChequePM> aRPaymentChequePMs = bankDepositQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
+
+                        foreach (ARPaymentChequePM item in aRPaymentChequePMs)
                         {
-                            aRPaymentChequePM.StatusCode = "8";
+                            item.StatusCode = "6";
+                            item.ChangeSetOp = ChangeSetOperation.Update;
                             ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                            aRPaymentChequeUpdateService.Update(aRPaymentChequePM, true);
+                            aRPaymentChequeUpdateService.Update(item, true);
                         }
                     }
                     transactionService.Update(transactionPM, false);
@@ -199,7 +202,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (totalDifference != 0)
             {
-                var msg = TranslateTextsClass.Translate("Accounting.General.O.DifferenceMustEqual0", 0);
+                ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
+                bool showLocal = !loggedContact.DontShowLocal;
+
+                var msg = TranslateTextsClass.Translate("Accounting.General.O.DifferenceMustEqual0",0, showLocal);
                 throw new ApplicationException(msg);
             }
 

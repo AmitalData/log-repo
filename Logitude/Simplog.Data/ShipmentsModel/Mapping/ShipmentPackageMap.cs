@@ -34,10 +34,10 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.EmptyContainerReturnId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.EmptyContainerReturnTo).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.EmptyContainerReturnFrom).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.Reference1).HasMaxLength(150).IsUnicode(false);
-            this.Property(t => t.Reference2).HasMaxLength(150).IsUnicode(false);
-            this.Property(t => t.Reference3).HasMaxLength(150).IsUnicode(false);
-            this.Property(t => t.Reference4).HasMaxLength(150).IsUnicode(false);
+            this.Property(t => t.Reference1).HasMaxLength(250).IsUnicode(false);
+            this.Property(t => t.Reference2).HasMaxLength(250).IsUnicode(false);
+            this.Property(t => t.Reference3).HasMaxLength(250).IsUnicode(false);
+            this.Property(t => t.Reference4).HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.CommodityNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.CommodityName).HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.CeficClass).HasMaxLength(25).IsUnicode(false);
@@ -124,6 +124,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.DeliveryTransportModeCode).HasColumnName("DeliveryTransportModeCode");
             this.Property(t => t.ECRTransportModeCode).HasColumnName("ECRTransportModeCode");
             this.Property(t => t.FlashPointTemperatureUnitCode).HasColumnName("FlashPointTemperatureUnitCode");
+            this.Property(t => t.IsMultiHarmonize).HasColumnName("IsMultiHarmonize");
 
             this.HasOptional(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
             this.HasOptional(t => t.PackageType).WithMany().HasForeignKey(d => d.PackageTypeId);

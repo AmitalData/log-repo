@@ -103,6 +103,27 @@ export class ShipmentList {
     Field18: string;
     Field19: string;
     Field20: string;
+    Field21: string;
+    Field22: string;
+    Field23: string;
+    Field24: string;
+    Field25: string;
+    Field26: string;
+    Field27: string;
+    Field28: string;
+    Field29: string;
+    Field30: string;
+    Field31: string;
+    Field32: string;
+    Field33: string;
+    Field34: string;
+    Field35: string;
+    Field36: string;
+    Field37: string;
+    Field38: string;
+    Field39: string;
+    Field40: string;
+
     NewMessage: boolean;
     FollowUpNotes: string;
     IsAnyConversation: boolean;
@@ -385,4 +406,10 @@ export class ShipmentList {
     Notify2Reference: string;
     ShipperNotExporterReference: string;
     ConsigneeNotImporterReference: string;
+    BasicFreightId: string;
+    DestinationPortChargesId: string;
+    DestinationHaulageChargesId: string;
+    AdditionalChargesId: string;
+    FreightPayerId: string;
+    FreightPayerAddressId: string;
 }

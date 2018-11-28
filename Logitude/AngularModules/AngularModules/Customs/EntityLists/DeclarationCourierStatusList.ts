@@ -45,6 +45,7 @@ export class DeclarationCourierStatusList {
 	CourierPendingReasonName: string;
 	PendingRemarks: string;
 	CourierSuspentionReasonName: string;
+	AcceptanceStatusCode: string;
 	
 }
  

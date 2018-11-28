@@ -16,6 +16,7 @@ namespace WebFreight.Web.DataProviders
         public string Name {get; set;}
         public string CompanyName { get; set; }
         public string Currency { get; set; }
+        public string Rate { get; set; }
 
         public string TenantName { get; set; }
         public string Address1 { get; set; }

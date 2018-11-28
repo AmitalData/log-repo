@@ -38,6 +38,8 @@ import {InvoicesRoutingsFilterComponent} from './Components/FiltersComponent/Acc
 import {AgingFilterComponent} from './Components/FiltersComponent/Accounting/AgingFilterComponent';
 import { RevenueExpenseFilterComponent } from './Components/FilterReportComponent/RevenueExpenseFilterComponent';
 import { TrailBalanceFiltersComponent } from './Components/FilterReportComponent/TrailBalanceFiltersComponent';
+import { ShipmentsStocksFiltersComponent } from './Components/FilterReportComponent/ShipmentsStocksFiltersComponent';
+import { DetailedShipmentChargesAnalysisComponent } from './Components/FiltersComponent/Accounting/DetailedShipmentChargesAnalysisComponent';
 
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
@@ -58,6 +60,11 @@ import {LicenseManagementFilterComponent} from './Components/FiltersComponent/Op
 // Time Sheet
 import {EmployeeTimeSheetFilterComponent} from './Components/FilterReportComponent/EmployeeTimeSheetFilterComponent';
 import {WorkDaysPerProjectFilterComponent} from './Components/FilterReportComponent/WorkDaysPerProjectFilterComponent';
+import { TasksOfNoProjectsFilterComponent } from './Components/FilterReportComponent/TasksOfNoProjectsFilterComponent';
+
+//Shipment Details
+import { ShipmentDetailsFilterComponent } from './Components/FilterReportComponent/ShipmentDetailsFilterComponent';
+
 
 export const Components =
     [
@@ -103,12 +110,16 @@ export const Components =
         InvoicesRoutingsFilterComponent,
         EmployeeTimeSheetFilterComponent,
         WorkDaysPerProjectFilterComponent,
+        TasksOfNoProjectsFilterComponent,
         OpenShipmentsByCustomerFilterComponent,
         ParentVsChildTenantsComponent,
         RevenueExpenseFilterComponent,
         TrailBalanceFiltersComponent,
         UsersByTenantReportFilterComponent,
         LicenseManagementFilterComponent,
+        ShipmentsStocksFiltersComponent,
+        ShipmentDetailsFilterComponent,
+        DetailedShipmentChargesAnalysisComponent,
     ];
 
 export class ModuleDeclarations {
@@ -158,13 +169,17 @@ export class ModuleDeclarations {
             case "InventoryReportFilterConmponent": { myResult = InventoryReportFilterConmponent; break; } 
             case "InvoicesRoutingsFilterComponent": { myResult = InvoicesRoutingsFilterComponent; break; }
             case "EmployeeTimeSheetFilterComponent": { myResult = EmployeeTimeSheetFilterComponent; break; }  
-            case "WorkDaysPerProjectFilterComponent": { myResult = WorkDaysPerProjectFilterComponent; break; } 
+            case "WorkDaysPerProjectFilterComponent": { myResult = WorkDaysPerProjectFilterComponent; break; }
+            case "TasksOfNoProjectsFilterComponent": { myResult = TasksOfNoProjectsFilterComponent; break; }
             case "OpenShipmentsByCustomerFilterComponent": { myResult = OpenShipmentsByCustomerFilterComponent; break; } 
             case "ParentVsChildTenantsComponent": { myResult = ParentVsChildTenantsComponent; break; }
             case "RevenueExpenseFilterComponent": { myResult = RevenueExpenseFilterComponent; break; }
             case "TrailBalanceFiltersComponent": { myResult = TrailBalanceFiltersComponent; break; }
             case "UsersByTenantReportFilterComponent": { myResult = UsersByTenantReportFilterComponent; break; }
-            case "LicenseManagementFilterComponent": { myResult = LicenseManagementFilterComponent; break; }   
+            case "LicenseManagementFilterComponent": { myResult = LicenseManagementFilterComponent; break; }  
+            case "ShipmentsStocksFiltersComponent": { myResult = ShipmentsStocksFiltersComponent; break; }  
+            case "ShipmentDetailsFilterComponent": { myResult = ShipmentDetailsFilterComponent; break; }
+            case "DetailedShipmentChargesAnalysisComponent": { myResult = DetailedShipmentChargesAnalysisComponent; break; }                
         }
 
         return myResult;

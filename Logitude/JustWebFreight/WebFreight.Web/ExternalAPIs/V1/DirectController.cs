@@ -5,8 +5,11 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -23,6 +26,9 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
+using WebFreight.Web.Validators;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -47,10 +53,29 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-        
-        public HttpResponseMessage Post(Direct entity)
+
+        public HttpResponseMessage GetSingleDirectByNumber(string number)
         {
-      
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                DirectQueryService Service = new DirectQueryService(tenant);
+                ServiceResponse response = new ServiceResponse();
+                var Result = Service.GetDirectByShipmentNumber(number, tenant);
+                //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
+                return Request.CreateResponse(HttpStatusCode.OK, Result);
+            }
+            catch (Exception ex)
+            {
+                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+        }
+
+        public HttpResponseMessage Post(Direct entity)
+        {      
             if (ModelState.IsValid)
             {
                 try
@@ -71,6 +96,46 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                         DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
                         ShipmentPM entityPM = mappingService.DirectCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
+
+                        if (entity.IsOperationalClosed)
+                        {
+                            string errorMessage = "";
+
+                            RulesValidator validator = new RulesValidator();
+                            validator.Initialize(authToken.Tenant);
+                            List<ObjectTableRuleField> requiredFields = validator.ValidateAllRequiredFieldRules(entityPM, "Shipment", authToken.Tenant);
+
+                            IWebFreightContext webFreightContext = WebFreightContext.GetContext(authToken.Tenant);
+                            ObjectFieldRepository ObjectFieldRepository = new ObjectFieldRepository(webFreightContext);
+                            if (requiredFields.Count > 0)
+                            {
+                                foreach (ObjectTableRuleField field in requiredFields)
+                                {
+                                    ObjectField f = ObjectFieldRepository.GetSingleObjectFieldById(field.ObjectFieldId, authToken.Tenant);
+                                    errorMessage = errorMessage + ", " + TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
+                                }
+                            }
+
+                            if (!string.IsNullOrEmpty(errorMessage))
+                            {
+                                errorMessage = errorMessage.TrimStart(',');
+                                throw new ApplicationException("Due to operational closed: " + errorMessage);
+                            }
+
+                            entityPM.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                        }
+
+                        if(entity.IsAccountingClosed)
+                        {
+                            if(!entity.IsOperationalClosed)
+                            {
+                                throw new ApplicationException("Shipment shoud be closed operationally");
+                            }
+                            else
+                            {
+                                entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                            }
+                        }
 
                         if (!string.IsNullOrEmpty(entityPM.IncotermId))
                         {
@@ -107,9 +172,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 throw new ApplicationException("The Customer Doesn't Exist on the shipment");
                             }
-
                         }
-
+                        
                         if (entityPM.ShipmentPackages.Count > 0)
                         {
                             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)

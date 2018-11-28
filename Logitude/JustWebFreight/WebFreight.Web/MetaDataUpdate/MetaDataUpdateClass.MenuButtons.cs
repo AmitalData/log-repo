@@ -90,12 +90,14 @@ namespace WebFreight.Web.MetaDataUpdate
             FeaturePM ARInvoiceFeature_SaveAndApprove = features.Where(d => d.Code == "SAVEANDAPPROVE" && d.ObjectTableId == ARInvoiceTableId).FirstOrDefault();
             FeaturePM ARInvoiceFeature_Print = features.Where(d => d.Code == "PRINT" && d.ObjectTableId == ARInvoiceTableId).FirstOrDefault();
             FeaturePM ARInvoiceFeature_ReTransfer = features.Where(d => d.Code == "EnableReTransfer" && d.ObjectTableId == ARInvoiceTableId).FirstOrDefault();
+            FeaturePM ARInvoiceFeature_SendQBO = features.Where(d => d.Code == "SendToQBO" && d.ObjectTableId == ARInvoiceTableId).FirstOrDefault();
 
             FeaturePM APInvoiceFeature_CancelApproval = features.Where(d => d.Code == "CANCELAPPROVAL" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
             FeaturePM APInvoiceFeature_Void = features.Where(d => d.Code == "VOID" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
             FeaturePM APInvoiceFeature_Approve = features.Where(d => d.Code == "APPROVE" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
             FeaturePM APInvoiceFeature_ReTransfer = features.Where(d => d.Code == "EnableReTransfer" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
             FeaturePM APInvoiceFeature_Print = features.Where(d => d.Code == "PRINT" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
+            FeaturePM ARInvoiceFeature_CHECKSATStatus = features.Where(d => d.Code == "CHECKSATSTATUS" && d.ObjectTableId == ARInvoiceTableId).FirstOrDefault();
 
             FeaturePM ARPaymentFeature_CancelApproval = features.Where(d => d.Code == "CANCELAPPROVAL" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
             FeaturePM ARPaymentFeature_Void = features.Where(d => d.Code == "VOID" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
@@ -103,6 +105,9 @@ namespace WebFreight.Web.MetaDataUpdate
             FeaturePM ARPaymentFeature_ReTransfer = features.Where(d => d.Code == "EnableReTransfer" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
             FeaturePM ARPaymentFeature_Print = features.Where(d => d.Code == "PRINT" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
             FeaturePM ARPaymentFeature_SendToSAT = features.Where(d => d.Code == "SENDToSAT" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
+            FeaturePM ARPaymentFeature_CHECKSATStatus = features.Where(d => d.Code == "CHECKSATSTATUS" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
+            FeaturePM ARPaymentFeature_SendToQBO = features.Where(d => d.Code == "SendToQBO" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
+
             
 
             FeaturePM APPaymentFeature_CancelApproval = features.Where(d => d.Code == "CANCELAPPROVAL" && d.ObjectTableId == APPaymentTableId).FirstOrDefault();
@@ -1155,6 +1160,25 @@ namespace WebFreight.Web.MetaDataUpdate
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
 
+
+            #region SendToQbo
+            MenuButton InvoiceSendToQBOButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "SendToQBO",
+                Index = 14,
+                IsActive = true,
+                LabelTextCodeCode = "ARInvoice.B.SendToQBO",
+                LabelTextCodeDefaultText = "Send to QBO",
+                LocalDefaultText = "Send to QBO",
+                ObjectTableId = invoiceObject.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = InvoiceMenuButtonGroup.Id,
+                ParentMenuButtonId = InvoiceActionButton.Id,
+                MenuButtonType = "menuitem",
+                FeatureId = ARInvoiceFeature_SendQBO.Id,
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            #endregion
+
             #region Separator
             MenuButton VoidInvoiceOperationsSeparator = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
             {
@@ -1242,6 +1266,21 @@ namespace WebFreight.Web.MetaDataUpdate
                 MenuButtonType = "button",
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
+
+            MenuButton InvoiceCheckSATStatusStatusButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "CheckSATStatus",
+                Index = 13,
+                IsActive = true,
+                LabelTextCodeCode = "ARInvoice.B.CheckSATStatus",
+                LabelTextCodeDefaultText = "Check SAT Status",
+                ObjectTableId = invoiceObject.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = InvoiceMenuButtonGroup.Id,
+                MenuButtonType = "button",
+                FeatureId = ARInvoiceFeature_CHECKSATStatus.Id,
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+
 
             #endregion
 
@@ -1392,6 +1431,9 @@ namespace WebFreight.Web.MetaDataUpdate
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
 
+
+       
+
             #endregion
 
             #region AR Payment
@@ -1529,6 +1571,35 @@ namespace WebFreight.Web.MetaDataUpdate
                 FeatureId = ARPaymentFeature_SendToSAT.Id,
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
 
+            MenuButton ARPaymentCheckSATStatusStatusButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "CheckSATStatus",
+                Index = 9,
+                IsActive = true,
+                LabelTextCodeCode = "ARPayment.B.CheckSATStatus",
+                LabelTextCodeDefaultText = "Check SAT Status",
+                ObjectTableId = theARPaymentObject.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
+                MenuButtonType = "button",
+                FeatureId = ARPaymentFeature_CHECKSATStatus.Id,
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+
+            MenuButton ARPaymentSendToQBOButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "SendToQBO",
+                Index = 10,
+                IsActive = true,
+                LabelTextCodeCode = "ARPayment.B.SendToQBO",
+                LabelTextCodeDefaultText = "Send To QBO",
+                LocalDefaultText = "Send To QBO",
+                ObjectTableId = theARPaymentObject.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = ARPaymentMenuButtonGroup.Id,
+                ParentMenuButtonId = ARPaymentActionButton.Id,
+                MenuButtonType = "menuitem",
+                FeatureId = ARPaymentFeature_SendToQBO.Id,
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
 
             #endregion
 
@@ -1602,7 +1673,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 IsActive = true,
                 LabelTextCodeCode = "APPayment.B.Void",
                 LabelTextCodeDefaultText = "Void",
-                LocalDefaultText = "להתעלם", 
+                LocalDefaultText = "ביטול", 
                 ObjectTableId = theAPPaymentObject.Id,
                 Tenant = tenant,
                 MenuButtonGroupId = APPaymentMenuButtonGroup.Id,
@@ -2045,7 +2116,35 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableId = TenantManagementTableId,
                 FeatureId = TenantManagementFeature_EraseData.Id,
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
-            
+
+            #endregion
+
+            #region AnalyzeQueue
+            ObjectTable AnalyzeQueueObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AnalyzeQueue").FirstOrDefault();
+            FeaturePM AnalyzeQueue_ResendFeature = features.Where(d => d.Code == "RESEND" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault();
+
+            MenuButtonGroup AnalyzeQueue_MenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+            {
+                MenuButtonGroupType = "AnalyzeQueueEdit",
+                Name = "AnalyzeQueueEditButtonsGroup",
+                ObjectTableId = AnalyzeQueueObjectTable.Id,
+                Tenant = tenant,
+            }, MenuButtonGroupRepository, TenantMenuButtonGroups);
+
+            MenuButton AnalyzeQueue_MenuButton_Resend = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "Resend",
+                Index = 0,
+                IsActive = true,
+                LabelTextCodeCode = "AnalyzeQueue.B.Resend",
+                LabelTextCodeDefaultText = "Resend",
+                ObjectTableId = AnalyzeQueueObjectTable.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = AnalyzeQueue_MenuButtonGroup.Id,
+                FeatureId = AnalyzeQueue_ResendFeature.Id,
+                MenuButtonType = "button",
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+
             #endregion
 
             MenuButtonGroupRepository.SubmitChanges();

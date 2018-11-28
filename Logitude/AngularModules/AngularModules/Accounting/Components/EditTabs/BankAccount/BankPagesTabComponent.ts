@@ -76,7 +76,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
                         this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
-            } 
+            }
 
             if (this.LoadCompletedEvent == null) {
                 this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -92,15 +92,15 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
-    
+
     ngOnInit() {
         this.BuildColumns();
         this.ReloadData();
     }
 
     //#region Properties
-   
-    
+
+
     //deferredGLAccount: GLAccountPM;
     //get DeferredGLAccount() { return this.deferredGLAccount; }
     //set DeferredGLAccount(value: GLAccountPM) {
@@ -186,7 +186,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     }
     //#endregion
 
-    //#region Search 
+    //#region Search
     private timerToken: any;
     TextChanged(searchtext) {
         if (!AppTool.IsNullOrEmpty(searchtext)) {
@@ -347,7 +347,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         this.OpenWindow();
     }
     //#endregion
-    
+
     onRowSelected(item) {
         if (!AppTool.IsNullOrEmpty(item)) {
             var entity = item.rowData;
@@ -358,6 +358,8 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     }
 
     OpenWindow(entity: any = null) {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+
         if (entity)
         {
             var entityPM;
@@ -368,13 +370,13 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
         }
         else
         {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
             this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id).subscribe((myResult) =>
             {
-                SessionLocator.CurrentSession.StopBusyIndicator();
                 var draftPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(draftPage))
                 {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+
                     var msg = new MessageWindow();
                     //msg.Title = "Error";
                     msg.Width = 360;
@@ -424,7 +426,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
             }
         });
 
-        
+
     }
 
 }

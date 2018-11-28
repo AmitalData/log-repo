@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .DeleteButton {
         display: none;
     }
@@ -570,12 +570,12 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="MediaFill" style="background:#DEEBEF;vertical-align:top;overflow-x:auto;">
-                                            <table style="min-width:1300px">
+                                        <div class="MediaFill" style="background:#DEEBEF;vertical-align:top;">
+                                            <table>
                                                 <tr>
                                                     <td>
-                                                        <div *ngIf="IsVisible" class="MediaFixedPadding5">
-                                                            <table>
+                                                        <div *ngIf="IsVisible" class="MediaFixedPadding5" style="overflow-x:auto;">
+                                                            <table style="min-width:1300px">
                                                                 <tr style="height:1px;vertical-align:top;">
                                                                     <td>
                                                                         <ul class="PagesMenu">
@@ -754,7 +754,7 @@
                                                                                                 <td style="width:5px;">
                                                                                                     <div></div>
                                                                                                 </td>
-                                                                                                <td *ngIf="SelectedConnectToFilter == 'M' && IsHouseVisible == true" style="width:250px;">
+                                                                                                <td *ngIf="SelectedConnectToFilter == 'M' && IsHouseVisible == true" style="width:210px;">
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:50px;float:left;vertical-align:central">
@@ -820,6 +820,10 @@
                                                                                                 </td>
                                                                                                 <td *ngIf="IsDigitallySignVisible && IsPDF" style="width:120px;float:left;vertical-align:central;" [class.Disable]="IsDigitallySignDisabled">
                                                                                                     <LogCheckBox [Checked]="SelectedAttachment.IsDigitallySign" [Text]="'Digitally Sign'" [NoObjectField]="true" [ObjectFieldName]="'IsDigitallySign'" [HideColumns]="true" [DataContext]="SelectedAttachment.DataContext"></LogCheckBox>
+                                                                                                </td>
+                                      
+                                                                                                <td  *ngIf="IsDSVConnectVisible"  style="width:100px;float:right;vertical-align:central; text-align:center;">
+                                                                                                    <button class="Button" (click)="DSVConnectClicked()">DSV Connect</button>
                                                                                                 </td>
                                                                                                 <td>
                                                                                                     <div></div>
@@ -890,7 +894,7 @@
                                                                 </td>
 
                                                                 <td style="width: 57px;">
-                                                                    <button [disabled]="!IsFilingButtonEnabled" class="RedButton" (click)="FileAndDeleteButtonClicked()">File & Delete</button>
+                                                                    <button [disabled]="!IsFilingButtonEnabled" class="RedButton" (click)="FileAndDeleteButtonClicked(false)">File & Delete</button>
                                                                 </td>
 
                                                                 <td style="width: 5px;">
