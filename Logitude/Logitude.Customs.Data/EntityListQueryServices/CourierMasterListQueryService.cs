@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CourierMasterList> GetIqueryableList(IQueryable<CourierMaster> iQueryable)
         {
-            IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType")
+            IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort")
                                                    select new CourierMasterList()
                                                    {
                                                        // comments made because of cannot convert nclob to char exception ---mohammad
