@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class ContactUpdateClass
@@ -178,9 +181,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search names/ emails/ phone.#",
+					  						DefaultText =  @"Search names/ emails/ phone.#",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: english and local names\n2: email\n3: From or to ports\n4: phone, fax and mobile numbers",
+					  						HelpTextDefaultText =  @"Searching by :\n1: english and local names\n2: email\n3: From or to ports\n4: phone, fax and mobile numbers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -235,9 +238,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
+					  						DefaultText =  @"Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						ListLableDefaultText =  @"Name",
 					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -291,9 +294,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ContactEmailAndNames",
-					  						DefaultText =  "Email and Name",
+					  						DefaultText =  @"Email and Name",
 					  						HelpTextCode =  "ContactEmailAndNames",
-					  						HelpTextDefaultText =  "Searching by:\n1. Contact email\n2. Contact first name\n3. Contact last name\n4. Contact local first name\n5. Contact local last name",
+					  						HelpTextDefaultText =  @"Searching by:\n1. Contact email\n2. Contact first name\n3. Contact last name\n4. Contact local first name\n5. Contact local last name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -348,9 +351,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "EnglishName",
-					  						DefaultText =  "English Name",
+					  						DefaultText =  @"English Name",
 					  						ListFieldLable =  "EnglishNameListLable",
-					  						ListLableDefaultText =  "English Name",
+					  						ListLableDefaultText =  @"English Name",
 					  						HelpTextCode =  "EnglishName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -406,9 +409,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LocalName",
-					  						DefaultText =  "Local Name",
+					  						DefaultText =  @"Local Name",
 					  						ListFieldLable =  "LocalNameListLable",
-					  						ListLableDefaultText =  "Local Name",
+					  						ListLableDefaultText =  @"Local Name",
 					  						HelpTextCode =  "LocalName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -464,7 +467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ComputedLocalName",
-					  						DefaultText =  "Local Name",
+					  						DefaultText =  @"Local Name",
 					  						HelpTextCode =  "ComputedLocalName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -520,9 +523,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Email",
-					  						DefaultText =  "Email",
+					  						DefaultText =  @"Email",
 					  						ListFieldLable =  "EmailListLable",
-					  						ListLableDefaultText =  "Email",
+					  						ListLableDefaultText =  @"Email",
 					  						HelpTextCode =  "Email",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -578,9 +581,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Mobile",
-					  						DefaultText =  "Mobile",
+					  						DefaultText =  @"Mobile",
 					  						ListFieldLable =  "MobileListLable",
-					  						ListLableDefaultText =  "Mobile",
+					  						ListLableDefaultText =  @"Mobile",
 					  						HelpTextCode =  "Mobile",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -636,9 +639,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BusinessPhone",
-					  						DefaultText =  "Business Phone",
+					  						DefaultText =  @"Business Phone",
 					  						ListFieldLable =  "BusinessPhoneListLable",
-					  						ListLableDefaultText =  "Business Phone",
+					  						ListLableDefaultText =  @"Business Phone",
 					  						HelpTextCode =  "BusinessPhone",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -694,9 +697,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Fax",
-					  						DefaultText =  "Fax",
+					  						DefaultText =  @"Fax",
 					  						ListFieldLable =  "FaxListLable",
-					  						ListLableDefaultText =  "Fax",
+					  						ListLableDefaultText =  @"Fax",
 					  						HelpTextCode =  "Fax",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -753,9 +756,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Birthday",
-					  						DefaultText =  "Birthday",
+					  						DefaultText =  @"Birthday",
 					  						ListFieldLable =  "BirthdayListLable",
-					  						ListLableDefaultText =  "Birthday",
+					  						ListLableDefaultText =  @"Birthday",
 					  						HelpTextCode =  "Birthday",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -812,9 +815,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Anniversary",
-					  						DefaultText =  "Anniversary",
+					  						DefaultText =  @"Anniversary",
 					  						ListFieldLable =  "AnniversaryListLable",
-					  						ListLableDefaultText =  "Anniversary",
+					  						ListLableDefaultText =  @"Anniversary",
 					  						HelpTextCode =  "Anniversary",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -870,9 +873,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  "Inactive Contact",
+					  						DefaultText =  @"Inactive Contact",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  "Inactive",
+					  						ListLableDefaultText =  @"Inactive",
 					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -928,7 +931,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CardId",
-					  						DefaultText =  "Card ID",
+					  						DefaultText =  @"Card ID",
 					  						HelpTextCode =  "CardId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -985,9 +988,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  "Notes",
+					  						DefaultText =  @"Notes",
 					  						ListFieldLable =  "NotesListLable",
-					  						ListLableDefaultText =  "Notes",
+					  						ListLableDefaultText =  @"Notes",
 					  						HelpTextCode =  "Notes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1043,9 +1046,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BirthdayReminder",
-					  						DefaultText =  "Birthday Reminder",
+					  						DefaultText =  @"Birthday Reminder",
 					  						ListFieldLable =  "BirthdayReminderListLable",
-					  						ListLableDefaultText =  "Birthday Reminder",
+					  						ListLableDefaultText =  @"Birthday Reminder",
 					  						HelpTextCode =  "BirthdayReminder",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1101,9 +1104,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AnniversaryReminder",
-					  						DefaultText =  "Anniversary Reminder",
+					  						DefaultText =  @"Anniversary Reminder",
 					  						ListFieldLable =  "AnniversaryReminderListLable",
-					  						ListLableDefaultText =  "Anniversary Reminder",
+					  						ListLableDefaultText =  @"Anniversary Reminder",
 					  						HelpTextCode =  "AnniversaryReminder",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1157,7 +1160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpcomingDates",
-					  						DefaultText =  "Upcoming Dates",
+					  						DefaultText =  @"Upcoming Dates",
 					  						HelpTextCode =  "UpcomingDates",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1211,7 +1214,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "HasNoReminders",
-					  						DefaultText =  "Has No Reminders",
+					  						DefaultText =  @"Has No Reminders",
 					  						HelpTextCode =  "HasNoReminders",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1268,7 +1271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DoneDate",
-					  						DefaultText =  "Done Date",
+					  						DefaultText =  @"Done Date",
 					  						HelpTextCode =  "DoneDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1324,7 +1327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BirthDayOfYear",
-					  						DefaultText =  "Birth Day Of Year",
+					  						DefaultText =  @"Birth Day Of Year",
 					  						HelpTextCode =  "BirthDayOfYear",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1381,7 +1384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ContactDoneMethodCode",
-					  						DefaultText =  "Contact Done Method",
+					  						DefaultText =  @"Contact Done Method",
 					  						HelpTextCode =  "ContactDoneMethodCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1437,9 +1440,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAirExport",
-					  						DefaultText =  "Air Export",
+					  						DefaultText =  @"Air Export",
 					  						ListFieldLable =  "IsAirExportListLable",
-					  						ListLableDefaultText =  "Is Air Export",
+					  						ListLableDefaultText =  @"Is Air Export",
 					  						HelpTextCode =  "IsAirExport",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1495,9 +1498,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAirImport",
-					  						DefaultText =  "Air Import",
+					  						DefaultText =  @"Air Import",
 					  						ListFieldLable =  "IsAirImportListLable",
-					  						ListLableDefaultText =  "Is Air Import",
+					  						ListLableDefaultText =  @"Is Air Import",
 					  						HelpTextCode =  "IsAirImport",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1553,9 +1556,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsOceanExport",
-					  						DefaultText =  "Ocean Export",
+					  						DefaultText =  @"Ocean Export",
 					  						ListFieldLable =  "IsOceanExportListLable",
-					  						ListLableDefaultText =  "Is Ocean Export",
+					  						ListLableDefaultText =  @"Is Ocean Export",
 					  						HelpTextCode =  "IsOceanExport",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1611,9 +1614,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsOceanImport",
-					  						DefaultText =  "Ocean Import",
+					  						DefaultText =  @"Ocean Import",
 					  						ListFieldLable =  "IsOceanImportListLable",
-					  						ListLableDefaultText =  "Is Ocean Import",
+					  						ListLableDefaultText =  @"Is Ocean Import",
 					  						HelpTextCode =  "IsOceanImport",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1669,9 +1672,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsCustomsImport",
-					  						DefaultText =  "Customs Import",
+					  						DefaultText =  @"Customs Import",
 					  						ListFieldLable =  "IsCustomsImportListLable",
-					  						ListLableDefaultText =  "Is Customs Import",
+					  						ListLableDefaultText =  @"Is Customs Import",
 					  						HelpTextCode =  "IsCustomsImport",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1727,9 +1730,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsInlandDomestic",
-					  						DefaultText =  "Inland Domestic",
+					  						DefaultText =  @"Inland Domestic",
 					  						ListFieldLable =  "IsInlandDomesticListLable",
-					  						ListLableDefaultText =  "Is Inland Domestic",
+					  						ListLableDefaultText =  @"Is Inland Domestic",
 					  						HelpTextCode =  "IsInlandDomestic",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1785,9 +1788,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAll",
-					  						DefaultText =  "All Product Types",
+					  						DefaultText =  @"All Product Types",
 					  						ListFieldLable =  "IsAllListLable",
-					  						ListLableDefaultText =  "Is All",
+					  						ListLableDefaultText =  @"Is All",
 					  						HelpTextCode =  "IsAll",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1843,9 +1846,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Position",
-					  						DefaultText =  "Position",
+					  						DefaultText =  @"Position",
 					  						ListFieldLable =  "PositionListLable",
-					  						ListLableDefaultText =  "Position",
+					  						ListLableDefaultText =  @"Position",
 					  						HelpTextCode =  "Position",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1859,7 +1862,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FieldsDataType =  "Text",
 					  						Code =  "ContactIdCustomFilter",
 					  						MaxLength =  250,
-					  						IsCustom =  true,
+					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
@@ -1900,9 +1903,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ContactIdCustomFilter",
-					  						DefaultText =  "ContactIdCustomFilter",
+					  						DefaultText =  @"ContactIdCustomFilter",
 					  						ListFieldLable =  "ContactIdCustomFilterListLable",
-					  						ListLableDefaultText =  "ContactIdCustomFilter",
+					  						ListLableDefaultText =  @"ContactIdCustomFilter",
 					  						HelpTextCode =  "ContactIdCustomFilter",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1959,9 +1962,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
+					  						DefaultText =  @"Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  @"Create Date",
 					  						HelpTextCode =  "CreateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2017,7 +2020,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsUser",
-					  						DefaultText =  "Is User",
+					  						DefaultText =  @"Is User",
 					  						HelpTextCode =  "IsUser",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2171,6 +2174,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature ContactFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.PackageFeature", NameTextCodeDefaultText = "Contact Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 		   
 		   Feature  ContactExcelFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Contact.Feature.EXCEL", Packagable = true, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.EXCEL", NameTextCodeDefaultText = "Download to Excel", FeatureTypeCode = "ACT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
+
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ContactFeature_ACTIVEPRODUCTTYPES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACTIVEPRODUCTTYPES", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.ActiveProductTypes", NameTextCodeDefaultText = @"Active Product Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ContactFeature_Contact_Feature_EXCEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Contact.Feature.EXCEL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.EXCEL", NameTextCodeDefaultText = @"Download to Excel" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ContactFeature_ANONYMIZE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANONYMIZE", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.Anonymize", NameTextCodeDefaultText = @"Anonymize" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
    
 	    
 		}
@@ -2309,7 +2322,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ContactObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Contact" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ContactTextCode_ContactMAnonymize = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.M.Anonymize", DefaultText = "Anonymizing this contact will result in erasing all personal data including the user's mail. in addition to erasing his info from operational data",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactIsInlandExportHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.IsInlandExportHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactCHIsInlandExportListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.CH.IsInlandExportListLable", DefaultText = "Is Inland Export",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactIsInlandImportHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.IsInlandImportHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactCHIsInlandImportListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.CH.IsInlandImportListLable", DefaultText = "Is Inland Import",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactOMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Month", DefaultText = "Month",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactOYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Year", DefaultText = "Year",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactBNewContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.B.NewContact", DefaultText = "New Contact",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactMThisContactAlreadyAdded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.M.ThisContactAlreadyAdded", DefaultText = "This contact is already added to this card.",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactOAddContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.AddContact", DefaultText = "Add Contact",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactOEditContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.EditContact", DefaultText = "Edit Contact",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactODay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Day", DefaultText = "Day",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactMContactAddedForYou = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.M.ContactAddedForYou", DefaultText = "This Contact is Already added for you",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactOContacts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Contacts", DefaultText = "Contacts",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactOTel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Tel", DefaultText = "Tel",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_Contact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact", DefaultText = "Contact",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactOPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

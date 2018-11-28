@@ -73,9 +73,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                           BankBranch = a.BankBranch,
                                                           BankAccount = a.BankAccount,
                                                           StatusName = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.EnglishName : "",
+                                                          
 
                                                       }).FirstOrDefault();
             return paymentCheques;
+        }
+
+
+
+        public ARPaymentChequePM GetPaymentChequeByChequeNo(string chequeNumber, int tenant)
+        {
+            ARPaymentCheque poco = (from a in context.ARPaymentCheques
+                                  where a.ChequeNumber == chequeNumber && a.Tenant == tenant
+                                  select a).FirstOrDefault();
+
+            return this.GetEntityPM(poco);
         }
     }
 }

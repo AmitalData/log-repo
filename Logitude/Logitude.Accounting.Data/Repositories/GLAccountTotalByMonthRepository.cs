@@ -40,6 +40,17 @@ namespace Logitude.Accounting.Data.Repositories
             var pocos = GetQuaryableMonthTotals(year, month, tenant).ToList();
             return pocos;
         }
+        public decimal GetLocalOpenBalanceForYearDateTypeCode(string DateTypeCode, string accountId, int year, int tenant)
+        {
+            decimal LocalOpenBalanceForYear = (from tot in
+                                                   context.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == DateTypeCode) //GLAccountTotalDateTypeValues.Accoutingdate)
+                        .Where(a => a.Tenant == tenant && a.Year < year && a.AccountId == accountId)
+                                               group tot by 1 into g
+                                               select g.Sum(tot => tot.LocalAmountDebit - tot.LocalAmountCredit)
+
+                        ).FirstOrDefault();
+            return LocalOpenBalanceForYear;
+        }
         public decimal GetLocalOpenBalanceForYear(string accountId, int year, int tenant)
         {
             decimal LocalOpenBalanceForYear = (from tot in
@@ -134,7 +145,21 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
         
+            public List<CurrencySum> GetCurrencySumUntillNotIncludeDateType(IQueryable<string> accountIdList, string DateTypeCode, int year, int month, int tenant)
+        {
+            var aggr = new List<CurrencySum>();
+            foreach (var accountIdListOf100 in accountIdList.Batch(100))
+            {
 
+
+                var mysumlist =
+                    GetQAllCurrencySumUntillNotIncludeGByAccIdCurrId(year, month, tenant, DateTypeCode)
+                    .Where(r => accountIdListOf100.Contains(r.AccountId))
+                    .ToList();
+                aggr.AddRange(mysumlist);
+            }
+            return aggr;
+        }
         public List<CurrencySum> GetAllCurrencySumUntillNotInclude(IQueryable<string> accountIdList, int year, int month, int tenant)
         {
             var aggr = new List<CurrencySum>();
@@ -151,9 +176,9 @@ namespace Logitude.Accounting.Data.Repositories
             return aggr;
         }
 
-        public IQueryable<CurrencySum> GetQAllCurrencySumUntillNotIncludeGByAccIdCurrId(int year, int month, int tenant)
+        public IQueryable<CurrencySum> GetQAllCurrencySumUntillNotIncludeGByAccIdCurrId(int year, int month, int tenant,string DateTypeCode ="1")
         {
-            return (from r in context.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == "1") //GLAccountTotalDateTypeValues.Accoutingdate
+            return (from r in context.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == DateTypeCode) //GLAccountTotalDateTypeValues.Accoutingdate
                     //where accountIdListOf100.Contains(r.AccountId)
                     where r.Tenant == tenant
                     where r.Year < year ||

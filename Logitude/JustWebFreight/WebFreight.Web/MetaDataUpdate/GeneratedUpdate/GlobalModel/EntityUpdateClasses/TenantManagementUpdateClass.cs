@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class TenantManagementUpdateClass
@@ -114,6 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  true,
 			      				    HasFiltersMenu =  false,
+			      				    AllowedInQueues =  false,
 			      				    Code =  "TNTS",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -168,12 +172,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
+					  						DefaultText =  @"Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						ListLableDefaultText =  @"Name",
 					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -226,12 +231,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageCode",
-					  						DefaultText =  "Package",
+					  						DefaultText =  @"Package",
 					  						ListFieldLable =  "PackageCodeListLable",
-					  						ListLableDefaultText =  "Package",
+					  						ListLableDefaultText =  @"Package",
 					  						HelpTextCode =  "PackageCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -283,12 +289,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageName",
-					  						DefaultText =  "Package",
+					  						DefaultText =  @"Package",
 					  						ListFieldLable =  "PackageNameListLable",
-					  						ListLableDefaultText =  "Package",
+					  						ListLableDefaultText =  @"Package",
 					  						HelpTextCode =  "PackageName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -340,13 +347,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TrialStartDate",
-					  						DefaultText =  "Trial Start Date",
+					  						DefaultText =  @"Trial Start Date",
 					  						ListFieldLable =  "TrialStartDateListLable",
-					  						ListLableDefaultText =  "Trial Start Date",
+					  						ListLableDefaultText =  @"Trial Start Date",
 					  						HelpTextCode =  "TrialStartDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -398,13 +406,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TrialEndDate",
-					  						DefaultText =  "Trial End Date",
+					  						DefaultText =  @"Trial End Date",
 					  						ListFieldLable =  "TrialEndDateListLable",
-					  						ListLableDefaultText =  "Trial End Date",
+					  						ListLableDefaultText =  @"Trial End Date",
 					  						HelpTextCode =  "TrialEndDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -456,12 +465,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ProductionEndDate",
-					  						DefaultText =  "Production End Date",
+					  						DefaultText =  @"Production End Date",
 					  						ListFieldLable =  "ProductionEndDateListLable",
-					  						ListLableDefaultText =  "Production End Date",
+					  						ListLableDefaultText =  @"Production End Date",
 					  						HelpTextCode =  "ProductionEndDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -513,13 +523,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaidUntilDate",
-					  						DefaultText =  "Paid Until Date",
+					  						DefaultText =  @"Paid Until Date",
 					  						ListFieldLable =  "PaidUntilDateListLable",
-					  						ListLableDefaultText =  "Paid Until Date",
+					  						ListLableDefaultText =  @"Paid Until Date",
 					  						HelpTextCode =  "PaidUntilDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -571,12 +582,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "IsTrial",
-					  						DefaultText =  "Is Trial",
+					  						DefaultText =  @"Is Trial",
 					  						ListFieldLable =  "IsTrialListLable",
-					  						ListLableDefaultText =  "Is Trial",
+					  						ListLableDefaultText =  @"Is Trial",
 					  						HelpTextCode =  "IsTrial",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -628,12 +640,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "NumberOfUsers",
-					  						DefaultText =  "Number Of Users",
+					  						DefaultText =  @"Number Of Users",
 					  						ListFieldLable =  "NumberOfUsersTrialListLable",
-					  						ListLableDefaultText =  "Number Of Users",
+					  						ListLableDefaultText =  @"Number Of Users",
 					  						HelpTextCode =  "NumberOfUsers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -686,12 +699,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search Ids/ names",
+					  						DefaultText =  @"Search Ids/ names",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: Id \n2: name \n3: number of users",
+					  						HelpTextDefaultText =  @"Searching by :\n1: Id \n2: name \n3: number of users",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -743,10 +757,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CountryId",
-					  						DefaultText =  "Country",
+					  						DefaultText =  @"Country",
 					  						HelpTextCode =  "CountryId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -798,12 +813,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CountryName",
-					  						DefaultText =  "Country",
+					  						DefaultText =  @"Country",
 					  						ListFieldLable =  "CountryNameListLable",
-					  						ListLableDefaultText =  "Country",
+					  						ListLableDefaultText =  @"Country",
 					  						HelpTextCode =  "CountryName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -855,10 +871,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TimeZone",
-					  						DefaultText =  "Time Zone",
+					  						DefaultText =  @"Time Zone",
 					  						HelpTextCode =  "TimeZone",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -910,12 +927,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsActive",
-					  						DefaultText =  "Is Active",
+					  						DefaultText =  @"Is Active",
 					  						ListFieldLable =  "IsActiveListLable",
-					  						ListLableDefaultText =  "Is Active",
+					  						ListLableDefaultText =  @"Is Active",
 					  						HelpTextCode =  "IsActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -967,10 +985,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "GlobalDBId",
-					  						DefaultText =  "Global DB Id",
+					  						DefaultText =  @"Global DB Id",
 					  						HelpTextCode =  "GlobalDBId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1022,12 +1041,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TTY",
-					  						DefaultText =  "TTY",
+					  						DefaultText =  @"TTY",
 					  						ListFieldLable =  "TTYListLable",
-					  						ListLableDefaultText =  "TTY",
+					  						ListLableDefaultText =  @"TTY",
 					  						HelpTextCode =  "TTY",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1079,12 +1099,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FreeUsers",
-					  						DefaultText =  "Free Users",
+					  						DefaultText =  @"Free Users",
 					  						ListFieldLable =  "FreeUsersListLable",
-					  						ListLableDefaultText =  "Free Users",
+					  						ListLableDefaultText =  @"Free Users",
 					  						HelpTextCode =  "FreeUsers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1136,12 +1157,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsRecurring",
-					  						DefaultText =  "Is Recurring",
+					  						DefaultText =  @"Is Recurring",
 					  						ListFieldLable =  "IsRecurringListLable",
-					  						ListLableDefaultText =  "Is Recurring",
+					  						ListLableDefaultText =  @"Is Recurring",
 					  						HelpTextCode =  "IsRecurring",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1194,10 +1216,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "RecurringPeriodCode",
-					  						DefaultText =  "Recurring Period",
+					  						DefaultText =  @"Recurring Period",
 					  						HelpTextCode =  "RecurringPeriodCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1249,12 +1272,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
+					  						DefaultText =  @"Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  @"Create Date",
 					  						HelpTextCode =  "CreateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1306,12 +1330,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  "Update Date",
+					  						DefaultText =  @"Update Date",
 					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  "Update Date",
+					  						ListLableDefaultText =  @"Update Date",
 					  						HelpTextCode =  "UpdateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1363,10 +1388,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MainContract",
-					  						DefaultText =  "Main Contract",
+					  						DefaultText =  @"Main Contract",
 					  						HelpTextCode =  "MainContract",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1419,10 +1445,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TemporalPackageCode",
-					  						DefaultText =  "Temporal Package",
+					  						DefaultText =  @"Temporal Package",
 					  						HelpTextCode =  "TemporalPackageCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1474,11 +1501,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TemporalStartDate",
-					  						DefaultText =  "Temporal Start Date",
+					  						DefaultText =  @"Temporal Start Date",
 					  						HelpTextCode =  "TemporalStartDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1530,11 +1558,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TemporalEndDate",
-					  						DefaultText =  "Temporal End Date",
+					  						DefaultText =  @"Temporal End Date",
 					  						HelpTextCode =  "TemporalEndDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1586,13 +1615,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FirstPaymentDate",
-					  						DefaultText =  "First Payment Date",
+					  						DefaultText =  @"First Payment Date",
 					  						ListFieldLable =  "FirstPaymentDateListLable",
-					  						ListLableDefaultText =  "First Payment Date",
+					  						ListLableDefaultText =  @"First Payment Date",
 					  						HelpTextCode =  "FirstPaymentDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1645,10 +1675,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentMethodCode",
-					  						DefaultText =  "Payment Method",
+					  						DefaultText =  @"Payment Method",
 					  						HelpTextCode =  "PaymentMethodCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1701,10 +1732,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentChannelCode",
-					  						DefaultText =  "Payment Channel",
+					  						DefaultText =  @"Payment Channel",
 					  						HelpTextCode =  "PaymentChannelCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1756,12 +1788,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LicensePrice",
-					  						DefaultText =  "License Price",
+					  						DefaultText =  @"License Price",
 					  						ListFieldLable =  "LicensePriceListLable",
-					  						ListLableDefaultText =  "License Price",
+					  						ListLableDefaultText =  @"License Price",
 					  						HelpTextCode =  "LicensePrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1811,10 +1844,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ActiveTrail",
-					  						DefaultText =  "Active Trail",
+					  						DefaultText =  @"Active Trail",
 					  						HelpTextCode =  "ActiveTrail",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1864,10 +1898,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PayingCustomers",
-					  						DefaultText =  "Paying Customers",
+					  						DefaultText =  @"Paying Customers",
 					  						HelpTextCode =  "PayingCustomers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1880,7 +1915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Notes",
-					  						MaxLength =  250,
+					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -1919,12 +1954,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  "Notes",
+					  						DefaultText =  @"Notes",
 					  						ListFieldLable =  "NotesListLable",
-					  						ListLableDefaultText =  "Notes",
+					  						ListLableDefaultText =  @"Notes",
 					  						HelpTextCode =  "Notes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1976,12 +2012,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastFWBSentDate",
-					  						DefaultText =  "Last FWB sent date",
+					  						DefaultText =  @"Last FWB sent date",
 					  						ListFieldLable =  "LastFWBSentDateListLable",
-					  						ListLableDefaultText =  "Last FWB sent date",
+					  						ListLableDefaultText =  @"Last FWB sent date",
 					  						HelpTextCode =  "LastFWBSentDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2033,12 +2070,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastFHLSentDate",
-					  						DefaultText =  "Last FHL sent date",
+					  						DefaultText =  @"Last FHL sent date",
 					  						ListFieldLable =  "LastFHLSentDateListLable",
-					  						ListLableDefaultText =  "Last FHL sent date",
+					  						ListLableDefaultText =  @"Last FHL sent date",
 					  						HelpTextCode =  "LastFHLSentDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2090,12 +2128,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "StatisticsUpdateDate",
-					  						DefaultText =  "Last Update Date",
+					  						DefaultText =  @"Last Update Date",
 					  						ListFieldLable =  "StatisticsUpdateDateListLable",
-					  						ListLableDefaultText =  "Last Update Date",
+					  						ListLableDefaultText =  @"Last Update Date",
 					  						HelpTextCode =  "StatisticsUpdateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2147,12 +2186,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipmentLastDate",
-					  						DefaultText =  "Last Date",
+					  						DefaultText =  @"Last Date",
 					  						ListFieldLable =  "ShipmentLastDateListLable",
-					  						ListLableDefaultText =  "Shipment Last Date",
+					  						ListLableDefaultText =  @"Shipment Last Date",
 					  						HelpTextCode =  "ShipmentLastDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2204,12 +2244,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipmentTotalLastWeek",
-					  						DefaultText =  "Last Week",
+					  						DefaultText =  @"Last Week",
 					  						ListFieldLable =  "ShipmentTotalLastWeekListLable",
-					  						ListLableDefaultText =  "Shipments Total Last Week",
+					  						ListLableDefaultText =  @"Shipments Total Last Week",
 					  						HelpTextCode =  "ShipmentTotalLastWeek",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2261,12 +2302,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipmentTotalLastMonth",
-					  						DefaultText =  "Last Month",
+					  						DefaultText =  @"Last Month",
 					  						ListFieldLable =  "ShipmentTotalLastMonthListLable",
-					  						ListLableDefaultText =  "Shipments Total Last Month",
+					  						ListLableDefaultText =  @"Shipments Total Last Month",
 					  						HelpTextCode =  "ShipmentTotalLastMonth",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2318,12 +2360,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteLastDate",
-					  						DefaultText =  "Last Date",
+					  						DefaultText =  @"Last Date",
 					  						ListFieldLable =  "QuoteLastDateListLable",
-					  						ListLableDefaultText =  "Quote Last Date",
+					  						ListLableDefaultText =  @"Quote Last Date",
 					  						HelpTextCode =  "QuoteLastDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2375,12 +2418,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteTotalLastWeek",
-					  						DefaultText =  "Last Week",
+					  						DefaultText =  @"Last Week",
 					  						ListFieldLable =  "QuoteTotalLastWeekListLable",
-					  						ListLableDefaultText =  "Quotes Total Last Week",
+					  						ListLableDefaultText =  @"Quotes Total Last Week",
 					  						HelpTextCode =  "QuoteTotalLastWeek",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2432,12 +2476,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteTotalLastMonth",
-					  						DefaultText =  "Last Month",
+					  						DefaultText =  @"Last Month",
 					  						ListFieldLable =  "QuoteTotalLastMonthListLable",
-					  						ListLableDefaultText =  "Quotes Total Last Month",
+					  						ListLableDefaultText =  @"Quotes Total Last Month",
 					  						HelpTextCode =  "QuoteTotalLastMonth",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2489,12 +2534,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ARInvoiceLastDate",
-					  						DefaultText =  "Last Date",
+					  						DefaultText =  @"Last Date",
 					  						ListFieldLable =  "ARInvoiceLastDateListLable",
-					  						ListLableDefaultText =  "ARInvoice Last Date",
+					  						ListLableDefaultText =  @"ARInvoice Last Date",
 					  						HelpTextCode =  "ARInvoiceLastDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2546,12 +2592,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ARInvoiceTotalLastWeek",
-					  						DefaultText =  "Last Week",
+					  						DefaultText =  @"Last Week",
 					  						ListFieldLable =  "ARInvoiceTotalLastWeekListLable",
-					  						ListLableDefaultText =  "ARInvoices Total Last Week",
+					  						ListLableDefaultText =  @"ARInvoices Total Last Week",
 					  						HelpTextCode =  "ARInvoiceTotalLastWeek",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2603,12 +2650,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ARInvoiceTotalLastMonth",
-					  						DefaultText =  "Last Month",
+					  						DefaultText =  @"Last Month",
 					  						ListFieldLable =  "ARInvoiceTotalLastMonthListLable",
-					  						ListLableDefaultText =  "ARInvoices Total Last Month",
+					  						ListLableDefaultText =  @"ARInvoices Total Last Month",
 					  						HelpTextCode =  "ARInvoiceTotalLastMonth",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2660,12 +2708,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "APInvoiceLastDate",
-					  						DefaultText =  "Last Date",
+					  						DefaultText =  @"Last Date",
 					  						ListFieldLable =  "APInvoiceLastDateListLable",
-					  						ListLableDefaultText =  "APInvoice Last Date",
+					  						ListLableDefaultText =  @"APInvoice Last Date",
 					  						HelpTextCode =  "APInvoiceLastDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2717,12 +2766,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "APInvoiceTotalLastWeek",
-					  						DefaultText =  "Last Week",
+					  						DefaultText =  @"Last Week",
 					  						ListFieldLable =  "APInvoiceTotalLastWeekListLable",
-					  						ListLableDefaultText =  "APInvoices Total Last Week",
+					  						ListLableDefaultText =  @"APInvoices Total Last Week",
 					  						HelpTextCode =  "APInvoiceTotalLastWeek",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2774,12 +2824,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "APInvoiceTotalLastMonth",
-					  						DefaultText =  "Last Month",
+					  						DefaultText =  @"Last Month",
 					  						ListFieldLable =  "APInvoiceTotalLastMonthListLable",
-					  						ListLableDefaultText =  "APInvoices Total Last Month",
+					  						ListLableDefaultText =  @"APInvoices Total Last Month",
 					  						HelpTextCode =  "APInvoiceTotalLastMonth",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2831,12 +2882,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomerLastDate",
-					  						DefaultText =  "Last Date",
+					  						DefaultText =  @"Last Date",
 					  						ListFieldLable =  "CustomerLastDateListLable",
-					  						ListLableDefaultText =  "Customer Last Date",
+					  						ListLableDefaultText =  @"Customer Last Date",
 					  						HelpTextCode =  "CustomerLastDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2888,12 +2940,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomerTotalLastWeek",
-					  						DefaultText =  "Last Week",
+					  						DefaultText =  @"Last Week",
 					  						ListFieldLable =  "CustomerTotalLastWeekListLable",
-					  						ListLableDefaultText =  "Customers Total Last Week",
+					  						ListLableDefaultText =  @"Customers Total Last Week",
 					  						HelpTextCode =  "CustomerTotalLastWeek",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2945,12 +2998,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomerTotalLastMonth",
-					  						DefaultText =  "Last Month",
+					  						DefaultText =  @"Last Month",
 					  						ListFieldLable =  "CustomerTotalLastMonthListLable",
-					  						ListLableDefaultText =  "Customers Total Last Month",
+					  						ListLableDefaultText =  @"Customers Total Last Month",
 					  						HelpTextCode =  "CustomerTotalLastMonth",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3000,10 +3054,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NotRecuringTenants",
-					  						DefaultText =  "Not Recuring Tenants",
+					  						DefaultText =  @"Not Recuring Tenants",
 					  						HelpTextCode =  "NotRecuringTenants",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3055,13 +3110,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastLoginDateTime",
-					  						DefaultText =  "Last Login Date",
+					  						DefaultText =  @"Last Login Date",
 					  						ListFieldLable =  "LastLoginDateTimeListLable",
-					  						ListLableDefaultText =  "Last Login Date",
+					  						ListLableDefaultText =  @"Last Login Date",
 					  						HelpTextCode =  "LastLoginDateTime",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3114,12 +3170,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentCurrencyCode",
-					  						DefaultText =  "Payment Currency",
+					  						DefaultText =  @"Payment Currency",
 					  						ListFieldLable =  "PaymentCurrencyCodeListLable",
-					  						ListLableDefaultText =  "Payment Currency",
+					  						ListLableDefaultText =  @"Payment Currency",
 					  						HelpTextCode =  "PaymentCurrencyCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3171,12 +3228,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ManageLicencesPerUser",
-					  						DefaultText =  "Allow to Manage  Licences per User",
+					  						DefaultText =  @"Allow to Manage  Licences per User",
 					  						ListFieldLable =  "ManageLicencesPerUserListLable",
-					  						ListLableDefaultText =  "Allow to Manage  Licences per User",
+					  						ListLableDefaultText =  @"Allow to Manage  Licences per User",
 					  						HelpTextCode =  "ManageLicencesPerUser",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3228,10 +3286,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsCargonautEnabled",
-					  						DefaultText =  "Is Cargonaut Enabled",
+					  						DefaultText =  @"Is Cargonaut Enabled",
 					  						HelpTextCode =  "IsCargonautEnabled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3283,12 +3342,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "FWBVersion",
-					  						DefaultText =  "FWB Version",
+					  						DefaultText =  @"FWB Version",
 					  						ListFieldLable =  "FWBVersionListLable",
-					  						ListLableDefaultText =  "FWBVersion",
+					  						ListLableDefaultText =  @"FWBVersion",
 					  						HelpTextCode =  "FWBVersion",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3340,12 +3400,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "FHLVersion",
-					  						DefaultText =  "FHL Version",
+					  						DefaultText =  @"FHL Version",
 					  						ListFieldLable =  "FHLVersionListLable",
-					  						ListLableDefaultText =  "FHLVersion",
+					  						ListLableDefaultText =  @"FHLVersion",
 					  						HelpTextCode =  "FHLVersion",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3397,12 +3458,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsSystemSupportEnabled",
-					  						DefaultText =  "System Support",
+					  						DefaultText =  @"System Support",
 					  						ListFieldLable =  "IsSystemSupportEnabledListLable",
-					  						ListLableDefaultText =  "System Support",
+					  						ListLableDefaultText =  @"System Support",
 					  						HelpTextCode =  "IsSystemSupportEnabled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3454,12 +3516,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsDistributorSupportEnabled",
-					  						DefaultText =  "Distributor Support",
+					  						DefaultText =  @"Distributor Support",
 					  						ListFieldLable =  "IsDistributorSupportEnabledListLable",
-					  						ListLableDefaultText =  "Distributor Support",
+					  						ListLableDefaultText =  @"Distributor Support",
 					  						HelpTextCode =  "IsDistributorSupportEnabled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3512,12 +3575,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DistributorCode",
-					  						DefaultText =  "Distributor",
+					  						DefaultText =  @"Distributor",
 					  						ListFieldLable =  "DistributorCodeListLable",
-					  						ListLableDefaultText =  "Distributor",
+					  						ListLableDefaultText =  @"Distributor",
 					  						HelpTextCode =  "DistributorCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3569,10 +3633,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsDEXXConnectionEnabled",
-					  						DefaultText =  "Is DEXX Connection Enabled",
+					  						DefaultText =  @"Is DEXX Connection Enabled",
 					  						HelpTextCode =  "IsDEXXConnectionEnabled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3624,12 +3689,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastFHLCargonautSentDate",
-					  						DefaultText =  "Last FHL (Cargonaut/DEXX) sent date",
+					  						DefaultText =  @"Last FHL (Cargonaut/DEXX) sent date",
 					  						ListFieldLable =  "LastFHLCargonautSentDateListLable",
-					  						ListLableDefaultText =  "Last FHL (Cargonaut/DEXX) sent date",
+					  						ListLableDefaultText =  @"Last FHL (Cargonaut/DEXX) sent date",
 					  						HelpTextCode =  "LastFHLCargonautSentDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3681,12 +3747,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastFWBCargonautSentDate",
-					  						DefaultText =  "Last FWB (Cargonaut/DEXX) sent date",
+					  						DefaultText =  @"Last FWB (Cargonaut/DEXX) sent date",
 					  						ListFieldLable =  "LastFWBCargonautSentDateListLable",
-					  						ListLableDefaultText =  "Last FWB (Cargonaut/DEXX) sent date",
+					  						ListLableDefaultText =  @"Last FWB (Cargonaut/DEXX) sent date",
 					  						HelpTextCode =  "LastFWBCargonautSentDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3739,10 +3806,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BluesnapContractCode",
-					  						DefaultText =  "Contract",
+					  						DefaultText =  @"Contract",
 					  						HelpTextCode =  "BluesnapContractCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3794,12 +3862,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentFailure",
-					  						DefaultText =  "Payment Failure",
+					  						DefaultText =  @"Payment Failure",
 					  						ListFieldLable =  "PaymentFailureListLable",
-					  						ListLableDefaultText =  "Payment Failure",
+					  						ListLableDefaultText =  @"Payment Failure",
 					  						HelpTextCode =  "PaymentFailure",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3851,13 +3920,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SuspendDate",
-					  						DefaultText =  "Suspend Date",
+					  						DefaultText =  @"Suspend Date",
 					  						ListFieldLable =  "SuspendDateListLable",
-					  						ListLableDefaultText =  "Suspend Date",
+					  						ListLableDefaultText =  @"Suspend Date",
 					  						HelpTextCode =  "SuspendDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3909,10 +3979,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "InternalNotes",
-					  						DefaultText =  "Internal Notes",
+					  						DefaultText =  @"Internal Notes",
 					  						HelpTextCode =  "InternalNotes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -3964,10 +4035,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BluesnapAccount",
-					  						DefaultText =  "Bluesnap Account",
+					  						DefaultText =  @"Bluesnap Account",
 					  						HelpTextCode =  "BluesnapAccount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4019,10 +4091,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PIMA",
-					  						DefaultText =  "PIMA",
+					  						DefaultText =  @"PIMA",
 					  						HelpTextCode =  "PIMA",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4075,10 +4148,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "AWBMessagesCCSTypeCode",
-					  						DefaultText =  "e-AWB messages CCS",
+					  						DefaultText =  @"e-AWB messages CCS",
 					  						HelpTextCode =  "AWBMessagesCCSTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4130,10 +4204,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsEAWBOnlyDemo",
-					  						DefaultText =  "Is e-AWB only Demo",
+					  						DefaultText =  @"Is e-AWB only Demo",
 					  						HelpTextCode =  "IsEAWBOnlyDemo",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4185,10 +4260,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsRestrictedByAirline",
-					  						DefaultText =  "Is Restricted By Airline",
+					  						DefaultText =  @"Is Restricted By Airline",
 					  						HelpTextCode =  "IsRestrictedByAirline",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4240,10 +4316,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ManagesRegisteredAgent",
-					  						DefaultText =  "Manages Registered Agent",
+					  						DefaultText =  @"Manages Registered Agent",
 					  						HelpTextCode =  "ManagesRegisteredAgent",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4295,12 +4372,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastFFRSentDate",
-					  						DefaultText =  "Last FFR sent date",
+					  						DefaultText =  @"Last FFR sent date",
 					  						ListFieldLable =  "LastFFRSentDateListLable",
-					  						ListLableDefaultText =  "Last FFR sent date",
+					  						ListLableDefaultText =  @"Last FFR sent date",
 					  						HelpTextCode =  "LastFFRSentDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4352,12 +4430,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OpportunityLastDate",
-					  						DefaultText =  "Last Date",
+					  						DefaultText =  @"Last Date",
 					  						ListFieldLable =  "OpportunityLastDateListLable",
-					  						ListLableDefaultText =  "Opportunity Last Date",
+					  						ListLableDefaultText =  @"Opportunity Last Date",
 					  						HelpTextCode =  "OpportunityLastDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4409,12 +4488,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OpportunityTotalLastWeek",
-					  						DefaultText =  "Last Week",
+					  						DefaultText =  @"Last Week",
 					  						ListFieldLable =  "OpportunityTotalLastWeekListLable",
-					  						ListLableDefaultText =  "Opportunitys Total Last Week",
+					  						ListLableDefaultText =  @"Opportunitys Total Last Week",
 					  						HelpTextCode =  "OpportunityTotalLastWeek",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4466,12 +4546,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OpportunityTotalLastMonth",
-					  						DefaultText =  "Last Month",
+					  						DefaultText =  @"Last Month",
 					  						ListFieldLable =  "OpportunityTotalLastMonthListLable",
-					  						ListLableDefaultText =  "Opportunitys Total Last Month",
+					  						ListLableDefaultText =  @"Opportunitys Total Last Month",
 					  						HelpTextCode =  "OpportunityTotalLastMonth",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4523,12 +4604,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ActivityLastDate",
-					  						DefaultText =  "Last Date",
+					  						DefaultText =  @"Last Date",
 					  						ListFieldLable =  "ActivityLastDateListLable",
-					  						ListLableDefaultText =  "Activity Last Date",
+					  						ListLableDefaultText =  @"Activity Last Date",
 					  						HelpTextCode =  "ActivityLastDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4580,12 +4662,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ActivityTotalLastWeek",
-					  						DefaultText =  "Last Week",
+					  						DefaultText =  @"Last Week",
 					  						ListFieldLable =  "ActivityTotalLastWeekListLable",
-					  						ListLableDefaultText =  "Activitys Total Last Week",
+					  						ListLableDefaultText =  @"Activitys Total Last Week",
 					  						HelpTextCode =  "ActivityTotalLastWeek",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4637,12 +4720,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ActivityTotalLastMonth",
-					  						DefaultText =  "Last Month",
+					  						DefaultText =  @"Last Month",
 					  						ListFieldLable =  "ActivityTotalLastMonthListLable",
-					  						ListLableDefaultText =  "Activitys Total Last Month",
+					  						ListLableDefaultText =  @"Activitys Total Last Month",
 					  						HelpTextCode =  "ActivityTotalLastMonth",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4694,12 +4778,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FSRLastSentDate",
-					  						DefaultText =  "Last FSR sent date",
+					  						DefaultText =  @"Last FSR sent date",
 					  						ListFieldLable =  "FSRLastSentDateListLable",
-					  						ListLableDefaultText =  "Last FSR sent date",
+					  						ListLableDefaultText =  @"Last FSR sent date",
 					  						HelpTextCode =  "FSRLastSentDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4751,12 +4836,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FSULastReceivedDate",
-					  						DefaultText =  "Last FSU received date",
+					  						DefaultText =  @"Last FSU received date",
 					  						ListFieldLable =  "FSULastReceivedDateListLable",
-					  						ListLableDefaultText =  "Last FSU received date",
+					  						ListLableDefaultText =  @"Last FSU received date",
 					  						HelpTextCode =  "FSULastReceivedDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4808,12 +4894,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FSALastReceivedDate",
-					  						DefaultText =  "Last FSA received date",
+					  						DefaultText =  @"Last FSA received date",
 					  						ListFieldLable =  "FSALastReceivedDateListLable",
-					  						ListLableDefaultText =  "Last FSA received date",
+					  						ListLableDefaultText =  @"Last FSA received date",
 					  						HelpTextCode =  "FSALastReceivedDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4865,12 +4952,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ResellerCommission",
-					  						DefaultText =  "Reseller's Commission (%)",
+					  						DefaultText =  @"Reseller's Commission (%)",
 					  						ListFieldLable =  "ResellerCommissionListLable",
-					  						ListLableDefaultText =  "Reseller's Commission",
+					  						ListLableDefaultText =  @"Reseller's Commission",
 					  						HelpTextCode =  "ResellerCommission",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4922,12 +5010,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BillingByLogitude",
-					  						DefaultText =  "Billing by Logitude",
+					  						DefaultText =  @"Billing by Logitude",
 					  						ListFieldLable =  "BillingByLogitudeListLable",
-					  						ListLableDefaultText =  "Billing by Logitude",
+					  						ListLableDefaultText =  @"Billing by Logitude",
 					  						HelpTextCode =  "BillingByLogitude",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -4980,10 +5069,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TenantTypeCode",
-					  						DefaultText =  "Tenant Type",
+					  						DefaultText =  @"Tenant Type",
 					  						HelpTextCode =  "TenantTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5035,10 +5125,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAWBStockPrepaid",
-					  						DefaultText =  "AWB Stock Prepaid",
+					  						DefaultText =  @"AWB Stock Prepaid",
 					  						HelpTextCode =  "IsAWBStockPrepaid",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5090,10 +5181,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SignupRequestRecipients",
-					  						DefaultText =  "Signup Request Recipients",
+					  						DefaultText =  @"Signup Request Recipients",
 					  						HelpTextCode =  "SignupRequestRecipients",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5145,10 +5237,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LoginPageNotes",
-					  						DefaultText =  "Login Page Notes",
+					  						DefaultText =  @"Login Page Notes",
 					  						HelpTextCode =  "LoginPageNotes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5200,10 +5293,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TenantConnectedToAirlineCode",
-					  						DefaultText =  "Airline",
+					  						DefaultText =  @"Airline",
 					  						HelpTextCode =  "TenantConnectedToAirlineCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5255,10 +5349,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SupportActivated",
-					  						DefaultText =  "Support Activated",
+					  						DefaultText =  @"Support Activated",
 					  						HelpTextCode =  "SupportActivated",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5310,10 +5405,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SupportEmail",
-					  						DefaultText =  "Support Email",
+					  						DefaultText =  @"Support Email",
 					  						HelpTextCode =  "SupportEmail",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5365,10 +5461,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsMultiPackage",
-					  						DefaultText =  "Is multi package",
+					  						DefaultText =  @"Is multi package",
 					  						HelpTextCode =  "IsMultiPackage",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5420,12 +5517,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MobileLastDate",
-					  						DefaultText =  "Last Date",
+					  						DefaultText =  @"Last Date",
 					  						ListFieldLable =  "MobileLastDateListLable",
-					  						ListLableDefaultText =  "Mobile Last Date",
+					  						ListLableDefaultText =  @"Mobile Last Date",
 					  						HelpTextCode =  "MobileLastDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5477,12 +5575,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MobileTotalLastWeek",
-					  						DefaultText =  "Last Week",
+					  						DefaultText =  @"Last Week",
 					  						ListFieldLable =  "MobileTotalLastWeekListtLable",
-					  						ListLableDefaultText =  "Mobile Total Last Week",
+					  						ListLableDefaultText =  @"Mobile Total Last Week",
 					  						HelpTextCode =  "MobileTotalLastWeek",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5534,12 +5633,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MobileTotalLastMonth",
-					  						DefaultText =  "Last Month",
+					  						DefaultText =  @"Last Month",
 					  						ListFieldLable =  "MobileTotalLastMonthListLable",
-					  						ListLableDefaultText =  "Mobile Total Last Month",
+					  						ListLableDefaultText =  @"Mobile Total Last Month",
 					  						HelpTextCode =  "MobileTotalLastMonth",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5591,12 +5691,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShardLogisticLastDate",
-					  						DefaultText =  "Last Date",
+					  						DefaultText =  @"Last Date",
 					  						ListFieldLable =  "ShardLogisticLastDateListLable",
-					  						ListLableDefaultText =  "Shared Logistic Last Date",
+					  						ListLableDefaultText =  @"Shared Logistic Last Date",
 					  						HelpTextCode =  "ShardLogisticLastDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5648,12 +5749,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShardLogisticTotalLastWeek",
-					  						DefaultText =  "Last Week",
+					  						DefaultText =  @"Last Week",
 					  						ListFieldLable =  "ShardLogisticTotalLastWeekListtLable",
-					  						ListLableDefaultText =  "Shard Logistic Total Last Week",
+					  						ListLableDefaultText =  @"Shard Logistic Total Last Week",
 					  						HelpTextCode =  "ShardLogisticTotalLastWeek",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5705,12 +5807,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShardLogisticTotalLastMonth",
-					  						DefaultText =  "Last Month",
+					  						DefaultText =  @"Last Month",
 					  						ListFieldLable =  "ShardLogisticTotalLastMonthListLable",
-					  						ListLableDefaultText =  "Shared Logistic Total Last Month",
+					  						ListLableDefaultText =  @"Shared Logistic Total Last Month",
 					  						HelpTextCode =  "ShardLogisticTotalLastMonth",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5762,12 +5865,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "RequestedAirlines",
-					  						DefaultText =  "Requested Airlines",
+					  						DefaultText =  @"Requested Airlines",
 					  						ListFieldLable =  "RequestedAirlinesListLable",
-					  						ListLableDefaultText =  "Requested Airlines",
+					  						ListLableDefaultText =  @"Requested Airlines",
 					  						HelpTextCode =  "RequestedAirlines",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5819,12 +5923,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "RegisteredAirlines",
-					  						DefaultText =  "Registered Airlines",
+					  						DefaultText =  @"Registered Airlines",
 					  						ListFieldLable =  "RegisteredAirlinesListLable",
-					  						ListLableDefaultText =  "Registered Airlines",
+					  						ListLableDefaultText =  @"Registered Airlines",
 					  						HelpTextCode =  "RegisteredAirlines",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5876,12 +5981,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PendingAirlines",
-					  						DefaultText =  "Pending Airlines",
+					  						DefaultText =  @"Pending Airlines",
 					  						ListFieldLable =  "PendingAirlinesListLable",
-					  						ListLableDefaultText =  "Pending Airlines",
+					  						ListLableDefaultText =  @"Pending Airlines",
 					  						HelpTextCode =  "PendingAirlines",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5933,10 +6039,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PrivateLabelId",
-					  						DefaultText =  "Private Label",
+					  						DefaultText =  @"Private Label",
 					  						HelpTextCode =  "PrivateLabelId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -5988,12 +6095,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SilverlightEndDate",
-					  						DefaultText =  "Silverlight End Date",
+					  						DefaultText =  @"Silverlight End Date",
 					  						ListFieldLable =  "SilverlightEndDateListLable",
-					  						ListLableDefaultText =  "Silverlight End Date",
+					  						ListLableDefaultText =  @"Silverlight End Date",
 					  						HelpTextCode =  "SilverlightEndDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6045,12 +6153,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsParentTenant",
-					  						DefaultText =  "Is Parent Tenant",
+					  						DefaultText =  @"Is Parent Tenant",
 					  						ListFieldLable =  "IsParentTenantListLable",
-					  						ListLableDefaultText =  "Is Parent Tenant",
+					  						ListLableDefaultText =  @"Is Parent Tenant",
 					  						HelpTextCode =  "IsParentTenant",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6102,10 +6211,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ParentTenantId",
-					  						DefaultText =  "Parent Tenant",
+					  						DefaultText =  @"Parent Tenant",
 					  						HelpTextCode =  "ParentTenantId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6157,12 +6267,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AgentSharedLogisticsStatisticsLastDate",
-					  						DefaultText =  "Last Date",
+					  						DefaultText =  @"Last Date",
 					  						ListFieldLable =  "AgentSharedLogisticsStatisticsLastDateListLable",
-					  						ListLableDefaultText =  "Agent Shared Logistics Last Date",
+					  						ListLableDefaultText =  @"Agent Shared Logistics Last Date",
 					  						HelpTextCode =  "AgentSharedLogisticsStatisticsLastDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6214,12 +6325,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AgentSharedLogisticsStatisticsLastWeek",
-					  						DefaultText =  "Last Week",
+					  						DefaultText =  @"Last Week",
 					  						ListFieldLable =  "AgentSharedLogisticsStatisticsLastWeekListtLable",
-					  						ListLableDefaultText =  "Agent Shared Logistics Total Last Week",
+					  						ListLableDefaultText =  @"Agent Shared Logistics Total Last Week",
 					  						HelpTextCode =  "AgentSharedLogisticsStatisticsLastWeek",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6271,12 +6383,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AgentSharedLogisticsStatisticsLastMonth",
-					  						DefaultText =  "Last Month",
+					  						DefaultText =  @"Last Month",
 					  						ListFieldLable =  "AgentSharedLogisticsStatisticsLastMonthListLable",
-					  						ListLableDefaultText =  "Agent Shared Logistics Total Last Month",
+					  						ListLableDefaultText =  @"Agent Shared Logistics Total Last Month",
 					  						HelpTextCode =  "AgentSharedLogisticsStatisticsLastMonth",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6328,10 +6441,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ChangeHeaderColor",
-					  						DefaultText =  "Change Header Color",
+					  						DefaultText =  @"Change Header Color",
 					  						HelpTextCode =  "ChangeHeaderColor",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6384,12 +6498,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Technology",
-					  						DefaultText =  "Technology",
+					  						DefaultText =  @"Technology",
 					  						ListFieldLable =  "TechnologyListLable",
-					  						ListLableDefaultText =  "Technology",
+					  						ListLableDefaultText =  @"Technology",
 					  						HelpTextCode =  "Technology",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6441,10 +6556,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ContactEmail",
-					  						DefaultText =  "Contact us",
+					  						DefaultText =  @"Contact us",
 					  						HelpTextCode =  "ContactEmail",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6496,10 +6612,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomerURL",
-					  						DefaultText =  "Domain",
+					  						DefaultText =  @"Domain",
 					  						HelpTextCode =  "CustomerURL",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6551,10 +6668,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EnableBranding",
-					  						DefaultText =  "Is Enable Branding",
+					  						DefaultText =  @"Is Enable Branding",
 					  						HelpTextCode =  "EnableBranding",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6606,10 +6724,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						CanAutomateSetValue =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "HideSharedlogistics",
-					  						DefaultText =  "Hide Shared logistics (powered by)",
+					  						DefaultText =  @"Hide Shared logistics (powered by)",
 					  						HelpTextCode =  "HideSharedlogistics",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -6704,7 +6823,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 			 QueryColumn InactiveTenantManagementsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveTenantManagementsQuery.Id, IndexOrder = 11, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TTY" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter InactiveTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = InactiveTenantManagementsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InactiveTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsActive" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = InactiveTenantManagementsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -6729,7 +6848,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 			 QueryColumn TrialTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TrialTenantManagementsQuery.Id, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "TrialEndDate" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter TrialTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "ActiveTrail" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = TrialTenantManagementsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TrialTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "ActiveTrail" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = TrialTenantManagementsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -6754,7 +6873,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 			 QueryColumn PayingTenantManagementsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PayingTenantManagementsQuery.Id, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter PayingTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PayingCustomers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = PayingTenantManagementsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter PayingTenantManagementsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "PayingCustomers" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = PayingTenantManagementsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -6779,7 +6898,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 			 QueryColumn NotRecuringTenantsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotRecuringTenantsQuery.Id, IndexOrder = 8, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "IsRecurring" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter NotRecuringTenantsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NotRecuringTenants" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = NotRecuringTenantsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter NotRecuringTenantsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TenantManagementObjectFields.Where(d => d.FieldName == "NotRecuringTenants" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = NotRecuringTenantsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -6846,19 +6965,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGGC",HtmlComponentName = "TenantManagementGeneralTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/TenantManagement/Tab/TenantManagementGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.EditTenantManagementControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGGC",HtmlComponentName = "TenantManagementGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.EditTenantManagementControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCH",HtmlComponentName = "CCSSettingsTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/TenantManagement/Tab/CCSSettingsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "CCSSettings" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementChampTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.CCSSettings" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCH",HtmlComponentName = "CCSSettingsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/CCSSettingsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "CCSSettings" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementChampTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.CCSSettings" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGST",HtmlComponentName = "TenantManagementStatisticsTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/TenantManagement/Tab/TenantManagementStatisticsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "STATISTICS" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementStatisticsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.Statistics" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGST",HtmlComponentName = "TenantManagementStatisticsTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/TenantManagementStatisticsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "STATISTICS" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementStatisticsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.Statistics" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGMS",HtmlComponentName = "",HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/Maintenance/TenantManagementAWBStockTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "AWB.MESSAGING.STOCK" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementAWBMessagingStockControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.AWBMessagingStock" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGCA",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "CONNECTEDAIRLINES" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.TenantManagementConnectedAirlinesControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.ConnectedAirlines" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGSU",HtmlComponentName = "SupportTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/TenantManagement/Tab/SupportTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Support" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.SupportTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.Support" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGSU",HtmlComponentName = "SupportTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/SupportTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Support" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TenantManagement.SupportTabControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.Support" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGBR",HtmlComponentName = "BrandingTabComponent",HtmlComponentUrl = "./Infrastructure/Components/Maintenance/TenantManagement/Tab/BrandingTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Branding" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.Branding" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGBR",HtmlComponentName = "BrandingTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureTenantManagement/Components/TenantManagement/BrandingTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Branding" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.Branding" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == TenantManagementObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TenantManagementObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TenantManagement.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
@@ -6870,7 +6989,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 		   Feature TenantManagementFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TenantManagementFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature TenantManagementFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TenantManagementFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.PackageFeature", NameTextCodeDefaultText = "TenantManagement Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature TenantManagementFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.PackageFeature", NameTextCodeDefaultText = "TenantManagement Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature TenantManagementFeature_SYSDISENABLED = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SYSDISENABLED", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.SysDisEnabled", NameTextCodeDefaultText = @"System & Distributor Support" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature TenantManagementFeature_EnableTenantManagementEdit = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableTenantManagementEdit", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, NameTextCodeCode = "TenantManagement.Features.EnableTenantManagementEdit", NameTextCodeDefaultText = @"Enable Tenant Management Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -7214,10 +7341,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 						MenuButtonGroupId = TenantManagementMenuButtonGroup.Id,
 						ObjectTableId = TenantManagementObjectTable.Id,
 						MenuButtonType = "button",
-						FeatureId = TenantManagementFeature_MB0.Id
+						FeatureId = TenantManagementFeature_MB0.Id,
+						Style = null,
+						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable TenantManagementObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode TenantManagementTextCode_TenantManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement", DefaultText = "Tenant Management",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TenantManagementTextCode_TenantManagementQTrailTenantManagements = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantManagement.Q.TrailTenantManagements", DefaultText = "Trail Tenant Managements",LocalDefaultText = null, ObjectTableId = TenantManagementObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

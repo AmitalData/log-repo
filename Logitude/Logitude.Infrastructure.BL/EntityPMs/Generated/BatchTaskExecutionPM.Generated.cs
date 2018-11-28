@@ -388,6 +388,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string callStack ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CallStack  
+	   {
+	    
+	     get
+		{
+		   return callStack;
+		 }
+		 set
+		 {
+		   if(callStack != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CallStack",OldValue=callStack,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   callStack=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

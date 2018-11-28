@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerTenantAccessCardsBatchUpdateClass
@@ -172,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CustomerId",
-					  						DefaultText =  "Customer Id",
+					  						DefaultText =  @"Customer Id",
 					  						HelpTextCode =  "CustomerId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -229,7 +232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CustomerTenantAccessId",
-					  						DefaultText =  "Customer Tenant Access Id",
+					  						DefaultText =  @"Customer Tenant Access Id",
 					  						HelpTextCode =  "CustomerTenantAccessId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -286,9 +289,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreateDateTime",
-					  						DefaultText =  "Create Date",
+					  						DefaultText =  @"Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  @"Create Date",
 					  						HelpTextCode =  "CreateDateTime",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -344,9 +347,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DoneDate",
-					  						DefaultText =  "Done Date",
+					  						DefaultText =  @"Done Date",
 					  						ListFieldLable =  "DoneDateListLable",
-					  						ListLableDefaultText =  "DoneDate",
+					  						ListLableDefaultText =  @"DoneDate",
 					  						HelpTextCode =  "DoneDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -402,9 +405,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FromDateTime",
-					  						DefaultText =  "From Date",
+					  						DefaultText =  @"From Date",
 					  						ListFieldLable =  "FromDateTimeListLable",
-					  						ListLableDefaultText =  "From Date",
+					  						ListLableDefaultText =  @"From Date",
 					  						HelpTextCode =  "FromDateTime",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -460,9 +463,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ToDateTime",
-					  						DefaultText =  "To Date",
+					  						DefaultText =  @"To Date",
 					  						ListFieldLable =  "ToDateTimeListLable",
-					  						ListLableDefaultText =  "ToDateTime",
+					  						ListLableDefaultText =  @"ToDateTime",
 					  						HelpTextCode =  "ToDateTime",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -518,7 +521,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Status",
-					  						DefaultText =  "Status",
+					  						DefaultText =  @"Status",
 					  						HelpTextCode =  "Status",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -574,7 +577,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BatchNumber",
-					  						DefaultText =  "Batch Number",
+					  						DefaultText =  @"Batch Number",
 					  						HelpTextCode =  "BatchNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -630,7 +633,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalFailed",
-					  						DefaultText =  "Total Failed",
+					  						DefaultText =  @"Total Failed",
 					  						HelpTextCode =  "TotalFailed",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -686,7 +689,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TotalShipment",
-					  						DefaultText =  "Total Shipment",
+					  						DefaultText =  @"Total Shipment",
 					  						HelpTextCode =  "TotalShipment",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -742,7 +745,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Totalsucceeded",
-					  						DefaultText =  "Total succeeded",
+					  						DefaultText =  @"Total succeeded",
 					  						HelpTextCode =  "Totalsucceeded",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -768,7 +771,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature CustomerTenantAccessCardsBatchFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomerTenantAccessCardsBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccessCardsBatch.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomerTenantAccessCardsBatchFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomerTenantAccessCardsBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccessCardsBatch.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomerTenantAccessCardsBatchFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomerTenantAccessCardsBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccessCardsBatch.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature CustomerTenantAccessCardsBatchFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CustomerTenantAccessCardsBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccessCardsBatch.Features.PackageFeature", NameTextCodeDefaultText = "CustomerTenantAccessCardsBatch Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature CustomerTenantAccessCardsBatchFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CustomerTenantAccessCardsBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccessCardsBatch.Features.PackageFeature", NameTextCodeDefaultText = "CustomerTenantAccessCardsBatch Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CustomerTenantAccessCardsBatchFeature_CUSTOMERTENANTACCESSESCARDBATCH = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMERTENANTACCESSESCARDBATCH", FeatureTypeCode = "MODL", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerTenantAccessCardsBatchObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccessCardsBatch.Features.CustomerTenantAccessCardsBatch", NameTextCodeDefaultText = @"CustomerTenantAccessCardsBatch" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -779,7 +788,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CustomerTenantAccessCardsBatchObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerTenantAccessCardsBatch" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CustomerTenantAccessCardsBatchTextCode_CustomerTenantAccessCardsBatch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessCardsBatch", DefaultText = "Customer Tenant Access Cards Batch",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessCardsBatchObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

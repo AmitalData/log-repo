@@ -29,7 +29,8 @@ import {AccountingPeriodsComponent} from './Components/Maintenance/AccountingPer
 import {EditAccountingPeriodComponent} from './Components/Maintenance/EditAccountingPeriodComponent';
 import {AccountingPeriodEventComponent} from './Components/Maintenance/AccountingPeriodEventComponent';
 import {YearTransferComponent} from './Components/Maintenance/YearTransferComponent';
-import { NewTaxReportComponent} from './Components/NewEntity/NewTaxReportComponent';
+import { NewTaxReportComponent } from './Components/NewEntity/NewTaxReportComponent';
+import { NewOpenFormatReportComponent } from './Components/NewEntity/NewOpenFormatReportComponent';
 
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
@@ -107,6 +108,7 @@ export const Components =
         AddEditRecoExPageComponent,
         NewConnectedGLAccountComponent,
         NewPaymentChequeComponent,
+        NewOpenFormatReportComponent,
         //Maintenance
         NewCategory1Component,
         NewCategory2Component,
@@ -203,6 +205,7 @@ export class ModuleDeclarations {
             case "NewPaymentChequeComponent": { myResult = NewPaymentChequeComponent; break; }
             case "NewTaxReportComponent": { myResult = NewTaxReportComponent; break; }
             case "NewTaxDeductionReportComponent": { myResult = NewTaxDeductionReportComponent; break; }
+            case "NewOpenFormatReportComponent": { myResult = NewOpenFormatReportComponent; break; }
             //Maintenance
             case "NewCategory1Component": { myResult = NewCategory1Component; break; }
             case "NewCategory2Component": { myResult = NewCategory2Component; break; }

@@ -320,7 +320,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                         Tenant = entityPM.Tenant,
                         EventTypeCode = "STDC",
                         UserId = loggedContactId,
-                        EntityId = entityPM.ShipmentId,
+                        EntityId = entityPOCO.ShipmentId,
                         ObjectTableName = "Shipment",
                         Notes = changesXml
                     });
@@ -366,7 +366,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                         Tenant = entityPM.Tenant,
                         EventTypeCode = "QTDC",
                         UserId = loggedContactId,
-                        EntityId = entityPM.QuoteId,
+                        EntityId = entityPOCO.QuoteId,
                         ObjectTableName = "Quote",
                         Notes = changesXml
                     });

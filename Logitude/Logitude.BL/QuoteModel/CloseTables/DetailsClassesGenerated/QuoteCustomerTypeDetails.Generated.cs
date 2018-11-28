@@ -25,7 +25,7 @@ namespace Logitude.BL.QuoteModel
             {    
                 Code = "AGT", 
                 Name = "Agent", 
-                SearchFields = "agt,agent", 
+                SearchFields = "AGT,Agent,True,", 
                 ShowInLOV = true, 
 			});
 			 
@@ -33,7 +33,7 @@ namespace Logitude.BL.QuoteModel
             {    
                 Code = "CON", 
                 Name = "Consignee", 
-                SearchFields = "con,consignee", 
+                SearchFields = "CON,Consignee,True,", 
                 ShowInLOV = true, 
 			});
 			 
@@ -41,7 +41,7 @@ namespace Logitude.BL.QuoteModel
             {    
                 Code = "NOT", 
                 Name = "Notify", 
-                SearchFields = "not,notify", 
+                SearchFields = "NOT,Notify,True,", 
                 ShowInLOV = true, 
 			});
 			 
@@ -49,7 +49,7 @@ namespace Logitude.BL.QuoteModel
             {    
                 Code = "OTH", 
                 Name = "Other", 
-                SearchFields = "oth,other", 
+                SearchFields = "OTH,Other,False,", 
                 ShowInLOV = false, 
 			});
 			 
@@ -57,7 +57,7 @@ namespace Logitude.BL.QuoteModel
             {    
                 Code = "SHI", 
                 Name = "Shipper", 
-                SearchFields = "shi,shipper", 
+                SearchFields = "SHI,Shipper,True,", 
                 ShowInLOV = true, 
 			});
 			

@@ -113,7 +113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שורת פקודה",
 			      				    DefaultText =  "Journal Line",
-			      				    Code =  "b4a8",
+			      				    Code =  "8f4c",
 			      				    Name =  "JournalLine Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -886,10 +886,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignAmount",
-					  						DefaultText =  "Foreign Amount",
+					  						DefaultText =  "F. Amount",
 					  						FullLocalDefaultText =  "סכום במטז",
 					  						ListFieldLable =  "ForeignAmountListLable",
-					  						ListLableDefaultText =  "Foreign Amount",
+					  						ListLableDefaultText =  "F. Amount",
 					  						ListLocalDefaultText =  "סכום במטז",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -1356,10 +1356,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DebitAccountName",
-					  						DefaultText =  "Debit Account Name",
+					  						DefaultText =  "D. Account",
 					  						FullLocalDefaultText =  "חשבון חובה",
 					  						ListFieldLable =  "DebitAccountNameListLable",
-					  						ListLableDefaultText =  "Debit Account Name",
+					  						ListLableDefaultText =  "D. Account",
 					  						ListLocalDefaultText =  "חשבון חובה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
@@ -2080,6 +2080,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ExternalReconcileNumber",
+					  						OldFieldName =  "ExternalReconcileNumber",
 					  						ObjectTableName =  "JournalLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -2097,6 +2098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExternalReconcileNumber",
 					  						ListPropertyPath =  "ExternalReconcileNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2196,7 +2198,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

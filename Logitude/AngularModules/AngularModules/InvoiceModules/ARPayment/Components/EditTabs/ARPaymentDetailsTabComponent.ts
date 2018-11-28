@@ -347,34 +347,21 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.searchText = args;
         this.LoadData();
     }
+
+    private ConnectedList: ARInvoiceList[] = [];
+    private IsMatchedList: ARInvoiceList[] = [];
     LoadData() {
 
         this.ItemsSource.Clear();
 
         if (!AppTool.IsNullOrEmpty(this.BillToId) && this.EntityPM.StatusCode != "VD") {
-            var filters = new ApiQueryFilters();
-            filters.PageIndex = 0;
-            filters.PageSize = 1000;
-            filters.SortBy = "InvoiceDate";
-            filters.SortDirection = "Descending";
-
-            filters.addAdditionalFilter("BillToId", this.EntityPM.BillToId, null, null, "Equals", false, false, false, "string");
-            filters.addAdditionalFilter("StatusCode", "DR,AD,PP,PD", null, null, "InList", false, true, false, "string");
-            filters.addAdditionalFilter("IsConstituentInvoice", false, null, null, "Equals", false, false, false, "Boolean");
-
-            var searchValue = null;
-            if (!AppTool.IsNullOrEmpty(this.searchText)) {
-                searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
+            if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                this.LoadPaymentInvoices_IsMatched();
             }
 
-            filters.addAdditionalFilter("ARPaymentInvoicesSearch", searchValue, null, null, "Contains", true, false, false, "string");
-
-            var myService = new ARInvoiceListService();
-            myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    this.FillBaselist(myResponse.Result);
-                }
-            });
+            else {
+                this.LoadPaymentInvoices_Connected();
+            }
         }
 
         else {
@@ -382,67 +369,130 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.IsDataLoaded = true;
         }
     }
-    FillBaselist(baselist: ARInvoiceList[]) {
+    LoadPaymentInvoices_Connected() {
+        var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 1000;
+        filters.SortBy = "InvoiceDate";
+        filters.SortDirection = "Descending";
+
+        var searchValue = null;
+        if (!AppTool.IsNullOrEmpty(this.searchText)) {
+            searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
+        }
+
+        filters.addAdditionalFilter("ARPaymentInvoicesSearch", searchValue, null, null, "Contains", true, false, false, "string");
+        filters.addAdditionalFilter("ARPaymentInvoicesConnected", this.EntityPM.Id, null, null, "Contains", true, false, false, "string");
+
+        var myService = new ARInvoiceListService();
+        myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+
+                this.ConnectedList = myResponse.Result;
+
+                if (this.EntityPM.IsClosed) {
+                    this.FillBaselist();
+                }
+
+                else {
+                    this.LoadPaymentInvoices_IsMatched();
+                }
+            }
+        });
+    }
+    LoadPaymentInvoices_IsMatched() {
+        var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 1000;
+        filters.SortBy = "InvoiceDate";
+        filters.SortDirection = "Descending";
+
+        filters.addAdditionalFilter("BillToId", this.EntityPM.BillToId, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("StatusCode", "DR,AD,PP,PD", null, null, "InList", false, true, false, "string");
+        filters.addAdditionalFilter("IsClosed", false, null, null, "Equals", false, false, false, "Boolean");
+        filters.addAdditionalFilter("IsConstituentInvoice", false, null, null, "Equals", false, false, false, "Boolean");       
+
+        var searchValue = null;
+        if (!AppTool.IsNullOrEmpty(this.searchText)) {
+            searchValue = AppTool.IsNullOrEmpty(this.searchText.trim()) ? null : this.searchText;
+        }
+
+        filters.addAdditionalFilter("ARPaymentInvoicesSearch", searchValue, null, null, "Contains", true, false, false, "string");
+
+        var myService = new ARInvoiceListService();
+        myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.IsMatchedList = myResponse.Result;                
+            }
+
+            this.FillBaselist();
+        });
+    }
+    FillBaselist() {
+        this.ItemsSource.Clear();
+
         var connectedList: ARPaymentInvoiceArgs[] = [];
         var unConnectedMatchedList: ARPaymentInvoiceArgs[] = [];
         var unConnectedListNotMatched: ARPaymentInvoiceArgs[] = [];
+        var itemsCollection: ARPaymentInvoiceArgs[] = [];
 
-        baselist.forEach(item => {
-            if (this.EntityPM.PaymentInvoices.filter(d => d.ARInvoiceId == item.Id)[0]) {
+        if (this.ConnectedList.length > 0) {
+            this.ConnectedList.forEach(item => {
+                if (this.EntityPM.PaymentInvoices.filter(d => d.ARInvoiceId == item.Id)[0]) {
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                    if (this.EntityPM.AmountInPaymentCurrency > 0) {
-                        var value = this.EntityPM.AmountInPaymentCurrency;
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                        if (this.EntityPM.AmountInPaymentCurrency > 0) {
+                            var value = this.EntityPM.AmountInPaymentCurrency;
 
-                        if (item.AmountDue > value) {
-                            item.AmountDue = item.AmountDue - value;
+                            if (item.AmountDue > value) {
+                                item.AmountDue = item.AmountDue - value;
+                            }
+
+                            else {
+                                item.AmountDue = 0;
+                            }
+                        }
+                    }
+
+                    connectedList.push(new ARPaymentInvoiceArgs(item, this));
+                }
+            });
+
+            connectedList.sort((a, b) => { return (a.SortingValue === b.SortingValue) ? 0 : (a.SortingValue < b.SortingValue) ? -1 : 1 }).forEach(item => {
+                itemsCollection.push(item);
+            });
+        }
+
+        if (!this.EntityPM.IsClosed) {
+            this.IsMatchedList.forEach(item => {
+                if (connectedList.filter(f => f.Id == item.Id).length == 0) {
+                    if (!item.IsClosed) {
+                        var isCurrencyMatched: boolean = false;
+
+                        if (this.PaymentCurrencyId == item.InvoiceCurrencyId) {
+                            isCurrencyMatched = true;
+                        }
+
+                        else if (this.IsMultiCurrency) {
+                            if (this.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
+                                isCurrencyMatched = true;
+                            }
+
+                            else if (item.InvoiceCurrencyId == SessionLocator.LocalCurrencyId) {
+                                isCurrencyMatched = true;
+                            }
+                        }
+
+                        if (isCurrencyMatched == false || item.StatusCode == "DR") {
+                            unConnectedListNotMatched.push(new ARPaymentInvoiceArgs(item, this));
                         }
 
                         else {
-                            item.AmountDue = 0;
+                            unConnectedMatchedList.push(new ARPaymentInvoiceArgs(item, this));
                         }
                     }
-                }
-
-                connectedList.push(new ARPaymentInvoiceArgs(item, this));
-            }
-
-            else {
-                if (!item.IsClosed) {
-                    var isCurrencyMatched: boolean = false;
-
-                    if (this.PaymentCurrencyId == item.InvoiceCurrencyId) {
-                        isCurrencyMatched = true;
-                    }
-
-                    else if (this.IsMultiCurrency) {
-                        if (this.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
-                            isCurrencyMatched = true;
-                        }
-
-                        else if (item.InvoiceCurrencyId == SessionLocator.LocalCurrencyId) {
-                            isCurrencyMatched = true;
-                        }
-                    }
-
-                    if (isCurrencyMatched == false || item.StatusCode == "DR") {
-                        unConnectedListNotMatched.push(new ARPaymentInvoiceArgs(item, this));
-                    }
-
-                    else {
-                        unConnectedMatchedList.push(new ARPaymentInvoiceArgs(item, this));
-                    }
-                }
-            }
-        });
-
-        var itemsCollection: ARPaymentInvoiceArgs[] = [];
-
-        connectedList.sort((a, b) => { return (a.SortingValue === b.SortingValue) ? 0 : (a.SortingValue < b.SortingValue) ? -1 : 1 }).forEach(item => {
-            itemsCollection.push(item);
-        });
-
-        if (!this.EntityPM.IsClosed) {
+                }                
+            });
 
             unConnectedMatchedList.filter(f => f.CurrencyId == this.PaymentCurrencyId).sort((a, b) => { return (a.SortingValue === b.SortingValue) ? 0 : (a.SortingValue < b.SortingValue) ? -1 : 1 }).forEach(item => {
                 itemsCollection.push(item);

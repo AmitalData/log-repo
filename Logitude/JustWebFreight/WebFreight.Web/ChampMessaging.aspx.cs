@@ -51,41 +51,83 @@ namespace WebFreight.Web
                     }
 
                     scope.Complete();
+
+                    Response.Clear();                    
+                    Response.ContentType = "text/xml";
+                    Response.Write("<status>OK</status>");
+
+                    //Response.StatusCode = 200;
+                    //Response.StatusDescription = "Success";
+                    Response.End();
                 }
             }
 
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "ChampMessaging Page", "Page_Load Method", null);
+                if (ex.Message == "Thread was being aborted.")
+                {
+
+                }
+
+                else
+                {
+
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "ChampMessaging Page", "Page_Load Method", null);
+
+                    Response.Clear();
+                    Response.ContentType = "text/xml";
+                    Response.Write("<status>Fail</status>");
+                    Response.Write("<message>" + ex.Message + "</message>");
+
+                    //Response.StatusCode = 404;
+                    //Response.StatusDescription = ex.Message;
+                    Response.End();
+                }
             }
+        }
+        protected override void Render(HtmlTextWriter writer)
+        {
+            base.Render(writer);
+            Response.TrySkipIisCustomErrors = true;
+            //Response.StatusCode = 200;
         }
 
         private void SaveMessageToAnalyzeQueue(string xmlfileText)
         {
-            AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
-            byte[] messageBytes = Encoding.ASCII.GetBytes(xmlfileText);
+            AnalyzeQueue analyzeQueue = null;
 
-            AnalyzeQueue analyzeQueue = new AnalyzeQueue()
+            using (TransactionScope scope2 = TransactionFactory.GetNewTransaction())
             {
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
-                From = "Champ",
-                Id = IdCounter.GetNumber("AnalyzeQueue", 0),
-                MessageBody = messageBytes,
-                Status = "W",
-                Retries = 0,
-                ConnectedToEntity = false,
-                ConnectedToTenant = false,
-                FileSize = xmlfileText.Length,
-            };
+                AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+                byte[] messageBytes = Encoding.ASCII.GetBytes(xmlfileText);
 
-            analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
-            analyzeQueueReposiory.Add(analyzeQueue);
-            analyzeQueueReposiory.SubmitChanges();
+                analyzeQueue = new AnalyzeQueue()
+                {
+                    CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
+                    From = "Champ",
+                    Id = IdCounter.GetNumber("AnalyzeQueue", 0),
+                    MessageBody = messageBytes,
+                    Status = "W",
+                    Retries = 0,
+                    ConnectedToEntity = false,
+                    ConnectedToTenant = false,
+                    FileSize = xmlfileText.Length,
+                };
 
-            DbQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("ChampAnalyzer", 0);            
-            queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
-            queueservice.Complete();
+                analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
+                analyzeQueueReposiory.Add(analyzeQueue);
+                analyzeQueueReposiory.SubmitChanges();
+
+                scope2.Complete();
+            }
+
+            if (analyzeQueue != null)
+            {
+                DbQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ChampAnalyzer", 0);
+                queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
+                queueservice.Complete();
+            }
         }
     }
 }

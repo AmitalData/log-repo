@@ -722,18 +722,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     foreach(var depositLine in bankDeposit.BankDepositLines)
                     {
                         //(a) update cheques
+                        ARPaymentChequeUpdateService chequeService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), cashbookPM.Tenant);
                         ARPaymentChequeQueryService chequesQuery = new ARPaymentChequeQueryService(MyContext);
                         ARPaymentChequeRepository chequesRepo = new ARPaymentChequeRepository(MyContext);
                         ARPaymentCheque cheque = chequesRepo.GetSingle(depositLine.ARPaymentChequeId, tenant);
-                        if(cheque != null)
+                        ARPaymentChequePM chequePM = chequesQuery.GetEntityPM(cheque);
+
+                        if (chequePM != null)
                         {
-                            cheque.StatusCode = "1"; // 1- In Cashbook
+                            chequePM.StatusCode = "1"; // 1- In Cashbook
                         }
                         else
                         {
                             throw new ApplicationException("Cannot find connected cheque for deposit line: " + depositLine.Line);
                         }
-                        
+
+                        // update
+                        chequeService.InitializeEntityPM(chequePM);
+                        chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                        chequeService.Update(chequePM, true);
+
 
                         //(b) update lines
                         //depositLine.IsOutOfDeposit = true;

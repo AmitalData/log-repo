@@ -822,7 +822,15 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             {
                                 if (entityPM.InvoiceDate < lastChronologicalDate)
                                 {
-                                    string dateString = lastChronologicalDate.Value.ToString("d", CultureInfo.CurrentCulture);
+                                    ICommonDataContext context = CommonDataContext.GetContext(entityPM.Tenant);
+                                    Tenant currentTenant = context.Tenants.Where(t => t.Id == entityPM.Tenant).FirstOrDefault();
+                                    string datetimeformat = @"dd\/MM\/yyyy";
+                                    if (!string.IsNullOrEmpty(currentTenant.DateTimeFormat))
+                                    {
+                                        datetimeformat = currentTenant.DateTimeFormat;
+                                    }
+
+                                    string dateString = lastChronologicalDate.Value.ToString(datetimeformat, CultureInfo.CurrentCulture);
 
                                     string msg = TranslateTextsClass.Translate("ARInvoice.M.ChronologicalDate", entityPM.Tenant) + " " + dateString;
                                     throw new ApplicationException(msg);

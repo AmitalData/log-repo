@@ -136,15 +136,14 @@ export class ARPaymentMenuButtonsHandler {
                                 if (SessionLocator.TenantPM.AccountingActivated) {
                                     button.IsHidden = true;
                                 }
-                                else {
-                                    if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD" || (this.EntityPM.StatusCode == "AD" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG"))) {
-                                        button.IsDisabled = true;
-                                    }
-
-                                    else {
-                                        button.IsDisabled = false;
-                                    }
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD" || (this.EntityPM.StatusCode == "AD" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG"))) {
+                                    button.IsDisabled = true;
                                 }
+
+                                else {
+                                    button.IsDisabled = false;
+                                }
+
                                 break;
                             }
                         case "VoidARPayemnt":

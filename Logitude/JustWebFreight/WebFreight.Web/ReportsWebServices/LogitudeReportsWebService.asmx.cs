@@ -6845,27 +6845,11 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_FromPortId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFromPortId").FirstOrDefault();
             QueryFilterItem filterItem_FinalDestinationPortId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFinalDestinationPortId").FirstOrDefault();
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
-
-            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            DateTime myStartDate = todayDate.AddMonths(-1);
-
-            DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
-            DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
-
+            
             string fromPortId = null;
             string finalDestinationPortId = null;
             string customerId = null;
-
-            if (filterItem_FromDate != null)
-            {
-                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
-            }
-
-            if (filterItem_ToDate != null)
-            {
-                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
-            }
-
+            
             if (filterItem_FromPortId != null)
             {
                 if (filterItem_FromPortId.FieldValue != null)
@@ -6893,17 +6877,28 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
 
             #region Base Data Filtered
-
-            if (fromDate != null)
+            if (filterItem_FromDate != null)
             {
-                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                DateTime fromDate;
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+                if (fromDate != null)
+                {
+                    totalData.FromDate = fromDate;
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
+                }
             }
 
-            if (toDate != null)
+            if (filterItem_ToDate != null)
             {
-                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                DateTime toDate;
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+                if (toDate != null)
+                {
+                    totalData.ToDate = toDate;
+                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.EntitiyCreateDate) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
+                }
             }
-
+            
             if (!string.IsNullOrEmpty(fromPortId))
             {
                 Port port = portRep.GetSinglePort(tenant, fromPortId);
@@ -6944,10 +6939,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #endregion
 
-            #region Fill Report Data
-
-            totalData.FromDate = fromDate;
-            totalData.ToDate = toDate;
+            #region Fill Report Data            
             totalData.Logo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
 
             if (iQueryable.Count() > 0)
@@ -9635,7 +9627,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-
             if (filterItem_OwnerId != null)
             {
                 if (filterItem_OwnerId.FieldValue != null)
@@ -9643,7 +9634,6 @@ namespace WebFreight.Web.ReportsWebServices
                     ownerId = filterItem_OwnerId.FieldValue.ToString();
                 }
             }
-
 
             if (filterItem_IncludeInnerProject != null)
             {
@@ -9822,6 +9812,12 @@ namespace WebFreight.Web.ReportsWebServices
                             if (card != null)
                             {
                                 timSheetItem_Detailed.CustomerName = card.EnglishName;
+                            }
+
+                            var owner = cardRep.GetSingleCard(project.OwnerId, tenant);
+                            if (owner != null)
+                            {
+                                timSheetItem_Detailed.OwnerName = owner.EnglishName;
                             }
                         }
 
@@ -10381,6 +10377,12 @@ namespace WebFreight.Web.ReportsWebServices
                     myRecord.Consignee = a.ConsigneeName;
                     myRecord.BookingNumber = a.BookingConfirmationNumber;
 
+                    myRecord.FullStatus = a.StatusName;
+                    if(!string.IsNullOrEmpty(a.StatusLocation))
+                    {
+                        myRecord.FullStatus = a.StatusName + "(" + a.StatusLocation + ")";
+                    }
+
                     if (!string.IsNullOrEmpty(a.ShipmentTypeId))
                     {
                         myRecord.ShipmentType = a.ShipmentTypeId + " " + a.ShipmentLevelName;
@@ -10411,8 +10413,8 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         if (a.ShipmentLevelCode == "H" && a.MasterShipmentDataId == null)
                         {
-                            PortPM fromPort = PortQuery.GetSinglePort(tenant, a.FromPortId, true);
-                            PortPM toPort = PortQuery.GetSinglePort(tenant, a.ToPortId, true);
+                            PortPM fromPort = PortQuery.GetSinglePort(tenant, a.FromPortId, false);
+                            PortPM toPort = PortQuery.GetSinglePort(tenant, a.ToPortId, false);
                             myRoutingField = fromPort.Code + " , " + toPort.Code;
                         }
 
@@ -10985,7 +10987,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
             
            
-            totalData.TotalRevenueExpense = (totalRevenues == null ? 0 : totalRevenues) - (totalExpenses == null ? 0 : totalExpenses);
+            totalData.TotalRevenueExpense = (totalRevenues == null ? 0 : totalRevenues) + (totalExpenses == null ? 0 : totalExpenses);
 
 
             #endregion

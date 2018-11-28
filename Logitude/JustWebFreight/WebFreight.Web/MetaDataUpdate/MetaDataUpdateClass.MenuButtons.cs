@@ -1673,7 +1673,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 IsActive = true,
                 LabelTextCodeCode = "APPayment.B.Void",
                 LabelTextCodeDefaultText = "Void",
-                LocalDefaultText = "להתעלם", 
+                LocalDefaultText = "ביטול", 
                 ObjectTableId = theAPPaymentObject.Id,
                 Tenant = tenant,
                 MenuButtonGroupId = APPaymentMenuButtonGroup.Id,
@@ -2116,7 +2116,35 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableId = TenantManagementTableId,
                 FeatureId = TenantManagementFeature_EraseData.Id,
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
-            
+
+            #endregion
+
+            #region AnalyzeQueue
+            ObjectTable AnalyzeQueueObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AnalyzeQueue").FirstOrDefault();
+            FeaturePM AnalyzeQueue_ResendFeature = features.Where(d => d.Code == "RESEND" && d.ObjectTableId == AnalyzeQueueObjectTable.Id).FirstOrDefault();
+
+            MenuButtonGroup AnalyzeQueue_MenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+            {
+                MenuButtonGroupType = "AnalyzeQueueEdit",
+                Name = "AnalyzeQueueEditButtonsGroup",
+                ObjectTableId = AnalyzeQueueObjectTable.Id,
+                Tenant = tenant,
+            }, MenuButtonGroupRepository, TenantMenuButtonGroups);
+
+            MenuButton AnalyzeQueue_MenuButton_Resend = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "Resend",
+                Index = 0,
+                IsActive = true,
+                LabelTextCodeCode = "AnalyzeQueue.B.Resend",
+                LabelTextCodeDefaultText = "Resend",
+                ObjectTableId = AnalyzeQueueObjectTable.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = AnalyzeQueue_MenuButtonGroup.Id,
+                FeatureId = AnalyzeQueue_ResendFeature.Id,
+                MenuButtonType = "button",
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+
             #endregion
 
             MenuButtonGroupRepository.SubmitChanges();

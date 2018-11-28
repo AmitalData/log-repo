@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class DocumentTypeCustomFieldUpdateClass
@@ -170,7 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "DocumentTypeId",
-					  						DefaultText =  "Document Type",
+					  						DefaultText =  @"Document Type",
 					  						HelpTextCode =  "DocumentTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -225,9 +228,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "FieldCode",
-					  						DefaultText =  "Code",
+					  						DefaultText =  @"Code",
 					  						ListFieldLable =  "FieldCodeListLable",
-					  						ListLableDefaultText =  "Code",
+					  						ListLableDefaultText =  @"Code",
 					  						HelpTextCode =  "FieldCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -282,9 +285,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
+					  						DefaultText =  @"Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						ListLableDefaultText =  @"Name",
 					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -339,9 +342,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "FieldDataTypeCode",
-					  						DefaultText =  "Data Type",
+					  						DefaultText =  @"Data Type",
 					  						ListFieldLable =  "FieldDataTypeCodeListLable",
-					  						ListLableDefaultText =  "Data Type Code",
+					  						ListLableDefaultText =  @"Data Type Code",
 					  						HelpTextCode =  "FieldDataTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -396,9 +399,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  "Inactive",
+					  						DefaultText =  @"Inactive",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  "Inactive",
+					  						ListLableDefaultText =  @"Inactive",
 					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -453,9 +456,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsRequired",
-					  						DefaultText =  "Required",
+					  						DefaultText =  @"Required",
 					  						ListFieldLable =  "IsRequiredListLable",
-					  						ListLableDefaultText =  "Is Required",
+					  						ListLableDefaultText =  @"Is Required",
 					  						HelpTextCode =  "IsRequired",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -510,9 +513,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MultiLine",
-					  						DefaultText =  "Multiline Custom Field",
+					  						DefaultText =  @"Multiline Custom Field",
 					  						ListFieldLable =  "MultiLineListLable",
-					  						ListLableDefaultText =  "Multiline",
+					  						ListLableDefaultText =  @"Multiline",
 					  						HelpTextCode =  "MultiLine",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -567,9 +570,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DefaultValue",
-					  						DefaultText =  "Default Value",
+					  						DefaultText =  @"Default Value",
 					  						ListFieldLable =  "DefaultValueListLable",
-					  						ListLableDefaultText =  "Default Value",
+					  						ListLableDefaultText =  @"Default Value",
 					  						HelpTextCode =  "DefaultValue",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -601,7 +604,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable DocumentTypeCustomFieldObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentTypeCustomField" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField", DefaultText = "Document Type Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOUnknownControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.UnknownControl", DefaultText = "Unknown Control",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBAddCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.AddCustomField", DefaultText = "Add Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBEditCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.EditCustomField", DefaultText = "Edit Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.Search", DefaultText = "Search",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOAddCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.AddCustomField", DefaultText = "Add Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOEditCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.EditCustomField", DefaultText = "Edit Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

@@ -1,11 +1,16 @@
 ﻿using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -71,6 +76,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
                         else
                         {
+                            if (entity.MainAddress.Country == null)
+                            {
+                                throw new ApplicationException("Main address country is required");
+                            }
+
+                            if (entity.MainAddress.City == null)
+                            {
+                                throw new ApplicationException("Main address city is required");
+                            }
+
                             Tenant myTenant = MyContext.Tenants.Where(d => d.Id == authToken.Tenant).FirstOrDefault();
                             if (myTenant.IsCustomerTelRequired)
                             {
@@ -93,6 +108,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         service.Create();
                         service.Submit();
 
+                        if (!string.IsNullOrEmpty(entity.PartnerCode) && !string.IsNullOrEmpty(computingPartnerCode))
+                        {
+                            this.CreateComputingPartnerTranslation(computingPartnerCode, entityPM.Code, entity.PartnerCode, authToken.Tenant);                            
+                        }
+
+                        #region GLAccount
                         //if (entity.GLAccount != null)
                         //{
                         //    CardRepository cardRepository = new CardRepository(authToken.Tenant);
@@ -113,6 +134,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         //        string glAccountId = fullAccountingHelper.CreateGLAccount(card);
                         //    }                            
                         //}
+                        #endregion
 
                         scope.Complete();
                     }
@@ -142,6 +164,65 @@ namespace WebFreight.Web.ExternalAPIs.V1
             var apiExceptionResult = ApiExceptionHandler.HandleException(new Exception("Updates are not supported"));
             APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Customer", null, "Customer API");
             return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+        }
+
+        private void CreateComputingPartnerTranslation(string computingPartnerCode, string ourCode, string partnerCode, int tenant)
+        {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+
+            UserQuery userQuery = new UserQuery(tenant);
+            UserPM MyUserPM = userQuery.GetSingleUserPMByEmail("system@tenant" + tenant + ".com", tenant, false);
+
+            ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(commonContext);
+            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(computingPartnerRepository);
+            ComputingPartnerPM myPartner = computingPartnerQuery.GetSinglePMByCode(computingPartnerCode, tenant);
+            if (myPartner == null)
+            {
+                myPartner = computingPartnerQuery.GetSinglePMByCode(computingPartnerCode, 0);
+            }
+
+            ObjectTableQuery objectTableQuery = new ObjectTableQuery(0);
+            ObjectTablePM myTable = objectTableQuery.GetObjectTableByName("Customer", 0);
+
+            if (myPartner != null && myTable != null)
+            {
+                ComputingPartnerTableRepository computingPartnerTableRepository = new ComputingPartnerTableRepository(commonContext);
+                ComputingPartnerTable myPartnerTable = computingPartnerTableRepository.GetSingleComputingPartnerTable(myPartner.Tenant, myTable.Id, myPartner.Id);
+                if (myPartnerTable == null)
+                {
+                    myPartnerTable = new ComputingPartnerTable()
+                    {
+                        Tenant = myPartner.Tenant,
+                        ObjectTableId = myTable.Id,
+                        ComputingPartnerId = myPartner.Id,
+                        CreateDate = TenantServerConfigration.GetCurrentDateTime(myPartner.Tenant),
+                        CreatedByUserId = MyUserPM.Id,
+                        Name = "Customer",
+                        UpdateDate = TenantServerConfigration.GetCurrentDateTime(myPartner.Tenant),
+                        UpdatedByUserId = MyUserPM.Id,
+                    };
+
+                    commonContext.ComputingPartnerTables.Add(myPartnerTable);
+                }
+                
+                ComputingPartnerTranslation myTranslation = new ComputingPartnerTranslation()
+                {
+                    Id = IdCounter.GetNumber("ComputingPartnerTranslation", myPartner.Tenant).ToString(),
+                    Tenant = myPartner.Tenant,
+                    CreateDate = TenantServerConfigration.GetCurrentDateTime(myPartner.Tenant),
+                    UpdateDate = TenantServerConfigration.GetCurrentDateTime(myPartner.Tenant),
+                    CreatedByUserId = MyUserPM.Id,
+                    UpdatedByUserId = MyUserPM.Id,
+                    ComputingPartnerId = myPartner.Id,
+                    ObjectTableId = myTable.Id,
+                    OurCode = ourCode,
+                    PartnerCode = partnerCode,
+                    SearchFields = ourCode + "," + partnerCode,
+                };
+
+                commonContext.ComputingPartnerTranslations.Add(myTranslation);
+                commonContext.SaveChanges();
+            }
         }
     }
 }

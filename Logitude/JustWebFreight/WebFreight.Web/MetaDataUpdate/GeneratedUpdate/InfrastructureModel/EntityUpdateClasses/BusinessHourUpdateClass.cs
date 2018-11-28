@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class BusinessHourUpdateClass
@@ -175,9 +178,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
+					  						DefaultText =  @"Create Date",
 					  						ListFieldLable =  "CreateDateLabel",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  @"Create Date",
 					  						HelpTextCode =  "CreateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -234,9 +237,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  "Update Date",
+					  						DefaultText =  @"Update Date",
 					  						ListFieldLable =  "UpdateDateLabel",
-					  						ListLableDefaultText =  "Update Date",
+					  						ListLableDefaultText =  @"Update Date",
 					  						HelpTextCode =  "UpdateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -292,9 +295,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
+					  						DefaultText =  @"Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						ListLableDefaultText =  @"Name",
 					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -350,9 +353,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Description",
-					  						DefaultText =  "Description",
+					  						DefaultText =  @"Description",
 					  						ListFieldLable =  "DescriptionListLable",
-					  						ListLableDefaultText =  "Description",
+					  						ListLableDefaultText =  @"Description",
 					  						HelpTextCode =  "Description",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -408,9 +411,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Is247",
-					  						DefaultText =  "Is24/7",
+					  						DefaultText =  @"Is24/7",
 					  						ListFieldLable =  "Is247ListLable",
-					  						ListLableDefaultText =  "Is247",
+					  						ListLableDefaultText =  @"Is247",
 					  						HelpTextCode =  "Is247",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -467,7 +470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  "Created by",
+					  						DefaultText =  @"Created by",
 					  						HelpTextCode =  "CreatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -524,7 +527,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  "Updated by",
+					  						DefaultText =  @"Updated by",
 					  						HelpTextCode =  "UpdatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -580,9 +583,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsMondayEnabeled",
-					  						DefaultText =  "Is Monday Enabeled",
+					  						DefaultText =  @"Is Monday Enabeled",
 					  						ListFieldLable =  "IsMondayEnabeledListLable",
-					  						ListLableDefaultText =  "IsMondayEnabeled",
+					  						ListLableDefaultText =  @"IsMondayEnabeled",
 					  						HelpTextCode =  "IsMondayEnabeled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -638,9 +641,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsTuesdayEnabeled",
-					  						DefaultText =  "Is Tuesday Enabeled",
+					  						DefaultText =  @"Is Tuesday Enabeled",
 					  						ListFieldLable =  "IsTuesdayEnabeledListLable",
-					  						ListLableDefaultText =  "IsTuesdayEnabeled",
+					  						ListLableDefaultText =  @"IsTuesdayEnabeled",
 					  						HelpTextCode =  "IsTuesdayEnabeled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -696,9 +699,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsWednesdayEnabeled",
-					  						DefaultText =  "Is Wednesday Enabeled",
+					  						DefaultText =  @"Is Wednesday Enabeled",
 					  						ListFieldLable =  "IsWednesdayEnabeledListLable",
-					  						ListLableDefaultText =  "IsWednesdayEnabeled",
+					  						ListLableDefaultText =  @"IsWednesdayEnabeled",
 					  						HelpTextCode =  "IsWednesdayEnabeled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -754,9 +757,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsThursdayEnabeled",
-					  						DefaultText =  "Is Thursday Enabeled",
+					  						DefaultText =  @"Is Thursday Enabeled",
 					  						ListFieldLable =  "IsThursdayEnabeledListLable",
-					  						ListLableDefaultText =  "IsThursdayEnabeled",
+					  						ListLableDefaultText =  @"IsThursdayEnabeled",
 					  						HelpTextCode =  "IsThursdayEnabeled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -812,9 +815,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsFridayEnabeled",
-					  						DefaultText =  "Is Friday Enabeled",
+					  						DefaultText =  @"Is Friday Enabeled",
 					  						ListFieldLable =  "IsFridayEnabeledListLable",
-					  						ListLableDefaultText =  "IsFridayEnabeled",
+					  						ListLableDefaultText =  @"IsFridayEnabeled",
 					  						HelpTextCode =  "IsFridayEnabeled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -870,9 +873,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsSaturdayEnabeled",
-					  						DefaultText =  "Is Saturday Enabeled",
+					  						DefaultText =  @"Is Saturday Enabeled",
 					  						ListFieldLable =  "IsSaturdayEnabeledListLable",
-					  						ListLableDefaultText =  "IsSaturdayEnabeled",
+					  						ListLableDefaultText =  @"IsSaturdayEnabeled",
 					  						HelpTextCode =  "IsSaturdayEnabeled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -928,9 +931,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsSundayEnabeled",
-					  						DefaultText =  "Is Sunday Enabeled",
+					  						DefaultText =  @"Is Sunday Enabeled",
 					  						ListFieldLable =  "IsSundayEnabeledListLable",
-					  						ListLableDefaultText =  "IsSundayEnabeled",
+					  						ListLableDefaultText =  @"IsSundayEnabeled",
 					  						HelpTextCode =  "IsSundayEnabeled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -986,9 +989,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MondayFromHour",
-					  						DefaultText =  "Monday From Hour",
+					  						DefaultText =  @"Monday From Hour",
 					  						ListFieldLable =  "MondayFromHourLabel",
-					  						ListLableDefaultText =  "Monday From Hour",
+					  						ListLableDefaultText =  @"Monday From Hour",
 					  						HelpTextCode =  "MondayFromHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1044,9 +1047,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TuesdayFromHour",
-					  						DefaultText =  "Tuesday From Hour",
+					  						DefaultText =  @"Tuesday From Hour",
 					  						ListFieldLable =  "TuesdayFromHourLabel",
-					  						ListLableDefaultText =  "Tuesday From Hour",
+					  						ListLableDefaultText =  @"Tuesday From Hour",
 					  						HelpTextCode =  "TuesdayFromHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1102,9 +1105,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "WednesdayFromHour",
-					  						DefaultText =  "Wednesday From Hour",
+					  						DefaultText =  @"Wednesday From Hour",
 					  						ListFieldLable =  "WednesdayFromHourLabel",
-					  						ListLableDefaultText =  "Wednesday From Hour",
+					  						ListLableDefaultText =  @"Wednesday From Hour",
 					  						HelpTextCode =  "WednesdayFromHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1160,9 +1163,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ThursdayFromHour",
-					  						DefaultText =  "Thursday From Hour",
+					  						DefaultText =  @"Thursday From Hour",
 					  						ListFieldLable =  "ThursdayFromHourLabel",
-					  						ListLableDefaultText =  "Thursday From Hour",
+					  						ListLableDefaultText =  @"Thursday From Hour",
 					  						HelpTextCode =  "ThursdayFromHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1218,9 +1221,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FridayFromHour",
-					  						DefaultText =  "Friday From Hour",
+					  						DefaultText =  @"Friday From Hour",
 					  						ListFieldLable =  "FridayFromHourLabel",
-					  						ListLableDefaultText =  "Friday From Hour",
+					  						ListLableDefaultText =  @"Friday From Hour",
 					  						HelpTextCode =  "FridayFromHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1276,9 +1279,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaturdayFromHour",
-					  						DefaultText =  "Saturday From Hour",
+					  						DefaultText =  @"Saturday From Hour",
 					  						ListFieldLable =  "SaturdayFromHourLabel",
-					  						ListLableDefaultText =  "Saturday From Hour",
+					  						ListLableDefaultText =  @"Saturday From Hour",
 					  						HelpTextCode =  "SaturdayFromHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1334,9 +1337,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SundayFromHour",
-					  						DefaultText =  "Sunday From Hour",
+					  						DefaultText =  @"Sunday From Hour",
 					  						ListFieldLable =  "SundayFromHourLabel",
-					  						ListLableDefaultText =  "Sunday From Hour",
+					  						ListLableDefaultText =  @"Sunday From Hour",
 					  						HelpTextCode =  "SundayFromHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1392,9 +1395,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MondayToHour",
-					  						DefaultText =  "Monday To Hour",
+					  						DefaultText =  @"Monday To Hour",
 					  						ListFieldLable =  "MondayToHourLabel",
-					  						ListLableDefaultText =  "Monday To Hour",
+					  						ListLableDefaultText =  @"Monday To Hour",
 					  						HelpTextCode =  "MondayToHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1450,9 +1453,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TuesdayToHour",
-					  						DefaultText =  "Tuesday To Hour",
+					  						DefaultText =  @"Tuesday To Hour",
 					  						ListFieldLable =  "TuesdayToHourLabel",
-					  						ListLableDefaultText =  "Tuesday To Hour",
+					  						ListLableDefaultText =  @"Tuesday To Hour",
 					  						HelpTextCode =  "TuesdayToHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1508,9 +1511,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "WednesdayToHour",
-					  						DefaultText =  "Wednesday To Hour",
+					  						DefaultText =  @"Wednesday To Hour",
 					  						ListFieldLable =  "WednesdayToHourLabel",
-					  						ListLableDefaultText =  "Wednesday To Hour",
+					  						ListLableDefaultText =  @"Wednesday To Hour",
 					  						HelpTextCode =  "WednesdayToHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1566,9 +1569,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ThursdayToHour",
-					  						DefaultText =  "Thursday To Hour",
+					  						DefaultText =  @"Thursday To Hour",
 					  						ListFieldLable =  "ThursdayToHourLabel",
-					  						ListLableDefaultText =  "Thursday To Hour",
+					  						ListLableDefaultText =  @"Thursday To Hour",
 					  						HelpTextCode =  "ThursdayToHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1624,9 +1627,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "FridayToHour",
-					  						DefaultText =  "Friday To Hour",
+					  						DefaultText =  @"Friday To Hour",
 					  						ListFieldLable =  "FridayToHourLabel",
-					  						ListLableDefaultText =  "Friday To Hour",
+					  						ListLableDefaultText =  @"Friday To Hour",
 					  						HelpTextCode =  "FridayToHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1682,9 +1685,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaturdayToHour",
-					  						DefaultText =  "Saturday To Hour",
+					  						DefaultText =  @"Saturday To Hour",
 					  						ListFieldLable =  "SaturdayToHourLabel",
-					  						ListLableDefaultText =  "Saturday To Hour",
+					  						ListLableDefaultText =  @"Saturday To Hour",
 					  						HelpTextCode =  "SaturdayToHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1740,9 +1743,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SundayToHour",
-					  						DefaultText =  "Sunday To Hour",
+					  						DefaultText =  @"Sunday To Hour",
 					  						ListFieldLable =  "SundayToHourLabel",
-					  						ListLableDefaultText =  "Sunday To Hour",
+					  						ListLableDefaultText =  @"Sunday To Hour",
 					  						HelpTextCode =  "SundayToHour",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1779,7 +1782,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable BusinessHourObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessHour" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode BusinessHourTextCode_BusinessHour = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessHour", DefaultText = "Business Hour",LocalDefaultText = null, ObjectTableId = BusinessHourObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

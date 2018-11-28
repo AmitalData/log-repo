@@ -303,7 +303,9 @@
     <None Include="EntityFiles\CommonDataModel\NewFiles\TarrifType.lxml" />
     <None Include="EntityFiles\CommonDataModel\NewFiles\TemperatureUnit.lxml" />
     <None Include="EntityFiles\CommonDataModel\NewFiles\TemplateFormat.lxml" />
-    <None Include="EntityFiles\CommonDataModel\NewFiles\Tenant.lxml" />
+    <None Include="EntityFiles\CommonDataModel\NewFiles\Tenant.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\CommonDataModel\NewFiles\TenantLoginPolicy.lxml" />
     <None Include="EntityFiles\CommonDataModel\NewFiles\TermsofUseSignature.lxml" />
     <None Include="EntityFiles\CommonDataModel\NewFiles\Trucker.lxml" />
@@ -572,6 +574,7 @@
     <None Include="EntityFiles\InfrastructureModel\NewFiles\DWObjectTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\NewFiles\EntityStatus.lxml" />
     <None Include="EntityFiles\InfrastructureModel\NewFiles\EventType.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\General.lxml" />
     <None Include="EntityFiles\InfrastructureModel\NewFiles\IATACode.lxml" />
     <None Include="EntityFiles\InfrastructureModel\NewFiles\InboundEmail.lxml" />
     <None Include="EntityFiles\InfrastructureModel\NewFiles\InboundEmailLine.lxml" />
@@ -579,7 +582,9 @@
     <None Include="EntityFiles\InfrastructureModel\NewFiles\ObjectField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\NewFiles\ObjectTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\NewFiles\PrepaidCollect.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\RatesTable.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\NewFiles\RatesTable.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\InfrastructureModel\NewFiles\TaskSchedulerHistory.lxml" />
     <None Include="EntityFiles\InfrastructureModel\NewFiles\TasksScheduler.lxml" />
     <None Include="EntityFiles\InfrastructureModel\NewFiles\TransportMode.lxml" />
@@ -707,7 +712,9 @@
     <None Include="EntityFiles\InvoiceModel\CreditCardType.lxml" />
     <None Include="EntityFiles\InvoiceModel\ExternalSystemsTablesCode.lxml" />
     <None Include="EntityFiles\QuoteModel\NewFiles\MarkUpType.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\Quote.lxml" />
+    <None Include="EntityFiles\QuoteModel\NewFiles\Quote.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\QuoteModel\NewFiles\QuoteCharge.lxml" />
     <None Include="EntityFiles\QuoteModel\NewFiles\QuoteClosingReason.lxml" />
     <None Include="EntityFiles\QuoteModel\NewFiles\QuoteCustomerType.lxml" />

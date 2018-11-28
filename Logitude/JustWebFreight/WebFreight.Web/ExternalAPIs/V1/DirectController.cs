@@ -28,6 +28,7 @@ using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
 using WebFreight.Web.Validators;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -118,7 +119,21 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             if (!string.IsNullOrEmpty(errorMessage))
                             {
                                 errorMessage = errorMessage.TrimStart(',');
-                                throw new ApplicationException(errorMessage);
+                                throw new ApplicationException("Due to operational closed: " + errorMessage);
+                            }
+
+                            entityPM.OperationalCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                        }
+
+                        if(entity.IsAccountingClosed)
+                        {
+                            if(!entity.IsOperationalClosed)
+                            {
+                                throw new ApplicationException("Shipment shoud be closed operationally");
+                            }
+                            else
+                            {
+                                entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                             }
                         }
 

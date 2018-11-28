@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class RestrictionUpdateClass
@@ -172,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ObjectTableId",
-					  						DefaultText =  "Table",
+					  						DefaultText =  @"Table",
 					  						HelpTextCode =  "ObjectTableId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -228,7 +231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ObjectFieldId",
-					  						DefaultText =  "Field",
+					  						DefaultText =  @"Field",
 					  						HelpTextCode =  "ObjectFieldId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -265,7 +268,32 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable RestrictionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Restriction" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode RestrictionTextCode_RestrictionOEditRestriction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.EditRestriction", DefaultText = "Edit Restriction",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RestrictionTextCode_RestrictionOTable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.Table", DefaultText = "Table",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RestrictionTextCode_RestrictionOAllValuesAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.AllValuesAllowed", DefaultText = "All Values Allowed",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RestrictionTextCode_RestrictionOByField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.ByField", DefaultText = "By Field",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RestrictionTextCode_RestrictionOAllowedValues = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.AllowedValues", DefaultText = "Allowed Values",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode RestrictionTextCode_Restriction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction", DefaultText = "Restriction",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

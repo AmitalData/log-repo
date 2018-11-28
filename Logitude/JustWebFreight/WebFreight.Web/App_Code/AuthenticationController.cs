@@ -1101,7 +1101,7 @@ namespace WebFreight.Web
                     if (data.InValidMailOrPassword || data.IsLocked || data.IpRestricted)
                     {
                         AddFailedLoginLog(data , loginParameters);
-                        int sleepTime = data.NumberOfRetries > 0 ? data.NumberOfRetries : 1;
+                       // int sleepTime = data.NumberOfRetries > 0 ? data.NumberOfRetries : 1;
 
                         if (!data.IpRestricted && loginParameters.ClientType == "Web")
                         {
@@ -1110,19 +1110,15 @@ namespace WebFreight.Web
                             {
                                 contactPassword = globalObjectContext.ContactPasswords.Where(c => c.Email.ToLower() == email).FirstOrDefault();
                                 isLoadContactPasswords = true;
-                            }
+                            } 
+
                             if (contactPassword != null)
                             {
                                 if (contactPassword.NumberOfRetries++ >= 5)
                                 {
                                     CaptchaHelper captchaHelper = new CaptchaHelper();
                                     captchaHelper.AddCaptchaKey(loginParameters.Email, data, "Login");
-
-                                    if (!isLoadContactPasswords)
-                                    {
-                                        contactPassword = globalObjectContext.ContactPasswords.Where(c => c.Email.ToLower() == loginParameters.Email).FirstOrDefault();
-                                    }
-
+                                    if (!isLoadContactPasswords) contactPassword = globalObjectContext.ContactPasswords.Where(c => c.Email.ToLower() == loginParameters.Email).FirstOrDefault();
                                     if (contactPassword != null)
                                     {
                                         contactPassword.CaptchaKey = data.CaptchaKey;
@@ -1132,7 +1128,7 @@ namespace WebFreight.Web
                             }
                         }
 
-                        Thread.Sleep(sleepTime);
+                      //  Thread.Sleep(sleepTime);
                     }
 
           
@@ -1156,7 +1152,7 @@ namespace WebFreight.Web
             }
         }
         
-        private UserData CheckCaptchaState(LoginParameters loginParameters)
+        private UserData CheckCaptchaState(LoginParameters loginParameters , bool withoutCheckUsed = false)
         {
             CaptchaHelper captchaHelper = new CaptchaHelper();
             UserData data = new UserData();
@@ -1168,7 +1164,8 @@ namespace WebFreight.Web
                 if (!isCheckCaptchaCode)
                 {
                      globalContext = GlobalContext.GetContext();
-                     contactPassword= globalContext.ContactPasswords.Where(c => c.Email.ToLower() == loginParameters.Email).FirstOrDefault();
+                     contactPassword = globalContext.ContactPasswords.Where(c => c.Email.ToLower() == loginParameters.Email).FirstOrDefault();
+
                     if (contactPassword!=null)
                     {
                         if (contactPassword.NumberOfRetries++ >= 5)
@@ -1183,6 +1180,7 @@ namespace WebFreight.Web
                         }
                     }
                 }
+
                 else
                 {
                     globalContext = GlobalContext.GetContext();
@@ -1190,7 +1188,8 @@ namespace WebFreight.Web
                 }
 
                 string userCaptchaKey = contactPassword != null ? contactPassword.CaptchaKey : null;
-                if (isCheckCaptchaCode && !captchaHelper.CheckCaptchaCodeValidated(loginParameters.CaptchaCode, loginParameters.CaptchaKey , userCaptchaKey))
+
+                if (isCheckCaptchaCode && !captchaHelper.CheckCaptchaCodeValidated(loginParameters.CaptchaCode, loginParameters.CaptchaKey, userCaptchaKey, withoutCheckUsed))
                 {
                     captchaHelper.AddCaptchaKey(loginParameters.Email, data, "Login");
                     if (contactPassword != null)
@@ -1285,7 +1284,7 @@ namespace WebFreight.Web
                     this.OneTimePassword = passResult.IsOneTimePassword;
                 }
 
-                UserData user = CheckCaptchaState(parameters);
+                UserData user = CheckCaptchaState(parameters , true);
 
                 if (!user.InValidCaptcha)
                 {
@@ -1475,14 +1474,14 @@ namespace WebFreight.Web
                 int executionTime = (int)((DateTime.Now.Ticks - DateBeforePostLoginData.Ticks) / TimeSpan.TicksPerMillisecond);
                 AddServerTimeToHeaderRespose(executionTime);
 
-                if (user.HasError)
-                {
-                    if (user.InValidMailOrPassword ||  ((user.IsLocked && parameters.ClientType!="Web") || (user.InValidCaptcha && parameters.ClientType == "Web")) || user.IpRestricted)
-                    {
-                        int sleepTime = user.NumberOfRetries > 0 ? user.NumberOfRetries : 1;
-                        Thread.Sleep(sleepTime);
-                    }
-                }
+                //if (user.HasError)
+                //{
+                //    if (user.InValidMailOrPassword ||  ((user.IsLocked && parameters.ClientType!="Web") || (user.InValidCaptcha && parameters.ClientType == "Web")) || user.IpRestricted)
+                //    {
+                //        int sleepTime = user.NumberOfRetries > 0 ? user.NumberOfRetries : 1;
+                //        Thread.Sleep(sleepTime);
+                //    }
+                //}
 
                 return user;
             }

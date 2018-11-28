@@ -704,7 +704,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public decimal TaxPercentage { get; set; }
         public string TaxCode { get; set; }
         public string DebitAccount { get; set; }
-        public decimal Quantity { get; set; }
         public string MeasurementCode { get; set; }
 
         [XmlElement(ElementName = "Advanced")]

@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class VatTypePercentageUpdateClass
@@ -170,7 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Percentage",
-					  						DefaultText =  "Percentage",
+					  						DefaultText =  @"Percentage",
 					  						HelpTextCode =  "Percentage",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -224,7 +227,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "FromDate",
-					  						DefaultText =  "From Date",
+					  						DefaultText =  @"From Date",
 					  						HelpTextCode =  "FromDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -256,7 +259,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable VatTypePercentageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "VatTypePercentage" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode VatTypePercentageTextCode_VatTypePercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatTypePercentage", DefaultText = "VAT Type Percentage",LocalDefaultText = null, ObjectTableId = VatTypePercentageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VatTypePercentageTextCode_VatTypePercentageOAddVatTypePercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatTypePercentage.O.AddVatTypePercentage", DefaultText = "Add VAT Type Percentage",LocalDefaultText = null, ObjectTableId = VatTypePercentageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VatTypePercentageTextCode_VatTypePercentageOEditVatTypePercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatTypePercentage.O.EditVatTypePercentage", DefaultText = "Edit VAT Type Percentage",LocalDefaultText = null, ObjectTableId = VatTypePercentageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VatTypePercentageTextCode_VatTypePercentageBAddPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatTypePercentage.B.AddPercentage", DefaultText = "Add Percentage",LocalDefaultText = null, ObjectTableId = VatTypePercentageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VatTypePercentageTextCode_VatTypePercentageBDeletePercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatTypePercentage.B.DeletePercentage", DefaultText = "Delete Percentage",LocalDefaultText = null, ObjectTableId = VatTypePercentageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VatTypePercentageTextCode_VatTypePercentageMDeletePercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatTypePercentage.M.DeletePercentage", DefaultText = "Delete this percentage?",LocalDefaultText = null, ObjectTableId = VatTypePercentageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode VatTypePercentageTextCode_VatTypePercentageOPercentages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatTypePercentage.O.Percentages", DefaultText = "Percentages",LocalDefaultText = null, ObjectTableId = VatTypePercentageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

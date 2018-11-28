@@ -214,7 +214,8 @@ using Simplog.Data.ShipmentsModel;
 					   				   }
 				   
 				   temp.MainCarriageATA = MyEntityPM.MainCarriageATA;
-				   temp.MainCarriageATD = MyEntityPM.MainCarriageATD;					
+				   temp.MainCarriageATD = MyEntityPM.MainCarriageATD;
+				   temp.IsAccountingClosed = MyEntityPM.IsAccountingClosed;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -458,7 +459,8 @@ using Simplog.Data.ShipmentsModel;
 			
 					
 					temp.MainCarriageATA = MyEntity.MainCarriageATA;
-					temp.MainCarriageATD = MyEntity.MainCarriageATD;					   
+					temp.MainCarriageATD = MyEntity.MainCarriageATD;
+					temp.IsAccountingClosed = MyEntity.IsAccountingClosed;					   
 					   return temp;
 		    }
             catch (Exception ex)

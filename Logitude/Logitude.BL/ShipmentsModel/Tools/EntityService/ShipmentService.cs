@@ -54,6 +54,9 @@ using Logitude.Server.Tools.StorageService;
 using Simplog.Server.Infrastructure.Azure;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -2320,7 +2323,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.IsRemovingStackEvents = false;
             entityPM.CalculateStatus = false;
 
-            ComputeShipmentStatus();
+            this.ComputeShipmentStatus();
+            this.UpdateCustomerWorkingDates();
 
             if (isNewEntity)
             {
@@ -2361,10 +2365,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                {
-                    this.UpdateCustomerWorkingDates();
-                }
+                //if (!string.IsNullOrEmpty(entityPM.CustomerId))
+                //{
+                //    this.UpdateCustomerWorkingDates();
+                //}
 
                 if (!entityPM.IsHybrid)
                 {
@@ -2843,77 +2847,85 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 //{
-                    ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
-                    CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
-                    DocumentRepository documentrepository = new DocumentRepository(commonContext);
-                    ObjectTableRepository objecttableRep = new ObjectTableRepository(entityPM.Tenant);
-                    ObjectTable objectTable = null;
+                ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
+                CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
+                DocumentRepository documentrepository = new DocumentRepository(commonContext);
+                ObjectTableRepository objecttableRep = new ObjectTableRepository(entityPM.Tenant);
+                ObjectTable objectTable = null;
 
-                    objectTable = objecttableRep.GetObjectTableByName("Shipment", 0, true);
+                objectTable = objecttableRep.GetObjectTableByName("Shipment", 0, true);
 
-                    List<QueueTask> tasks = new List<QueueTask>();
-                    tasks.Add(new QueueTask()
-                    {
-                        Action = "StatusUpdate",
-                        Parameters = new List<Logitude.Server.Tools.Parameter>() {
+                List<QueueTask> tasks = new List<QueueTask>();
+                tasks.Add(new QueueTask()
+                {
+                    Action = "StatusUpdate",
+                    Parameters = new List<Logitude.Server.Tools.Parameter>() {
                 new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = entityPM.ShipmentNumber},
                 new Logitude.Server.Tools.Parameter { Name = "Code", Value = "VPR"},
-               
+                new Logitude.Server.Tools.Parameter { Name = "Direction", Value = entityPM.DirectionId},
+
                 }
-                    });
-                    var ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
-                    Document document = new Document()
-                    {
-                        CreateDate = DateTime.Now,
-                        Extension = "xml",
-                        FileSize = ByteData.Length,
-                        Tenant = Convert.ToInt32(entityPM.Tenant),
-                        Id = IdCounter.GetNumber("Document", entityPM.Tenant),
-                        HasFile = true,
-                        Folder = "ExternalTasksQueue",
-                    };
-                    documentrepository.Add(document);
-                    documentrepository.SubmitChanges();
-                    var commLog = new CommunicationLog()
-                    {
-                        Id = IdCounter.GetNumber("CommunicationLog", entityPM.Tenant),
-                        LastStatusDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
-                        InOut = "O",
-                        ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
-                        Subject = "Status Update",
-                        Tenant = entityPM.Tenant,
-                        CommunicationLogTypeCode = "Q",
-                        CommunicationStatusTypeCode = "W",
-                        CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
-                        DocumentId = document.Id,
-                        CreateDateUTC = DateTime.UtcNow,
-                        LastStatusDateUTC = DateTime.UtcNow,
-                        QueueName = "externaltasksqueue" + entityPM.Tenant + 1,
-                        Priority = 1,
+                });
 
-                    };
 
-                    communicationLogRepository.Add(commLog);
-                    communicationLogRepository.SubmitChanges();
-                    string filename = document.Id + "." + document.Extension;
-                    string filePath = "tenant" + commLog.Tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
-                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                    BlobFileInfo fileInfo = new BlobFileInfo()
-                    {
-                        FileName = document.Id,
-                        FolderName = document.Folder,
-                        Extension = document.Extension,
-                        Tenant = entityPM.Tenant,
-                        FileSize = ByteData.Length,
 
-                    };
 
-                    storageservice.Write(ByteData, fileInfo);
-                     
+                var ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
+                Document document = new Document()
+                {
+                    CreateDate = DateTime.Now,
+                    Extension = "xml",
+                    FileSize = ByteData.Length,
+                    Tenant = Convert.ToInt32(entityPM.Tenant),
+                    Id = IdCounter.GetNumber("Document", entityPM.Tenant),
+                    HasFile = true,
+                    Folder = "ExternalTasksQueue",
+                };
+                documentrepository.Add(document);
+                documentrepository.SubmitChanges();
+                var commLog = new CommunicationLog()
+                {
+                    Id = IdCounter.GetNumber("CommunicationLog", entityPM.Tenant),
+                    LastStatusDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
+                    InOut = "O",
+                    ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
+                    Subject = "Status Update",
+                    Tenant = entityPM.Tenant,
+                    CommunicationLogTypeCode = "Q",
+                    CommunicationStatusTypeCode = "W",
+                    CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
+                    DocumentId = document.Id,
+                    CreateDateUTC = DateTime.UtcNow,
+                    LastStatusDateUTC = DateTime.UtcNow,
+                    QueueName = "externaltasksqueue" + entityPM.Tenant + 1,
+                    Priority = 1,
+
+                };
+
+                communicationLogRepository.Add(commLog);
+                communicationLogRepository.SubmitChanges();
+                string filename = document.Id + "." + document.Extension;
+                string filePath = "tenant" + commLog.Tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = entityPM.Tenant,
+                    FileSize = ByteData.Length,
+
+                };
+
+                storageservice.Write(ByteData, fileInfo);
+                Communications.SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, commLog.Tenant);
+
                 //    scope.Complete();
                 //}
             }
         }
+
+      
         private void InitializeFCL_LCL()
         {
             var isFCL = false;
@@ -6176,10 +6188,49 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             customer.LastShipmentDate = todayDate;
                         }
 
-
                         customerRepository.Update(customer);
                         customerRepository.SubmitChanges();
                     }
+                }
+            }
+
+            else
+            {
+                if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
+                {
+                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                    CustomerRepository customerRepository = new CustomerRepository(tenant);                    
+
+                    if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
+                    {
+                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false);
+                        if (customer != null)
+                        {
+                            customer.LastShipmentDate = todayDate;
+                            customerRepository.Update(customer);
+                            customerRepository.SubmitChanges();
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(this.entityPoco.CustomerId))
+                    {
+                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(this.entityPoco.CustomerId, tenant, false);
+                        if (customer != null)
+                        {
+                            List<Shipment> shipments = this.objectContext.Shipments.Where(d => d.CustomerId == customer.Id && d.Id != this.entityPoco.Id).ToList();
+                            if (shipments.Count > 0)
+                            {
+                                Shipment shipment = shipments.OrderByDescending(s => s.CreateDateTime).FirstOrDefault();
+
+                                if (shipment != null)
+                                {
+                                    customer.LastShipmentDate = shipment.CreateDateTime;
+                                    customerRepository.Update(customer);
+                                    customerRepository.SubmitChanges();
+                                }
+                            }
+                        }
+                    }                    
                 }
             }
         }

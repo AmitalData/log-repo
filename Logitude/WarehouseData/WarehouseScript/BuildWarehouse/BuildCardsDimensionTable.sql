@@ -1,37 +1,4 @@
 
-
-If(OBJECT_ID('tempdb..#DIM_PartnersTemp') Is Not Null)
-Begin
-    Drop Table #DIM_PartnersTemp
-End
-
-
-
---Create temporal DIM_PartnersTemp
-
-CREATE TABLE #DIM_PartnersTemp (
-	Id_Number int not null identity(1,1) primary key,
-    Id varchar(15) not null,
-    Name varchar(70) not null,
-	[Local Name]  nvarchar(100),
-	City nvarchar(25),
-	Country varchar(120),
-	[State Name]  varchar(40),
-	[Zip Code]  varchar(15),
-	[Primary Contact] varchar(60),
-	[Account Manager]  varchar(60),
-	Salesman  varchar(60),
-	[Customer Rank]   varchar(40),
-	[Partner Type]  varchar(20) not null,
-	[Source Tenant]  int,
-    [Parent Tenant]  int,
-	[Country Code] varchar(2),
-    [Primary Contact Email] varchar(70),
-
-);
-insert into #DIM_PartnersTemp values ('-1' , 'Not Specified' ,'Not Specified' ,'Not Specified','Not Specified','Not Specified','Not Specified','Not Specified','Not Specified','Not Specified','Not Specified' ,'Not Specified', 0,0,null,'Not Specified')
-
---Fill temporal DIM_PartnersTemp
    declare @Id as varchar(15)
    declare @Name as varchar(70)
    declare @LocalName as nvarchar(100)
@@ -69,17 +36,10 @@ insert into #DIM_PartnersTemp values ('-1' , 'Not Specified' ,'Not Specified' ,'
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-	insert into #DIM_PartnersTemp values(@Id,@Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant,@CountryCode,@PrimaryContactEmail)
+	insert into #DIM_PartnersTemp (Id,Name,[Local Name],City,Country,[State Name],[Zip Code],[Primary Contact],[Account Manager],Salesman,[Customer Rank],[Partner Type],[Source Tenant],[Parent Tenant] ,[Country Code],[Primary Contact Email]) values(@Id,@Name,@LocalName ,@City,@Country, @State, @ZipCode , @PrimaryContact , @AccountManager , @Salesman ,@Rank , @PartnerType,  @SourceTenant , @ParentTenant,@CountryCode,@PrimaryContactEmail)
 
 	FETCH NEXT FROM PartnersCursor INTO @Id , @Name, @LocalName ,@City , @Country, @State , @ZipCode , @PrimaryContact , @AccountManager , @Salesman , @Rank , @PartnerType  , @SourceTenant, @ParentTenant,  @CountryCode,@PrimaryContactEmail
 		End
 	CLOSE PartnersCursor
 	DEALLOCATE PartnersCursor
 	
-
-IF OBJECT_ID ('NewDIM_Partners', 'U')  IS NOT NULL Begin  Drop Table NewDIM_Partners End
-SELECT *  INTO  NewDIM_Partners FROM #DIM_PartnersTemp
-If(OBJECT_ID('tempdb..#DIM_PartnersTemp') Is Not Null) Begin Drop Table #DIM_PartnersTemp End
-
-ALTER TABLE NewDIM_Partners ADD CONSTRAINT PK_NewDIM_Partners_Id_Number PRIMARY KEY CLUSTERED (Id_Number);
-CREATE NONCLUSTERED INDEX [IX_DIM_Partners_Id] ON [dbo].[NewDIM_Partners]([Id])

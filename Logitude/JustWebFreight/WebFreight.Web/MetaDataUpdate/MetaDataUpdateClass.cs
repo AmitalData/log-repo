@@ -2899,7 +2899,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Boolean",
                 MaxLength = 1,
                 MinLength = 0,
-                ObjectTableId = ComputingPartnerObjectTable.Id,
+                ObjectTableId = BusinessUnitObject.Id,
                 ObjectTableName = BusinessUnitObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
@@ -10316,7 +10316,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1000,
                 MinLength = 0,
                 ObjectTableId = RatesTableObject.Id,
-                ObjectTableName = "RatesTableObject.Name",
+                ObjectTableName = RatesTableObject.Name,
                 ObjectTablePlural = "RatesTables",
                 ObjectTableSingular = "RatesTable",
                 Tenant = 0,
@@ -11525,7 +11525,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Bill to VAT is required",
+                DefaultText = "Bill To VAT is required",
                 FullFieldLable = "IsVatNumberMandatoryInAR",
                 FieldName = "IsVatNumberMandatoryInAR",
                 FieldsDataType = "Boolean",
@@ -11536,7 +11536,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ListFieldLable = "IsVatNumberMandatoryInAR",
-                ListLableDefaultText = "Bill to VAT is required",
+                ListLableDefaultText = "Bill To VAT is required",
                 DisplayInList = true,
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAR",
@@ -11548,7 +11548,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Bill to VAT is required",
+                DefaultText = "Vendor VAT is required",
                 FullFieldLable = "IsVatNumberMandatoryInAP",
                 FieldName = "IsVatNumberMandatoryInAP",
                 FieldsDataType = "Boolean",
@@ -11559,7 +11559,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ListFieldLable = "IsVatNumberMandatoryInAP",
-                ListLableDefaultText = "Bill to VAT is required",
+                ListLableDefaultText = "Vendor VAT is required",
                 DisplayInList = true,
                 CanFilter = true,
                 ListPropertyPath = "IsVatNumberMandatoryInAP",
@@ -14882,7 +14882,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Support e-mail",
-                FullFieldLable = "Support e-mail",
+                FullFieldLable = "Supportemail",
                 FieldName = "Supportemail",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -29014,17 +29014,17 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1000,
                 MinLength = 0,
                 ObjectTableId = WareHouseObject.Id,
-                ObjectTableName = "WareHouse",
-                ObjectTablePlural = "WareHouses",
-                ObjectTableSingular = "WareHouse",
+                ObjectTableName = "Warehouse",
+                ObjectTablePlural = "Warehouses",
+                ObjectTableSingular = "Warehouse",
                 Tenant = 0,
                 TextCodeType = "F",
                 DisplayOnly = false,
                 SystemMaxLength = 40,
                 SystemRequired = false,
                 CanFilter = true,
-                ValidForQuerySection1 = "WareHouse",
-                ValidForQuerySection2 = "WareHouseFollowUp",
+                ValidForQuerySection1 = "Warehouse",
+                ValidForQuerySection2 = "WarehouseFollowUp",
                 DisplayInList = true,
                 IsCustomFilter = false,
                 Operator = "Contains",
@@ -63955,7 +63955,9 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.ClosedInvoice", DefaultText = "This invoice is closed", LocalDefaultText = "חשבונית זאת סגורה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.NoGLAccount", DefaultText = "The chosen charge type doesn't have GLAccount connected to it", LocalDefaultText = "סעיף החיוב הנבחר לא מקושר לכרטיס הנה''ח", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.VendorNoGLAccount", DefaultText = "The vendor does not have GLAccount", LocalDefaultText = "לספק לא קושר כרטיס הנהלת חשבונות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.InvoiceCurrNotMatch", DefaultText = "The Invoice Currency does not match the vendor GLAccount Currency ", LocalDefaultText = "מטבע החשבונית לא תואם את מטבע הכרטיס של הספק", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
 
+            
             #endregion
 
             ObjectContext.SaveChanges();
@@ -65642,16 +65644,18 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region AnalyzeQueue Features
-            Feature AnalyzeQueueFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            //Feature AnalyzeQueueFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueue.Features.Edit", NameTextCodeDefaultText = "Edit Analyze Queue", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MESSAGEBODY", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.MessageBody", NameTextCodeDefaultText = "Message Body", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AllAnalyzeQueues", NameTextCodeDefaultText = "All Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANALYZEQUEUEERRORS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AnalyzeQueueErrors", NameTextCodeDefaultText = "Error", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.PackageFeature", NameTextCodeDefaultText = "Analyze Queue Package Feature", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature AnalyzeQueueFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.TodayAnalyzeQueues", NameTextCodeDefaultText = "Today Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Read", NameTextCodeDefaultText = "Read", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.PackageFeature", NameTextCodeDefaultText = "Analyze Queue Package Feature", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
+            Feature AnalyzeQueueFeature_A01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_A02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_A03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MESSAGEBODY", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.MessageBody", NameTextCodeDefaultText = "Message Body", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_A04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ANALYZEQUEUEERRORS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AnalyzeQueueErrors", NameTextCodeDefaultText = "Error", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            Feature AnalyzeQueueFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.AllAnalyzeQueues", NameTextCodeDefaultText = "All Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AnalyzeQueueFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TODAYANALYZEQUS", Packagable = true, ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueueObjectTable.Features.TodayAnalyzeQueues", NameTextCodeDefaultText = "Today Analyze Queues", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            Feature AnalyzeQueueFeature_C01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESEND", ObjectTableId = AnalyzeQueueObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AnalyzeQueue.Features.Resend", NameTextCodeDefaultText = "Resend", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -66589,6 +66593,10 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature AgentSharedManifestFeature_07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OceanAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.OceanAgentSharedManifests", NameTextCodeDefaultText = "Ocean Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AgentSharedManifestFeature_08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InlandAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.InlandAgentSharedManifests", NameTextCodeDefaultText = "Inland Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature AgentSharedManifestFeature_09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelledAgentSharedManifestsQ", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.CancelledAgentSharedManifests", NameTextCodeDefaultText = "Cancelled Agent Shared Manifests", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AgentSharedManifestFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATESHAREDAGENT", Packagable = true, ObjectTableId = AgentSharedManifestObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AgentSharedManifest.Features.UpdateSharedAgent", NameTextCodeDefaultText = "Update Shared Agent", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
+
             #endregion
 
             #region ContainerFollowUp

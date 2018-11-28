@@ -82,8 +82,8 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
 
                 }
 
-                errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
                 BatchTaskExecution.ErrorLog = errorMessage;
+                BatchTaskExecution.CallStack = ex.StackTrace;
             }
             BatchTaskExecution.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             batchTaskExecutionUpdateService.Update(BatchTaskExecution, true);

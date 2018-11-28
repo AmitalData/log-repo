@@ -82,13 +82,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
             List<Simplog.Data.CommonDataModel.EntityPOCOs.Card> cards = cardRepository.GetCardsByIds(cardIds, tenant).ToList();
             
-            string  vatNumber = null;
+           
 
             List<TaxReportLinePM> reportLinesList = new List<TaxReportLinePM>();
 
             //Outputs
             foreach (Journal a in journals)
             {
+                string vatNumber = null;
                 var exist = reportLinesList.Where(d => d.JournalId == a.Id).Any();
                 if (!exist)
                 {
@@ -292,7 +293,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    taxReportLine.LineTypeCode = "C";
+                    taxReportLine.LineTypeCode = "H";
                 }
 
 
@@ -618,7 +619,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 //create line 
                 string line = "";
-                myStringBuilder.Append("O");
                 line += lineList.LineTypeCode;
 
                 myStringBuilder.Append(FormatString(lineList.VatNumber, 9, paddingDigit: '0'));
@@ -776,8 +776,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 number = 0;
             }
 
+
+            //truncate
+            if (truncateDecimal)
+            {
+                number = Math.Truncate(number.Value);
+            }
+
             //big size
-            if(number.ToString().Length > wordSize)
+            if (number.ToString().Length > wordSize)
             {
                 throw new ApplicationException("There is a number with big value!");
             }
@@ -786,12 +793,6 @@ namespace Logitude.Accounting.BL.CoreBL
             if (includeSign)
             {
                 result += number >= 0 ? '+' : '-';
-            }
-
-            //truncate
-            if (truncateDecimal)
-            {
-                number = Math.Truncate(number.Value);
             }
 
             //abs
