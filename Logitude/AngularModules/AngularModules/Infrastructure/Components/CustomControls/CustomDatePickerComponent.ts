@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
@@ -131,6 +131,16 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
                 this.SelectedItem = "Less Than";
                 this.Text = "Less Than " + stringDate;
             }
+            if (predefinedFilter.Operator == "Between") {
+                
+                var myDate = DateTool.GetDateParts(predefinedFilter.PredefinedValue);
+                var myDate1 = DateTool.GetDateParts(predefinedFilter.PredefinedValue2);
+                var stringDate = (myDate.Day < 10 ? "0" : "") + myDate.Day + '-' + (myDate.Month < 10 ? "0" : "") + myDate.Month + '-' + myDate.Year;
+                var endingDate = (myDate1.Day < 10 ? "0" : "") + myDate1.Day + '-' + (myDate1.Month < 10 ? "0" : "") + myDate1.Month + '-' + myDate1.Year;
+                this.SelectedItem = stringDate + " - " + endingDate;
+                this.Text = stringDate + " - " + endingDate;
+            }
+            //Between
         }
         if (this.SelectedItem != null) {
             this.SetDisplayText();
