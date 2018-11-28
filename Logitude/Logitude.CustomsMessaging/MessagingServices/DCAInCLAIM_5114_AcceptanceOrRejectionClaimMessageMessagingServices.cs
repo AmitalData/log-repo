@@ -8,7 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnifreightIIG.Common.MessageLib.Claim;
+
+using UnifreightIIG.Common.MessageLib.Claim.ClaimREJACC;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
