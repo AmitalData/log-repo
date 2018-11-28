@@ -610,7 +610,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                         let bank: CustomBankList = allCustomBankList.filter(d => d.InternalCode == customFileCreditResponseData.BankCode && !d.InActive)[0];
                         if (!AppTool.IsNullOrEmpty(bank)) {
                             this.GetCreditInternalBankId = bank.Id;
-                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection.length == 1) {
                                 this.JustAutoFillPaymentScreen();
                             }
                         }

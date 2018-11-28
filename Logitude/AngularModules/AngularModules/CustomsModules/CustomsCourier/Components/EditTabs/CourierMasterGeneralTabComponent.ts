@@ -183,38 +183,4 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     HAWBLostFocus(value: any) {
     }
 
-    SaveAndOpenWorksheet() {
-        if (this.EntityPM.IsDirty) {
-
-
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-            var sub = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                sub.unsubscribe();
-                if (isSaveSuccess) {
-                    this.OpenWorksheet();
-                }
-            });
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-
-        }
-        else {
-            this.OpenWorksheet();
-
-        }
-    }
-    OpenWorksheet(){
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 1029;
-        logitudeWindow.Height = 750;
-        logitudeWindow.ShowCloseButton = true;
-        logitudeWindow.IsFillScreen = true;
-
-        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM };
-        //logitudeWindow.Title = this.ObjectTableName + " Search";
-        //logitudeWindow.Show('./Customs/Components/Courier/CourierWorkSheet/CourierWorksheetComponent');
-        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
-        logitudeWindow.WindowClosed.subscribe(($event: any) => SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM());
-
-    }
 }
