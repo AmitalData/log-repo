@@ -1090,6 +1090,7 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "DSCA":
                 case "AREX":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(ArchivoExportadoDataProvider));
@@ -1585,6 +1586,7 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "DSCA":
                 case "AREX":
                     {
                         ArchivoExportadoManager myDataManager = new ArchivoExportadoManager(filters, reportFliter.tenant);

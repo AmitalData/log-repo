@@ -48,10 +48,26 @@ export class ReportComponent {
                     reportService.GetReportListsByGroupId(item.Id, SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             var myResult: ReportList[] = myResponse.Result;
-
+                            
                             myResult.forEach((item) => {
-                                if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
-                                    this.reportList.push(item);
+                                if (item.Code == "AREX") {
+                                    if (SessionLocator.Tenant == 1212) {
+                                        this.reportList.push(item);
+                                    }
+                                }
+
+                                else if (item.Code == "DSCA") {
+                                    if (SessionLocator.Tenant != 1212) {
+                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                            this.reportList.push(item);
+                                        }
+                                    }
+                                }
+
+                                else {
+                                    if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                        this.reportList.push(item);
+                                    }
                                 }
                             });
 
