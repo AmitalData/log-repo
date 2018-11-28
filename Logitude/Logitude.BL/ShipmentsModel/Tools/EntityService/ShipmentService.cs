@@ -2858,6 +2858,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     Parameters = new List<Logitude.Server.Tools.Parameter>() {
                 new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = entityPM.ShipmentNumber},
                 new Logitude.Server.Tools.Parameter { Name = "Code", Value = "VPR"},
+                new Logitude.Server.Tools.Parameter { Name = "Direction", Value = entityPM.DirectionId},
 
                 }
                 });

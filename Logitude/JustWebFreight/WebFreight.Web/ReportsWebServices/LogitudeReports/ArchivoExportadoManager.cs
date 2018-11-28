@@ -226,6 +226,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.LongMaster = longMaster;
                             myRecord.DirectionPartner = myDirectionPartner;
                             myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
+                            myRecord.Salesman = myShipment.SalesmanUserName;
 
                             if (!string.IsNullOrEmpty(myShipment.BranchId))
                             {
@@ -238,7 +239,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.BranchExternalId = myBranch.ExternalId;
                                 }
                             }
-
+                            
                             myDataProvider.Shipments.Add(myRecord);
                         }
                     }
@@ -253,6 +254,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.DirectionPartner = myDirectionPartner;
                         myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                         myRecord.Payables = this.IsLocalCurrency ? invoice.AmountInLocalCurrency : invoice.AmountInProfitCurrency;
+                        myRecord.Salesman = myShipment.SalesmanUserName;
 
                         myRecord.InvoiceNumber = invoice.InvoiceNumber;
                         myRecord.InvoiceDate = invoice.InvoiceDate;
@@ -307,6 +309,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.DirectionPartner = myDirectionPartner;
                         myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                         myRecord.Receivables = this.IsLocalCurrency ? invoice.AmountInLocalCurrency : invoice.AmountInProfitCurrency;
+                        myRecord.Salesman = myShipment.SalesmanUserName;
 
                         myRecord.InvoiceNumber = invoice.InvoiceNumber;
                         myRecord.InvoiceDate = invoice.InvoiceDate;
@@ -547,6 +550,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.DirectionPartner = myDirectionPartner;
                                     myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                                     myRecord.Payables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
+                                    myRecord.Salesman = myShipment.SalesmanUserName;
 
                                     if (myBranch != null)
                                     {
@@ -599,6 +603,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.DirectionPartner = myDirectionPartner;
                                     myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                                     myRecord.Receivables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
+                                    myRecord.Salesman = myShipment.SalesmanUserName;
 
                                     if (myBranch != null)
                                     {
@@ -659,6 +664,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.LongMaster = longMaster;
                                 myRecord.DirectionPartner = myDirectionPartner;
                                 myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
+                                myRecord.Salesman = myShipment.SalesmanUserName;
 
                                 myRecord.Payables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
 
@@ -728,7 +734,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.LongMaster = longMaster;
                                 myRecord.DirectionPartner = myDirectionPartner;
                                 myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
-
+                                myRecord.Salesman = myShipment.SalesmanUserName;
                                 myRecord.Receivables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
 
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
