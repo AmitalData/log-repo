@@ -623,6 +623,28 @@ export class ImporterDetailsComponent extends BaseComponent {
      }
 
     doDisable: boolean;
+    DeleteImporterDetailsButtonClicked() {
+        this.ImporterTypeCode = null;
+        this.ImporterPassportNumber = null;
+        this.ImporterPassCountryCode = null;
+        this.MainImporterEntitlemntTypeCode = null;
+        this.ImporterName = null;
+        this.ImporterTypeName = null;
+
+        this.CasualImporterAddress1 = null;
+        this.CasualImporterAddress2 = null;
+        this.CasualImporterCity = null;
+        this.CasualImporterContact = null;
+        this.CasualImporterEmail = null;
+        this.CasualImporterFax = null;
+        this.CasualImporterTel = null;
+        this.CasualImporterZipCode = null;
+        this.EntityPM.CalculatedImporterName = null
+
+        //this.OkButtonClicked();
+        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+    }
     OkButtonClicked() {
         if (this.type == "Importer" && this.isCourierDeclaration) {
             //if (!FormatTool.IsEmail(this.CasualImporterEmail)) {
