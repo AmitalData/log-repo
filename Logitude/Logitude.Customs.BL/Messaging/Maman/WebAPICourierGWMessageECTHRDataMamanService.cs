@@ -160,8 +160,28 @@ namespace Logitude.Customs.BL.Messaging.Maman
             var myCourierMasterQueryService = new CourierMasterQueryService(context);
             var declarationPM = myDeclarationQueryService.GetSingle(settings.DeclarationId, false, false);
             declarationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-            declarationPM.MamanStatusCode = responeGWMessageECTHRData.ResponseStatusCode.ToString();
-            declarationPM.MamanErrorXml = responeGWMessageECTHRData.ResponseStatusMsg;
+
+
+
+            switch (responeGWMessageECTHRData.ResponseStatusCode)
+            {
+                case 0:
+                    {
+                        declarationPM.MamanStatusCode = "1";
+                    }
+                    break;
+                case 1:
+                    {
+                        declarationPM.MamanStatusCode = "2";
+                    }
+                    break;
+                default:
+                    declarationPM.MamanStatusCode = responeGWMessageECTHRData.ResponseStatusCode.ToString();//???        
+                    break;
+            }
+
+
+            declarationPM.MamanErrorXml = responeGWMessageECTHRData.ResponseStatusCode.ToString() + " " + responeGWMessageECTHRData.ResponseStatusMsg;
 
             using (var scope = TransactionFactory.GetNewTransaction())
             {
