@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 
@@ -34,21 +35,20 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         throw new ApplicationException("Blob chunk must not be larger than 100 KB");
                     }
 
-                    #region SecurityKey
-                    string shipmentId = string.Empty;
-                    ShipmentQuery shipmentQuery = new ShipmentQuery(blobInfo.Tenant); 
+                    #region Authentication
 
+                    string shipmentId = string.Empty;
+                    ShipmentQuery shipmentQuery = new ShipmentQuery(blobInfo.Tenant);
                     if (!string.IsNullOrEmpty(blobInfo.SecurityKey))
                     {
                         shipmentId = shipmentQuery.GetShipmentIdBySecurityKeyAndShipmentNumber(blobInfo.ShipmentNumber, blobInfo.SecurityKey, blobInfo.Tenant);
                     }
-
+             
                     if (string.IsNullOrEmpty(shipmentId))
                     {
-                        
                         bool isExist = shipmentQuery.CheckIfShipmentExistByShipmentNumber(blobInfo.ShipmentNumber, blobInfo.Tenant);
                         if (!isExist) throw new ApplicationException("התיק לא אותר");
-                        throw new ApplicationException("זיהוי משלוח לא תקין- אנא פנה לסוכן מכס");
+                        else throw new ApplicationException("זיהוי משלוח לא תקין- אנא פנה לסוכן מכס");
                     }
 
                     #endregion
