@@ -64,11 +64,11 @@ namespace Logitude.BL.InfrastructureModel
         {
             get
             {
-                throw new NotImplementedException();
+                return this.Id;
             }
             set
             {
-                throw new NotImplementedException();
+                this.Code = value;
             }
         }
    }

@@ -63,6 +63,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     public IconBackground = "./Images/single-tick.png";
     public ShareAsDefault: boolean = false;
     public IsDSVConnectVisible: boolean = false;
+    public IsHebrewSettings = false;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
 
     constructor() {
@@ -77,6 +78,10 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         this.SetUIPropertires();
     }
     ngOnInit() {
+
+        if (this.IsLogBox || SessionLocator.PrivateLableSettings) {
+            this.IsHebrewSettings = true; 
+        }
         if (FeatureLocator.HasFeaturePermession("FilingInbox", "DigitallySign")) {
             this.CheckDigitalSign();
         }

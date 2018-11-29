@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteChargeUpdateClass
@@ -78,7 +81,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuoteCharge",
 			      				    DBTableName =  "QuoteCharges",
 			      				    ObjectTableSingular =  "Quote Charge",
-			      				    ObjectTablePlural =  "QuoteCharges",
 			      				    DefaultText =  "Quote Charge",
 			      				    Name =  "QuoteCharge",
 			      				    IsNewWizard =  false,
@@ -172,7 +174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostQuantity",
-					  						DefaultText =  "Cost Quantity",
+					  						DefaultText =  @"Cost Quantity",
 					  						HelpTextCode =  "CostQuantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -227,7 +229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostUnitPrice",
-					  						DefaultText =  "Cost Unit Price",
+					  						DefaultText =  @"Cost Unit Price",
 					  						HelpTextCode =  "CostUnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -282,7 +284,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostTotalAmount",
-					  						DefaultText =  "Cost Total Amount",
+					  						DefaultText =  @"Cost Total Amount",
 					  						HelpTextCode =  "CostTotalAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -337,7 +339,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostTotalAmountLocal",
-					  						DefaultText =  "Cost Total Amount Local",
+					  						DefaultText =  @"Cost Total Amount Local",
 					  						HelpTextCode =  "CostTotalAmountLocal",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -392,7 +394,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostContainerType1UnitPrice",
-					  						DefaultText =  "Cost Container Type 1 Unit Price",
+					  						DefaultText =  @"Cost Container Type 1 Unit Price",
 					  						HelpTextCode =  "CostContainerType1UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -447,7 +449,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostContainerType2UnitPrice",
-					  						DefaultText =  "Cost Container Type 2 Unit Price",
+					  						DefaultText =  @"Cost Container Type 2 Unit Price",
 					  						HelpTextCode =  "CostContainerType2UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -502,7 +504,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostContainerType3UnitPrice",
-					  						DefaultText =  "Cost Container Type 3 Unit Price",
+					  						DefaultText =  @"Cost Container Type 3 Unit Price",
 					  						HelpTextCode =  "CostContainerType3UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -557,7 +559,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostContainerType4UnitPrice",
-					  						DefaultText =  "Cost Container Type 4 Unit Price",
+					  						DefaultText =  @"Cost Container Type 4 Unit Price",
 					  						HelpTextCode =  "CostContainerType4UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -612,7 +614,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostContainerType5UnitPrice",
-					  						DefaultText =  "Cost Container Type 5 Unit Price",
+					  						DefaultText =  @"Cost Container Type 5 Unit Price",
 					  						HelpTextCode =  "CostContainerType5UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -668,7 +670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "SaleMeasurementId",
-					  						DefaultText =  "Sale UOM",
+					  						DefaultText =  @"Sale UOM",
 					  						HelpTextCode =  "SaleMeasurementId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -723,7 +725,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleQuantity",
-					  						DefaultText =  "Sales Quantity",
+					  						DefaultText =  @"Sales Quantity",
 					  						HelpTextCode =  "SaleQuantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -778,7 +780,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleUnitPrice",
-					  						DefaultText =  "Sales Unit Price",
+					  						DefaultText =  @"Sales Unit Price",
 					  						HelpTextCode =  "SaleUnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -833,7 +835,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleTotalAmount",
-					  						DefaultText =  "Sales Total Amount",
+					  						DefaultText =  @"Sales Total Amount",
 					  						HelpTextCode =  "SaleTotalAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -888,7 +890,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleTotalAmountLocal",
-					  						DefaultText =  "Sales Total Amount Local",
+					  						DefaultText =  @"Sales Total Amount Local",
 					  						HelpTextCode =  "SaleTotalAmountLocal",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -943,7 +945,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleContainerType1UnitPrice",
-					  						DefaultText =  "Sale Container Type 1 Unit Price",
+					  						DefaultText =  @"Sale Container Type 1 Unit Price",
 					  						HelpTextCode =  "SaleContainerType1UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -998,7 +1000,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleContainerType2UnitPrice",
-					  						DefaultText =  "Sale Container Type 2 Unit Price",
+					  						DefaultText =  @"Sale Container Type 2 Unit Price",
 					  						HelpTextCode =  "SaleContainerType2UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1053,7 +1055,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleContainerType3UnitPrice",
-					  						DefaultText =  "Sale Container Type 3 Unit Price",
+					  						DefaultText =  @"Sale Container Type 3 Unit Price",
 					  						HelpTextCode =  "SaleContainerType3UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1108,7 +1110,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleContainerType4UnitPrice",
-					  						DefaultText =  "Sale Container Type 4 Unit Price",
+					  						DefaultText =  @"Sale Container Type 4 Unit Price",
 					  						HelpTextCode =  "SaleContainerType4UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1163,7 +1165,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleContainerType5UnitPrice",
-					  						DefaultText =  "Sale Container Type 5 Unit Price",
+					  						DefaultText =  @"Sale Container Type 5 Unit Price",
 					  						HelpTextCode =  "SaleContainerType5UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1218,7 +1220,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CostExchangeRate",
-					  						DefaultText =  "Cost Exchange Rate",
+					  						DefaultText =  @"Cost Exchange Rate",
 					  						HelpTextCode =  "CostExchangeRate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1274,7 +1276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CostCurrencyId",
-					  						DefaultText =  "Cost Currency",
+					  						DefaultText =  @"Cost Currency",
 					  						HelpTextCode =  "CostCurrencyId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1327,7 +1329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostIsFixedRate",
-					  						DefaultText =  "Cost Is Fixed Rate",
+					  						DefaultText =  @"Cost Is Fixed Rate",
 					  						HelpTextCode =  "CostIsFixedRate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1383,9 +1385,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ChargesTypeId",
-					  						DefaultText =  "Charge Type",
+					  						DefaultText =  @"Charge Type",
 					  						ListFieldLable =  "ChargesTypeId",
-					  						ListLableDefaultText =  "Charge Type",
+					  						ListLableDefaultText =  @"Charge Type",
 					  						HelpTextCode =  "ChargesTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1441,9 +1443,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VendorId",
-					  						DefaultText =  "Vendor",
+					  						DefaultText =  @"Vendor",
 					  						ListFieldLable =  "VendorId",
-					  						ListLableDefaultText =  "Vendor",
+					  						ListLableDefaultText =  @"Vendor",
 					  						HelpTextCode =  "VendorId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1499,9 +1501,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "SaleCurrency",
-					  						DefaultText =  "Sales Currency",
+					  						DefaultText =  @"Sales Currency",
 					  						ListFieldLable =  "SaleCurrencyId",
-					  						ListLableDefaultText =  "Curr",
+					  						ListLableDefaultText =  @"Curr",
 					  						HelpTextCode =  "SaleCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1556,7 +1558,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleExchangeRate",
-					  						DefaultText =  "Sales Exchange Rate",
+					  						DefaultText =  @"Sales Exchange Rate",
 					  						HelpTextCode =  "SaleExchangeRate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1610,7 +1612,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MarkUpTypeCode",
-					  						DefaultText =  "Markup Type Code",
+					  						DefaultText =  @"Markup Type Code",
 					  						HelpTextCode =  "MarkUpTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1665,7 +1667,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MarkUpValue",
-					  						DefaultText =  "Markup Value",
+					  						DefaultText =  @"Markup Value",
 					  						HelpTextCode =  "MarkUpValue",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1718,9 +1720,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAllIN",
-					  						DefaultText =  "Is All-In",
+					  						DefaultText =  @"Is All-In",
 					  						ListFieldLable =  "IsAllIn",
-					  						ListLableDefaultText =  "All In",
+					  						ListLableDefaultText =  @"All In",
 					  						HelpTextCode =  "IsAllIN",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1774,7 +1776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  "Notes",
+					  						DefaultText =  @"Notes",
 					  						HelpTextCode =  "Notes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1830,9 +1832,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CostMeasurementId",
-					  						DefaultText =  "Cost UOM",
+					  						DefaultText =  @"Cost UOM",
 					  						ListFieldLable =  "CostMeasurementId",
-					  						ListLableDefaultText =  "UOM",
+					  						ListLableDefaultText =  @"UOM",
 					  						HelpTextCode =  "CostMeasurementId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1887,7 +1889,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostMaxAmount",
-					  						DefaultText =  "Cost Max Amount",
+					  						DefaultText =  @"Cost Max Amount",
 					  						HelpTextCode =  "CostMaxAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1942,7 +1944,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostMinAmount",
-					  						DefaultText =  "Cost Min Amount",
+					  						DefaultText =  @"Cost Min Amount",
 					  						HelpTextCode =  "CostMinAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1997,7 +1999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleMaxAmount",
-					  						DefaultText =  "Sale Max Amount",
+					  						DefaultText =  @"Sale Max Amount",
 					  						HelpTextCode =  "SaleMaxAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2052,7 +2054,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleMinAmount",
-					  						DefaultText =  "Sale Min Amount",
+					  						DefaultText =  @"Sale Min Amount",
 					  						HelpTextCode =  "SaleMinAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2107,7 +2109,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsChargeBySteps",
-					  						DefaultText =  "Price by break",
+					  						DefaultText =  @"Price by break",
 					  						HelpTextCode =  "IsChargeBySteps",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2163,7 +2165,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VatTypeId",
-					  						DefaultText =  "VAT Type",
+					  						DefaultText =  @"VAT Type",
 					  						HelpTextCode =  "VatTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2218,7 +2220,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VatPercentage",
-					  						DefaultText =  "VAT Percentage",
+					  						DefaultText =  @"VAT Percentage",
 					  						HelpTextCode =  "VatPercentage",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2273,7 +2275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VatTypeName",
-					  						DefaultText =  "VAT Type",
+					  						DefaultText =  @"VAT Type",
 					  						HelpTextCode =  "VatTypeName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2328,7 +2330,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VatAmount",
-					  						DefaultText =  "VAT Amount",
+					  						DefaultText =  @"VAT Amount",
 					  						HelpTextCode =  "VatAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2383,7 +2385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleUnitPriceInSaleCurrency",
-					  						DefaultText =  "Sale Unit Price In Sale Currency",
+					  						DefaultText =  @"Sale Unit Price In Sale Currency",
 					  						HelpTextCode =  "SaleUnitPriceInSaleCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2438,7 +2440,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleUnitPrice1InSaleCurrency",
-					  						DefaultText =  "Sale Unit Price 1 In Sale Currency",
+					  						DefaultText =  @"Sale Unit Price 1 In Sale Currency",
 					  						HelpTextCode =  "SaleUnitPrice1InSaleCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2493,7 +2495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleUnitPrice2InSaleCurrency",
-					  						DefaultText =  "Sale Unit Price 2 In Sale Currency",
+					  						DefaultText =  @"Sale Unit Price 2 In Sale Currency",
 					  						HelpTextCode =  "SaleUnitPrice2InSaleCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2548,7 +2550,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleUnitPrice3InSaleCurrency",
-					  						DefaultText =  "Sale Unit Price 3 In Sale Currency",
+					  						DefaultText =  @"Sale Unit Price 3 In Sale Currency",
 					  						HelpTextCode =  "SaleUnitPrice3InSaleCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2603,7 +2605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleUnitPrice4InSaleCurrency",
-					  						DefaultText =  "Sale Unit Price 4 In Sale Currency",
+					  						DefaultText =  @"Sale Unit Price 4 In Sale Currency",
 					  						HelpTextCode =  "SaleUnitPrice4InSaleCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2658,7 +2660,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleUnitPrice5InSaleCurrency",
-					  						DefaultText =  "Sale Unit Price 5 In Sale Currency",
+					  						DefaultText =  @"Sale Unit Price 5 In Sale Currency",
 					  						HelpTextCode =  "SaleUnitPrice5InSaleCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2713,7 +2715,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleAmountInSaleCurrency",
-					  						DefaultText =  "Sale Amount In Sale Currency",
+					  						DefaultText =  @"Sale Amount In Sale Currency",
 					  						HelpTextCode =  "SaleAmountInSaleCurrency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2766,8 +2768,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SaleIsFixedRate",
-					  						DefaultText =  "Sale Is Fixed Rate",
+					  						DefaultText =  @"Sale Is Fixed Rate",
 					  						HelpTextCode =  "SaleIsFixedRate",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "QuoteChargePriceSteps",
+					  						ObjectTableName =  "QuoteCharge",
+					  						Code =  "QuoteChargePriceSteps",
+					  						MaxLength =  15,
+					  						IsCustom =  false,
+					  						MinLength =  0,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						PMPropertyPath =  "QuoteChargePriceSteps",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						IsMulti =  true,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						NumberOfDigits =  0,
+					  						IsMaxLength =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
+					  						MultiTableName =  "QuotePriceSteps",
+					  						FullFieldLable =  "QuoteChargePriceSteps",
+					  						DefaultText =  @"Price Steps",
+					  						HelpTextCode =  "QuoteChargePriceSteps",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2798,7 +2854,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable QuoteChargeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteCharge" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode QuoteChargeTextCode_QuoteCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteCharge", DefaultText = "Quote Charge",LocalDefaultText = null, ObjectTableId = QuoteChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteChargeTextCode_QuoteChargeMExchangeRateIsRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteCharge.M.ExchangeRateIsRequired", DefaultText = "The exchange rate is required.",LocalDefaultText = null, ObjectTableId = QuoteChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode QuoteChargeTextCode_QuoteChargePriceBreakHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteCharge.PriceBreakHelpText", DefaultText = "The quantity (e.g. 100 kg.) for the price.",LocalDefaultText = null, ObjectTableId = QuoteChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

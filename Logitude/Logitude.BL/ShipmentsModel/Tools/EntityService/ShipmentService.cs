@@ -54,6 +54,9 @@ using Logitude.Server.Tools.StorageService;
 using Simplog.Server.Infrastructure.Azure;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -2320,7 +2323,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.IsRemovingStackEvents = false;
             entityPM.CalculateStatus = false;
 
-            ComputeShipmentStatus();
+            this.ComputeShipmentStatus();
+            this.UpdateCustomerWorkingDates();
 
             if (isNewEntity)
             {
@@ -2361,10 +2365,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                {
-                    this.UpdateCustomerWorkingDates();
-                }
+                //if (!string.IsNullOrEmpty(entityPM.CustomerId))
+                //{
+                //    this.UpdateCustomerWorkingDates();
+                //}
 
                 if (!entityPM.IsHybrid)
                 {
@@ -6184,10 +6188,49 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             customer.LastShipmentDate = todayDate;
                         }
 
-
                         customerRepository.Update(customer);
                         customerRepository.SubmitChanges();
                     }
+                }
+            }
+
+            else
+            {
+                if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
+                {
+                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+                    CustomerRepository customerRepository = new CustomerRepository(tenant);                    
+
+                    if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
+                    {
+                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false);
+                        if (customer != null)
+                        {
+                            customer.LastShipmentDate = todayDate;
+                            customerRepository.Update(customer);
+                            customerRepository.SubmitChanges();
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(this.entityPoco.CustomerId))
+                    {
+                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(this.entityPoco.CustomerId, tenant, false);
+                        if (customer != null)
+                        {
+                            List<Shipment> shipments = this.objectContext.Shipments.Where(d => d.CustomerId == customer.Id && d.Id != this.entityPoco.Id).ToList();
+                            if (shipments.Count > 0)
+                            {
+                                Shipment shipment = shipments.OrderByDescending(s => s.CreateDateTime).FirstOrDefault();
+
+                                if (shipment != null)
+                                {
+                                    customer.LastShipmentDate = shipment.CreateDateTime;
+                                    customerRepository.Update(customer);
+                                    customerRepository.SubmitChanges();
+                                }
+                            }
+                        }
+                    }                    
                 }
             }
         }

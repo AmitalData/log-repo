@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerTenantAccessUpdateClass
@@ -174,9 +177,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomerTenant",
-					  						DefaultText =  "CustomerTenant",
+					  						DefaultText =  @"CustomerTenant",
 					  						ListFieldLable =  "CustomerTenantListLable",
-					  						ListLableDefaultText =  "Tenant",
+					  						ListLableDefaultText =  @"Tenant",
 					  						HelpTextCode =  "CustomerTenant",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -232,7 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CustomerIdInCustomerTenant",
-					  						DefaultText =  "CustomerIdInCustomerTenant",
+					  						DefaultText =  @"CustomerIdInCustomerTenant",
 					  						HelpTextCode =  "CustomerIdInCustomerTenant",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -288,10 +291,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Contact",
-					  						DefaultText =  "Contact Name",
+					  						DefaultText =  @"Contact Name",
 					  						ListFieldLable =  "ContactNameListLable",
-					  						ListLableDefaultText =  "Contact",
-					  						ListLocalDefaultText =  "Contact",
+					  						ListLableDefaultText =  @"Contact",
+					  						ListLocalDefaultText =  @"Contact",
 					  						HelpTextCode =  "Contact",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -347,10 +350,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Company VAT",
-					  						DefaultText =  "Company VAT",
+					  						DefaultText =  @"Company VAT",
 					  						ListFieldLable =  "CompanyVATListLable",
-					  						ListLableDefaultText =  "VAT #",
-					  						ListLocalDefaultText =  "CompanyVAT",
+					  						ListLableDefaultText =  @"VAT #",
+					  						ListLocalDefaultText =  @"CompanyVAT",
 					  						HelpTextCode =  "Company VAT",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -406,9 +409,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Company",
-					  						DefaultText =  "Company Name",
+					  						DefaultText =  @"Company Name",
 					  						ListFieldLable =  "CompanyNameListLable",
-					  						ListLableDefaultText =  "Company",
+					  						ListLableDefaultText =  @"Company",
 					  						HelpTextCode =  "Company",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -464,9 +467,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Company Email",
-					  						DefaultText =  "Company Email",
+					  						DefaultText =  @"Company Email",
 					  						ListFieldLable =  "CompanyEmailListLable",
-					  						ListLableDefaultText =  "Company Email",
+					  						ListLableDefaultText =  @"Company Email",
 					  						HelpTextCode =  "Company Email",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -522,9 +525,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Contact Mobile",
-					  						DefaultText =  "Contact Mobile",
+					  						DefaultText =  @"Contact Mobile",
 					  						ListFieldLable =  "ContactMobileListLable",
-					  						ListLableDefaultText =  "Contact Mobile",
+					  						ListLableDefaultText =  @"Contact Mobile",
 					  						HelpTextCode =  "Contact Mobile",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -580,9 +583,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Contact Phone",
-					  						DefaultText =  "Contact Phone",
+					  						DefaultText =  @"Contact Phone",
 					  						ListFieldLable =  "ContactPhoneListLable",
-					  						ListLableDefaultText =  "Contact Phone",
+					  						ListLableDefaultText =  @"Contact Phone",
 					  						HelpTextCode =  "Contact Phone",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -638,9 +641,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Request Date",
-					  						DefaultText =  "RequestDateTime",
+					  						DefaultText =  @"RequestDateTime",
 					  						ListFieldLable =  "RequestDateTimeListLable",
-					  						ListLableDefaultText =  "Request DateTime",
+					  						ListLableDefaultText =  @"Request DateTime",
 					  						HelpTextCode =  "Request Date",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -697,7 +700,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Status",
-					  						DefaultText =  "Status",
+					  						DefaultText =  @"Status",
 					  						HelpTextCode =  "Status",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -753,9 +756,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "StatusName",
-					  						DefaultText =  "Status",
+					  						DefaultText =  @"Status",
 					  						ListFieldLable =  "StatusNameLable",
-					  						ListLableDefaultText =  "Status",
+					  						ListLableDefaultText =  @"Status",
 					  						HelpTextCode =  "StatusName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -812,7 +815,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Updated By User",
-					  						DefaultText =  "UpdatedBy UserId",
+					  						DefaultText =  @"UpdatedBy UserId",
 					  						HelpTextCode =  "Updated By User",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -868,9 +871,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "UpdatedByUser",
-					  						DefaultText =  "Updated By",
+					  						DefaultText =  @"Updated By",
 					  						ListFieldLable =  "UpdatedByUserNameListLable",
-					  						ListLableDefaultText =  "Updated By User",
+					  						ListLableDefaultText =  @"Updated By User",
 					  						HelpTextCode =  "UpdatedByUser",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -926,9 +929,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Last Update Date",
-					  						DefaultText =  "Last Update Date",
+					  						DefaultText =  @"Last Update Date",
 					  						ListFieldLable =  "LastUpdateDateListLable",
-					  						ListLableDefaultText =  "Last Update Date",
+					  						ListLableDefaultText =  @"Last Update Date",
 					  						HelpTextCode =  "Last Update Date",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -982,9 +985,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search by Contact , Customer , Company",
+					  						DefaultText =  @"Search by Contact , Customer , Company",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: EnglishName\n3: LocalName",
+					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: EnglishName\n3: LocalName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1039,9 +1042,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Last Shipment Date",
-					  						DefaultText =  "Last Shipment Date",
+					  						DefaultText =  @"Last Shipment Date",
 					  						ListFieldLable =  "LastShipmentDateListLable",
-					  						ListLableDefaultText =  "Last Shipment Date",
+					  						ListLableDefaultText =  @"Last Shipment Date",
 					  						HelpTextCode =  "Last Shipment Date",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1097,9 +1100,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsPrivateLabelCustomer",
-					  						DefaultText =  "Is Private Label",
+					  						DefaultText =  @"Is Private Label",
 					  						ListFieldLable =  "IsPrivateLabelCustomerLable",
-					  						ListLableDefaultText =  "Is Private Label",
+					  						ListLableDefaultText =  @"Is Private Label",
 					  						HelpTextCode =  "IsPrivateLabelCustomer",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1155,9 +1158,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CustomCompanyName",
-					  						DefaultText =  "CompanyName",
+					  						DefaultText =  @"CompanyName",
 					  						ListFieldLable =  "CustomCompanyNameLable",
-					  						ListLableDefaultText =  "CompanyName",
+					  						ListLableDefaultText =  @"CompanyName",
 					  						HelpTextCode =  "CustomCompanyName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1213,9 +1216,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Stock Type",
-					  						DefaultText =  "Stock Type",
+					  						DefaultText =  @"Stock Type",
 					  						ListFieldLable =  "StockTypeCodeLable",
-					  						ListLableDefaultText =  "Stock Type",
+					  						ListLableDefaultText =  @"Stock Type",
 					  						HelpTextCode =  "Stock Type",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1329,6 +1332,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature CustomerTenantAccessFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccess.Features.PackageFeature", NameTextCodeDefaultText = "CustomerTenantAccess Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 		   
 		   Feature  CustomerTenantAccessExcelFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerTenantAccess.Feature.EXCEL", Packagable = true, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccess.Features.EXCEL", NameTextCodeDefaultText = "Download to Excel", FeatureTypeCode = "ACT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
+
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature CustomerTenantAccessFeature_CustomerTenantAccess_Feature_EXCEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomerTenantAccess.Feature.EXCEL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccess.Features.EXCEL", NameTextCodeDefaultText = @"Download to Excel" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
    
 	    
 		}
@@ -1374,7 +1383,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CustomerTenantAccessObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerTenantAccess" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersAddRelatedCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.AddRelatedCustomer", DefaultText = "Add Card",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersEditRelatedCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.EditRelatedCustomer", DefaultText = "Edit Card",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersCustomerCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.CustomerCode", DefaultText = "Customer Code",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersCustomerName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.CustomerName", DefaultText = "Customer Name",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersCreateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.CreateDate", DefaultText = "Create date",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersCreatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.CreatedBy", DefaultText = "Created by",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersLastShipmentDateInQueue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.LastShipmentDateInQueue", DefaultText = "Last Shipment Date",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersRelatedCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.RelatedCustomers", DefaultText = "Related Customers",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersUpdateDateTime = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.UpdateDateTime", DefaultText = "Update date",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersStatusType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.StatusType", DefaultText = "Status",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessORelatedCustomersHybridStartDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.O.RelatedCustomers.HybridStartDate", DefaultText = "Hybrid Start Date",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccessBRelatedCustomersAddRelatedCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess.B.RelatedCustomers.AddRelatedCustomer", DefaultText = "Add Related Customer",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerTenantAccessTextCode_CustomerTenantAccess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccess", DefaultText = "Customer Tenant Access",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

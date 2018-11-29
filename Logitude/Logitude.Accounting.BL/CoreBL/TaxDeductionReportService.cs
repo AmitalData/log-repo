@@ -293,7 +293,16 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(item.Month);
                 }
 
-                    myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month).Count());
+                if (item.TotalVendors.ToString().Length < 6)
+                {
+                    myStringBuilder.Append(item.TotalVendors.ToString().PadLeft(6, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append(item.TotalVendors);
+                }
+
+                
 
                     if (item.TotalPaymentsWithoutDivided != null)
                     {

@@ -34,6 +34,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             // TASK 43057
             //if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             //{
+
+            if (this.EntityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
                 if (entityPM.IsManuallyChanged == true)
                 {
                     JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
@@ -42,26 +45,30 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 
                     JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
-                    JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(journalPM.Id, false,false);
+                    JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(journalPM.Id, false, false);
                     if (journalPM != null)
                     {
                         if (entityPM.TransmitStatusCode == "1") // 1- For transmit
-                        journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
+                            journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
                         else if (entityPM.TransmitStatusCode == "3") // 3- Not for transmit at all
-                        journalAdditionalDataPM.TaxReportId = "1111";
+                            journalAdditionalDataPM.TaxReportId = "1111";
 
-                    //update
+                        //update
 
-                    journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                    journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
+                        journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                        journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
                         entityPM.IsManuallyChanged = false;
 
                     }
 
-                //}
+                    //}
+                }
             }
+            else
+            {
 
-          
+                entityPM.IsManuallyChanged = true;
+            }
             base.OnUpdating(entityPM, entityPOCO);
         }
 

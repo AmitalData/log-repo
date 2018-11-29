@@ -608,7 +608,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                           BankBranch = a.BankBranch,
                                                           BankAccount = a.BankAccount,
                                                           StatusName = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.EnglishName : "",
-                                                          PaymentId= a.PaymentId,
+                                                          PaymentId = a.PaymentId,
                                                           ExchangeRate = a.ExchangeRate,
                                                           StatusCode = a.StatusCode,
                                                           CurrencyId = a.CurrencyId,

@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteTotalVATUpdateClass
@@ -78,7 +81,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuoteTotalVAT",
 			      				    DBTableName =  "QuoteTotalVATs",
 			      				    ObjectTableSingular =  "Quote Total VAT",
-			      				    ObjectTablePlural =  "Quote Total VATs",
 			      				    DefaultText =  "Quote Total VAT",
 			      				    Name =  "QuoteTotalVAT",
 			      				    IsNewWizard =  false,
@@ -173,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteCurrencyVATAmount",
-					  						DefaultText =  "Quote Currency VAT Amount",
+					  						DefaultText =  @"Quote Currency VAT Amount",
 					  						HelpTextCode =  "QuoteCurrencyVATAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -229,7 +231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QuoteCurrencyVatableAmount",
-					  						DefaultText =  "Quote Currency Vatable Amount",
+					  						DefaultText =  @"Quote Currency Vatable Amount",
 					  						HelpTextCode =  "QuoteCurrencyVatableAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -285,7 +287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LocalCurrencyVATAmount",
-					  						DefaultText =  "Local Currency VAT Amount",
+					  						DefaultText =  @"Local Currency VAT Amount",
 					  						HelpTextCode =  "LocalCurrencyVATAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -341,7 +343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LocalCurrencyVatableAmount",
-					  						DefaultText =  "Local Currency Vatable Amount",
+					  						DefaultText =  @"Local Currency Vatable Amount",
 					  						HelpTextCode =  "LocalCurrencyVatableAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -397,7 +399,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ProfitCurrencyVATAmount",
-					  						DefaultText =  "Profit Currency VAT Amount",
+					  						DefaultText =  @"Profit Currency VAT Amount",
 					  						HelpTextCode =  "ProfitCurrencyVATAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -453,7 +455,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ProfitCurrencyVatableAmount",
-					  						DefaultText =  "Profit Currency Vatable Amount",
+					  						DefaultText =  @"Profit Currency Vatable Amount",
 					  						HelpTextCode =  "ProfitCurrencyVatableAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -509,7 +511,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VatPercent",
-					  						DefaultText =  "VAT Percent",
+					  						DefaultText =  @"VAT Percent",
 					  						HelpTextCode =  "VatPercent",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -565,7 +567,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExternalVATCard",
-					  						DefaultText =  "External VAT Card",
+					  						DefaultText =  @"External VAT Card",
 					  						HelpTextCode =  "ExternalVATCard",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -621,7 +623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExternalTAXItemId",
-					  						DefaultText =  "External TAX Item Id",
+					  						DefaultText =  @"External TAX Item Id",
 					  						HelpTextCode =  "ExternalTAXItemId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -678,7 +680,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "VatTypeId",
-					  						DefaultText =  "VAT Type",
+					  						DefaultText =  @"VAT Type",
 					  						HelpTextCode =  "VatTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -710,7 +712,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable QuoteTotalVATObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteTotalVAT" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode QuoteTotalVATTextCode_QuoteTotalVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTotalVAT", DefaultText = "Quote Total VAT",LocalDefaultText = null, ObjectTableId = QuoteTotalVATObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

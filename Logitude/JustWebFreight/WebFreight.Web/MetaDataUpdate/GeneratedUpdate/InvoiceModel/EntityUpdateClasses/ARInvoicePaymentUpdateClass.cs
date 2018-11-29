@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class ARInvoicePaymentUpdateClass
@@ -176,11 +179,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LocalAmount",
-					  						DefaultText =  "Local Amount",
-					  						FullLocalDefaultText =  "סכום במטבע מקומי",
+					  						DefaultText =  @"Local Amount",
+					  						FullLocalDefaultText =  @"סכום במטבע מקומי",
 					  						ListFieldLable =  "LocalAmountListLable",
-					  						ListLableDefaultText =  "Local Amount",
-					  						ListLocalDefaultText =  "סכום במטבע מקומי",
+					  						ListLableDefaultText =  @"Local Amount",
+					  						ListLocalDefaultText =  @"סכום במטבע מקומי",
 					  						HelpTextCode =  "LocalAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -236,11 +239,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ForeignAmount",
-					  						DefaultText =  "Foreign Amount",
-					  						FullLocalDefaultText =  "סכום במטבע זר",
+					  						DefaultText =  @"Foreign Amount",
+					  						FullLocalDefaultText =  @"סכום במטבע זר",
 					  						ListFieldLable =  "ForeignAmountListLable",
-					  						ListLableDefaultText =  "Foreign Amount",
-					  						ListLocalDefaultText =  "סכום במטבע זר",
+					  						ListLableDefaultText =  @"Foreign Amount",
+					  						ListLocalDefaultText =  @"סכום במטבע זר",
 					  						HelpTextCode =  "ForeignAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -297,11 +300,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ARPaymentId",
-					  						DefaultText =  "Payment",
-					  						FullLocalDefaultText =  "תשלום ",
+					  						DefaultText =  @"Payment",
+					  						FullLocalDefaultText =  @"תשלום ",
 					  						ListFieldLable =  "ARPaymentIdListLable",
-					  						ListLableDefaultText =  "Payment",
-					  						ListLocalDefaultText =  "תשלום ",
+					  						ListLableDefaultText =  @"Payment",
+					  						ListLocalDefaultText =  @"תשלום ",
 					  						HelpTextCode =  "ARPaymentId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -358,11 +361,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ARInvoiceId",
-					  						DefaultText =  "Invoice",
-					  						FullLocalDefaultText =  "חשבונית",
+					  						DefaultText =  @"Invoice",
+					  						FullLocalDefaultText =  @"חשבונית",
 					  						ListFieldLable =  "ARInvoiceIdListLable",
-					  						ListLableDefaultText =  "A/R Invoice Id",
-					  						ListLocalDefaultText =  "חשבונית",
+					  						ListLableDefaultText =  @"A/R Invoice Id",
+					  						ListLocalDefaultText =  @"חשבונית",
 					  						HelpTextCode =  "ARInvoiceId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -419,11 +422,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ForeignCurrencyId",
-					  						DefaultText =  "Foreign Currency",
-					  						FullLocalDefaultText =  "מטבע זר",
+					  						DefaultText =  @"Foreign Currency",
+					  						FullLocalDefaultText =  @"מטבע זר",
 					  						ListFieldLable =  "ForeignCurrencyIdListLable",
-					  						ListLableDefaultText =  "Foreign Currency Id",
-					  						ListLocalDefaultText =  "מטבע זר",
+					  						ListLableDefaultText =  @"Foreign Currency Id",
+					  						ListLocalDefaultText =  @"מטבע זר",
 					  						HelpTextCode =  "ForeignCurrencyId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -478,8 +481,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExchangeRate",
-					  						DefaultText =  "Exchange Rate",
-					  						FullLocalDefaultText =  "שער",
+					  						DefaultText =  @"Exchange Rate",
+					  						FullLocalDefaultText =  @"שער",
 					  						HelpTextCode =  "ExchangeRate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -534,8 +537,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentAmount",
-					  						DefaultText =  "Payment Amount",
-					  						FullLocalDefaultText =  "סכום לתשלום",
+					  						DefaultText =  @"Payment Amount",
+					  						FullLocalDefaultText =  @"סכום לתשלום",
 					  						HelpTextCode =  "PaymentAmount",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -567,7 +570,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ARInvoicePaymentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARInvoicePayment" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ARInvoicePaymentTextCode_ARInvoicePaymentCHARInvoiceId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoicePayment.CH.ARInvoiceId", DefaultText = "AR Invoice Id",LocalDefaultText = null, ObjectTableId = ARInvoicePaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoicePaymentTextCode_ARInvoicePayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoicePayment", DefaultText = "Invoice Payment",LocalDefaultText = null, ObjectTableId = ARInvoicePaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     
