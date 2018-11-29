@@ -7,11 +7,9 @@ namespace WebFreight.Web.DataProviders
 {
     public class ShipmentDetailsDataProvider : BaseDataProvider
     {
-
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
         public List<ShipmentDetals> Shipments { get; set; }
-
     }
 
     public class ShipmentDetals
@@ -72,12 +70,12 @@ namespace WebFreight.Web.DataProviders
         public string GoodsReadinessDate { get; set; }
         public string DocumentsReadinessDate { get; set; }
         public DateTime? PickupFromDate { get; set; }
-        public DateTime? GroupageDate { get; set; }
+        public string GroupageDate { get; set; }
         public string DateonboardOrigin { get; set; }
         public string Dateofarrivaltoport { get; set; }
         public DateTime? ImportDeclarationDate { get; set; }
         public DateTime? CustomsClearanceDate { get; set; }
-        public string DeliveryDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
         public DateTime? ClosedDate { get; set; }
         public bool IncludeCustoms { get; set; }
         public string ImportDeclarationNumber { get; set; }
