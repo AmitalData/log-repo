@@ -234,12 +234,13 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         this.IsEntitleImporterEnabled = !this.IsDisplayOnly;
         if (!this.IsDisplayOnly) {
 
-            this.IsImporerCodeEnabled = AppTool.IsNullOrEmpty(this.EntityPM.ImporterName + this.EntityPM.ImporterAddress);
+            this.IsImporerCodeEnabled = AppTool.IsNullOrEmpty(this.EntityPM.ImporterName) && AppTool.IsNullOrEmpty(this.EntityPM.ImporterAddress);
             if (!AppTool.IsNullOrEmpty(this.ImporterCode)) {
+                this.IsImporerCodeEnabled = true;
                 if (this.ImporterCode.includes("F") || this.ImporterCode.includes("P")) {
                     this.IsImporerCodeEnabled = false;
                 }
-            }
+            } 
 
         }
 
@@ -615,8 +616,10 @@ export class DeclarationClassificationComponent extends BaseComponent implements
 
         let MyPrimarySupplierInvoice: SupplierInvoicePM
         if (this.EntityPM.SupplierInvoices.length > 0) {
-          MyPrimarySupplierInvoice = this.EntityPM.SupplierInvoices.filter(r => r.IsPrimarySupplierInvoice == true)[0];
-          this._IncotermCode = MyPrimarySupplierInvoice.IncotermCode;
+            MyPrimarySupplierInvoice = this.EntityPM.SupplierInvoices.filter(r => r.IsPrimarySupplierInvoice == true)[0];
+            if (!AppTool.IsNullOrEmpty(MyPrimarySupplierInvoice)) {
+                this._IncotermCode = MyPrimarySupplierInvoice.IncotermCode;
+            }
         }
         
         let _My1stConsignmentPM: ConsignmentPM;

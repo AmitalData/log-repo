@@ -14,6 +14,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -34,8 +35,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
             this.CustomMappedPMProperties.Add(PMPropertyNames.CreatedByUserName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AirlinePrefix);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.AirlineName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.EstimatedArrivalDateOnly);
             this.CustomMappedPMProperties.Add(PMPropertyNames.EstimatedArrivalTimeOnly);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.OriginPortName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.GatewayPortName);
 
             CustomsAirlineRepository rep = new CustomsAirlineRepository(entityPM.Tenant);
             UserRepository userRep = new UserRepository(entityPM.Tenant);
@@ -43,7 +47,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (customsAirline != null)
             {
                 entityPM.AirlinePrefix = customsAirline.AirlinePrefix;
-          
+                entityPM.AirlineName = customsAirline.LocalName;
             }
 
             User user = userRep.GetSingleUser(entityPM.CreatedByUserId, entityPM.Tenant);
@@ -62,6 +66,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.EstimatedArrivalDateOnly = entityPOCO.EstimatedArrivalDate.Value.Date;
                 entityPM.EstimatedArrivalTimeOnly = (DateTime)entityPOCO.EstimatedArrivalDate;
+            }
+
+            if (entityPOCO.OriginPortCode != null)
+            {
+                InternationalSiteQueryService internationalSiteQueryService = new InternationalSiteQueryService(entityPOCO.Tenant);
+                InternationalSitePM internationalSitePM = internationalSiteQueryService.GetSingle(entityPOCO.OriginPortCode, false, true);
+                if(internationalSitePM != null)
+                {
+                    entityPM.OriginPortName = internationalSitePM.LocalName;
+                }
+            }
+
+            if (entityPOCO.GatewayPortCode != null)
+            {
+                InternationalSiteQueryService internationalSiteQueryService = new InternationalSiteQueryService(entityPOCO.Tenant);
+                InternationalSitePM internationalSitePM = internationalSiteQueryService.GetSingle(entityPOCO.GatewayPortCode, false, true);
+                if (internationalSitePM != null)
+                {
+                    entityPM.GatewayPortName = internationalSitePM.LocalName;
+                }
             }
 
         }

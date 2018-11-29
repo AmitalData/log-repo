@@ -278,5 +278,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
         }
+
+        protected override void AfterUpdating(PaymentOrderPM entityPM, EntityPM entityParentPM)
+        {
+            if (entityPM.CustomerId != null)
+            {
+                CardRepository cardRepository = new CardRepository(entityPM.Tenant);
+                Card card = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
+                if (card != null)
+                {
+                    entityPM.CustomerName = card.EnglishName;
+                }
+            }
+        }
     }
 }

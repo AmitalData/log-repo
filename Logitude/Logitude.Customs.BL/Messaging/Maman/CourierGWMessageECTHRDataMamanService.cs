@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
@@ -82,6 +83,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
 
             string defBaldarCodeValue = GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _DeclarationPM.Tenant);
+            var rep = new CustomsAirlineRepository(_CourierMasterPM.Tenant);
+            var customsAirline = rep.GetSingle(_CourierMasterPM.AirlineId, _CourierMasterPM.Tenant);
 
             var courierHawbMamanModel = new GWMessageECTHRData()
             {
@@ -93,7 +96,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 Master = CInt(_CourierMasterPM.MAWB),
                 Awb8 = CInt(_CourierMasterPM.ShortHAWB),
                 HawbExtnd = _CourierMasterPM.HAWB,
-                AirlineCode = _CourierMasterPM.AirlineName??"",
+                AirlineCode = customsAirline.AirlineCode,
                 FltNo = CInt(_CourierMasterPM.FlightNumber),
                 FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date,// fltdate is not nullable ??
                 LandTime = _CourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??

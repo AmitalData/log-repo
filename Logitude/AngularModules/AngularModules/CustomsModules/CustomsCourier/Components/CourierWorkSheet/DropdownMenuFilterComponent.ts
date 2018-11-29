@@ -115,9 +115,9 @@ export class DropdownMenuFilterComponent implements OnInit {
             }
             
             document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
-                (myTop/*itemRect.top*/ /*+ 27*/ -5) + 'px';
+                (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
             document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
-                (myleft/*itemRect.left*/ /*- 50*/ -100+5) + 'px';//min-width: 80px
+                (myleft/*itemRect.left*/ /*- 50*/ - 100 /*+5*/) + 'px';//min-width: 80px
             this._DropdownDisplay = 'block';
         } else {
             this._DropdownDisplay = 'none';

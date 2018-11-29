@@ -1,4 +1,4 @@
-﻿
+
 import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -19,7 +19,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 export class CourierMasterGeneralTabComponent extends BaseComponent {
     ObjectTableName: string = "Customs.CourierMaster";
     DataContext: any = this;
-    entityPM: CourierMasterPM;
+    //entityPM: CourierMasterPM;
     CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
     CourierMasterService: CourierMasterService = new CourierMasterService();
 
@@ -27,7 +27,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
 
     constructor(public entityArgs: EntityArgs) {
         super();
-        this.entityPM = entityArgs.EntityPM;
+        this.EntityPM = entityArgs.EntityPM;
         this.Listen();
     }
 
@@ -62,108 +62,108 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     }
 
 
-    get AirlineId() { return this.entityPM.AirlineId; }
+    get AirlineId() { return this.EntityPM.AirlineId; }
     set AirlineId(value: string) {
 
-        if (this.entityPM.AirlineId != value) {
-            this.entityPM.AirlineId = value;
+        if (this.EntityPM.AirlineId != value) {
+            this.EntityPM.AirlineId = value;
         }
     }
 
-    get MAWB() { return this.entityPM.MAWB; }
+    get MAWB() { return this.EntityPM.MAWB; }
     set MAWB(value: string) {
-        if (this.entityPM.MAWB != value) {
-            this.entityPM.MAWB = value;
+        if (this.EntityPM.MAWB != value) {
+            this.EntityPM.MAWB = value;
         }
     }
 
-    get HAWB() { return this.entityPM.HAWB; }
+    get HAWB() { return this.EntityPM.HAWB; }
     set HAWB(value: string) {
-        if (this.entityPM.HAWB != value) {
-            this.entityPM.HAWB = value;
+        if (this.EntityPM.HAWB != value) {
+            this.EntityPM.HAWB = value;
         }
     }
 
-    get OriginPortCode() { return this.entityPM.OriginPortCode; }
+    get OriginPortCode() { return this.EntityPM.OriginPortCode; }
     set OriginPortCode(value: string) {
-        if (this.entityPM.OriginPortCode != value) {
-            this.entityPM.OriginPortCode = value;
+        if (this.EntityPM.OriginPortCode != value) {
+            this.EntityPM.OriginPortCode = value;
         }
     }
 
-    get ManifestNumber() { return this.entityPM.ManifestNumber; }
+    get ManifestNumber() { return this.EntityPM.ManifestNumber; }
     set ManifestNumber(value: string) {
-        if (this.entityPM.ManifestNumber != value) {
-            this.entityPM.ManifestNumber = value;
+        if (this.EntityPM.ManifestNumber != value) {
+            this.EntityPM.ManifestNumber = value;
         }
     }
 
-    get GatewayPortCode() { return this.entityPM.GatewayPortCode; }
+    get GatewayPortCode() { return this.EntityPM.GatewayPortCode; }
     set GatewayPortCode(value: string) {
-        if (this.entityPM.GatewayPortCode != value) {
-            this.entityPM.GatewayPortCode = value;
+        if (this.EntityPM.GatewayPortCode != value) {
+            this.EntityPM.GatewayPortCode = value;
         }
     }
 
-    get FlightNumber() { return this.entityPM.FlightNumber; }
+    get FlightNumber() { return this.EntityPM.FlightNumber; }
     set FlightNumber(value: string) {
-        if (this.entityPM.FlightNumber != value) {
-            this.entityPM.FlightNumber = value;
+        if (this.EntityPM.FlightNumber != value) {
+            this.EntityPM.FlightNumber = value;
         }
     }
 
-    get IsOpen() { return this.entityPM.IsOpen; }
+    get IsOpen() { return this.EntityPM.IsOpen; }
     set IsOpen(value: boolean) {
-        if (this.entityPM.IsOpen != value) {
-            this.entityPM.IsOpen = value;
+        if (this.EntityPM.IsOpen != value) {
+            this.EntityPM.IsOpen = value;
         }
     }
 
-    get DepartureDate() { return this.entityPM.DepartureDate; }
+    get DepartureDate() { return this.EntityPM.DepartureDate; }
     set DepartureDate(value: Date) {
-        if (this.entityPM.DepartureDate != value) {
-            this.entityPM.DepartureDate = value;
+        if (this.EntityPM.DepartureDate != value) {
+            this.EntityPM.DepartureDate = value;
         }
     }
 
-    get PackageQuantity() { return this.entityPM.PackageQuantity; }
+    get PackageQuantity() { return this.EntityPM.PackageQuantity; }
     set PackageQuantity(value: number) {
-        if (this.entityPM.PackageQuantity != value) {
-            this.entityPM.PackageQuantity = value;
+        if (this.EntityPM.PackageQuantity != value) {
+            this.EntityPM.PackageQuantity = value;
         }
     }
 
-    get GrossMassMeasure() { return this.entityPM.GrossMassMeasure; }
+    get GrossMassMeasure() { return this.EntityPM.GrossMassMeasure; }
     set GrossMassMeasure(value: number) {
-        if (this.entityPM.GrossMassMeasure != value) {
-            this.entityPM.GrossMassMeasure = value;
+        if (this.EntityPM.GrossMassMeasure != value) {
+            this.EntityPM.GrossMassMeasure = value;
         }
     }
 
-    get EstimatedArrivalDateOnly() { return this.entityPM.EstimatedArrivalDateOnly; }
+    get EstimatedArrivalDateOnly() { return this.EntityPM.EstimatedArrivalDateOnly; }
     set EstimatedArrivalDateOnly(value: Date) {
-        if (this.entityPM.EstimatedArrivalDateOnly != value) {
-            this.entityPM.EstimatedArrivalDateOnly = value;
+        if (this.EntityPM.EstimatedArrivalDateOnly != value) {
+            this.EntityPM.EstimatedArrivalDateOnly = value;
         }
     }
 
-    get EstimatedArrivalTimeOnly() { return this.entityPM.EstimatedArrivalTimeOnly; }
+    get EstimatedArrivalTimeOnly() { return this.EntityPM.EstimatedArrivalTimeOnly; }
     set EstimatedArrivalTimeOnly(value: Date) {
-        if (this.entityPM.EstimatedArrivalTimeOnly != value) {
-            this.entityPM.EstimatedArrivalTimeOnly = value;
+        if (this.EntityPM.EstimatedArrivalTimeOnly != value) {
+            this.EntityPM.EstimatedArrivalTimeOnly = value;
         }
     }
 
-    get EstimatedArrivalDate() { return this.entityPM.EstimatedArrivalDate; }
+    get EstimatedArrivalDate() { return this.EntityPM.EstimatedArrivalDate; }
     set EstimatedArrivalDate(value: Date) {
-        if (this.entityPM.EstimatedArrivalDate != value) {
-            this.entityPM.EstimatedArrivalDate = value;
+        if (this.EntityPM.EstimatedArrivalDate != value) {
+            this.EntityPM.EstimatedArrivalDate = value;
         }
     }
 
     AirLineIdLostFocus(value: any) {
 
-        //this.CourierMasterService.GetIfCourierMasterExists(this.entityPM.Id, this.entityPM.AirlineId, this.entityPM.HAWB, this.entityPM.MAWB).subscribe(Result => {
+        //this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.EntityPM.AirlineId, this.EntityPM.HAWB, this.EntityPM.MAWB).subscribe(Result => {
         //    var mm: ServiceResponse = Result;
         //    if (!mm.HasError) {
         //        if (mm.Result) {
@@ -183,38 +183,4 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     HAWBLostFocus(value: any) {
     }
 
-    SaveAndOpenWorksheet() {
-        if (this.entityPM.IsDirty) {
-
-
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-            var sub = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                sub.unsubscribe();
-                if (isSaveSuccess) {
-                    this.OpenWorksheet();
-                }
-            });
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-
-        }
-        else {
-            this.OpenWorksheet();
-
-        }
-    }
-    OpenWorksheet(){
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 1029;
-        logitudeWindow.Height = 750;
-        logitudeWindow.ShowCloseButton = true;
-        logitudeWindow.IsFillScreen = true;
-
-        logitudeWindow.WindowArgs = { EntityPM: this.entityPM };
-        //logitudeWindow.Title = this.ObjectTableName + " Search";
-        //logitudeWindow.Show('./Customs/Components/Courier/CourierWorkSheet/CourierWorksheetComponent');
-        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/CourierWorksheetComponent');
-        logitudeWindow.WindowClosed.subscribe(($event: any) => SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM());
-
-    }
 }

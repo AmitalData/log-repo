@@ -1406,7 +1406,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                         break;
                     }
                 default: {
-                    if (isNaN(Number(this.TextValue))) {
+                    if (this.TextValue && isNaN(Number(this.TextValue))) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         suppressValidateion = true;
                     }

@@ -140,8 +140,8 @@
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'HighLowValue'" style="text-align:right;">
-        <span *ngIf="IsHighLow">{{'Customs.CourierMaster.HighLowValue.High'  | TextCodeTranslationPipe }}</span>
-        <span *ngIf="!IsHighLow">{{'Customs.CourierMaster.HighLowValue.Low'  | TextCodeTranslationPipe }}</span>
+        <span *ngIf="!IsHighLow">{{'Customs.CourierMaster.HighLowValue.High'  | TextCodeTranslationPipe }}</span>
+        <span *ngIf="IsHighLow">{{'Customs.CourierMaster.HighLowValue.Low'  | TextCodeTranslationPipe }}</span>
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'CourierHawb'" style="text-align:right;">
@@ -156,45 +156,48 @@
     <div class="TextTrimming" *ngIf="fieldName == 'CourierPendingReasonName'" style="text-align:right;">
         <span data-toggle="tooltip" data-placement="bottom" title="{{_CourierWorksheet['PendingRemarks']}}">{{_CourierWorksheet.CourierPendingReasonName}}</span>
     </div>
-
-    <div *ngIf="fieldName == 'CourierPendingReasonCode'" style="width: 14px; height: 14px; margin-top:7.5px; margin-right:16.5px; text-align:right;">
-        <courier-filter-button #MyDropdownMenuFilterComponent (DropdownMenuButtonClicked)="DropdownMenuButtonClicked(event)">
-            <div class="class-filter-content">
-                <div>
-                    <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
+    <!--style="width: 14px; height: 14px; margin-top:7.5px; margin-right:16.5px; text-align:right;background-color:red"-->
+    <div *ngIf="fieldName == 'CourierPendingReasonCode'"  style="text-align:right;cursor:default;height:35px;width:120px;" (click)="ButtonClick($event)">
+        <div (click)="ButtonClick($event)" style="margin:3px;">
+            <courier-filter-button #MyDropdownMenuFilterComponent (DropdownMenuButtonClicked)="DropdownMenuButtonClicked(event)">
+                <div class="class-filter-content">
+                    <div>
+                        <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
+                    </div>
                 </div>
-            </div>
 
-            <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();">
-                <!--<div style="width:30px;height:30px">
+                <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();">
+                    <!--<div style="width:30px;height:30px">
                     <div>-->
-                <ul class="P-button-drop-menu" style="width:100px; ">
-                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
-                        <span>הזנת Pending</span>
-                    </li>
-                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Update');">
-                        <span>עדכון Pending</span>
-                    </li>
-                    <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
-                        <span>מחיקת Pending</span>
-                    </li>
-                </ul>
-                <!--</div>
-                </div>-->
-            </div>
-        </courier-filter-button>
+                    <ul class="P-button-drop-menu" style="width:100px; ">
+                        <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                            <span>הזנת Pending</span>
+                        </li>
+                        <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Update');">
+                            <span>עדכון Pending</span>
+                        </li>
+                        <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
+                            <span>מחיקת Pending</span>
+                        </li>
+                    </ul>
+                    <!--</div>
+                    </div>-->
+                </div>
+            </courier-filter-button>
+        </div>
     </div>
 
 
-    <div class="TextTrimming" *ngIf="fieldName == 'SendSplitButton'" style="text-align:right;margin-top:5px;">
-        <div>
+    <div class="TextTrimming" style="cursor:default;height:35px;width:120px;" *ngIf="fieldName == 'SendSplitButton'"  (click)="ButtonClick($event)">
+        <div style="text-align:right;margin-top:5px;cursor:default" (click)="ButtonClick($event)">
             <split-button #currSplitButtonComponent
+                          [IsDisabled]="_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O'   "
                           [OnClickedShowMenuContent]="true"
                           (DefaultSplitButtonClicked)="SendButtonClicked()"
                           [ButtonText]="'שלח'"
                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="66">
 
-                <div class="class-MENUSplitButton-content">
+                <div class="class-MENUSplitButton-content"  style="cursor:pointer">
                     <div>
                         <ul class="x-button-drop-menu" style="width:90px;">
 
@@ -222,7 +225,7 @@
         </div>
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'MyDeclarationCheckBox'">
+    <div class="TextTrimming" *ngIf="fieldName == 'MyDeclarationCheckBox'" style="cursor:pointer"  >
         <div style="width: 16px; height:16px; margin-top:10px">
             <input class="CenterCenter" style="box-shadow:none ;width: 16px; height:16px; text-align:center" type="checkbox" [checked]="IsDeclarationChecked" (click)="OnCheckedWithSystemEvent($event)" />
         </div>
