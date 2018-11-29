@@ -52,7 +52,9 @@ export class ReportComponent {
                             myResult.forEach((item) => {
                                 if (item.Code == "AREX") {
                                     if (SessionLocator.Tenant == 1212) {
-                                        this.reportList.push(item);
+                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                            this.reportList.push(item);
+                                        }
                                     }
                                 }
 
