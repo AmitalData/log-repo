@@ -32,8 +32,8 @@ update textcodes set code = 'SystemData.SupportemailHelpText' where code = 'Syst
 update textcodes set code = 'Warehouse.F.SearchFields'where code = 'WareHouse.F.SearchFields' and objecttableid in (select id from objecttables where name = 'warehouse')
 update textcodes set code = 'Warehouse.SearchFieldsHelpText'where code = 'WareHouse.SearchFieldsHelpText' and objecttableid in (select id from objecttables where name = 'warehouse')
 
-update textcodes set code = 'RatesTable.F.SearchFields'where code = 'RatesTableObject.F.SearchFields' and objecttableid in (select id from objecttables where name = 'ratestable')
-update textcodes set code = 'RatesTable.SearchFieldsHelpText'where code = 'RatesTableObject.SearchFieldsHelpText' and objecttableid in (select id from objecttables where name = 'ratestable')
+update textcodes set code = 'RatesTable.F.SearchFields'where code = 'RatesTableObject.Name.F.SearchFields' and objecttableid in (select id from objecttables where name = 'ratestable')
+update textcodes set code = 'RatesTable.SearchFieldsHelpText'where code = 'RatesTableObject.Name.SearchFieldsHelpText' and objecttableid in (select id from objecttables where name = 'ratestable')
 
  
 

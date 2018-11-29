@@ -1,5 +1,6 @@
-﻿declare var window: any;
+declare var window: any;
 import {SessionLocator} from '../Utilities/SessionLocator';
+import { AppTool } from '../Tools';
 
 export class TextCodeTranslator {
 
@@ -29,12 +30,8 @@ export class TextCodeTranslator {
             window.TranslationsCache.splice(0, 50);
         }
 
-         return translation;
-        //return "!" + translation;
+        return TextCodeTranslator.FixTranslation(translation);
     }
-
-
-
     static TranslateCached(value: string): string {
 
         //console.log('88888888888888:', value);
@@ -103,11 +100,8 @@ export class TextCodeTranslator {
             window.TextCodesCache.splice(0, 50);
         }
 
-        return translation;
-        //return "!" + translation;
+        return TextCodeTranslator.FixTranslation(translation);
     }
-
-
     static TranslateTable(value: string): string {
 
         if (SessionLocator.UseCachedData) {
@@ -133,10 +127,8 @@ export class TextCodeTranslator {
             window.TranslationsCache.splice(0, 50);
         }
 
-        return translation;
-        //return "!" + translation;
+        return TextCodeTranslator.FixTranslation(translation);
     }
-
     static TranslateTablePlural(value: string): string {
 
         if (SessionLocator.UseCachedData) {
@@ -162,11 +154,8 @@ export class TextCodeTranslator {
             window.TranslationsCache.splice(0, 50);
         }
 
-        return translation;
-        //return "!" + translation;
+        return TextCodeTranslator.FixTranslation(translation);
     }
-
-
     static TranslatePluralCached(value: string): string {
 
         //console.log('88888888888888:', value);
@@ -213,10 +202,8 @@ export class TextCodeTranslator {
             window.TextCodesCache.splice(0, 50);
         }
 
-        return translation;
-        //return "!" + translation;
+        return TextCodeTranslator.FixTranslation(translation);
     }
-
     static GetRequiredFieldForTableMessageTranslation(requiredTextCodeCode: string, fieldNameTextCode: string, tableNameTextCode: string, entityReference: string) {
         var message = TextCodeTranslator.Translate("Customs.General.O.FieldForTableIsRequired");
         var fieldName = TextCodeTranslator.Translate(fieldNameTextCode);
@@ -229,5 +216,15 @@ export class TextCodeTranslator {
         return message;
     }
 
+    static FixTranslation(value: string) {
+        var myResult: string = "";
 
+        if (value) {
+            myResult = AppTool.Replace(value, "%n", "\n");
+        }
+
+                //return "!" + translation;
+
+        return myResult;
+    }
 }

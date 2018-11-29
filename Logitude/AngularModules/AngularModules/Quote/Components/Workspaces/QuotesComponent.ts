@@ -805,13 +805,10 @@ export class QuotesComponent extends BaseComponent {
                 default: { break; }
             }
 
-            displayTitle = queryCode;
-
             var listArgs = new ListComponentArgs();
             listArgs.Filters = filterAgrs;
             listArgs.QueryCode = queryCode;
             listArgs.ObjectTableName = objectTableName;
-            listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
             listArgs.MethodName = MethodName;
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
