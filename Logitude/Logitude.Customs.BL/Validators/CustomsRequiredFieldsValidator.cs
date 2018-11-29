@@ -963,9 +963,10 @@ namespace Logitude.Customs.BL.Validators
 
 
             declaration = paramDeclarationPM;
+            var fromCache = true;
             if (declaration == null)
             {
-                var fromCache = true;
+                
                 if (fromCache)
                 {
                     var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
