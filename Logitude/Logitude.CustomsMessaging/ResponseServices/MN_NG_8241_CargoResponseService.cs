@@ -172,6 +172,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //<--- Yuval Chalup 13.03.2016 TASK-20524
                         _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                         var _myCFIPACKS = GetCFIPACKSXML(customResponse);
+                        var _FileAdditionalData = GetFileAdditionalDataXML(customResponse);
                         if (_myCFIPACKS != null)
                         {
                             text = text + " (המכולות בתיק העמילות עודכנו)";
@@ -202,8 +203,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             RequestAutoSend = requestParams.AutoSend,
                             RaiseStatus = _status,
                             CargoData = "",
-                            StatusDate = _statusDate
-                        };
+                            StatusDate = _statusDate,
+                            FileAdditionalData =  _FileAdditionalData
+                    };
                         _MyDeclarationPM.CurrentContextTag = _cargoContext;
 
                         OpenUnifreighTask();
@@ -231,16 +233,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             _MyDeclarationPM.Consignments[0].StorageSiteCode = customResponse.Cargo.CargoAdditionalData.First().goodsReceiptPlaceSiteID;
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update; 
                         }
-                        if(!String.IsNullOrWhiteSpace(customResponse.Cargo.MasterBolNumber))
-                        {
-                            //_MyDeclarationPM.Consignments[0].ManifestNumber = customResponse.Cargo.MasterBolNumber;
-                            //_MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
-                        }
-                        if (!String.IsNullOrWhiteSpace(customResponse.Cargo.BillOfLadingNumber))
-                        {
-                            _MyDeclarationPM.Consignments[0].ThirdCargoID = customResponse.Cargo.BillOfLadingNumber;
-                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
-                        }
+                        
                         //If there are NO packages OR If there is one DUMMY package (without wight, quantity and pack type)
                         if (_MyDeclarationPM.Consignments[0].ConsignmentPackages == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 0 ||
                             (_MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 1 &&
@@ -279,6 +272,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                     //_MyDeclarationPM.CurrentContextTag = GetCFIPACKSXML(customResponse);
                     var myCFIPACKS = GetCFIPACKSXML(customResponse);
+                    var myFileAdditionalData = GetFileAdditionalDataXML(customResponse);
                     if (requestParams.IsAngularClient != true) requestParams.AutoSend = true; // temp - AutoSend implemented only in angular
                     string status = null;
                     DateTime? statusDate = DateTime.Now;
@@ -300,7 +294,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         RequestAutoSend = requestParams.AutoSend,
                         RaiseStatus = status,
                         CargoData = "",
-                        StatusDate = statusDate
+                        StatusDate = statusDate,
+                        FileAdditionalData = myFileAdditionalData
                     };
                     _MyDeclarationPM.CurrentContextTag = cargoContext;
                     myDeclarationUpdateService.Update(_MyDeclarationPM, true);
@@ -730,6 +725,64 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 return myCFIPACKS;
                             }
                         }
+                        return null;
+                    }
+
+                }
+
+                finally
+                {
+                    if (scope != null)
+                    {
+                        scope.Dispose();
+                    }
+                }
+            }
+        }
+
+        private FileAdditionalData GetFileAdditionalDataXML(MN_NG_8241_Cargo_Message customResponse)
+        {
+           
+            if (!_MyDeclarationPM.IsConnectedToUnifreight)
+            {
+                return null;
+            }
+            
+            if (customResponse.Cargo == null)
+            {
+                return null;
+            }
+            else
+            {
+                TransactionScope scope = null;
+                if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
+                {
+                    scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+                }
+                try
+                {
+                    using (_AmitalContext = AmitalContext.GetContext(_MyDeclarationPM.Tenant))
+                    {
+                        if (_MyDeclarationPM.Consignments[0].CargoTypeCode == "11" || _MyDeclarationPM.Consignments[0].CargoTypeCode == "20")
+                        {
+                            if (!String.IsNullOrWhiteSpace(customResponse.Cargo.MasterBolNumber) || !String.IsNullOrWhiteSpace(customResponse.Cargo.BillOfLadingNumber))
+                            {
+                                var myFileAdditionalData = GetFileAdditionalDataXML(customResponse);
+                            }
+                        }
+                        if (_MyDeclarationPM.Consignments != null && (_MyDeclarationPM.Consignments[0].CargoTypeCode == "11" || _MyDeclarationPM.Consignments[0].CargoTypeCode == "20"))
+                        {
+                            if (!String.IsNullOrWhiteSpace(customResponse.Cargo.MasterBolNumber) || !String.IsNullOrWhiteSpace(customResponse.Cargo.BillOfLadingNumber))
+                            {
+
+
+                                FileAdditionalData myFileAdditionalData = new FileAdditionalData();
+                                myFileAdditionalData.HAWB = customResponse.Cargo.BillOfLadingNumber;
+                                myFileAdditionalData.MAWB = customResponse.Cargo.MasterBolNumber;
+                                return myFileAdditionalData;
+                            }
+                        }
+                        
                         return null;
                     }
 
