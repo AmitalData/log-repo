@@ -811,6 +811,17 @@ export class QuoteTemplateSettingPM {
     public get ShowChargeNoteContainers() { return this.showChargeNoteContainers; }
     public set ShowChargeNoteContainers(newValue: boolean) { if (this.showChargeNoteContainers != newValue) { this.showChargeNoteContainers = newValue; this.MarkAsDirty("ShowChargeNoteContainers"); } }
 
+    private showSaleMaxMinAmountPackages: boolean;
+    public get ShowSaleMaxMinAmountPackages() { return this.showSaleMaxMinAmountPackages; }
+    public set ShowSaleMaxMinAmountPackages(newValue: boolean) { if (this.showSaleMaxMinAmountPackages != newValue) { this.showSaleMaxMinAmountPackages = newValue; this.MarkAsDirty("ShowSaleMaxMinAmountPackages"); } }
+
+
+    private showSaleMaxMinAmountContainers: boolean;
+    public get ShowSaleMaxMinAmountContainers() { return this.showSaleMaxMinAmountContainers; }
+    public set ShowSaleMaxMinAmountContainers(newValue: boolean) { if (this.showSaleMaxMinAmountContainers != newValue) { this.showSaleMaxMinAmountContainers = newValue; this.MarkAsDirty("ShowSaleMaxMinAmountContainers"); } }
+
+
+
 
 
     public OldEntityPM: QuoteTemplateSettingPM;

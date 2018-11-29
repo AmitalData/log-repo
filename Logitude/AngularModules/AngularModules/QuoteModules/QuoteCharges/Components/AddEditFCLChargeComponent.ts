@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -140,8 +140,6 @@ export class AddEditFCLChargeComponent {
         this.myCloner.AddField('VendorId');
         this.myCloner.AddField('CostMeasurementId');
         this.myCloner.AddField('SaleMeasurementId');
-        this.myCloner.AddField('CostMinAmount');
-        this.myCloner.AddField('SaleMinAmount');
         this.myCloner.AddField('CostCurrencyId');
         this.myCloner.AddField('CostExchangeRate');
         this.myCloner.AddField('CostIsFixedRate');
@@ -158,6 +156,10 @@ export class AddEditFCLChargeComponent {
         this.myCloner.AddField('Notes');
         this.myCloner.AddField('VatTypeId');
         this.myCloner.AddField('VatPercentage');
+        this.myCloner.AddField('CostMinAmount');
+        this.myCloner.AddField('CostMaxAmount');
+        this.myCloner.AddField('SaleMinAmount');
+        this.myCloner.AddField('SaleMaxAmount');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);
     }

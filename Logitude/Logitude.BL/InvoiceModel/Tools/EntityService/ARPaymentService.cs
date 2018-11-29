@@ -1329,7 +1329,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             List<ARPaymentChequePM> aRPaymentCheques = query.GetListByPaymentId(entityPm.Id, tenant);
                             if (aRPaymentCheques != null)
                             {
-                                var list = aRPaymentCheques.Where(a => a.StatusCode != "1").ToList();
+                                var list = aRPaymentCheques.Where(a => a.StatusCode == "6" || a.StatusCode == "3").ToList();
                                 if (list == null || (list != null && list.Count() == 0))
                                 {
                                     string msg = TranslateTextsClass.Translate("ARPayment.M.CANTCancelARPayment", entityPm.Tenant, useLocal) + "{ ";
