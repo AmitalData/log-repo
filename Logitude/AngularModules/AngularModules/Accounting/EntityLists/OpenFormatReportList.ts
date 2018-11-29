@@ -22,6 +22,7 @@ export class OpenFormatReportList {
 	ErrorMessage: string;
 	CreatedByUserName: string;
 	Status: string;
+	DateTypeName: string;
 	
 }
  
