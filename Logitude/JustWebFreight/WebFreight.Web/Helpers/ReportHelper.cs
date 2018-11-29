@@ -1227,7 +1227,7 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
-
+                    
                 case "SHID":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(ShipmentDetailsDataProvider));
@@ -1237,8 +1237,6 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
-
-
             }
             return urlImage;
         }
@@ -1366,14 +1364,11 @@ namespace WebFreight.Web.Helpers
             {
                 #region
 
-
                 case "SHST":
                     {
                         dataProvider = logitudeReportsWebService.LoadShipmentsStocksData(filters, reportFliter.tenant);
                         break;
                     }
-
-
 
                 case "UPTR":
                     {               
