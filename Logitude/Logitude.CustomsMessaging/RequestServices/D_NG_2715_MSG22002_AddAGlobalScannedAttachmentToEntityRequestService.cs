@@ -184,16 +184,20 @@ namespace Logitude.CustomsMessaging.RequestServices
                         this.MyRequestSheetParam.EntityId1 = myClaimPM.Id;
 
                         //relatedEntity.entityType = 12383;
-                        relatedEntity.entityType = 1008;
+//                        relatedEntity.entityType = 1008;
                         if (customsDocumentPointerPM.Child1EntityCode == "ClaimsRelatedEntity" && customsDocumentPointerPM.Child1EntityId != null)
                         {
                             int child1EntityId = 0;
                             int.TryParse(customsDocumentPointerPM.Child1EntityId, out child1EntityId);
                             ClaimsRelatedEntityPM claimsRelatedEntityPM = myClaimPM.ClaimsRelatedEntities.FirstOrDefault(si => si.EntityCounterKey == child1EntityId);
-                            relatedEntity.entityIdKey1 = claimsRelatedEntityPM.TapagNumber;
-                            if (claimsRelatedEntityPM.Numeral != null)
+                            if (!string.IsNullOrEmpty(claimsRelatedEntityPM.TapagNumber))
                             {
-                                relatedEntity.entityIdKey2 = claimsRelatedEntityPM.Numeral.ToString();
+                                relatedEntity.entityType = 1008;
+                                relatedEntity.entityIdKey1 = claimsRelatedEntityPM.TapagNumber;
+                                if (claimsRelatedEntityPM.Numeral != null)
+                                {
+                                    relatedEntity.entityIdKey2 = claimsRelatedEntityPM.Numeral.ToString();
+                                }
                             }
                         }
                     }
