@@ -94,6 +94,11 @@ export class OpenFormatReportPM {
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
        
 	 
+    private dateTypeName: string;
+    public get DateTypeName() { return this.dateTypeName; }
+    public set DateTypeName(newValue: string) { if (this.dateTypeName != newValue) { this.dateTypeName = newValue; this.MarkAsDirty("DateTypeName"); } }
+       
+	 
 
     public OldEntityPM: OpenFormatReportPM;
 		
