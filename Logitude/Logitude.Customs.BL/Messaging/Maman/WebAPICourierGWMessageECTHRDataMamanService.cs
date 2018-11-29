@@ -181,7 +181,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
 
 
-            declarationPM.MamanErrorXml = responeGWMessageECTHRData.ResponseStatusCode.ToString() + " " + responeGWMessageECTHRData.ResponseStatusMsg;
+            declarationPM.MamanErrorXml = responeGWMessageECTHRData.ResponseStatusCode.ToString() + " " + responeGWMessageECTHRData.ResponseStatusMsg??"";
 
             using (var scope = TransactionFactory.GetNewTransaction())
             {
