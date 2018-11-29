@@ -616,8 +616,10 @@ export class DeclarationClassificationComponent extends BaseComponent implements
 
         let MyPrimarySupplierInvoice: SupplierInvoicePM
         if (this.EntityPM.SupplierInvoices.length > 0) {
-          MyPrimarySupplierInvoice = this.EntityPM.SupplierInvoices.filter(r => r.IsPrimarySupplierInvoice == true)[0];
-          this._IncotermCode = MyPrimarySupplierInvoice.IncotermCode;
+            MyPrimarySupplierInvoice = this.EntityPM.SupplierInvoices.filter(r => r.IsPrimarySupplierInvoice == true)[0];
+            if (!AppTool.IsNullOrEmpty(MyPrimarySupplierInvoice)) {
+                this._IncotermCode = MyPrimarySupplierInvoice.IncotermCode;
+            }
         }
         
         let _My1stConsignmentPM: ConsignmentPM;
