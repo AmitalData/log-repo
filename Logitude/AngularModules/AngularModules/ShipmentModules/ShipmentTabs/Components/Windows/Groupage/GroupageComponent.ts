@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -327,8 +327,8 @@ export class GroupageListItem {
                 }
             });
 
-            this.EntityPM.Weight = AppTool.Round(myWeight, 3);
-            this.EntityPM.Volume = AppTool.Round(myVolume, 3);
+            this.Weight = AppTool.Round(myWeight, 3);
+            this.Volume = AppTool.Round(myVolume, 3);
         }
     }
 

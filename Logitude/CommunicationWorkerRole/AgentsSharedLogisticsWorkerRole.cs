@@ -170,7 +170,7 @@ namespace CommunicationWorkerRole
                                                                     bool isCreate = shipmentQuery.CheckIfShipmentCreateFromManinfest(agentSharedManifest.Id, agentSharedManifest.Tenant);
                                                                     if (isCreate)
                                                                     {
-                                                                       // agentSharedManifestHelper.SendEmail(manifestSL.AgentSharedKey, manifestSL.ShipmentNumber, tenant);
+                                                                       agentSharedManifestHelper.SendEmail(manifestSL.AgentSharedKey, manifestSL.ShipmentNumber, tenant);
                                                                     }
                                                                     else
                                                                     {
