@@ -2207,56 +2207,50 @@ namespace Logitude.BL.Helpers
 
                 if (setting.ShowChargeCodePackages)
                 {
-                    string Name = GetNameColum("CHARGECODEPACKAGES", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("CHARGECODEPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
                 if (setting.ShowChargeNamePackages)
                 {
-                    string Name = GetNameColum("CHARGEPACKAGES", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("CHARGEPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
                 if (setting.ShowUnitsPackages)
                 {
-                    string Name = GetNameColum("UNITSPACKAGES", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("UNITSPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
                 if (setting.ShowUnitPricePackages)
                 {
-                    string Name = GetNameColum("UNITPRICEPACKAGES", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("UNITPRICEPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+
                 }
 
                 if (setting.ShowMeasurementPackages)
                 {
-                    string Name = GetNameColum("MEASUREMENTPACKAGES", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("MEASUREMENTPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
                 if (setting.ShowSaleCurrencyColumnPackages)
                 {
-                    string Name = GetNameColum("TOTALPACKAGES", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("TOTALPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
                 if (setting.ShowLocalCurrencyColumnPackages)
                 {
-                    string Name = GetNameColum("LOCALAMOUNTPACKAGES", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("LOCALAMOUNTPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
                 if (setting.ShowChargeDescriptionPackages)
                 {
-                    string Name = GetNameColum("CHARGEDESCRIPTIONPACKAGES", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("CHARGEDESCRIPTIONPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+
                 }
 
                 if (setting.ShowChargeNotePackages)
                 {
-                    string Name = GetNameColum("CHARGENOTEPACKAGES", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("CHARGENOTEPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+
                 }
 
                 HtmlTemplate.Append("</tr>");
@@ -2266,28 +2260,26 @@ namespace Logitude.BL.Helpers
                 GetCountHeader(setting, quotePM, "PC");
                 if (setting.ShowChargeCodeContainers)
                 {
-                    string Name = GetNameColum("CHARGECODECONTAINERS", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("CHARGECODECONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+
                 }
 
                 if (setting.ShowChargeNameContainers)
                 {
-                    string Name = GetNameColum("CHARGECONTAINERS", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("CHARGECONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+
                 }
 
                 if (setting.ShowMeasurementContainers)
                 {
-                    string Name = GetNameColum("MEASUREMENTCONTAINERS", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("MEASUREMENTCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
                 if (setting.ShowFixedPriceContainers)
                 {
                     if (ViewFixedPrice)
                     {
-                        string Name = GetNameColum("FIXEDPRICECONTAINERS", textcodes, pricingSectionType);
-                        HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                        AppendHeaderColumn("FIXEDPRICECONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                     }
                 }
 
@@ -2338,26 +2330,23 @@ namespace Logitude.BL.Helpers
 
                 if (setting.ShowSaleCurrencyColumnContainers)
                 {
-                    string Name = GetNameColum("TOTALCONTAINERS", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("TOTALCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
                 if (setting.ShowLocalCurrencyColumnContainers)
                 {
-                    string Name = GetNameColum("LOCALAMOUNTCONTAINERS", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("LOCALAMOUNTCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
                 if (setting.ShowChargeDescriptionContainers)
                 {
-                    string Name = GetNameColum("CHARGEDESCRIPTIONCONTAINERS", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("CHARGEDESCRIPTIONCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
                 }
 
                 if (setting.ShowChargeNoteContainers)
                 {
-                    string Name = GetNameColum("CHARGENOTECONTAINERS", textcodes, pricingSectionType);
-                    HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
+                    AppendHeaderColumn("CHARGENOTECONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+
                 }
 
                 //===========================================================================
@@ -2366,6 +2355,12 @@ namespace Logitude.BL.Helpers
             }
 
 
+        }
+
+        private void AppendHeaderColumn(string textCode,StringBuilder HtmlTemplate, QuoteTemplateSettingPM setting, QuoteTemplateTextDesignPM quotetemplateTextDesignPMHeader, QuoteTemplateTableDesignPM quoteTemplateTableDesignPM, string pricingSectionType, List<QuoteTemplateTextCodePM> textcodes)
+        {
+            string Name = GetNameColum(textCode, textcodes, pricingSectionType);
+            HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
         }
 
         public void BuildPricingTitle(StringBuilder HtmlTemplate, QuoteTemplateTextDesignPM quotetemplateTextDesignPMPricingTitle, string typepricing, List<QuoteTemplateTextCodePM> textcodes, bool RightToLeft)
@@ -2703,8 +2698,7 @@ namespace Logitude.BL.Helpers
                     }
 
                     if (setting.ShowChargeNamePackages)
-                    {//ChargesTypeLocalName = a.ChargesType == null ? "" : a.ChargesType.LocalName,
-
+                    {
                         if (setting.ShowLocalLanguage && chargePM.ChargesTypeLocalName != null)
                         {
                             HtmlTemplate.Append(BuildTableColumn(chargePM.ChargesTypeLocalName, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
@@ -2726,8 +2720,6 @@ namespace Logitude.BL.Helpers
                             double value = (double)chargePM.SaleQuantity;
                             AA = value.ToString("N"); // 1,234.512
                         }
-
-
 
                         HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
 

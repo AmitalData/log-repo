@@ -31,7 +31,8 @@ export class DeliveryPackagesTabComponent {
     public TransportModeId: string;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
     public ItemsSource: DeliveryPackageItem[] = [];
-    public DataContext = this;  
+    public DataContext = this;
+    public TypeCode: string = null;
     constructor() {
 
     }
@@ -44,6 +45,7 @@ export class DeliveryPackagesTabComponent {
         this.FatherComponent = father;
         this.DirectionId = this.ShipmentPM.DirectionId;
         this.TransportModeId = this.ShipmentPM.TransportModeId;
+        this.TypeCode = this.EntityPM.PickUpDeliveryTypeCode;
         this.IsLCLEntity = AppTool.IsLCLEntity(this.ShipmentPM.TransportModeId, this.ShipmentPM.ShipmentTypeId);
         this.IsFCLEntity = AppTool.IsFCLEntity(this.ShipmentPM.TransportModeId, this.ShipmentPM.ShipmentTypeId);
 
