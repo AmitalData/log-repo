@@ -44,6 +44,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         ExchangeRate = a.ExchangeRate,
                         PaymentAmount = a.PaymentAmount,
                         APInvoiceTransferStatusCode=a.APInvoice==null?null:a.APInvoice.TransferStatusCode,
+
                     }).ToList();
         }
         public List<APInvoicePaymentPM> GetAPInvoicePaymentPMsForInvoice(string invoiceid, int tenant)

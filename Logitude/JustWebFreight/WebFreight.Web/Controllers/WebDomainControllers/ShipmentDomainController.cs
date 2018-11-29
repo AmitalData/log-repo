@@ -897,7 +897,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-        public HttpResponseMessage GetTop10DashBoard(string type, string FromDate, string ToDate, int measurment, int currentTenant, int top, bool includeOthers)
+        public HttpResponseMessage GetTop10DashBoardCustom(string type, string FromDate, string ToDate, int measurment, int currentTenant, int top, bool includeOthers)
         {
             try
             {
@@ -940,7 +940,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
 
-        public HttpResponseMessage GetTop10DashBoardCustom(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers)
+        public HttpResponseMessage GetTop10DashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers)
         {
             try
             {

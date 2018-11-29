@@ -98,5 +98,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string ShipperName { get; set; }
     
     public string DeclarationXMLData { get; set; }
+    
+    public DateTime? DeclarationDate { get; set; }
     }
 } 

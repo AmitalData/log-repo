@@ -1400,6 +1400,8 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
     public CurrencyId: string = null;
     public CurrencyCode: string = null;
     public InvoiceAmount: number = 0;
+    public TransferStatusCode: string = null;
+
     InitProperties() {
         this.Id = this.Invoice.Id;
         this.DueDate = this.Invoice.DueDate;
@@ -1411,6 +1413,8 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
         this.InvoiceAmount = this.Invoice.AmountInInvoiceCurrency == null ? 0 : this.Invoice.AmountInInvoiceCurrency;
         this.ShipmentNumber = this.Invoice.IsConsolidationInvoice ? "List" : this.Invoice.MainEntityReference;
         this.SATTransferStatus = this.Invoice.SATInvoiceStatusName;
+        this.TransferStatusCode = this.Invoice.TransferStatusCode;
+
     }
 
     public ExchangeRate: number = 0;
@@ -1833,6 +1837,8 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
         itemPM.ForeignAmount = this.ConnectedAmount_INV == null ? 0 : AppTool.Round(this.ConnectedAmount_INV, 2);
         itemPM.PaymentAmount = this.ConnectedAmount_PAY == null ? 0 : AppTool.Round(this.ConnectedAmount_PAY, 2);
         itemPM.ARInvoiceMetodoPagoCode = this.Invoice.MetodoPagoCode;
+        itemPM.ARInvoiceTransferStatusCode = this.TransferStatusCode;
+
         if (this.CurrencyId == this.LocalCurrencyId) {
             itemPM.LocalAmount = itemPM.ForeignAmount;
         }

@@ -350,6 +350,10 @@
     <Compile Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.Designer.cs">
       <DependentUpon>201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs" />
+    <Compile Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.Designer.cs">
+      <DependentUpon>201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -556,6 +560,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.resx">
       <DependentUpon>201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.resx">
+      <DependentUpon>201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
