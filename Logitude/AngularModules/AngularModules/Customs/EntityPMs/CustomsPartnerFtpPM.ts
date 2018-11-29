@@ -64,6 +64,11 @@ export class CustomsPartnerFtpPM {
     public set FileExt(newValue: string) { if (this.fileExt != newValue) { this.fileExt = newValue; this.MarkAsDirty("FileExt"); } }
        
 	 
+    private communicationDetails: string;
+    public get CommunicationDetails() { return this.communicationDetails; }
+    public set CommunicationDetails(newValue: string) { if (this.communicationDetails != newValue) { this.communicationDetails = newValue; this.MarkAsDirty("CommunicationDetails"); } }
+       
+	 
 
     public OldEntityPM: CustomsPartnerFtpPM;
 		

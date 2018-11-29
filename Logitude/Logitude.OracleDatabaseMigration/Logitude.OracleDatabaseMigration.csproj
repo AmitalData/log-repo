@@ -136,6 +136,10 @@
     <Compile Include="Migrations\201811251240447_AddICAOFieldToCustomsAirLines.Designer.cs">
       <DependentUpon>201811251240447_AddICAOFieldToCustomsAirLines.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811290906148_CustomsPartnerCommDet.cs" />
+    <Compile Include="Migrations\201811290906148_CustomsPartnerCommDet.Designer.cs">
+      <DependentUpon>201811290906148_CustomsPartnerCommDet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -220,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811251240447_AddICAOFieldToCustomsAirLines.resx">
       <DependentUpon>201811251240447_AddICAOFieldToCustomsAirLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811290906148_CustomsPartnerCommDet.resx">
+      <DependentUpon>201811290906148_CustomsPartnerCommDet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
