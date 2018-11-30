@@ -1177,6 +1177,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableTypeCode = "MD",
                 ClientModuleName = "Common",
                 NameField = "EnglishName",
+                CodeField = "Code",
+                AllowedForComputingPartners = true,
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
             #endregion
 
@@ -3707,6 +3709,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ClientModuleName = "Infrastructure",
                 AllowedForComputingPartners = true,
                 CodeField="Code",
+                NameField = "Name",
+
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
             #endregion
 

@@ -168,9 +168,9 @@ export class ARInvoiceLinePM {
     public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
        
 	 
-    private objectTableId: string;
-    public get ObjectTableId() { return this.objectTableId; }
-    public set ObjectTableId(newValue: string) { if (this.objectTableId != newValue) { this.objectTableId = newValue; this.MarkAsDirty("ObjectTableId"); } }
+    //private objectTableId: string;
+    //public get ObjectTableId() { return this.objectTableId; }
+    //public set ObjectTableId(newValue: string) { if (this.objectTableId != newValue) { this.objectTableId = newValue; this.MarkAsDirty("ObjectTableId"); } }
        
 	 
     private entityReference: string;

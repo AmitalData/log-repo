@@ -66,15 +66,15 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.ChargeableWeightUnitCode = MyTenantPM.ChargeableWeightUnitCode;
                 temp.Master = MyEntity.Master;
                 temp.ShipperName = MyEntity.ShipperName;
-                
-                if (temp.CustomsClearanceDate != null || !string.IsNullOrEmpty(temp.DeclarationNumber))
+                temp.DeclarationDate = MyEntity.DeclarationDate;
+
+                if (temp.DeclarationDate != null || !string.IsNullOrEmpty(temp.DeclarationNumber))
                 {
                     temp.IncludesCustoms = true;
-                    if (temp.CustomsClearanceDate == null && !string.IsNullOrEmpty(temp.DeclarationNumber))
+                    if (temp.DeclarationDate == null && !string.IsNullOrEmpty(temp.DeclarationNumber))
                     {
                         throw new ApplicationException("Declaration Date should be sent");
                     }
-                    temp.DeclarationDate = temp.CustomsClearanceDate;
                 }
                 switch (temp.DirectionId)
                 {

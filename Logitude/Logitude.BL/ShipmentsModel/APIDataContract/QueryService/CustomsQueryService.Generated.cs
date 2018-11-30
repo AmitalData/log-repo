@@ -226,7 +226,8 @@ using Simplog.Data.ShipmentsModel;
 				 
 				   
 				   temp.ShipperName = MyEntityPM.ShipperName;
-				   temp.DeclarationXMLData = MyEntityPM.DeclarationXMLData;					
+				   temp.DeclarationXMLData = MyEntityPM.DeclarationXMLData;
+				   temp.DeclarationDate = MyEntityPM.DeclarationDate;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -459,7 +460,8 @@ using Simplog.Data.ShipmentsModel;
 			
 					
 					temp.ShipperName = MyEntity.ShipperName;
-					temp.DeclarationXMLData = MyEntity.DeclarationXMLData;					   
+					temp.DeclarationXMLData = MyEntity.DeclarationXMLData;
+					temp.DeclarationDate = MyEntity.DeclarationDate;					   
 					   return temp;
 		    }
             catch (Exception ex)

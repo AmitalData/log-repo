@@ -571,7 +571,19 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     }
 
 
-    
+    ShowSaleMaxMinAmountColumnKey: string = Guid.newGuid();
+    get ShowSaleMaxMinAmountColumn() {
+        var showSaleMaxMinAmountColumn: boolean = false;
+        if (this.QuoteTemplateSettingPM) showSaleMaxMinAmountColumn = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountPackages : this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountContainers;
+        return showSaleMaxMinAmountColumn;
+    }
+    set ShowSaleMaxMinAmountColumn(value: boolean) {
+        if (this.QuoteTemplateSettingPM != null) {
+            if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountPackages = value;
+            else this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountContainers = value;
+        }
+    }
+
 
 
     DisablePricingSetting() {
