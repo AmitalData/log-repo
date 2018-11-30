@@ -61,11 +61,17 @@ export class DeliveryPackagesTabComponent {
             }
         }
 
+        if (this.FatherComponent.IsCreatingContainerDelivery) {
+            this.IsConnectedToContainer = true;
+        }
+
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
         }
 
         else {
+
+
             if (this.ShipmentPM.ShipmentPackages.filter(f => f.DeliveryId == this.EntityPM.Id).length > 0) {
                 this.IsConnectedToContainer = true;
             }
