@@ -230,6 +230,20 @@
 
                                                                                                     </tr>
 
+                                                                                                    <!--Sale Max Min Amount -->
+                                                                                                    <tr style="height:22px">
+                                                                                                        <td style="width:8px"></td>
+                                                                                                        <td>
+                                                                                                            <div class="CheckBox">
+                                                                                                                <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowSaleMaxMinAmountColumn" class="LeftCenter" style="text-align:center" [attr.id]="ShowSaleMaxMinAmountColumnKey" type="checkbox" />
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowSaleMaxMinAmountColumnKey">Show Sale Min/Max</label>
+                                                                                                            </div>
+
+
+                                                                                                        </td>
+
+                                                                                                    </tr>
+
 
 
                                                                                                 </table>

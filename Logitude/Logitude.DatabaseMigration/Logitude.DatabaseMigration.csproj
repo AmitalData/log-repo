@@ -350,6 +350,10 @@
     <Compile Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.Designer.cs">
       <DependentUpon>201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs" />
+    <Compile Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.Designer.cs">
+      <DependentUpon>201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201811251315249_NewField_BTE.cs" />
     <Compile Include="Migrations\201811251315249_NewField_BTE.Designer.cs">
       <DependentUpon>201811251315249_NewField_BTE.cs</DependentUpon>
@@ -563,6 +567,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811251315249_NewField_BTE.resx">
       <DependentUpon>201811251315249_NewField_BTE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.resx">
+      <DependentUpon>201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

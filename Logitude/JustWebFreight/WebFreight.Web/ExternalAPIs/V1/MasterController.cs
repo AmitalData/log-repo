@@ -334,7 +334,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 }
                             }
                         }
-
+                        
                         if (!string.IsNullOrEmpty(entityPM.IncotermId))
                         {
                             IncotermRepository myIncotermRepository = new IncotermRepository(entityPM.Tenant);
@@ -365,6 +365,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (allHouses.Count > 0)
                         {
+                            ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(MyContext);
+                            ShipmentComputedFields entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
+                            if(entityComputedFields != null)
+                            {
+                                entityComputedFields.NumberOfHouses = allHouses.Count;
+                                shipmentComputedFieldsRepository.Update(entityComputedFields);
+                                shipmentComputedFieldsRepository.SubmitChanges();
+                            }
+
                             foreach (Shipment item in allHouses)
                             {
                                 if (entityPM.IsOperationalClosed)

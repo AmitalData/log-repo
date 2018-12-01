@@ -9645,6 +9645,13 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (fromDate != null && toDate != null)
             {
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.IsProrated == false
+                              select myTMEmployeeTime);
                 iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
                 iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
             }
@@ -11844,8 +11851,6 @@ namespace WebFreight.Web.ReportsWebServices
 
         #endregion
 
-
-
         #region Load Shipments Stocks
         public byte[] LoadShipmentsStocksData(byte[] xmlFilters, int tenant)
         {
@@ -11863,9 +11868,6 @@ namespace WebFreight.Web.ReportsWebServices
         }
         #endregion
 
-
-
-
         #region Load Users By Tenant 
         public byte[] LoadUsersByTenantData(byte[] xmlFilters, int tenant)
         {
@@ -11882,7 +11884,6 @@ namespace WebFreight.Web.ReportsWebServices
             return bytearray;
         }
         #endregion
-
 
         #region Shipment Details
         public byte[] LoadShipmentDetailsDataProvider(byte[] xmlFilters, int tenant)
@@ -11905,6 +11906,9 @@ namespace WebFreight.Web.ReportsWebServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             AddressRepository addressRepository = new AddressRepository(commonContext);
 
+            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+
             #region Report Filters
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -11913,6 +11917,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            
             //ToDate
             DateTime? toDate = null;
             if (filterItem_tODate != null)
@@ -11932,10 +11937,9 @@ namespace WebFreight.Web.ReportsWebServices
                     FromDate = (DateTime)filterItem_FromDate.FieldValue;
                 }
             }
+            #endregion
 
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
-            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
-
+            #region Base Data Filtered
 
             shipments = shipments.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H");
             if (FromDate != null)
@@ -11947,7 +11951,9 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
             }
+            #endregion
 
+            #region Fill Report Data
             List<ShipmentDataView> Shipments = shipments.ToList();
 
             if (Shipments.Count > 0)
@@ -11976,7 +11982,6 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (myLastPickup != null)
                     {
-
                         switch (myLastPickup.PickUpDeliveryFromTypeCode)
                         {
                             case "PART":
@@ -12022,7 +12027,6 @@ namespace WebFreight.Web.ReportsWebServices
                                     break;
                                 }
                         }
-
                     }
 
                     if (myLastDelivery != null)
@@ -12058,7 +12062,6 @@ namespace WebFreight.Web.ReportsWebServices
                                         {
                                             shipment.DeliveryToName = myPort.EnglishName;
                                             shipment.DeliveryTocity = myPort.StateName;
-
                                         }
                                     }
 
@@ -12078,6 +12081,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                         }
                     }
+
                     shipment.Direction = Item.DirectionName;
                     shipment.ShipmentId = Item.ShipmentNumber;
                     shipment.Shipper = Item.Shipper;
@@ -12087,7 +12091,6 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.CountOfInvoices = Item.MainHarmonize;
                     shipment.ShipperInvoiceNumber = Item.Field10;
                     shipment.BUImporte = Item.ConsigneeNotImporterName;
-                    shipment.Consignee = Item.ConsigneeName;
                     shipment.ConsigneeRef1 = Item.ConsigneeReference1;
                     shipment.ConsigneeRef2 = Item.ConsigneeReference2;
                     shipment.Agent = Item.AgentName;
@@ -12129,13 +12132,13 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.NotificationDate = Item.Field1;
                     shipment.GoodsReadinessDate = Item.Field5;
                     shipment.DocumentsReadinessDate = Item.Field6;
-                    shipment.PickupFromDate = myLastPickup != null ? myLastPickup.ATD : null;
-                    shipment.GroupageDate = Item.CutoffDate;
+                    shipment.PickupFromDate = myFirstPickup != null ? myFirstPickup.ATD : null;
+                    shipment.GroupageDate = Item.Field9;
                     shipment.DateonboardOrigin = Item.MainCarriageATD != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageATD) : (Item.MainCarriageETD != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageETD) + " (estimated)" : "");
                     shipment.Dateofarrivaltoport = Item.MainCarriageATA != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageATA) : (Item.MainCarriageETA != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageETA) + " (estimated)" : "");
                     shipment.ImportDeclarationDate = Item.DeclarationDate;
                     shipment.CustomsClearanceDate = Item.CustomsClearanceDate;
-                    shipment.DeliveryDate = myLastDelivery != null ? (myLastDelivery.ATA != null ? String.Format("{0:dd.MMM.yy}", myLastDelivery.ATA) : (myLastDelivery.ETA != null ? String.Format("{0:dd.MMM.yy}", myLastDelivery.ETA) + " (Estimated)" : "")) : "";
+                    shipment.DeliveryDate = myLastDelivery != null ? myLastDelivery.ATA : null;
                     shipment.ClosedDate = Item.OperationalCloseDate;
                     shipment.IncludeCustoms = Item.IncludesCustoms;
                     shipment.ImportDeclarationNumber = Item.DeclarationNumber;
@@ -12161,23 +12164,16 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.Dept = ShipmentDepartment != null ? ShipmentDepartment.EnglishName : null;
                     shipment.Branch = Item.BranchName;
                     totalData.Shipments.Add(shipment);
-
                 }
 
                 totalData.FromDate = FromDate;
                 totalData.ToDate = toDate;
-
             }
-
-
             #endregion
 
             return totalData;
         }
-
-
         #endregion
-
 
         #region License Management
         public byte[] LoadLicenseManagementDataProvider(byte[] xmlFilters, int tenant)

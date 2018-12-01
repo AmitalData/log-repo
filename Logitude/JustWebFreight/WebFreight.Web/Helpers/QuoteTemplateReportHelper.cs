@@ -1695,12 +1695,10 @@ namespace Logitude.BL.Helpers
                 
             };
 
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT",Notes = "test" ,ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description" });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT", Notes = "test2" ,ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description1" });
-            //quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeLocalName = "عبد", ChargesTypeCode = "DEMU", ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 5000000, SaleTotalAmountLocal = 6000000, CurrencyCode = "USD" });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "DEMU", Notes = "test3",ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description2" });
-            //quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeLocalName = "هههههه", ChargesTypeCode = "DU", ChargesGroupCode = "CUSCH", ChargesTypeName = "Duties", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 50000, SaleTotalAmountLocal = 6000, CurrencyCode = "USD" });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "DU", Notes = "test4", ChargesGroupCode = "FRT", ChargesTypeName = "Duties", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description3" });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT",Notes = "test" ,ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description", SaleMaxAmount=50,SaleMinAmount=20 });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT", Notes = "test2" ,ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description1", SaleMaxAmount = 40, SaleMinAmount = 25 });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "DEMU", Notes = "test3",ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description2", SaleMaxAmount = 45, SaleMinAmount = 33 });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "DU", Notes = "test4", ChargesGroupCode = "FRT", ChargesTypeName = "Duties", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description3", SaleMaxAmount = 22, SaleMinAmount = 15 });
 
             return quotePM;
         }
@@ -2250,8 +2248,15 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowChargeNotePackages)
                 {
                     AppendHeaderColumn("CHARGENOTEPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
-
                 }
+
+
+                if (setting.ShowSaleMaxMinAmountPackages)
+                {
+                    AppendHeaderColumn("SALEMINMAXPACKAGES", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                }
+
+
 
                 HtmlTemplate.Append("</tr>");
             }
@@ -2349,6 +2354,10 @@ namespace Logitude.BL.Helpers
 
                 }
 
+                if (setting.ShowSaleMaxMinAmountContainers)
+                {
+                    AppendHeaderColumn("SALEMINMAXCONTAINERS", HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, pricingSectionType, textcodes);
+                }
                 //===========================================================================
 
                 HtmlTemplate.Append("</tr>");
@@ -2466,6 +2475,7 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowSaleCurrencyColumnPackages) ++TdCount;
                 if (setting.ShowChargeDescriptionPackages) ++TdCount;
                 if (setting.ShowChargeNotePackages) ++TdCount;
+                if (setting.ShowSaleMaxMinAmountPackages)++TdCount;
             }
             else
             {
@@ -2497,6 +2507,8 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowSaleCurrencyColumnContainers) ++TdCount;
                 if (setting.ShowChargeDescriptionContainers) ++TdCount;
                 if (setting.ShowChargeNoteContainers) ++TdCount;
+                if (setting.ShowSaleMaxMinAmountContainers) ++TdCount;
+                
 
             }
         }
@@ -2794,6 +2806,14 @@ namespace Logitude.BL.Helpers
                         HtmlTemplate.Append(BuildTableColumn(chargePM.Notes, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
 
                     }
+                    if (setting.ShowSaleMaxMinAmountPackages)
+                    {
+                        string saleMaxMinAmount = GetSaleMaxMinAmountValue(chargePM);
+                        HtmlTemplate.Append(BuildTableColumn(saleMaxMinAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
+                    }
+
+          
+
 
                 }
                 else if (pricingSectionType == "PC")
@@ -2976,10 +2996,42 @@ namespace Logitude.BL.Helpers
 
                     }
 
+                    if (setting.ShowSaleMaxMinAmountContainers)
+                    {
+                        string saleMaxMinAmount = GetSaleMaxMinAmountValue(chargePM);
+                        HtmlTemplate.Append(BuildTableColumn(saleMaxMinAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
+                    }
                 }
 
                 HtmlTemplate.Append("</tr>");
             }
+        }
+
+        private  string  GetSaleMaxMinAmountValue(QuoteSaleChargePM chargePM)
+        {
+            var saleMinAmount = string.Empty;
+            var saleMaxAmount = string.Empty;
+            string saleMaxMinAmount = string.Empty;
+
+            if (chargePM.SaleMinAmount != null && chargePM.SaleMinAmount > 0)
+            {
+                string AA = " ";
+                double value = (double)chargePM.SaleMinAmount;
+                AA = value.ToString("N");
+                saleMinAmount = "min " + AA;
+                saleMaxMinAmount = saleMinAmount;
+            }
+
+            if (chargePM.SaleMaxAmount != null && chargePM.SaleMaxAmount > 0)
+            {
+                string AA = " ";
+                double value = (double)chargePM.SaleMaxAmount;
+                AA = value.ToString("N");
+                saleMaxAmount = "max " + AA;
+                if (!string.IsNullOrEmpty(saleMaxMinAmount)) saleMaxMinAmount += " , ";
+                saleMaxMinAmount += saleMaxAmount;
+            }
+            return saleMaxMinAmount;
         }
 
 
