@@ -57443,6 +57443,7 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn ApprovalGeneralInvoicecol10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Approval.Id, IndexOrder = 9, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn ApprovalGeneralInvoicecol11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Approval.Id, IndexOrder = 10, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn ApprovalGeneralInvoicecol12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Approval.Id, IndexOrder = 11, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+
             #endregion
 
             #region All
