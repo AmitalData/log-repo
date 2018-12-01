@@ -31,7 +31,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.DWQueryId).HasColumnName("DWQueryId");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
-            this.Property(t => t.DWFactTableCode).HasColumnName("DWObjectTableCode");
+            this.Property(t => t.DWFactTableCode).HasColumnName("DWFactTableCode");
             this.Property(t => t.SQLString).HasColumnName("SQLString");
             //this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             //this.Property(t => t.UpdateByUserId).HasColumnName("UpdateByUserId");

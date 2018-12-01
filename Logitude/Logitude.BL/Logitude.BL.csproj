@@ -1552,6 +1552,7 @@
     <Compile Include="InfrastructureModel\EntityQueries\DWObjectTableQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DWQueryColumnQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DWQueryFilterQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DWSubQueryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\DWQueryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\TaskSchedulerHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\TasksSchedulerQuery.cs" />

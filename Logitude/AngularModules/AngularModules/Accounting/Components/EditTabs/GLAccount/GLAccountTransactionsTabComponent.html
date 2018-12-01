@@ -260,7 +260,7 @@
 
 
         }
-    
+
      .DisbleBox{
         display: inline-block;
         border: 1px solid #ffd800;
@@ -325,7 +325,7 @@
                                                 <td style="width: 50px;">
                                                     <div></div>
                                                 </td>
-                                          
+
                                                 <td style="width: 50px;" [style.text-align]="isRTL ? 'right' : 'left'" >{{'Accounting.General.O.To' | TextCodeTranslationPipe}}</td>
 
                                                 <td style="width: 130px;">
@@ -359,15 +359,15 @@
                                                                     </div>
                                                                 </div>
                                                                 </td>
-                                                           
+
                                                         </tr>
                                                         <tr>
 
-                                                           
+
                                                         </tr>
                                                         <tr></tr>
                                                     </table>
-                                                 
+
 
 
                                                 </td>
@@ -402,13 +402,13 @@
                                                             </td>
                                                             <td>
                                                             <td>
-                                                                
+
                                                             </td>
 
                                                         </tr>
                                                     </table>
                                                 </td>
-                                            
+
                                             </tr>
 
                                             <!-- Open Balance for -->
@@ -515,7 +515,7 @@
                             <div style="width: 30px;" [style.float]="isRTL ? 'left' : 'right'">
                                 <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
                             </div>
-                            
+
                             <!-- With Splitted by currency checkbox -->
                             <!--<div *ngIf="EntityPM.AccountTypeCode == '2' || EntityPM.AccountTypeCode == '3'" [style.float]="isRTL ? 'left' : 'right'">
                                 <div [style.float]="isRTL ? 'right' : 'left'" style="width: 20px; padding-top: 2px;">
@@ -587,11 +587,11 @@
             </div>
         </div>
 
-        <div [style.float]="isRTL ? 'right' : 'left'" style="width: calc(100% - 300px); overflow: auto;" *ngIf="EntityPM.IsMultiCurrency == true">
+        <div [style.float]="isRTL ? 'right' : 'left'" style="width: calc(100% - 300px); overflow: auto;"  *ngIf="TenantCurrency != EntityPM.CurrencyCode" >
             <div class="footer-title">
                 {{'Accounting.General.O.TotalInCurrencies' | TextCodeTranslationPipe}}
             </div>
-            <div class="footer-cell" [style.float]="isRTL ? 'right' : 'left'" *ngFor="let currency of LTBSummery.EndBalanceForeignList; let i=index;">
+            <div class="footer-cell" [style.float]="isRTL ? 'right' : 'left'" *ngFor="let currency of LTBSummery.EndBalanceForeignList; let i=index;"  >
 
                 <div *ngIf="i>0" style="border-left: 1px solid #c1c1c1;width: 2px; margin: 0px 15px; height: 37px"  [style.float]="isRTL ? 'right' : 'left'" ></div>
 

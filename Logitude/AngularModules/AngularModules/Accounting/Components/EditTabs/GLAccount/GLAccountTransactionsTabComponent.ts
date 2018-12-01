@@ -520,7 +520,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                             if (!myResponse.HasError) {
                                 this.LTBSummery = myResult.Result;
 
-                                if (this.EntityPM.IsMultiCurrency) {
+                                // if (this.EntityPM.IsMultiCurrency) {
                                     var text = " &nbsp;";
 
                                     for (let item of this.LTBSummery.EndBalanceForeignList) {
@@ -536,7 +536,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                                     }
 
                                     this.OpenAmountHint = text;
-                                }
+                                // }
 
                                 console.log("Result: ", myResult.Result);
                             }

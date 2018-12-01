@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class HybridTenantThresholdUpdateClass
@@ -171,9 +174,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Description",
-					  						DefaultText =  "Description",
+					  						DefaultText =  @"Description",
 					  						ListFieldLable =  "DescriptionListLable",
-					  						ListLableDefaultText =  "Description",
+					  						ListLableDefaultText =  @"Description",
 					  						HelpTextCode =  "Description",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -228,9 +231,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Language",
-					  						DefaultText =  "Language",
+					  						DefaultText =  @"Language",
 					  						ListFieldLable =  "LanguageListLable",
-					  						ListLableDefaultText =  "Language",
+					  						ListLableDefaultText =  @"Language",
 					  						HelpTextCode =  "Language",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -285,9 +288,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "InternalRemarks",
-					  						DefaultText =  "Remarks",
+					  						DefaultText =  @"Remarks",
 					  						ListFieldLable =  "InternalRemarkseListLable",
-					  						ListLableDefaultText =  "Language",
+					  						ListLableDefaultText =  @"Language",
 					  						HelpTextCode =  "InternalRemarks",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -342,9 +345,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CountryCode",
-					  						DefaultText =  "Country",
+					  						DefaultText =  @"Country",
 					  						ListFieldLable =  "CountryCodeListLable",
-					  						ListLableDefaultText =  "CountryCode",
+					  						ListLableDefaultText =  @"CountryCode",
 					  						HelpTextCode =  "CountryCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -399,9 +402,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsEnabledForCustomers",
-					  						DefaultText =  "Enabled for Customers",
+					  						DefaultText =  @"Enabled for Customers",
 					  						ListFieldLable =  "IsEnabledForCustomersListLable",
-					  						ListLableDefaultText =  "IsEnabledForCustomers",
+					  						ListLableDefaultText =  @"IsEnabledForCustomers",
 					  						HelpTextCode =  "IsEnabledForCustomers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -456,9 +459,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsCopiedAtSignup",
-					  						DefaultText =  "Copy at Signup",
+					  						DefaultText =  @"Copy at Signup",
 					  						ListFieldLable =  "IsCopiedAtSignupListLable",
-					  						ListLableDefaultText =  "IsCopiedAtSignup",
+					  						ListLableDefaultText =  @"IsCopiedAtSignup",
 					  						HelpTextCode =  "IsCopiedAtSignup",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -495,7 +498,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable HybridTenantThresholdObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HybridTenantThreshold" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode HybridTenantThresholdTextCode_HybridTenantThreshold = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridTenantThreshold", DefaultText = "Hybrid Tenant Threshold",LocalDefaultText = null, ObjectTableId = HybridTenantThresholdObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

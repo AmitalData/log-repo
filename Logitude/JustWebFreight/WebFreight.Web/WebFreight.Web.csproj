@@ -1525,6 +1525,7 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\CustomPickListExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryBuilderController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryColumnController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\DWSubQueryController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryFilterController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWObjectFieldExtendedController.cs" />
@@ -2496,6 +2497,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWObjectTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\EntityStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\EventTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\GeneralUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\IATACodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\InboundEmailLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\InboundEmailUpdateClass.cs" />

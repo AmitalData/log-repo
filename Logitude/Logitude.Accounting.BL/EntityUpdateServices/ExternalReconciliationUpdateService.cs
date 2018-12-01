@@ -80,14 +80,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (transactionPM.SourceTypeCode == "6")
                     {
                         List<ARPaymentChequePM> aRPaymentChequePMs = bankDepositQueryService.GetListByPaymentId(transactionPM.SourceId, entityPM.Tenant);
+                        ARPaymentChequePM aRPaymentCheque = aRPaymentChequePMs.Where(a => a.ChequeNumber == transactionPM.Reference1).FirstOrDefault();
 
-                        foreach (ARPaymentChequePM item in aRPaymentChequePMs)
-                        {
-                            item.StatusCode = "6";
-                            item.ChangeSetOp = ChangeSetOperation.Update;
-                            ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
-                            aRPaymentChequeUpdateService.Update(item, true);
-                        }
+                        aRPaymentCheque.StatusCode = "6";
+                        aRPaymentCheque.ChangeSetOp = ChangeSetOperation.Update;
+                        ARPaymentChequeUpdateService aRPaymentChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+                         aRPaymentChequeUpdateService.Update(aRPaymentCheque, true);
+                        
                     }
                     transactionService.Update(transactionPM, false);
                 }

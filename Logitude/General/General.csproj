@@ -500,6 +500,7 @@
     <Content Include="Main Branch\2018\11 - 2018\Day 07 [Abdullah] Delete old TaxReport query.sql" />
     <Content Include="Main Branch\2018\11 - 2018\Day 14 [Maheera] Delete ProjectNumber ScreenFieldId in Shipment.sql" />
     <Content Include="Main Branch\2018\11 - 2018\Day 18 [Alaa] AddJournalAdditionalData For each tenant.sql" />
+    <Content Include="Main Branch\2018\11 - 2018\Day 28 [Islam] Fix wrong text codes.sql" />
     <Content Include="Main Branch\2018\11 - 2018\Day 19 [Maheera] Fill Entity Type In Ticket Table.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />

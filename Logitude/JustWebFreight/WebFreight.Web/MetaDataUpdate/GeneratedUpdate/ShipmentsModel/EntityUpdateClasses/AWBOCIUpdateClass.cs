@@ -174,9 +174,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "SupplementaryCustomsInfo",
-					  						DefaultText =  "Supplementary value",
+					  						DefaultText =  @"Supplementary value",
 					  						ListFieldLable =  "SupplementaryCustomsInfo",
-					  						ListLableDefaultText =  "Supplementary value",
+					  						ListLableDefaultText =  @"Supplementary value",
 					  						HelpTextCode =  "SupplementaryCustomsInfo",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -232,9 +232,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CountryId",
-					  						DefaultText =  "Country",
+					  						DefaultText =  @"Country",
 					  						ListFieldLable =  "CountryId",
-					  						ListLableDefaultText =  "Country",
+					  						ListLableDefaultText =  @"Country",
 					  						HelpTextCode =  "CountryId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -290,9 +290,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AWBCustomsInformationCode",
-					  						DefaultText =  "Customs Info. ID",
+					  						DefaultText =  @"Customs Info. ID",
 					  						ListFieldLable =  "AWBCustomsInformationCode",
-					  						ListLableDefaultText =  "Customs Info. ID",
+					  						ListLableDefaultText =  @"Customs Info. ID",
 					  						HelpTextCode =  "AWBCustomsInformationCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -348,9 +348,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AWBInformationCode",
-					  						DefaultText =  "Information ID",
+					  						DefaultText =  @"Information ID",
 					  						ListFieldLable =  "AWBInformationCode",
-					  						ListLableDefaultText =  "Information ID",
+					  						ListLableDefaultText =  @"Information ID",
 					  						HelpTextCode =  "AWBInformationCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);

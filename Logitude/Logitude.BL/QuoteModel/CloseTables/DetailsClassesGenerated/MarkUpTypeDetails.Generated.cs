@@ -23,14 +23,14 @@ namespace Logitude.BL.QuoteModel
 		    var all = new List<MarkUpTypeDetails>();  
             all.Add(new MarkUpTypeDetails()
             {    
-                SearchFields = "F,Fixed", 
+                SearchFields = "F,Fixed,", 
                 Code = "F", 
                 Name = "Fixed", 
 			});
 			 
             all.Add(new MarkUpTypeDetails()
             {    
-                SearchFields = "P,Percentage", 
+                SearchFields = "P,Percentage,", 
                 Code = "P", 
                 Name = "Percentage", 
 			});

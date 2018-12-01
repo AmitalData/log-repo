@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class AccountingSettingUpdateClass
@@ -173,9 +176,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AccountingSystemCode",
-					  						DefaultText =  "Accounting System",
+					  						DefaultText =  @"Accounting System",
 					  						ListFieldLable =  "AccountingSystemCodeListLable",
-					  						ListLableDefaultText =  "Accounting System",
+					  						ListLableDefaultText =  @"Accounting System",
 					  						HelpTextCode =  "AccountingSystemCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -230,9 +233,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TempCard1",
-					  						DefaultText =  "Temp Card",
+					  						DefaultText =  @"Temp Card",
 					  						ListFieldLable =  "TempCard1ListLable",
-					  						ListLableDefaultText =  "Temp Card",
+					  						ListLableDefaultText =  @"Temp Card",
 					  						HelpTextCode =  "TempCard1",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -287,10 +290,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AllowMinusInvoicelines",
-					  						DefaultText =  "Allow to add Credit Items in Invoice",
+					  						DefaultText =  @"Allow to add Credit Items in Invoice",
 					  						ListFieldLable =  "AllowMinusInvoicelines",
-					  						ListLableDefaultText =  "Allow to add Credit Items in Invoice",
+					  						ListLableDefaultText =  @"Allow to add Credit Items in Invoice",
 					  						HelpTextCode =  "AllowMinusInvoicelines",
+					  						HelpTextDefaultText =  @"Allow invoices including negative charges amounts",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -344,10 +348,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AllowVoidARI",
-					  						DefaultText =  "Allow void Invoice",
+					  						DefaultText =  @"Allow void Invoice",
 					  						ListFieldLable =  "AllowVoidARI",
-					  						ListLableDefaultText =  "Allow void Invoice",
+					  						ListLableDefaultText =  @"Allow void Invoice",
 					  						HelpTextCode =  "AllowVoidARI",
+					  						HelpTextDefaultText =  @"To activate VOID action for AR Invoice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -401,10 +406,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AllowVoidARP",
-					  						DefaultText =  "Allow void Payment",
+					  						DefaultText =  @"Allow void Payment",
 					  						ListFieldLable =  "AllowVoidARP",
-					  						ListLableDefaultText =  "Allow void Payment",
+					  						ListLableDefaultText =  @"Allow void Payment",
 					  						HelpTextCode =  "AllowVoidARP",
+					  						HelpTextDefaultText =  @"To activate VOID action for AR Payment",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -458,10 +464,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AllowVoidAPI",
-					  						DefaultText =  "Allow void Invoice",
+					  						DefaultText =  @"Allow void Invoice",
 					  						ListFieldLable =  "AllowVoidAPI",
-					  						ListLableDefaultText =  "Allow void Invoice",
+					  						ListLableDefaultText =  @"Allow void Invoice",
 					  						HelpTextCode =  "AllowVoidAPI",
+					  						HelpTextDefaultText =  @"To activate VOID option in AP invoices",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -515,10 +522,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AllowVoidAPP",
-					  						DefaultText =  "Allow void Payment",
+					  						DefaultText =  @"Allow void Payment",
 					  						ListFieldLable =  "AllowVoidAPP",
-					  						ListLableDefaultText =  "Allow void Payment",
+					  						ListLableDefaultText =  @"Allow void Payment",
 					  						HelpTextCode =  "AllowVoidAPP",
+					  						HelpTextDefaultText =  @"To activate VOID option in AP Payments",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -572,10 +580,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AllowManualInvoiceNumber",
-					  						DefaultText =  "Allow manual invoice number entry",
+					  						DefaultText =  @"Allow manual invoice number entry",
 					  						ListFieldLable =  "AllowManualInvoiceNumber",
-					  						ListLableDefaultText =  "Allow manual invoice number entry",
+					  						ListLableDefaultText =  @"Allow manual invoice number entry",
 					  						HelpTextCode =  "AllowManualInvoiceNumber",
+					  						HelpTextDefaultText =  @"To manage an external invoice number to be entered manually in the Invoice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -629,10 +638,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsVatNumberMandatoryInAR",
-					  						DefaultText =  "Bill to VAT is required",
+					  						DefaultText =  @"Bill to VAT is required",
 					  						ListFieldLable =  "IsVatNumberMandatoryInAR",
-					  						ListLableDefaultText =  "Bill to VAT is required",
+					  						ListLableDefaultText =  @"Bill to VAT is required",
 					  						HelpTextCode =  "IsVatNumberMandatoryInAR",
+					  						HelpTextDefaultText =  @"Mandatory Bill to VAT number in AR Invoice & AR Payment",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -686,10 +696,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsVatNumberMandatoryInAP",
-					  						DefaultText =  "Bill to VAT is required",
+					  						DefaultText =  @"Bill to VAT is required",
 					  						ListFieldLable =  "IsVatNumberMandatoryInAP",
-					  						ListLableDefaultText =  "Bill to VAT is required",
+					  						ListLableDefaultText =  @"Bill to VAT is required",
 					  						HelpTextCode =  "IsVatNumberMandatoryInAP",
+					  						HelpTextDefaultText =  @"Mandatory Bill to VAT number in AP Invoices and AP Payments",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -743,10 +754,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsChronologicalDates",
-					  						DefaultText =  "Invoices dates must be chronological",
+					  						DefaultText =  @"Invoices dates must be chronological",
 					  						ListFieldLable =  "IsChronologicalDates",
-					  						ListLableDefaultText =  "Invoices dates must be chronological",
+					  						ListLableDefaultText =  @"Invoices dates must be chronological",
 					  						HelpTextCode =  "IsChronologicalDates",
+					  						HelpTextDefaultText =  @"Avoid issuing an invoice with date less than the date of the previous issued invoice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -800,10 +812,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AllowClosureWithoutPayables",
-					  						DefaultText =  "Allow closure without payable invoice",
+					  						DefaultText =  @"Allow closure without payable invoice",
 					  						ListFieldLable =  "AllowClosureWithoutPayablesLable",
-					  						ListLableDefaultText =  "Allow closure without payable invoice",
+					  						ListLableDefaultText =  @"Allow closure without payable invoice",
 					  						HelpTextCode =  "AllowClosureWithoutPayables",
+					  						HelpTextDefaultText =  @"Allows to accounting close shipments with open payables lines",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -857,9 +870,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsARInvoicesTransferEnabled",
-					  						DefaultText =  "Invoices transfer enabled",
+					  						DefaultText =  @"Invoices transfer enabled",
 					  						ListFieldLable =  "IsARInvoicesTransferEnabledLabel",
-					  						ListLableDefaultText =  "Invoices transfer enabled",
+					  						ListLableDefaultText =  @"Invoices transfer enabled",
 					  						HelpTextCode =  "IsARInvoicesTransferEnabled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -914,9 +927,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAPInvoicesTransferEnabled",
-					  						DefaultText =  "Invoices transfer enabled",
+					  						DefaultText =  @"Invoices transfer enabled",
 					  						ListFieldLable =  "IsAPInvoicesTransferEnabledLabel",
-					  						ListLableDefaultText =  "Invoices transfer enabled",
+					  						ListLableDefaultText =  @"Invoices transfer enabled",
 					  						HelpTextCode =  "IsAPInvoicesTransferEnabled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -971,9 +984,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "APInvoiceTransferStartDate",
-					  						DefaultText =  "AP Invoice transfer start date",
+					  						DefaultText =  @"AP Invoice transfer start date",
 					  						ListFieldLable =  "APInvoiceTransferStartDateLabel",
-					  						ListLableDefaultText =  "AP Invoice transfer start date",
+					  						ListLableDefaultText =  @"AP Invoice transfer start date",
 					  						HelpTextCode =  "APInvoiceTransferStartDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1028,9 +1041,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ARInvoiceTransferStartDate",
-					  						DefaultText =  "AR Invoice transfer start date",
+					  						DefaultText =  @"AR Invoice transfer start date",
 					  						ListFieldLable =  "ARInvoiceTransferStartDateLabel",
-					  						ListLableDefaultText =  "AR Invoice transfer start date",
+					  						ListLableDefaultText =  @"AR Invoice transfer start date",
 					  						HelpTextCode =  "ARInvoiceTransferStartDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1085,8 +1098,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AllowPositiveAmountsInTheCreditNote",
-					  						DefaultText =  "Allow positive amounts in the credit note",
+					  						DefaultText =  @"Allow positive amounts in the credit note",
 					  						HelpTextCode =  "AllowPositiveAmountsInTheCreditNote",
+					  						HelpTextDefaultText =  @"Allow credit notes including positive charges amounts",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1141,8 +1155,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EnableMultiPercentageVATTypes",
-					  						DefaultText =  "Enable multi-percentage VAT Types",
+					  						DefaultText =  @"Enable multi-percentage VAT Types",
 					  						HelpTextCode =  "EnableMultiPercentageVATTypes",
+					  						HelpTextDefaultText =  @"Allows creating combined VAT types from two or more VAT Types with different percentages",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1197,8 +1212,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NotifyPastDateOnInvoiceEdit",
-					  						DefaultText =  "Notify past date on invoice edit",
+					  						DefaultText =  @"Notify past date on invoice edit",
 					  						HelpTextCode =  "NotifyPastDateOnInvoiceEdit",
+					  						HelpTextDefaultText =  @"Alert in draft or open constituent invoice if the date should be updated to the current day",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1253,8 +1269,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EnableMultiRateAPInvoices",
-					  						DefaultText =  "Enable multi-rate AP invoices",
+					  						DefaultText =  @"Enable multi-rate AP invoices",
 					  						HelpTextCode =  "EnableMultiRateAPInvoices",
+					  						HelpTextDefaultText =  @"Allows recording AP invoice with different exchange rates",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1309,7 +1326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "RegistryDateTypeCode",
-					  						DefaultText =  "Registry Date",
+					  						DefaultText =  @"Registry Date",
 					  						HelpTextCode =  "RegistryDateTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1364,9 +1381,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivableVATCard",
-					  						DefaultText =  "Receivable VAT Card",
+					  						DefaultText =  @"Receivable VAT Card",
 					  						ListFieldLable =  "ReceivableVATCardListLable",
-					  						ListLableDefaultText =  "Receivable VAT Card",
+					  						ListLableDefaultText =  @"Receivable VAT Card",
 					  						HelpTextCode =  "ReceivableVATCard",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1421,9 +1438,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PayableVATCard",
-					  						DefaultText =  "Payable VAT Card",
+					  						DefaultText =  @"Payable VAT Card",
 					  						ListFieldLable =  "PayableVATCardListLable",
-					  						ListLableDefaultText =  "Payable VAT Card",
+					  						ListLableDefaultText =  @"Payable VAT Card",
 					  						HelpTextCode =  "PayableVATCard",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1479,8 +1496,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EnableMultiCurrencyARPayments",
-					  						DefaultText =  "Enable multi-currency AR payments",
+					  						DefaultText =  @"Enable multi-currency AR payments",
 					  						HelpTextCode =  "EnableMultiCurrencyARPayments",
+					  						HelpTextDefaultText =  @"Allows closing AR invoices in foreign currency with AR Payment in local currency or vice versa",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1534,9 +1552,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsAPPaymentsTransferEnabled",
-					  						DefaultText =  "Payments transfer enabled",
+					  						DefaultText =  @"Payments transfer enabled",
 					  						ListFieldLable =  "IsAPPaymentsTransferEnabledLabel",
-					  						ListLableDefaultText =  "Payments transfer enabled",
+					  						ListLableDefaultText =  @"Payments transfer enabled",
 					  						HelpTextCode =  "IsAPPaymentsTransferEnabled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1592,8 +1610,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EnableNegativeOffsetARPayments",
-					  						DefaultText =  "Enable negative offset AR payments",
+					  						DefaultText =  @"Enable negative offset AR payments",
 					  						HelpTextCode =  "EnableNegativeOffsetARPayments",
+					  						HelpTextDefaultText =  "Allows recording AR Payments in negative amounts using payment method \"Offset",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1648,8 +1667,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EnableNegativeOffsetAPPayments",
-					  						DefaultText =  "Enable negative offset AP payments",
+					  						DefaultText =  @"Enable negative offset AP payments",
 					  						HelpTextCode =  "EnableNegativeOffsetAPPayments",
+					  						HelpTextDefaultText =  @"Allows recording payables payments in negative amounts using payment method is Offset",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1703,9 +1723,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PayableVATableTempCard",
-					  						DefaultText =  "Payable VATable Temp Card",
+					  						DefaultText =  @"Payable VATable Temp Card",
 					  						ListFieldLable =  "PayableVATableTempCardListLable",
-					  						ListLableDefaultText =  "Payable VATable Temp Card",
+					  						ListLableDefaultText =  @"Payable VATable Temp Card",
 					  						HelpTextCode =  "PayableVATableTempCard",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1760,9 +1780,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PayableVATExemptTempCard",
-					  						DefaultText =  "Payable Exempt Temp Card",
+					  						DefaultText =  @"Payable Exempt Temp Card",
 					  						ListFieldLable =  "PayableVATExemptTempCardListLable",
-					  						ListLableDefaultText =  "Payable Exempt Temp Card",
+					  						ListLableDefaultText =  @"Payable Exempt Temp Card",
 					  						HelpTextCode =  "PayableVATExemptTempCard",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1817,9 +1837,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivableVATableTempCard",
-					  						DefaultText =  "Receivable VATable Temp Card",
+					  						DefaultText =  @"Receivable VATable Temp Card",
 					  						ListFieldLable =  "ReceivableVATableTempCardListLable",
-					  						ListLableDefaultText =  "Receivable VATable Temp Card",
+					  						ListLableDefaultText =  @"Receivable VATable Temp Card",
 					  						HelpTextCode =  "ReceivableVATableTempCard",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1874,9 +1894,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ReceivableVATExemptTempCard",
-					  						DefaultText =  "Receivable Exempt Temp Card",
+					  						DefaultText =  @"Receivable Exempt Temp Card",
 					  						ListFieldLable =  "ReceivableVATExemptTempCardListLable",
-					  						ListLableDefaultText =  "Receivable Exempt Temp Card",
+					  						ListLableDefaultText =  @"Receivable Exempt Temp Card",
 					  						HelpTextCode =  "ReceivableVATExemptTempCard",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1932,10 +1952,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsSingleTaxPerInvoice",
-					  						DefaultText =  "Invoices are limited to single VAT",
+					  						DefaultText =  @"Invoices are limited to single VAT",
 					  						ListFieldLable =  "IsSingleTaxPerInvoiceLabel",
-					  						ListLableDefaultText =  "Invoices are limited to single VAT",
+					  						ListLableDefaultText =  @"Invoices are limited to single VAT",
 					  						HelpTextCode =  "IsSingleTaxPerInvoice",
+					  						HelpTextDefaultText =  @"You are limited to use one VAT type per invoice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1989,9 +2010,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsARPaymentsTransferEnabled",
-					  						DefaultText =  "Payments transfer enabled",
+					  						DefaultText =  @"Payments transfer enabled",
 					  						ListFieldLable =  "IsARPaymentsTransferEnabledLabel",
-					  						ListLableDefaultText =  "Payments transfer enabled",
+					  						ListLableDefaultText =  @"Payments transfer enabled",
 					  						HelpTextCode =  "IsARPaymentsTransferEnabled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2046,9 +2067,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ARPaymentTransferStartDate",
-					  						DefaultText =  "AR Payment transfer start date",
+					  						DefaultText =  @"AR Payment transfer start date",
 					  						ListFieldLable =  "ARPaymentTransferStartDateLabel",
-					  						ListLableDefaultText =  "AR Payment transfer start date",
+					  						ListLableDefaultText =  @"AR Payment transfer start date",
 					  						HelpTextCode =  "ARPaymentTransferStartDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2104,9 +2125,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VatNumber",
-					  						DefaultText =  "VAT Number",
+					  						DefaultText =  @"VAT Number",
 					  						ListFieldLable =  "VatNumberListLable",
-					  						ListLableDefaultText =  "VAT Number",
+					  						ListLableDefaultText =  @"VAT Number",
 					  						HelpTextCode =  "VatNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2163,9 +2184,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PaymentTermId",
-					  						DefaultText =  "Payment Term",
+					  						DefaultText =  @"Payment Term",
 					  						HelpTextCode =  "PaymentTermId",
-					  						HelpTextDefaultText =  "default payment term for customers",
+					  						HelpTextDefaultText =  @"default payment term for customers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2220,7 +2241,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TransferToDropboxActivated",
-					  						DefaultText =  "Transfer To Dropbox Activated",
+					  						DefaultText =  @"Transfer To Dropbox Activated",
 					  						HelpTextCode =  "TransferToDropboxActivated",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2276,8 +2297,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EnableMultiCurrencyAPPayments",
-					  						DefaultText =  "Enable multi-currency AP payments",
+					  						DefaultText =  @"Enable multi-currency AP payments",
 					  						HelpTextCode =  "EnableMultiCurrencyAPPayments",
+					  						HelpTextDefaultText =  @"Allows closing AP invoices in foreign currencies with payment in local currency or vice versa",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -2313,7 +2335,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable AccountingSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingSetting" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode AccountingSettingTextCode_AccountingSettingRequestedPaymentMethodIsMandatoryHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSetting.RequestedPaymentMethodIsMandatoryHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = AccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AccountingSettingTextCode_AccountingSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSetting", DefaultText = "Accounting Setting",LocalDefaultText = null, ObjectTableId = AccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

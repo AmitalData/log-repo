@@ -261,6 +261,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                
                 var XML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
                 var FilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Filters);
+                var temp = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(XML);
+                var temp1 = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(FilterXML);
                 //IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 //QueryColumnService service = new QueryColumnService(objectContext, entityPM.Tenant);
                 //service.Create(entityPM);

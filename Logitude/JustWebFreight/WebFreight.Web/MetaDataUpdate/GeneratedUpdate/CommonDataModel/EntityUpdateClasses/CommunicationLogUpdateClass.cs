@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CommunicationLogUpdateClass
@@ -175,7 +178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  "Created By User",
+					  						DefaultText =  @"Created By User",
 					  						HelpTextCode =  "CreatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -231,11 +234,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreatedByUserName",
-					  						DefaultText =  "Created By User",
-					  						FullLocalDefaultText =  "נוצר על ידי משתמש",
+					  						DefaultText =  @"Created By User",
+					  						FullLocalDefaultText =  @"נוצר על ידי משתמש",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
-					  						ListLableDefaultText =  "Created By User",
-					  						ListLocalDefaultText =  "נוצר על ידי משתמש",
+					  						ListLableDefaultText =  @"Created By User",
+					  						ListLocalDefaultText =  @"נוצר על ידי משתמש",
 					  						HelpTextCode =  "CreatedByUserName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -291,11 +294,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  true,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "צור תאריך",
+					  						DefaultText =  @"Create Date",
+					  						FullLocalDefaultText =  @"צור תאריך",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "צור תאריך",
+					  						ListLableDefaultText =  @"Create Date",
+					  						ListLocalDefaultText =  @"צור תאריך",
 					  						HelpTextCode =  "CreateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -351,11 +354,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Subject",
-					  						DefaultText =  "Subject",
-					  						FullLocalDefaultText =  "נושא",
+					  						DefaultText =  @"Subject",
+					  						FullLocalDefaultText =  @"נושא",
 					  						ListFieldLable =  "SubjectListLable",
-					  						ListLableDefaultText =  "Subject",
-					  						ListLocalDefaultText =  "נושא",
+					  						ListLableDefaultText =  @"Subject",
+					  						ListLocalDefaultText =  @"נושא",
 					  						HelpTextCode =  "Subject",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -411,9 +414,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DoneDate",
-					  						DefaultText =  "Done Date",
+					  						DefaultText =  @"Done Date",
 					  						ListFieldLable =  "DoneDateListLable",
-					  						ListLableDefaultText =  "Done Date",
+					  						ListLableDefaultText =  @"Done Date",
 					  						HelpTextCode =  "DoneDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -470,11 +473,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  true,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "InOut",
-					  						DefaultText =  "In/Out",
-					  						FullLocalDefaultText =  "כניסה / יציאה",
+					  						DefaultText =  @"In/Out",
+					  						FullLocalDefaultText =  @"כניסה / יציאה",
 					  						ListFieldLable =  "InOutListLable",
-					  						ListLableDefaultText =  "In/Out",
-					  						ListLocalDefaultText =  "כניסה / יציאה",
+					  						ListLableDefaultText =  @"In/Out",
+					  						ListLocalDefaultText =  @"כניסה / יציאה",
 					  						HelpTextCode =  "InOut",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -529,9 +532,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CC",
-					  						DefaultText =  "CC",
+					  						DefaultText =  @"CC",
 					  						ListFieldLable =  "CCListLable",
-					  						ListLableDefaultText =  "CC",
+					  						ListLableDefaultText =  @"CC",
 					  						HelpTextCode =  "CC",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -588,8 +591,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DocumentOutId",
-					  						DefaultText =  "Document Out",
-					  						FullLocalDefaultText =  "מסמך החוצה",
+					  						DefaultText =  @"Document Out",
+					  						FullLocalDefaultText =  @"מסמך החוצה",
 					  						HelpTextCode =  "DocumentOutId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -646,8 +649,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DocumentInId",
-					  						DefaultText =  "Document In",
-					  						FullLocalDefaultText =  "מסמך ב",
+					  						DefaultText =  @"Document In",
+					  						FullLocalDefaultText =  @"מסמך ב",
 					  						HelpTextCode =  "DocumentInId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -703,11 +706,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "To",
-					  						DefaultText =  "To",
-					  						FullLocalDefaultText =  "אל",
+					  						DefaultText =  @"To",
+					  						FullLocalDefaultText =  @"אל",
 					  						ListFieldLable =  "ToListLable",
-					  						ListLableDefaultText =  "To",
-					  						ListLocalDefaultText =  "אל",
+					  						ListLableDefaultText =  @"To",
+					  						ListLocalDefaultText =  @"אל",
 					  						HelpTextCode =  "To",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -764,8 +767,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CommunicationStatusTypeCode",
-					  						DefaultText =  "Status",
-					  						FullLocalDefaultText =  "סטטוס",
+					  						DefaultText =  @"Status",
+					  						FullLocalDefaultText =  @"סטטוס",
 					  						HelpTextCode =  "CommunicationStatusTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -820,11 +823,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CommunicationStatusTypeName",
-					  						DefaultText =  "Communication Status",
-					  						FullLocalDefaultText =  "מצב תקשורת",
+					  						DefaultText =  @"Communication Status",
+					  						FullLocalDefaultText =  @"מצב תקשורת",
 					  						ListFieldLable =  "CommunicationStatusTypeNameListLable",
-					  						ListLableDefaultText =  "Communication Status",
-					  						ListLocalDefaultText =  "מצב תקשורת",
+					  						ListLableDefaultText =  @"Communication Status",
+					  						ListLocalDefaultText =  @"מצב תקשורת",
 					  						HelpTextCode =  "CommunicationStatusTypeName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -881,8 +884,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CommunicationLogTypeCode",
-					  						DefaultText =  "Log Type",
-					  						FullLocalDefaultText =  "התחבר סוג",
+					  						DefaultText =  @"Log Type",
+					  						FullLocalDefaultText =  @"התחבר סוג",
 					  						HelpTextCode =  "CommunicationLogTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -937,11 +940,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CommunicationLogTypeName",
-					  						DefaultText =  "Log Type",
-					  						FullLocalDefaultText =  "התחבר סוג",
+					  						DefaultText =  @"Log Type",
+					  						FullLocalDefaultText =  @"התחבר סוג",
 					  						ListFieldLable =  "CommunicationLogTypeNameListLable",
-					  						ListLableDefaultText =  "Log Type",
-					  						ListLocalDefaultText =  "התחבר סוג",
+					  						ListLableDefaultText =  @"Log Type",
+					  						ListLocalDefaultText =  @"התחבר סוג",
 					  						HelpTextCode =  "CommunicationLogTypeName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -997,11 +1000,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Retries",
-					  						DefaultText =  "Retries",
-					  						FullLocalDefaultText =  "ניסיונות חוזרים",
+					  						DefaultText =  @"Retries",
+					  						FullLocalDefaultText =  @"ניסיונות חוזרים",
 					  						ListFieldLable =  "RetriesListLable",
-					  						ListLableDefaultText =  "Retries",
-					  						ListLocalDefaultText =  "ניסיונות חוזרים",
+					  						ListLableDefaultText =  @"Retries",
+					  						ListLocalDefaultText =  @"ניסיונות חוזרים",
 					  						HelpTextCode =  "Retries",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1056,9 +1059,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "BCC",
-					  						DefaultText =  "BCC",
+					  						DefaultText =  @"BCC",
 					  						ListFieldLable =  "BCCListLable",
-					  						ListLableDefaultText =  "BCC",
+					  						ListLableDefaultText =  @"BCC",
 					  						HelpTextCode =  "BCC",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1115,8 +1118,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ObjectTableId",
-					  						DefaultText =  "Object Table",
-					  						FullLocalDefaultText =  "טבלת אובייקט",
+					  						DefaultText =  @"Object Table",
+					  						FullLocalDefaultText =  @"טבלת אובייקט",
 					  						HelpTextCode =  "ObjectTableId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1171,11 +1174,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ObjectTableName",
-					  						DefaultText =  "Object Table",
-					  						FullLocalDefaultText =  "טבלת אובייקט",
+					  						DefaultText =  @"Object Table",
+					  						FullLocalDefaultText =  @"טבלת אובייקט",
 					  						ListFieldLable =  "ObjectTableNameListLable",
-					  						ListLableDefaultText =  "Object Table",
-					  						ListLocalDefaultText =  "טבלת אובייקט",
+					  						ListLableDefaultText =  @"Object Table",
+					  						ListLocalDefaultText =  @"טבלת אובייקט",
 					  						HelpTextCode =  "ObjectTableName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1231,11 +1234,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "From",
-					  						DefaultText =  "From",
-					  						FullLocalDefaultText =  "מן",
+					  						DefaultText =  @"From",
+					  						FullLocalDefaultText =  @"מן",
 					  						ListFieldLable =  "FromListLable",
-					  						ListLableDefaultText =  "From",
-					  						ListLocalDefaultText =  "מן",
+					  						ListLableDefaultText =  @"From",
+					  						ListLocalDefaultText =  @"מן",
 					  						HelpTextCode =  "From",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1290,11 +1293,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastStatusDate",
-					  						DefaultText =  "Last Status Date",
-					  						FullLocalDefaultText =  "תאריך הסטטוס האחרון",
+					  						DefaultText =  @"Last Status Date",
+					  						FullLocalDefaultText =  @"תאריך הסטטוס האחרון",
 					  						ListFieldLable =  "LastStatusDateListLable",
-					  						ListLableDefaultText =  "Last Status Date",
-					  						ListLocalDefaultText =  "תאריך הסטטוס האחרון",
+					  						ListLableDefaultText =  @"Last Status Date",
+					  						ListLocalDefaultText =  @"תאריך הסטטוס האחרון",
 					  						HelpTextCode =  "LastStatusDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1350,11 +1353,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "EntityReference",
-					  						DefaultText =  "Entity Reference",
-					  						FullLocalDefaultText =  "התייחסות לישות",
+					  						DefaultText =  @"Entity Reference",
+					  						FullLocalDefaultText =  @"התייחסות לישות",
 					  						ListFieldLable =  "EntityReferenceListLable",
-					  						ListLableDefaultText =  "Entity Reference",
-					  						ListLocalDefaultText =  "התייחסות לישות",
+					  						ListLableDefaultText =  @"Entity Reference",
+					  						ListLocalDefaultText =  @"התייחסות לישות",
 					  						HelpTextCode =  "EntityReference",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1408,9 +1411,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search emails/ subject",
+					  						DefaultText =  @"Search emails/ subject",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: emails\n2: subject",
+					  						HelpTextDefaultText =  @"Searching by :\n1: emails\n2: subject",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1465,9 +1468,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreateDateUTC",
-					  						DefaultText =  "Create Date UTC",
+					  						DefaultText =  @"Create Date UTC",
 					  						ListFieldLable =  "CreateDateUTCListLable",
-					  						ListLableDefaultText =  "Create Date UTC",
+					  						ListLableDefaultText =  @"Create Date UTC",
 					  						HelpTextCode =  "CreateDateUTC",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1523,9 +1526,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DoneDateUTC",
-					  						DefaultText =  "Done Date UTC",
+					  						DefaultText =  @"Done Date UTC",
 					  						ListFieldLable =  "DoneDateUTCListLable",
-					  						ListLableDefaultText =  "Done Date UTC",
+					  						ListLableDefaultText =  @"Done Date UTC",
 					  						HelpTextCode =  "DoneDateUTC",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1581,9 +1584,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastStatusDateUTC",
-					  						DefaultText =  "Last Status Date UTC",
+					  						DefaultText =  @"Last Status Date UTC",
 					  						ListFieldLable =  "LastStatusDateUTCListLable",
-					  						ListLableDefaultText =  "Last Status Date (UTC)",
+					  						ListLableDefaultText =  @"Last Status Date (UTC)",
 					  						HelpTextCode =  "LastStatusDateUTC",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1639,9 +1642,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NextTryDateTimeUTC",
-					  						DefaultText =  "Next Try Date UTC",
+					  						DefaultText =  @"Next Try Date UTC",
 					  						ListFieldLable =  "NextTryDateTimeUTCListLable",
-					  						ListLableDefaultText =  "Next Try Date UTC",
+					  						ListLableDefaultText =  @"Next Try Date UTC",
 					  						HelpTextCode =  "NextTryDateTimeUTC",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1697,9 +1700,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "NextTryDateTime",
-					  						DefaultText =  "Next Try Date",
+					  						DefaultText =  @"Next Try Date",
 					  						ListFieldLable =  "NextTryDateTimeListLable",
-					  						ListLableDefaultText =  "Next Try Date",
+					  						ListLableDefaultText =  @"Next Try Date",
 					  						HelpTextCode =  "NextTryDateTime",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1755,9 +1758,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "QueueName",
-					  						DefaultText =  "Queue Name",
+					  						DefaultText =  @"Queue Name",
 					  						ListFieldLable =  "QueueNameListLable",
-					  						ListLableDefaultText =  "Queue Name",
+					  						ListLableDefaultText =  @"Queue Name",
 					  						HelpTextCode =  "QueueName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1813,9 +1816,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Priority",
-					  						DefaultText =  "Priority",
+					  						DefaultText =  @"Priority",
 					  						ListFieldLable =  "PriorityListLable",
-					  						ListLableDefaultText =  "Priority",
+					  						ListLableDefaultText =  @"Priority",
 					  						HelpTextCode =  "Priority",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1871,9 +1874,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TenantName",
-					  						DefaultText =  "Tenant Name",
+					  						DefaultText =  @"Tenant Name",
 					  						ListFieldLable =  "TenantNameListLable",
-					  						ListLableDefaultText =  "Tenant Name",
+					  						ListLableDefaultText =  @"Tenant Name",
 					  						HelpTextCode =  "TenantName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1929,9 +1932,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AWBNumber",
-					  						DefaultText =  "AWB #",
+					  						DefaultText =  @"AWB #",
 					  						ListFieldLable =  "AWBNumberListLable",
-					  						ListLableDefaultText =  "AWB #",
+					  						ListLableDefaultText =  @"AWB #",
 					  						HelpTextCode =  "AWBNumber",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1987,9 +1990,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Email Delivery Error",
-					  						DefaultText =  "Email Delivery Error",
+					  						DefaultText =  @"Email Delivery Error",
 					  						ListFieldLable =  "EmailDeliveryErrorListLable",
-					  						ListLableDefaultText =  "Email Delivery Error",
+					  						ListLableDefaultText =  @"Email Delivery Error",
 					  						HelpTextCode =  "Email Delivery Error",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2045,9 +2048,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LogSettings",
-					  						DefaultText =  "LogSettings",
+					  						DefaultText =  @"LogSettings",
 					  						ListFieldLable =  "LogSettingsListLable",
-					  						ListLableDefaultText =  "LogSettings",
+					  						ListLableDefaultText =  @"LogSettings",
 					  						HelpTextCode =  "LogSettings",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -2372,7 +2375,40 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CommunicationLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CommunicationLog" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogOLogs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Logs", DefaultText = "Logs",LocalDefaultText = @"לוג", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogOCorrelationID = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.CorrelationID", DefaultText = "Correlation ID",LocalDefaultText = @"מתאם", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogOMoreDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.MoreDetails", DefaultText = "More Details",LocalDefaultText = @"פרטים נוספים", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLog = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog", DefaultText = "Communication Log",LocalDefaultText = null, ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogBView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.B.View", DefaultText = "View",LocalDefaultText = @"לצפות", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogOStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Status", DefaultText = "Status",LocalDefaultText = @"סטטוס", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogOFromTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.From/To", DefaultText = "From/To",LocalDefaultText = @"מ / אל", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogOUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.User", DefaultText = "User",LocalDefaultText = @"משתמש", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogOError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Error", DefaultText = "Error",LocalDefaultText = @"שגיאה", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CommunicationLogTextCode_CommunicationLogBDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.B.Details", DefaultText = "Details",LocalDefaultText = @"פרטים", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

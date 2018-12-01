@@ -1110,7 +1110,7 @@ namespace WebFreight.Web
                             {
                                 contactPassword = globalObjectContext.ContactPasswords.Where(c => c.Email.ToLower() == email).FirstOrDefault();
                                 isLoadContactPasswords = true;
-                            }
+                            } 
 
                             if (contactPassword != null)
                             {

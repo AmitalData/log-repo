@@ -1,27 +1,20 @@
 ﻿<Window x:Class="MetaDataGenerator.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="293.438" Width="590.913" >
-    <Grid Height="121" VerticalAlignment="Top">
+        Title="MainWindow" Height="350" Width="706.913" >
+    <Grid Height="300" VerticalAlignment="Top">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Button Content="Generate lxml from database" Margin="9,140,371,-59"  Click="Button_Click_1" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleX="0.955"/>
-                    <RotateTransform/>
-                    <TranslateTransform X="0.983"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
+
+
         <TextBox x:Name="TableName" HorizontalAlignment="Left" Height="23" Margin="125,26,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="280"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,26,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Object Table Name" VerticalAlignment="Top" Width="115" Height="23"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,58,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Model Name" VerticalAlignment="Top" Width="115" Height="23"/>
-        <ComboBox x:Name="cmbModels" HorizontalAlignment="Left" Margin="125,58,0,0" Grid.Row="1" VerticalAlignment="Top" Width="280">
+        <ComboBox x:Name="cmbModels" HorizontalAlignment="Left" Margin="125,58,0,120" Grid.Row="1" Width="280">
             <ComboBoxItem Content="Shipment"/>
             <ComboBoxItem Content="Common"/>
             <ComboBoxItem Content="Quote"/>
@@ -29,7 +22,13 @@
             <ComboBoxItem Content="Infrastructure"/>
             <ComboBoxItem Content="Global"/>
         </ComboBox>
-        <Button Content="Update Model LXMLS" HorizontalAlignment="Left" Margin="236,140,0,-58" Grid.Row="1" VerticalAlignment="Top" Width="197" Height="39" x:Name="btnUpdateModelLXMLs" Click="btnUpdateModelLXMLs_Click"/>
+
+        <StackPanel Orientation="Horizontal"  Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <Button Content="Generate lxml from database" Click="Button_Click_1" Grid.Row="1"   Height="39" Width="197"/>
+            <Button Margin="5 0 0 0" Content="Update Model LXMLS" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Width="197" Height="39" x:Name="btnUpdateModelLXMLs" Click="btnUpdateModelLXMLs_Click"/>
+            <Button  Margin="5 0 0 0" Content="Update Model Old LXMLS" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Top" Width="197" Height="39" x:Name="btnUpdate_Old_ModelLXMLs" Click="btnUpdate_Old_ModelLXMLs_Click"/>
+
+        </StackPanel>
 
     </Grid>
 </Window>

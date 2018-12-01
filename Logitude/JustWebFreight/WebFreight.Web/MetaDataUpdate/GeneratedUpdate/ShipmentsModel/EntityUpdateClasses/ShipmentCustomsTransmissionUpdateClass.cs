@@ -176,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastSendDate",
-					  						DefaultText =  "Last Send Date",
+					  						DefaultText =  @"Last Send Date",
 					  						HelpTextCode =  "LastSendDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -232,7 +232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Error",
-					  						DefaultText =  "Error",
+					  						DefaultText =  @"Error",
 					  						HelpTextCode =  "Error",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -287,7 +287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MessageCode",
-					  						DefaultText =  "Message Code",
+					  						DefaultText =  @"Message Code",
 					  						HelpTextCode =  "MessageCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -342,7 +342,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Status",
-					  						DefaultText =  "Status",
+					  						DefaultText =  @"Status",
 					  						HelpTextCode =  "Status",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);

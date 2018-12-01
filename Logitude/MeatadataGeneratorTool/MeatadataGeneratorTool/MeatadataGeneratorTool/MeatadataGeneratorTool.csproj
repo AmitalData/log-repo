@@ -156,6 +156,9 @@
     <Compile Include="Helpers\GridConverters.cs" />
     <Compile Include="Helpers\TrueIfFalseConverter.cs" />
     <Compile Include="Helpers\XmlParserHelper.cs" />
+    <Compile Include="LoadFileWindow.xaml.cs">
+      <DependentUpon>LoadFileWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindowControl.xaml.cs">
       <DependentUpon>MainWindowControl.xaml</DependentUpon>
     </Compile>
@@ -228,6 +231,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Features\FeaturesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadFileWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

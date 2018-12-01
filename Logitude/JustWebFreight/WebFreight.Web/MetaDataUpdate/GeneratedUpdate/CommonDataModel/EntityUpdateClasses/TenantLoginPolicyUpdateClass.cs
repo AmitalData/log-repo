@@ -177,7 +177,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "LoginPolicyCode",
-					  						DefaultText =  "Login Policy",
+					  						DefaultText =  @"Login Policy",
 					  						HelpTextCode =  "LoginPolicyCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -233,9 +233,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsEnabledForSpecificUsers",
-					  						DefaultText =  "Is Enabled For Specific Users",
+					  						DefaultText =  @"Is Enabled For Specific Users",
 					  						ListFieldLable =  "IsEnabledForSpecificUsersListLable",
-					  						ListLableDefaultText =  "Is Enabled For Specific Users",
+					  						ListLableDefaultText =  @"Is Enabled For Specific Users",
 					  						HelpTextCode =  "IsEnabledForSpecificUsers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -291,9 +291,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "TwoFactorInternalIPs",
-					  						DefaultText =  "Internal IPs",
+					  						DefaultText =  @"Internal IPs",
 					  						ListFieldLable =  "TwoFactorInternalIPsListLable",
-					  						ListLableDefaultText =  "Internal IPs",
+					  						ListLableDefaultText =  @"Internal IPs",
 					  						HelpTextCode =  "TwoFactorInternalIPs",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -349,11 +349,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "KeepUserLoggedIn",
-					  						DefaultText =  "Keep User Logged In",
+					  						DefaultText =  @"Keep User Logged In",
 					  						ListFieldLable =  "KeepUserLoggedInLable",
-					  						ListLableDefaultText =  "Keep User Logged In",
+					  						ListLableDefaultText =  @"Keep User Logged In",
 					  						HelpTextCode =  "KeepUserLoggedIn",
-					  						HelpTextDefaultText =  "Enabling this setting the system will remember logged users",
+					  						HelpTextDefaultText =  @"Enabling this setting the system will remember logged users",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -408,9 +408,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AllowedIPs",
-					  						DefaultText =  "Allowed IPs",
+					  						DefaultText =  @"Allowed IPs",
 					  						ListFieldLable =  "AllowedIPsListLable",
-					  						ListLableDefaultText =  "Allowed IPs",
+					  						ListLableDefaultText =  @"Allowed IPs",
 					  						HelpTextCode =  "AllowedIPs",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -466,11 +466,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ExcludeInternalIPs",
-					  						DefaultText =  "Exclude Internal IPs",
+					  						DefaultText =  @"Exclude Internal IPs",
 					  						ListFieldLable =  "ExcludeInternalIPsListLable",
-					  						ListLableDefaultText =  "Exclude Internal IPs",
+					  						ListLableDefaultText =  @"Exclude Internal IPs",
 					  						HelpTextCode =  "ExcludeInternalIPs",
-					  						HelpTextDefaultText =  "Users will be able to login from internal IPs without using two factor authentication",
+					  						HelpTextDefaultText =  @"Users will be able to login from internal IPs without using two factor authentication",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -525,9 +525,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  "In Active",
+					  						DefaultText =  @"In Active",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  "In Active",
+					  						ListLableDefaultText =  @"In Active",
 					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -538,7 +538,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 
 					 						FieldName =  "SessionTimeout",
 					  						ObjectTableName =  "TenantLoginPolicy",
-					  						FieldsDataType = "Decimal",
+					  						FieldsDataType =  "Decimal",
 					  						Code =  "SessionTimeout",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
@@ -569,7 +569,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ValidForQuerySection1 =  "TenantLoginPolicy",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
-					  						DigitsAfterPoint =  0,
+					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
@@ -583,9 +583,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SessionTimeout",
-					  						DefaultText =  "Session Timeout",
+					  						DefaultText =  @"Session Timeout",
 					  						ListFieldLable =  "SessionTimeoutLable",
-					  						ListLableDefaultText =  "Session Timeout",
+					  						ListLableDefaultText =  @"Session Timeout",
 					  						HelpTextCode =  "SessionTimeout",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -622,7 +622,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable TenantLoginPolicyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TenantLoginPolicy" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode TenantLoginPolicyTextCode_TenantLoginPolicy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TenantLoginPolicy", DefaultText = "Login Policy",LocalDefaultText = null, ObjectTableId = TenantLoginPolicyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     
