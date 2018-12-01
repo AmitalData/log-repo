@@ -40,6 +40,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
     public IsShowNewWarehouseReleaseButton: boolean = false;
     public IsContainerFollowup: boolean = false;
     public ContainerReturnDeliveryId: string = null;
+    public IsCreatingContainerDelivery: boolean = false;
     IsShipmentEditComponent: boolean = true;
     WareHouseRelaseCustomerId: string;
     WareHouseRelaseWareHouseId: string;
@@ -56,6 +57,7 @@ export class AddEditDeliveryComponent implements OnDestroy {
         this.ContainerReturnDeliveryId = args['ContainerReturnDeliveryId'];
         this.WareHouseRelaseCustomerId = args['WareHouseRelaseCustomerId'];
         this.WareHouseRelaseWareHouseId = args['WareHouseRelaseWareHouseId'];
+        this.IsCreatingContainerDelivery = args["IsCreatingContainerDelivery"];
         var isOutSource = args['IsOutSource'];
         if (isOutSource) this.IsShipmentEditComponent = false;
 

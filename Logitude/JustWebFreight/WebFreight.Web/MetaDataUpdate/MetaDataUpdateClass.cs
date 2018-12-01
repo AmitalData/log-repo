@@ -62717,7 +62717,7 @@ namespace WebFreight.Web.MetaDataUpdate
             #region Messages
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisPartner", DefaultText = "Delete This Partner?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisCharge", DefaultText = "Delete This Charge?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.YouCanTypeSalePrice", DefaultText = "You can type Sale Price ex:(1000)\nOr\nYou can type Sale Markup ex:(+100) Or (+10%)", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.YouCanTypeSalePrice", DefaultText = "You can type Sale Price ex:(1000)%nOr%nYou can type Sale Markup ex:(+100) Or (+10%)", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.UnableToDoAllIn", DefaultText = "Unable to do All In..", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.IfMatchesFrieghtCharge", DefaultText = "Only if matches the Frieght Charge UOM and Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisPackage", DefaultText = "Delete this package?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
@@ -62869,6 +62869,16 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Fixed", DefaultText = "Fixed", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SameAsCost", DefaultText = "Same as Cost Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostMinAmount", DefaultText = "Cost%nMin Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostMaxAmount", DefaultText = "Cost%nMax Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleMinAmount", DefaultText = "Sale%nMin Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleMaxAmount", DefaultText = "Sale%nMax Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalSaleAmount", DefaultText = "Total Sale Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.VATDetails", DefaultText = "VAT Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SubTotal", DefaultText = "Sub-Total", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalVAT", DefaultText = "Total VAT", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalSale", DefaultText = "Total Sale", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Details", DefaultText = "Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             #endregion
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Routings", DefaultText = "Routings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);

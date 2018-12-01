@@ -312,7 +312,7 @@ export class ARPaymentMenuButtonsHandler {
         if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
             var myConfirmWindow = new ConfirmWindow();
             myConfirmWindow.Width = 400;
-            myConfirmWindow.Show("Resend this [payment] to QBO?");
+            myConfirmWindow.Show("Resend this invoice to QBO?");
             myConfirmWindow.WindowClosed.subscribe(s => {
                 this.ResetAllFlags();
                 if (myConfirmWindow.Yes) {
@@ -335,7 +335,28 @@ export class ARPaymentMenuButtonsHandler {
         this.EntityPM.SetReTransfer = false;
         this.EntityPM.SetCancelApproval = false;
 
-        this.entityArgs.EditComponent.SaveChanges(Text);
+        if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+            var FlagNotTransfered: boolean = false;
+            this.EntityPM.PaymentInvoices.forEach(item => {
+                if (item.ARInvoiceTransferStatusCode != "TR") {
+                    FlagNotTransfered = true;
+                }
+            });
+
+            if (FlagNotTransfered) {
+                var window: MessageWindow = new MessageWindow();
+                window.Show("Invoices that were not transferred to QBO will not be connected to the payment at QBO");
+                window.WindowClosed.subscribe((event: any) => {
+                    this.entityArgs.EditComponent.SaveChanges(Text);
+                });
+            }
+            else {
+                this.entityArgs.EditComponent.SaveChanges(Text);
+            }
+        }
+        else {
+            this.entityArgs.EditComponent.SaveChanges(Text);
+        }        
     }
 
 
@@ -427,33 +448,33 @@ export class ARPaymentMenuButtonsHandler {
     // [Approval]
     ApprovalMethod() {
         
-            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
-                var FlagNotTransfered: boolean = false;
-                this.EntityPM.PaymentInvoices.forEach(item => {
-                    if (item.ARInvoiceTransferStatusCode != "TR") {
-                        FlagNotTransfered = true;
-                    }
-                });
-
-                if (FlagNotTransfered) {
-                    var window: MessageWindow = new MessageWindow();
-                    window.Show("Invoices that were not transferred to QBO will not be connected to the payment at QBO");
-                    window.WindowClosed.subscribe((event: any) => {
-                        this.CompleteApprove();
-                    });
+        if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+            var FlagNotTransfered: boolean = false;
+            this.EntityPM.PaymentInvoices.forEach(item => {
+                if (item.ARInvoiceTransferStatusCode != "TR") {
+                    FlagNotTransfered = true;
                 }
-                else {
+            });
+
+            if (FlagNotTransfered) {
+                var window: MessageWindow = new MessageWindow();
+                window.Show("Invoices that were not transferred to QBO will not be connected to the payment at QBO");
+                window.WindowClosed.subscribe((event: any) => {
                     this.CompleteApprove();
-                }
-
+                });
             }
             else {
                 this.CompleteApprove();
             }
-        
+
+        }
+        else {
+            this.CompleteApprove();
+        }
+
     }
 
-private CompleteApprove(){
+    private CompleteApprove() {
     if (this.EntityPM.AccountingPaymentMethodCode == "FS" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
         var messageWindow = new MessageWindow();
         messageWindow.Show("This payments with payment method Offsetting will not be transfered to quickbooks online , transfer it manually");

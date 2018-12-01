@@ -1294,7 +1294,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 }
 export class APPaymentInvoiceArgs extends BaseComponent {
     public EntityPM: APPaymentInvoicePM = null;
-    public Invoice: APInvoiceList = null;
+    public Invoice: APInvoiceList = null; APPaymentInvoiceArgs
     public PaymentPM: APPaymentPM = null;
     public DataContext: APPaymentInvoiceArgs = this;
     public ObjectTableName: string = "APInvoice";
@@ -1338,6 +1338,8 @@ export class APPaymentInvoiceArgs extends BaseComponent {
     public CurrencyId: string = null;
     public CurrencyCode: string = null;
     public InvoiceAmount: number = 0;
+    public TransferStatusCode: string = null;
+
     InitProperties() {
         this.Id = this.Invoice.Id;
         this.DueDate = this.Invoice.DueDate;
@@ -1348,6 +1350,8 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         this.CurrencyCode = this.Invoice.InvoiceCurrencyCode;
         this.InvoiceAmount = this.Invoice.AmountInInvoiceCurrency == null ? 0 : this.Invoice.AmountInInvoiceCurrency;
         this.ShipmentNumber = this.Invoice.IsMultipleEntities ? "List" : this.Invoice.MainEntityReference;
+        this.TransferStatusCode = this.Invoice.TransferStatusCode;
+
     }
 
     public ExchangeRate: number = 0;
@@ -1730,6 +1734,7 @@ export class APPaymentInvoiceArgs extends BaseComponent {
         itemPM.ExchangeRate = this.ExchangeRate;
         itemPM.ForeignAmount = this.ConnectedAmount_INV == null ? 0 : AppTool.Round(this.ConnectedAmount_INV, 2);
         itemPM.PaymentAmount = this.ConnectedAmount_PAY == null ? 0 : AppTool.Round(this.ConnectedAmount_PAY, 2);
+        itemPM.APInvoiceTransferStatusCode = this.TransferStatusCode;
 
         if (this.CurrencyId == this.LocalCurrencyId) {
             itemPM.LocalAmount = itemPM.ForeignAmount;
