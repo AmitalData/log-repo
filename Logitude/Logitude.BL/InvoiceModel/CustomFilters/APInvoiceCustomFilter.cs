@@ -102,6 +102,17 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
                     {
                         queryableData = queryableData.Where(d => d.TransferStatusCode == "TR");
                     }
+
+                    else if (item.FieldName == "DraftGeneralAPInvoices")
+                    {
+                        queryableData = queryableData.Where(d => d.IsClosed == false  && d.IsGeneralInvoice == true && d.StatusCode == "DR");
+                    }
+
+                    else if (item.FieldName == "ApprovalGeneralAPInvoices")
+                    {
+                        queryableData = queryableData.Where(d => d.IsClosed == false && d.IsGeneralInvoice == true && d.ApprovedDate != null);
+                    }
+
                 }
             }
 
