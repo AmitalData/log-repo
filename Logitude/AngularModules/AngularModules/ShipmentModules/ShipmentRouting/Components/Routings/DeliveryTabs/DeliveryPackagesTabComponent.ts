@@ -320,7 +320,7 @@ export class DeliveryPackageItem extends BaseComponent {
         }
     }
     SetUIProperties_Harmonize() {
-        var isFieldEnabled: boolean = true;
+        var isFieldEnabled: boolean = false;
         if (this.IsEditingEnabled) {
             isFieldEnabled = true;
             if (this.IsMultiHarmonize == true) {
