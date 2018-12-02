@@ -18,6 +18,7 @@ import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings'
 import {CountryList} from '../../../../Common/EntityLists/CountryList';
 import {CountryListService} from '../../../../Common/Services/StandardLists/CountryListService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'CompanyAddressSettingsComponent',
@@ -34,6 +35,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     public AgentObjectTableName: string = "Agent";
     public TenantObjectTableName: string = "Tenant";
     public IsVisibile: boolean = false;
+    public IsLocalAddressTabVisible: boolean = false;
     public SelectedTabCode: string = "0";
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
@@ -79,6 +81,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
 
             this.InitializeData();
             this.IsVisibile = true;
+            this.LoadLocalAddress();
         }
 
         else {
@@ -87,6 +90,30 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
                 this.TenantAddress = myResult.Result;
                 this.InitializeData();
                 this.IsVisibile = true;
+                this.LoadLocalAddress();
+            });
+        }
+    }
+
+    LoadLocalAddress() {
+        if (AppTool.IsNullOrEmpty(this.TenantPm.LocalAddressId)) {
+            this.TenantAddress = new AddressPM();
+            this.TenantAddress.Tenant = this.TenantPm.Id;
+            this.TenantAddress.AddressTypeId = "L";
+
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyLocalAddress")) {
+                this.IsLocalAddressTabVisible = true;
+            }
+        }
+
+        else {
+            var myService: AddressPMService = new AddressPMService();
+            myService.get(this.TenantPm.LocalAddressId).subscribe((myResult: ServiceResponse) => {
+                this.TenantAddress = myResult.Result;
+
+                if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyLocalAddress")) {
+                    this.IsLocalAddressTabVisible = true;
+                }
             });
         }
     }
@@ -398,6 +425,13 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetRequired("StateId", "Address", isRequired);
     }
 
+    //Local Address
+
+
+
+
+
+
     // Commands 
     SelectCityCommand() {
 
@@ -537,4 +571,5 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
             }
         });
     }
+
 }
