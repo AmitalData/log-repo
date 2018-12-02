@@ -929,6 +929,16 @@ export class DeclarationPM {
     public set AcceptanceStatusName(newValue: string) { if (this.acceptanceStatusName != newValue) { this.acceptanceStatusName = newValue; this.MarkAsDirty("AcceptanceStatusName"); } }
        
 	 
+    private courierPendingReasonCode: string;
+    public get CourierPendingReasonCode() { return this.courierPendingReasonCode; }
+    public set CourierPendingReasonCode(newValue: string) { if (this.courierPendingReasonCode != newValue) { this.courierPendingReasonCode = newValue; this.MarkAsDirty("CourierPendingReasonCode"); } }
+       
+	 
+    private pendingRemarks: string;
+    public get PendingRemarks() { return this.pendingRemarks; }
+    public set PendingRemarks(newValue: string) { if (this.pendingRemarks != newValue) { this.pendingRemarks = newValue; this.MarkAsDirty("PendingRemarks"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

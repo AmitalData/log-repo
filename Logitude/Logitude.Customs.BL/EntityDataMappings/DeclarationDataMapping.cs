@@ -343,6 +343,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 CourierDeclarationQueryService courierDeclarationQueryService = new CourierDeclarationQueryService(entityPOCO.Tenant);
                 entityPM.MAWBCourierMaster = courierDeclarationQueryService.GetMAWBCourierMasterByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(entityPOCO.Tenant);
+                DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPOCO.Id, false,false);
+                if(declarationCourierStatusPM != null)
+                {
+                    entityPM.CourierPendingReasonCode = declarationCourierStatusPM.CourierPendingReasonCode;
+                    entityPM.PendingRemarks = declarationCourierStatusPM.PendingRemarks;
+                }
             }
 
             if (entityPOCO.AcceptanceStatusCode != null)

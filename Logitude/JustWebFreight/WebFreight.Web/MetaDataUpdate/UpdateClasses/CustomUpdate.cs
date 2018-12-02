@@ -673,6 +673,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             FeaturePM declarationFeature_VehicleModification = features.Where(d => d.Code == "VEHICLEMODIFICATION" && d.ObjectTableId == declarationTableId).FirstOrDefault(); // moran 29.2.16 - Task 19807
             FeaturePM declarationFeature_DocumentsPanel = features.Where(d => d.Code == "DOCUMENTSPANEL" && d.ObjectTableId == declarationTableId).FirstOrDefault();
             FeaturePM declarationFeature_SendManifest = features.Where(d => d.Code == "SENDMANIFEST" && d.ObjectTableId == declarationTableId).FirstOrDefault();
+            FeaturePM declarationFeature_CourierPendingReason = features.Where(d => d.Code == "CourierPendingReason" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             string paymentOrderTableId = ObjectContext.ObjectTables.Where(f => f.Name == "Customs.PaymentOrder" && f.Tenant == tenant).FirstOrDefault().Id;
 
@@ -1027,6 +1028,41 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 MenuButtonType = "menuitem",
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
+
+            #region CourierPendingReason
+            MenuButton CourierPendingReasonButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "CourierPendingReason",
+                Index = 5,
+                IsActive = true,
+                LabelTextCodeCode = "Customs.Declaration.B.CourierPendingReason",
+                LabelTextCodeDefaultText = "Courier Pending Reason",
+                LocalDefaultText = "הזנת Pending",
+                ObjectTableId = declarationTableId,
+                Tenant = tenant,
+                MenuButtonGroupId = declarationMenuButtonGroup.Id,
+                ParentMenuButtonId = actionButton.Id,
+                FeatureId = declarationFeature_CourierPendingReason.Id,
+                MenuButtonType = "menuitem",
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+
+            MenuButton CourierPendingReasonDelButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "CourierPendingReasonDel",
+                Index = 5,
+                IsActive = true,
+                LabelTextCodeCode = "Customs.Declaration.B.CourierPendingReasonDel",
+                LabelTextCodeDefaultText = "Courier Pending Reason",
+                LocalDefaultText = "מחיקת Pending",
+                ObjectTableId = declarationTableId,
+                Tenant = tenant,
+                MenuButtonGroupId = declarationMenuButtonGroup.Id,
+                ParentMenuButtonId = actionButton.Id,
+                FeatureId = declarationFeature_CourierPendingReason.Id,
+                MenuButtonType = "menuitem",
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            #endregion
+
             #endregion
 
 
