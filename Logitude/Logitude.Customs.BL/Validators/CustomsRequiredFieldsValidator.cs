@@ -963,7 +963,7 @@ namespace Logitude.Customs.BL.Validators
 
             var fromCache = true;
             declaration = paramDeclarationPM;
-            var fromCache = true;
+            
             if (declaration == null)
             {
                 
