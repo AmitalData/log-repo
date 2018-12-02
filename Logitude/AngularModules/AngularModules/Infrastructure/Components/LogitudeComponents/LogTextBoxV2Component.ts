@@ -43,6 +43,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
     public HideColumns: boolean = false;
     public HideLastColumn: boolean = false;
     public DigitsAfterPoint: number;
+    CopyValueSubs: any;
     @Output() KeyUp = new EventEmitter();
     @Output() ValueChanged = new EventEmitter();
     @Output() LostFocus = new EventEmitter();
@@ -278,7 +279,20 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
 
         this.SetControlIds(baseIdCombination);
 
+        if (this.FocusOnMe) {// it means it is inside a grid.
+            this.CopyValueSubs= SessionLocator.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
+                if (id == this.InputId) {
+                    //SessionLocator.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                    this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
+                    SessionLocator.CurrentSession.CopiedCell = null;
+                }
+            });
 
+            if (SessionLocator.CurrentSession.CopiedCell) {
+                //this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
+                //SessionLocator.CurrentSession.CopiedCell = null;
+            }
+        }
 
         var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
         if (table) {
@@ -409,6 +423,11 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (this._debounceTimeSub) {
             this._debounceTimeSub.unsubscribe();
         }
+        if (this.CopyValueSubs)
+        {
+            this.CopyValueSubs.unsubscribe();
+            this.CopyValueSubs = null;
+        }
     }
 
     onFocus() {
@@ -441,11 +460,17 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
             if (this.uiProperty.ValidValue) {
                 this.InputDivStyle = null;
             }
+            this.TextValueChanges(this.TextValue);
         }, 300);
+        this.timerToken = setTimeout(() => {
+           this.TextValueChanges(this.TextValue);
+        }, 30);
         this.Detach = true;
         //this.DetectChanges();
         this.show = false;
-        this.TextValueChanges(this.TextValue);
+        //if(!this.FocusOnMe){
+            
+        //}
         // this.TextValue = this.DataContext[this.ObjectFieldName];
         this.keydown = false;
         this.GetValueFormatted(this.TextValue);
