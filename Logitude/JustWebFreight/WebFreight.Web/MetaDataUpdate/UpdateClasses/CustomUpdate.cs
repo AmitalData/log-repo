@@ -16985,7 +16985,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                                 Logitude.Customs.Data.EntityPOCOs.InterfaceManagement,
                                   Logitude.Customs.Def.ClosedTable.InterfaceManagementDetails,
                                 Logitude.Customs.Data.Repsitories.InterfaceManagementRepository>(repo, dic);
-
+            return;// ITZIK :NO MESSAGE >>NO NEED 
             var test = new Logitude.Customs.Def.ClosedTable.InterfaceManagementDetails();
 
             MessagingServiceFactoryHelper.InitContainer();

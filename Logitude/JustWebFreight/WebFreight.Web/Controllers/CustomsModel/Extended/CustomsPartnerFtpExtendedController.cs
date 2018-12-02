@@ -73,8 +73,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         var details = new CustomsPartnerFtpDetails();
                         var entityPM = new
                         {
+                            InterfaceDetailsItems = details.GetAllInterfaceName(),
                             PartnerCodeItems = details.GetAllPartnerCode(),
-                            InterfaceNameItems = details.GetAllInterfaceName(),
+                            
                             TypeCodeItems= details.GetAllTypeCode()
                         };
                         

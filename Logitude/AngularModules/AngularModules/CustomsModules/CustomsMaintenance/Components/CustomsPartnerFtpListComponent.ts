@@ -26,6 +26,7 @@ import { RegionList } from '../../../Common/EntityLists/RegionList';
 import { FTPDetailPMService } from '../../../Common/Services/StandardPMs/FTPDetailPMService';
 import { FTPDetailPM } from '../../../common/EntityPMs/FTPDetailPM';
 import { retry } from 'rxjs/operators';
+import { Jsonp } from '@angular/http';
 
 @Component({
     moduleId: module.id,
@@ -56,7 +57,7 @@ export class CustomsPartnerFtpListComponent
     _TypeCodeItems: any[] = [];
     _InterfaceNameItems: any[] = [];
     _PartnerCodeItems: any[] = [];
-
+    _InterfaceDetailsItems: InterfaceDetails[];
     _InEditMode: boolean = false;
 
     private myFTPService: FTPDetailPMService;
@@ -87,7 +88,20 @@ export class CustomsPartnerFtpListComponent
             this._CustomsPartnerFtpExtendedPMService.GetScreenOption(SessionLocator.Tenant).subscribe(res => {
                 let screenOption = res.Result;
                 this._PartnerCodeItems = screenOption.PartnerCodeItems;
-                this._InterfaceNameItems = screenOption.InterfaceNameItems;
+                //this._InterfaceNameItems = screenOption.InterfaceNameItems;
+                this._InterfaceNameItems = [];
+                this._InterfaceNameItems.push({ Key: '', Value: '' });
+                this._InterfaceDetailsItems = [];
+                let listInterfaceDetailsItems: any[] = screenOption.InterfaceDetailsItems;
+                listInterfaceDetailsItems.forEach(r => {
+
+
+                    let val = r.Value;
+
+                    let myInterfaceDetails: InterfaceDetails = JSON.parse(val);
+                    this._InterfaceNameItems.push({ Key: myInterfaceDetails.Code, Value: myInterfaceDetails.Name });
+                    this._InterfaceDetailsItems.push(myInterfaceDetails);
+                });
                 this._TypeCodeItems = screenOption.TypeCodeItems;
                 this.ReLoadList();
             })
@@ -272,8 +286,18 @@ export class CustomsPartnerFtpListComponent
     PartnerCodeChanged(selectControl: any) {
         this._CustomsPartnerFtpPM.PartnerCode = selectControl.value;
     }
+    _InterfaceDetail: InterfaceDetails;
     InterfaceNameChanged(selectControl: any) {
         this._CustomsPartnerFtpPM.InterfaceName = selectControl.value;
+        
+        this.SetFromServer();
+    }
+    SetFromServer() {
+        if (!AppTool.IsNullOrEmpty(this._CustomsPartnerFtpPM.InterfaceName)) {
+            this._InterfaceDetail = this._InterfaceDetailsItems.filter(r => r.Code == this._CustomsPartnerFtpPM.InterfaceName)[0];
+            this.PartnerCode = this._InterfaceDetail.Partner;
+            this.TypeCode = this._InterfaceDetail.TypeCode;
+        }
     }
     _SettingsHost: string;
     
@@ -371,4 +395,13 @@ export class CustomsPartnerFtpListComponent
 
 
   
+}
+
+class InterfaceDetails {
+    Code: string
+    Name: string
+
+    TypeCode: string
+    Partner: string
+    ViaMethod: string
 }

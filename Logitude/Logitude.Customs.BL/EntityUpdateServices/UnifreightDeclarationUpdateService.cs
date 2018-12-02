@@ -747,7 +747,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         requestData = requestData.Replace("</transmission>", string.Concat(xmlCFIDATA, "</transmission>"));
                     }
                 }
-
+                var myFileAdditionalData = myCargoQueryContext.FileAdditionalData as FileAdditionalData;
+                if (myFileAdditionalData != null)
+                {
+                    var xmlFileAdditionalData = XmlGenericUtil<FileAdditionalData>.SerializeObject(myFileAdditionalData, true);
+                    if (!string.IsNullOrWhiteSpace(xmlFileAdditionalData))
+                    {
+                        requestData = requestData.Replace("</transmission>", string.Concat(xmlFileAdditionalData, "</transmission>"));
+                    }
+                }
                 if (string.IsNullOrWhiteSpace(myCustomFileNo)) myCustomFileNo = this._DirtyDeclarationPM.CustomFileNo;
 
                 if (!string.IsNullOrWhiteSpace(requestData))

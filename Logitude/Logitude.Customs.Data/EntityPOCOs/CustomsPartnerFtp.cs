@@ -38,6 +38,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FileName { get; set; }
         [Column("FileExt")]
 	    public string FileExt { get; set; }
+        [Column("CommunicationDetails")]
+	    public string CommunicationDetails { get; set; }
     }
 }
 	 

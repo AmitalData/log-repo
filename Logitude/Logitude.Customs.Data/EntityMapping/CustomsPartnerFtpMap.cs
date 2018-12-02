@@ -38,6 +38,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.FileName).HasColumnName("FileName").HasMaxLength(256).IsUnicode(false);
 
             this.Property(t => t.FileExt).HasColumnName("FileExt").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.CommunicationDetails).HasColumnName("CommunicationDetails").HasMaxLength(2000).IsUnicode(false);
         }
     }
 }

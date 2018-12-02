@@ -29,7 +29,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InterfaceName, 
 	         FtpDetailsId, 
 	         FileName, 
-	         FileExt,
+	         FileExt, 
+	         CommunicationDetails,
 	      }
 
 
@@ -43,7 +44,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         InterfaceName, 
 	         FtpDetailsId, 
 	         FileName, 
-	         FileExt,
+	         FileExt, 
+	         CommunicationDetails,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -85,6 +87,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FileExt))
             {
 				entityPOCO.FileExt = entityPM.FileExt;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommunicationDetails))
+            {
+				entityPOCO.CommunicationDetails = entityPM.CommunicationDetails;
 			}
 			}
 
@@ -131,6 +138,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.FileExt = entityPOCO.FileExt;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommunicationDetails))
+            {
+					entityPM.CommunicationDetails = entityPOCO.CommunicationDetails;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsPartnerFtpPM entityPM, CustomsPartnerFtpPM oldEntityPM)
@@ -170,6 +182,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FileExt))
             {
                 oldEntityPM.FileExt = entityPM.FileExt;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommunicationDetails))
+            {
+                oldEntityPM.CommunicationDetails = entityPM.CommunicationDetails;
             }
 			
 		}
