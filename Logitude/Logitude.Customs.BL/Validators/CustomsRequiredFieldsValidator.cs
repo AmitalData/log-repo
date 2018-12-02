@@ -961,9 +961,9 @@ namespace Logitude.Customs.BL.Validators
 
             CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(context);
 
-
-            declaration = paramDeclarationPM;
             var fromCache = true;
+            declaration = paramDeclarationPM;
+            
             if (declaration == null)
             {
                 

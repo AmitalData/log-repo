@@ -13,5 +13,13 @@ namespace Logitude.Server.Tools.Utils
         {
             return JsonConvert.SerializeObject(obj);
         }
+        public static T JsonConvertDeserializeTyped<T>(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<T>(jsonString);
+        }
+        public static object JsonConvertDeserialize(string  jsonString)
+        {
+            return JsonConvert.DeserializeObject(jsonString);
+        }
     }
 }

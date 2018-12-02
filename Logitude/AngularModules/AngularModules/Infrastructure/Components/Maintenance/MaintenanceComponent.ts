@@ -950,6 +950,16 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "CFTP": {
+                    let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
+                    LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
+                    let allowed = false;
+                    allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital."));
+                    if (!SessionLocator.LoggedUserPM.IsCustomerCare && allowed) {
+
+                        let messageWindow = new MessageWindow()
+                        messageWindow.Show("Logged User Is not Customer Care ");
+                        return;
+                    }
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = " הגדרות FTP לשותפים";
                     logitudeWindow.Width = 900;

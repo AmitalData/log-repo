@@ -32,14 +32,14 @@
                                                         <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
                                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="_FetchCustomsPartnerFtpResultList">
 
-                                                                <!-- InterfaceName -->
+                                                                <!-- InterfaceCodeName -->
                                                                 <log-column [header]="'Customs.CustomsPartnerFtp.F.InterfaceName' | TextCodeTranslationPipe"
-                                                                            [width]="'140'" [Alignment]="'right'" [binding]="'InterfaceName'" [Editable]="true">
+                                                                            [width]="'140'" [Alignment]="'right'" [binding]="'InterfaceCodeName'" [Editable]="true">
                                                                     <log-cell-template template="let item" #logcelltemplate>
-                                                                        <div class="TextTrimming RightCenter" >
-                                                                            <span>{{item.InterfaceName}}</span>
+                                                                        <div class="TextTrimming RightCenter">
+                                                                            <span>{{item.InterfaceCodeName}}</span>
                                                                         </div>
-                                                                        
+
                                                                     </log-cell-template>
                                                                 </log-column>
 
@@ -50,10 +50,10 @@
                                                                 <log-column [header]="'Customs.CustomsPartnerFtp.F.PartnerCode' | TextCodeTranslationPipe"
                                                                             [width]="'140'" [Alignment]="'right'" [binding]="'PartnerCode'" [Editable]="true">
                                                                     <log-cell-template template="let item" #logcelltemplate>
-                                                                        <div class="TextTrimming RightCenter" >
+                                                                        <div class="TextTrimming RightCenter">
                                                                             <span>{{item.PartnerCode}}</span>
                                                                         </div>
-                                                                        
+
                                                                     </log-cell-template>
                                                                 </log-column>
 
@@ -62,16 +62,16 @@
                                                                 <log-column [header]="'Customs.CustomsPartnerFtp.F.TypeCode' | TextCodeTranslationPipe"
                                                                             [width]="'140'" [Alignment]="'right'" [binding]="'TypeCode'" [Editable]="true">
                                                                     <log-cell-template template="let item" #logcelltemplate>
-                                                                        <div class="TextTrimming RightCenter" >
+                                                                        <div class="TextTrimming RightCenter">
                                                                             <span>{{item.TypeCode}}</span>
                                                                         </div>
                                                                         <!--<div *ngIf="logcelltemplate.IsEditMode">
-                                                                            <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;"
-                                                                                    #selectControl
-                                                                                    (change)="item.TypeCodeChanged(selectControl)">
-                                                                                <option *ngFor="let c of _TypeCodeItems" [value]="c.Key" [selected]="c.Key==item.TypeCode">{{c.Value}}</option>
-                                                                            </select>
-                                                                        </div>-->
+                <select class="LogLovContainer LogLOVControl LogLovInputDiv" style="width: 140px; cursor:pointer;"
+                        #selectControl
+                        (change)="item.TypeCodeChanged(selectControl)">
+                    <option *ngFor="let c of _TypeCodeItems" [value]="c.Key" [selected]="c.Key==item.TypeCode">{{c.Value}}</option>
+                </select>
+            </div>-->
                                                                     </log-cell-template>
                                                                 </log-column>
 
@@ -80,15 +80,15 @@
                                                                 <log-column [header]="'Customs.CustomsPartnerFtp.F.FileName' | TextCodeTranslationPipe"
                                                                             [width]="'140'" [Alignment]="'right'" [binding]="'FileName'" [Editable]="true">
                                                                     <log-cell-template template="let item" #logcelltemplate>
-                                                                        <div class="TextTrimming RightCenter" >
+                                                                        <div class="TextTrimming RightCenter">
                                                                             <span>{{item.FileName}}</span>
                                                                         </div>
                                                                         <!--<div *ngIf="logcelltemplate.IsEditMode">
-                                                                            <LogTextBox [ObjectFieldName]="'FileName'" [ObjectTableName]="ObjectTableName" [Text]="FileName"
-                                                                                        (LostFocus)="item.FileNameLostFocusMethod()"
+                <LogTextBox [ObjectFieldName]="'FileName'" [ObjectTableName]="ObjectTableName" [Text]="FileName"
+                            (LostFocus)="item.FileNameLostFocusMethod()"
 
-                                                                                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                                                                        </div>-->
+                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+            </div>-->
 
                                                                     </log-cell-template>
                                                                 </log-column>
@@ -96,16 +96,16 @@
                                                                 <log-column [header]="'Customs.CustomsPartnerFtp.F.FileExt' | TextCodeTranslationPipe"
                                                                             [width]="'140'" [Alignment]="'right'" [binding]="'FileExt'" [Editable]="true">
                                                                     <log-cell-template template="let item" #logcelltemplate>
-                                                                        <div class="TextTrimming RightCenter" >
+                                                                        <div class="TextTrimming RightCenter">
                                                                             <span>{{item.FileExt}}</span>
                                                                         </div>
                                                                         <!--<div *ngIf="logcelltemplate.IsEditMode">
-                                                                            <LogTextBox [ObjectFieldName]="'FileExt'" [ObjectTableName]="ObjectTableName" [Text]="FileExt"
-                                                                                        #myLogTextBox
+                <LogTextBox [ObjectFieldName]="'FileExt'" [ObjectTableName]="ObjectTableName" [Text]="FileExt"
+                            #myLogTextBox
 
-                                                                                        (LostFocus)="item.FileExtLostFocusMethod(logcelltemplate,myLogTextBox)"
-                                                                                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-                                                                        </div>-->
+                            (LostFocus)="item.FileExtLostFocusMethod(logcelltemplate,myLogTextBox)"
+                            [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+            </div>-->
 
                                                                     </log-cell-template>
                                                                 </log-column>
@@ -219,7 +219,7 @@
                                                 </tr>
 
 
-                                                <tr class="FormFieldRow"  *ngIf="_InterfaceDetail.ViaMethod == 'FTP' ">
+                                                <tr class="FormFieldRow" *ngIf="_InterfaceDetail !=null && _InterfaceDetail.ViaMethod == 'FTP' ">
 
                                                     <!-- FileName -->
                                                     <td style="width: 130px;">
@@ -248,14 +248,14 @@
 
 
 
-                                                <tr class="FormFieldRow">
+                                                <tr class="FormFieldRow" *ngIf="_InterfaceDetail !=null && _InterfaceDetail.ViaMethod == 'FTP' ">
                                                     <td colspan="5">
 
 
                                                         <table>
                                                             <tr>
                                                                 <td style="width: 130px;">
-                                                                    <LogLabel [ObjectFieldName]="'FileExt'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'הגדרת FTP'"></LogLabel>
+                                                                    <LogLabel [ObjectFieldName]="'FTPDEF'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'הגדרת FTP'"></LogLabel>
                                                                 </td>
                                                                 <td style="width: 250px;">
                                                                     <div class="BoxText" style="border:1px solid #ccc9c9; border-radius:3px;">
@@ -282,6 +282,78 @@
 
 
                                                     </td>
+
+                                                </tr>
+
+
+
+                                                <tr class="FormFieldRow" *ngIf="_InterfaceDetail !=null && _InterfaceDetail.ViaMethod == 'WEBAPI' ">
+                                                    <td colspan="5">
+
+
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 130px;">
+                                                                    <LogLabel [ObjectFieldName]="'WEBAPIURL'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'כתובת השירות'"></LogLabel>
+                                                                </td>
+                                                                <td style="width: 417px;">
+                                                                    <LogTextBox [ObjectFieldName]="'WEBAPIURL'" [ObjectTableName]="ObjectTableName"
+                                                                                [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+                                                                </td>
+
+                                                            </tr>
+                                                        </table>
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="FormFieldRow" *ngIf="_InterfaceDetail !=null && _InterfaceDetail.ViaMethod == 'WEBAPI' ">
+                                                    <td colspan="5">
+
+
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 130px;">
+                                                                    <LogLabel [ObjectFieldName]="'WEBAPIAuthenticationURL'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'כתובת אימות השירות'"></LogLabel>
+                                                                </td>
+                                                                <td style="width: 417px;">
+                                                                    <LogTextBox [ObjectFieldName]="'WEBAPIAuthenticationURL'" [ObjectTableName]="ObjectTableName"
+                                                                                [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+
+                                                                </td>
+
+                                                            </tr>
+                                                        </table>
+
+                                                    </td>
+                                                </tr>
+
+
+                                                <tr class="FormFieldRow" *ngIf="_InterfaceDetail !=null && _InterfaceDetail.ViaMethod == 'WEBAPI' ">
+
+                                                    <!-- User -->
+                                                    <td style="width: 130px;">
+                                                        <LogLabel [ObjectFieldName]="'User'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'שם משתמש'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 130px;">
+                                                        <LogTextBox [ObjectFieldName]="'User'" [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+
+                                                    <td style="width: 3px;"><div></div></td>
+
+
+                                                    <!-- TypeCode -->
+                                                    <td style="width: 130px;">
+                                                        <LogLabel [ObjectFieldName]="'Password'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'סיסמא'"></LogLabel>
+                                                    </td>
+                                                    <td style="width: 130px;">
+                                                        <LogTextBox [ObjectFieldName]="'Password'" [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+
+
 
                                                 </tr>
                                                 <tr>

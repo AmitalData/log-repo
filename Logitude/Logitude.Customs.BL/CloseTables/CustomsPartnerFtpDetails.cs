@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.CloseTables
 {
+
+
     public class CustomsPartnerFtpDetails
     {
         public const string InterfaceName_SubManifest = "SUBMANIFEST";
@@ -80,5 +82,15 @@ namespace Logitude.Customs.BL.CloseTables
         public string TypeCode { get; set; }
         public string Partner { get; set; }
         public string ViaMethod { get; set; }
+    }
+
+
+    public class WebApiDefinitionDTO
+    {
+        public string WEBAPIURL { get; set; }
+        public string WEBAPIAuthenticationURL { get; set; }
+        public string User { get; set; }
+        public string Password { get; set; }
+
     }
 }

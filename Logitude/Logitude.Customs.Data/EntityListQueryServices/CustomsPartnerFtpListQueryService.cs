@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
+
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
 
@@ -21,7 +22,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
         private IQueryable<CustomsPartnerFtpList> GetIqueryableList(IQueryable<CustomsPartnerFtp> iQueryable)
         {
+
+            var all = new List<KeyValuePair<string, string>>() {
+                new KeyValuePair<string, string>("SUBMANIFEST", "תת מצהר לממן"),
+                new KeyValuePair<string, string>("ECTHR","ש.מ.ב לממן"),
+            };
             IQueryable<CustomsPartnerFtpList> query = (from a in iQueryable
+                                                           //join keyVal in all on a.InterfaceName equals keyVal.Key
                                                        select new CustomsPartnerFtpList()
                                                        {
                                                            Id = a.Id,
@@ -31,6 +38,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                            FtpDetailsId = a.FtpDetailsId,
                                                            Tenant = a.Tenant,
                                                            TypeCode = a.TypeCode,
+
+                                                           InterfaceCodeName = a.InterfaceName, // move 2 client
+                                                           //all.FirstOrDefault( r=>r.Key== a.InterfaceName).Value,
+                                                           //keyVal.Value,
 
 
                                                            FileExt = a.FileExt,

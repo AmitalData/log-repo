@@ -11,7 +11,7 @@
     }
 </style>
 
-<table>
+<table class="noselect" *ngIf="Loaded">
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
