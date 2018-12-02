@@ -1,10 +1,13 @@
-﻿<table>
+<table>
     <tr>
         <td>
             <div class="TableHolder">
                 <table >
                     <tr style="height:25px">
-                        <td class="TabTitleRow" style="width:250px"> {{'General.O.ConnectedDeclarations' | TextCodeTranslationPipe}}  </td>
+                        <td class="TabTitleRow" style="width:250px">
+                            {{'General.O.ConnectedDeclarations' | TextCodeTranslationPipe}}
+                            <span *ngIf="TotalConnected != null"> {{' (' + TotalConnected + ')' }} </span>
+                        </td>
                         <td><div></div></td>
                         <td style="width:250px">
                             <SearchBox [SearchText]="ConnectedSearch" (TextChanged)="ConnectedSearchCompleted($event)"

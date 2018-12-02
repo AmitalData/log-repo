@@ -265,11 +265,22 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "TransferToCollector") // moran 4.8.16 - AMI-56804
                     {
-                        if (this.checkTransfer == "1") {
-                            button.IsDisabled = true;
+                        if (this.EntityPM.IsCourierDeclaration) {
+                            button.IsHidden = true;
                         }
                         else {
-                            button.IsDisabled = false;
+                            if (this.checkTransfer == "1") {
+                                button.IsDisabled = true;
+                            }
+                            else {
+                                button.IsDisabled = false;
+                            }
+                        }
+                    }
+                    if (button.EventCode == "Vehicle Modifications") 
+                    {
+                        if (this.EntityPM.IsCourierDeclaration) {
+                            button.IsHidden = true;
                         }
                     }
                     if (button.EventCode == "ResetDeclarationNumber") {//Eitan H 26/11/17 34387
@@ -280,6 +291,17 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         else {
                             button.IsDisabled = false;
                             button.IsHidden = false;
+                        }
+                    }
+                    if (button.EventCode == "CourierPendingReason") {
+                        if (!this.EntityPM.IsCourierDeclaration) {
+                            button.IsHidden = true;
+                        }
+                    }
+
+                    if (button.EventCode == "CourierPendingReasonDel") {
+                        if (!this.EntityPM.IsCourierDeclaration) {
+                            button.IsHidden = true;
                         }
                     }
 
@@ -422,6 +444,16 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     case "SpecialActionRequest":
                         {
                             this.SpecialActionRequestMethod();
+                            break;
+                        }
+                    case "CourierPendingReason":
+                        {
+                            this.CourierPendingReasonMethod();
+                            break;
+                        }
+                    case "CourierPendingReasonDel":
+                        {
+                            this.CourierPendingReasonDeleteMethod();
                             break;
                         }
                 }
@@ -974,6 +1006,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         ///Yuval Chalup 29.07.2015 TASK-14849 --->
 
     }
+
     private PrintReleaseMethod() // moran 29.2.16 - Task 19807
     {
 
@@ -996,6 +1029,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             win.focus();
         }
     }
+
     public OpenPaymentOrderWindow() {
         if (this.EntityPM) {
 
@@ -1019,6 +1053,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             console.log("No entityPM in menu buttons!!!");
         }
     }
+
     ActivateUnifreightInstruction() {
         //if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomFileNo) && AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM.CustomFileNo, this.EntityPM.IsConvertedDeclaration, this.EntityPM.IsConnectedToUnifreight)) {
@@ -1059,6 +1094,56 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 this.ApplyCheckMenuButtonsState(this.MenuButtons);
             }
             
+        });
+    }
+
+    CourierPendingReasonMethod() {
+
+        var logitudeWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        var declarationIdList = [];
+        declarationIdList.push(this.EntityPM.Id);
+        windowArgs.DeclarationIdList = declarationIdList;
+        windowArgs.CourierHawb = this.EntityPM.MAWBCourierMaster;
+        windowArgs.Mode = "Insert";
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.CourierPendingReasonCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PendingRemarks)) {
+            windowArgs.CourierPendingReasonCode = this.EntityPM.CourierPendingReasonCode;
+            windowArgs.PendingRemarks = this.EntityPM.PendingRemarks;
+            windowArgs.Mode = "Update";
+        }
+
+        logitudeWindow.Width = 450;
+        logitudeWindow.Height = 280;
+        logitudeWindow.IsShowCloseButton = false;
+        logitudeWindow.Title = TextCodeTranslator.Translate("Customs.CourierMaster.O.MarkPending");
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
+        });
+    }
+
+    CourierPendingReasonDeleteMethod() {
+        var confirm = new ConfirmWindow();
+        confirm.Width = 350;
+        confirm.Height = 200;
+        confirm.Title = "מחיקת Pending";
+        confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+        confirm.ShowNoButton = true;
+        confirm.Show("האם למחוק Pending?");
+        confirm.WindowClosed.subscribe((event: any) => {
+            if (confirm.Yes) {
+                //this.DeletePending(response.Result);
+
+                //SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                //declarationCourierStatusPM.CourierPendingReasonCode = null;
+                //declarationCourierStatusPM.PendingRemarks = null;
+                //this._DeclarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
+                //    SessionLocator.CurrentSession.StopBusyIndicator();
+                //});
+            }
+            confirm.Close();
         });
     }
 }
