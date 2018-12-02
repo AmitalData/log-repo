@@ -171,8 +171,6 @@ export class APPaymentMenuButtonsHandler {
 
     // [Approval]
     ApprovalMethod() {
-
-
         if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
             var FlagNotTransfered: boolean = false;
             this.EntityPM.PaymentInvoices.forEach(item => {
@@ -195,9 +193,10 @@ export class APPaymentMenuButtonsHandler {
         }
         else {
             this.CompleteApprove();
-        }        
- 
+        }
+
     }
+    
 
     CompleteApprove() {
 

@@ -233,7 +233,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setApproved = theEntityPm.SetApproved;
             var setCancelApproved = theEntityPm.SetCancelApproval;
             var setVoided = theEntityPm.SetVoided;
-            var setReTransferQBO = theEntityPm.SetReTransfer;
+            var SetReSendQBO = theEntityPm.SetReSendQBO;
 
             // PaymentCheque And CashBook
             this.AddARPaymentChequeAndCashBook(theEntityPm, theEntityPm.SetApproved);
@@ -248,7 +248,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.UpdatePaymentOpenAmount();
             ARPaymentHelper service = new ARPaymentHelper();
-            if (payment.ExternalAccountingEntityId != null || setReTransferQBO)
+            if (payment.ExternalAccountingEntityId != null || SetReSendQBO)
             {
                 service.ARPaymentQuickbooksValidating(theEntityPm, true, false, payment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved);
             }
