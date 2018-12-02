@@ -961,11 +961,11 @@ namespace Logitude.Customs.BL.Validators
 
             CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(context);
 
-
+            var fromCache = true;
             declaration = paramDeclarationPM;
             if (declaration == null)
             {
-                var fromCache = true;
+                
                 if (fromCache)
                 {
                     var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
