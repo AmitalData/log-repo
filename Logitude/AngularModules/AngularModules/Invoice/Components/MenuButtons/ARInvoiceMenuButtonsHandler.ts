@@ -319,30 +319,30 @@ export class ARInvoiceMenuButtonsHandler {
         if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
             var myConfirmWindow = new ConfirmWindow();
             myConfirmWindow.Width = 400;
-            myConfirmWindow.Show("Resend this [invoice] to QBO?");
+            myConfirmWindow.Show("Resend this invoice to QBO?");
             myConfirmWindow.WindowClosed.subscribe(s => {
                 this.StopFlags();
                 if (myConfirmWindow.Yes) {
-                    this.SendToQBOApproved("Resending Invoice to QBO");                    
+                    this.SendToQBOApproved("Resending Invoice to QBO");
 
                 }
             });
         }
 
         else {
-            this.SendToQBOApproved("Sending Invoice to QBO");                    
+            this.SendToQBOApproved("Sending Invoice to QBO");
             this.StopFlags();
         }
     }
 
 
-    SendToQBOApproved(Text:string) {
+    SendToQBOApproved(Text: string) {
         this.EntityPM.SetReSendQBO = true;
         this.EntityPM.SetVoided = false;
         this.EntityPM.SetApproved = false;
         this.EntityPM.SetReTransfer = false;
         this.EntityPM.SetCancelDraft = false;
-        this.entityArgs.EditComponent.SaveChanges(Text);        
+        this.entityArgs.EditComponent.SaveChanges(Text);
     }
 
     isValid: boolean = false;
