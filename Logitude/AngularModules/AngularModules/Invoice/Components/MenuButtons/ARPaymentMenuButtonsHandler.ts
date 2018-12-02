@@ -40,6 +40,7 @@ export class ARPaymentMenuButtonsHandler {
         this.isVoided = false;
         this.isPrintRequested = false;
         this.isSATSendRequest = false;
+        this.EntityPM.SetReSendQBO = false;
     }
 
     Listen() {
@@ -312,11 +313,11 @@ export class ARPaymentMenuButtonsHandler {
         if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
             var myConfirmWindow = new ConfirmWindow();
             myConfirmWindow.Width = 400;
-            myConfirmWindow.Show("Resend this invoice to QBO?");
+            myConfirmWindow.Show("Resend this payment to QBO?");
             myConfirmWindow.WindowClosed.subscribe(s => {
                 this.ResetAllFlags();
                 if (myConfirmWindow.Yes) {
-                    this.SendToQBOApproved("Resending Invoice to QBO");
+                    this.SendToQBOApproved("Resending payment to QBO");
 
                 }
             });
