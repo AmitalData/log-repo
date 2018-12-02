@@ -53,12 +53,15 @@ export class NewLineComponent extends BaseComponent {
                 this.EntityPM = args.EntityPM;
                 this.EntityId = this.EntityPM.Id;
                 this.DateOfWorkDate.Date = this.EntityPM.DateOfWork;
-                this.DateOfWorkDateFormat = this.ApplyTimeFormat(this.DateOfWorkMinutes);
+                //this.DateOfWorkDateFormat = this.ApplyTimeFormat(this.EntityPM.TimeInMinutes);
+                this.DateOfWorkMinutes = this.EntityPM.TimeInMinutes;
                 this.Father = args.Father;
                 this.LocationCode = args.Father.LocationCode;
                 this.EmployeeUserId = args.Father.EmployeeUserId;
                 this.SetUIProperties();
                 this.IsNew = false;
+                
+            
             }
             else {
                 this.Father = args.Father;
@@ -160,7 +163,7 @@ export class NewLineComponent extends BaseComponent {
         }
     }
     set DateOfWorkMinutes(value: number) {
-        if (this.DateOfWorkDate.Minuts != value) {
+        if (this.DateOfWorkDate != null) {
             this.DateOfWorkDate.Minuts = value;
             this.DateOfWorkDateFormat = this.ApplyTimeFormat(value);
         }
@@ -172,7 +175,7 @@ export class NewLineComponent extends BaseComponent {
     }
     set DateOfWorkDateFormat(value: string) {
         if (this.dateOfWorkDateFormat != value) {
-            this.dateOfWorkDateFormat == value;
+            this.dateOfWorkDateFormat = value;
         }
     }
 

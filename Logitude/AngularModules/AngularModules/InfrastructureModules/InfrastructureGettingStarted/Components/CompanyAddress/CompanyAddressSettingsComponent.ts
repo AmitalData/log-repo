@@ -1,4 +1,4 @@
-﻿import {Component,OnInit} from '@angular/core';
+import {Component,OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -13,12 +13,12 @@ import {AgentPMService} from '../../../../Common/Services/StandardPMs/AgentPMSer
 import {TenantPMService} from '../../../../Common/Services/StandardPMs/TenantPMService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {StateList} from '../../../../Common/EntityLists/StateList';
-import {StateListService} from '../../../../Common/Services/StandardLists/StateListService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {CountryList} from '../../../../Common/EntityLists/CountryList';
 import {CountryListService} from '../../../../Common/Services/StandardLists/CountryListService';
-import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+
 @Component({
     selector: 'CompanyAddressSettingsComponent',
     moduleId: module.id,
@@ -26,7 +26,6 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 })
 
 export class CompanyAddressSettingsComponent extends BaseComponent implements OnInit  {
-
     public TenantPm: TenantPM = new TenantPM();
     public TenantAgent: AgentPM = new AgentPM();
     public TenantAddress: AddressPM = new AddressPM();
@@ -35,6 +34,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     public AgentObjectTableName: string = "Agent";
     public TenantObjectTableName: string = "Tenant";
     public IsVisibile: boolean = false;
+    public SelectedTabCode: string = "0";
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         super();      
@@ -94,11 +94,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     InitializeData() {
         if (this.TenantAddress != null) {
             var countryListService: CountryListService = new CountryListService();
-            countryListService.getAllFromCache().subscribe(result => {
-
-                //var list: CountryList = result.Result.filter(d => d.Tenant == SessionLocator.Tenant && d.Id == this.TenantAddress.CountryId)[0];
-                //this.SetStateIsEnabled(list);
-
+            countryListService.getAllFromCache().subscribe(result => {                
                 this.SetUIProperties_State();
 
                 if (AppTool.IsNullOrEmpty(this.TenantAddress.Id)) {
@@ -139,18 +135,13 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("Address2", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("City", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("CountryId", this.AddressObjectTableName, false);
-        //this.UIProperties.SetEnabled("StateId", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("ZipCode", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("Signature", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("PhoneNumber", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("FaxNumber", this.AddressObjectTableName, false);
     }
 
-
-
     // Cach Lists 
-
-
     private LoadTenantAgentMethod() {
         var myService = new AgentPMService();
         myService.get(this.TenantPm.AgentId).subscribe((myResult: ServiceResponse) => {
@@ -301,7 +292,6 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
             this.TenantAddress.StateCode = newValue;
         }
     }
-
 
     get StateEnglishName() { return this.TenantAddress.StateEnglishName; }
     set StateEnglishName(newValue: string) {
