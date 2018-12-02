@@ -191,7 +191,7 @@ namespace WebFreight.Web.Helpers.LogBox
             Stream stream = new MemoryStream(buffer);
             stream.Read(mybytearray, 0, len);
 
-            Document document = new Document()
+            Document documentBody = new Document()
             {
                 Id = IdCounter.GetNumber("Document", Tenant),
                 CreateDate = DateTime.Now,
@@ -202,13 +202,13 @@ namespace WebFreight.Web.Helpers.LogBox
                 Folder = "filinginbox",
             };
 
-            documentRepository.Add(document);
+            documentRepository.Add(documentBody);
             // Blob
             Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
             {
-                FileName = document.Id,
-                FolderName = document.Folder,
-                Extension = document.Extension,
+                FileName = documentBody.Id,
+                FolderName = documentBody.Folder,
+                Extension = documentBody.Extension,
                 Tenant = Tenant,
                 FileSize = mybytearray.Length,
                 IsEncrypted = true,
@@ -225,12 +225,13 @@ namespace WebFreight.Web.Helpers.LogBox
                 Tenant = Tenant,
                 Sender = updatedByUserId,
                 Subject = EmailDetails.Subject,
-                BodyDocumentId = document.Id,
+                BodyDocumentId = documentBody.Id,
                 IsDeleted = false,
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant),
                 UpdatedByUserId = updatedByUserId,
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant),
             };
+
             if (!string.IsNullOrEmpty(EmailDetails.Subject))
             {
                 MethodHelper.AddToSearchFields(ref mySearchFields, EmailDetails.Subject);
@@ -248,7 +249,7 @@ namespace WebFreight.Web.Helpers.LogBox
                     string[] fileparams = !string.IsNullOrEmpty(item.FileName) ? item.FileName.Split('.') : null;
                     var extention = fileparams != null ? fileparams[fileparams.Length - 1] : "";
 
-                    document = new Document()
+                    Document document = new Document()
                     {
                         Id = IdCounter.GetNumber("Document", Tenant),
                         CreateDate = DateTime.Now,
@@ -290,6 +291,19 @@ namespace WebFreight.Web.Helpers.LogBox
                 }
             }
 
+            FilingInboxAttachment myFilingInboxAttachment_Body = new FilingInboxAttachment()
+            {
+                Id = IdCounter.GetNumber("FilingInboxAttachment", Tenant).ToString(),
+                Tenant = Tenant,
+                FileName = "Mail Body",
+                DocumentId = documentBody.Id,
+                FilingInboxId = myFilingInbox.Id,
+            };
+            if (!string.IsNullOrEmpty(documentBody.FileName))
+            {
+                MethodHelper.AddToSearchFields(ref mySearchFields, documentBody.FileName);
+            }
+            myFilingInboxAttachRepository.Add(myFilingInboxAttachment_Body);
 
             if (mySearchFields.Length > 1000)
             {

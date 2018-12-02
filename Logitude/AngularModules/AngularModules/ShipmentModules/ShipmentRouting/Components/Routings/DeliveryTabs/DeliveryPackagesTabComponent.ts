@@ -61,11 +61,17 @@ export class DeliveryPackagesTabComponent {
             }
         }
 
+        if (this.FatherComponent.IsCreatingContainerDelivery) {
+            this.IsConnectedToContainer = true;
+        }
+
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
 
         }
 
         else {
+
+
             if (this.ShipmentPM.ShipmentPackages.filter(f => f.DeliveryId == this.EntityPM.Id).length > 0) {
                 this.IsConnectedToContainer = true;
             }
@@ -314,7 +320,7 @@ export class DeliveryPackageItem extends BaseComponent {
         }
     }
     SetUIProperties_Harmonize() {
-        var isFieldEnabled: boolean = true;
+        var isFieldEnabled: boolean = false;
         if (this.IsEditingEnabled) {
             isFieldEnabled = true;
             if (this.IsMultiHarmonize == true) {

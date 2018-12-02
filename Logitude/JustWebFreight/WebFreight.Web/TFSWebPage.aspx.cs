@@ -82,8 +82,8 @@ namespace WebFreight.Web
                     }
 
                     response.Description = data.resource.revision != null ? data.resource.revision.fields["System.Description"] : "";
-                    var remainingWorkOld = 0;
-                    var remainingWorkNew = 0;
+                    var remainingWorkOld = 0.0;
+                    var remainingWorkNew = 0.0;
                     if (data.resource.fields != null)
                     {
                         response.IterationPath = data.resource.revision != null ? data.resource.revision.fields["System.IterationPath"] : "";

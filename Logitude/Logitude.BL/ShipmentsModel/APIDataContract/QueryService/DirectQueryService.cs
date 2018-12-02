@@ -57,7 +57,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.FWBStatusName = "Not Sent";
                 temp.ManifestStatusCode = "NSEN";
                 temp.LocalCustomsTransmissionsStatusCode = "NSEN";
-                temp.IsOperationalClosed = false;
                 temp.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.StatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
