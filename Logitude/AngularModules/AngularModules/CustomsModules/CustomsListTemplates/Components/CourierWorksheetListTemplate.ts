@@ -311,7 +311,13 @@ export class CourierWorksheetListTemplate {
             .subscribe(res => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                let mess = "";
+                if (res.HasError) {
+                    mess = res.ErrorsArray[0];
+                } else {
+                    mess = res.Result;
+                }
+                myMessageWindow.Show(mess);
             });
     }
     SendPay(event) {

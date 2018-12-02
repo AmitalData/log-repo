@@ -1,7 +1,9 @@
-﻿using Logitude.Customs.Data.EntityPOCOs;
+﻿using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Utils;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -49,6 +51,34 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             entityPM.PartnerCode = entityPM.PartnerCode ?? "";
             entityPM.PartnerCode = entityPM.PartnerCode.ToUpper();
+            if (!string.IsNullOrWhiteSpace( entityPM.InterfaceName))
+            {
+                var myCustomsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+                var myinterfaceDef =myCustomsPartnerFtpDetails.GetAllInterfaceName().FirstOrDefault(r=>r.Key== entityPM.InterfaceName);
+                if (string.IsNullOrWhiteSpace(myinterfaceDef.Key))
+                {
+                    //maybe to clear all ??!?!
+                }
+                else
+                {
+                    var def=ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(myinterfaceDef.Value) ;
+                    switch (def.ViaMethod)
+                    {
+                        case "WEBAPI":
+                            {
+                                
+                            }
+                            break;
+                        case "FTP":
+                        default:
+                            {
+                                entityPM.CommunicationDetails = null;
+                            }
+                            break;
+                    }
+                }
+
+            }
             base.OnUpdating(entityPM);
         }
     }

@@ -16,6 +16,7 @@ export class CustomsPartnerFtpList {
 	FtpDetailsId: string;
 	FileName: string;
 	FileExt: string;
+	InterfaceCodeName: string;
 	
 }
  

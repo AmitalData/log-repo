@@ -119,7 +119,11 @@ export class CustomsPartnerFtpListComponent
             console.log("Get All CustomsPartnerFtp Definition: ", myResult);
             if (myResult != null && myResult.Result != null) {
                 let _mappedListsArray: Array<CustomsPartnerFtpList> = myResult.Result;
-
+                _mappedListsArray.forEach(row => {
+                    let detail = this._InterfaceDetailsItems.filter(r => r.Code == row.InterfaceName)[0];
+                    row.InterfaceCodeName = detail.Name;
+                });
+                
                 this._FetchCustomsPartnerFtpResultList.InsertCollection(_mappedListsArray);
 
             }
@@ -142,6 +146,10 @@ export class CustomsPartnerFtpListComponent
     OkButtonClicked() {
 
         this.ValidateCustomsPartnerFtp();
+        if (this.ValidationErrorsList != null && this.ValidationErrorsList.length > 0) {
+            return;
+        }
+        this.ValidateWebApi();
         if (this.ValidationErrorsList != null && this.ValidationErrorsList.length > 0) {
             return;
         }
@@ -227,10 +235,33 @@ export class CustomsPartnerFtpListComponent
                     
                 this._CustomsPartnerFtpPM = myResponse.Result;
                 this._InEditMode = true;
-                if (AppTool.IsNullOrEmpty(this._CustomsPartnerFtpPM.FtpDetailsId)) {
-                } else {
-                    this.LoadFTP(this._CustomsPartnerFtpPM.FtpDetailsId, this._CustomsPartnerFtpPM.TypeCode);
+                
+                if (!AppTool.IsNullOrEmpty(this._CustomsPartnerFtpPM.InterfaceName)) {
+                    this._InterfaceDetail = this._InterfaceDetailsItems.filter(r => r.Code == this._CustomsPartnerFtpPM.InterfaceName)[0];
                 }
+                 
+                switch (this._InterfaceDetail.ViaMethod) {
+                    case "WEBAPI":
+                        {
+                            this._WebApiDefinition = new WebApiDefinition();
+                            if (!AppTool.IsNullOrEmpty(this._CustomsPartnerFtpPM.CommunicationDetails)) {
+                                this._WebApiDefinition = JSON.parse(this._CustomsPartnerFtpPM.CommunicationDetails)
+                            }
+                            
+                        } break;
+                    case "FTP":
+                        {
+                            if (!AppTool.IsNullOrEmpty(this._CustomsPartnerFtpPM.FtpDetailsId)) {
+                                this.LoadFTP(this._CustomsPartnerFtpPM.FtpDetailsId, this._CustomsPartnerFtpPM.TypeCode);
+                            }
+
+                        } break;
+                    default:
+                        break;
+                }
+
+                
+                
                 
             });
     }
@@ -276,9 +307,26 @@ export class CustomsPartnerFtpListComponent
     public set FileName(newValue: string) { if (this._CustomsPartnerFtpPM.FileName != newValue) { this._CustomsPartnerFtpPM.FileName = newValue; } }
 
 
-
+    
     public get FileExt() { return this._CustomsPartnerFtpPM.FileExt; }
     public set FileExt(newValue: string) { if (this._CustomsPartnerFtpPM.FileExt != newValue) { this._CustomsPartnerFtpPM.FileExt = newValue; } }
+
+
+    _WebApiDefinition: WebApiDefinition;
+    public get WEBAPIURL() { return this._WebApiDefinition.WEBAPIURL; }
+    public set WEBAPIURL(newValue: string) { if (this._WebApiDefinition.WEBAPIURL != newValue) { this._WebApiDefinition.WEBAPIURL = newValue; } }
+
+    
+    public get WEBAPIAuthenticationURL() { return this._WebApiDefinition.WEBAPIAuthenticationURL; }
+    public set WEBAPIAuthenticationURL(newValue: string) { if (this._WebApiDefinition.WEBAPIAuthenticationURL != newValue) { this._WebApiDefinition.WEBAPIAuthenticationURL= newValue; } }
+
+    
+    public get User() { return this._WebApiDefinition.User; }
+    public set User(newValue: string) { if (this._WebApiDefinition.User != newValue) { this._WebApiDefinition.User = newValue; } }
+
+    
+    public get Password() { return this._WebApiDefinition.Password; }
+    public set Password(newValue: string) { if (this._WebApiDefinition.Password != newValue) { this._WebApiDefinition.Password = newValue; } }
 
     TypeCodeChanged(selectControl: any) {
         this._CustomsPartnerFtpPM.TypeCode = selectControl.value;
@@ -297,6 +345,9 @@ export class CustomsPartnerFtpListComponent
             this._InterfaceDetail = this._InterfaceDetailsItems.filter(r => r.Code == this._CustomsPartnerFtpPM.InterfaceName)[0];
             this.PartnerCode = this._InterfaceDetail.Partner;
             this.TypeCode = this._InterfaceDetail.TypeCode;
+            if (this._InterfaceDetail.ViaMethod == "WEBAPI") {
+                this._WebApiDefinition = new WebApiDefinition();
+            }
         }
     }
     _SettingsHost: string;
@@ -319,7 +370,7 @@ export class CustomsPartnerFtpListComponent
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.InterfaceName)) {
             this.ValidationErrorsList = [];
-            this.ValidationErrorsList.push("שם מסר היינו חובה");
+            this.ValidationErrorsList.push("שם מסר הינו חובה");
             return;
         }
         if (AppTool.IsNullOrEmpty(this.TypeCode)) {
@@ -331,17 +382,55 @@ export class CustomsPartnerFtpListComponent
 
         if (AppTool.IsNullOrEmpty(this.PartnerCode)) {
             this.ValidationErrorsList = [];
-            this.ValidationErrorsList.push("קוד שותף היינו חובה");
+            this.ValidationErrorsList.push("קוד שותף הינו חובה");
             return;
         }
 
         
+    }
+    ValidateWebApi() {
+        if (this._InterfaceDetail != null && this._InterfaceDetail.ViaMethod == 'WEBAPI') {
+            
+            if (AppTool.IsNullOrEmpty(this.WEBAPIURL)) {
+                this.ValidationErrorsList = [];
+                this.ValidationErrorsList.push("כתובת השירות הינו חובה");
+                return;
+            }
+            var pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+            if (!pattern.test(this.WEBAPIURL)) {
+                this.ValidationErrorsList = [];
+                this.ValidationErrorsList.push("כתובת השירות אינו חוקי");
+                return;
+
+            }
+            
+            if (!AppTool.IsNullOrEmpty(this.WEBAPIAuthenticationURL)) {
+                if (!pattern.test(this.WEBAPIAuthenticationURL)) {
+                    this.ValidationErrorsList = [];
+                    this.ValidationErrorsList.push("כתובת אימות השירות אינו חוקי");
+                    return;
+                }
+            }
+            if (!AppTool.IsNullOrEmpty(this.WEBAPIAuthenticationURL) ||
+                !AppTool.IsNullOrEmpty(this.User) ||
+                !AppTool.IsNullOrEmpty(this.Password) 
+            ) {
+
+                /// MAYBE IF ONE IS NOT NULL ALL OTHER SHOULDNT BR NULL ALSO ??!!
+
+            }
+            this._CustomsPartnerFtpPM.CommunicationDetails = JSON.stringify(this._WebApiDefinition);
+        }
+        
+        
+
     }
     AddFTP() {
         this.ValidateCustomsPartnerFtp();
         if (this.ValidationErrorsList != null && this.ValidationErrorsList.length > 0) {
             return;
         }
+        
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Add FTP Detail";
         logWindow.WindowArgs = { Code: this.TypeCode, IsNew: true };
@@ -404,4 +493,10 @@ class InterfaceDetails {
     TypeCode: string
     Partner: string
     ViaMethod: string
+}
+class WebApiDefinition {
+    WEBAPIURL: string
+    WEBAPIAuthenticationURL: string
+    User: string
+    Password: string
 }

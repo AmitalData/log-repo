@@ -13,6 +13,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
@@ -53,19 +54,42 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 
 
+            var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
+            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, CustomsPartnerFtpDetails.InterfaceName_ECTHR, CustomsPartnerFtpDetails.PartnerCode_Mamam, CustomsPartnerFtpDetails.TypeCode_Out);
 
 
+            if (string.IsNullOrWhiteSpace(pmCustomsPartnerFtp.CommunicationDetails))
+            {
+                throw new Exception("  שטר מטען בלדר  לממן -לא נמצא הגדרת תקשורת ");
+            }
+            var dtoWebApiDefinition = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(pmCustomsPartnerFtp.CommunicationDetails);
+            if (string.IsNullOrWhiteSpace(dtoWebApiDefinition.WEBAPIAuthenticationURL))
+            {
+                throw new Exception(" היינו שדה חובה שטר מטען בלדר  לממן -כתובת אימות השירות  ");
+            }
+            if (string.IsNullOrWhiteSpace(dtoWebApiDefinition.WEBAPIURL))
+            {
+                throw new Exception(" הינו שדה חובה שטר מטען בלדר  לממן -כתובת  השירות  ");
+            }
+            if (string.IsNullOrWhiteSpace(dtoWebApiDefinition.User))
+            {
+                throw new Exception(" הינו שדה חובה שטר מטען בלדר  לממן -שם משתמש  ");
+            }
 
+            if (string.IsNullOrWhiteSpace(dtoWebApiDefinition.Password))
+            {
+                throw new Exception(" הינו שדה חובה שטר מטען בלדר  לממן -סיסמא");
+            }
 
 
             //.PostIt("", "F_unitedf", "Unit2019", data);
             var settings = new CourierHawbMamanCommunicationLogSettings()
             {
-                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
-                URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
+                URIBaldarCreateECTHRMessgae = dtoWebApiDefinition.WEBAPIURL,/// @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
+                URIToken = dtoWebApiDefinition.WEBAPIAuthenticationURL, ///@"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
 
-                username = "F_unitedf",
-                password = "Unit2019",
+                username = dtoWebApiDefinition.User, //"F_unitedf",
+                password = dtoWebApiDefinition.Password,// "Unit2019",
 
                 Tenant = tenant,
                 DeclarationId = declarationId

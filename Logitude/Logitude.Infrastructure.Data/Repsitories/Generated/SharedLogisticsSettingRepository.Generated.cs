@@ -44,6 +44,8 @@ namespace Logitude.Infrastructure.Data.Repsitories
 				 
         public SharedLogisticsSetting GetSingle(EntityKeyFields entityKeys)
         {
+
+            if (LogitudeSettings.IsCostomsDeploy) return new SharedLogisticsSetting();
             SharedLogisticsSettingKeys keys = entityKeys as SharedLogisticsSettingKeys;
             return (from a in context.SharedLogisticsSettings
                     where a.Id == keys.Id

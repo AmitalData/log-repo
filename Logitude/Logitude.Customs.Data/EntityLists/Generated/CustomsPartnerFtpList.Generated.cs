@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string FileName  { get; set; }
        [DataMember]
        public string FileExt  { get; set; }
+       [DataMember]
+       public string InterfaceCodeName  { get; set; }
    }
 
 }
