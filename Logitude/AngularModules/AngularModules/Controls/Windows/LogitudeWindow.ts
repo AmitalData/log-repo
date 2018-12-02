@@ -36,8 +36,8 @@ export class LogitudeWindow {
     public ZIndex: number = 0;
     public IsFillScreen_90: boolean = false;
     public SuppressBusyIndicator: boolean = false;
-
-
+    public IsHideWindowMargin: boolean = false;
+    
     @Output() WindowClosed: EventEmitter<any> = new EventEmitter();
     @Output() ComponentLoaded: EventEmitter<any> = new EventEmitter();
     constructor() {
@@ -242,7 +242,8 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public HelpText: string = null;
     public RTL: boolean = false;
     public BottomBorderForTitle: string = "none";
-    
+    public IsHideWindowMargin: boolean = false;
+
     LayoutDirection: string = 'ltr';
     public ZIndex: number = 0;
 
@@ -292,6 +293,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.RTL = logWindow.RTL;
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
+        this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
         
         this.SetWindowSize();
         this.RunComponent();
@@ -324,7 +326,9 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.ZIndex = logWindow.ZIndex;      
         this.NotifyOnClose = logWindow.NotifyOnClose;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
+        this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
         
+
         this.ChildComponentPath = "./Infrastructure/Components/EditComponent/EditComponent";
         this.HelpText = logWindow.HelpText;
         this.RTL = logWindow.RTL;
