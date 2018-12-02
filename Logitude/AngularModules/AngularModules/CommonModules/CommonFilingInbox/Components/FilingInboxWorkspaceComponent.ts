@@ -1033,7 +1033,11 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             }
             this.isMailBody = false;
             if (value != null) {
-                if (value.FileName != null && (value.FileName.split('.')[1].toUpperCase().trim() == "PDF")) {
+
+                if (value.FileName != null && value.FileName =="Mail Body") {
+                    this.isMailBody = true;
+                }
+                if (value.FileName != null && value.FileName.split('.')[1] != null && (value.FileName.split('.')[1].toUpperCase().trim() == "PDF")) {
                     this.IsPDF = true;
                     this.myCommonDomainService.GetFilingAttachPdfReport(value.DocumentId).subscribe((response: ServiceResponse) => {
                         if (!response.HasError) {
@@ -1522,10 +1526,15 @@ export class FilingInboxData {
     FillFilingInboxAttachments() {
         this.FilingInboxAttachments = [];
         this.FilingInboxAttachments = [];
-        this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null && (a.FileName.split('.')[1] != null && a.FileName.split('.')[1].toUpperCase() == "PDF")).forEach(item => {
-            this.FilingInboxAttachments.push(new FilingInboxAttachment(item, this.father));
-        });
-        this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null && (a.FileName.split('.')[1] != null && a.FileName.split('.')[1].toUpperCase() != "PDF")).forEach(item => {
+        //this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null && (a.FileName.split('.')[1] != null && a.FileName.split('.')[1].toUpperCase() == "PDF")).forEach(item => {
+        //    this.FilingInboxAttachments.push(new FilingInboxAttachment(item, this.father));
+        //});
+        //this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null && (a.FileName.split('.')[1] != null && a.FileName.split('.')[1].toUpperCase() != "PDF")).forEach(item => {
+        //    this.FilingInboxAttachments.push(new FilingInboxAttachment(item, this.father));
+        //});
+
+        this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null).forEach(item => {
+            
             this.FilingInboxAttachments.push(new FilingInboxAttachment(item, this.father));
         });
     }
@@ -1596,6 +1605,7 @@ export class FilingInboxAttachment extends BaseComponent {
     constructor(entity: FilingInboxAttachmentPM, public father: FilingInboxWorkspaceComponent) {
         super();
         this.entity = entity;
+        
         this.AttachLogs = entity != null ? entity.AttachLogs : [];
         if (this.AttachLogs != null && this.AttachLogs.length > 0) {
             this.IsSingleTick = false;

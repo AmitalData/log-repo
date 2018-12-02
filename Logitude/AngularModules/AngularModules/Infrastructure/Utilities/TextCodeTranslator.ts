@@ -1,13 +1,14 @@
 declare var window: any;
 import {SessionLocator} from '../Utilities/SessionLocator';
 import { AppTool } from '../Tools';
+import { retry } from 'rxjs/operator/retry';
 
 export class TextCodeTranslator {
 
-    static Translate(value: string): string {
+    static Translate(value: string, Fix: boolean = true): string {
         if (SessionLocator.UseCachedData) {
 
-            return this.TranslateCached(value);
+            return this.TranslateCached(value, Fix);
         }
         //console.log('88888888888888:', value);
 
@@ -30,9 +31,15 @@ export class TextCodeTranslator {
             window.TranslationsCache.splice(0, 50);
         }
 
-        return TextCodeTranslator.FixTranslation(translation);
+        if (Fix == true) {
+            return TextCodeTranslator.FixTranslation(translation);
+        }
+
+        else {
+            return translation;
+        }
     }
-    static TranslateCached(value: string): string {
+    static TranslateCached(value: string, Fix: boolean = true): string {
 
         //console.log('88888888888888:', value);
 
@@ -100,7 +107,13 @@ export class TextCodeTranslator {
             window.TextCodesCache.splice(0, 50);
         }
 
-        return TextCodeTranslator.FixTranslation(translation);
+        if (Fix == true) {
+            return TextCodeTranslator.FixTranslation(translation);
+        }
+
+        else {
+            return translation;
+        }
     }
     static TranslateTable(value: string): string {
 

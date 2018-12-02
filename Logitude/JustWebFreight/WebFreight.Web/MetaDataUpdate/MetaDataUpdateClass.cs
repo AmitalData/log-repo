@@ -62869,6 +62869,16 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Fixed", DefaultText = "Fixed", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SameAsCost", DefaultText = "Same as Cost Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostMinAmount", DefaultText = "Cost%nMin Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostMaxAmount", DefaultText = "Cost%nMax Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleMinAmount", DefaultText = "Sale%nMin Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleMaxAmount", DefaultText = "Sale%nMax Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalSaleAmount", DefaultText = "Total Sale Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.VATDetails", DefaultText = "VAT Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SubTotal", DefaultText = "Sub-Total", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalVAT", DefaultText = "Total VAT", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalSale", DefaultText = "Total Sale", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Details", DefaultText = "Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             #endregion
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Routings", DefaultText = "Routings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);

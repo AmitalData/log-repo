@@ -507,6 +507,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     set EntityType(newValue: string) {
         if (this.EntityPM.EntityType != newValue) {
             this.EntityPM.EntityType = newValue;
+            this.GetEntityLinkNumberVisibility();
         }
     }
 
