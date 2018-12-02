@@ -57,19 +57,22 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.FWBStatusName = "Not Sent";
                 temp.ManifestStatusCode = "NSEN";
                 temp.LocalCustomsTransmissionsStatusCode = "NSEN";
-                temp.IsOperationalClosed = false;
                 temp.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.StatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.AWBCurrencyId =  MyTenantPM.FreightCurrencyId;
                 temp.ProfitCurrencyId = MyTenantPM.ProfitCurrencyId;
-                temp.ValueOfGoodsCurrencyId = MyTenantPM.FreightCurrencyId;
                 temp.VolumeUnitCode = temp.VolumeUnitCode;
                 temp.DimensionsUnitCode = temp.DimensionsUnitCode;
                 temp.GrossWeightUnitCode = temp.GrossWeightUnitCode; 
                 temp.ChargeableWeightUnitCode = temp.ChargeableWeightUnitCode;
                 temp.Master = MyEntity.Master;
                 temp.OnCarriageAdditionalTransportModeCode = "BYTR";
+
+                if (string.IsNullOrEmpty(temp.ValueOfGoodsCurrencyId))
+                {
+                    temp.ValueOfGoodsCurrencyId = MyTenantPM.FreightCurrencyId;
+                }
 
                 switch (temp.DirectionId)
                 {
