@@ -524,6 +524,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
 
             if (this.CustomsDocument.CustomsDocId) {
                 this.IsMetaDataEditEnabled = false;
+                this.IsSendDocumentEnabled = false;
             }
 
             var statusCodes = ['1', '7'];
