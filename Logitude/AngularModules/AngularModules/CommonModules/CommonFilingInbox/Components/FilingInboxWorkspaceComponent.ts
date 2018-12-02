@@ -335,7 +335,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 var result: FilingInboxPM[] = response.Result;
 
                 if (result != null && !AppTool.IsNullOrEmpty(this.searchFields)) {
-                    result = result.filter(d => d.SearchFields && d.SearchFields.toUpperCase().indexOf(this.searchFields.toUpperCase()) > -1);
+                    result = result.filter(d => d.SearchFields!= null && d.SearchFields && d.SearchFields.toUpperCase().indexOf(this.searchFields.toUpperCase()) > -1);
                 }
 
                 result.forEach(item => {
@@ -1037,7 +1037,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 if (value.FileName != null && value.FileName =="Mail Body") {
                     this.isMailBody = true;
                 }
-                if (value.FileName != null && value.FileName.split('.')[1] != null && (value.FileName.split('.')[1].toUpperCase().trim() == "PDF")) {
+                if (value.FileName != null && value.FileName.split('.') != null && value.FileName.split('.')[1] != null && (value.FileName.split('.')[1].toUpperCase().trim() == "PDF")) {
                     this.IsPDF = true;
                     this.myCommonDomainService.GetFilingAttachPdfReport(value.DocumentId).subscribe((response: ServiceResponse) => {
                         if (!response.HasError) {

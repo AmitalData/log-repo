@@ -904,7 +904,15 @@ export class ARInvoiceMenuButtonsHandler {
             myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
             this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
         }
-
+        else if (this.EntityPM.IsConsolidationInvoice) {
+            myEntityId = this.EntityPM.Id;
+            myChildEntityId = null;
+            mychildObjectTableId = null;
+            myObjectTableName = "ARInvoice";
+            myDocumentTypeCode = "999G";
+            myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
+            this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
+        }
         else {
 
             mychildObjectTableId = window.ObjectTables.filter(d => d.Name == "ARInvoice")[0].Id;
