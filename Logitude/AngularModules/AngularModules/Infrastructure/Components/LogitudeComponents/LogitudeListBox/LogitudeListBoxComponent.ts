@@ -6,7 +6,7 @@ import { AppTool } from '../../../Tools';
     moduleId: module.id,
 
     templateUrl: './LogitudeListBoxComponent.html',
-    inputs: ['DataSource', 'Height', 'SelectedItem', 'Binding', 'event', 'DataSourceChanged'],
+    inputs: ['DataSource', 'Height', 'SelectedItem', 'Binding', 'event', 'DataSourceChanged', 'Sort'],
     selector: 'LogListBox',
 })
 
@@ -18,6 +18,7 @@ export class LogitudeListBoxComponent implements OnInit {
     Height: string;
     Style: any;
     public Binding: string = null;
+    public Sort: boolean = false;
     public SelectedItem: any = null;
     ClassName: string = "ListBoxItem";
     DataSource: any[];
@@ -49,7 +50,13 @@ export class LogitudeListBoxComponent implements OnInit {
                             iSourceItems.push(new ListBoxItem(value, this));
                         }
 
-                        this.SourceItems = iSourceItems.sort((a, b) => a.TranslatedText.toLowerCase() !== b.TranslatedText.toLowerCase() ? a.TranslatedText.toLowerCase() < b.TranslatedText.toLowerCase() ? -1 : 1 : 0);
+                        if (this.Sort) {
+                            this.SourceItems = iSourceItems.sort((a, b) => a.TranslatedText.toLowerCase() !== b.TranslatedText.toLowerCase() ? a.TranslatedText.toLowerCase() < b.TranslatedText.toLowerCase() ? -1 : 1 : 0);
+                        }
+                        else {
+                            this.SourceItems = iSourceItems;
+                        }
+
                         this.CD.detectChanges();
                     });
                 }
@@ -109,13 +116,13 @@ export class ListBoxItem {
     public set Text(newValue: any) { this.text = newValue; }
     ClassName: string = "ListBoxItem";
     public TranslatedText: string = "";    
-    constructor(SourceItem: any, private parentComponent: LogitudeListBoxComponent, isselected = false) { 
+    constructor(SourceItem: any, private parentComponent: LogitudeListBoxComponent, isselected = false) {
         this.Item = SourceItem;
 
         if (isselected == true) {
             this.ClassName = "SelectedListBoxItem";
         }
-        
+
         if (this.parentComponent.Binding == null) {
             this.Text = SourceItem;
         }
