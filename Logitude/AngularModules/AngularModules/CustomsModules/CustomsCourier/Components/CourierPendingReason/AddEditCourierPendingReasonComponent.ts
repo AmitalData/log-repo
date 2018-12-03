@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -18,7 +18,10 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
     templateUrl: './AddEditCourierPendingReasonComponent.html',
 })
 
-export class AddEditCourierPendingReasonComponent extends BaseComponent {
+export class AddEditCourierPendingReasonComponent
+    extends BaseComponent
+    implements OnInit{
+
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.CourierPendingReason";
     public EntityPM: CourierPendingReasonPM;
@@ -26,15 +29,16 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
     isNewRecord: boolean = false;
     isFromUnifreight: boolean = false;
     ValidationErrorsList: any[] = [];
+    private _EntityResourceService: EntityResourceService = new EntityResourceService();
 
     _CourierPendingReasonPMService: CourierPendingReasonPMService = new CourierPendingReasonPMService();
     _CourierPendingReasonExtendedListService: CourierPendingReasonExtendedListService = new CourierPendingReasonExtendedListService();
 
-    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs) {
         super();
 
         SessionLocator.CurrentSession.StartBusyIndicator("");
-        this.EntityResourceService.getEntityResourceByTableName("Customs.CourierPendingReason").subscribe(response => {
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
 
             SessionLocator.CurrentSession.StopBusyIndicator();
             if (AppTool.IsNullOrEmpty(entityArgs.EntityPM)) {
@@ -45,8 +49,18 @@ export class AddEditCourierPendingReasonComponent extends BaseComponent {
 
             } else {
                 this.EntityPM = this.entityArgs.EntityPM;
+                this.UnifreightStatusCode = this.EntityPM.UnifreightStatusCode;
             }
             this.UIProperties.SetEnabled("UnifreightStatusCode", this.ObjectTableName, false);
+        });
+    }
+
+    Loaded: boolean = false;
+    ngOnInit() {
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.Loaded = true;
         });
     }
 
