@@ -5123,12 +5123,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
 
                 ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);
+                PickUpDeliveryPackageHarmonizeQuery pickUpDeliveryPackageHarmonizeQuery = new PickUpDeliveryPackageHarmonizeQuery(pickUpDeliveryPackageHarmonizeRepository);
 
                 List<ShipmentPickUpDeliveryPackagePM> PickUpDeliveryPackage = shipmentPickUpDeliveryPackageQuery.GetShipmentPickUpDeliveryPackages(itemPM.Id, tenant);
                 foreach (ShipmentPickUpDeliveryPackagePM insideItemPM in PickUpDeliveryPackage)
                 {
                     ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(insideItemPM.Id);
                     shipmentPickUpDeliveryPackageRepository.Remove(insideItemPoco);
+
+                    List<PickUpDeliveryPackageHarmonizePM> PickUpDeliveryPackageHarmonize = pickUpDeliveryPackageHarmonizeQuery.GetPickUpDeliveryPackageHarmonizes(insideItemPM.Id, tenant);
+                    foreach (PickUpDeliveryPackageHarmonizePM harmonizeItemPM in PickUpDeliveryPackageHarmonize)
+                    {
+                        PickUpDeliveryPackageHarmonize harmonizeItem = pickUpDeliveryPackageHarmonizeRepository.GetSinglePickUpDeliveryPackageHarmonize(harmonizeItemPM.Id, tenant);
+                        pickUpDeliveryPackageHarmonizeRepository.Remove(harmonizeItem);
+                    }
                 }
 
                 shipmentPickUpDeliveryRepository.Remove(itemPoco);
@@ -6198,7 +6206,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
                 {
-                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                     CustomerRepository customerRepository = new CustomerRepository(tenant);                    
 
                     if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
@@ -6206,7 +6213,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false);
                         if (customer != null)
                         {
-                            customer.LastShipmentDate = todayDate;
+                            customer.LastShipmentDate = this.entityPM.CreateDateTime;
                             customerRepository.Update(customer);
                             customerRepository.SubmitChanges();
                         }
