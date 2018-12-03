@@ -373,7 +373,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     JournalId = entityPM.Id,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     TaxReportId = null,
-                    TaxReportStatusCode = null,
+                    TaxReportTransmitStatusCode = null,
                     Tenant = entityPM.Tenant,
                 };
 

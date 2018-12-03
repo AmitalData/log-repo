@@ -276,7 +276,7 @@
                     <table [hidden]="SelectedTabCode != '1'" style="margin-left:10px;">
                         <tr>
                             <td>
-                                <table class="FixedTable">
+                                <table class="FixedTable" *ngIf="IsLocalAddressTabVisible">
                                     <tr>
                                         <td style="width: 460px">
                                             <table>

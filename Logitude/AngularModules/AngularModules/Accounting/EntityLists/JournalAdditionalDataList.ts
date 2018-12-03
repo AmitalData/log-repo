@@ -11,7 +11,7 @@ export class JournalAdditionalDataList {
 	Tenant: number;
 	JournalId: string;
 	TaxReportId: string;
-	TaxReportStatusCode: string;
+	TaxReportTransmitStatusCode: string;
 	
 }
  
