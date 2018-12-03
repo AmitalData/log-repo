@@ -366,6 +366,10 @@
     <Compile Include="Migrations\201812020847085_AddLocalAddressToTenantLevel_Samar.Designer.cs">
       <DependentUpon>201812020847085_AddLocalAddressToTenantLevel_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.cs" />
+    <Compile Include="Migrations\201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.Designer.cs">
+      <DependentUpon>201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -584,6 +588,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812020847085_AddLocalAddressToTenantLevel_Samar.resx">
       <DependentUpon>201812020847085_AddLocalAddressToTenantLevel_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.resx">
+      <DependentUpon>201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
