@@ -196,7 +196,7 @@
                         <div class="MediaFill">
                             <table>
                                 <tr>
-                                    <td style="width: 10px;" *ngIf="!IsEditComponent && !IsFullScreen">
+                                    <td style="width: 10px;" *ngIf="!IsEditComponent && !IsFullScreen && !IsHideWindowMargin">
                                         <div></div>
                                     </td>
 
@@ -206,7 +206,7 @@
                                         </div>
                                     </td>
 
-                                    <td style="width: 10px;" *ngIf="!IsEditComponent && !IsFullScreen">
+                                    <td style="width: 10px;" *ngIf="!IsEditComponent && !IsFullScreen && !IsHideWindowMargin">
                                         <div></div>
                                     </td>
                                 </tr>
@@ -215,7 +215,7 @@
                     </td>
                 </tr>
 
-                <tr style="height: 10px;" *ngIf="!IsEditComponent && !IsFullScreen">
+                <tr style="height: 10px;" *ngIf="!IsEditComponent && !IsFullScreen && !IsHideWindowMargin">
                     <td>
                         <div></div>
                     </td>

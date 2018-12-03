@@ -187,7 +187,13 @@ export class ARInvoiceValidator {
             }
         }
 
-        if (this.EntityPM.ConstituentInvoices.length == 0) {
+        if (this.EntityPM.StatusCode == "AC" || this.EntityPM.StatusCode == "AR") {
+            if (this.EntityPM.InvoiceLines.length == 0) {
+                this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast"));
+            }
+        }
+
+        else if (this.EntityPM.ConstituentInvoices.length == 0) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast"));
         }
 

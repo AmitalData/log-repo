@@ -585,6 +585,15 @@ namespace Logitude.BL.Helpers
 
             IsShowlanguage = setting.ShowLocalLanguage;
 
+            bool isHaveMaxMinValue = quotePM.QuoteSaleCharges.Where(d=>d.SaleMaxAmount!=null || d.SaleMinAmount!=null).Any();
+            if (!isHaveMaxMinValue)
+            {
+                if(pricingSectionType == "PP") setting.ShowSaleMaxMinAmountPackages = false;
+               else if (pricingSectionType == "PC") setting.ShowSaleMaxMinAmountContainers = false;
+            }
+
+
+
             GetCountHeader(setting, quotePM, pricingSectionType);
 
             QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
