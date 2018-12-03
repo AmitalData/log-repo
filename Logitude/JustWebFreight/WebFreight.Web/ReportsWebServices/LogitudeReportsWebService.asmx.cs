@@ -9645,6 +9645,13 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (fromDate != null && toDate != null)
             {
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.IsProrated == false
+                              select myTMEmployeeTime);
                 iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
                 iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
             }

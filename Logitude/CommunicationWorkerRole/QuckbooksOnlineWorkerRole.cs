@@ -48,6 +48,7 @@ namespace CommunicationWorkerRole
         ICommonDataContext context;
         private string type;
         private string QBOIDSuccess = null;
+        private string APInvoiceId = null;
         public override void Run()
         {
             while (IsRunning)
@@ -362,7 +363,7 @@ namespace CommunicationWorkerRole
                         StringBuilder sb = new StringBuilder();
                         sb.AppendLine(cl.ExceptionMessage);
                         sb.AppendLine("Failed To Send , Check your Translations");
-                        SendingFail(cl, tenant, sb.ToString(), null, null);
+                        SendingFail(cl, tenant, sb.ToString(), null, APInvoiceId);
                     }
 
                 }
@@ -690,6 +691,7 @@ namespace CommunicationWorkerRole
                         ServiceContext serviceContext = getServiceContext(tenant + "");
                         DataService service = new DataService(serviceContext);
                         string Id = final.Id;
+                        APInvoiceId = Id;
                         final.Id = null;
                             Bill Result = service.Add(final) as Bill;
                             if (Result == null)

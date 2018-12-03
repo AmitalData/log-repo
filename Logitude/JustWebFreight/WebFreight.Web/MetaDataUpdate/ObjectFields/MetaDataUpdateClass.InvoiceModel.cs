@@ -4036,6 +4036,48 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Draft General Invoices",
+                FullFieldLable = "DraftGeneralAPInvoices",
+                FieldName = "DraftGeneralAPInvoices",
+                FieldsDataType = "Boolean",
+                IsCustomFilter = true,
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = APInvoiceObject.Id,
+                ObjectTableName = "APInvoice",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "APInvoice",
+                ListPropertyPath = "DraftGeneralAPInvoices",
+                PMPropertyPath = "DraftGeneralAPInvoices",
+                FullLocalDefaultText = "חשבוניות בסטטוס טיוטה",
+                ListLocalDefaultText = "חשבוניות בסטטוס טיוטה",
+                ShortLocalDefaultText = "חשבוניות בסטטוס טיוטה",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Approval General APInvoices",
+                FullFieldLable = "ApprovalGeneralAPInvoices",
+                FieldName = "ApprovalGeneralAPInvoices",
+                FieldsDataType = "Boolean",
+                IsCustomFilter = true,
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = APInvoiceObject.Id,
+                ObjectTableName = "APInvoice",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "APInvoice",
+                ListPropertyPath = "ApprovalGeneralAPInvoices",
+                PMPropertyPath = "ApprovalGeneralAPInvoices",
+                FullLocalDefaultText = "חשבוניות מאושרות ",
+                ListLocalDefaultText = "חשבוניות מאושרות ",
+                ShortLocalDefaultText = "חשבוניות מאושרות ",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Amount To Pay",
                 FullFieldLable = "AmountPaid",
                 FieldName = "AmountPaid",
@@ -7094,6 +7136,30 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Bank Account",
+                FullFieldLable = "BankAccountName",
+                FieldName = "BankAccountName",
+                FieldsDataType = "Text",
+                MaxLength = 60,
+                MinLength = 0,
+                ObjectTableId = ARPaymentObject.Id,
+                ObjectTableName = ARPaymentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                DisplayInList = true,
+                ValidForQuerySection1 = "ARPayment",
+                ListFieldLable = "BankAccountNameListLable",
+                ListLableDefaultText = "Bank Account",
+                Operator = "StartsWith",
+                ListPropertyPath = "BankAccountName",
+                PMPropertyPath = "BankAccountName",
+                FullLocalDefaultText = "חשבון בנק",
+                ListLocalDefaultText = "חשבון בנק",
+                ShortLocalDefaultText = "חשבון בנק",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Bank Account",
                 FullFieldLable = "BankAccountLiteId",
                 FieldName = "BankAccountLiteId",
                 FieldsDataType = "LookUp",
@@ -7106,9 +7172,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ValidForQuerySection1 = "ARPayment",
                 ListFieldLable = "BankAccountLiteIdListLable",
-                ListLableDefaultText = "Bank Account",
                 Operator = "Equals",
-                DisplayInList = true,
                 ListPropertyPath = "BankAccountLiteId",
                 PMPropertyPath = "BankAccountLiteId",
                 FullLocalDefaultText = "חשבון בנק",

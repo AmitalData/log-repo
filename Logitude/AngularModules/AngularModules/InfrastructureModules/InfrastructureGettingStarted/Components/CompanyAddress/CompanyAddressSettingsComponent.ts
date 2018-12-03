@@ -1,4 +1,4 @@
-﻿import {Component,OnInit} from '@angular/core';
+import {Component,OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -13,12 +13,13 @@ import {AgentPMService} from '../../../../Common/Services/StandardPMs/AgentPMSer
 import {TenantPMService} from '../../../../Common/Services/StandardPMs/TenantPMService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {StateList} from '../../../../Common/EntityLists/StateList';
-import {StateListService} from '../../../../Common/Services/StandardLists/StateListService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {CountryList} from '../../../../Common/EntityLists/CountryList';
 import {CountryListService} from '../../../../Common/Services/StandardLists/CountryListService';
-import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+
 @Component({
     selector: 'CompanyAddressSettingsComponent',
     moduleId: module.id,
@@ -26,15 +27,18 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 })
 
 export class CompanyAddressSettingsComponent extends BaseComponent implements OnInit  {
-
     public TenantPm: TenantPM = new TenantPM();
     public TenantAgent: AgentPM = new AgentPM();
     public TenantAddress: AddressPM = new AddressPM();
+    public LocalTenantAddress: AddressPM = new AddressPM();
     public DataContext: CompanyAddressSettingsComponent = this;
     public AddressObjectTableName: string = "Address";
     public AgentObjectTableName: string = "Agent";
     public TenantObjectTableName: string = "Tenant";
     public IsVisibile: boolean = false;
+    public IsLocalAddressTabVisible: boolean = false;
+    public SelectedTabCode: string = "0";
+    public LocalAddressDataContext: AddressItem; 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         super();      
@@ -79,6 +83,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
 
             this.InitializeData();
             this.IsVisibile = true;
+            this.LoadLocalAddress();
         }
 
         else {
@@ -87,6 +92,34 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
                 this.TenantAddress = myResult.Result;
                 this.InitializeData();
                 this.IsVisibile = true;
+                this.LoadLocalAddress();
+            });
+        }
+    }
+
+    LoadLocalAddress() {
+        if (AppTool.IsNullOrEmpty(this.TenantPm.LocalAddressId)) {
+            this.LocalTenantAddress = new AddressPM();
+            this.LocalTenantAddress.Tenant = this.TenantPm.Id;
+            this.LocalTenantAddress.AddressTypeId = "L";
+
+            this.LocalAddressDataContext = new AddressItem(this.LocalTenantAddress, this.TenantPm, this);
+
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyLocalAddress")) {
+                this.IsLocalAddressTabVisible = true;
+            }
+        }
+
+        else {
+            var myService: AddressPMService = new AddressPMService();
+            myService.get(this.TenantPm.LocalAddressId).subscribe((myResult: ServiceResponse) => {
+                this.LocalTenantAddress = myResult.Result;
+
+                this.LocalAddressDataContext = new AddressItem(this.LocalTenantAddress, this.TenantPm, this);
+
+                if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyLocalAddress")) {
+                    this.IsLocalAddressTabVisible = true;
+                }
             });
         }
     }
@@ -94,11 +127,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     InitializeData() {
         if (this.TenantAddress != null) {
             var countryListService: CountryListService = new CountryListService();
-            countryListService.getAllFromCache().subscribe(result => {
-
-                //var list: CountryList = result.Result.filter(d => d.Tenant == SessionLocator.Tenant && d.Id == this.TenantAddress.CountryId)[0];
-                //this.SetStateIsEnabled(list);
-
+            countryListService.getAllFromCache().subscribe(result => {                
                 this.SetUIProperties_State();
 
                 if (AppTool.IsNullOrEmpty(this.TenantAddress.Id)) {
@@ -139,18 +168,13 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("Address2", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("City", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("CountryId", this.AddressObjectTableName, false);
-        //this.UIProperties.SetEnabled("StateId", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("ZipCode", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("Signature", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("PhoneNumber", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("FaxNumber", this.AddressObjectTableName, false);
     }
 
-
-
     // Cach Lists 
-
-
     private LoadTenantAgentMethod() {
         var myService = new AgentPMService();
         myService.get(this.TenantPm.AgentId).subscribe((myResult: ServiceResponse) => {
@@ -302,7 +326,6 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
         }
     }
 
-
     get StateEnglishName() { return this.TenantAddress.StateEnglishName; }
     set StateEnglishName(newValue: string) {
         if (this.TenantAddress.StateEnglishName != newValue) {
@@ -407,7 +430,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
 
         this.UIProperties.SetRequired("StateId", "Address", isRequired);
     }
-
+    
     // Commands 
     SelectCityCommand() {
 
@@ -547,4 +570,166 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
             }
         });
     }
+}
+
+export class AddressItem extends BaseComponent {
+    public ObjectTableName: string = "Address";
+    public Address: AddressPM;
+    public Tenant: TenantPM;
+    public DemoMessageVisibility: boolean = false;
+    constructor(address: AddressPM, tenant: TenantPM, public father: CompanyAddressSettingsComponent) {
+        super();
+
+        this.Address = address;
+        this.Tenant = tenant;
+        this.DemoMessageVisibility = this.father.DemoMessageVisibility;
+
+        this.SetUIProperties();
+    }
+
+    public SetUIProperties() {
+       
+    }
+    
+    get Name() { return this.Address.Name; }
+    set Name(newValue: string) {
+        if (this.Address.Name != newValue) {
+            this.Address.Name = newValue;
+        }
+    }
+
+    get Address1() { return this.Address.Address1; }
+    set Address1(newValue: string) {
+        if (this.Address.Address1 != newValue) {
+            this.Address.Address1 = newValue;            
+        }
+    }
+
+    get Address2() { return this.Address.Address2; }
+    set Address2(newValue: string) {
+        if (this.Address.Address2 != newValue) {
+            this.Address.Address2 = newValue;
+        }
+    }
+
+    get City() { return this.Address.City; }
+    set City(newValue: string) {
+        if (this.Address.City != newValue) {
+            this.Address.City = newValue;
+        }
+    }
+
+    get CountryId() { return this.Address.CountryId; }
+    set CountryId(newValue: string) {
+        if (this.Address.CountryId != newValue) {
+            this.Address.CountryId = newValue;
+        }
+    }
+
+    get StateId() { return this.Address.StateId; }
+    set StateId(newValue: string) {
+        if (this.Address.StateId != newValue) {
+            this.Address.StateId = newValue;
+        }
+    }
+
+    get ZipCode() { return this.Address.ZipCode; }
+    set ZipCode(newValue: string) {
+        if (this.Address.ZipCode != newValue) {
+            this.Address.ZipCode = newValue;
+        }
+    }
+
+    get Signature() { return this.Address.Signature; }
+    set Signature(newValue: string) {
+        if (this.Address.Signature != newValue) {
+            this.Address.Signature = newValue;
+        }
+    }
+
+    get PhoneNumber() { return this.Address.PhoneNumber; }
+    set PhoneNumber(newValue: string) {
+        if (this.Address.PhoneNumber != newValue) {
+            this.Address.PhoneNumber = newValue;
+        }
+    }
+
+    get FaxNumber() { return this.Address.FaxNumber; }
+    set FaxNumber(newValue: string) {
+        if (this.Address.FaxNumber != newValue) {
+            this.Address.FaxNumber = newValue;
+        }
+    }
+
+    private country: CountryList = null;
+    get Country() { return this.country; }
+    set Country(newValue: CountryList) {
+        if (this.country != newValue) {
+            this.country = newValue;
+            this.OnCountryChanged(newValue);
+        }
+    }
+
+    private state: StateList = null;
+    get State() { return this.state; }
+    set State(value: StateList) {
+        if (this.state != value) {
+            this.state = value;
+            this.OnStateChanged(value);
+        }
+    }
+
+    private OnCountryChanged(list: CountryList) {
+        //if (list == null) {
+        //    this.CountryCode = null;
+        //    this.CountryName = null;
+        //    this.CountryEnglishName = null;
+        //}
+
+        //else {
+        //    this.CountryCode = list.Code;
+        //    this.CountryName = this.TenantAddress.IsLocalLanguage ? list.LocalName : list.EnglishName;
+        //    this.CountryEnglishName = list.EnglishName;
+        //}
+
+        //this.SetUIProperties_State();
+    }
+    private OnStateChanged(list: StateList) {
+        //if (list == null) {
+        //    this.StateCode = null;
+        //    this.StateEnglishName = null;
+        //}
+
+        //else {
+        //    this.StateCode = list.Code;
+        //    this.StateEnglishName = list.EnglishName;
+        //}
+
+        //this.SetUIProperties_StateRequired();
+    }
+
+    SelectCityCommand() {
+        var args = new CitySelectionArgs(this.CountryId);
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Select City";
+        logWindow.WindowArgs = args;
+        logWindow.Show('./CommonModules/CommonOthers/Components/CitySelection/CitySelectionComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if (args.IsCitySelected) {
+
+                var mySelectedCity: string = args.CityName;
+                if (this.Address.IsLocalLanguage && args.CityLocalName != null) {
+                    mySelectedCity = args.CityLocalName;
+                }
+
+                this.City = mySelectedCity;
+                this.CountryId = args.CountryId;
+                this.StateId = args.StateId;
+            }
+        });
+    }
+       
+    
+
+    
 }

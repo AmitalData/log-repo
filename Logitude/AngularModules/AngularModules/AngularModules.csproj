@@ -334,6 +334,7 @@
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\EditTabs\Overview\TicketOverviewTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\ChooseShipmentComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.ts" />
+    <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />
@@ -544,11 +545,13 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWObjectTableList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryColumnList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryFilterList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\DWSubQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectFieldPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectTablePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryColumnPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryFilterPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\DWSubQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedLogisticsSettingPM.ts" />
@@ -557,6 +560,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BusinessRolePM.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BusinessRoleExtendedListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWQueryBuilderService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessProcessQueueListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessRoleListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWObjectFieldExtendedPMService.ts" />
@@ -564,6 +568,8 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectTableListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWObjectFieldPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWObjectTablePMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWSubQueryPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleAPPayment.ts" />

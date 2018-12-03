@@ -325,6 +325,7 @@ namespace WebFreight.Web.MetaDataUpdate
         ObjectTable DWObjectFieldObject;
         ObjectTable ShipmentPackageHarmonizeObject;
         ObjectTable PickUpDeliveryPackageHarmonizeObject;
+        ObjectTable DWSubQueryObject;
         #endregion
 
         #region Create All Object Tables
@@ -6661,6 +6662,28 @@ namespace WebFreight.Web.MetaDataUpdate
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 
             #endregion
+
+            #region DWSubQueryObject
+            DWSubQueryObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
+            {
+                DefaultText = "DWSubQuery",
+                ObjectTableName = "DWSubQuery",
+                ObjectTablePlural = "DWSubQuerys",
+                ObjectTableSingular = "DWSubQuery",
+                DBTableName = "DWSubQueries",
+                Tenant = 0,
+                KeyPropertyPath = "Id",
+                IsMain = true,
+                IsAutoComplete = true,
+                AutoCompleteSearchWindow = true,
+                EnableSecurity = true,
+                ObjectTableTypeCode = "MD",
+                ClientModuleName = "Infrastructure",
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
+
+            #endregion
+
+            
 
             #region DWObjectTable
             DWObjectFieldObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
