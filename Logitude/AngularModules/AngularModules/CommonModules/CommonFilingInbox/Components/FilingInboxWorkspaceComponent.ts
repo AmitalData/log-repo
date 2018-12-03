@@ -866,7 +866,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 this.Customer = entity.ShipperName;
             }
 
-            if (AppTool.IsNullOrEmpty(entity.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entity.StatusName) && entity.StatusName.toLocaleLowerCase() == "in progress") {
+            if (AppTool.IsNullOrEmpty(entity.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entity.StatusName) && entity.StatusName.toLocaleLowerCase() != "in progress") {
                 this.IsDSVConnectVisible = true;
             }
             else {
@@ -980,7 +980,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                         this.Customer = entityList.ShipperName;
                     }
 
-                    if (AppTool.IsNullOrEmpty(entityList.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entityList.StatusName) && entityList.StatusName.toLocaleLowerCase() == "in progress") {
+                    if (AppTool.IsNullOrEmpty(entityList.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entityList.StatusName) && entityList.StatusName.toLocaleLowerCase() != "in progress") {
                         this.IsDSVConnectVisible = true;
                     }
                     else {
@@ -1473,7 +1473,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                         this.EntityId = shipment.Id;
                         if ((ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") || SessionLocator.PrivateLableSettings) {
                             this.EntityNumber = AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) ? shipment.CustomerReference1 : shipment.ForwarderShipmentNumber;
-                            if (AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(shipment.StatusName) && shipment.StatusName.toLocaleLowerCase() == "in progress") {
+                            if (AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(shipment.StatusName) && shipment.StatusName.toLocaleLowerCase() != "in progress") {
                                 this.IsDSVConnectVisible = true;
                             }
                             else {
