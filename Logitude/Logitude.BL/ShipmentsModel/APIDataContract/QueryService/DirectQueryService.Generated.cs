@@ -261,7 +261,8 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.ValueOfGoodsCurrency = CurrencyService17.GetCurrencyById(MyEntityPM.ValueOfGoodsCurrencyId,Tenant); 
 			       
 					   				   }
-				   					
+				   
+				   temp.MainCarriageCarrierNumber = MyEntityPM.MainCarriageCarrierNumber;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -541,7 +542,8 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										   
+					
+					temp.MainCarriageCarrierNumber = MyEntity.MainCarriageCarrierNumber;					   
 					   return temp;
 		    }
             catch (Exception ex)

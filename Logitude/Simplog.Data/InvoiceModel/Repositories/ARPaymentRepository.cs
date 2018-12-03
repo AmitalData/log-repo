@@ -30,7 +30,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public ARPayment GetSingleARPayment(string id, int tenant)
         {
-            return (from a in context.ARPayments.Include("ARAccount").Include("AccountingPaymentMethod").Include("BillToCard").Include("CreatedByUser.Contact").Include("DebitAccount").Include("LocalCurrency").Include("PaymentCurrency").Include("Status").Include("SATTransferStatus").Include("TransferStatus").Include("Branch")
+            return (from a in context.ARPayments.Include("ARAccount").Include("AccountingPaymentMethod").Include("BillToCard").Include("CreatedByUser.Contact").Include("DebitAccount").Include("LocalCurrency").Include("PaymentCurrency").Include("Status").Include("SATTransferStatus").Include("TransferStatus").Include("Branch").Include("BankAccountLite")
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
