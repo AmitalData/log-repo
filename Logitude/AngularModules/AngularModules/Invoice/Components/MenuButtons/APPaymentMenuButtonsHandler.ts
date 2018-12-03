@@ -105,6 +105,9 @@ export class APPaymentMenuButtonsHandler {
                             }
                         case "CancelApproval":
                             {
+                                if (SessionLocator.TenantPM.AccountingActivated) {
+                                    button.IsHidden = true;
+                                }
                                 if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD" || (this.EntityPM.StatusCode == "AD" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG"))) {
                                     button.IsDisabled = true;
                                 }
@@ -168,8 +171,6 @@ export class APPaymentMenuButtonsHandler {
 
     // [Approval]
     ApprovalMethod() {
-
-
         if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
             var FlagNotTransfered: boolean = false;
             this.EntityPM.PaymentInvoices.forEach(item => {
@@ -192,9 +193,10 @@ export class APPaymentMenuButtonsHandler {
         }
         else {
             this.CompleteApprove();
-        }        
- 
+        }
+
     }
+    
 
     CompleteApprove() {
 

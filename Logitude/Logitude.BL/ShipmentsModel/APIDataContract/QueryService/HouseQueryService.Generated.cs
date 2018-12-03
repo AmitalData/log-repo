@@ -246,6 +246,14 @@ using Simplog.Data.ShipmentsModel;
 				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"Shipment");
 				temp.CustomFields = customFieldService.CustomFieldCustomDataMapping(MyEntityPM, Tenant);
 				 
+				   
+				   temp.ValueOfGoods = MyEntityPM.ValueOfGoods;			  
+				   if(MyEntityPM.ValueOfGoodsCurrencyId != null)
+				   {
+					   CurrencyQueryService CurrencyService16 = new CurrencyQueryService(Tenant);
+					   					   temp.ValueOfGoodsCurrency = CurrencyService16.GetCurrencyById(MyEntityPM.ValueOfGoodsCurrencyId,Tenant); 
+			       
+					   				   }
 				   					
 				   return temp;
 			}
@@ -408,22 +416,22 @@ using Simplog.Data.ShipmentsModel;
 					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService16 = new AirPackageQueryService(Tenant);
-						temp.ShipmentPackages = AirPackageService16.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+						AirPackageQueryService AirPackageService17 = new AirPackageQueryService(Tenant);
+						temp.ShipmentPackages = AirPackageService17.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService16 = new OceanOrInlandPackageQueryService(Tenant);
-						temp.ShipmentPackages = OceanOrInlandPackageService16.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService17 = new OceanOrInlandPackageQueryService(Tenant);
+						temp.ShipmentPackages = OceanOrInlandPackageService17.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService16 = new ContainerQueryService(Tenant);
-						temp.ShipmentPackages = ContainerService16.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+						ContainerQueryService ContainerService17 = new ContainerQueryService(Tenant);
+						temp.ShipmentPackages = ContainerService17.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -485,15 +493,15 @@ using Simplog.Data.ShipmentsModel;
 					
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService16 = new PickUpQueryService(Tenant);
-						temp.ShipmentPickUps = PickUpService16.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
+						PickUpQueryService PickUpService17 = new PickUpQueryService(Tenant);
+						temp.ShipmentPickUps = PickUpService17.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService16 = new DeliveryQueryService(Tenant);
-						temp.ShipmentDeliveries = DeliveryService16.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
+						DeliveryQueryService DeliveryService17 = new DeliveryQueryService(Tenant);
+						temp.ShipmentDeliveries = DeliveryService17.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -502,6 +510,18 @@ using Simplog.Data.ShipmentsModel;
 				{
 					 customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
 				}		
+			
+					
+					temp.ValueOfGoods = MyEntity.ValueOfGoods;					CurrencyQueryService ValueOfGoodsCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					if(MyEntity.ValueOfGoodsCurrency != null)
+					{
+						var myValueOfGoodsCurrencyPM = ValueOfGoodsCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.ValueOfGoodsCurrency,Tenant,ComputingPartnerName);
+												if(myValueOfGoodsCurrencyPM != null)
+						{
+							temp.ValueOfGoodsCurrencyId = myValueOfGoodsCurrencyPM.Id;
+						}
+						 
+					}
 			
 										   
 					   return temp;

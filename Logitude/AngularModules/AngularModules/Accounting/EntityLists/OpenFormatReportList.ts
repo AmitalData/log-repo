@@ -20,6 +20,9 @@ export class OpenFormatReportList {
 	DateTypeCode: string;
 	StatusTypeCode: string;
 	ErrorMessage: string;
+	CreatedByUserName: string;
+	Status: string;
+	DateTypeName: string;
 	
 }
  

@@ -3830,7 +3830,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "QuoteTypeCode",
                 PMPropertyPath = "QuoteTypeCode",
                 HelpTextCode = "QuoteTypeCode",
-                HelpTextDefaultText = "Spot Rate: Use for quoting prices for a specific shipment with a given quantity.\nRouting Rates: Use for quoting your rates for package types, per unit or by price break levels.",
+                HelpTextDefaultText = "Spot Rate: Use for quoting prices for a specific shipment with a given quantity.%nRouting Rates: Use for quoting your rates for package types, per unit or by price break levels.",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -4485,7 +4485,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableName = QuoteChargeObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
-                DisplayInEntityVariables = false,
                 Operator = "Equals",
                 PMPropertyPath = "CostMaxAmount",
                 ListPropertyPath = "CostMaxAmount",
@@ -5355,7 +5354,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 LookUpTableId = CurrenciesObject.Id,
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
-
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Sale Exchange Rate",
@@ -5371,7 +5369,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "Equals",
                 PMPropertyPath = "SaleExchangeRate",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
@@ -5585,6 +5582,39 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "CostContainerType5UnitPrice",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Cost Min Amount",
+                FullFieldLable = "CostMinAmount",
+                FieldName = "CostMinAmount",
+                FieldsDataType = "Double",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = QuoteCostChargesObject.Id,
+                ObjectTableName = QuoteCostChargesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "CostMinAmount",
+                ListPropertyPath = "CostMinAmount",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Cost Max Amount",
+                FullFieldLable = "CostMaxAmount",
+                FieldName = "CostMaxAmount",
+                FieldsDataType = "Double",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = QuoteCostChargesObject.Id,
+                ObjectTableName = QuoteCostChargesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "CostMaxAmount",
+                ListPropertyPath = "CostMaxAmount",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             this.ObjectContext.SaveChanges();
         }
@@ -6047,8 +6077,26 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SaleMinAmount",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Sale Max Amount",
+                FullFieldLable = "SaleMaxAmount",
+                FieldName = "SaleMaxAmount",
+                FieldsDataType = "Double",
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = QuoteSaleChargesObject.Id,
+                ObjectTableName = QuoteSaleChargesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                PMPropertyPath = "SaleMaxAmount",
+                ListPropertyPath = "SaleMaxAmount",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             this.ObjectContext.SaveChanges();
         }
+
         private void CreateQuotePriceStepsFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()

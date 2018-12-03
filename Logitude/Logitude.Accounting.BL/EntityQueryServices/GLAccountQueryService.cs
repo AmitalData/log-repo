@@ -756,9 +756,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
 
             taxDeduction.ByMonthList = new List<ByMonthList>();
-            foreach (var item in groupedByMonthpayments)
+            List<int> months = new List<int> { 1,2,3,4,5,6,7,8,9,10,11,12};
+            foreach (var item in months)
+                
             {
-                var month = item.Key.Month;
+                var month = item;
               //  var year = item.Key.RegisterDate.Value.Year.ToString().Substring(2, 2);
                 ByMonthList byMonthList = new ByMonthList()
                 {

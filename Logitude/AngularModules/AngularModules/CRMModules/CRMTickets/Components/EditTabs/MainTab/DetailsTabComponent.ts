@@ -503,6 +503,9 @@ export class DetailsTabComponent extends BaseComponent implements AfterViewInit 
     set EntityType(value: string) {
         if (this.Trigger.EntityPM.EntityType != value) {
             this.Trigger.EntityPM.EntityType = value;
+            this.ShipmentNumber = null;
+            this.QuoteNumber = null;
+            this.GetEntityLinkNumberVisibility();
         }
     }
 

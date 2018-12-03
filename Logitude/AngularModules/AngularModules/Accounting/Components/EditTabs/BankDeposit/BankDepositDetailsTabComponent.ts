@@ -425,6 +425,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
                 } else {
                     this._CashbookTotal = this.CashBookPM.TotalAmount;
+                    this.CalculateTotals();
+
                 }
             }
         }
@@ -536,16 +538,17 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.SelectedTotal += line2.ForeignAmount == null ? 0 : line2.ForeignAmount;
             }
 
-            if (this.IsLinesSelection && !this.EntityPM.IsCashDeposit)
-            {
-                this.EntityPM.LocalDepositAmount = localSum;
-                this.EntityPM.ForeignAmount = this.SelectedTotal;
+            if (this.IsLinesSelection) {
+                if (this.IsLinesSelection && !this.EntityPM.IsCashDeposit) {
+                    this.EntityPM.LocalDepositAmount = localSum;
+                    this.EntityPM.ForeignAmount = this.SelectedTotal;
 
-            } else if (this.IsLinesSelection) {
-                this.EntityPM.ForeignAmount = this.SelectedTotal;
-                //this.CalculateForeign(this.SelectedTotal);
-                this.CalculateLocal(this.SelectedTotal);
+                } else if (this.IsLinesSelection) {
+                    this.EntityPM.ForeignAmount = this.SelectedTotal;
+                    //this.CalculateForeign(this.SelectedTotal);
+                    this.CalculateLocal(this.SelectedTotal);
 
+                }
             }
         }
     }

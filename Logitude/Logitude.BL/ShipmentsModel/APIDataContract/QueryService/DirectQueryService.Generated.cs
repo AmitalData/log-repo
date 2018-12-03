@@ -252,7 +252,17 @@ using Simplog.Data.ShipmentsModel;
 					   				   }
 				   
 				   temp.MainCarriageATA = MyEntityPM.MainCarriageATA;
-				   temp.MainCarriageATD = MyEntityPM.MainCarriageATD;					
+				   temp.MainCarriageATD = MyEntityPM.MainCarriageATD;
+				   temp.IsAccountingClosed = MyEntityPM.IsAccountingClosed;
+				   temp.ValueOfGoods = MyEntityPM.ValueOfGoods;			  
+				   if(MyEntityPM.ValueOfGoodsCurrencyId != null)
+				   {
+					   CurrencyQueryService CurrencyService17 = new CurrencyQueryService(Tenant);
+					   					   temp.ValueOfGoodsCurrency = CurrencyService17.GetCurrencyById(MyEntityPM.ValueOfGoodsCurrencyId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.MainCarriageCarrierNumber = MyEntityPM.MainCarriageCarrierNumber;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -423,22 +433,22 @@ using Simplog.Data.ShipmentsModel;
 					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService17 = new AirPackageQueryService(Tenant);
-						temp.ShipmentPackages = AirPackageService17.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+						AirPackageQueryService AirPackageService18 = new AirPackageQueryService(Tenant);
+						temp.ShipmentPackages = AirPackageService18.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService17 = new OceanOrInlandPackageQueryService(Tenant);
-						temp.ShipmentPackages = OceanOrInlandPackageService17.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService18 = new OceanOrInlandPackageQueryService(Tenant);
+						temp.ShipmentPackages = OceanOrInlandPackageService18.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService17 = new ContainerQueryService(Tenant);
-						temp.ShipmentPackages = ContainerService17.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+						ContainerQueryService ContainerService18 = new ContainerQueryService(Tenant);
+						temp.ShipmentPackages = ContainerService18.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -487,15 +497,15 @@ using Simplog.Data.ShipmentsModel;
 					
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService17 = new DeliveryQueryService(Tenant);
-						temp.ShipmentDeliveries = DeliveryService17.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
+						DeliveryQueryService DeliveryService18 = new DeliveryQueryService(Tenant);
+						temp.ShipmentDeliveries = DeliveryService18.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService17 = new PickUpQueryService(Tenant);
-						temp.ShipmentPickUps = PickUpService17.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
+						PickUpQueryService PickUpService18 = new PickUpQueryService(Tenant);
+						temp.ShipmentPickUps = PickUpService18.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -519,7 +529,21 @@ using Simplog.Data.ShipmentsModel;
 			
 					
 					temp.MainCarriageATA = MyEntity.MainCarriageATA;
-					temp.MainCarriageATD = MyEntity.MainCarriageATD;					   
+					temp.MainCarriageATD = MyEntity.MainCarriageATD;
+					temp.IsAccountingClosed = MyEntity.IsAccountingClosed;
+					temp.ValueOfGoods = MyEntity.ValueOfGoods;					CurrencyQueryService ValueOfGoodsCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					if(MyEntity.ValueOfGoodsCurrency != null)
+					{
+						var myValueOfGoodsCurrencyPM = ValueOfGoodsCurrencyCurrencyService.CurrencyDataMappingAndValidatin(MyEntity.ValueOfGoodsCurrency,Tenant,ComputingPartnerName);
+												if(myValueOfGoodsCurrencyPM != null)
+						{
+							temp.ValueOfGoodsCurrencyId = myValueOfGoodsCurrencyPM.Id;
+						}
+						 
+					}
+			
+					
+					temp.MainCarriageCarrierNumber = MyEntity.MainCarriageCarrierNumber;					   
 					   return temp;
 		    }
             catch (Exception ex)

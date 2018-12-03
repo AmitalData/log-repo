@@ -1,15 +1,3 @@
-IF object_id(N'GetDateFormateAsNumber', N'FN') IS NOT NULL
-  BEGIN DROP FUNCTION GetDateFormateAsNumber   end
-
-IF object_id('GetDateFormateAsNumber') IS  NULL
-BEGIN
- declare @dateString as varchar(3000)
-
- set @dateString = 'CREATE FUNCTION [dbo].[GetDateFormateAsNumber](@dateTime datetime) RETURNS int WITH EXECUTE AS CALLER AS BEGIN   declare @Result  as int declare @dateString as varchar(100) set @Result = -1	 if(@dateTime is not null)   begin    if(@dateTime < ''2008-01-01 00:00:00.000'')  begin set @Result = -2  end  else if(@dateTime> ''2027-12-31 00:00:00.000'')  begin  set @Result = -3	 end     else  begin set @dateString = CONVERT(VARCHAR(10), @dateTime, 120);  set @dateString = REPLACE(@dateString, ''-'', '''');   set @dateString = REPLACE(@dateString, ''/'', '''');   set @Result = @dateString     end  end   RETURN(@Result);  END;';
-
- EXEC(@dateString)
-			
-END
 
  declare @AutomaticLastUpdateDate as datetime
  declare @LastUpdateDate as datetime
@@ -171,7 +159,7 @@ END
 	     if(@DepartedDate is null) begin set @IsDeparted=0; end
 		 if(@CustomsClearenceDate is null) begin set @IsCustomsCleared= 0 end
 
-		insert into Fact_Shipments values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @Level, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency,@NumberOfInvoices ,@OperationallyClosed,@AccountingClosed, @Status, @Location,  @Origin , @FinalDestination , @IsDeparted , @DepartedDate ,@IsArrived , @ArrivedDate , @IsCustomsCleared , dbo.GetDateFormateAsNumber(@CustomsClearenceDate) , 1 ,@CreateDate , @LastUpdateDate ,dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency )
+		insert into Fact_Shipments ([Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[Level],[Type],[Department],[Branch],[Shipment Number],[House],[Master],[Shipper],[Consignee],[Agent],[Customer],[Incoterm],[Gross Weight (KG)],[Chargeable Weight (KG)],[Total Volume (CBM)],[Number of Packages],[Number of Containers],[Salesman],[Account Manager],[Profit ( Local )],[Profit],[Local Currency ],[Profit Currency],[Number of Invoices],[Operationally Closed],[Accounting Closed],[Status],[Location],[Origin],[Final Destination],[Is Departed],[Departed Date],[Is Arrived],[Arrived Date],[Is Customs Cleared],[Customs Clearence Date],[Total Shipments],[Create Date],[Last Update Date],[Operational Date],[Operational Close Date],[Accounting Close Date],[Open Receivables ( Local )],[Open Receivables ( Profit )],[Accounted Receivables ( Local )],[Accounted Receivables ( Profit )],[Open Payables ( Local )],[Open Payables ( Profit )],[Accounted Payables ( Local )],[Accounted Payables ( Profit )]) values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @Level, @Type , @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency,@NumberOfInvoices ,@OperationallyClosed,@AccountingClosed, @Status, @Location,  @Origin , @FinalDestination , @IsDeparted , @DepartedDate ,@IsArrived , @ArrivedDate , @IsCustomsCleared , dbo.GetDateFormateAsNumber(@CustomsClearenceDate) , 1 ,@CreateDate , @LastUpdateDate ,dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency )
 
 
 	FETCH NEXT FROM ShipmentsCursor    INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @Level , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Shipper , @Consignee , @Agent, @Customer 

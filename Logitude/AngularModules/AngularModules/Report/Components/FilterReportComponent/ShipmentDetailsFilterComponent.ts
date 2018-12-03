@@ -1,15 +1,10 @@
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {ReportFliter} from '../../Components/Filters/ReportFliter';
-import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {Component, OnInit, Output, ElementRef}  from '@angular/core';
-import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {ParticipantList} from '../../EntityLists/ParticipantList';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {DateTool} from '../../../Infrastructure/Tools';
-import {CodeNameClass} from './CodeNameClass';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ReportsPreviewComponent } from '../../Components/ReportsPreviewComponent';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { ReportFliter } from '../../Components/Filters/ReportFliter';
+import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
+import { Component } from '@angular/core';
+import { DateTool } from '../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -37,12 +32,12 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
         this.FromDate = DateTool.GetCurrentDateAsUtc();
-        this.FromDate.setMonth(this.FromDate.getMonth()-1);
+        this.FromDate.setMonth(this.FromDate.getMonth() - 1);
         this.ToDate = DateTool.GetCurrentDateAsUtc();
         this.RunReport(false);
     }
 
-    
+
     RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {
@@ -58,7 +53,7 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
         }
 
         if (this.ValidationErrorsList.length == 0) {
-            this.queryFilterItems = new Array<QueryFilterItem>();         
+            this.queryFilterItems = new Array<QueryFilterItem>();
 
             this.queryFilterItem = new QueryFilterItem();
             this.queryFilterItem.DisplayInList = false;
@@ -83,11 +78,8 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
             this.reportFliter.NumberOfPage = 1;
             this.reportFliter.ProcessType = "GenerateReport";
 
-            this.ReportsPreview.CleanPartnersObslist();        
-
+            this.ReportsPreview.CleanPartnersObslist();
             this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
         }
     }
-  
-
 }

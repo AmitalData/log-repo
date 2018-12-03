@@ -602,6 +602,31 @@
                         <div></div>
                     </td>
 
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <input type="text" style="float:left;width:120px;" [(ngModel)]="ID" />
+                                </td>
+                                <td style="width: 5px;">
+                                    <div style="width: 5px;height:20px;"></div>
+                                </td>
+                                <td>
+                                    <button class="RedButton" (click)="EditButtonClicked()">Edit</button>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+
                 </tr>
             </table>
         </td>

@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuotePriceStepsUpdateClass
@@ -78,7 +81,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuotePriceSteps",
 			      				    DBTableName =  "QuotePriceSteps",
 			      				    ObjectTableSingular =  "Quote Price Steps",
-			      				    ObjectTablePlural =  "QuotePriceSteps",
 			      				    DefaultText =  "Quote Price Steps",
 			      				    Name =  "QuotePriceSteps",
 			      				    IsNewWizard =  false,
@@ -172,7 +174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Step",
-					  						DefaultText =  "Step",
+					  						DefaultText =  @"Step",
 					  						HelpTextCode =  "Step",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -227,10 +229,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CostUnitPrice",
-					  						DefaultText =  "Cost Unit Price",
+					  						DefaultText =  @"Cost Unit Price",
 					  						HelpTextCode =  "CostUnitPrice",
 					  						ShortFieldLable =  "CostStepPrices",
-					  						ShortFieldLableDefaultText =  "Cost break price",
+					  						ShortFieldLableDefaultText =  @"Cost break price",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -284,10 +286,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "SaleUnitPrice",
-					  						DefaultText =  "Sales Unit Price",
+					  						DefaultText =  @"Sales Unit Price",
 					  						HelpTextCode =  "SaleUnitPrice",
 					  						ShortFieldLable =  "SaleStepPrices",
-					  						ShortFieldLableDefaultText =  "Sale break price",
+					  						ShortFieldLableDefaultText =  @"Sale break price",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -341,10 +343,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "MarkupValue",
-					  						DefaultText =  "Markup Value",
+					  						DefaultText =  @"Markup Value",
 					  						HelpTextCode =  "MarkupValue",
 					  						ShortFieldLable =  "MarkupValue",
-					  						ShortFieldLableDefaultText =  "Markup",
+					  						ShortFieldLableDefaultText =  @"Markup",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -375,7 +377,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable QuotePriceStepsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuotePriceSteps" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode QuotePriceStepsTextCode_QuotePriceSteps = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuotePriceSteps", DefaultText = "Quote Price Steps",LocalDefaultText = null, ObjectTableId = QuotePriceStepsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

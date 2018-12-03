@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 
 import {Component, OnInit}  from '@angular/core';
@@ -54,6 +54,25 @@ export class ARInvoiceDocsOutTabComponent implements OnInit {
                 this.CustomFilterOperation = "Equal";
                 this.CustomFilterValue = "999C";
 
+            }
+
+            else if (this.EntityPM.IsGeneralInvoice) {
+                this.IsVisible = true;
+                if (table) this.ObjectTableId = table.Id;
+                this.EntityId = this.EntityPM.Id;
+                var myReference: string = null;
+
+                if (this.EntityPM.InvoiceNumber == null) {
+                    myReference = "Draft: " + this.EntityPM.DraftNumber;
+                }
+
+                else {
+                    myReference = this.EntityPM.InvoiceNumber;
+                }
+
+                this.EntityReference = myReference;
+                this.CustomFilterOperation = "Equal";
+                this.CustomFilterValue = "999G";
             }
 
             else if (this.EntityPM.StatusCode != "VD") {

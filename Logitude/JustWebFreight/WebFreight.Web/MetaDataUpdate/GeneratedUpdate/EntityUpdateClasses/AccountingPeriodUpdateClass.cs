@@ -161,11 +161,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Year",
-					  						DefaultText =  "Year",
-					  						FullLocalDefaultText =  "שנה",
+					  						DefaultText =  @"Year",
+					  						FullLocalDefaultText =  @"שנה",
 					  						ListFieldLable =  "YearListLable",
-					  						ListLableDefaultText =  "Year",
-					  						ListLocalDefaultText =  "שנה",
+					  						ListLableDefaultText =  @"Year",
+					  						ListLocalDefaultText =  @"שנה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -213,11 +213,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PeriodTypeCode",
-					  						DefaultText =  "Type",
-					  						FullLocalDefaultText =  "סוג תקופה",
+					  						DefaultText =  @"Type",
+					  						FullLocalDefaultText =  @"סוג תקופה",
 					  						ListFieldLable =  "PeriodTypeCodeListLable",
-					  						ListLableDefaultText =  "Type",
-					  						ListLocalDefaultText =  "סוג תקופה",
+					  						ListLableDefaultText =  @"Type",
+					  						ListLocalDefaultText =  @"סוג תקופה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -265,11 +265,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PeriodTypeName",
-					  						DefaultText =  "Period Type",
-					  						FullLocalDefaultText =  "סוג תקופה",
+					  						DefaultText =  @"Period Type",
+					  						FullLocalDefaultText =  @"סוג תקופה",
 					  						ListFieldLable =  "PeriodTypeNameListLable",
-					  						ListLableDefaultText =  "Period Type",
-					  						ListLocalDefaultText =  "סוג תקופה",
+					  						ListLableDefaultText =  @"Period Type",
+					  						ListLocalDefaultText =  @"סוג תקופה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -317,11 +317,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpenMonth",
-					  						DefaultText =  "Open Month",
-					  						FullLocalDefaultText =  "חודש פתוח",
+					  						DefaultText =  @"Open Month",
+					  						FullLocalDefaultText =  @"חודש פתוח",
 					  						ListFieldLable =  "OpenMonthListLable",
-					  						ListLableDefaultText =  "OpenMonth",
-					  						ListLocalDefaultText =  "חודש פתוח",
+					  						ListLableDefaultText =  @"OpenMonth",
+					  						ListLocalDefaultText =  @"חודש פתוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -369,11 +369,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClosedMonth",
-					  						DefaultText =  "Closed Month",
-					  						FullLocalDefaultText =  "חודש סגור",
+					  						DefaultText =  @"Closed Month",
+					  						FullLocalDefaultText =  @"חודש סגור",
 					  						ListFieldLable =  "ClosedMonthListLable",
-					  						ListLableDefaultText =  "Closed Month",
-					  						ListLocalDefaultText =  "חודש סגור",
+					  						ListLableDefaultText =  @"Closed Month",
+					  						ListLocalDefaultText =  @"חודש סגור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -587,7 +587,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

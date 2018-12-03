@@ -296,6 +296,75 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string createdByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return createdByUserName;
+		 }
+		 set
+		 {
+		   if(createdByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=createdByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   createdByUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string status ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Status  
+	   {
+	    
+	     get
+		{
+		   return status;
+		 }
+		 set
+		 {
+		   if(status != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Status",OldValue=status,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   status=value;
+		   }
+			
+		 }
+	   }
+	  private string dateTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DateTypeName  
+	   {
+	    
+	     get
+		{
+		   return dateTypeName;
+		 }
+		 set
+		 {
+		   if(dateTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DateTypeName",OldValue=dateTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dateTypeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class AWBOCIUpdateClass
@@ -171,9 +174,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "SupplementaryCustomsInfo",
-					  						DefaultText =  "Supplementary value",
+					  						DefaultText =  @"Supplementary value",
 					  						ListFieldLable =  "SupplementaryCustomsInfo",
-					  						ListLableDefaultText =  "Supplementary value",
+					  						ListLableDefaultText =  @"Supplementary value",
 					  						HelpTextCode =  "SupplementaryCustomsInfo",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -229,9 +232,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CountryId",
-					  						DefaultText =  "Country",
+					  						DefaultText =  @"Country",
 					  						ListFieldLable =  "CountryId",
-					  						ListLableDefaultText =  "Country",
+					  						ListLableDefaultText =  @"Country",
 					  						HelpTextCode =  "CountryId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -287,9 +290,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AWBCustomsInformationCode",
-					  						DefaultText =  "Customs Info. ID",
+					  						DefaultText =  @"Customs Info. ID",
 					  						ListFieldLable =  "AWBCustomsInformationCode",
-					  						ListLableDefaultText =  "Customs Info. ID",
+					  						ListLableDefaultText =  @"Customs Info. ID",
 					  						HelpTextCode =  "AWBCustomsInformationCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -345,9 +348,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "AWBInformationCode",
-					  						DefaultText =  "Information ID",
+					  						DefaultText =  @"Information ID",
 					  						ListFieldLable =  "AWBInformationCode",
-					  						ListLableDefaultText =  "Information ID",
+					  						ListLableDefaultText =  @"Information ID",
 					  						HelpTextCode =  "AWBInformationCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -379,7 +382,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable AWBOCIObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AWBOCI" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode AWBOCITextCode_AWBOCI = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBOCI", DefaultText = "AWB OCI",LocalDefaultText = null, ObjectTableId = AWBOCIObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

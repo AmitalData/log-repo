@@ -12,6 +12,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -38,7 +39,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
     public class SharedAgentManifestController : ApiController
     {
 
-        public HttpResponseMessage GetSharedAgentManifest(string shipmentId, int tenant)
+        public HttpResponseMessage GetSharedAgentManifest(string shipmentId, bool isUpdateAgent ,int tenant)
         {
             try
             {
@@ -273,7 +274,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         Transshipment2ToPort = transshipment2ToPort,
                         Transshipment3FromPort = transshipment3FromPort,
                         Transshipment3ToPort = transshipment3ToPort,
-
+                        
                         AgentReference1 = pm.AgentReference1,
                         AgentReference2 = pm.AgentReference2,
                         ShipmentLevelCode = pm.ShipmentLevelCode,
@@ -369,7 +370,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         MasterDate = pm.CreateDateTime,
                         MoveTypeCode = pm.MoveTypeCode,
                         MoveTypeName = !string.IsNullOrEmpty(pm.MoveTypeName) ? pm.MoveTypeName : pm.MoveTypeCode,
-                     
+                        OrginalAgentId = pm.AgentId,
 
                     };
 
@@ -651,8 +652,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         #endregion
                     }
 
-
-
+  
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         //string manifestXML = LogitudeXmlSerializer.SerializeObjectToXmlString(manifestSL);
@@ -672,7 +672,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                             LoggingUserId = loggedContact.Id,
                             LoggingObjectTableId = table.Id,
                             LoggingEntityId = pm.Id,
-                            Subject = "Shared Manifest",
+                            Subject = !isUpdateAgent ? "Shared Manifest" : "Update Shared Agent",
                             FolderName = "AgentsSharedLogisticsQueue",
                             ByteData = manifestXML,
                         };
@@ -1535,6 +1535,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 AgentSharedManifestQuery agentSharedManifestQuery = new AgentSharedManifestQuery(authToken.Tenant);
                 List<SharedManifestsStatusClass> result = agentSharedManifestQuery.GetAgentSharedManifestsForDashBoard(lastMonths, lastDays, selectedIndex ,  authToken.Tenant);
@@ -1548,6 +1549,59 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             }
         }
 
+
+        public HttpResponseMessage GetIsAgentSharedManifests(string agentId , string entityid)
+        {
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                bool result = false;
+
+                AgentSharedManifestHelper agentSharedManifestHelper = new AgentSharedManifestHelper();
+                List<ManifestSL> manifestSLLists = agentSharedManifestHelper.GetAgentShareManifestSLByEntityId(entityid, authToken.Tenant);
+
+                if (manifestSLLists.Count> 0)
+                {
+                    var manifestSL = manifestSLLists.Where(d => d.OrginalAgentId == agentId).FirstOrDefault();
+                    if (manifestSL != null)
+                    {
+                        result = true;
+                    }
+                }
+
+                if (!result)
+                {
+                    foreach (ManifestSL manifestSL in manifestSLLists.Where(d => string.IsNullOrEmpty(d.OrginalAgentId)).ToList())
+                    {
+                        if (manifestSL != null)
+                        {
+                            AgentRepository agentRepository = new AgentRepository(authToken.Tenant);
+                            Agent agent = agentRepository.GetSingleAgentBySharedKey(manifestSL.AgentSharedKey, authToken.Tenant);
+                            if (agent != null)
+                            {
+                                if (agent.Id == agentId)
+                                {
+                                    result = true;
+                                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 

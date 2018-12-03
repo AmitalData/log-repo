@@ -227,12 +227,13 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     ListFilters: ApiQueryFilters
     FilterLines() {
 
-        var filteredLines = [];
-        filteredLines = this.OriginalReportLines.Collection;
+        // var filteredLines = [];
+        // filteredLines = this.OriginalReportLines.Collection;
 
         //search
         if (!AppTool.IsNullOrEmpty(this.searchText))
-            filteredLines = filteredLines.filter(d => d.SearchFields.toLowerCase().includes(this.searchText.toLowerCase()));
+                filters.addAdditionalFilter("SearchFields", this.searchText, null, null, "Contains", false, false, false, "string");
+                // filteredLines = filteredLines.filter(d => d.SearchFields.toLowerCase().includes(this.searchText.toLowerCase()));
 
         //update filters count
         //this.TaxableTransactionsCount = filteredLines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "O" && d.TaxReportLinePM.VatAmount > 0).length;
@@ -321,16 +322,15 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     FillGrids() {
         // var lines = [];
 
-        // this.ReportLines = new ObservableCollection([]);
         // this.OriginalReportLines = new ObservableCollection([]);
 
         // if (!AppTool.IsNullOrEmpty(this.EntityPM)) {
-        //     for (let item of this.EntityPM.TaxReportLines.sort((a, b) => { return (a.Line === b.Line) ? 0 : (a.Line < b.Line) ? -1 : 1 })) {
-        //         //lines.push(new ReportLineModel(item, this));
+        //     for (let item of this.ReportLines.Collection.sort((a, b) => { return (a.Line === b.Line) ? 0 : (a.Line < b.Line) ? -1 : 1 })) {
+        //         lines.push(item));
         //     }
         // }
 
-        // this.ReportLines.InsertCollection(lines);
+        // // this.ReportLines.InsertCollection(lines);
         // this.OriginalReportLines.InsertCollection(lines);
 
         //calculate sums
@@ -340,7 +340,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         //this.InputsEquipmentsCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == true).length;
         //this.InputsOtherCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == false).length;
         //this.AllCount = lines.length;
-        //this.errorsCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.StatusCode != "6" && d.TaxReportLinePM.TransmitStatusCode == "1").length;
+
+        var lines = this.ReportLines.Collection;
+        this.errorsCount = lines.filter((d) => d.TaxReportLinePM.StatusCode != "6" && d.TaxReportLinePM.TransmitStatusCode == "1").length;
         this.ShowErrorMsg = this.errorsCount > 0;
 
     }

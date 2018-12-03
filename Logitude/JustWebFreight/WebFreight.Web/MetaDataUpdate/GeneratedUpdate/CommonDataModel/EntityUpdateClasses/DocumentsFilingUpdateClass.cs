@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class DocumentsFilingUpdateClass
@@ -174,10 +177,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						FullLocalDefaultText =  "סימוכין",
+					  						DefaultText =  @"Code",
+					  						FullLocalDefaultText =  @"סימוכין",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
+					  						ListLableDefaultText =  @"Code",
 					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -233,8 +236,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "DocumentTypeId",
-					  						DefaultText =  "Document Type Id",
-					  						FullLocalDefaultText =  "סוג מסמך",
+					  						DefaultText =  @"Document Type Id",
+					  						FullLocalDefaultText =  @"סוג מסמך",
 					  						HelpTextCode =  "DocumentTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -290,10 +293,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "DocumentTypeName",
-					  						DefaultText =  "Document Type Name",
-					  						FullLocalDefaultText =  "סוג מסמך",
+					  						DefaultText =  @"Document Type Name",
+					  						FullLocalDefaultText =  @"סוג מסמך",
 					  						ListFieldLable =  "DocumentTypeNameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						ListLableDefaultText =  @"Name",
 					  						HelpTextCode =  "DocumentTypeName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -349,9 +352,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "DirectionCode",
-					  						DefaultText =  "Direction Code",
+					  						DefaultText =  @"Direction Code",
 					  						ListFieldLable =  "DirectionCodeListLable",
-					  						ListLableDefaultText =  "Direction Code",
+					  						ListLableDefaultText =  @"Direction Code",
 					  						HelpTextCode =  "DirectionCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -408,7 +411,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ObjectTableId",
-					  						DefaultText =  "Object Table",
+					  						DefaultText =  @"Object Table",
 					  						HelpTextCode =  "ObjectTableId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -464,9 +467,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ObjectTableName",
-					  						DefaultText =  "Object Table",
+					  						DefaultText =  @"Object Table",
 					  						ListFieldLable =  "ObjectTableNameListLable",
-					  						ListLableDefaultText =  "Object Table",
+					  						ListLableDefaultText =  @"Object Table",
 					  						HelpTextCode =  "ObjectTableName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -523,7 +526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  "Created By",
+					  						DefaultText =  @"Created By",
 					  						HelpTextCode =  "CreatedByUserId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -579,9 +582,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreatedByUserName",
-					  						DefaultText =  "Created By",
+					  						DefaultText =  @"Created By",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
-					  						ListLableDefaultText =  "Created By",
+					  						ListLableDefaultText =  @"Created By",
 					  						HelpTextCode =  "CreatedByUserName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -638,7 +641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "OwnerId",
-					  						DefaultText =  "Owner Id",
+					  						DefaultText =  @"Owner Id",
 					  						HelpTextCode =  "OwnerId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -694,10 +697,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "OwnerName",
-					  						DefaultText =  "Owner",
-					  						FullLocalDefaultText =  "משתמש",
+					  						DefaultText =  @"Owner",
+					  						FullLocalDefaultText =  @"משתמש",
 					  						ListFieldLable =  "OwnerNameListLable",
-					  						ListLableDefaultText =  "Owner",
+					  						ListLableDefaultText =  @"Owner",
 					  						HelpTextCode =  "OwnerName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -753,10 +756,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Description",
-					  						DefaultText =  "Description",
-					  						FullLocalDefaultText =  "תאור",
+					  						DefaultText =  @"Description",
+					  						FullLocalDefaultText =  @"תאור",
 					  						ListFieldLable =  "DescriptionListLable",
-					  						ListLableDefaultText =  "Description",
+					  						ListLableDefaultText =  @"Description",
 					  						HelpTextCode =  "Description",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -810,9 +813,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search codes/ names",
+					  						DefaultText =  @"Search codes/ names",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: document name",
+					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: document name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -868,10 +871,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  " תאריך יצירה",
+					  						DefaultText =  @"Create Date",
+					  						FullLocalDefaultText =  @" תאריך יצירה",
 					  						ListFieldLable =  "CreateDateLabel",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  @"Create Date",
 					  						HelpTextCode =  "CreateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -927,7 +930,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "LastVersion",
-					  						DefaultText =  "LastVersion",
+					  						DefaultText =  @"LastVersion",
 					  						HelpTextCode =  "LastVersion",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -983,9 +986,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Extension",
-					  						DefaultText =  "Extension",
+					  						DefaultText =  @"Extension",
 					  						ListFieldLable =  "ExtensionListLable",
-					  						ListLableDefaultText =  "Extension",
+					  						ListLableDefaultText =  @"Extension",
 					  						HelpTextCode =  "Extension",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1041,9 +1044,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  true,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsDigitallySigned",
-					  						DefaultText =  "IsDigitallySigned",
+					  						DefaultText =  @"IsDigitallySigned",
 					  						ListFieldLable =  "IsDigitallySignedListLable",
-					  						ListLableDefaultText =  "Is Digitally Signed",
+					  						ListLableDefaultText =  @"Is Digitally Signed",
 					  						HelpTextCode =  "IsDigitallySigned",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1099,9 +1102,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsSharedWithForwarder",
-					  						DefaultText =  "IsSharedWithForwarder",
+					  						DefaultText =  @"IsSharedWithForwarder",
 					  						ListFieldLable =  "IsSharedWithForwarderListLable",
-					  						ListLableDefaultText =  "Is Shared With Forwarder",
+					  						ListLableDefaultText =  @"Is Shared With Forwarder",
 					  						HelpTextCode =  "IsSharedWithForwarder",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1157,9 +1160,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsRequested",
-					  						DefaultText =  "IsRequested",
+					  						DefaultText =  @"IsRequested",
 					  						ListFieldLable =  "IsRequestedListLable",
-					  						ListLableDefaultText =  "Is Requested",
+					  						ListLableDefaultText =  @"Is Requested",
 					  						HelpTextCode =  "IsRequested",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1291,7 +1294,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   Feature DocumentsFilingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature DocumentsFilingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature DocumentsFilingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature DocumentsFilingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.PackageFeature", NameTextCodeDefaultText = "DocumentsFiling Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+		   Feature DocumentsFilingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.PackageFeature", NameTextCodeDefaultText = "DocumentsFiling Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes); 
+
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature DocumentsFilingFeature_DOCUMENTSFILING = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCUMENTSFILING", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFiling.Features.DocumentsFilings", NameTextCodeDefaultText = @"Document Filing" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature DocumentsFilingFeature_DocumentsFiling_M_DocumentsFiling = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsFiling.M.DocumentsFiling", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, NameTextCodeCode = "DocumentsFilingObjectTable.Features.DocumentsFilingObjectTable", NameTextCodeDefaultText = @"Documents Filing" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+   
 	    
 		}
 
@@ -1302,7 +1313,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable DocumentsFilingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentsFiling" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode DocumentsFilingTextCode_DocumentsFilingQDocumentsFilings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling.Q.DocumentsFilings", DefaultText = "Documents Filings",LocalDefaultText = null, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentsFilingTextCode_DocumentsFiling = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentsFiling", DefaultText = "Document Filing",LocalDefaultText = null, ObjectTableId = DocumentsFilingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

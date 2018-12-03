@@ -426,7 +426,29 @@ namespace CommunicationWorkerRole
                                         case "GLSHK":
                                         case "CHAMP":
                                             {
-                                                if (waitingCommLog.Tenant == 42)
+                                                bool isUsingRestAPI = false;
+
+                                                var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+                                                if (iAppSettings != null)
+                                                {
+                                                    if (iAppSettings["ChampRestAPITenants"] != null)
+                                                    {
+                                                        string iTenantsText = iAppSettings["ChampRestAPITenants"].ToString();
+                                                        if (!string.IsNullOrEmpty(iTenantsText))
+                                                        {
+                                                            string[] iTenantsList = iTenantsText.Split(',');
+
+                                                            foreach (string iTenantString in iTenantsList)
+                                                            {
+                                                                if (waitingCommLog.Tenant.ToString() == iTenantString.Trim()){
+                                                                    isUsingRestAPI = true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                if (isUsingRestAPI)
                                                 {
                                                     SendCommunicationLogToChampAPI(waitingCommLog, xmlfile);
                                                 }
@@ -893,36 +915,44 @@ namespace CommunicationWorkerRole
         {
             GateWay gateWay = GateWay.Amazon;
 
-            int intId;
-            string[] commLogIdSplitted = waitingCommLog.Id.Split('-');
-            
-            if (int.TryParse(commLogIdSplitted[1], out intId))
+            if (LogitudeSettings.ChampEnv == "TEST")
             {
-                int modl = intId % 10;
+                gateWay = GateWay.Amazon;
+            }
 
-                if (waitingCommLog.Retries < 3)
-                {                    
-                    if (modl <= 7)
-                    {
-                        gateWay = GateWay.Amazon;
-                    }
+            else
+            {
+                int intId;
+                string[] commLogIdSplitted = waitingCommLog.Id.Split('-');
 
-                    else
-                    {
-                        gateWay = GateWay.Amital;
-                    }
-                }
-
-                else
+                if (int.TryParse(commLogIdSplitted[1], out intId))
                 {
-                    if (modl <= 7)
+                    int modl = intId % 10;
+
+                    if (waitingCommLog.Retries < 3)
                     {
-                        gateWay = GateWay.Amital;
+                        if (modl <= 7)
+                        {
+                            gateWay = GateWay.Amazon;
+                        }
+
+                        else
+                        {
+                            gateWay = GateWay.Amital;
+                        }
                     }
 
                     else
                     {
-                        gateWay = GateWay.Amazon;
+                        if (modl <= 7)
+                        {
+                            gateWay = GateWay.Amital;
+                        }
+
+                        else
+                        {
+                            gateWay = GateWay.Amazon;
+                        }
                     }
                 }
             }

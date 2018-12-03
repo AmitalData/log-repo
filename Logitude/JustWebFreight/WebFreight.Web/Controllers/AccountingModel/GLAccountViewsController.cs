@@ -350,7 +350,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     Aging4AccountTypeCode = isCustomer == true ? AgingReportParam.Aging4AccountTypeCodeEnum.Customer2 : AgingReportParam.Aging4AccountTypeCodeEnum.ControlAccountOnly1,
 
                     GroupByDate = groupByDate == "AccountingDate" ? AgingReportParam.DateEnum.AccountingDate : AgingReportParam.DateEnum.DueDate,
-                    AgingMethod = AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString(),
+                    AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
 
                     AgingMethod_Options = Enum.GetNames(typeof(AgingReportParam.MethodEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
                     GroupByDate_Options = Enum.GetNames(typeof(AgingReportParam.DateEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
@@ -454,9 +454,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         private decimal CalculateLocalAmount(decimal amount, string currencyId)
         {
+            if (tenantCurrency == currencyId)
+                return amount;
+
             RatesTableList rateList = ratesList.Find(d => d.BaseCurrencyId == tenantCurrency && d.ForeignCurrencyId == currencyId);
             var rate = rateList == null ? 0 : rateList.Rate;
-
+            
             return amount * (decimal)rate;
 
         }

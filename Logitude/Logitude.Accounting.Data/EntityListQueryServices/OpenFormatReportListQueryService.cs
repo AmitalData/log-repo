@@ -50,6 +50,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          StatusTypeCode = a.StatusTypeCode,
 					
 					                          ErrorMessage = a.ErrorMessage,
+                                              CreatedByUserName = a.CreatedByUser.Contact.LocalName,
+                                              Status= a.OpenFormatReportStatus != null? a.OpenFormatReportStatus.LocalName:null,
+                                              DateTypeName = a.OpenFormatDateType != null? a.OpenFormatDateType.LocalName : null
 					
 		                    	            });
             return query;
@@ -57,8 +60,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<OpenFormatReport> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<OpenFormatReport> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+
+        }
 				private IQueryable<OpenFormatReport> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<OpenFormatReport> iQueryable, int tenant)
         {
 			return iQueryable;

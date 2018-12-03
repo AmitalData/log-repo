@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerFieldsUpdateSettingUpdateClass
@@ -176,9 +179,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ObjectFieldName",
-					  						DefaultText =  "Object Field Name",
+					  						DefaultText =  @"Object Field Name",
 					  						ListFieldLable =  "ObjectFieldNameListLable",
-					  						ListLableDefaultText =  "Object Field Name",
+					  						ListLableDefaultText =  @"Object Field Name",
 					  						HelpTextCode =  "ObjectFieldName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -235,9 +238,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "ObjectFieldId",
-					  						DefaultText =  "Object Field",
+					  						DefaultText =  @"Object Field",
 					  						ListFieldLable =  "ObjectFieldIdListLable",
-					  						ListLableDefaultText =  "Object Field",
+					  						ListLableDefaultText =  @"Object Field",
 					  						HelpTextCode =  "ObjectFieldId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -293,9 +296,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "UpdateDirection",
-					  						DefaultText =  "Update Direction",
+					  						DefaultText =  @"Update Direction",
 					  						ListFieldLable =  "UpdateDirectionListLable",
-					  						ListLableDefaultText =  "Update Direction",
+					  						ListLableDefaultText =  @"Update Direction",
 					  						HelpTextCode =  "UpdateDirection",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -380,7 +383,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CustomerFieldsUpdateSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CustomerFieldsUpdateSettingTextCode_CustomerFieldsUpdateSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSetting", DefaultText = "Customer Fields Update Setting",LocalDefaultText = null, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomerFieldsUpdateSettingTextCode_CustomerFieldsUpdateSettingQueueQAllCustomerFieldsUpdateSettingQueues = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerFieldsUpdateSettingQueue.Q.AllCustomerFieldsUpdateSettingQueues", DefaultText = "All Customer Fields Update Setting Queues",LocalDefaultText = null, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

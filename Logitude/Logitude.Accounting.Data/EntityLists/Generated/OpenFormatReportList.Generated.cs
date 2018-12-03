@@ -38,6 +38,12 @@ namespace Logitude.Accounting.Data.EntityLists
        public string StatusTypeCode  { get; set; }
        [DataMember]
        public string ErrorMessage  { get; set; }
+       [DataMember]
+       public string CreatedByUserName  { get; set; }
+       [DataMember]
+       public string Status  { get; set; }
+       [DataMember]
+       public string DateTypeName  { get; set; }
    }
 
 }

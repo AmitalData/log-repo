@@ -233,7 +233,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setApproved = theEntityPm.SetApproved;
             var setCancelApproved = theEntityPm.SetCancelApproval;
             var setVoided = theEntityPm.SetVoided;
-            var setReTransferQBO = theEntityPm.SetReTransfer;
+            var SetReSendQBO = theEntityPm.SetReSendQBO;
 
             // PaymentCheque And CashBook
             this.AddARPaymentChequeAndCashBook(theEntityPm, theEntityPm.SetApproved);
@@ -248,7 +248,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.UpdatePaymentOpenAmount();
             ARPaymentHelper service = new ARPaymentHelper();
-            if (payment.ExternalAccountingEntityId != null || setReTransferQBO)
+            if (payment.ExternalAccountingEntityId != null || SetReSendQBO)
             {
                 service.ARPaymentQuickbooksValidating(theEntityPm, true, false, payment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved);
             }
@@ -1329,7 +1329,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             List<ARPaymentChequePM> aRPaymentCheques = query.GetListByPaymentId(entityPm.Id, tenant);
                             if (aRPaymentCheques != null)
                             {
-                                var list = aRPaymentCheques.Where(a => a.StatusCode != "1").ToList();
+                                var list = aRPaymentCheques.Where(a => a.StatusCode == "6" || a.StatusCode == "3").ToList();
                                 if (list == null || (list != null && list.Count() == 0))
                                 {
                                     string msg = TranslateTextsClass.Translate("ARPayment.M.CANTCancelARPayment", entityPm.Tenant, useLocal) + "{ ";

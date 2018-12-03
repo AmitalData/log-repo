@@ -114,7 +114,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "ProjectNumberListLable",
                 Operator = "Equals",
                 ListPropertyPath = "ProjectNumber",
-                PMPropertyPath = "ProjectNumber"
+                PMPropertyPath = "ProjectNumber",
+                DisplayInList = true,
+                ListLableDefaultText = "Project #",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -21634,7 +21636,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1,
                 MinLength = 0,
                 ObjectTableId = ShipmentTypesObject.Id,
-                ObjectTableName = "TransportModeId",
+                ObjectTableName = "ShipmentType",
                 Tenant = 0,
                 TextCodeType = "F",
                 LookUpTableId = null,
@@ -29012,7 +29014,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 15,
                 MinLength = 0,
                 ObjectTableId = ShipmentAssemblyObject.Id,
-                ObjectTableName = "Shipment",
+                ObjectTableName = ShipmentAssemblyObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
@@ -29047,7 +29049,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 15,
                 MinLength = 0,
                 ObjectTableId = ShipmentAssemblyObject.Id,
-                ObjectTableName = "Shipment",
+                ObjectTableName = ShipmentAssemblyObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",

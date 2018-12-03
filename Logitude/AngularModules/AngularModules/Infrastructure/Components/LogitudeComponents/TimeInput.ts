@@ -30,7 +30,7 @@ export class TimeInput extends BaseComponent {
         this.ControlId = "TimeInputControl_" + idIndex;
     }
 
-    private inputValue: string;
+    private inputValue: string = "";
     @Input() public get InputValue() {
         return this.inputValue;
     }
