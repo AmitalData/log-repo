@@ -81,6 +81,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "JournalAdditionalData",
 			      				    IsNew =  true,
 			      				    DBTableName =  "JournalAdditionalDatas",
+			      				    OldDBTableName =  "JournalAdditionalDatas",
 			      				    ObjectTableSingular =  "Journal Additional Data",
 			      				    ObjectTablePlural =  "Journal Additional Datas",
 			      				    HasCustomFilter =  false,
@@ -111,7 +112,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Journal Additional Data",
-			      				    Code =  "f8e3",
+			      				    Code =  "0688",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -134,6 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "JournalId",
+					  						OldFieldName =  "JournalId",
 					  						ObjectTableName =  "JournalAdditionalData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -151,6 +153,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "JournalId",
 					  						ListPropertyPath =  "JournalId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -185,6 +188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TaxReportId",
+					  						OldFieldName =  "TaxReportId",
 					  						ObjectTableName =  "JournalAdditionalData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -202,6 +206,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TaxReportId",
 					  						ListPropertyPath =  "TaxReportId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -235,7 +240,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "TaxReportStatusCode",
+					 						FieldName =  "TaxReportTransmitStatusCode",
+					  						OldFieldName =  "TaxReportStatusCode",
 					  						ObjectTableName =  "JournalAdditionalData",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -251,8 +257,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TaxReportStatusCode",
-					  						ListPropertyPath =  "TaxReportStatusCode",
+					  						PMPropertyPath =  "TaxReportTransmitStatusCode",
+					  						ListPropertyPath =  "TaxReportTransmitStatusCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -268,8 +275,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TaxReportStatusCode",
-					  						DefaultText =  @"Tax Report Status Code",
+					  						FullFieldLable =  "TaxReportTransmitStatusCode",
+					  						DefaultText =  @"Tax Report Transmit Status Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
