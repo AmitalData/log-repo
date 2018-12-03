@@ -279,6 +279,7 @@ export class PackagesTabComponent extends BaseComponent {
         });
 
         if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
         }
 
@@ -297,6 +298,7 @@ export class PackagesTabComponent extends BaseComponent {
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionCode, this.EntityPM.TransportModeCode);
 
         if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
         }
 
