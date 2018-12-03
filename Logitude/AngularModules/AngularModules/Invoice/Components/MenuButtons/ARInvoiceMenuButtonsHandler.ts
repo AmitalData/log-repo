@@ -865,11 +865,20 @@ export class ARInvoiceMenuButtonsHandler {
         });
     }
     OpenAutoCreditScreen() {
+
+        if (this.EntityPM.IsConsolidationInvoice) {
+            SessionLocator.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
+        }
+
         if (!AppTool.IsNullOrEmpty(this.AutoCreditId)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.AutoCreditId, ObjectTableName: 'ARInvoice', BackButtonLabel: "Invoice: " + this.EntityPM.InvoiceNumber });
+
+                    if (this.EntityPM.IsConsolidationInvoice) {
+                        SessionLocator.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
+                    }
                 });
         }
     }

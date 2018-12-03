@@ -276,7 +276,7 @@
                     <table [hidden]="SelectedTabCode != '1'" style="margin-left:10px;">
                         <tr>
                             <td>
-                                <table class="FixedTable">
+                                <table class="FixedTable" *ngIf="IsLocalAddressTabVisible">
                                     <tr>
                                         <td style="width: 460px">
                                             <table>
@@ -284,54 +284,54 @@
                                                 <!-- Name -->
                                                 <tr class="FormFieldRow">
                                                     <td style="width: 110px;">
-                                                        <LogLabel [ObjectFieldName]="'Name_Local'" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogLabel>
                                                     </td>
 
                                                     <td style="width: 350px;">
-                                                        <LogTextBox [ObjectFieldName]="'Name_Local'" [Text]="Name_Local" [InputType]="text" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="LocalAddressDataContext.Name" [InputType]="text" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
                                                 </tr>
 
                                                 <!-- Address1 -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <LogLabel [ObjectFieldName]="'Address1_Local'" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'Address1'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogLabel>
                                                     </td>
 
                                                     <td>
-                                                        <LogTextBox [ObjectFieldName]="'Address1_Local'" [Text]="Address1_Local" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                        <LogTextBox [ObjectFieldName]="'Address1'" [Text]="LocalAddressDataContext.Address1" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
                                                 </tr>
 
                                                 <!-- Address2 -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <LogLabel [ObjectFieldName]="'Address2_Local'" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'Address2'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogLabel>
                                                     </td>
 
                                                     <td>
-                                                        <LogTextBox [ObjectFieldName]="'Address2_Local'" [Text]="Address2_Local" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                        <LogTextBox [ObjectFieldName]="'Address2'" [Text]="LocalAddressDataContext.Address2" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
                                                 </tr>
 
                                                 <!-- City -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <LogLabel [ObjectFieldName]="'City_Local'" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'City'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogLabel>
                                                     </td>
 
                                                     <td>
                                                         <table>
                                                             <tr>
                                                                 <td style="width: 214px">
-                                                                    <LogTextBox [HideColumns]="true" [Text]="City_Local" [ObjectFieldName]="'City_Local'" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    <LogTextBox [HideColumns]="true" [Text]="LocalAddressDataContext.City" [ObjectFieldName]="'City'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogTextBox>
                                                                 </td>
 
                                                                 <td style="width: 5px;">
                                                                     <div></div>
                                                                 </td>
                                                                 <td style="vertical-align:middle;">
-                                                                    <span style="float:left;" class="hyperlink" (click)="SelectCityCommand()" [class.HyperlinkDisabled]="DemoMessageVisibility">Select</span>
+                                                                    <span style="float:left;" class="hyperlink" (click)="LocalAddressDataContext.SelectCityCommand()" [class.HyperlinkDisabled]="LocalAddressDataContext.DemoMessageVisibility">Select</span>
                                                                 </td>
                                                                 <td>
                                                                     <div></div>
@@ -344,19 +344,19 @@
                                                 <!-- Country -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <LogLabel [ObjectFieldName]="'CountryId_Local'" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogLabel>
                                                     </td>
 
                                                     <td>
                                                         <table>
                                                             <tr>
                                                                 <td style="width: 250px">
-                                                                    <LogLov [ObjectFieldName]="'CountryId_Local'"
-                                                                            [ObjectTableName]="AddressObjectTableName"
-                                                                            [SelectedValue]="CountryId_Local"
-                                                                            [DataContext]="DataContext"
+                                                                    <LogLov [ObjectFieldName]="'CountryId'"
+                                                                            [ObjectTableName]="LocalAddressDataContext.ObjectTableName"
+                                                                            [SelectedValue]="LocalAddressDataContext.CountryId"
+                                                                            [DataContext]="LocalAddressDataContext"
                                                                             [LookUpTableName]="'Country'"
-                                                                            (SelectedItemChanged)="Country_Local = $event">
+                                                                            (SelectedItemChanged)="LocalAddressDataContext.Country = $event">
                                                                     </LogLov>
                                                                 </td>
 
@@ -371,20 +371,20 @@
                                                 <!-- State -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <LogLabel [ObjectFieldName]="'StateId_Local'" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'StateId'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogLabel>
                                                     </td>
 
                                                     <td>
                                                         <table>
                                                             <tr>
                                                                 <td style="width: 250px">
-                                                                    <LogLov [ObjectFieldName]="'StateId_Local'"
-                                                                            [SelectedValue]="StateId_Local"
-                                                                            [ObjectTableName]="AddressObjectTableName"
-                                                                            [DataContext]="DataContext"
+                                                                    <LogLov [ObjectFieldName]="'StateId'"
+                                                                            [SelectedValue]="LocalAddressDataContext.StateId"
+                                                                            [ObjectTableName]="LocalAddressDataContext.ObjectTableName"
+                                                                            [DataContext]="LocalAddressDataContext"
                                                                             [LookUpTableName]="'State'"
-                                                                            (SelectedItemChanged)="State_Local = $event"
-                                                                            [DependencyFilter1Value]="CountryId_Local">
+                                                                            (SelectedItemChanged)="LocalAddressDataContext.State = $event"
+                                                                            [DependencyFilter1Value]="LocalAddressDataContext.CountryId">
                                                                     </LogLov>
                                                                 </td>
 
@@ -399,14 +399,14 @@
                                                 <!-- Zip Code -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <LogLabel [ObjectFieldName]="'ZipCode_Local'" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'ZipCode'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogLabel>
                                                     </td>
 
                                                     <td>
                                                         <table>
                                                             <tr>
                                                                 <td style="width: 200px">
-                                                                    <LogTextBox [ObjectFieldName]="'ZipCode_Local'" [Text]="ZipCode_Local" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    <LogTextBox [ObjectFieldName]="'ZipCode'" [Text]="LocalAddressDataContext.ZipCode" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogTextBox>
                                                                 </td>
 
                                                                 <td>
@@ -420,14 +420,14 @@
                                                 <!-- Signature -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <LogLabel [ObjectFieldName]="'Signature_Local'" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'Signature'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogLabel>
                                                     </td>
 
                                                     <td>
                                                         <table>
                                                             <tr>
                                                                 <td style="width: 200px">
-                                                                    <LogTextBox [ObjectFieldName]="'Signature_Local'" [Text]="Signature_Local" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    <LogTextBox [ObjectFieldName]="'Signature'" [Text]="LocalAddressDataContext.Signature" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogTextBox>
                                                                 </td>
 
                                                                 <td>
@@ -472,22 +472,22 @@
                                                 <!-- Phone Number -->
                                                 <tr class="FormFieldRow">
                                                     <td style="width: 80px;">
-                                                        <LogLabel [ObjectFieldName]="'PhoneNumber_Local'" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'PhoneNumber'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogLabel>
                                                     </td>
 
                                                     <td style="width: 200px;">
-                                                        <LogTextBox [ObjectFieldName]="'PhoneNumber_Local'" [Text]="PhoneNumber_Local" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        <LogTextBox [ObjectFieldName]="'PhoneNumber'" [Text]="LocalAddressDataContext.PhoneNumber" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogTextBox>
                                                     </td>
                                                 </tr>
 
                                                 <!-- Fax Number -->
                                                 <tr class="FormFieldRow">
                                                     <td>
-                                                        <LogLabel [ObjectFieldName]="'FaxNumber_Local'" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        <LogLabel [ObjectFieldName]="'FaxNumber'" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogLabel>
                                                     </td>
 
                                                     <td>
-                                                        <LogTextBox [ObjectFieldName]="'FaxNumber_Local'" [Text]="FaxNumber_Local" [ObjectTableName]="AddressObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        <LogTextBox [ObjectFieldName]="'FaxNumber'" [Text]="LocalAddressDataContext.FaxNumber" [ObjectTableName]="LocalAddressDataContext.ObjectTableName" [DataContext]="LocalAddressDataContext"></LogTextBox>
                                                     </td>
                                                 </tr>
 

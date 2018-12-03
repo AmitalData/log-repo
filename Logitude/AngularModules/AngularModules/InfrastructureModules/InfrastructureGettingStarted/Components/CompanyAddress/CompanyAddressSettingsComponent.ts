@@ -30,6 +30,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     public TenantPm: TenantPM = new TenantPM();
     public TenantAgent: AgentPM = new AgentPM();
     public TenantAddress: AddressPM = new AddressPM();
+    public LocalTenantAddress: AddressPM = new AddressPM();
     public DataContext: CompanyAddressSettingsComponent = this;
     public AddressObjectTableName: string = "Address";
     public AgentObjectTableName: string = "Agent";
@@ -37,6 +38,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     public IsVisibile: boolean = false;
     public IsLocalAddressTabVisible: boolean = false;
     public SelectedTabCode: string = "0";
+    public LocalAddressDataContext: AddressItem; 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     constructor() {
         super();      
@@ -63,7 +65,12 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
                 if (this.TenantPm.Id == 65 && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
                     this.SetUIPropertiesHitVisible();
                 }
-            } else {
+
+                if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyLocalAddress")) {
+                    this.LoadLocalAddress();
+                }
+            }
+            else {
                 if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
                     var messageWindow: MessageWindow = new MessageWindow();
                     messageWindow.Title = "Logitude Message";
@@ -81,7 +88,6 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
 
             this.InitializeData();
             this.IsVisibile = true;
-            this.LoadLocalAddress();
         }
 
         else {
@@ -90,30 +96,27 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
                 this.TenantAddress = myResult.Result;
                 this.InitializeData();
                 this.IsVisibile = true;
-                this.LoadLocalAddress();
             });
         }
     }
 
     LoadLocalAddress() {
         if (AppTool.IsNullOrEmpty(this.TenantPm.LocalAddressId)) {
-            this.TenantAddress = new AddressPM();
-            this.TenantAddress.Tenant = this.TenantPm.Id;
-            this.TenantAddress.AddressTypeId = "L";
+            this.LocalTenantAddress = new AddressPM();
+            this.LocalTenantAddress.Tenant = this.TenantPm.Id;
+            this.LocalTenantAddress.AddressTypeId = "L";
 
-            if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyLocalAddress")) {
-                this.IsLocalAddressTabVisible = true;
-            }
+            this.LocalAddressDataContext = new AddressItem(this.LocalTenantAddress, this.TenantPm, this);
+            this.IsLocalAddressTabVisible = true;
         }
 
         else {
             var myService: AddressPMService = new AddressPMService();
             myService.get(this.TenantPm.LocalAddressId).subscribe((myResult: ServiceResponse) => {
-                this.TenantAddress = myResult.Result;
+                this.LocalTenantAddress = myResult.Result;
 
-                if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyLocalAddress")) {
-                    this.IsLocalAddressTabVisible = true;
-                }
+                this.LocalAddressDataContext = new AddressItem(this.LocalTenantAddress, this.TenantPm, this);
+                this.IsLocalAddressTabVisible = true;
             });
         }
     }
@@ -424,14 +427,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
 
         this.UIProperties.SetRequired("StateId", "Address", isRequired);
     }
-
-    //Local Address
-
-
-
-
-
-
+    
     // Commands 
     SelectCityCommand() {
 
@@ -465,6 +461,10 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
         Validator.TryValidateObject(this.TenantAddress, this.DataContext.AddressObjectTableName, errors);
         Validator.TryValidateObject(this.TenantAgent, this.DataContext.AgentObjectTableName, errors);
         Validator.TryValidateObject(this.TenantPm, this.DataContext.TenantObjectTableName, errors);
+
+        if (this.LocalAddressDataContext != null) {
+            Validator.TryValidateObject(this.LocalAddressDataContext.Address, this.LocalAddressDataContext.ObjectTableName, errors);
+        }
 
         this.ValidationErrorsList = errors;
 
@@ -513,45 +513,75 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
         });
     }
 
-    SubmitUpdatingAddress() {
-        var myService: AddressPMService = new AddressPMService();
-        myService.update(this.TenantAddress).subscribe((myRespone: ServiceResponse) => {
+    SubmitUpdatingAddress(type: string) {
+        var address: AddressPM = null;
+        if (type == "M") {
+            address = this.TenantAddress;
+        }
+        else if (type == "L") {
+            address = this.LocalTenantAddress;
+        }
 
-            if (myRespone != null) {
-                if (!myRespone.HasError) {
-                    this.SubmitTenantChanges();
-                }
+        if (address != null && address.IsDirty) {
+            var myService: AddressPMService = new AddressPMService();
+            myService.update(address).subscribe((myRespone: ServiceResponse) => {
+                if (myRespone != null) {
+                    if (!myRespone.HasError) {                        
+                        this.SubmitTenantChanges();
+                    }
 
-                else {
-                    this.ValidationErrorsList = myRespone.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    else {
+                        this.ValidationErrorsList = myRespone.ErrorsArray;
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
-    SubmitCreatingAddress() {
-        var myService: AddressPMService = new AddressPMService();
-        myService.insert(this.TenantAddress).subscribe((myRespone: ServiceResponse) => {
-            if (myRespone != null) {
-                if (!myRespone.HasError) {
-                    this.SubmitTenantChanges();
-                }
+    SubmitCreatingAddress(type: string) {
+        var address: AddressPM = null;
+        if (type == "M") {
+            address = this.TenantAddress;
+        }
+        else if (type == "L") {
+            address = this.LocalTenantAddress;
+        }
 
-                else {
-                    this.ValidationErrorsList = myRespone.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+        if (address != null && address.IsDirty) {
+            var myService: AddressPMService = new AddressPMService();
+            myService.insert(address).subscribe((myRespone: ServiceResponse) => {
+                if (myRespone != null) {
+                    if (!myRespone.HasError) {
+                        if (type == "L" && AppTool.IsNullOrEmpty(this.TenantPm.LocalAddressId)) {
+                            this.TenantPm.LocalAddressId = myRespone.Result.Id;
+                        }
+
+                        this.SubmitTenantChanges();
+                    }
+
+                    else {
+                        this.ValidationErrorsList = myRespone.ErrorsArray;
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     OnSaveAgentCompletedSuccessfully() {
         if (AppTool.IsNullOrEmpty(this.TenantAddress.Id)) {
-            this.SubmitCreatingAddress();
+            this.SubmitCreatingAddress("M");
         }
         else {
-            this.SubmitUpdatingAddress();
+            this.SubmitUpdatingAddress("M");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.LocalTenantAddress.Id)) {
+            this.SubmitCreatingAddress("L");
+        }
+        else {
+            this.SubmitUpdatingAddress("L");
         }
     }
 
@@ -571,5 +601,166 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
             }
         });
     }
+}
 
+export class AddressItem extends BaseComponent {
+    public ObjectTableName: string = "Address";
+    public Address: AddressPM;
+    public Tenant: TenantPM;
+    public DemoMessageVisibility: boolean = false;
+    constructor(address: AddressPM, tenant: TenantPM, public father: CompanyAddressSettingsComponent) {
+        super();
+
+        this.Address = address;
+        this.Tenant = tenant;
+        this.DemoMessageVisibility = this.father.DemoMessageVisibility;
+    }
+    
+    get Name() { return this.Address.Name; }
+    set Name(newValue: string) {
+        if (this.Address.Name != newValue) {
+            this.Address.Name = newValue;
+            this.Address.Description = newValue;
+        }
+    }
+
+    get Address1() { return this.Address.Address1; }
+    set Address1(newValue: string) {
+        if (this.Address.Address1 != newValue) {
+            this.Address.Address1 = newValue;            
+        }
+    }
+
+    get Address2() { return this.Address.Address2; }
+    set Address2(newValue: string) {
+        if (this.Address.Address2 != newValue) {
+            this.Address.Address2 = newValue;
+        }
+    }
+
+    get City() { return this.Address.City; }
+    set City(newValue: string) {
+        if (this.Address.City != newValue) {
+            this.Address.City = newValue;
+        }
+    }
+
+    get CountryId() { return this.Address.CountryId; }
+    set CountryId(newValue: string) {
+        if (this.Address.CountryId != newValue) {
+            this.Address.CountryId = newValue;
+        }
+    }
+
+    get StateId() { return this.Address.StateId; }
+    set StateId(newValue: string) {
+        if (this.Address.StateId != newValue) {
+            this.Address.StateId = newValue;
+        }
+    }
+    
+    get ZipCode() { return this.Address.ZipCode; }
+    set ZipCode(newValue: string) {
+        if (this.Address.ZipCode != newValue) {
+            this.Address.ZipCode = newValue;
+        }
+    }
+
+    get Signature() { return this.Address.Signature; }
+    set Signature(newValue: string) {
+        if (this.Address.Signature != newValue) {
+            this.Address.Signature = newValue;
+        }
+    }
+
+    get PhoneNumber() { return this.Address.PhoneNumber; }
+    set PhoneNumber(newValue: string) {
+        if (this.Address.PhoneNumber != newValue) {
+            this.Address.PhoneNumber = newValue;
+        }
+    }
+
+    get FaxNumber() { return this.Address.FaxNumber; }
+    set FaxNumber(newValue: string) {
+        if (this.Address.FaxNumber != newValue) {
+            this.Address.FaxNumber = newValue;
+        }
+    }
+
+    private country: CountryList = null;
+    get Country() { return this.country; }
+    set Country(newValue: CountryList) {
+        if (this.country != newValue) {
+            this.country = newValue;
+            this.OnCountryChanged(newValue);
+        }
+    }
+
+    private state: StateList = null;
+    get State() { return this.state; }
+    set State(value: StateList) {
+        if (this.state != value) {
+            this.state = value;
+            this.OnStateChanged(value);
+        }
+    }
+
+    private OnCountryChanged(list: CountryList) {
+        this.SetUIProperties_State();
+    }
+    private OnStateChanged(list: StateList) {
+        this.SetUIProperties_StateRequired();
+    }
+
+    private SetUIProperties_State() {
+        if (this.Address != null) {
+            this.SetUIProperties_StateEnabled();
+            this.SetUIProperties_StateRequired();
+        }
+    }
+    private SetUIProperties_StateEnabled() {
+        var isEnabled = false;
+
+        if (this.Country != null) {
+            if (this.Country.HasStates) {
+                isEnabled = true;
+            }
+        }
+
+        this.UIProperties.SetEnabled("StateId", "Address", isEnabled);
+    }
+    private SetUIProperties_StateRequired() {
+        var isRequired = false;
+
+        if (this.Country != null) {
+            if (this.State == null) {
+                if (this.Country.IsStateRequired) {
+                    isRequired = true;
+                }
+            }
+        }
+
+        this.UIProperties.SetRequired("StateId", "Address", isRequired);
+    }
+
+    SelectCityCommand() {
+        var args = new CitySelectionArgs(this.CountryId);
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Select City";
+        logWindow.WindowArgs = args;
+        logWindow.Show('./CommonModules/CommonOthers/Components/CitySelection/CitySelectionComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if (args.IsCitySelected) {
+
+                var mySelectedCity: string = args.CityName;
+                if (this.Address.IsLocalLanguage && args.CityLocalName != null) {
+                    mySelectedCity = args.CityLocalName;
+                }
+
+                this.City = mySelectedCity;
+                this.CountryId = args.CountryId;
+                this.StateId = args.StateId;
+            }
+        });
+    }   
 }

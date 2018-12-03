@@ -54,7 +54,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             journalAdditionalDataPM.TaxReportId = "1111";
 
                         //update
-
+                        journalAdditionalDataPM.TaxReportTransmitStatusCode = "1";
+                        journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId; //updated by alaa task:45553
                         journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
                         journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
                         entityPM.IsManuallyChanged = false;

@@ -31,7 +31,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          TaxReportId = a.TaxReportId,
 					
-					                          TaxReportStatusCode = a.TaxReportStatusCode,
+					                          TaxReportTransmitStatusCode = a.TaxReportTransmitStatusCode,
 					
 		                    	            });
             return query;

@@ -31,11 +31,11 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string TaxReportId { get; set; }
 	      
         public virtual TaxReport TaxReport { get; set; }
-        [ForeignKey("TaxReportStatus")]
-        [Column("TaxReportStatusCode")]
-	    public string TaxReportStatusCode { get; set; }
+        [ForeignKey("TaxReportLineTransmitStatus")]
+        [Column("TaxReportTransmitStatusCode")]
+	    public string TaxReportTransmitStatusCode { get; set; }
 	      
-        public virtual TaxReportStatus TaxReportStatus { get; set; }
+        public virtual TaxReportLineTransmitStatus TaxReportLineTransmitStatus { get; set; }
     }
 }
 	 
