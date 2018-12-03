@@ -355,7 +355,21 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ItemsSource.Clear();
 
         if (!AppTool.IsNullOrEmpty(this.BillToId) && this.EntityPM.StatusCode != "VD") {
+
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+
+                if (this.EntityPM.PaymentInvoices.length == 1) {
+                    var iConnectedItem = new ARInvoiceList();
+                    iConnectedItem.Id = this.EntityPM.PaymentInvoices[0].ARInvoiceId;
+                    iConnectedItem.InvoiceCurrencyId = this.EntityPM.PaymentInvoices[0].ForeignCurrencyId;
+                    iConnectedItem.InvoiceCurrencyExchangeRate = this.EntityPM.PaymentInvoices[0].ExchangeRate;
+                    iConnectedItem.AmountInInvoiceCurrency = this.EntityPM.PaymentInvoices[0].ForeignAmount;
+                    iConnectedItem.AmountInLocalCurrency = this.EntityPM.PaymentInvoices[0].LocalAmount;
+                    iConnectedItem.Id = this.EntityPM.PaymentInvoices[0].ARInvoiceId;
+                    iConnectedItem.MetodoPagoCode = this.EntityPM.PaymentInvoices[0].ARInvoiceMetodoPagoCode;
+                    this.ConnectedList.push(iConnectedItem);
+                }
+                
                 this.LoadPaymentInvoices_IsMatched();
             }
 
