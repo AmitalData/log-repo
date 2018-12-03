@@ -11,6 +11,23 @@
         <td>
             <table>
 
+                <tr class="FormFieldRow">
+                    <td style="width:120px;">
+                        <LogLabel [ObjectFieldName]="'EmployeeUserId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:370px;">
+                        <LogLov [ObjectFieldName]="'EmployeeUserId'"
+                                [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="EmployeeUserId"
+                                [LookUpTableName]="'User'"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
                 <!-- Project Id -->
                 <tr class="FormFieldRow">
                     <td style="width:120px;">
