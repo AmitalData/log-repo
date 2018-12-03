@@ -344,8 +344,8 @@ namespace Logitude.Accounting.Data.Repositories
             return (from a in context.Journals
                     join r in context.JournalLines on a.Id equals r.JournalId
                     join m in context.JournalAdditionalDatas on a.Id equals m.JournalId
-                    where a.AccountingEntityCode == "2" && (m.TaxReportTransmitStatusCode == "3" || m.TaxReportTransmitStatusCode == null) && a.Tenant== tenant
-                    && r.DocumentDate <= taxReportMonth
+                    where a.AccountingEntityCode == "2" && (m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null) && a.Tenant== tenant
+                    && r.DocumentDate <= taxReportMonth && m.TaxReportId==null
 
                     select a).ToList();
 
