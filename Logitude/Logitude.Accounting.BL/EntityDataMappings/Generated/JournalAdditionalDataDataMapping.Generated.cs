@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.TaxReportTransmitStatusCode = entityPM.TaxReportTransmitStatusCode;
 			}
-		}
+			}
 
 		public void POCOToPM(JournalAdditionalDataPM entityPM, JournalAdditionalData entityPOCO)
         {
