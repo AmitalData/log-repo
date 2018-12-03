@@ -188,6 +188,13 @@ export class AddEditOceanPackageComponent {
                         DeliveryPackagePM.IsMultiHarmonize = this.EntityPM.IsMultiHarmonize;
                     }
 
+                    if (DeliveryPackagePM.PickUpDeliveryPackageHarmonizes != null && DeliveryPackagePM.PickUpDeliveryPackageHarmonizes.length > 0) {
+                        for (var i = DeliveryPackagePM.PickUpDeliveryPackageHarmonizes.length - 1; i >= 0; i--) {
+                            var item = DeliveryPackagePM.PickUpDeliveryPackageHarmonizes[i];
+                            DeliveryPackagePM.RemovePickUpDeliveryPackageHarmonizePM(item);
+                        }
+                    }
+
                     if (this.EntityPM.ShipmentPackageHarmonizes.length > 0) {
                         this.EntityPM.ShipmentPackageHarmonizes.forEach(harmonizeItem => {
                             if (harmonizeItem != null) {
