@@ -6206,7 +6206,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
                 {
-                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
                     CustomerRepository customerRepository = new CustomerRepository(tenant);                    
 
                     if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
@@ -6214,7 +6213,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false);
                         if (customer != null)
                         {
-                            customer.LastShipmentDate = todayDate;
+                            customer.LastShipmentDate = this.entityPM.CreateDateTime;
                             customerRepository.Update(customer);
                             customerRepository.SubmitChanges();
                         }
