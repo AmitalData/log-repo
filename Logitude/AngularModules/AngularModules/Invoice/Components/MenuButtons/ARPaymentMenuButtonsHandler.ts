@@ -40,7 +40,7 @@ export class ARPaymentMenuButtonsHandler {
         this.isVoided = false;
         this.isPrintRequested = false;
         this.isSATSendRequest = false;
-        this.EntityPM.SetReSendQBO = false;
+        //this.EntityPM.SetReSendQBO = false;
     }
 
     Listen() {
@@ -502,7 +502,6 @@ export class ARPaymentMenuButtonsHandler {
             this.EntityPM.SetVoided = false;
             this.EntityPM.SetApproved = true;
             this.EntityPM.SetCancelApproval = false;
-            this.EntityPM.SetReSendQBO = false;
 
             if (this.CurrentDocument != null) {
                 this.CurrentDocument.NeedsRebuild = true;
@@ -558,7 +557,6 @@ export class ARPaymentMenuButtonsHandler {
         if (isValid) {
             this.EntityPM.SetVoided = false;
             this.EntityPM.SetApproved = false;
-            this.EntityPM.SetReSendQBO = false;
             this.EntityPM.SetCancelApproval = true;
             if (this.CurrentDocument != null) {
                 this.CurrentDocument.NeedsRebuild = true;
@@ -654,7 +652,6 @@ export class ARPaymentMenuButtonsHandler {
                         this.EntityPM.SetVoided = true;
                         this.EntityPM.SetApproved = false;
                         this.EntityPM.SetCancelApproval = false;
-                        this.EntityPM.SetReSendQBO = false;
                         if (this.CurrentDocument != null) {
                             this.CurrentDocument.NeedsRebuild = true;
                             //CommonContext.SubmitChanges();
@@ -676,7 +673,6 @@ export class ARPaymentMenuButtonsHandler {
             this.EntityPM.SetApproved = false;
             this.EntityPM.SetReTransfer = true;
             this.EntityPM.SetCancelApproval = false;
-            this.EntityPM.SetReSendQBO = false;
             this.entityArgs.EditComponent.SaveChanges();
         }
     }
