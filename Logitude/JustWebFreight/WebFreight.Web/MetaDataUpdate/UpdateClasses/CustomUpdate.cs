@@ -700,7 +700,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             string declarationCargoSplitId = ObjectContext.ObjectTables.Where(f => f.Name == "Customs.DeclarationCargoSplit" && f.Tenant == tenant).FirstOrDefault().Id;
             FeaturePM declarationCargoSplitFeature_SendDeclarationCargoSplit = features.Where(d => d.Code == "SENDDECLARATIONCARGOSPLIT" && d.ObjectTableId == declarationCargoSplitId).FirstOrDefault();
-            
+
+            string physicalCheckTableId = ObjectContext.ObjectTables.Where(f => f.Name == "Customs.PhysicalCheck" && f.Tenant == tenant).FirstOrDefault().Id;
+            FeaturePM physicalCheckFeature_Actions = features.Where(d => d.Code == "PHYSICALCHECKACTIONS" && d.ObjectTableId == claimTableId).FirstOrDefault();
+            FeaturePM physicalCheckFeature_ClosePhysicalCheck = features.Where(d => d.Code == "CLOSEPHYSICALCHECK" && d.ObjectTableId == claimTableId).FirstOrDefault();
 
             #region Declaration Buttons
             MenuButtonGroup declarationMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
@@ -1188,7 +1191,6 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             #endregion
 
-
             #region vendors Buttons
             MenuButtonGroup vendorMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
             {
@@ -1353,6 +1355,52 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 MenuButtonType = "control",
                 ControlPath = "Logitude.Customs.CustomsControls.SendOptionsControl",
                 HtmlComponentPath = "./CustomsModules/CustomsVehicle/Components/SendVehicle/DeleteVehicleComponent",
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            #endregion
+
+            #endregion
+
+            #region PhysicalCheck Buttons
+            MenuButtonGroup physicalCheckMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+            {
+                MenuButtonGroupType = "Customs.PhysicalCheckEdit",
+                Name = "Customs.PhysicalCheckEditButtonsGroup",
+                ObjectTableId = physicalCheckTableId,
+                Tenant = tenant,
+            }, MenuButtonGroupRepository, TenantMenuButtonGroups);
+
+            #region action button
+            MenuButton physicalCheckActionButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "Actions",
+                Index = 2,
+                IsActive = false,
+                LabelTextCodeCode = "Customs.PhysicalCheck.B.Actions",
+                LabelTextCodeDefaultText = "Actions",
+                LocalDefaultText = "פעולות",
+                Tenant = tenant,
+                MenuButtonGroupId = physicalCheckMenuButtonGroup.Id,
+                ObjectTableId = physicalCheckTableId,
+                MenuButtonType = "dropdownbutton",
+                FeatureId = physicalCheckFeature_Actions.Id,
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            #endregion
+
+            #region Close Physical Check
+            MenuButton ClosePhysicalCheckButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "ClosePhysicalCheck",
+                Index = 1,
+                IsActive = true,
+                LabelTextCodeCode = "Customs.PhysicalCheck.B.ClosePhysicalCheck",
+                LabelTextCodeDefaultText = "Close Physical Check",
+                LocalDefaultText = "סגירת בדיקה",
+                ObjectTableId = physicalCheckTableId,
+                Tenant = tenant,
+                MenuButtonGroupId = physicalCheckMenuButtonGroup.Id,
+                ParentMenuButtonId = physicalCheckActionButton.Id,
+                FeatureId = physicalCheckFeature_ClosePhysicalCheck.Id,
+                MenuButtonType = "menuitem",
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
 
@@ -14243,6 +14291,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.Seizure", DefaultText = "Seizure", LocalDefaultText = "פירוט עיקולים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ClaimsRelatedEntitiesRefund", DefaultText = "Refund", LocalDefaultText = "כמות שאושרה לסחורה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.IsClosePhysicalCheck", DefaultText = "Are you sure you want to close physical check?", LocalDefaultText = "האם ברצונך לסגור את הבדיקה ?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ClosePhysicalCheck", DefaultText = "Physical Check Closed Successfully", LocalDefaultText = "הבדיקה נסגרה בהצלחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ImpDeclInUse", 
             //    DefaultText = "Importer's declaration '{0}' is already in use", 
