@@ -4036,6 +4036,48 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Draft General Invoices",
+                FullFieldLable = "DraftGeneralAPInvoices",
+                FieldName = "DraftGeneralAPInvoices",
+                FieldsDataType = "Boolean",
+                IsCustomFilter = true,
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = APInvoiceObject.Id,
+                ObjectTableName = "APInvoice",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "APInvoice",
+                ListPropertyPath = "DraftGeneralAPInvoices",
+                PMPropertyPath = "DraftGeneralAPInvoices",
+                FullLocalDefaultText = "חשבוניות בסטטוס טיוטה",
+                ListLocalDefaultText = "חשבוניות בסטטוס טיוטה",
+                ShortLocalDefaultText = "חשבוניות בסטטוס טיוטה",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Approval General APInvoices",
+                FullFieldLable = "ApprovalGeneralAPInvoices",
+                FieldName = "ApprovalGeneralAPInvoices",
+                FieldsDataType = "Boolean",
+                IsCustomFilter = true,
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = APInvoiceObject.Id,
+                ObjectTableName = "APInvoice",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "APInvoice",
+                ListPropertyPath = "ApprovalGeneralAPInvoices",
+                PMPropertyPath = "ApprovalGeneralAPInvoices",
+                FullLocalDefaultText = "חשבוניות מאושרות ",
+                ListLocalDefaultText = "חשבוניות מאושרות ",
+                ShortLocalDefaultText = "חשבוניות מאושרות ",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Amount To Pay",
                 FullFieldLable = "AmountPaid",
                 FieldName = "AmountPaid",

@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .ListBoxItem{
         min-height:25px;
         margin-left: 5px;
@@ -30,9 +30,5 @@
 
 
 <ul [ngStyle]="Style" *ngIf="SourceItems" >
-    <li *ngFor="let item of SourceItems" class="{{item.ClassName}}" (click)="item.setSelected()">{{item.Text | TextCodeTranslationPipe}}</li>
+    <li *ngFor="let item of SourceItems" class="{{item.ClassName}}" (click)="item.setSelected()">{{item.TranslatedText}}</li>
 </ul>
-
-
-
-

@@ -340,7 +340,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         //this.InputsEquipmentsCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == true).length;
         //this.InputsOtherCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == false).length;
         //this.AllCount = lines.length;
-        //this.errorsCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.StatusCode != "6" && d.TaxReportLinePM.TransmitStatusCode == "1").length;
+
+        var lines = this.ReportLines.Collection;
+        this.errorsCount = lines.filter((d) => d.TaxReportLinePM.StatusCode != "6" && d.TaxReportLinePM.TransmitStatusCode == "1").length;
         this.ShowErrorMsg = this.errorsCount > 0;
 
     }
