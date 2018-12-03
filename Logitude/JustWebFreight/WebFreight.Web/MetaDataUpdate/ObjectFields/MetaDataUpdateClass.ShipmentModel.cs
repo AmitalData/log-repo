@@ -28766,6 +28766,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "DeliveryTransportModeNameListLable",
                 ListLableDefaultText = "Delivery Transport Mode",
                 DisplayInList = true,
+                HasTemplate = true,
                 Operator = "StartsWith",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -28808,6 +28809,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "ECRTransportModeNameListLable",
                 ListLableDefaultText = "Return Transport Mode",
                 DisplayInList = true,
+                HasTemplate = true,
                 Operator = "StartsWith",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
