@@ -82,44 +82,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DBTableName =  "Reports",
 			      				    ObjectTableSingular =  "Report",
 			      				    ObjectTablePlural =  "Reports",
-			      				    DefaultText =  "Report",
-			      				    Name =  "Report",
-			      				    IsNewWizard =  false,
 			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  true,
+			      				    IsNewWizard =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  true,
-			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  true,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "Report,Reports,,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  true,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  10,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  true,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  10,
+			      				    DefaultText =  "Report",
+			      				    Code =  "RPRT",
+			      				    Name =  "Report",
+			      				    GenerateDomainService =  false,
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    CustomFieldsCount =  0,
+			      				    SearchFields =  "Report,Reports,,Id,",
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    IsEditable =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Common",
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
-			      				    Code =  "RPRT",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -631,41 +633,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature ReportFeature_STATISTICSBYAIRLINE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYAIRLINE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsbyAirline", NameTextCodeDefaultText = @"Statistics by Airline" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STATISTICSBYAIRLINE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYAIRLINE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsbyAirline", NameTextCodeDefaultText = @"Statistics by Airline" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_STATISTICSBYSHIPPINGLINES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYSHIPPINGLINES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsbyShippingLines", NameTextCodeDefaultText = @"Statistics by Shipping Lines" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STATISTICSBYSHIPPINGLINES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYSHIPPINGLINES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsbyShippingLines", NameTextCodeDefaultText = @"Statistics by Shipping Lines" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_PROFITBYSHIPMENTSTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROFITBYSHIPMENTSTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ProfitByShipmentStatistics", NameTextCodeDefaultText = @"Profit By Shipment Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_PROFITBYSHIPMENTSTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROFITBYSHIPMENTSTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ProfitByShipmentStatistics", NameTextCodeDefaultText = @"Profit By Shipment Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_STATISTICSBYCUSTOMER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYCUSTOMER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsByCustomer", NameTextCodeDefaultText = @"Statistics By Customer" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STATISTICSBYCUSTOMER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYCUSTOMER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsByCustomer", NameTextCodeDefaultText = @"Statistics By Customer" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_STATEMENT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATEMENT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.Statement", NameTextCodeDefaultText = @"Statement" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STATEMENT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATEMENT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.Statement", NameTextCodeDefaultText = @"Statement" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_INVOICEBYPARTNER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INVOICEBYPARTNER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.InvoicesByPartner", NameTextCodeDefaultText = @"Invoices By Partner" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_INVOICEBYPARTNER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INVOICEBYPARTNER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.InvoicesByPartner", NameTextCodeDefaultText = @"Invoices By Partner" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_QUOTESSTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUOTESSTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.QuotesStatistics", NameTextCodeDefaultText = @"Quotes Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_QUOTESSTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUOTESSTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.QuotesStatistics", NameTextCodeDefaultText = @"Quotes Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_ARINVOICEINCLUDEVAT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARINVOICEINCLUDEVAT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ARInvoiceIncludeVAT", NameTextCodeDefaultText = @"AR Invoice include VAT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_ARINVOICEINCLUDEVAT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARINVOICEINCLUDEVAT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ARInvoiceIncludeVAT", NameTextCodeDefaultText = @"AR Invoice include VAT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_AGEDACCOUNTSRECIEVABLES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGEDACCOUNTSRECIEVABLES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.AgedAccountsReceivable", NameTextCodeDefaultText = @"Aging report - Statement summarized" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_AGEDACCOUNTSRECIEVABLES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGEDACCOUNTSRECIEVABLES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.AgedAccountsReceivable", NameTextCodeDefaultText = @"Aging report - Statement summarized" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_OPENFORMATREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENFORMATREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.OpenFormatReport", NameTextCodeDefaultText = @"Open Format Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_OPENFORMATREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENFORMATREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.OpenFormatReport", NameTextCodeDefaultText = @"Open Format Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_IATASTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IATASTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.IATAStatistics", NameTextCodeDefaultText = @"IATA Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_IATASTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IATASTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.IATAStatistics", NameTextCodeDefaultText = @"IATA Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_ACCOUNTINGLEDGER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGLEDGER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.AccountingLedger", NameTextCodeDefaultText = @"Accounting Ledger" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_ACCOUNTINGLEDGER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGLEDGER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.AccountingLedger", NameTextCodeDefaultText = @"Accounting Ledger" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_APINVOICEINCLUDEVAT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APINVOICEINCLUDEVAT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.APInvoiceIncludeVAT", NameTextCodeDefaultText = @"AP Invoice Include VAT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_APINVOICEINCLUDEVAT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APINVOICEINCLUDEVAT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.APInvoiceIncludeVAT", NameTextCodeDefaultText = @"AP Invoice Include VAT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_OCEANSHIPMENTREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OCEANSHIPMENTREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.OceanShipmentReport", NameTextCodeDefaultText = @"Ocean Shipment Report to Client" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_OCEANSHIPMENTREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OCEANSHIPMENTREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.OceanShipmentReport", NameTextCodeDefaultText = @"Ocean Shipment Report to Client" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_STATEMENTBYINVOICEDATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATEMENTBYINVOICEDATE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatementByInvoiceDate", NameTextCodeDefaultText = @"Statement By Invoice Date" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STATEMENTBYINVOICEDATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATEMENTBYINVOICEDATE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatementByInvoiceDate", NameTextCodeDefaultText = @"Statement By Invoice Date" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_STAGECHANGINGREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STAGECHANGINGREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StageChangingReport", NameTextCodeDefaultText = @"Stage Changing Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STAGECHANGINGREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STAGECHANGINGREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StageChangingReport", NameTextCodeDefaultText = @"Stage Changing Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_MONTHLYCONVERSION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MONTHLYCONVERSION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.MonthlyConversionReport", NameTextCodeDefaultText = @"Monthly Conversion Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_MONTHLYCONVERSION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MONTHLYCONVERSION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.MonthlyConversionReport", NameTextCodeDefaultText = @"Monthly Conversion Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_EXPECTEDINCOMEREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPECTEDINCOMEREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ExpectedIncomeReport", NameTextCodeDefaultText = @"Expected monthly income report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_EXPECTEDINCOMEREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPECTEDINCOMEREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ExpectedIncomeReport", NameTextCodeDefaultText = @"Expected monthly income report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ReportFeature_CONTAINERTRUCKINGREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTAINERTRUCKINGREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ContainerTruckingReport", NameTextCodeDefaultText = @"Container Trucking" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 

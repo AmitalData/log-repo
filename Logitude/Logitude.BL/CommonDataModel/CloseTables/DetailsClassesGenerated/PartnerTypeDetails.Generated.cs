@@ -144,11 +144,11 @@ namespace Logitude.BL.CommonDataModel
         {
             get
             {
-                return this.Id;
+                throw new NotImplementedException();
             }
             set
             {
-                this.Id = value;
+                throw new NotImplementedException();
             }
         }
    }

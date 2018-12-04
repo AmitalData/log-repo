@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DefaultText =  "Document Type Custom Field",
 			      				    Name =  "DocumentTypeCustomField",
 			      				    IsNewWizard =  false,
-			      				    HasCustomFilter =  false,
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
@@ -110,6 +109,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
+			      				    HasCustomFilter =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    DisableSearchBox =  false,
 			      				    HasHelper =  false,
@@ -619,15 +619,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOUnknownControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.UnknownControl", DefaultText = "Unknown Control",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBAddCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.AddCustomField", DefaultText = "Add Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBAddCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.AddCustomField", DefaultText = "Add Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBEditCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.EditCustomField", DefaultText = "Edit Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBEditCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.EditCustomField", DefaultText = "Edit Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.Search", DefaultText = "Search",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.Search", DefaultText = "Search",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOAddCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.AddCustomField", DefaultText = "Add Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOAddCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.AddCustomField", DefaultText = "Add Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOEditCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.EditCustomField", DefaultText = "Edit Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOEditCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.EditCustomField", DefaultText = "Edit Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

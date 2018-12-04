@@ -79,51 +79,55 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "Warehouse",
+			      				    IsNew =  false,
 			      				    DBTableName =  "Warehouses",
+			      				    OldDBTableName =  "Warehouses",
 			      				    ObjectTableSingular =  "Warehouse",
 			      				    ObjectTablePlural =  "Warehouses",
-			      				    DefaultText =  "Warehouse",
-			      				    Name =  "WarHouses",
+			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  true,
 			      				    IsNewWizard =  true,
-			      				    NewWizardControlName =  "Simplog.FreightLib.NewWarehouseCommand",
 			      				    LookUp1 =  "Code",
 			      				    LookUp2 =  "EnglishName",
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  true,
 			      				    HasCounter =  false,
-			      				    EnableEditFromLOV =  true,
 			      				    EnableAddFromLOV =  true,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
+			      				    EnableEditFromLOV =  true,
 			      				    InActive =  false,
-			      				    SearchFields =  "Warehouse,Warehouses,Simplog.FreightLib.NewWarehouseCommand,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  true,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "Simplog.FreightLib.NewWarehouseCommand",
+			      				    DefaultText =  "Warehouse",
+			      				    Code =  "WARH",
+			      				    Name =  "WarHouses",
+			      				    GenerateDomainService =  false,
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
-			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
+			      				    SearchFields =  "Warehouse,Warehouses,Simplog.FreightLib.NewWarehouseCommand,Id,",
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./CommonModules/CommonPartners/Components/NewEntity/NewWarehouseComponent",
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
-			      				    Code =  "WARH",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -162,8 +166,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "WareHouse",
-					  						ValidForQuerySection2 =  "WareHouseFollowUp",
+					  						ValidForQuerySection1 =  "Warehouse",
+					  						ValidForQuerySection2 =  "WarehouseFollowUp",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -2309,6 +2313,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup WarehouseQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "WARH", Name = "WarHouses" }, queryGroupRepository);
+						QueryGroup WarehouseQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "4d67", Name = " Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable WarehouseObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Warehouse" && d.Tenant == 0).FirstOrDefault();
@@ -2509,9 +2514,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode WarehouseTextCode_WarehouseOCompanyLocalName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.CompanyLocalName", DefaultText = "Local Name",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode WarehouseTextCode_WarehouseOGeneralData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.GeneralData", DefaultText = "General Data",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode WarehouseTextCode_WarehouseOGeneralData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.GeneralData", DefaultText = "General Data",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode WarehouseTextCode_WarehouseOAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode WarehouseTextCode_WarehouseOAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.Address", DefaultText = "Addresses",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode WarehouseTextCode_WarehouseOCompanyName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.CompanyName", DefaultText = "Company Name",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

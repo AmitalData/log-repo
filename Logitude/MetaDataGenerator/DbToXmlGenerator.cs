@@ -143,9 +143,10 @@ namespace MetaDataGenerator
 
                 XmlDocument doc = new XmlDocument();
                 doc.Load(filePath);
+                 
 
                 XmlElement entityElement = (XmlElement)doc.GetElementsByTagName("entity")[0];
-
+                this.UpdateEntityElement(entityElement, doc, table, tableTextCodes);
                 
                 List<XmlNode> dataContractsNodesList = new List<XmlNode>();
                 foreach (XmlNode node in doc.GetElementsByTagName("DataContracts"))
@@ -177,6 +178,8 @@ namespace MetaDataGenerator
                 {
                     tableName = table.Name.Split('.')[1];
                 }
+
+                XmlDocument newdoc = new XmlDocument();
                 doc.Save(directoryPath + tableName + ".lxml");
 
                 #endregion
@@ -184,6 +187,125 @@ namespace MetaDataGenerator
 
             return true;
         }
+
+        #region GenerateEntityElement
+
+
+        private XmlElement UpdateEntityElement(XmlElement entityElement, XmlDocument doc, ObjectTable table, List<TextCode> tableTextCodes)
+        {
+
+            //SetAttribute("Id", GetStringValue(Guid.NewGuid()), entityElement, null);
+            if (string.IsNullOrEmpty(this.GetAttributeValue("ObjectTableName", entityElement)))
+                SetAttribute("ObjectTableName", GetStringValue(table.Name), entityElement);
+            if (string.IsNullOrEmpty(this.GetAttributeValue("DBTableName", entityElement)))
+                SetAttribute("DBTableName", (!string.IsNullOrEmpty(table.DBTableName) ? GetStringValue(table.DBTableName) : GetStringValue("NONE")), entityElement);
+
+            TextCode tableTextCode = (from a in tableTextCodes
+                                      where a.Tenant == 0 && a.Code == table.Name
+                                      select a).FirstOrDefault();
+            if (tableTextCode != null)
+            {
+                SetAttribute("ObjectTableSingular", GetStringValue(tableTextCode.DefaultText), entityElement);
+                SetAttribute("ObjectTablePlural", GetStringValue(tableTextCode.DefaultTextPlural), entityElement);
+                SetAttribute("DefaultText", GetStringValue(tableTextCode.DefaultText), entityElement);
+            }
+            if (table.DescriptionTextCode != null)
+            {
+                SetAttribute("DescriptionDefaultText", GetStringValue(table.DescriptionTextCode.DefaultText), entityElement);
+
+            }
+
+            PropertyInfo[] objectTableProperties = table.GetType().GetProperties().Where(
+                f => f.Name != "ObjectTableSingular" &&
+                    f.Name != "ObjectTablePlural" &&
+                    f.Name != "DescriptionDefaultText" &&
+                     f.Name != "Id" &&
+                      f.Name != "Tenant" &&
+                      f.Name != "ObjectTableName" &&
+                      f.Name != "DBTableName"
+                      && f.Name != "HeaderScreenId"
+
+                     ).ToArray();
+
+            foreach (var prop in objectTableProperties)
+            {
+                string xmlAttrValue = this.GetAttributeValue(prop.Name, entityElement);
+
+                object value = prop.GetValue(table);
+                if (value != null)
+                {
+                    if (prop.PropertyType == typeof(bool) || prop.PropertyType == typeof(int))
+                    {
+                        SetAttribute(prop.Name, value.ToString().ToLower(), entityElement);
+                    }
+                    else if (prop.PropertyType == typeof(string))
+                    {
+
+                        SetAttribute(prop.Name, GetStringValue(value), entityElement);
+
+                    }
+                }
+            }
+
+            IEnumerable<IGrouping<string, Query>> tableQueries = this.allQueries.Where(q => q.ObjectTableId == table.Id && q.QueryGroupCode != null && q.SystemLevel == true).GroupBy(q => q.QueryGroupCode);
+
+            int? index = null;
+            foreach (var item in tableQueries)
+            {
+                QueryGroup qg = this.allQueryGroups.Where(g => g.Code == item.Key).FirstOrDefault();
+                SetAttribute("Code" + (index != null ? index.Value.ToString() : ""), GetStringValue(qg.Code), entityElement, null);
+                SetAttribute("Name" + (index != null ? index.Value.ToString() : ""), GetStringValue(qg.Name), entityElement, null);
+
+                if (index == null)
+                {
+                    index = 1;
+                }
+                else
+                    index++;
+            }
+
+            if (table.IsClosed)
+            {
+                ObjectField codeField = this.allFields.Where(q => q.ObjectTableId == table.Id && q.FieldName == "Code").FirstOrDefault();
+                if (codeField == null)
+                {
+                    codeField = this.allFields.Where(q => q.ObjectTableId == table.Id && q.FieldName == "Id").FirstOrDefault();
+                }
+
+                ObjectField nameField = this.allFields.Where(q => q.ObjectTableId == table.Id && q.FieldName == "Name" || q.FieldName == "EnlglishName").FirstOrDefault();
+                if (codeField != null)
+                    SetAttribute("CloseTableCode", GetStringValue(codeField.FieldName), entityElement, null);
+
+                if (nameField != null)
+                    SetAttribute("CloseTableName", GetStringValue(nameField.FieldName), entityElement, null);
+            }
+
+
+
+            return entityElement;
+
+        }
+
+        public string GetAttributeValue(string attName, XmlElement entityElement)
+        {
+
+            XmlAttribute att = entityElement.Attributes[attName];
+            string result = null;
+            if (att != null)
+            {
+                if (!string.IsNullOrEmpty(att.Value))
+                {
+                    if (att.Value != null)
+                    {
+                        result = att.Value.Trim('"').ToLower();
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
 
         public bool GenerateNewEntityLXML(ObjectTable table)
         {

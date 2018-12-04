@@ -86,7 +86,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    Name =  "Distributor",
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "EnglishName",
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -112,6 +111,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    IsEditable =  true,
+			      				    HasCustomFilter =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Common",
@@ -438,7 +438,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature DistributorFeature_Distributor_M_Distributors = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.M.Distributors", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Distributors", NameTextCodeDefaultText = @"Distributors" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature DistributorFeature_Distributor_M_Distributors = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.M.Distributors", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Distributors", NameTextCodeDefaultText = @"Distributors" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

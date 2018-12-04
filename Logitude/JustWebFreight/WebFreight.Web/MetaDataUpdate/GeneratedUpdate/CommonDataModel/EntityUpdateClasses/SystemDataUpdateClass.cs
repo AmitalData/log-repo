@@ -79,13 +79,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             {
 			
 	             				    ObjectTableName =  "SystemData",
-			      				    DBTableName =  "NONE",
+			      				    DBTableName =  "SystemDatas",
 			      				    ObjectTableSingular =  "System Data",
 			      				    ObjectTablePlural =  "SystemData",
 			      				    DefaultText =  "System Data",
 			      				    Name =  "SystemData",
 			      				    IsNewWizard =  false,
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -111,6 +110,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
+			      				    NoViewsController =  true,
+			      				    HasCustomFilter =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    DisableSearchBox =  false,
 			      				    HasHelper =  false,
