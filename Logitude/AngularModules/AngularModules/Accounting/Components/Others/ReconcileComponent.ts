@@ -982,10 +982,17 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.TotalCredit = 0;
         this.TotalDebit = 0;
         for (let line of this.SelectedLines.Collection) {
+
             if (line.AmountToReconcile < 0)
                 this.TotalDebit += +line.AmountToReconcile * -1; //cast number
             else
                 this.TotalCredit += +line.AmountToReconcile;
+
+            // due this.TotalCredit + amountToReconcile;  == 335.78999999999996 <>335.79
+            this.TotalDebit = AppTool.Round(this.TotalDebit, 2);
+            this.TotalCredit = AppTool.Round(this.TotalCredit, 2);
+
+
         }
         var def = (this.TotalCredit - this.TotalDebit)
         this.TotalsDeference = def < 0 ? def * -1 : def
