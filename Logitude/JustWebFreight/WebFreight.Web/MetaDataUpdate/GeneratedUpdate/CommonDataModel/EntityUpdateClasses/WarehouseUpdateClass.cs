@@ -162,8 +162,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "WareHouse",
-					  						ValidForQuerySection2 =  "WareHouseFollowUp",
+					  						ValidForQuerySection1 =  "Warehouse",
+					  						ValidForQuerySection2 =  "WarehouseFollowUp",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -2509,9 +2509,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode WarehouseTextCode_WarehouseOCompanyLocalName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.CompanyLocalName", DefaultText = "Local Name",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode WarehouseTextCode_WarehouseOGeneralData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.GeneralData", DefaultText = "General Data",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode WarehouseTextCode_WarehouseOGeneralData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.GeneralData", DefaultText = "General Data",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode WarehouseTextCode_WarehouseOAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode WarehouseTextCode_WarehouseOAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.Address", DefaultText = "Addresses",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode WarehouseTextCode_WarehouseOCompanyName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.CompanyName", DefaultText = "Company Name",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

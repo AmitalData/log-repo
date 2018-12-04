@@ -638,9 +638,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsVatNumberMandatoryInAR",
-					  						DefaultText =  @"Bill to VAT is required",
+					  						DefaultText =  @"Bill To VAT is required",
 					  						ListFieldLable =  "IsVatNumberMandatoryInAR",
-					  						ListLableDefaultText =  @"Bill to VAT is required",
+					  						ListLableDefaultText =  @"Bill To VAT is required",
 					  						HelpTextCode =  "IsVatNumberMandatoryInAR",
 					  						HelpTextDefaultText =  @"Mandatory Bill to VAT number in AR Invoice & AR Payment",
 					  		
@@ -696,9 +696,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "IsVatNumberMandatoryInAP",
-					  						DefaultText =  @"Bill to VAT is required",
+					  						DefaultText =  @"Vendor VAT is required",
 					  						ListFieldLable =  "IsVatNumberMandatoryInAP",
-					  						ListLableDefaultText =  @"Bill to VAT is required",
+					  						ListLableDefaultText =  @"Vendor VAT is required",
 					  						HelpTextCode =  "IsVatNumberMandatoryInAP",
 					  						HelpTextDefaultText =  @"Mandatory Bill to VAT number in AP Invoices and AP Payments",
 					  		
@@ -1612,7 +1612,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FullFieldLable =  "EnableNegativeOffsetARPayments",
 					  						DefaultText =  @"Enable negative offset AR payments",
 					  						HelpTextCode =  "EnableNegativeOffsetARPayments",
-					  						HelpTextDefaultText =  "Allows recording AR Payments in negative amounts using payment method \"Offset",
+					  						HelpTextDefaultText =  "Allows recording AR Payments in negative amounts using payment method ''Offset",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  

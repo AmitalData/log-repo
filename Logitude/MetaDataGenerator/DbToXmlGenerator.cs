@@ -141,19 +141,24 @@ namespace MetaDataGenerator
                 //string solutionDirectory = solutionDir.FullName;
                 string filePath = directoryPath + table.Name + ".lxml";
 
-                XmlDocument doc = new XmlDocument();
-                doc.Load(filePath);
+                XmlDocument oldDoc = new XmlDocument();
+                oldDoc.Load(filePath);
 
-                XmlElement entityElement = (XmlElement)doc.GetElementsByTagName("entity")[0];
+                //XmlElement oldEntityElement = (XmlElement)oldDoc.GetElementsByTagName("entity")[0];
 
-                
                 List<XmlNode> dataContractsNodesList = new List<XmlNode>();
-                foreach (XmlNode node in doc.GetElementsByTagName("DataContracts"))
+                foreach (XmlNode node in oldDoc.GetElementsByTagName("DataContracts"))
                 {
                     dataContractsNodesList.Add(node);
                 }
 
-                this.RemoveOldNodes(doc, entityElement, "DataContracts");
+                XmlDocument doc = new XmlDocument();
+                XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
+                doc.AppendChild(xmlDeclaration);
+                XmlElement entityElement = GenerateEntityElement(doc, table, tableTextCodes);
+
+
+                //this.RemoveOldNodes(doc, entityElement, "DataContracts");
                 if (!this.GenerateTableLXMLFields(doc, table, entityElement, fields))
                 {
                     errors += (table.Name + "fields not generated!" + Environment.NewLine);
@@ -166,7 +171,8 @@ namespace MetaDataGenerator
                 foreach (XmlNode node in dataContractsNodesList)
                 {
                     XmlNode newNode = doc.CreateElement("DataContracts");
-                    entityElement.AppendChild(node);
+                    newNode.InnerXml = node.InnerXml;
+                    entityElement.AppendChild(newNode);
                 }
 
                 #region Write Xml To file

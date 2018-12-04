@@ -1001,7 +1001,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        ObjectTable PaymentTermObjectTable = objectContext.ObjectTables.Where(d => d.Name == "PaymentTerm" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> PaymentTermObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "PaymentTerm").ToList();   
 
-			   TextCode PaymentTermTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.Q.PaymentTerms", DefaultText = @"Payment Terms",LocalDefaultText = null, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode PaymentTermTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTerm.Q.PaymentTerms", DefaultText = @"Payment terms",LocalDefaultText = null, ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature PaymentTermFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTTERMS", ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.PaymentTerms", NameTextCodeDefaultText = "PaymentTerms", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

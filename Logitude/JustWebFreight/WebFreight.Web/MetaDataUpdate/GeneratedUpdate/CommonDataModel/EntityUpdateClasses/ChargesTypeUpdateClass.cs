@@ -2453,7 +2453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        ObjectTable ChargesTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ChargesType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> ChargesTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ChargesType").ToList();   
 
-			   TextCode ChargesTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.Q.ChargesTypes", DefaultText = @"Charge Types",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode ChargesTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.Q.ChargesTypes", DefaultText = @"Charges Types",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ChargesTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHARGESTYPES", ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesType.Features.ChargesTypes", NameTextCodeDefaultText = "Charges Types", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

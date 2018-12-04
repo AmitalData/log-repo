@@ -2412,7 +2412,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable TruckerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Trucker" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode TruckerTextCode_TruckerOCompanyName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.O.CompanyName", DefaultText = "Company Name",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TruckerTextCode_TruckerOCompanyName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.O.CompanyName", DefaultText = "Company Name",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TruckerTextCode_Trucker = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker", DefaultText = "Trucker",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
