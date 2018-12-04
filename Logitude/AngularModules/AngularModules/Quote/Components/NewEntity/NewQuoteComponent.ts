@@ -36,7 +36,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     public EntityPM: QuotePM;
     public DataContext: NewQuoteComponent = this;
     public ObjectTableName: string = "Quote";    
-    public LabelColumnWidth: number = 110;
+    public LabelColumnWidth: number = 120;
     public ControlColumnWidth: number = 220;
     public CardDependencyProperty1: string = "CS,PO";
     public IsLCLEntity: boolean = false;

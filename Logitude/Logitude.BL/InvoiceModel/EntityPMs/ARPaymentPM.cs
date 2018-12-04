@@ -123,6 +123,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SATTransferStatusCode { get; set; }
 
         public string BankAccountLiteId { get; set; }
+        public string BankAccountName { get; set; }
         public string MetodoPagoCode { get; set; }
         public string TipoCadenaPago { get; set; }
         public string CertPago { get; set; }

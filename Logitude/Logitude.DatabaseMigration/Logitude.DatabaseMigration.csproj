@@ -346,9 +346,29 @@
     <Compile Include="Migrations\201811211426578_FixSubQueryTableName_Rabaia.Designer.cs">
       <DependentUpon>201811211426578_FixSubQueryTableName_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs" />
+    <Compile Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.Designer.cs">
+      <DependentUpon>201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs" />
+    <Compile Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.Designer.cs">
+      <DependentUpon>201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201811251315249_NewField_BTE.cs" />
     <Compile Include="Migrations\201811251315249_NewField_BTE.Designer.cs">
       <DependentUpon>201811251315249_NewField_BTE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.cs" />
+    <Compile Include="Migrations\201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.Designer.cs">
+      <DependentUpon>201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812020847085_AddLocalAddressToTenantLevel_Samar.cs" />
+    <Compile Include="Migrations\201812020847085_AddLocalAddressToTenantLevel_Samar.Designer.cs">
+      <DependentUpon>201812020847085_AddLocalAddressToTenantLevel_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.cs" />
+    <Compile Include="Migrations\201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.Designer.cs">
+      <DependentUpon>201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -484,13 +504,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.resx">
       <DependentUpon>201811081200180_JournalLineExternalReconcileNumberMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811071326248_AddShipmentPackageHarmonize.resx">
-      <DependentUpon>201811071326248_AddShipmentPackageHarmonize.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.resx">
-      <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
-    </EmbeddedResource>
+    </EmbeddedResource>     
     <EmbeddedResource Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.resx">
       <DependentUpon>201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs</DependentUpon>
     </EmbeddedResource>
@@ -554,8 +568,23 @@
     <EmbeddedResource Include="Migrations\201811211426578_FixSubQueryTableName_Rabaia.resx">
       <DependentUpon>201811211426578_FixSubQueryTableName_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.resx">
+      <DependentUpon>201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811251315249_NewField_BTE.resx">
       <DependentUpon>201811251315249_NewField_BTE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.resx">
+      <DependentUpon>201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.resx">
+      <DependentUpon>201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812020847085_AddLocalAddressToTenantLevel_Samar.resx">
+      <DependentUpon>201812020847085_AddLocalAddressToTenantLevel_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.resx">
+      <DependentUpon>201812031004553_JournalAdditionalDataTaxRepostTransmitStatusCodeMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

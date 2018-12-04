@@ -27,12 +27,14 @@ export class TaxReportListTemplate {
 
 
     public isRTL: boolean = false;
+    public showLocal: boolean = false;
 
     private _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     private _TaxReportLinePMService: TaxReportLinePMService = new TaxReportLinePMService();
 
     constructor(private CD: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
     }
 
     setVariables(rowData: any, fieldName: string, MyAdditionalData: any) {

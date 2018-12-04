@@ -221,12 +221,20 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     public Sale3Header: any[] = [];
     public Sale4Header: any[] = [];
     public Sale5Header: any[] = [];
+    public CostMinAmountHeader: any = [];
+    public CostMaxAmountHeader: any = [];
+    public SaleMinAmountHeader: any = [];
+    public SaleMaxAmountHeader: any = [];
     SetLabels() {
         this.CostQuentityHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostQuantity").split('%n');
         this.CostPriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostPrice").split('%n');
         this.CostAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostAmount").split('%n');
         this.SaleQuantityHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleQuantity").split('%n');
         this.SaleLocalAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmountLocal").replace("%LocalCurrencyCode", this.LocalCurrencyCode).split('%n');
+        this.CostMinAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostMinAmount", false).split('%n');
+        this.CostMaxAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostMaxAmount", false).split('%n');
+        this.SaleMinAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleMinAmount", false).split('%n');
+        this.SaleMaxAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleMaxAmount", false).split('%n');
         this.SetLabelsAttached();
     }
     SetLabelsAttached() {
@@ -1150,7 +1158,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
     }
     VATDetailsClicked() {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "VAT Details";
+        logitudeWindow.Title = TextCodeTranslator.Translate("Quote.O.Charges.VATDetails");
         logitudeWindow.WindowArgs = { IsLocalCurrency: this.IsLocalCurrency, SaleCurrencyCode: this.SaleCurrencyCode, IsCurrencyFilterVisible: this.IsCurrencyFilterVisible, TotalVATs: this.EntityPM.TotalVATs };
         logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/QuoteVATDetailsComponent');
     }
@@ -1349,6 +1357,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.IsEnabled_CostMinAmount = isEnabled_CostMinAmount;
         this.IsEnabled_CostUnitPriceFCL = isEnabled_CostUnitPriceFCL;
         this.UIProperties.SetEnabled("CostMeasurementId", this.ObjectTableName, isEnabled_CostMeasurement);
+        this.UIProperties.SetEnabled("CostMinAmount", this.ObjectTableName, isEnabled_CostMinAmount);
+        this.UIProperties.SetEnabled("CostMaxAmount", this.ObjectTableName, isEnabled_CostMinAmount);
         this.SetUIProperties_CostRate();
     }
     SetUIProperties_CostRate() {
@@ -1453,6 +1463,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
         this.IsEnabled_SaleMinAmount = isEnabled_SaleMinAmount;
         this.IsEnabled_SaleUnitPriceFCL = isEnabled_SaleUnitPriceFCL;
         this.UIProperties.SetEnabled("SaleMeasurementId", this.ObjectTableName, isEnabled_SaleMeasurement);
+        this.UIProperties.SetEnabled("SaleMinAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
+        this.UIProperties.SetEnabled("SaleMaxAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
     }
 
     public SaleUnitPriceColor: string = FontTool.Black;

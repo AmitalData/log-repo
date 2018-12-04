@@ -123,6 +123,13 @@ export class BankDepositMenuButtonsHandler {
                             this.entityArgs.EditComponent.ValidationErrorsList.push(msg);
                             return;
                         }
+                        else if (this.EntityPM.LocalDepositAmount < 0)
+                        {
+                            var msg = TextCodeTranslator.Translate("Accounting.O.minusDepositNotAllowed");
+                            this.entityArgs.EditComponent.ValidationErrorsList = [];
+                            this.entityArgs.EditComponent.ValidationErrorsList.push(msg);
+                            return;
+                        }
                     }
                     else
                     {

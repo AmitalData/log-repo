@@ -9064,6 +9064,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return result;
 
         }
+
+
+
+        public bool CheckIfShipmentCreateFromManinfest(string agentSharedManifestId, int tenant)
+        {
+            bool result = (from a in repository.context.Shipments
+                           where a.Tenant == tenant && a.AgentSharedManifestRef == agentSharedManifestId
+                           select a).Any();
+
+            return result;
+
+        }
+
+
+
+
     }
 
     public class DeparturesArrivalsDataItem

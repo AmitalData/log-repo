@@ -319,30 +319,30 @@ export class ARInvoiceMenuButtonsHandler {
         if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
             var myConfirmWindow = new ConfirmWindow();
             myConfirmWindow.Width = 400;
-            myConfirmWindow.Show("Resend this [invoice] to QBO?");
+            myConfirmWindow.Show("Resend this invoice to QBO?");
             myConfirmWindow.WindowClosed.subscribe(s => {
                 this.StopFlags();
                 if (myConfirmWindow.Yes) {
-                    this.SendToQBOApproved("Resending Invoice to QBO");                    
+                    this.SendToQBOApproved("Resending Invoice to QBO");
 
                 }
             });
         }
 
         else {
-            this.SendToQBOApproved("Sending Invoice to QBO");                    
+            this.SendToQBOApproved("Sending Invoice to QBO");
             this.StopFlags();
         }
     }
 
 
-    SendToQBOApproved(Text:string) {
+    SendToQBOApproved(Text: string) {
         this.EntityPM.SetReSendQBO = true;
         this.EntityPM.SetVoided = false;
         this.EntityPM.SetApproved = false;
         this.EntityPM.SetReTransfer = false;
         this.EntityPM.SetCancelDraft = false;
-        this.entityArgs.EditComponent.SaveChanges(Text);        
+        this.entityArgs.EditComponent.SaveChanges(Text);
     }
 
     isValid: boolean = false;
@@ -865,11 +865,20 @@ export class ARInvoiceMenuButtonsHandler {
         });
     }
     OpenAutoCreditScreen() {
+
+        if (this.EntityPM.IsConsolidationInvoice) {
+            SessionLocator.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
+        }
+
         if (!AppTool.IsNullOrEmpty(this.AutoCreditId)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.AutoCreditId, ObjectTableName: 'ARInvoice', BackButtonLabel: "Invoice: " + this.EntityPM.InvoiceNumber });
+
+                    if (this.EntityPM.IsConsolidationInvoice) {
+                        SessionLocator.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
+                    }
                 });
         }
     }
@@ -904,7 +913,15 @@ export class ARInvoiceMenuButtonsHandler {
             myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
             this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
         }
-
+        else if (this.EntityPM.IsGeneralInvoice) {
+            myEntityId = this.EntityPM.Id;
+            myChildEntityId = null;
+            mychildObjectTableId = null;
+            myObjectTableName = "ARInvoice";
+            myDocumentTypeCode = "999G";
+            myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
+            this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
+        }
         else {
 
             mychildObjectTableId = window.ObjectTables.filter(d => d.Name == "ARInvoice")[0].Id;

@@ -280,6 +280,8 @@ namespace MeatadataGeneratorTool
             DisplayLookUpFieldsList = new ObservableCollection<ObjectFieldsViewModel>();
             ToBeDisplayOnLookUpList = new ObservableCollection<ObjectFieldsViewModel>();
             ObjectTableTypes = new List<ObjectTableType>() { new ObjectTableType { Code = "MD", Name = "Master Data" }, new ObjectTableType() { Code = "BR", Name = "Business Record" } };
+            this.AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
+            this.AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
         }
 
         public void BuildObsList(List<ObjectFieldsViewModel> fields)
@@ -488,6 +490,30 @@ namespace MeatadataGeneratorTool
             TextCodesEditControlVisibility = (AdditionalTextCodesList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
 
             this.SelectedTextCode = AdditionalTextCodesList.FirstOrDefault();
+
+        }
+
+        public void BuildAdditionalFeaturesList(List<FeaturesViewModel> features)
+        {
+            if (AdditionalFeaturesList == null)
+            {
+                AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
+
+            }
+            if (AdditionalFeaturesList != null && AdditionalFeaturesList.Count > 0)
+            {
+                AdditionalFeaturesList.Clear();
+            }
+            foreach (var item in features)
+            {
+                AdditionalFeaturesList.Add(item);
+            }
+
+
+
+            FeaturesEditControlVisibility = (AdditionalFeaturesList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+
+            this.SelectedFeature = AdditionalFeaturesList.FirstOrDefault();
 
         }
 
@@ -1471,7 +1497,8 @@ namespace MeatadataGeneratorTool
             set
             {
                 selectedObjectField = value;
-                FieldLength = value.Length;
+                if (value != null)
+                    FieldLength = value.Length;
                 FirePropertyChanged("SelectedObjectField");
             }
         }

@@ -171,11 +171,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "JournalId",
-					  						DefaultText =  "Journal Id",
-					  						FullLocalDefaultText =  "קוד יומן",
+					  						DefaultText =  @"Journal Id",
+					  						FullLocalDefaultText =  @"קוד יומן",
 					  						ListFieldLable =  "JournalIdListLable",
-					  						ListLableDefaultText =  "Journal Id",
-					  						ListLocalDefaultText =  "קוד יומן",
+					  						ListLableDefaultText =  @"Journal Id",
+					  						ListLocalDefaultText =  @"קוד יומן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -229,11 +229,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Line",
-					  						DefaultText =  "Line",
-					  						FullLocalDefaultText =  "שורה",
+					  						DefaultText =  @"Line",
+					  						FullLocalDefaultText =  @"שורה",
 					  						ListFieldLable =  "LineListLable",
-					  						ListLableDefaultText =  "Line",
-					  						ListLocalDefaultText =  "שורה",
+					  						ListLableDefaultText =  @"Line",
+					  						ListLocalDefaultText =  @"שורה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -286,8 +286,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GeneralData",
-					  						DefaultText =  "Genera lData",
-					  						FullLocalDefaultText =  "נתונים כלליים",
+					  						DefaultText =  @"Genera lData",
+					  						FullLocalDefaultText =  @"נתונים כלליים",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -338,7 +338,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TaxReportId",
-					  						DefaultText =  "TaxReportId",
+					  						DefaultText =  @"TaxReportId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -389,7 +389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TaxReportStatusCode",
-					  						DefaultText =  "Tax Report Status Code",
+					  						DefaultText =  @"Tax Report Status Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -465,7 +465,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

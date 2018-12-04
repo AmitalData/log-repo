@@ -60,9 +60,9 @@
                                     </td>
 
                                     <td style="width:260px;">
-
-                                        <div *ngIf="EntityObjectTableName =='Shipment'">
-                                            <QuickSearchTextBox [IsItemSelected]="'true'" [IsDisabled]="IsShipmentIdDisabled" [Area]="'Ticket.Shipment'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="260" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity()" [Watermark]="' '" [DisplayText]="ShipmentNumber">
+                                         
+                                        <div *ngIf="(EntityObjectTableName =='Shipment')|| (EntityType == null)">
+                                            <QuickSearchTextBox [IsItemSelected]="'true'" [IsDisabled]="IsShipmentIdDisabled || (EntityType == null)" [Area]="'Ticket.Shipment'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="260" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity()" [Watermark]="' '" [DisplayText]="ShipmentNumber">
                                                 <ul>
                                                     <li class="LogitudeQuickSearchItem" style="height:25px;" *ngFor="let item of QuickSearchItems" (mousedown)="QuickSearchTextChanged(item)">
                                                         <table>
@@ -103,7 +103,7 @@
                                         </div>
 
                                         <div *ngIf="EntityObjectTableName =='Quote'">
-                                            <QuickSearchTextBox [IsItemSelected]="'true'" [IsDisabled]="IsShipmentIdDisabled" [Area]="'Ticket.Shipment'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="260" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity()" [Watermark]="' '" [DisplayText]="QuoteNumber">
+                                            <QuickSearchTextBox [IsItemSelected]="'true'" [IsDisabled]="IsShipmentIdDisabled || (EntityType == null)" [Area]="'Ticket.Shipment'" [Filters]="Filters" [ShowViewAll]="true" [IsIconsVisible]="false" [ObjectTableName]="EntityObjectTableName" [DropDownWidth]="260" [ItemHeight]="25" (DataLoaded)="QuickSearchItems = $event" (ViewAllClicked)="ChooseEntity()" [Watermark]="' '" [DisplayText]="QuoteNumber">
                                                 <ul>
                                                     <li class="LogitudeQuickSearchItem" style="height:25px;" *ngFor="let item of QuickSearchItems" (mousedown)="QuickSearchTextChanged(item)">
                                                         <table>

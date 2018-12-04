@@ -60,8 +60,6 @@ export class ARPaymentInvoicePM {
     private aRInvoiceTransferStatusCode: string;
     public get ARInvoiceTransferStatusCode() { return this.aRInvoiceTransferStatusCode; }
     public set ARInvoiceTransferStatusCode(newValue: string) { this.aRInvoiceTransferStatusCode = newValue; this.MarkAsDirty(); }
-
-
     
   private changeSetOp: string;
   public get ChangeSetOp() { return this.changeSetOp; }

@@ -57,19 +57,22 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.FWBStatusName = "Not Sent";
                 temp.ManifestStatusCode = "NSEN";
                 temp.LocalCustomsTransmissionsStatusCode = "NSEN";
-                temp.IsOperationalClosed = false;
                 temp.CreateDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.LastUpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.StatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.AWBCurrencyId =  MyTenantPM.FreightCurrencyId;
                 temp.ProfitCurrencyId = MyTenantPM.ProfitCurrencyId;
-                temp.ValueOfGoodsCurrencyId = MyTenantPM.FreightCurrencyId;
                 temp.VolumeUnitCode = temp.VolumeUnitCode;
                 temp.DimensionsUnitCode = temp.DimensionsUnitCode;
                 temp.GrossWeightUnitCode = temp.GrossWeightUnitCode; 
                 temp.ChargeableWeightUnitCode = temp.ChargeableWeightUnitCode;
                 temp.Master = MyEntity.Master;
                 temp.OnCarriageAdditionalTransportModeCode = "BYTR";
+
+                if (string.IsNullOrEmpty(temp.ValueOfGoodsCurrencyId))
+                {
+                    temp.ValueOfGoodsCurrencyId = MyTenantPM.FreightCurrencyId;
+                }
 
                 switch (temp.DirectionId)
                 {
@@ -126,7 +129,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     temp.DepartmentId = MyUserPM.DepartmentId;
                 }
 
-                if (string.IsNullOrEmpty(temp.MainCarriageCarrierCode))
+                if (string.IsNullOrEmpty(temp.MainCarriageCarrierId))
                 {
                     this.MainCarriageCarrierChanged(temp, null);
 
@@ -149,7 +152,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     ICommonDataContext MyContext = CommonDataContext.GetContext(Tenant);
                     CardRepository cardRepository = new CardRepository(MyContext);
                     CardList list = null;
-                    Card entityPoco = cardRepository.GetSingleCardByCode(temp.MainCarriageCarrierCode, Tenant,true);
+                    Card entityPoco = cardRepository.GetSingleCard(temp.MainCarriageCarrierId, Tenant);
 
                     if (entityPoco != null)
                     {
@@ -170,11 +173,11 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         {
                             AirlineRepository airlineRepository = new AirlineRepository(MyContext);
                             AirlineList entityList = null;
-                            Airline airLine = airlineRepository.GetSingleAirlineByCode(temp.MainCarriageCarrierCode, Tenant);
+                            Airline airLine = airlineRepository.GetSingleAirline(temp.MainCarriageCarrierId, Tenant);
 
                             if (airLine != null)
                             {
-                                temp.MainCarriageCarrierId = airLine.Id;
+                                temp.MainCarriageCarrierCode = airLine.Card.Code;
                                 List<Airline> singleEntityList = new List<Airline>();
                                 singleEntityList.Add(airLine);
 
@@ -613,15 +616,15 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 
             if (list == null)
             {
-                if (entityPM.MainCarriageCarrierNumber != null)
-                {
-                    entityPM.MainCarriageCarrierNumber = null;
-                }
+                //if (entityPM.MainCarriageCarrierNumber != null)
+                //{
+                //    entityPM.MainCarriageCarrierNumber = null;
+                //}
 
-                if (!string.IsNullOrEmpty(entityPM.Master))
-                {
-                    entityPM.Master = null;
-                }
+                //if (!string.IsNullOrEmpty(entityPM.Master))
+                //{
+                //    entityPM.Master = null;
+                //}
             }
 
             else

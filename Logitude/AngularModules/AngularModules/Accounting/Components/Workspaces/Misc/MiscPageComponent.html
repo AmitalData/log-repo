@@ -67,7 +67,7 @@
                                     <div class="ScrollViewer">
                                         <div class="ScrollContent">
 
-                                         
+
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{ 'OpenFormatReport' |TextCodeTranslationPipe }}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
@@ -83,8 +83,8 @@
                                                                             <p class="QueryLink" (click)="ViewAccountingQuery('AllOpenFormats')">{{ 'OpenFormatReport' |TextCodeTranslationPipe }} </p>
                                                                         </td>
                                                                     </tr>
-                                                                 
-                                                                   
+
+
                                                                     <tr>
                                                                         <td><div></div></td>
                                                                     </tr>
@@ -98,11 +98,40 @@
                                                 </div>
                                             </div>
 
-                                         
+
 
                                             <div style="height: 15px;"></div>
 
-                        
+                                            <div class="QueriesSection" style="color: #58B8FF;">
+                                                <div>Tax Report</div>
+                                                <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                                    <!-- <button class="Button" (click)="RunNewOpenFormatReportWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button> -->
+                                                </div>
+                                                <div>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ALLTAXREPORTS')">All Reports</p>
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                    <tr>
+                                                                        <td><div></div></td>
+                                                                    </tr>
+                                                                </table>
+
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+
 
 
 
@@ -159,7 +188,7 @@
 
                                                                         <td rowspan="1" style="width:300px; font-size: 14px;color: #1B90CB;">{{item.GLAccountLocalName}}</td>
 
-                                                                      
+
                                                                         <td style="width: 120px;">
                                                                             <div style="color: #6b6b6b;">{{'Accounting.General.O.User' | TextCodeTranslationPipe}}: </div>
                                                                         </td>

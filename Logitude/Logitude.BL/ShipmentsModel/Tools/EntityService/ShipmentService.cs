@@ -54,6 +54,9 @@ using Logitude.Server.Tools.StorageService;
 using Simplog.Server.Infrastructure.Azure;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -2320,7 +2323,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.IsRemovingStackEvents = false;
             entityPM.CalculateStatus = false;
 
-            ComputeShipmentStatus();
+            this.ComputeShipmentStatus();
+            this.UpdateCustomerWorkingDates();
 
             if (isNewEntity)
             {
@@ -2361,10 +2365,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                {
-                    this.UpdateCustomerWorkingDates();
-                }
+                //if (!string.IsNullOrEmpty(entityPM.CustomerId))
+                //{
+                //    this.UpdateCustomerWorkingDates();
+                //}
 
                 if (!entityPM.IsHybrid)
                 {
@@ -2858,6 +2862,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     Parameters = new List<Logitude.Server.Tools.Parameter>() {
                 new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = entityPM.ShipmentNumber},
                 new Logitude.Server.Tools.Parameter { Name = "Code", Value = "VPR"},
+                new Logitude.Server.Tools.Parameter { Name = "Direction", Value = entityPM.DirectionId},
 
                 }
                 });
@@ -5118,12 +5123,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
 
                 ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);
+                PickUpDeliveryPackageHarmonizeQuery pickUpDeliveryPackageHarmonizeQuery = new PickUpDeliveryPackageHarmonizeQuery(pickUpDeliveryPackageHarmonizeRepository);
 
                 List<ShipmentPickUpDeliveryPackagePM> PickUpDeliveryPackage = shipmentPickUpDeliveryPackageQuery.GetShipmentPickUpDeliveryPackages(itemPM.Id, tenant);
                 foreach (ShipmentPickUpDeliveryPackagePM insideItemPM in PickUpDeliveryPackage)
                 {
                     ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(insideItemPM.Id);
                     shipmentPickUpDeliveryPackageRepository.Remove(insideItemPoco);
+
+                    List<PickUpDeliveryPackageHarmonizePM> PickUpDeliveryPackageHarmonize = pickUpDeliveryPackageHarmonizeQuery.GetPickUpDeliveryPackageHarmonizes(insideItemPM.Id, tenant);
+                    foreach (PickUpDeliveryPackageHarmonizePM harmonizeItemPM in PickUpDeliveryPackageHarmonize)
+                    {
+                        PickUpDeliveryPackageHarmonize harmonizeItem = pickUpDeliveryPackageHarmonizeRepository.GetSinglePickUpDeliveryPackageHarmonize(harmonizeItemPM.Id, tenant);
+                        pickUpDeliveryPackageHarmonizeRepository.Remove(harmonizeItem);
+                    }
                 }
 
                 shipmentPickUpDeliveryRepository.Remove(itemPoco);
@@ -6183,10 +6196,48 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             customer.LastShipmentDate = todayDate;
                         }
 
-
                         customerRepository.Update(customer);
                         customerRepository.SubmitChanges();
                     }
+                }
+            }
+
+            else
+            {
+                if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
+                {
+                    CustomerRepository customerRepository = new CustomerRepository(tenant);                    
+
+                    if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
+                    {
+                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false);
+                        if (customer != null)
+                        {
+                            customer.LastShipmentDate = this.entityPM.CreateDateTime;
+                            customerRepository.Update(customer);
+                            customerRepository.SubmitChanges();
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(this.entityPoco.CustomerId))
+                    {
+                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(this.entityPoco.CustomerId, tenant, false);
+                        if (customer != null)
+                        {
+                            List<Shipment> shipments = this.objectContext.Shipments.Where(d => d.CustomerId == customer.Id && d.Id != this.entityPoco.Id).ToList();
+                            if (shipments.Count > 0)
+                            {
+                                Shipment shipment = shipments.OrderByDescending(s => s.CreateDateTime).FirstOrDefault();
+
+                                if (shipment != null)
+                                {
+                                    customer.LastShipmentDate = shipment.CreateDateTime;
+                                    customerRepository.Update(customer);
+                                    customerRepository.SubmitChanges();
+                                }
+                            }
+                        }
+                    }                    
                 }
             }
         }

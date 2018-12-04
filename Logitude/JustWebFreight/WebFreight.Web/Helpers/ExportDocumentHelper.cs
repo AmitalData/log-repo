@@ -679,6 +679,7 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "999G":
                 case "999C":
                     {
                         theT1 = System.DateTime.Now.Ticks;

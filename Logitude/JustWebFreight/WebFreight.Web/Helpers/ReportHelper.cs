@@ -1090,6 +1090,7 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "DSCA":
                 case "AREX":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(ArchivoExportadoDataProvider));
@@ -1134,7 +1135,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(WorkDaysPerProjectDataProvider));
                         WorkDaysPerProjectDataProvider reportDataProvider = (WorkDaysPerProjectDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                        CurrentBusinessObject = new StiBusinessObject() { Category = "WorkDaysPerProject", Name = "WorkDaysPerProjectDataProvider", BusinessObjectValue = reportDataProvider };
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "WorkHoursPerProject", Name = "WorkHoursPerProjectDataProvider", BusinessObjectValue = reportDataProvider };
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
@@ -1226,7 +1227,7 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
-
+                    
                 case "SHID":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(ShipmentDetailsDataProvider));
@@ -1236,8 +1237,6 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
-
-
             }
             return urlImage;
         }
@@ -1365,14 +1364,11 @@ namespace WebFreight.Web.Helpers
             {
                 #region
 
-
                 case "SHST":
                     {
                         dataProvider = logitudeReportsWebService.LoadShipmentsStocksData(filters, reportFliter.tenant);
                         break;
                     }
-
-
 
                 case "UPTR":
                     {               
@@ -1585,6 +1581,7 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "DSCA":
                 case "AREX":
                     {
                         ArchivoExportadoManager myDataManager = new ArchivoExportadoManager(filters, reportFliter.tenant);

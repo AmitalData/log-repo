@@ -34,7 +34,7 @@ namespace WebFreight.Web.WcfApi
                     Tenant = destinationTenant,
                     CommunicationLogTypeCode = "Q",
                     QueueName = "externaltasksqueue" + destinationTenant + priority,
-                    Priority = 1,
+                    Priority = priority,
                     InOut = "I",
                     Status = "W",
                     LoggingUserId = user.Id,

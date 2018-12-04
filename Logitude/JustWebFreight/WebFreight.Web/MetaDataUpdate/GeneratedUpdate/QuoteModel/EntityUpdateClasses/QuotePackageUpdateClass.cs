@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuotePackageUpdateClass
@@ -78,7 +81,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	             				    ObjectTableName =  "QuotePackage",
 			      				    DBTableName =  "QuotePackages",
 			      				    ObjectTableSingular =  "QuotePackage",
-			      				    ObjectTablePlural =  "Quote Packages",
 			      				    DefaultText =  "QuotePackage",
 			      				    Name =  "QuotePackage",
 			      				    IsNewWizard =  false,
@@ -173,7 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageTypeId",
-					  						DefaultText =  "Package Type",
+					  						DefaultText =  @"Package Type",
 					  						HelpTextCode =  "PackageTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -228,9 +230,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageTypeName",
-					  						DefaultText =  "Package Type",
+					  						DefaultText =  @"Package Type",
 					  						ListFieldLable =  "PackageTypeNameListLable",
-					  						ListLableDefaultText =  "Package Type",
+					  						ListLableDefaultText =  @"Package Type",
 					  						HelpTextCode =  "PackageTypeName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -285,9 +287,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Quantity",
-					  						DefaultText =  "Pieces",
+					  						DefaultText =  @"Pieces",
 					  						ListFieldLable =  "QuantityListLable",
-					  						ListLableDefaultText =  "Quantity",
+					  						ListLableDefaultText =  @"Quantity",
 					  						HelpTextCode =  "Quantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -342,9 +344,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "GrossWeight",
-					  						DefaultText =  "Gross Weight (%WeightCode)",
+					  						DefaultText =  @"Gross Weight (%WeightCode)",
 					  						ListFieldLable =  "GrossWeightListLable",
-					  						ListLableDefaultText =  "Gross Weight",
+					  						ListLableDefaultText =  @"Gross Weight",
 					  						HelpTextCode =  "GrossWeight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -399,9 +401,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Volume",
-					  						DefaultText =  "Volume (%VolumeCode)",
+					  						DefaultText =  @"Volume (%VolumeCode)",
 					  						ListFieldLable =  "VolumeListLable",
-					  						ListLableDefaultText =  "Volume",
+					  						ListLableDefaultText =  @"Volume",
 					  						HelpTextCode =  "Volume",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -456,7 +458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Height",
-					  						DefaultText =  "Height",
+					  						DefaultText =  @"Height",
 					  						HelpTextCode =  "Height",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -511,7 +513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Width",
-					  						DefaultText =  "Width",
+					  						DefaultText =  @"Width",
 					  						HelpTextCode =  "Width",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -566,7 +568,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Length",
-					  						DefaultText =  "Length",
+					  						DefaultText =  @"Length",
 					  						HelpTextCode =  "Length",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -621,9 +623,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VolumetricWeight",
-					  						DefaultText =  "Volumetric Weight (%WeightCode)",
+					  						DefaultText =  @"Volumetric Weight (%WeightCode)",
 					  						ListFieldLable =  "VolumetricWeightListLable",
-					  						ListLableDefaultText =  "Volumetric Weight",
+					  						ListLableDefaultText =  @"Volumetric Weight",
 					  						HelpTextCode =  "VolumetricWeight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -678,9 +680,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Dimensions",
-					  						DefaultText =  "Dimensions (L-W-H) (%UnitCode)",
+					  						DefaultText =  @"Dimensions (L-W-H) (%UnitCode)",
 					  						ListFieldLable =  "DimensionsListLable",
-					  						ListLableDefaultText =  "Dimensions (L-W-H)",
+					  						ListLableDefaultText =  @"Dimensions (L-W-H)",
 					  						HelpTextCode =  "Dimensions",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -712,7 +714,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable QuotePackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuotePackage" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode QuotePackageTextCode_QuotePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuotePackage", DefaultText = "QuotePackage",LocalDefaultText = null, ObjectTableId = QuotePackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

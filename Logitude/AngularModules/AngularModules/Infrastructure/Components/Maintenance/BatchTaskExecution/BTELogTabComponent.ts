@@ -69,6 +69,7 @@ export class BTELogTabComponent extends BaseComponent {
 
     SetUIProperties() {
         //if (!this.EntityPM.TypeCode) {
+        this.UIProperties.SetEnabled("CallStack", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ErrorLog", this.ObjectTableName, false);
         //}
 

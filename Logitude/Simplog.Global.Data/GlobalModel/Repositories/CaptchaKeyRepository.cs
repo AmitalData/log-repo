@@ -21,11 +21,19 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             globalContext = context;
         }
 
+        public CaptchaKey GetSingleCaptchaKeyById(string id)
+        {
+            CaptchaKey item = context.CaptchaKeys.Where(d => d.Id == id).FirstOrDefault();
+            return item;
+        }
+
         public CaptchaKey GetSingleCaptchaKey(string id)
         {
             CaptchaKey item = context.CaptchaKeys.Where(d => d.Id == id && !d.IsUsed).FirstOrDefault();
             return item;
         }
+
+
 
         public IQueryable<CaptchaKey> GetAllCaptchaKeys()
         {

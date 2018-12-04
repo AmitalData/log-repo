@@ -627,6 +627,7 @@
     <Content Include="images\icons\arrow-down-n.png" />
     <Content Include="images\icons\arrow-up-n.png" />
     <Content Include="images\icons\AutomationIcon.png" />
+    <Content Include="images\icons\CellTooltip.png" />
     <Content Include="images\icons\DigitallyNotSigned.png" />
     <Content Include="images\icons\DigitallySigned.png" />
     <Content Include="images\LoginScreen\CRM.png" />
@@ -1525,6 +1526,7 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\CustomPickListExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryBuilderController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryColumnController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\DWSubQueryController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryFilterController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWObjectFieldExtendedController.cs" />
@@ -1808,6 +1810,8 @@
       <DependentUpon>OpenAccessWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
+    <Compile Include="DataContracts\DWQueryData.cs" />
     <Compile Include="DataContracts\ShipmentTestData.cs" />
     <Compile Include="DataProviders\CrossDockEntryDataProvider.cs" />
     <Compile Include="DataContracts\EventTypeArgs.cs" />
@@ -2122,6 +2126,7 @@
     <Compile Include="ExternalAPIs\V1\HouseController.cs" />
     <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
+    <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ComputeHelper.cs" />
     <Compile Include="Helpers\APIHelpers\DateHelper.cs" />
@@ -2493,6 +2498,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWObjectTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\EntityStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\EventTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\GeneralUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\IATACodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\InboundEmailLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\InboundEmailUpdateClass.cs" />

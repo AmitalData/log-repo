@@ -102,17 +102,72 @@ namespace MetaDataGenerator
 
                 XmlElement entityElement = (XmlElement)doc.GetElementsByTagName("entity")[0];
 
+                GenerateMetadataEntities(table, fields, doc, entityElement, true);
+
+                #region Write Xml To file
 
 
-                GenerateQueries(doc, entityElement, table, fields, true);
-                GenerateScreens(doc, entityElement, table, fields);
-                GenerateTabs(doc, entityElement, table, fields);
-                GenerateMenuButtons(doc, entityElement, table, fields);
-                GenerateEvents(doc, entityElement, table, fields);
-                if (table.IsClosed)
-                    GenerateTableDataRecords(doc, entityElement, table, fields);
+                string tableName = table.Name;
+                if (table.Name.Contains("."))
+                {
+                    tableName = table.Name.Split('.')[1];
+                }
+                doc.Save(directoryPath + tableName + ".lxml");
 
+                #endregion
+            }
 
+            return true;
+        }
+
+       
+
+        public bool RegenerateExisting_Old_ModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath,ref string errors)
+        {
+            if (string.IsNullOrEmpty(errors))
+                errors = "";
+            directoryPath = directoryPath + @"\";
+              
+            foreach (ObjectTable table in modelTables)
+            {
+                List<ObjectField> fields = (from a in this.allFields
+                                            where a.ObjectTableId == table.Id
+                                            select a).ToList();
+
+                List<TextCode> tableTextCodes = allTextCodes.Where(t => t.ObjectTableId == table.Id).ToList();
+
+                //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+                //DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+                //string solutionDirectory = solutionDir.FullName;
+                string filePath = directoryPath + table.Name + ".lxml";
+
+                XmlDocument doc = new XmlDocument();
+                doc.Load(filePath);
+
+                XmlElement entityElement = (XmlElement)doc.GetElementsByTagName("entity")[0];
+
+                
+                List<XmlNode> dataContractsNodesList = new List<XmlNode>();
+                foreach (XmlNode node in doc.GetElementsByTagName("DataContracts"))
+                {
+                    dataContractsNodesList.Add(node);
+                }
+
+                this.RemoveOldNodes(doc, entityElement, "DataContracts");
+                if (!this.GenerateTableLXMLFields(doc, table, entityElement, fields))
+                {
+                    errors += (table.Name + "fields not generated!" + Environment.NewLine);
+                    //continue;
+
+                }
+
+                GenerateMetadataEntities(table, fields, doc, entityElement, false);
+
+                foreach (XmlNode node in dataContractsNodesList)
+                {
+                    XmlNode newNode = doc.CreateElement("DataContracts");
+                    entityElement.AppendChild(node);
+                }
 
                 #region Write Xml To file
 
@@ -145,6 +200,30 @@ namespace MetaDataGenerator
 
 
 
+            if (!this.GenerateTableLXMLFields(doc, table, entityElement, fields))
+            {
+                return false;
+            }
+
+            GenerateMetadataEntities(table, fields, doc, entityElement, false);
+
+            #region Write Xml To file
+
+
+            string tableName = table.Name;
+            if (table.Name.Contains("."))
+            {
+                tableName = table.Name.Split('.')[1];
+            }
+            doc.Save("../../GeneratedFiles/New/" + tableName + ".lxml");
+
+            #endregion
+
+            return true;
+        }
+
+        private bool GenerateTableLXMLFields(XmlDocument doc, ObjectTable table, XmlElement entityElement, List<ObjectField> fields)
+        {
             string modelName = "CommonDataModel";
             string qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + table.Name);
 
@@ -195,26 +274,30 @@ namespace MetaDataGenerator
             string qListName = Assembly.CreateQualifiedName("Logitude.BL", "Logitude.BL." + modelName + ".EntityLists." + table.Name + "List");
             System.Type tableListClass = System.Type.GetType(qListName);
 
-            if (tableClass == null)// && tablePMClass == null)
+
+            if (tableClass == null && table.Name != "General")// && tablePMClass == null)
             {
                 return false;
             }
 
-            PropertyInfo[] pocoProperties = tableClass.GetProperties();
+            PropertyInfo[] pocoProperties = { };
             PropertyInfo[] pmClassProperties = { };
             PropertyInfo[] listClassProperties = { };
+            if (tableClass != null)
+            {
+                pocoProperties = tableClass.GetProperties();
+            }
             if (tablePMClass != null)
             {
                 pmClassProperties = tablePMClass.GetProperties();
             }
-
-
             if (tableListClass != null)
             {
                 listClassProperties = tableListClass.GetProperties();
             }
 
 
+            RemoveOldNodes(doc, entityElement, "field");
 
             List<string> addeddFields = new List<string>();
 
@@ -223,7 +306,12 @@ namespace MetaDataGenerator
             GeneratePMOnlyFields(doc, entityElement, fields, table, pmClassProperties, pocoProperties, addeddFields);
             GenerateListOnlyFields(doc, entityElement, fields, table, listClassProperties, pocoProperties, addeddFields);
 
-            GenerateQueries(doc, entityElement, table, fields);
+            return true;
+        }
+
+        private void GenerateMetadataEntities(ObjectTable table, List<ObjectField> fields, XmlDocument doc, XmlElement entityElement, bool updateExistingLXML = false)
+        {
+            GenerateQueries(doc, entityElement, table, fields, updateExistingLXML);
             GenerateScreens(doc, entityElement, table, fields);
             GenerateTabs(doc, entityElement, table, fields);
             GenerateMenuButtons(doc, entityElement, table, fields);
@@ -233,20 +321,6 @@ namespace MetaDataGenerator
 
             GenerateAdditionalTextCodes(doc, entityElement, table, fields);
             GenerateAdditionalFeatures(doc, entityElement, table, fields);
-
-            #region Write Xml To file
-
-
-            string tableName = table.Name;
-            if (table.Name.Contains("."))
-            {
-                tableName = table.Name.Split('.')[1];
-            }
-            doc.Save("../../GeneratedFiles/New/" + tableName + ".lxml");
-
-            #endregion
-
-            return true;
         }
 
         private void GenerateAdditionalTextCodes(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields)
@@ -995,6 +1069,7 @@ namespace MetaDataGenerator
 
                 if (f.FullNameTextCode != null)
                 {
+                    
                     //FullNameTextCodeId = objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable;
                     string fullLable = f.FullNameTextCode.Code.Split('.').Length > 2 ? f.FullNameTextCode.Code.Split('.')[2] : f.FullNameTextCode.Code.Split('.')[1];
                     SetAttribute("FullFieldLable", GetStringValue(fullLable), fieldElement, f);
@@ -1551,7 +1626,7 @@ namespace MetaDataGenerator
 
             SetAttribute("Id", GetStringValue(Guid.NewGuid()), entityElement, null);
             SetAttribute("ObjectTableName", GetStringValue(table.Name), entityElement);
-            SetAttribute("DBTableName", GetStringValue(table.DBTableName), entityElement);
+            SetAttribute("DBTableName", (!string.IsNullOrEmpty(table.DBTableName)?GetStringValue(table.DBTableName): GetStringValue("NONE")), entityElement);
 
             TextCode tableTextCode = (from a in tableTextCodes
                                       where a.Tenant == 0 && a.Code == table.Name

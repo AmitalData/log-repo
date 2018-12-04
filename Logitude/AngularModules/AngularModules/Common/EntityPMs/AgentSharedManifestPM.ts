@@ -126,7 +126,13 @@ export class AgentSharedManifestPM {
     public get PackagesQuantity() { return this.packagesQuantity; }
     public set PackagesQuantity(newValue: number) { if (this.packagesQuantity != newValue) { this.packagesQuantity = newValue; this.MarkAsDirty("PackagesQuantity"); } }
 
+    private cancelledBySenderAgent: boolean;
+    public get CancelledBySenderAgent() { return this.cancelledBySenderAgent; }
+    public set CancelledBySenderAgent(newValue: boolean) { if (this.cancelledBySenderAgent != newValue) { this.cancelledBySenderAgent = newValue; this.MarkAsDirty("CancelledBySenderAgent"); } }
 
+
+
+    
      
 	private sharedManifestTranslations: SharedManifestTranslationPM[];
     get  SharedManifestTranslations() {

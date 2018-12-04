@@ -43,6 +43,11 @@ namespace CommunicationWorkerRole
         public ChampMessageInWR(string gateWay)
         {
             this.gateWay = gateWay;
+
+            if (LogitudeSettings.ChampEnv == "TEST")
+            {
+                gateWay = "amazon";
+            }
         }
 
         public override void Run()

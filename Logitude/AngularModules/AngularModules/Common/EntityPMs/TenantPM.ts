@@ -35,6 +35,11 @@ export class TenantPM {
     public set AddressId(newValue: string) { if (this.addressId != newValue) { this.addressId = newValue; this.MarkAsDirty("AddressId"); } }
        
 	 
+    private localAddressId: string;
+    public get LocalAddressId() { return this.localAddressId; }
+    public set LocalAddressId(newValue: string) { if (this.localAddressId != newValue) { this.localAddressId = newValue; this.MarkAsDirty("LocalAddressId"); } }
+       
+	 
     private companyAddress: string;
     public get CompanyAddress() { return this.companyAddress; }
     public set CompanyAddress(newValue: string) { if (this.companyAddress != newValue) { this.companyAddress = newValue; this.MarkAsDirty("CompanyAddress"); } }

@@ -39,9 +39,9 @@ export class JournalAdditionalDataPM {
     public set TaxReportId(newValue: string) { if (this.taxReportId != newValue) { this.taxReportId = newValue; this.MarkAsDirty("TaxReportId"); } }
        
 	 
-    private taxReportStatusCode: string;
-    public get TaxReportStatusCode() { return this.taxReportStatusCode; }
-    public set TaxReportStatusCode(newValue: string) { if (this.taxReportStatusCode != newValue) { this.taxReportStatusCode = newValue; this.MarkAsDirty("TaxReportStatusCode"); } }
+    private taxReportTransmitStatusCode: string;
+    public get TaxReportTransmitStatusCode() { return this.taxReportTransmitStatusCode; }
+    public set TaxReportTransmitStatusCode(newValue: string) { if (this.taxReportTransmitStatusCode != newValue) { this.taxReportTransmitStatusCode = newValue; this.MarkAsDirty("TaxReportTransmitStatusCode"); } }
        
 	 
 

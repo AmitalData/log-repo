@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool, FormatTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -73,13 +73,13 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
             this.CardDependencyProperty1IsList = true;
         }
     }
-
+    public ScreenIsReady: boolean = false;
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
             res.subscribe(resp => {
-
+                this.ScreenIsReady = true;
                 this.BuildFiltersLists();
 
                 if (this.IsCopyFromShipment == false && this.IsBuildFromQuote == false) {

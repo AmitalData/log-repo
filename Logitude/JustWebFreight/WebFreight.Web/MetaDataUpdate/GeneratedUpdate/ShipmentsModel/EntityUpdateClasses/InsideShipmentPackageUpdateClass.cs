@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses
 {
    public class InsideShipmentPackageUpdateClass
@@ -171,7 +174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "VolumetricWeight",
-					  						DefaultText =  "Volumetric Weight (%WeightCode)",
+					  						DefaultText =  @"Volumetric Weight (%WeightCode)",
 					  						HelpTextCode =  "VolumetricWeight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -226,9 +229,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "ShipmentPackageId",
-					  						DefaultText =  "Shipment Package",
+					  						DefaultText =  @"Shipment Package",
 					  						ListFieldLable =  "ShipmentPackageIdListLable",
-					  						ListLableDefaultText =  "Shipment Package ID",
+					  						ListLableDefaultText =  @"Shipment Package ID",
 					  						HelpTextCode =  "ShipmentPackageId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -283,9 +286,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "PackageTypeId",
-					  						DefaultText =  "Package Type",
+					  						DefaultText =  @"Package Type",
 					  						ListFieldLable =  "PackageTypeIdListLable",
-					  						ListLableDefaultText =  "Package Type ID",
+					  						ListLableDefaultText =  @"Package Type ID",
 					  						HelpTextCode =  "PackageTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -340,9 +343,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
 					  						FullFieldLable =  "Quantity",
-					  						DefaultText =  "Quantity",
+					  						DefaultText =  @"Quantity",
 					  						ListFieldLable =  "QuantityListLable",
-					  						ListLableDefaultText =  "Quantity",
+					  						ListLableDefaultText =  @"Quantity",
 					  						HelpTextCode =  "Quantity",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -397,9 +400,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Height",
-					  						DefaultText =  "Height",
+					  						DefaultText =  @"Height",
 					  						ListFieldLable =  "HeightListLable",
-					  						ListLableDefaultText =  "Height",
+					  						ListLableDefaultText =  @"Height",
 					  						HelpTextCode =  "Height",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -454,9 +457,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Width",
-					  						DefaultText =  "Width",
+					  						DefaultText =  @"Width",
 					  						ListFieldLable =  "WidthListLable",
-					  						ListLableDefaultText =  "Width",
+					  						ListLableDefaultText =  @"Width",
 					  						HelpTextCode =  "Width",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -511,9 +514,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Length",
-					  						DefaultText =  "Length",
+					  						DefaultText =  @"Length",
 					  						ListFieldLable =  "LengthListLable",
-					  						ListLableDefaultText =  "Length",
+					  						ListLableDefaultText =  @"Length",
 					  						HelpTextCode =  "Length",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -568,9 +571,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Volume",
-					  						DefaultText =  "Volume (%VolumeCode)",
+					  						DefaultText =  @"Volume (%VolumeCode)",
 					  						ListFieldLable =  "VolumeListLable",
-					  						ListLableDefaultText =  "Volume",
+					  						ListLableDefaultText =  @"Volume",
 					  						HelpTextCode =  "Volume",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -625,9 +628,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Weight",
-					  						DefaultText =  "Weight (%WeightCode)",
+					  						DefaultText =  @"Weight (%WeightCode)",
 					  						ListFieldLable =  "WeightListLable",
-					  						ListLableDefaultText =  "Weight",
+					  						ListLableDefaultText =  @"Weight",
 					  						HelpTextCode =  "Weight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -682,7 +685,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Description",
-					  						DefaultText =  "Description",
+					  						DefaultText =  @"Description",
 					  						HelpTextCode =  "Description",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -695,7 +698,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference1",
-					  						MaxLength =  50,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -737,12 +740,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Reference1",
-					  						DefaultText =  "Reference 1",
+					  						DefaultText =  @"Reference 1",
 					  						ListFieldLable =  "Reference1ListLable",
-					  						ListLableDefaultText =  "Reference1",
+					  						ListLableDefaultText =  @"Reference1",
 					  						HelpTextCode =  "Reference1",
 					  						ShortFieldLable =  "Reference1",
-					  						ShortFieldLableDefaultText =  "Ref 1",
+					  						ShortFieldLableDefaultText =  @"Ref 1",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -754,7 +757,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference2",
-					  						MaxLength =  50,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -796,12 +799,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Reference2",
-					  						DefaultText =  "Reference 2",
+					  						DefaultText =  @"Reference 2",
 					  						ListFieldLable =  "Reference2ListLable",
-					  						ListLableDefaultText =  "Reference2",
+					  						ListLableDefaultText =  @"Reference2",
 					  						HelpTextCode =  "Reference2",
 					  						ShortFieldLable =  "Reference2",
-					  						ShortFieldLableDefaultText =  "Ref 2",
+					  						ShortFieldLableDefaultText =  @"Ref 2",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -813,7 +816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference3",
-					  						MaxLength =  50,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -855,12 +858,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Reference3",
-					  						DefaultText =  "Reference 3",
+					  						DefaultText =  @"Reference 3",
 					  						ListFieldLable =  "Reference3ListLable",
-					  						ListLableDefaultText =  "Reference3",
+					  						ListLableDefaultText =  @"Reference3",
 					  						HelpTextCode =  "Reference3",
 					  						ShortFieldLable =  "Reference3",
-					  						ShortFieldLableDefaultText =  "Ref 3",
+					  						ShortFieldLableDefaultText =  @"Ref 3",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -914,12 +917,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CommodityNumber",
-					  						DefaultText =  "Commodity Number",
+					  						DefaultText =  @"Commodity Number",
 					  						ListFieldLable =  "CommodityNumberListLable",
-					  						ListLableDefaultText =  "CommodityNumber",
+					  						ListLableDefaultText =  @"CommodityNumber",
 					  						HelpTextCode =  "CommodityNumber",
 					  						ShortFieldLable =  "CommodityNumber",
-					  						ShortFieldLableDefaultText =  "Commodity No.",
+					  						ShortFieldLableDefaultText =  @"Commodity No.",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -931,7 +934,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Text",
 					  						Code =  "Reference4",
-					  						MaxLength =  50,
+					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
@@ -973,10 +976,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "Reference4",
-					  						DefaultText =  "Reference 4",
+					  						DefaultText =  @"Reference 4",
 					  						HelpTextCode =  "Reference4",
 					  						ShortFieldLable =  "Reference4",
-					  						ShortFieldLableDefaultText =  "Ref 4",
+					  						ShortFieldLableDefaultText =  @"Ref 4",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1030,7 +1033,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
 					  						FullFieldLable =  "CommodityName",
-					  						DefaultText =  "Commodity Name",
+					  						DefaultText =  @"Commodity Name",
 					  						HelpTextCode =  "CommodityName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -1062,7 +1065,36 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable InsideShipmentPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InsideShipmentPackage" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageODimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.Dimensions", DefaultText = "Dimensions (L-W-H) (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOVolume = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.Volume", DefaultText = "Volume (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOVolWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.VolWeight", DefaultText = "Volumetric Weight (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOGrossWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.GrossWeight", DefaultText = "Gross Weight (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageFDimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.F.Dimensions", DefaultText = "Dimensions (L-W-H) (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOAddInsidePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.AddInsidePackage", DefaultText = "Add Inside Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOEditInsidePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.EditInsidePackage", DefaultText = "Edit Inside Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage", DefaultText = "Inside Shipment Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
 
    }
     

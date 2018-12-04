@@ -602,6 +602,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         });
 
         if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
         }
 
@@ -619,6 +620,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
         if (!AppTool.IsNullOrEmpty(input)) {
+            input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
         }
 
@@ -1869,7 +1871,7 @@ export class ShipmentPackageItem extends BaseComponent {
         }
     }
 
-    OnGrossWeightLostFocus(input: number) {
+    OnGrossWeightLostFocus(input1: number) {
         if (this.fatherComponent.IsLCLEntity) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
                 if (this.Width == null || this.Height == null || this.Length == null) {
@@ -2674,9 +2676,14 @@ export class ShipmentPackageItem extends BaseComponent {
 
         newDeliveryPM.AddPackage(newDeliveryPackagePM);
 
+        var isCreatingContainerDelivery = false;
+        if (typeCode == "D") {
+            isCreatingContainerDelivery = true;
+        }
+
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = myWindowTitle;
-        logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: newDeliveryPM, IsNewEntity: true, ContainerReturnDeliveryId: this.DeliveryId };
+        logitudeWindow.WindowArgs = { ShipmentPM: this.ShipmentPM, EntityPM: newDeliveryPM, IsNewEntity: true, ContainerReturnDeliveryId: this.DeliveryId, IsCreatingContainerDelivery: isCreatingContainerDelivery };
         logitudeWindow.Width = 950;
         logitudeWindow.Height = 595;
 
@@ -2957,7 +2964,7 @@ export class InsideShipmentPackageItem extends BaseComponent {
         }
     }
 
-    OnGrossWeightLostFocus(input: number) {
+    OnGrossWeightLostFocus(input1: number) {
         if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
             if (this.Width == null || this.Height == null || this.Length == null) {
                 this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.EntityPM.Weight);

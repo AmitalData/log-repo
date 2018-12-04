@@ -251,7 +251,30 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
         }
 
+        public HttpResponseMessage Post(DWQueryData QueryData)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+               
+                var XML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Columns);
+                var FilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Filters);
+                var temp = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(XML);
+                var temp1 = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(FilterXML);
+                //IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
+                //QueryColumnService service = new QueryColumnService(objectContext, entityPM.Tenant);
+                //service.Create(entityPM);
 
+                return Request.CreateResponse(HttpStatusCode.OK, FilterXML);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 

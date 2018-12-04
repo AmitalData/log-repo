@@ -467,7 +467,7 @@ export class WizardDimensionItem extends BaseComponent {
         }
     }
 
-    OnGrossWeightLostFocus(input: number) {
+    OnGrossWeightLostFocus(input1: number) {
         if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
             if (this.Width == null || this.Height == null || this.Length == null) {
                 this.EntityPM.VolumetricWeight = AppTool.GetWeightFromWeight(this.ShipmentPM.GrossWeightUnitCode, this.ShipmentPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeight);

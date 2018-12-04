@@ -347,12 +347,35 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.searchText = args;
         this.LoadData();
     }
+
+    private ConnectedList: ARInvoiceList[] = [];
+    private IsMatchedList: ARInvoiceList[] = [];
     LoadData() {
 
         this.ItemsSource.Clear();
 
         if (!AppTool.IsNullOrEmpty(this.BillToId) && this.EntityPM.StatusCode != "VD") {
-            this.LoadPaymentInvoices_Connected();
+
+            if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+
+                if (this.EntityPM.PaymentInvoices.length == 1) {
+                    var iConnectedItem = new ARInvoiceList();
+                    iConnectedItem.Id = this.EntityPM.PaymentInvoices[0].ARInvoiceId;
+                    iConnectedItem.InvoiceCurrencyId = this.EntityPM.PaymentInvoices[0].ForeignCurrencyId;
+                    iConnectedItem.InvoiceCurrencyExchangeRate = this.EntityPM.PaymentInvoices[0].ExchangeRate;
+                    iConnectedItem.AmountInInvoiceCurrency = this.EntityPM.PaymentInvoices[0].ForeignAmount;
+                    iConnectedItem.AmountInLocalCurrency = this.EntityPM.PaymentInvoices[0].LocalAmount;
+                    iConnectedItem.Id = this.EntityPM.PaymentInvoices[0].ARInvoiceId;
+                    iConnectedItem.MetodoPagoCode = this.EntityPM.PaymentInvoices[0].ARInvoiceMetodoPagoCode;
+                    this.ConnectedList.push(iConnectedItem);
+                }
+                
+                this.LoadPaymentInvoices_IsMatched();
+            }
+
+            else {
+                this.LoadPaymentInvoices_Connected();
+            }
         }
 
         else {
@@ -378,9 +401,14 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         var myService = new ARInvoiceListService();
         myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.FillBaselist(myResponse.Result);
 
-                if (!this.EntityPM.IsClosed) {
+                this.ConnectedList = myResponse.Result;
+
+                if (this.EntityPM.IsClosed) {
+                    this.FillBaselist();
+                }
+
+                else {
                     this.LoadPaymentInvoices_IsMatched();
                 }
             }
@@ -395,7 +423,8 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         filters.addAdditionalFilter("BillToId", this.EntityPM.BillToId, null, null, "Equals", false, false, false, "string");
         filters.addAdditionalFilter("StatusCode", "DR,AD,PP,PD", null, null, "InList", false, true, false, "string");
-        filters.addAdditionalFilter("IsConstituentInvoice", false, null, null, "Equals", false, false, false, "Boolean");
+        filters.addAdditionalFilter("IsClosed", false, null, null, "Equals", false, false, false, "Boolean");
+        filters.addAdditionalFilter("IsConstituentInvoice", false, null, null, "Equals", false, false, false, "Boolean");       
 
         var searchValue = null;
         if (!AppTool.IsNullOrEmpty(this.searchText)) {
@@ -407,71 +436,77 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         var myService = new ARInvoiceListService();
         myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                this.FillBaselist(myResponse.Result);
+                this.IsMatchedList = myResponse.Result;                
             }
+
+            this.FillBaselist();
         });
     }
-    FillBaselist(baselist: ARInvoiceList[]) {
+    FillBaselist() {
+        this.ItemsSource.Clear();
+
         var connectedList: ARPaymentInvoiceArgs[] = [];
         var unConnectedMatchedList: ARPaymentInvoiceArgs[] = [];
         var unConnectedListNotMatched: ARPaymentInvoiceArgs[] = [];
+        var itemsCollection: ARPaymentInvoiceArgs[] = [];
 
-        baselist.forEach(item => {
-            if (this.EntityPM.PaymentInvoices.filter(d => d.ARInvoiceId == item.Id)[0]) {
+        if (this.ConnectedList.length > 0) {
+            this.ConnectedList.forEach(item => {
+                if (this.EntityPM.PaymentInvoices.filter(d => d.ARInvoiceId == item.Id)[0]) {
 
-                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                    if (this.EntityPM.AmountInPaymentCurrency > 0) {
-                        var value = this.EntityPM.AmountInPaymentCurrency;
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                        if (this.EntityPM.AmountInPaymentCurrency > 0) {
+                            var value = this.EntityPM.AmountInPaymentCurrency;
 
-                        if (item.AmountDue > value) {
-                            item.AmountDue = item.AmountDue - value;
+                            if (item.AmountDue > value) {
+                                item.AmountDue = item.AmountDue - value;
+                            }
+
+                            else {
+                                item.AmountDue = 0;
+                            }
+                        }
+                    }
+
+                    connectedList.push(new ARPaymentInvoiceArgs(item, this));
+                }
+            });
+
+            connectedList.sort((a, b) => { return (a.SortingValue === b.SortingValue) ? 0 : (a.SortingValue < b.SortingValue) ? -1 : 1 }).forEach(item => {
+                itemsCollection.push(item);
+            });
+        }
+
+        if (!this.EntityPM.IsClosed) {
+            this.IsMatchedList.forEach(item => {
+                if (connectedList.filter(f => f.Id == item.Id).length == 0) {
+                    if (!item.IsClosed) {
+                        var isCurrencyMatched: boolean = false;
+
+                        if (this.PaymentCurrencyId == item.InvoiceCurrencyId) {
+                            isCurrencyMatched = true;
+                        }
+
+                        else if (this.IsMultiCurrency) {
+                            if (this.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
+                                isCurrencyMatched = true;
+                            }
+
+                            else if (item.InvoiceCurrencyId == SessionLocator.LocalCurrencyId) {
+                                isCurrencyMatched = true;
+                            }
+                        }
+
+                        if (isCurrencyMatched == false || item.StatusCode == "DR") {
+                            unConnectedListNotMatched.push(new ARPaymentInvoiceArgs(item, this));
                         }
 
                         else {
-                            item.AmountDue = 0;
+                            unConnectedMatchedList.push(new ARPaymentInvoiceArgs(item, this));
                         }
                     }
-                }
-
-                connectedList.push(new ARPaymentInvoiceArgs(item, this));
-            }
-
-            else {
-                if (!item.IsClosed) {
-                    var isCurrencyMatched: boolean = false;
-
-                    if (this.PaymentCurrencyId == item.InvoiceCurrencyId) {
-                        isCurrencyMatched = true;
-                    }
-
-                    else if (this.IsMultiCurrency) {
-                        if (this.PaymentCurrencyId == SessionLocator.LocalCurrencyId) {
-                            isCurrencyMatched = true;
-                        }
-
-                        else if (item.InvoiceCurrencyId == SessionLocator.LocalCurrencyId) {
-                            isCurrencyMatched = true;
-                        }
-                    }
-
-                    if (isCurrencyMatched == false || item.StatusCode == "DR") {
-                        unConnectedListNotMatched.push(new ARPaymentInvoiceArgs(item, this));
-                    }
-
-                    else {
-                        unConnectedMatchedList.push(new ARPaymentInvoiceArgs(item, this));
-                    }
-                }
-            }
-        });
-
-        var itemsCollection: ARPaymentInvoiceArgs[] = [];
-
-        connectedList.sort((a, b) => { return (a.SortingValue === b.SortingValue) ? 0 : (a.SortingValue < b.SortingValue) ? -1 : 1 }).forEach(item => {
-            itemsCollection.push(item);
-        });
-
-        if (!this.EntityPM.IsClosed) {
+                }                
+            });
 
             unConnectedMatchedList.filter(f => f.CurrencyId == this.PaymentCurrencyId).sort((a, b) => { return (a.SortingValue === b.SortingValue) ? 0 : (a.SortingValue < b.SortingValue) ? -1 : 1 }).forEach(item => {
                 itemsCollection.push(item);
@@ -1379,6 +1414,8 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
     public CurrencyId: string = null;
     public CurrencyCode: string = null;
     public InvoiceAmount: number = 0;
+    public TransferStatusCode: string = null;
+
     InitProperties() {
         this.Id = this.Invoice.Id;
         this.DueDate = this.Invoice.DueDate;
@@ -1390,6 +1427,8 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
         this.InvoiceAmount = this.Invoice.AmountInInvoiceCurrency == null ? 0 : this.Invoice.AmountInInvoiceCurrency;
         this.ShipmentNumber = this.Invoice.IsConsolidationInvoice ? "List" : this.Invoice.MainEntityReference;
         this.SATTransferStatus = this.Invoice.SATInvoiceStatusName;
+        this.TransferStatusCode = this.Invoice.TransferStatusCode;
+
     }
 
     public ExchangeRate: number = 0;
@@ -1812,6 +1851,8 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
         itemPM.ForeignAmount = this.ConnectedAmount_INV == null ? 0 : AppTool.Round(this.ConnectedAmount_INV, 2);
         itemPM.PaymentAmount = this.ConnectedAmount_PAY == null ? 0 : AppTool.Round(this.ConnectedAmount_PAY, 2);
         itemPM.ARInvoiceMetodoPagoCode = this.Invoice.MetodoPagoCode;
+        itemPM.ARInvoiceTransferStatusCode = this.TransferStatusCode;
+
         if (this.CurrencyId == this.LocalCurrencyId) {
             itemPM.LocalAmount = itemPM.ForeignAmount;
         }

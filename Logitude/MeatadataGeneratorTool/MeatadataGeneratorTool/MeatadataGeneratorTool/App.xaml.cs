@@ -106,6 +106,11 @@ namespace MeatadataGeneratorTool
                     // MessageBox.Show(fileContent);
                 }
             }
+            else
+            {
+                LoadFileWindow loadFileWindow = new LoadFileWindow();
+                loadFileWindow.Show();
+            }
             base.OnStartup(e);
         }
 

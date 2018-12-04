@@ -112,8 +112,9 @@ namespace MetaDataGenerator
 
                     case "Infrastructure":
                         tables = (from a in rep.context.ObjectTables
-                                  where !a.Name.Contains(".Customs")
+                                  where (!a.Name.Contains(".Customs")
                                   && (a.ClientModuleName == modelName || (infraFiles.Contains(a.Name))) && !globalFiles.Contains(a.Name) && !commFiles.Contains(a.Name)
+                                  ) || a.Name == "General"
                                   select a).ToList();
                         break;
 
@@ -193,6 +194,48 @@ namespace MetaDataGenerator
             }
         }
 
+        private void btnUpdate_Old_ModelLXMLs_Click(object sender, RoutedEventArgs e)
+        {
+
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+                DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+                string solutionDirectory = solutionDir.FullName;
+
+                string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
+                dialog.SelectedPath = dir;
+
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+                if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+                {
+                    List<ObjectTable> tables = new List<ObjectTable>();
+                    ObjectFieldRepository rep = new ObjectFieldRepository(0);
+
+                    DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
+                    string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+
+                    tables = (from a in rep.context.ObjectTables
+                              where allFiles.Contains(a.Name)
+                              select a).OrderBy(t => t.Name).ToList();
+
+                    string errors = "";
+                    DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
+                    dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs(tables, dialog.SelectedPath, ref errors);
+
+                    if (string.IsNullOrEmpty(errors))
+                        MessageBox.Show("Export completed successfully");
+                    else
+                    {
+                        MessageBox.Show(errors);
+                    }
+
+                    
+
+                }
+            }
+        }
     }
 }
 /*

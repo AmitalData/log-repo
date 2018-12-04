@@ -62,7 +62,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static MenuButton AddMenuButton(MenuButtonDetails menuButtonDetails, MenuButtonRepository menuButtonRepository, Dictionary<string, MenuButton> tenantMenuButtons, TextCodeRepository textCodeRepository, Dictionary<string, TextCode> textCodes)
         {
-
             ObjectTableRepository Repo = new ObjectTableRepository(0);
             var table = Repo.GetSingleObjectTable(menuButtonDetails.ObjectTableId, menuButtonDetails.Tenant, false);
             string NewKey = "";
