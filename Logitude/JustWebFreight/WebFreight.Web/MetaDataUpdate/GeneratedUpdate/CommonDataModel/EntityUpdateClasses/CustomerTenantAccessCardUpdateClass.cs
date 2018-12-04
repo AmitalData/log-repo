@@ -112,11 +112,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsLookUp =  false,
 			      				    IsEditable =  false,
 			      				    AllowedForComputingPartners =  false,
+			      				    DisableSearchBox =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
-			      				    DisableSearchBox =  false,
 			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -859,7 +859,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode CustomerTenantAccessCardTextCode_CustomerTenantAccessCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessCard", DefaultText = "Customer Tenant Access Card",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessCardObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomerTenantAccessCardTextCode_CustomerTenantAccessCardTipNewCardTip = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessCard.Tip.NewCardTip", DefaultText = " Press ''+'' button to connect a customer to that request.",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessCardObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomerTenantAccessCardTextCode_CustomerTenantAccessCardTipNewCardTip = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessCard.Tip.NewCardTip", DefaultText = " Press \"+\" button to connect a customer to that request.",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessCardObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

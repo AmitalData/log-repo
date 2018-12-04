@@ -37,9 +37,9 @@ this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 
 
  
-GenerateAllUpdateClasses("../EntityFiles/CommonDataModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/CommonDataModel/EntityUpdateClasses","CommonDataModel");
-GenerateMetaDataUpdateClass("../EntityFiles/CommonDataModel","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/CommonDataModel","CommonDataModelUpdateClass");
-GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/CommonDataModel","../../Logitude.BL/CommonDataModel/CloseTables","CommonDataModel");
+GenerateAllUpdateClasses("../EntityFiles/CommonDataModel/NewFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/CommonDataModel/EntityUpdateClasses","CommonDataModel");
+GenerateMetaDataUpdateClass("../EntityFiles/CommonDataModel/NewFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/CommonDataModel","CommonDataModelUpdateClass");
+GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/CommonDataModel/NewFiles","../../Logitude.BL/CommonDataModel/CloseTables","CommonDataModel");
  
  
  

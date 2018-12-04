@@ -82,53 +82,51 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DBTableName =  "Ports",
 			      				    ObjectTableSingular =  "Port",
 			      				    ObjectTablePlural =  "Ports",
-			      				    HasCustomFilter =  false,
-			      				    HasCustomFields =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    IsEditable =  true,
+			      				    DefaultText =  "Port",
+			      				    Name =  "Ports",
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Code",
 			      				    LookUp2 =  "EnglishName",
 			      				    DependencyFilter1 =  "TransportModeId",
+			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  true,
 			      				    HasCounter =  false,
+			      				    EnableEditFromLOV =  true,
 			      				    EnableAddFromLOV =  true,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
-			      				    EnableEditFromLOV =  true,
 			      				    SortingByObjectField =  "Code",
+			      				    CustomFieldsCount =  0,
+			      				    HasCustomFields =  false,
 			      				    InActive =  false,
+			      				    SearchFields =  "Port,Ports,,Id,Code",
 			      				    IsSaveButtonVisible =  true,
-			      				    IsComposition =  false,
+			      				    MainTipCode =  "PORT",
 			      				    EnableSecurity =  true,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    IsComposition =  false,
+			      				    MaxNumberOfCustomFields =  0,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    MainTipCode =  "PORT",
-			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Port",
-			      				    Code =  "PORT",
-			      				    Name =  "Ports",
-			      				    GenerateDomainService =  false,
-			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
-			      				    CustomFieldsCount =  0,
-			      				    SearchFields =  "Port,Ports,,Id,Code",
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
+			      				    IsEditable =  true,
 			      				    AllowedForComputingPartners =  true,
 			      				    CodeField =  "CombinedCode",
 			      				    NameField =  "EnglishName",
 			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Common",
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
+			      				    Code =  "PORT",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -1636,9 +1634,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode PortTextCode_Port = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port", DefaultText = "Port",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode PortTextCode_PortMChoosePortTransportation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.M.ChoosePortTransportation", DefaultText = "Please choose the transportation method of the Port",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PortTextCode_PortMChoosePortTransportation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.M.ChoosePortTransportation", DefaultText = "Please choose the transportation method of the port.",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode PortTextCode_PortMTheCodeAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.M.TheCodeAlreadyExists", DefaultText = "The Code already exists",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PortTextCode_PortMTheCodeAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.M.TheCodeAlreadyExists", DefaultText = "The code already exists.",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
  		   TextCode PortTextCode_PortTipGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Port.Tip.General", DefaultText = " - Ports are listed  in this pane(%L) - To add a Port to your company press the 'add' button(%L)",LocalDefaultText = null, ObjectTableId = PortObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

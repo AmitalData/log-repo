@@ -78,14 +78,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    IsComposition =  false,
-			      				    ObjectTableName =  "TarrifCharge",
+	             				    ObjectTableName =  "TarrifCharge",
 			      				    DBTableName =  "TarrifCharges",
 			      				    ObjectTableSingular =  "Tariff Charge",
 			      				    ObjectTablePlural =  "TarrifCharges",
 			      				    DefaultText =  "Tariff Charge",
 			      				    Name =  "TarrifCharge",
 			      				    IsNewWizard =  false,
+			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -104,13 +104,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsSaveButtonVisible =  true,
 			      				    EnableSecurity =  false,
 			      				    ObjectTableTypeCode =  "MD",
+			      				    IsComposition =  false,
 			      				    MaxNumberOfCustomFields =  0,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
-			      				    HasCustomFilter =  false,
 			      				    AllowedForComputingPartners =  false,
 			      				    DisableSearchBox =  false,
 			      				    HasHelper =  false,
@@ -555,19 +555,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode TarrifChargeTextCode_TarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge", DefaultText = "Tariff Charge",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeBAddTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.B.AddTarrifCharge", DefaultText = "Add Tariff Charge",LocalDefaultText = @"הוסף תעריף חיוב", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeBDeleteTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.B.DeleteTarrifCharge", DefaultText = "Delete Tariff Charge",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeBDeleteTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.B.DeleteTarrifCharge", DefaultText = "Delete Tariff Charge",LocalDefaultText = @"מחק תעריף חיוב", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeMCantAddFreightToSurcharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.CantAddFreightToSurcharge", DefaultText = "Can't add freight charge to surcharge tariff.",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeMCantAddFreightToSurcharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.CantAddFreightToSurcharge", DefaultText = "Cant add Freight Charge to Surcharge Tariff",LocalDefaultText = @"לא ניתן להוסיף סעיף הובלה למחירון חיובים נוספים", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeMTarrifChargeTypeAlreadyAdded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.TarrifChargeTypeAlreadyAdded", DefaultText = "This tariff charge type is already added.",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeMTarrifChargeTypeAlreadyAdded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.TarrifChargeTypeAlreadyAdded", DefaultText = "This Tariff Charge Type is already Added",LocalDefaultText = @"סוג תעריף החיוב כבר נקלט", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeMMinLessThanMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.MinLessThanMax", DefaultText = "Min should be less than Max",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeMMinLessThanMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.MinLessThanMax", DefaultText = "Min Should be less than Max",LocalDefaultText = @"מינימום צריך להיות פחות מהמקסימום", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeOAddTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.O.AddTarrifCharge", DefaultText = "Add Tariff Charge",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeOAddTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.O.AddTarrifCharge", DefaultText = "Add Tariff Charge",LocalDefaultText = @"הוסף תעריף חיוב", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeOEditTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.O.EditTarrifCharge", DefaultText = "Edit Tariff Charge",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeOEditTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.O.EditTarrifCharge", DefaultText = "Edit Tariff Charge",LocalDefaultText = @"עריכת תעריף חיוב", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeBAddTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.B.AddTarrifCharge", DefaultText = "Add Tariff Charge",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -82,44 +82,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DBTableName =  "DocumentTypeTemplates",
 			      				    ObjectTableSingular =  "Document Type Template",
 			      				    ObjectTablePlural =  "DocumentTypeTemplates",
-			      				    HasCustomFilter =  false,
-			      				    IsEditable =  true,
+			      				    DefaultText =  "Document Type Template",
+			      				    Name =  "DocumentTypeTemplate",
 			      				    IsNewWizard =  false,
+			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  true,
 			      				    HasCounter =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
-			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Id",
-			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  true,
-			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
-			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Document Type Template",
-			      				    Code =  "d093",
-			      				    Name =  "DocumentTypeTemplate",
-			      				    GenerateDomainService =  false,
-			      				    HasMenuButtons =  false,
 			      				    CustomFieldsCount =  0,
 			      				    HasCustomFields =  false,
+			      				    InActive =  false,
 			      				    SearchFields =  "DocumentTypeTemplate,DocumentTypeTemplates,,Id,",
+			      				    IsSaveButtonVisible =  true,
+			      				    EnableSecurity =  true,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    IsComposition =  false,
+			      				    MaxNumberOfCustomFields =  0,
+			      				    AllowCustomFields =  false,
+			      				    HasDynamicHeader =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsEditable =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    DisableSearchBox =  false,
 			      				    ClientModuleName =  "Common",
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
+			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
 			      				    AllowedInQueues =  false,
 			                    
@@ -519,6 +516,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable DocumentTypeTemplateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentTypeTemplate" && d.Tenant == 0).FirstOrDefault(); 
 
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBSetAsInActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.SetAsInActive", DefaultText = "Set As Inactive",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOOriginalTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.OriginalTemplate", DefaultText = "Original Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOInActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.InActive", DefaultText = "Inactive",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.DocumentType", DefaultText = "Document Type",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Type", DefaultText = "Template Type",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOCountry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Country", DefaultText = "Country",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOManageTemplates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.ManageTemplates", DefaultText = "Manage Templates",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOEditDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.EditDocument", DefaultText = "Edit Document",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -547,18 +556,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOMarkAsactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.MarkAsactive", DefaultText = "Mark as active",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBSetAsInActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.SetAsInActive", DefaultText = "Set As Inactive",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOOriginalTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.OriginalTemplate", DefaultText = "Original Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOInActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.InActive", DefaultText = "Inactive",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.DocumentType", DefaultText = "Document Type",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Type", DefaultText = "Template Type",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOCountry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Country", DefaultText = "Country",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate", DefaultText = "Document Type Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
  		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateMSelectDocumentToDublicate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.M.SelectDocumentToDublicate", DefaultText = "Please select a document to dublicate",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -569,37 +566,37 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOInsertDataField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.InsertDataField", DefaultText = "Insert Data Field",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateONewPrintTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.NewPrintTemplate", DefaultText = "New Print Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBSetAsDefault = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.SetAsDefault", DefaultText = "Set As Default",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateONewHTMLTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.NewHTMLTemplate", DefaultText = "New Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBLoadTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.LoadTemplate", DefaultText = "Load Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOEditPrintTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.EditPrintTemplate", DefaultText = "Edit Print Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODefault = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Default", DefaultText = "Default",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOEditHTMLTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.EditHTMLTemplate", DefaultText = "Edit Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Description", DefaultText = "Description",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOBlank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Blank", DefaultText = "Blank",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOLastUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.LastUpdate", DefaultText = "Last Update",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODuplicate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Duplicate", DefaultText = "Duplicate",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOUpdatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.UpdatedBy", DefaultText = "Updated By",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOFromLibrary = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.FromLibrary", DefaultText = "From Library",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateONewPrintTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.NewPrintTemplate", DefaultText = "New Print Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOFromFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.FromFile", DefaultText = "From File",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateONewHTMLTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.NewHTMLTemplate", DefaultText = "New HTML Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOStimulSoft = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.StimulSoft", DefaultText = "StimulSoft",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOEditPrintTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.EditPrintTemplate", DefaultText = "Edit Print Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateORichText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.RichText", DefaultText = "RichText",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOEditHTMLTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.EditHTMLTemplate", DefaultText = "Edit HTML Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBSetAsDefault = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.SetAsDefault", DefaultText = "Set As Default",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOBlank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Blank", DefaultText = "Blank",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBLoadTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.LoadTemplate", DefaultText = "Load Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODuplicate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Duplicate", DefaultText = "Duplicate",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODefault = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Default", DefaultText = "Default",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOFromLibrary = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.FromLibrary", DefaultText = "From Library",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Description", DefaultText = "Description",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOFromFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.FromFile", DefaultText = "From File",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOLastUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.LastUpdate", DefaultText = "Last Update",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOStimulSoft = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.StimulSoft", DefaultText = "Stimulsoft",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOUpdatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.UpdatedBy", DefaultText = "Updated By",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateORichText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.RichText", DefaultText = "Rich Text",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
    
 	    
