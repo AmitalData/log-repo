@@ -1143,7 +1143,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             }
             else {
                 let window = new MessageWindow();
-                window.Show("לא ניתן לבצע מחיקה, לתי לא מוגדר Pending");
+                window.Show(" Pending לא ניתן לבצע מחיקה, לתיק לא מוגדר ");
             }
         }
     }
