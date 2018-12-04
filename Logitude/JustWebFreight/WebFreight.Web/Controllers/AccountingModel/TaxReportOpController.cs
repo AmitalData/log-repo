@@ -228,6 +228,37 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
+        public HttpResponseMessage GetErrorsCount(string reportId)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("TaxReport", "READ", authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+
+                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+                TaxReportQueryService reportService = new TaxReportQueryService(MyContext);
+                int count = reportService.GetReportLinesWithErrors(reportId, tenant);
+
+                ServiceResponse response = new ServiceResponse();
+
+                response.Result = count;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
 
     }
 }

@@ -23,11 +23,11 @@ import {TaxReportLineStatusList} from '../../EntityLists/TaxReportLineStatusList
 
 export class TaxReportLineStatusListService {
 	private _http: Http;
-    private _apiUrl: string;   
+    private _apiUrl: string;
 	public static CachedData: Array<TaxReportLineStatusList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/taxreportlinestatusviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/taxreportlinestatusviews';
     }
 
     getSingle(code: string) {
@@ -40,18 +40,18 @@ export class TaxReportLineStatusListService {
                 headers: authHeader
             }).map(response => {
                 var list = response.json();
-                    
+
                 var entity: TaxReportLineStatusList;
 				if(list)
 				{
                    entity = this.MapJsonToEntityList(list);
-                }   
+                }
                 var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse(); 
-                serviceResponse.Result = entity;  
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
 				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReportLineStatus", "GetSingleList", 'code=' + code); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReportLineStatus", "GetSingleList", 'code=' + code);
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -75,7 +75,7 @@ export class TaxReportLineStatusListService {
 		      if(allLists)
 			  {
 				for (var key in  allLists) {
-				
+
 				   var entity: TaxReportLineStatusList;
                    entity = this.MapJsonToEntityList(allLists[key]);
 				   _mappedListsArray.push(entity);
@@ -83,11 +83,11 @@ export class TaxReportLineStatusListService {
 				 }
                }
                 var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse(); 
-                serviceResponse.Result = _mappedListsArray;  
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = _mappedListsArray;
 				serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReportLineStatus", "GetAll", ""); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReportLineStatus", "GetAll", "");
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -96,10 +96,9 @@ export class TaxReportLineStatusListService {
         );
     }
 
-	
     getByFilters(filters: ApiQueryFilters) {
 
-	   var callTime = new Date();       
+	   var callTime = new Date();
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -130,8 +129,8 @@ export class TaxReportLineStatusListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
-        
-		
+
+
 	   return Observable.defer(() => {
             return this._http.get(callUrl, {
                 headers: authHeader
@@ -143,28 +142,28 @@ export class TaxReportLineStatusListService {
 				if(serviceResponse.Result)
 				{
                 for (var key in serviceResponse.Result) {
-				
+
 				   var entity: TaxReportLineStatusList;
                    entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
 				   _mappedListsArray.push(entity);
 
 				 }
-                }   
+                }
 
-                serviceResponse.Result = _mappedListsArray;      
+                serviceResponse.Result = _mappedListsArray;
 		        serviceResponse.CallTime = callTime;
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReportLineStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 				
-				            
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TaxReportLineStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+
+
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        });        
+        });
     }
 
     getSingleFromCache(code: string) {
 
-	   var callTime = new Date(); 	    
+	   var callTime = new Date();
 		 if (!SessionLocator.UseCachedData) {
             return this.getSingle(code);
         }
@@ -178,7 +177,7 @@ export class TaxReportLineStatusListService {
 
                 var filteredData = TaxReportLineStatusListService.CachedData.filter(a => a.Code === code)[0];
 				serviceResponse.CallTime = callTime;
-				serviceResponse.Result = filteredData; 
+				serviceResponse.Result = filteredData;
                 return Observable.of(serviceResponse);
 
             });
@@ -201,10 +200,10 @@ export class TaxReportLineStatusListService {
                 TaxReportLineStatusListService.CachedData = _mappedListsArray;
 
                 var filteredData = TaxReportLineStatusListService.CachedData.filter(a => a.Code === code)[0];
-				serviceResponse.Result = filteredData; 
+				serviceResponse.Result = filteredData;
 				serviceResponse.CallTime = callTime;
-			     
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "TaxReportLineStatus", "GetSingleListFromCache", 'code=' + code); 
+
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "TaxReportLineStatus", "GetSingleListFromCache", 'code=' + code);
 
                 return serviceResponse;
 
@@ -216,7 +215,7 @@ export class TaxReportLineStatusListService {
 
     getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
 
-	     var callTime = new Date(); 	           
+	     var callTime = new Date();
 		 if (!SessionLocator.UseCachedData) {
             return this.getByFilters(filters);
         }
@@ -238,12 +237,12 @@ export class TaxReportLineStatusListService {
             return Observable.defer(() => {
                 if(filters.GetAll)
 				{
-					serviceResponse.Result = TaxReportLineStatusListService.CachedData; 
+					serviceResponse.Result = TaxReportLineStatusListService.CachedData;
 				}
 				else
 				{
 					var filteredData = InfraGenericFilter.GetFilteredArray(TaxReportLineStatusListService.CachedData, filters);
-					serviceResponse.Result = filteredData; 
+					serviceResponse.Result = filteredData;
 					serviceResponse.CallTime = callTime;
 				}
                 return Observable.of(serviceResponse);
@@ -270,29 +269,29 @@ export class TaxReportLineStatusListService {
                 TaxReportLineStatusListService.CachedData = _mappedListsArray;
                 if(filters.GetAll)
 				{
-					serviceResponse.Result = _mappedListsArray; 
+					serviceResponse.Result = _mappedListsArray;
 				}
 				else
 				{
-							
+
 					_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-							      
-			   
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "TaxReportLineStatus", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 	
-					serviceResponse.Result = _mappedListsArray; 
+
+
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "TaxReportLineStatus", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+
+					serviceResponse.Result = _mappedListsArray;
 					serviceResponse.CallTime = callTime;
 				}
                 return serviceResponse;
 
             }).catch(ServiceHelper.HandleServiceError);
 
-        }		 
+        }
     }
-	
+
 	    MapJsonToEntityList(jsonList: any) {
-       
+
             var entityList: TaxReportLineStatusList;
             entityList = new TaxReportLineStatusList();
             var jsonListKeys = Object.keys(jsonList);
@@ -301,7 +300,7 @@ export class TaxReportLineStatusListService {
                 var property = jsonListKeys[key];
                 entityList[property] = jsonList[property];
             }
-			
+
 
         return entityList;
     }
