@@ -15,9 +15,7 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {DeclarationPMService} from '../../Services/StandardPMs/DeclarationPMService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {DeclarationCourierStatusPMService} from '../../Services/StandardPMs/DeclarationCourierStatusPMService';
-
-import { DeclarationRestoreComponent } from '../../../CustomsModules/CustomsRequests/Components/DeclarationRequests/DeclarationRestoreComponent';
-
+import { DeclarationCourierStatusPM } from '../../../Customs/EntityPMs/DeclarationCourierStatusPM';
 import { CustomsRequestMenuService } from '../../Services/Others/CustomsRequestMenuService';
 import { IIGGeneralMessagesService } from '../../Services/WebServices/IIGGeneralMessagesService';
 import { CustomFileCreditRequestParams } from '../../DataContract/RequestParams/CustomFileCreditRequestParams';
@@ -59,6 +57,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     //Services
     private declarationPMService: DeclarationPMService = new DeclarationPMService();
+    private declarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -1101,17 +1100,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
         var logitudeWindow = new LogitudeWindow();
         var windowArgs: any = {};
-        var declarationIdList = [];
-        declarationIdList.push(this.EntityPM.Id);
-        windowArgs.DeclarationIdList = declarationIdList;
+        windowArgs.Mode = "FromDeclaration";
+        windowArgs.DeclarationId = this.EntityPM.Id;
         windowArgs.CourierHawb = this.EntityPM.MAWBCourierMaster;
-        windowArgs.Mode = "Insert";
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.CourierPendingReasonCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PendingRemarks)) {
-            windowArgs.CourierPendingReasonCode = this.EntityPM.CourierPendingReasonCode;
-            windowArgs.PendingRemarks = this.EntityPM.PendingRemarks;
-            windowArgs.Mode = "Update";
-        }
 
         logitudeWindow.Width = 450;
         logitudeWindow.Height = 280;
@@ -1125,26 +1116,36 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
     }
 
     CourierPendingReasonDeleteMethod() {
-        var confirm = new ConfirmWindow();
-        confirm.Width = 350;
-        confirm.Height = 200;
-        confirm.Title = "מחיקת Pending";
-        confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
-        confirm.ShowNoButton = true;
-        confirm.Show("האם למחוק Pending?");
-        confirm.WindowClosed.subscribe((event: any) => {
-            if (confirm.Yes) {
-                //this.DeletePending(response.Result);
 
-                //SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-                //declarationCourierStatusPM.CourierPendingReasonCode = null;
-                //declarationCourierStatusPM.PendingRemarks = null;
-                //this._DeclarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
-                //    SessionLocator.CurrentSession.StopBusyIndicator();
-                //});
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.declarationCourierStatusPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            var declarationCourierStatusPM: DeclarationCourierStatusPM = response.Result;
+            if (declarationCourierStatusPM != null && (!AppTool.IsNullOrEmpty(declarationCourierStatusPM.CourierPendingReasonCode) || !AppTool.IsNullOrEmpty(declarationCourierStatusPM.PendingRemarks))) {
+                var confirm = new ConfirmWindow();
+                confirm.Width = 350;
+                confirm.Height = 200;
+                confirm.Title = "מחיקת Pending";
+                confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+                confirm.ShowNoButton = true;
+                confirm.Show("האם למחוק Pending?");
+                confirm.WindowClosed.subscribe((event: any) => {
+                    if (confirm.Yes) {
+                        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                        declarationCourierStatusPM.CourierPendingReasonCode = null;
+                        declarationCourierStatusPM.PendingRemarks = null;
+                        this.declarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
+                            SessionLocator.CurrentSession.StopBusyIndicator();
+                        });
+                    }
+                    confirm.Close();
+                });
             }
-            confirm.Close();
-        });
+            else {
+                let window = new MessageWindow();
+                window.Show("לא ניתן לבצע מחיקה, לתי לא מוגדר Pending");
+            }
+        }
     }
 }
 

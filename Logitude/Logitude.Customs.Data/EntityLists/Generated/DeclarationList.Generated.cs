@@ -266,10 +266,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string MamanStatusName  { get; set; }
        [DataMember]
        public string AcceptanceStatusName  { get; set; }
-       [DataMember]
-       public string CourierPendingReasonCode  { get; set; }
-       [DataMember]
-       public string PendingRemarks  { get; set; }
    }
 
 }
