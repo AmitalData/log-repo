@@ -127,6 +127,13 @@ export class DeclarationCorrectionsComponent extends BaseComponent {
         SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
+    public IsDescriptionVisible: boolean = false;
+    private description: string;
+    public get Description() { return this.description }
+    public set Description(newValue: string) {
+        this.description = newValue;
+    }
+
     //#region Get screen DATA
     SelectedGeneralIndex: number;
     GeneralData: GeneralDataView[] = [];

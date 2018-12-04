@@ -702,8 +702,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             FeaturePM declarationCargoSplitFeature_SendDeclarationCargoSplit = features.Where(d => d.Code == "SENDDECLARATIONCARGOSPLIT" && d.ObjectTableId == declarationCargoSplitId).FirstOrDefault();
 
             string physicalCheckTableId = ObjectContext.ObjectTables.Where(f => f.Name == "Customs.PhysicalCheck" && f.Tenant == tenant).FirstOrDefault().Id;
-            FeaturePM physicalCheckFeature_Actions = features.Where(d => d.Code == "PHYSICALCHECKACTIONS" && d.ObjectTableId == claimTableId).FirstOrDefault();
-            FeaturePM physicalCheckFeature_ClosePhysicalCheck = features.Where(d => d.Code == "CLOSEPHYSICALCHECK" && d.ObjectTableId == claimTableId).FirstOrDefault();
+            FeaturePM physicalCheckFeature_Actions = features.Where(d => d.Code == "PHYSICALCHECKACTIONS" && d.ObjectTableId == physicalCheckTableId).FirstOrDefault();
+            FeaturePM physicalCheckFeature_ClosePhysicalCheck = features.Where(d => d.Code == "CLOSEPHYSICALCHECK" && d.ObjectTableId == physicalCheckTableId).FirstOrDefault();
 
             #region Declaration Buttons
             MenuButtonGroup declarationMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
@@ -14801,6 +14801,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature CustomsPhysicalCheckFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = CustomsPhysicalCheckObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.PhysicalCheck.Features.Edit", NameTextCodeDefaultText = "Edit PhysicalCheck", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CustomsPhysicalCheckFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COMMUNICATIONS", Packagable = true, ObjectTableId = CustomsPhysicalCheckObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.PhysicalCheck.Features.Communication", NameTextCodeDefaultText = "Communication", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature CustomsPhysicalCheckFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEET", Packagable = true, ObjectTableId = CustomsPhysicalCheckObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.PhysicalCheck.Features.RequestSheets", NameTextCodeDefaultText = "Request Sheets", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature CustomsPhysicalCheckFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PHYSICALCHECKACTIONS", Packagable = true, ObjectTableId = CustomsPhysicalCheckObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.PhysicalCheck.Features.Actions", NameTextCodeDefaultText = "Actions", FullLocalDefaultText = "פעולות", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature CustomsPhysicalCheckFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEPHYSICALCHECK", Packagable = true, ObjectTableId = CustomsPhysicalCheckObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.PhysicalCheck.Features.ClosePhysicalCheck", NameTextCodeDefaultText = "Close Check", FullLocalDefaultText = "סגירת בדיקה", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
 
             #endregion

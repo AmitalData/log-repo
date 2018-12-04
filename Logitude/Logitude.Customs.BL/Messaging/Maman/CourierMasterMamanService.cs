@@ -90,8 +90,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             messageToMaman.Append(courierMasterMamanModel.Weight);
             messageToMaman.Append(courierMasterMamanModel.PackageQuantity.PadLeft(4, '0'));
             messageToMaman.Append(courierMasterMamanModel.GrossMassMeasure.PadLeft(6, '0')); // to check round????
-            messageToMaman.Append(' ', 15);
-            messageToMaman.Append(courierMasterMamanModel.Description.PadRight(15));
+            messageToMaman.Append(' ', 15); // Description
             messageToMaman.Append(courierMasterMamanModel.Agent.PadRight(3));
             messageToMaman.Append(courierMasterMamanModel.SystemDate);
             messageToMaman.Append(courierMasterMamanModel.Forwarder.PadRight(3));
