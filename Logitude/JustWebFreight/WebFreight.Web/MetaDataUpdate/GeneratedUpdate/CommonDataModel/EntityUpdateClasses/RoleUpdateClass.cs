@@ -610,21 +610,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode RoleTextCode_Role = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role", DefaultText = "Role",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode RoleTextCode_RoleBEditRole = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.B.EditRole", DefaultText = "Edit Role",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode RoleTextCode_RoleOUnSelectedFeatures = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.UnSelectedFeatures", DefaultText = "UN Selected Features",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode RoleTextCode_RoleORoles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.Roles", DefaultText = "Roles",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode RoleTextCode_RoleBEditRole = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.B.EditRole", DefaultText = "Edit Role",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode RoleTextCode_RoleOSelectedRoles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.SelectedRoles", DefaultText = "Selected Roles",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode RoleTextCode_RoleORoles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.Roles", DefaultText = "Roles",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode RoleTextCode_RoleOUnSelectedRoles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.UnSelectedRoles", DefaultText = "Unselected Roles",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode RoleTextCode_RoleOSelectedRoles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.SelectedRoles", DefaultText = "Selected Roles",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode RoleTextCode_RoleOObjectTables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.ObjectTables", DefaultText = "Object Tables",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode RoleTextCode_RoleOUnSelectedRoles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.UnSelectedRoles", DefaultText = "UN Selected Roles",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode RoleTextCode_RoleOSelectedFeatures = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.SelectedFeatures", DefaultText = "Selected Features",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode RoleTextCode_RoleOObjectTables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.ObjectTables", DefaultText = "Object Tables",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode RoleTextCode_RoleOUnSelectedFeatures = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.UnSelectedFeatures", DefaultText = "Unselected Features",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode RoleTextCode_RoleOSelectedFeatures = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.SelectedFeatures", DefaultText = "Selected Features",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode RoleTextCode_RoleOEditRole = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.EditRole", DefaultText = "Edit Role",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode RoleTextCode_RoleOEditRole = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.EditRole", DefaultText = "Edit Role",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
    
 	    

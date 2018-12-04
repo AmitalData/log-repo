@@ -2178,7 +2178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature ContactFeature_ACTIVEPRODUCTTYPES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACTIVEPRODUCTTYPES", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.ActiveProductTypes", NameTextCodeDefaultText = @"Active Product Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ContactFeature_ACTIVEPRODUCTTYPES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACTIVEPRODUCTTYPES", FeatureTypeCode = "QUER", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.ActiveProductTypes", NameTextCodeDefaultText = @"Active Product Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ContactFeature_Contact_Feature_EXCEL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Contact.Feature.EXCEL", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "Contact.Features.EXCEL", NameTextCodeDefaultText = @"Download to Excel" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
@@ -2341,19 +2341,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode ContactTextCode_ContactCHIsInlandImportListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.CH.IsInlandImportListLable", DefaultText = "Is Inland Import",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContactTextCode_ContactOMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Month", DefaultText = "Month",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContactTextCode_ContactOMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Month", DefaultText = "Month",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContactTextCode_ContactOYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Year", DefaultText = "Year",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContactTextCode_ContactOYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Year", DefaultText = "Year",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContactTextCode_ContactBNewContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.B.NewContact", DefaultText = "New Contact",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContactTextCode_ContactBNewContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.B.NewContact", DefaultText = "New Contact",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContactTextCode_ContactMThisContactAlreadyAdded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.M.ThisContactAlreadyAdded", DefaultText = "This Contact is already added to this card",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContactTextCode_ContactMThisContactAlreadyAdded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.M.ThisContactAlreadyAdded", DefaultText = "This contact is already added to this card.",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContactTextCode_ContactOAddContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.AddContact", DefaultText = "Add Contact",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContactTextCode_ContactOAddContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.AddContact", DefaultText = "Add Contact",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContactTextCode_ContactOEditContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.EditContact", DefaultText = "Edit Contact",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContactTextCode_ContactOEditContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.EditContact", DefaultText = "Edit Contact",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContactTextCode_ContactODay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Day", DefaultText = "Day",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ContactTextCode_ContactODay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Day", DefaultText = "Day",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
  		   TextCode ContactTextCode_ContactMContactAddedForYou = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.M.ContactAddedForYou", DefaultText = "This Contact is Already added for you",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

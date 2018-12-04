@@ -2084,7 +2084,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        ObjectTable CustomAgentObjectTable = objectContext.ObjectTables.Where(d => d.Name == "CustomAgent" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> CustomAgentObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomAgent").ToList();   
 
-			   TextCode CustomAgentTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.Q.CustomAgents", DefaultText = @"Custom Agents",LocalDefaultText = null, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode CustomAgentTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomAgent.Q.CustomAgents", DefaultText = @"Customs Agents",LocalDefaultText = null, ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature CustomAgentFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMAGENT", ObjectTableId = CustomAgentObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomAgent.Features.CustomAgents", NameTextCodeDefaultText = "Custom Agents", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

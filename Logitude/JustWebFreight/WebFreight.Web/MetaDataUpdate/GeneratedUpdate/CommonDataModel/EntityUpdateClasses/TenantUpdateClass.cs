@@ -5754,63 +5754,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "LocalAddressId",
-					  						ObjectTableName =  "Tenant",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Address",
-					  						Code =  "LocalAddressId",
-					  						MaxLength =  15,
-					  						IsCustom =  false,
-					  						MinLength =  0,
-					  						DisplayOnLookUp =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						PMPropertyPath =  "LocalAddressId",
-					  						ListPropertyPath =  "LocalAddressId",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Tenant",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "LocalAddressId",
-					  						DefaultText =  @"Local Address",
-					  						HelpTextCode =  "LocalAddressId",
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
@@ -5869,6 +5812,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable TenantObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Tenant" && d.Tenant == 0).FirstOrDefault(); 
 
+ 		   TextCode TenantTextCode_Tenant = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant", DefaultText = "Tenant",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
  		   TextCode TenantTextCode_TenantPrepaidCollectHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.PrepaidCollectHelpText", DefaultText = "Default payment method for freight and other charges, in direct and consolidation (Master) shipments, for export and import.\nP-Prepaid: by sender at origin.\nC-Collect: by receiver at destination.",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TenantTextCode_TenantDefaultUnitsHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.DefaultUnitsHelpText", DefaultText = "The default unit of measurement for the weight, volume and dimension entries.",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -5880,8 +5825,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  		   TextCode TenantTextCode_TenantODefaultUnits = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.O.DefaultUnits", DefaultText = "Default Units",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TenantTextCode_TenantOOthers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.O.Others", DefaultText = "Others",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode TenantTextCode_Tenant = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant", DefaultText = "Tenant",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
  		   TextCode TenantTextCode_TenantQAllTenants = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.Q.AllTenants", DefaultText = "All Tenants",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

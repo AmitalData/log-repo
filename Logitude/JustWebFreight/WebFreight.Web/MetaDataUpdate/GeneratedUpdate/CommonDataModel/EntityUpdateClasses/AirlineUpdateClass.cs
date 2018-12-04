@@ -4713,8 +4713,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature AirlineAccountingFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGTRANSFER", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.AccountingTransfer", NameTextCodeDefaultText = "Accounting Transfer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
-			   TextCode AirlineStockTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Stack", DefaultText = "Stock",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature AirlineStockFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STACK", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Stack", NameTextCodeDefaultText = "Stack", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode AirlineStackTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Stack", DefaultText = "Stack",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature AirlineStackFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STACK", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Stack", NameTextCodeDefaultText = "Stack", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
  
                  
 			   TextCode AirlineAddressesTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Addresses", DefaultText = "Addresses",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);

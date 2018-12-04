@@ -1669,15 +1669,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode AddressTextCode_Address = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode AddressTextCode_AddressBNewAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.B.NewAddress", DefaultText = "New Address",LocalDefaultText = @"כתובת חדשה", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AddressTextCode_AddressBNewAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.B.NewAddress", DefaultText = "New Address",LocalDefaultText = @"כתובת חדשה", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode AddressTextCode_AddressOMainAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.MainAddress", DefaultText = "Main Address",LocalDefaultText = null, ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AddressTextCode_AddressOMainAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.MainAddress", DefaultText = "Main Address",LocalDefaultText = null, ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode AddressTextCode_AddressOBillingAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.BillingAddress", DefaultText = "Billing Address",LocalDefaultText = null, ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AddressTextCode_AddressOBillingAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.BillingAddress", DefaultText = "Billing Address",LocalDefaultText = null, ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode AddressTextCode_AddressOAddAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.AddAddress", DefaultText = "Add Address",LocalDefaultText = @"הוסף כתובת", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AddressTextCode_AddressOAddAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.AddAddress", DefaultText = "Add Address",LocalDefaultText = @"הוסף כתובת", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
- 		   TextCode AddressTextCode_AddressOEditAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.EditAddress", DefaultText = "Edit Address",LocalDefaultText = @"לערוך את הכתובת", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AddressTextCode_AddressOEditAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.EditAddress", DefaultText = "Edit Address",LocalDefaultText = @"לערוך את הכתובת", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
  		   TextCode AddressTextCode_AddressOAddresses = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.Addresses", DefaultText = "Addresses",LocalDefaultText = @"כתובות", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

@@ -667,7 +667,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature MeasurementFeature_Measurement_M_Measurements = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Measurement.M.Measurements", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Measurements", NameTextCodeDefaultText = @"Measurements" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature MeasurementFeature_Measurement_M_Measurements = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Measurement.M.Measurements", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = MeasurementObjectTable.Id, Tenant = 0, NameTextCodeCode = "Measurement.Features.Measurements", NameTextCodeDefaultText = @"Measurements" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

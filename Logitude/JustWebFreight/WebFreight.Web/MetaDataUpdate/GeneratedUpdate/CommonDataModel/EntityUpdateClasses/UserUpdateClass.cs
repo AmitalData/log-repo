@@ -2383,7 +2383,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature UserFeature_PRODUCTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRODUCTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Products", NameTextCodeDefaultText = @"Products" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature UserFeature_PRODUCTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRODUCTS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.Products", NameTextCodeDefaultText = @"Products" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature UserFeature_NEWUSER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEWUSER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = UserObjectTable.Id, Tenant = 0, NameTextCodeCode = "User.Features.NewUser", NameTextCodeDefaultText = @"New User" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
@@ -2611,7 +2611,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode UserTextCode_UserOResetUserPassword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.O.ResetUserPassword", DefaultText = "Reset User password",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode UserTextCode_UserOReTypePassword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.O.ReTypePassword", DefaultText = "Re-type Password",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode UserTextCode_UserOReTypePassword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.O.ReTypePassword", DefaultText = "Retype Password",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
  		   TextCode UserTextCode_User = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User", DefaultText = "User",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 

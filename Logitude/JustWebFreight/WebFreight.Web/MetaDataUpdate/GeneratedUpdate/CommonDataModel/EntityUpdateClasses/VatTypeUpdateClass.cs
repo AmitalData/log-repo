@@ -945,7 +945,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        ObjectTable VatTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "VatType" && d.Tenant == 0).FirstOrDefault();
 	        List<ObjectField> VatTypeObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "VatType").ToList();   
 
-			   TextCode VatTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.Q.VatTypes", DefaultText = @"Vat Types",LocalDefaultText = null, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   TextCode VatTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatType.Q.VatTypes", DefaultText = @"VAT Types",LocalDefaultText = null, ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature VatTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VATTYPES", ObjectTableId = VatTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "VatType.Features.VatTypes", NameTextCodeDefaultText = "VatTypes", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();

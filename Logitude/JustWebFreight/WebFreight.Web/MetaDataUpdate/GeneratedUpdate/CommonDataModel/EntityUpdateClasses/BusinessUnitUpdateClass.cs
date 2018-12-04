@@ -492,7 +492,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature BusinessUnitFeature_BusinessUnit_M_BusinessUnits = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessUnit.M.BusinessUnits", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.BusinessUnits", NameTextCodeDefaultText = @"Business Units" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature BusinessUnitFeature_BusinessUnit_M_BusinessUnits = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BusinessUnit.M.BusinessUnits", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = BusinessUnitObjectTable.Id, Tenant = 0, NameTextCodeCode = "BusinessUnit.Features.BusinessUnits", NameTextCodeDefaultText = @"Business Units" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
