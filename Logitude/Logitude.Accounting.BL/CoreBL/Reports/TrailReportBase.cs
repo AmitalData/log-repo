@@ -57,7 +57,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         }
 
-
+   
         public List<TrailReportM> Execute()
         {
             _TrailReportParam.FromDate = _TrailReportParam.FromDate.Date;

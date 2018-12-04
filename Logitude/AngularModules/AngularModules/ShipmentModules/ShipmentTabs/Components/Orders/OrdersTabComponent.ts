@@ -1178,7 +1178,7 @@ export class ShipmentOrderPackageItem extends BaseComponent {
         }
     }
 
-    OnGrossWeightLostFocus(input: number) {
+    OnGrossWeightLostFocus(input1: number) {
         if (this.fatherComponent.IsLCLEntity) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.Volume)) {
                 if (this.Width == null || this.Height == null || this.Length == null) {

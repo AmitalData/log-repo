@@ -508,13 +508,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.resx">
       <DependentUpon>201811081200180_JournalLineExternalReconcileNumberMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811071326248_AddShipmentPackageHarmonize.resx">
-      <DependentUpon>201811071326248_AddShipmentPackageHarmonize.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.resx">
-      <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
-    </EmbeddedResource>
+    </EmbeddedResource>     
     <EmbeddedResource Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.resx">
       <DependentUpon>201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs</DependentUpon>
     </EmbeddedResource>

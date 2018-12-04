@@ -618,8 +618,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (lineList.ReferenceDate == null) throw new ApplicationException("Reference Date is empty! line:" + lineList.Line);
 
                 //create line 
-                string line = "";
-                line += lineList.LineTypeCode;
+                myStringBuilder.Append(lineList.LineTypeCode);
 
                 myStringBuilder.Append(FormatString(lineList.VatNumber, 9, paddingDigit: '0'));
 

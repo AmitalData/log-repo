@@ -161,7 +161,31 @@
         <tr>
             <td>
                 <div [id]="InputDivId" class="DatePickerInputDiv" [ngStyle]="DatePickerInputDivStyle">
-                    <table>
+
+                    <!-- Input -->
+                    <div style="height: 100%;width: calc(100% - 24px);"  [style.float]="isRTL ? 'right' : 'left'" >
+                        <input [id]="DatePickerInputId"
+                            style="background: transparent;padding-top: 2px;box-shadow:none;border:1px solid transparent; border-radius:3px; text-indent:5px;height:18px;min-height:18px;max-height:20px;opacity:1 !important;line-height: 1.0;display: block;"
+                            [disabled]="IsDisabled"
+                            [(ngModel)]="InputValue"
+                            (focus)="onFocus()"
+                            (blur)="onBlur()"
+                            (keydown)="onkeydown($event)"
+                            (keyup)="onkeyup($event)"
+                            class="DatePickerInput"
+                            autocomplete="off" [placeholder]="DatePickerPlaceHolder" ondrop="return false"/>
+                    </div>
+
+                    <!-- Toggle Button -->
+                    <div style="height: 100%;width: 20px;" [style.float]="isRTL ? 'left' : 'right'">
+                        <button [id]="CalendarButtonId" tabindex="-1"
+                            class="Button CalendarButton RightCenter CustomButton"
+                            (click)="ToggleCalendar()"
+                            (focus)="OnBtnFocus()"
+                            [disabled]="IsDisabled"></button>
+                    </div>
+
+                    <!-- <table>
                         <tr>
                             <td>
                                 <input [id]="DatePickerInputId"
@@ -181,7 +205,9 @@
                                 </button>
                             </td>
                         </tr>
-                    </table>
+                    </table> -->
+
+
                 </div>
             </td>
 

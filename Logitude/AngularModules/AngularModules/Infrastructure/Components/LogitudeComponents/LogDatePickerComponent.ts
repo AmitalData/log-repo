@@ -162,11 +162,13 @@ export class LogDatePickerComponent implements OnInit, AfterViewInit, OnDestroy 
     isTextChanged: boolean = false;
 
     LayoutDirection: string = 'ltr';
+    isRTL: boolean = false;
 
     constructor(private cd: ChangeDetectorRef) {
         this.show = false;
 
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
     }
 
@@ -213,7 +215,7 @@ export class LogDatePickerComponent implements OnInit, AfterViewInit, OnDestroy 
 
     ngAfterViewInit() {
         this.timerToken = setTimeout(() => this.InitializeEnability(), 1);
-      
+
         if (this.FocusOnMe) {
             var element = document.getElementById(this.DatePickerInputId);
             element.focus();
@@ -2078,7 +2080,7 @@ export class LogDatePickerComponent implements OnInit, AfterViewInit, OnDestroy 
     ngOnDestroy() {
         console.log("datepicker:ngOnDestroy");
         this.cd = null;
-      
+
         if (this.CopyValueSubs) {
             this.CopyValueSubs.unsubscribe();
             this.CopyValueSubs = null;
