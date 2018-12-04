@@ -230,7 +230,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                         if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].StorageSiteCode))
                         {
-                            _MyDeclarationPM.Consignments[0].StorageSiteCode = customResponse.Cargo.CargoAdditionalData.First().goodsReceiptPlaceSiteID;
+                            _MyDeclarationPM.Consignments[0].StorageSiteCode = customResponse.Cargo.CargoAdditionalData.First().acceptedArrivalSiteID;
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update; 
                         }
                         
@@ -350,7 +350,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         MyResponseData.CargoResultList.CargoAdditionalDataList.UnloadingLocationName = customResponse.Cargo.CargoAdditionalData.FirstOrDefault().unloadingLocationName;
                         MyResponseData.CargoResultList.CargoAdditionalDataList.TotalRecordNumberOfPackeges = String.Format("{0:N2}", customResponse.Cargo.CargoAdditionalData.FirstOrDefault().totalRecordNumberOfPackeges);
-                        MyResponseData.CargoResultList.CargoAdditionalDataList.GoodsReceiptPlaceSiteName = customResponse.Cargo.CargoAdditionalData.FirstOrDefault().goodsReceiptPlaceSiteName;
+                        MyResponseData.CargoResultList.CargoAdditionalDataList.GoodsReceiptPlaceSiteName = customResponse.Cargo.CargoAdditionalData.FirstOrDefault().acceptedArrivalSiteName;
                         MyResponseData.CargoResultList.CargoAdditionalDataList.TotalRecordWeight = String.Format("{0:N2}", customResponse.Cargo.CargoAdditionalData.FirstOrDefault().totalRecordWeight);
                         MyResponseData.CargoResultList.CargoAdditionalDataList.TransitDestinationLocationName = customResponse.Cargo.CargoAdditionalData.FirstOrDefault().transitDestinationLocationName;
                     }
