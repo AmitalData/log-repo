@@ -97,6 +97,26 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         DirectQueryService mappingService = new DirectQueryService(authToken.Tenant);
                         ShipmentPM entityPM = mappingService.DirectCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
 
+                        if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
+                        {
+                            throw new ApplicationException("Missing volume unit code");
+                        }
+
+                        if (string.IsNullOrEmpty(entityPM.DimensionsUnitCode))
+                        {
+                            throw new ApplicationException("Missing dimensions unit code");
+                        }
+
+                        if (string.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
+                        {
+                            throw new ApplicationException("Missing gross weight unit code");
+                        }
+
+                        if (string.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
+                        {
+                            throw new ApplicationException("Missing chargeable weight unit code");
+                        }
+
                         if (entity.IsOperationalClosed)
                         {
                             string errorMessage = "";
@@ -136,7 +156,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                             }
                         }
-
+                        
                         if (!string.IsNullOrEmpty(entityPM.IncotermId))
                         {
                             IncotermRepository myIncotermRepository = new IncotermRepository(entityPM.Tenant);
@@ -148,8 +168,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
                         }
 
+                        AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
                         if (!string.IsNullOrEmpty(entityPM.CustomerId))
                         {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.CustomerAddressId = address.Id;
+                            }
+
                             if (entityPM.CustomerId == entityPM.ShipperId || entityPM.CustomerId == entityPM.ConsigneeId || entityPM.CustomerId == entityPM.AgentId || entityPM.CustomerId == entityPM.IssuingCarrierAgentId || entityPM.CustomerId == entityPM.CustomAgentExportId || entityPM.CustomerId == entityPM.CustomAgentImportId || entityPM.CustomerId == entityPM.Notify1Id || entityPM.CustomerId == entityPM.Notify2Id || entityPM.CustomerId == entityPM.ShipperNotExporterId || entityPM.CustomerId == entityPM.ConsigneeNotImporterId || entityPM.CustomerId == entityPM.FreightForwarderId || entityPM.CustomerId == entityPM.ColoaderId || entityPM.CustomerId == entityPM.CustomClearancePointId || entityPM.CustomerId == entityPM.ConsolidatorId || entityPM.CustomerId == entityPM.ReleasingAgentId)
                             {
                                 CardRepository cardRepository = new CardRepository(entityPM.Tenant);
@@ -173,7 +200,25 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 throw new ApplicationException("The Customer Doesn't Exist on the shipment");
                             }
                         }
-                        
+                                                
+                        if (!string.IsNullOrEmpty(entityPM.ShipperId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ShipperAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ConsigneeAddressId = address.Id;
+                            }
+                        }                        
+
                         if (entityPM.ShipmentPackages.Count > 0)
                         {
                             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
