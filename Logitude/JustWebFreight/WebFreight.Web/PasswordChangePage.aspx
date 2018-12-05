@@ -262,14 +262,14 @@
 
                                                                         <table>
 
-                                                                            <tr  id="CurrentPasswordArea" style="height:20px">
+                                                                            <tr  id="CurrentPasswordArea" style="height:20px;">
                                                                                  <td class="column1">Current password:
-                                                                                    <input class="auto-style1" style="height:20px" id="CurrentPassword" type="password" runat="server" required data-email-msg="current password is required!" onkeypress="capLock(event)" />
+                                                                                    <input class="auto-style1" style="height:20px" id="CurrentPassword" type="password" runat="server" required data-email-msg="current password is required!"  onchange="onCurrentPasswordChanged()" onkeypress="capLock(event)" />
                                                                               <br />
                                                                                      </td>
                                                                             </tr>
 
-
+                                                                   
                                                                                  <tr style="height:20px">
 
                                                                                      <td>
@@ -293,9 +293,11 @@
 
                                                                             </tr>
 
+                                                                       
+
                                                                                  <tr style="height:20px">
                                                                                  <td class="column1">Confirm password:
-                                                                                  <input class="auto-style1" style="height:20px" id="RetypedPassword" type="password" runat="server" required data-email-msg="password is required!" onkeypress="capLock(event)" onchange="onPasswordChanged2()" />
+                                                                                  <input class="auto-style1" style="height:20px" id="ConfirmPassword" type="password" runat="server" required data-email-msg="password is required!" onkeypress="capLock(event)" onchange="onConfirmPasswordChanged()" />
                                                                                 </td>
                                                                             </tr>
                                                                       
@@ -365,8 +367,8 @@
 
 
 
-                                                                            <tr>
-                                                                                <td><p  style="color: red; display: none; text-align: left;height:auto" id="errorsList"></p></td>
+                                                                            <tr style="min-height:15px">
+                                                                                <td style="min-height:15px"><p  style="color: red; text-align: left;height:auto;display:block" id="errorsList"></p></td>
                                                                             </tr>
 
                                                                       <tr style="height:20px">
@@ -375,12 +377,12 @@
                                                                                     <p style="text-align: left">
 
                                                                                         <input class="cmdSubmit" type="submit" value="Submit >" runat="server" id="cmdSubmit" data-bind="click: submitMethod" />
-
-                                                                                        <a id="BackToLogin" style="margin-left: 15px; margin-top: 50px; color: #4B4A4A; font-size: 12px; font-family: Arial; vertical-align: central; display: none" href="login.aspx">Back to login page</a>
+                    
+                                                                                        <a id="BackToLogin" style=" font-size: 12px;margin-top:5px;margin-left:15px; font-family: Arial; vertical-align: central; display: none;text-decoration:underline" href="login.aspx">Back to login page</a>
                                                                                     </p>
 
-                                                                                    <p id="busyIndicator" style="display: none; text-align: center">
-                                                                                        <img width="50" height="50" src="images/LoginScreen/indicator.gif" alt='loading' />
+                                                                                    <p id="busyIndicator" style="display: none; text-align: center;margin-top:-45px;margin-left:50px">
+                                                                                        <img width="40" height="40" src="images/LoginScreen/indicator.gif" alt='loading' />
                                                                                     </p>
                                                                                 </td>
 
@@ -432,7 +434,7 @@
     <script type="text/javascript">
 
          var x =  window.sessionStorage.getItem("PasswordChange");
- 
+
          if (x == "ShowLink") {
              window.sessionStorage.setItem("PasswordChange", "");
              document.getElementById("BackToLogin").style.display = "";
@@ -515,36 +517,53 @@
             document.getElementById(id).selectionStart = cursorPosition;
             document.getElementById(id).selectionEnd = cursorPosition;
         }
-        onPasswordChanged2 = function () {
+
+
+
+            onCurrentPasswordChanged = function () {
             $("#errorsList").hide();
+            var passtring = $("#CurrentPassword").val();
+            if (passtring) {
+                var cursorPosition = document.getElementById("CurrentPassword").selectionStart;
+                $("#CurrentPassword").val($.trim(passtring));
+                setCaretToPos("CurrentPassword", cursorPosition);
+ 
+
+            }
+        }
+
+
+
+
+
+
+
+        onConfirmPasswordChanged = function () {
+            $("#errorsList").hide();
+            var passtring = $("#ConfirmPassword").val();
+            if (passtring) {
+                var cursorPosition = document.getElementById("ConfirmPassword").selectionStart;
+                $("#ConfirmPassword").val($.trim(passtring));
+                setCaretToPos("ConfirmPassword", cursorPosition);
+ 
+
+            }
         }
 
 
 
 
         onPasswordChanged = function () {
-
-
             $("#errorsList").hide();
             var passtring = $("#Password").val();
             if (passtring) {
-
-
                 var cursorPosition = document.getElementById("Password").selectionStart;
                 $("#Password").val($.trim(passtring));
                 setCaretToPos("Password", cursorPosition);
-                $("#errorsList").hide();
- 
+
+
             }
 
-
-
-
-
-
-
-
-            
         }
 
 
@@ -605,11 +624,11 @@
             
             var valid = true;
             var newPassword = $("#Password").val();
-            var retypedPassword = $("#RetypedPassword").val();
+            var confirmPassword = $("#ConfirmPassword").val();
             var errorMessage = "";
             
             if (valid) {
-                if (newPassword == retypedPassword) {
+                if (newPassword == confirmPassword) {
                     if (newPassword) {
                         errorMessage = PasswordValidation(newPassword, userEmail);
                         if (errorMessage) valid = false;
@@ -965,8 +984,11 @@
             if (!isResetRequest) {
                 document.getElementById("CurrentPassword").style.height = "14px";
                 document.getElementById("Password").style.height = "14px";
-                document.getElementById("RetypedPassword").style.height = "14px";
-                document.getElementById("LoginScreen").style.height = "270px";
+                document.getElementById("ConfirmPassword").style.height = "14px";
+                document.getElementById("LoginScreen").style.height = "300px";
+                document.getElementById("LoginScreen").style.width = "690px";
+                document.getElementById("LoginScreen").style.minWidth = "690px";
+                
 
             } else {
                 document.getElementById("CurrentPasswordArea").style.display = "none";
