@@ -282,8 +282,7 @@
                                                                                  </td>
                                                                                     <td style="width: 70px">
                                                                                     <img class="RedTxt" src="images/ChangePassword.png" style="width: 16px; height: 16px; vertical-align: bottom; margin-left: -10px; margin-top: 20px" />
-
-                                                                                </td>
+                                                                        </td>
                                                                                              </tr>
                                                                                          </table>
                                                                                      </td>
@@ -302,7 +301,7 @@
                                                                       
 
                                                                 
-<%--                                                                           <tr style="height:10px">
+                                                                           <tr style="height:10px">
                                                                                 <td class="column1">
                                                                                     <div id="divMayus" style="visibility: hidden">
                                                                                         <img width="15" height="15" src="images/SimplogIcons/warning.png" />
@@ -310,18 +309,18 @@
                                                 
                                                                                     </div>
                                                                                 </td>
-                                                                            </tr>--%>
+                                                                            </tr>
                                                                         
                                                                             <tr style="height:80px;">
                                                                                 <td style="vertical-align:top;">
                                                                                 
-                                                                                <div style="vertical-align:top;text-align:left;margin-top:5px">
-                                                                                    <div style="font-size:13px;font-family:'Arial'">You Password must have : </div>
+                                                                                <div id="PasswordMustHaveArea" style="vertical-align:top;text-align:left;margin-top:-15px">
+                                                                                    <div style="font-size:13px;font-family:'Arial'">Your Password must have : </div>
                                                                           <div style="height:20px">
                                                                                          <table>
                                                                                              <tr>           
                                                                                                  <td style="width:16px;">  <img id="PasswordLenghtImg" width="16" src="images/verified.png" alt='loading' /></td>
-                                                                                                 <td><div id="PasswordLenghtDiv" style="font-size:13px;color:gray;margin-left:5px;margin-top:-5px;vertical-align:central;font-family:'Arial'">8 or mor characters</div></td>
+                                                                                                 <td><div id="PasswordLenghtDiv" style="font-size:13px;color:gray;margin-left:5px;margin-top:-5px;vertical-align:central;font-family:'Arial'">8 or more characters</div></td>
                                                                                              </tr>
                                                                                          </table>
                                                                                      </div>
@@ -481,24 +480,32 @@
 
            function capLock(e) {
                
-               //kc = e.keyCode ? e.keyCode : e.which;
+               kc = e.keyCode ? e.keyCode : e.which;
 
-               //if (kc == 20) {
+               if (kc == 20) {
 
-               //    if (document.getElementById('divMayus').style.visibility == 'hidden') {
-               //        document.getElementById('divMayus').style.visibility = 'visible';
-               //    }
-               //    else {
-               //        document.getElementById('divMayus').style.visibility = 'hidden';
-               //    }
-               //}
-               //else {
-               //    sk = e.shiftKey ? e.shiftKey : ((kc == 16) ? true : false);
-               //    if (((kc >= 65 && kc <= 90) && !sk) || ((kc >= 97 && kc <= 122) && sk))
-               //        document.getElementById('divMayus').style.visibility = 'visible';
-               //    else
-               //        document.getElementById('divMayus').style.visibility = 'hidden';
-               //}
+                   if (document.getElementById('divMayus').style.visibility == 'hidden') {
+                       document.getElementById('divMayus').style.visibility = 'visible';
+                   }
+                   else {
+                       document.getElementById('divMayus').style.visibility = 'hidden';
+                   }
+               }
+               else {
+                   sk = e.shiftKey ? e.shiftKey : ((kc == 16) ? true : false);
+                   if (((kc >= 65 && kc <= 90) && !sk) || ((kc >= 97 && kc <= 122) && sk))
+                       document.getElementById('divMayus').style.visibility = 'visible';
+                   else
+                       document.getElementById('divMayus').style.visibility = 'hidden';
+               }
+
+
+               if (document.getElementById('divMayus').style.visibility == 'visible') {
+                   document.getElementById('PasswordMustHaveArea').style.marginTop = "0px";
+               } else {
+                       document.getElementById('PasswordMustHaveArea').style.marginTop = "-17px";
+               }
+
            }
     </script>
 
