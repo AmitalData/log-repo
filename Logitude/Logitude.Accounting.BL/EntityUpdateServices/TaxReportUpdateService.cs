@@ -130,7 +130,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
                 // recalculate totals
-                List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(entityPM.Id, entityPOCO.Tenant);
+                List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(entityPM.Id, entityPOCO.Tenant).ToList();
 
 
                 entityPM.TaxableOutputAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
