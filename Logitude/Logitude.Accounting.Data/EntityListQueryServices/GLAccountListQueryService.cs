@@ -107,7 +107,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         NextDueDate = md.NextDueDate,
                                                         TotalOpenChequesInLocalCur = md.TotalOpenChequesInLocalCur,
                                                         TotFutureOpenChequesInLocalCur = md.TotFutureOpenChequesInLocalCur,
-                                                     });
+
+                                                        //categories
+                                                        Category1Name = a.Category1.EnglishName,
+                                                        Category2Name = a.Category2.EnglishName,
+                                                        Category3Name = a.Category3.EnglishName,
+                                                        Category4Name = a.Category4.EnglishName,
+                                                        Category5Name = a.Category5.EnglishName,
+                                               });
             return query;
         }
 
