@@ -130,6 +130,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     itemPOCO.TimeInMinutes = itemChanged.TimeInMinutes;
                                     itemPOCO.Description = itemChanged.Description;
                                     itemPOCO.WINumber = itemChanged.WINumber;
+                                    itemPOCO.EmployeeUserId = itemChanged.EmployeeUserId;
                                     itemPOCO.SprintId = itemChanged.SprintId;
                                     itemPOCO.ProjectId = itemChanged.ProjectId;
                                     itemPOCO.DateOfWork = itemChanged.DateOfWork;
