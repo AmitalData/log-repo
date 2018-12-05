@@ -17,6 +17,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System.Configuration;
 using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -93,11 +94,37 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var customContext = MainContext as ICustomContext;
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
                     DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPOCO.EntityId1, false, false);
-                    if (currentDeclarationCourierStatusPM == null)
+                    if (currentDeclarationCourierStatusPM != null)
                     {
-                        //DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), entityPOCO.Tenant);
-                        //DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(null);
-                        //declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                        string prevVal = null;
+                        string currvVal = null;
+                        CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, entityPOCO.EntityId1, entityPOCO.Tenant);
+                        switch (entityPOCO.InterfaceTypeCode)
+                        {
+                            case "2755":
+                                prevVal = currentDeclarationCourierStatusPM.CourierPaymentStatusCode;
+                                calculateDeclarationCourierStatus.CalcCourierPaymentStatusCode(currentDeclarationCourierStatusPM);
+                                currvVal = currentDeclarationCourierStatusPM.CourierPaymentStatusCode;
+                                break;
+                            case "2750":
+                                prevVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                                calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
+                                currvVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                                break;
+                            case "1170":
+                                prevVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                                calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(currentDeclarationCourierStatusPM);
+                                currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                                break;
+                            default:
+                                break;
+                        }
+                        if (prevVal != currvVal)
+                        {
+                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), entityPOCO.Tenant);
+                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                        }
                     }
                 }
             }
