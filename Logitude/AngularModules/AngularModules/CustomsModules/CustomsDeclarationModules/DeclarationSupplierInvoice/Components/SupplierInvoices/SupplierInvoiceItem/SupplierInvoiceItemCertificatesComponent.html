@@ -71,7 +71,7 @@
 
 
 
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ReqConfirmationTypeCode' | TextCodeTranslationPipe" [binding]="'ReqConfirmationTypeCode'" [width]="'85'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ReqConfirmationTypeCode' | TextCodeTranslationPipe" [binding]="'ConfirmationTypeCode'" [width]="'85'" [Editable]="true" [Alignment]="'right'">
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                             <span>{{item.ConfirmationTypeName}}</span>
@@ -130,7 +130,8 @@
 
                                 </log-column>
 
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CertificateExemptionTypeCode' | TextCodeTranslationPipe" [width]="'85'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CertificateExemptionTypeCode' | TextCodeTranslationPipe" [width]="'85'"
+                                 [Editable]="true" [Alignment]="'right'" [binding]="'CertificateExemptionTypeCode'">
 
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
@@ -150,7 +151,8 @@
                                     </log-cell-template>
 
                                 </log-column>
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ResConfirmationTypeCode' | TextCodeTranslationPipe" [width]="'70'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ResConfirmationTypeCode' | TextCodeTranslationPipe" [width]="'70'"
+                                 [Editable]="true" [Alignment]="'right'" [binding]="'ResConfirmationTypeCode'">
 
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
@@ -171,7 +173,8 @@
 
 
                                 </log-column>
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CustomsAttachmentID' | TextCodeTranslationPipe" [width]="'145'" [Editable]="true" [Alignment]="'right'">
+                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CustomsAttachmentID' | TextCodeTranslationPipe" [width]="'145'" 
+                                [Editable]="true" [Alignment]="'right'" [binding] ="'CustomsAttachmentID'">
 
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
@@ -188,7 +191,8 @@
                                 </log-column>
 
                                  
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ExternalRequestTypeCode' | TextCodeTranslationPipe" [width]="'100'" [Editable]="true" [Alignment]="'right'" [visibility]="IKEAFeature">
+                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ExternalRequestTypeCode' | TextCodeTranslationPipe" [width]="'100'"
+                                 [Editable]="true" [Alignment]="'right'" [visibility]="IKEAFeature" [binding]="'ExternalRequestTypeCode'">
 
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
@@ -204,7 +208,8 @@
 
                                 </log-column>
 
-                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ApprovalRequestNumber' | TextCodeTranslationPipe" [width]="'110'" [Editable]="true" [Alignment]="'right'" [visibility]="IKEAFeature">
+                                <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ApprovalRequestNumber' | TextCodeTranslationPipe" [width]="'110'" 
+                                [Editable]="true" [Alignment]="'right'" [visibility]="IKEAFeature" [binding]="'ApprovalRequestNumber'">
 
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
