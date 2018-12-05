@@ -51,7 +51,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             courierMasterMamanModel.MAWB = _CourierMasterPM.MAWB != null ? _CourierMasterPM.MAWB : " ";
             courierMasterMamanModel.AirlineId = _CourierMasterPM.AirlinePrefix != null ? _CourierMasterPM.AirlinePrefix : " ";
             courierMasterMamanModel.HAWBShort = _CourierMasterPM.ShortHAWB != null ? _CourierMasterPM.ShortHAWB : " ";
-            courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode : " ";
+            courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode.Substring(0, 3) : "";
             courierMasterMamanModel.Weight = "K";
             courierMasterMamanModel.PackageQuantity = _CourierMasterPM.PackageQuantity > 0 ? _CourierMasterPM.PackageQuantity.ToString() : " ";
             courierMasterMamanModel.GrossMassMeasure = _CourierMasterPM.GrossMassMeasure > 0 ? _CourierMasterPM.GrossMassMeasure.ToString() : " ";

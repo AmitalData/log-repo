@@ -11,7 +11,7 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import { PhysicalCheckWebService } from '../../../Customs/Services/WebServices/PhysicalCheckWebService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 
-export class PhysicalCheck {
+export class PhysicalCheckMenuButtonsHandler {
     isValid: boolean = false;
     isButtonClicked: boolean = false;
     MenuButtonCode: string = null;
@@ -55,6 +55,10 @@ export class PhysicalCheck {
                 for (var i = 0; i < menuButtons.length; i++) {
                     var button = menuButtons[i];
 
+                    if (button.EventCode == "Actions") {
+                        button.Width = 70;
+                    }
+
                     if (button.EventCode == "ClosePhysicalCheck") {
                         if (this.EntityPM.IsClosed) {
                             button.IsDisabled = true;
@@ -90,8 +94,8 @@ export class PhysicalCheck {
     private ClosePhysicalCheckMethod() {
 
         var confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 400;
-        confirmWindow.Show(TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
+        confirmWindow.Width = 300;
+        confirmWindow.Show("האם ברצונך לסגור את הבדיקה ?");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this._PhysicalCheckWebService.PostClosePhysicalCheck(this.EntityPM.Id, this.EntityPM.Tenant)
@@ -101,7 +105,7 @@ export class PhysicalCheck {
                             let messageWindow = new MessageWindow();
                             messageWindow.Width = 300;
                             messageWindow.Height = 180;
-                            messageWindow.Show(TextCodeTranslator.Translate("Customs.PhysicalCheck.O.ClosePhysicalCheck"));
+                            messageWindow.Show("הבדיקה נסגרה בהצלחה");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.ClosePhysicalCheck"));
                         }
                     });
             }

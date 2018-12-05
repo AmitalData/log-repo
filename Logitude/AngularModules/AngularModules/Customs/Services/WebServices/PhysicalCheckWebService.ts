@@ -48,7 +48,7 @@ export class PhysicalCheckWebService {
             authHeader.append('Content-Type', 'application/json');
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/PostClosePhysicalCheck/?physicalCheckId=" + physicalCheckId + "&tenant=" + tenant, {
+            return this._http.post(this._apiUrl + "/PostClosePhysicalCheck/?physicalCheckId=" + physicalCheckId + "&tenant=" + tenant, {
                 headers: authHeader
             }).map(response => {
 
