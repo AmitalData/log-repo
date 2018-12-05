@@ -82,7 +82,26 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                      
+                        if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
+                        {
+                            throw new ApplicationException("Missing volume unit code");
+                        }
+
+                        if (string.IsNullOrEmpty(entityPM.DimensionsUnitCode))
+                        {
+                            throw new ApplicationException("Missing dimensions unit code");
+                        }
+
+                        if (string.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
+                        {
+                            throw new ApplicationException("Missing gross weight unit code");
+                        }
+
+                        if (string.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
+                        {
+                            throw new ApplicationException("Missing chargeable weight unit code");
+                        }
+
                         if (!string.IsNullOrEmpty(entityPM.IncotermId))
                         {
                             IncotermRepository myIncotermRepository = new IncotermRepository(entityPM.Tenant);
@@ -94,14 +113,39 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
                         }
 
+                        AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
                         if (!string.IsNullOrEmpty(entityPM.CustomerId))
                         {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.CustomerAddressId = address.Id;
+                            }
+
                             CardRepository cardRepository = new CardRepository(entityPM.Tenant);
                             Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
                             if (customer != null)
                             {
                                 entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
                                 entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
+                            }
+                        }
+   
+                        if (!string.IsNullOrEmpty(entityPM.ShipperId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ShipperAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ConsigneeAddressId = address.Id;
                             }
                         }
 
