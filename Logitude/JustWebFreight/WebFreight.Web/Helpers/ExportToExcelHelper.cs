@@ -10,6 +10,7 @@ using Syncfusion.XlsIO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -280,7 +281,13 @@ namespace WebFreight.Web.Helpers
                 int count = (int)getCountMethodInfo.Invoke(context, parameters);
 
                 // Get dataList
-                queryOperations.PageSize = count;
+                int pagesize = count;
+                if (pagesize > 65534)
+                {
+                    queryOperations.GetAll = false;
+                    pagesize = 65000;
+                }
+                queryOperations.PageSize = pagesize;
                 xmlFilters = filterSerializer.SerializeFilterItems(queryOperations);
 
                 parameters = new object[] { xmlFilters, tenant };
@@ -376,6 +383,7 @@ namespace WebFreight.Web.Helpers
                     }
 
                     int[,] array = new int[,] { { 65, 0 } };
+                    
                     foreach (XmlNode node in entitiesList.Item(0).ChildNodes)
                     {
                         string nodename = TranslateTextsClass.Translate(node.Name, tenant);
@@ -415,7 +423,7 @@ namespace WebFreight.Web.Helpers
                         //sheet.Range.NumberFormat = "yyyy-mm-dd;@";
                         range.CellStyle.Font.FontName = "Times New Roman";
                         range.CellStyle.Font.Bold = true;
-
+                      
                     }
                     //TenantRepository tenantRepoitory = new TenantRepository(tenant);
                     //var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
@@ -429,7 +437,7 @@ namespace WebFreight.Web.Helpers
                         {
 
                             QueryColumnPM column = queryColumns.Where(q => q.ObjectFieldListLabelTextCodeCode == childNode.Name || q.ObjectFieldFullNameTextCodeCode == childNode.Name).FirstOrDefault();
-
+                           
                             switch (column.ObjectFieldDataTypeCode)
                             {
                                 case "Text":
@@ -495,6 +503,7 @@ namespace WebFreight.Web.Helpers
                             cellCol++;
                         }
                         cellRow++;
+                        
 
                     }
 
