@@ -1894,7 +1894,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn TodayDepositsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayDepositsQuery.Id, IndexOrder = 6, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter TodayDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "#today",PredefinedValue2 = null, QueryId = TodayDepositsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter TodayDepositsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = BankDepositObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == BankDepositObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "#today",PredefinedValue2 = "#today", QueryId = TodayDepositsQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
