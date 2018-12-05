@@ -56,6 +56,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                  select a.Id);
             return q;
         }
+        public IQueryable<string> GetQGLAccIdBySalesmanId(int tenant, string SalesmanId, string AccountTypeCode)
+        {
+            var q = (
+                from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
+                join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
+                on a.Id equals card.GLAccountId
+                join cust in (this.context as AccountingContext).Customers
+                .Where(r => r.SalesmanUserId == SalesmanId && r.Tenant == tenant)
+                on card.Id equals cust.Id
+                select a.Id);
+            return q;
+        }
         public bool CheckIfDisplayNumberExists(string displayNo, string internalNumber, int tenant)
         {
             return this.repository.CheckIfDisplayNumberExists(displayNo, internalNumber, tenant);
