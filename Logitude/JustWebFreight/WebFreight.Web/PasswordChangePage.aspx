@@ -481,24 +481,24 @@
 
            function capLock(e) {
                
-               kc = e.keyCode ? e.keyCode : e.which;
+               //kc = e.keyCode ? e.keyCode : e.which;
 
-               if (kc == 20) {
+               //if (kc == 20) {
 
-                   if (document.getElementById('divMayus').style.visibility == 'hidden') {
-                       document.getElementById('divMayus').style.visibility = 'visible';
-                   }
-                   else {
-                       document.getElementById('divMayus').style.visibility = 'hidden';
-                   }
-               }
-               else {
-                   sk = e.shiftKey ? e.shiftKey : ((kc == 16) ? true : false);
-                   if (((kc >= 65 && kc <= 90) && !sk) || ((kc >= 97 && kc <= 122) && sk))
-                       document.getElementById('divMayus').style.visibility = 'visible';
-                   else
-                       document.getElementById('divMayus').style.visibility = 'hidden';
-               }
+               //    if (document.getElementById('divMayus').style.visibility == 'hidden') {
+               //        document.getElementById('divMayus').style.visibility = 'visible';
+               //    }
+               //    else {
+               //        document.getElementById('divMayus').style.visibility = 'hidden';
+               //    }
+               //}
+               //else {
+               //    sk = e.shiftKey ? e.shiftKey : ((kc == 16) ? true : false);
+               //    if (((kc >= 65 && kc <= 90) && !sk) || ((kc >= 97 && kc <= 122) && sk))
+               //        document.getElementById('divMayus').style.visibility = 'visible';
+               //    else
+               //        document.getElementById('divMayus').style.visibility = 'hidden';
+               //}
            }
     </script>
 
