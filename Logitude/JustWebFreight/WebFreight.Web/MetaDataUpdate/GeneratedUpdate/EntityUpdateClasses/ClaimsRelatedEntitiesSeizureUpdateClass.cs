@@ -1,0 +1,647 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+ 
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.QuoteModel;
+using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.Repositories;
+using WebFreight.Web.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.GlobalModel;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.InfrastructureModel;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using WebFreight.Web.InvoiceModel;
+using WebFreight.Web.MetaDataUpdate.AddClasses;
+using WebFreight.Web.MetaDataUpdate.DetailClasses;
+using WebFreight.Web.QuoteModel;
+using WebFreight.Web.ShipmentsModel;
+using WebFreight.Web.CommonDataModel.DomainServices;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System.Data.Entity.Core.EntityClient;
+using System.Configuration;
+using Simplog.Server.Infrastructure;
+using System.Data.Common;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.BL;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.BL;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.BookingLib.Data.EntityPOCOs;
+using Logitude.BookingLib.BL;
+using Logitude.BookingLib.Data.Repositories;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Social.Data.EntityPOCOs;
+using Logitude.Social.BL;
+using Logitude.Social.Data.Repsitories;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Customs.BL.CloseTables;
+using Logitude.CRM.BL.CLoseTable;
+using Logitude.BookingLib.BL.CLoseTable;
+using Logitude.WarehouseLib.Data.Repositories;
+using Logitude.WarehouseLib.Data.EntityPOCOs;
+using Logitude.WarehouseLib.BL.CLoseTable;
+using Logitude.TimeManagement.Data.Repositories;
+using Logitude.TimeManagement.Data.EntityPOCOs;
+using Logitude.TimeManagement.BL.CLoseTable;
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
+{
+   public class ClaimsRelatedEntitiesSeizureUpdateClass
+   {  
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+        {                     
+            
+            AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
+            {
+			
+	             				    ObjectTableName =  "Customs.ClaimsRelatedEntitiesSeizure",
+			      				    IsNew =  true,
+			      				    DBTableName =  "Customs.ClaimsRelatedEntitiesSeizures",
+			      				    OldDBTableName =  "Customs.ClaimsRelatedEntitiesSeizures",
+			      				    ObjectTableSingular =  "ClaimsRelatedEntitiesSeizure",
+			      				    ObjectTablePlural =  "ClaimsRelatedEntitiesSeizures",
+			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  false,
+			      				    IsNewWizard =  false,
+			      				    KeyPropertyPath =  "ClaimId",
+			      				    AutoCompleteSearchWindow =  false,
+			      				    IsClosed =  false,
+			      				    CacheOnClient =  false,
+			      				    EditableFromAutoCompleteWindow =  false,
+			      				    HasCounter =  false,
+			      				    EnableAddFromLOV =  false,
+			      				    IsRestrictable =  false,
+			      				    IsMain =  false,
+			      				    IsAutoComplete =  false,
+			      				    EnableEditFromLOV =  false,
+			      				    SortingByObjectField =  "ClaimId",
+			      				    InActive =  false,
+			      				    IsSaveButtonVisible =  false,
+			      				    IsComposition =  true,
+			      				    EnableSecurity =  false,
+			      				    AllowCustomFields =  false,
+			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "BR",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    LocalDefaultText =  "עיקול ישויות תביעה",
+			      				    DefaultText =  "ClaimsRelatedEntitiesSeizure",
+			      				    Code =  "e272",
+			      				    Name =  " Query Group",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Customs",
+			      				    ServerModuleName =  "Customs",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    Code1 =  "75ce",
+			      				    Name1 =  " Query Group",
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			                    
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
+		}
+	
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository)
+	    {
+	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ClaimId",
+					  						OldFieldName =  "ClaimId",
+					  						IsNew =  false,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ClaimId",
+					  						ListPropertyPath =  "ClaimId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ClaimId",
+					  						DefaultText =  "Claim Id",
+					  						FullLocalDefaultText =  "מספר תביעה",
+					  						ListFieldLable =  "ClaimIdListLable",
+					  						ListLableDefaultText =  "Claim Id",
+					  						ListLocalDefaultText =  "מספר תביעה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CounterKey",
+					  						OldFieldName =  "CounterKey",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CounterKey",
+					  						ListPropertyPath =  "CounterKey",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CounterKey",
+					  						DefaultText =  "EntityCounterKey",
+					  						FullLocalDefaultText =  "מונה ישות",
+					  						ListFieldLable =  "CounterKeyListLable",
+					  						ListLableDefaultText =  "Entity Counter Key",
+					  						ListLocalDefaultText =  "מונה ישות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SeizureLinoNo",
+					  						OldFieldName =  "SeizureLinoNo",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SeizureLinoNo",
+					  						ListPropertyPath =  "SeizureLinoNo",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SeizureLinoNo",
+					  						DefaultText =  "LinoNo",
+					  						FullLocalDefaultText =  "מונה",
+					  						ListFieldLable =  "SeizureLinoNoListLable",
+					  						ListLableDefaultText =  "Line No",
+					  						ListLocalDefaultText =  "מונה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SeizureFactorCode",
+					  						OldFieldName =  "SeizureFactorCode",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  2,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  2,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SeizureFactorCode",
+					  						ListPropertyPath =  "SeizureFactorCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SeizureFactorCode",
+					  						DefaultText =  "Seizure Factor Code",
+					  						FullLocalDefaultText =  "גורם מעקל",
+					  						ListFieldLable =  "SeizureFactorCodeListLable",
+					  						ListLableDefaultText =  "Seizure Factor Code",
+					  						ListLocalDefaultText =  "גורם מעקל",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SeizureMethodCode",
+					  						OldFieldName =  "SeizureMethodCode",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.SeizureMethodType",
+					  						MinLength =  0,
+					  						MaxLength =  2,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  2,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SeizureMethodCode",
+					  						ListPropertyPath =  "SeizureMethodCode",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SeizureMethodCode",
+					  						DefaultText =  "Seizure Method Code",
+					  						FullLocalDefaultText =  "סוג פעילות",
+					  						ListFieldLable =  "SeizureMethodCodeListLable",
+					  						ListLableDefaultText =  "Seizure Method Code",
+					  						ListLocalDefaultText =  "סוג פעילות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SeizureMethodName",
+					  						OldFieldName =  "SeizureMethodName",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  50,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  50,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SeizureMethodName",
+					  						ListPropertyPath =  "SeizureMethodName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SeizureMethodName",
+					  						DefaultText =  "Seizure Method Name",
+					  						FullLocalDefaultText =  "סוג פעילות",
+					  						ListFieldLable =  "SeizureMethodNameListLable",
+					  						ListLableDefaultText =  "Seizure Method Name",
+					  						ListLocalDefaultText =  "סוג פעילות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SeizureAmount",
+					  						OldFieldName =  "SeizureAmount",
+					  						IsNew =  true,
+					  						IsChecked =  true,
+					  						IsDeleted =  false,
+					  						ObjectTableName =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						FieldsDataType =  "Decimal",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						DisplayOnLookUp =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SeizureAmount",
+					  						ListPropertyPath =  "SeizureAmount",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ClaimsRelatedEntitiesSeizure",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  16,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SeizureAmount",
+					  						DefaultText =  "SeizureAmount",
+					  						FullLocalDefaultText =  "סכום",
+					  						ListFieldLable =  "SeizureAmountListLable",
+					  						ListLableDefaultText =  "Seizure Amount",
+					  						ListLocalDefaultText =  "סכום",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						IsSpellCheckedFullFieldLable =  false,
+					  						IsSpellCheckedHelpLocalDefaultText =  false,
+					  						IsSpellCheckedShortLocalDefaultText =  false,
+					  						IsSpellCheckedListLocalDefaultText =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+ 
+	    }
+
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
+	    {  	   
+	    }
+
+	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
+	    {    
+
+	    }
+
+	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
+	    {      
+	    } 
+	
+	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+		}
+
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext)
+	    {   
+			ObjectTable ClaimsRelatedEntitiesSeizureObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ClaimsRelatedEntitiesSeizure" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "CREV",
+                EnglishName = "Created",
+                Tenant = 0,
+                AddedManually = false,
+				IsManualEntry = false,
+                LocalName = "Created",
+                ObjectTableId = ClaimsRelatedEntitiesSeizureObjectTable.Id,
+                ShortView = true,
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "UPEV",
+                EnglishName = "Updated",
+                Tenant = 0,
+                AddedManually = false,
+				IsManualEntry = false,
+                LocalName = "Updated",
+                ObjectTableId = ClaimsRelatedEntitiesSeizureObjectTable.Id,
+                ShortView = false,
+            }, EventTypeRepository, tenantEventTypes);
+
+
+	    }
+	
+	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
+	    {  
+	    }     
+
+   }
+    
+}
+	 

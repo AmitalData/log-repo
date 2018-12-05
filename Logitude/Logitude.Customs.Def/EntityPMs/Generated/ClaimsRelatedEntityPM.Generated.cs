@@ -794,7 +794,215 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private string decisionCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DecisionCode  
+	   {
+	    
+	     get
+		{
+		   return decisionCode;
+		 }
+		 set
+		 {
+		   if(decisionCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DecisionCode",OldValue=decisionCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   decisionCode=value;
+		   }
+			
+		 }
+	   }
+	  private string decisionName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DecisionName  
+	   {
+	    
+	     get
+		{
+		   return decisionName;
+		 }
+		 set
+		 {
+		   if(decisionName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DecisionName",OldValue=decisionName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   decisionName=value;
+		   }
+			
+		 }
+	   }
+	  private string decisionNote ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DecisionNote  
+	   {
+	    
+	     get
+		{
+		   return decisionNote;
+		 }
+		 set
+		 {
+		   if(decisionNote != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DecisionNote",OldValue=decisionNote,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   decisionNote=value;
+		   }
+			
+		 }
+	   }
+	  private string eilatVatRefoundDecision ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EilatVatRefoundDecision  
+	   {
+	    
+	     get
+		{
+		   return eilatVatRefoundDecision;
+		 }
+		 set
+		 {
+		   if(eilatVatRefoundDecision != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EilatVatRefoundDecision",OldValue=eilatVatRefoundDecision,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   eilatVatRefoundDecision=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? depositingAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? DepositingAmount  
+	   {
+	    
+	     get
+		{
+		   return depositingAmount;
+		 }
+		 set
+		 {
+		   if(depositingAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DepositingAmount",OldValue=depositingAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   depositingAmount=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? refundAmount ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? RefundAmount  
+	   {
+	    
+	     get
+		{
+		   return refundAmount;
+		 }
+		 set
+		 {
+		   if(refundAmount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RefundAmount",OldValue=refundAmount,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   refundAmount=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<ClaimsRelatedEntitiesSeizurePM> claimsRelatedEntitiesSeizures;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClaimsRelatedEntitiesSeizure", "ClaimId,EntityCounterKey","ClaimId,CounterKey")]
+	   [DataMember]
+	   public virtual List<ClaimsRelatedEntitiesSeizurePM> ClaimsRelatedEntitiesSeizures  
+	   {
+	        get
+             {
+                 if (claimsRelatedEntitiesSeizures == null)
+                 {
+                     claimsRelatedEntitiesSeizures = new List<ClaimsRelatedEntitiesSeizurePM>();
+                 }
+                 return claimsRelatedEntitiesSeizures;
+              }
+             set { claimsRelatedEntitiesSeizures = value; }
+	    }
+		   
+	   private List<ClaimsRelatedEntitiesSeizurePM>  deletedClaimsRelatedEntitiesSeizures;
+	   public virtual List<ClaimsRelatedEntitiesSeizurePM> DeletedClaimsRelatedEntitiesSeizures  
+	   {
+	        get
+             {
+                 if ( deletedClaimsRelatedEntitiesSeizures == null)
+                 {
+                      deletedClaimsRelatedEntitiesSeizures = new List<ClaimsRelatedEntitiesSeizurePM>();
+                 }
+                 return  deletedClaimsRelatedEntitiesSeizures;
+              }
+             set {  deletedClaimsRelatedEntitiesSeizures = value; }
+	    }
+	  
+	   private List<ClaimsRelatedEntitiesRefundPM> claimsRelatedEntitiesRefunds;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ClaimsRelatedEntitiesRefund", "ClaimId,EntityCounterKey","ClaimId,CounterKey")]
+	   [DataMember]
+	   public virtual List<ClaimsRelatedEntitiesRefundPM> ClaimsRelatedEntitiesRefunds  
+	   {
+	        get
+             {
+                 if (claimsRelatedEntitiesRefunds == null)
+                 {
+                     claimsRelatedEntitiesRefunds = new List<ClaimsRelatedEntitiesRefundPM>();
+                 }
+                 return claimsRelatedEntitiesRefunds;
+              }
+             set { claimsRelatedEntitiesRefunds = value; }
+	    }
+		   
+	   private List<ClaimsRelatedEntitiesRefundPM>  deletedClaimsRelatedEntitiesRefunds;
+	   public virtual List<ClaimsRelatedEntitiesRefundPM> DeletedClaimsRelatedEntitiesRefunds  
+	   {
+	        get
+             {
+                 if ( deletedClaimsRelatedEntitiesRefunds == null)
+                 {
+                      deletedClaimsRelatedEntitiesRefunds = new List<ClaimsRelatedEntitiesRefundPM>();
+                 }
+                 return  deletedClaimsRelatedEntitiesRefunds;
+              }
+             set {  deletedClaimsRelatedEntitiesRefunds = value; }
+	    }
+	     }
    
 }
 	 

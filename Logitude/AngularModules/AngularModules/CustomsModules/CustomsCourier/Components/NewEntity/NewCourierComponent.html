@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -30,8 +30,8 @@
                                            
                                             [HideColumns]="false"
                                             [SelectedValue]="AirlineId"
-                                             [LookUpTableName]="'Carrier'"
-                                          [DependencyFilter1Value]="'AL'">
+                                             [LookUpTableName]="'Customs.CustomsAirline'"
+                                          >
                                     </LogLov>
                                 </td>
 

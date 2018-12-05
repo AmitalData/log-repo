@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
+import {Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -96,6 +96,11 @@ export class AddEditCustomsAirlineComponent extends BaseComponent {
     public get AirlineCode() { return this.EntityPM.AirlineCode; }
     public set AirlineCode(newValue: string) {
         this.EntityPM.AirlineCode = newValue;
+    }
+
+    public get ICAO() { return this.EntityPM.ICAO; }
+    public set ICAO(newValue: string) {
+        this.EntityPM.ICAO = newValue;
     }
 
     public get EnglishName() { return this.EntityPM.EnglishName; }

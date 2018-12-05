@@ -39,7 +39,7 @@ namespace CustomsWorkerRole
 
             
             ThreadedRoleEntryPoint.StartStatic(BuildObjectTablesZipFilesDataAction, prodInfo);
-            InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil);
+            InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null);
             //string storageServiceMode = ConfigurationManager.AppSettings.Get("StorageServiceMode");
             //ContainerAccessor.InitContainer(storageServiceMode);
 

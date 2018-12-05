@@ -50,6 +50,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private Dictionary<string, IList> _MyLocalCache = new Dictionary<string, IList>();
         private AmitalContext _AmitalContext;
 
+
+        public override void OnRequestFail(MN_MSG4_SendManifestFeedBack_Message customResponse, MANIFESTRequestRequestParams requestParams)
+        {
+            if (!String.IsNullOrWhiteSpace(requestParams.DeclarationId))
+            {
+                var customContext = CustomContext.GetContext(requestParams.Tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, false, false);
+                if (currentDeclarationCourierStatusPM == null)
+                {
+                    //DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), entityPOCO.Tenant);
+                    //DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(null);
+                    //declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                }
+            }
+            base.OnRequestFail(customResponse, requestParams);
+        }
+
+
         public override void Update(MN_MSG4_SendManifestFeedBack_Message customResponse, MANIFESTRequestRequestParams requestParams)
         {
             var responseName = requestParams.ResponseName;
@@ -223,7 +242,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration>.DeSerializeObject(declarationXml);
                     UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration = new UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration();
 
-                    _MyDeclarationPM.ManifestErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(responseError, _MyDeclarationPM, WCOTypeEnum.Manifest);
+                    _MyDeclarationPM.ManifestErrorXml = mydDclarationErrorPointerService.AnalyzeErrorPionter(responseError, _MyDeclarationPM, WCOTypeEnum.Manifest, false);
 
 
 

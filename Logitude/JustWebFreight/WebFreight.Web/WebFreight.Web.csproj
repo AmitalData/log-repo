@@ -74,27 +74,23 @@
       <HintPath>..\..\packages\Autofac.WebApi.3.1.0\lib\net40\Autofac.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Devart.Data, Version=5.0.895.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Linq.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+      <HintPath>..\..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Linq, Version=4.4.441.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Web, Version=8.2.103.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\DevartV1.1.0.0.2\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
       <HintPath>..\..\packages\IppDotNetSdkForQuickBooksApiV3.2.9.1\lib\DevDefined.OAuth.dll</HintPath>
@@ -309,6 +305,7 @@
       <HintPath>..\..\packages\Microsoft.VisualStudio.Services.Client.16.136.1-preview\lib\net45\Microsoft.VisualStudio.Services.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -351,10 +348,6 @@
     </Reference>
     <Reference Include="SilverlightExpressions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SilverlightExpression.1.0.0\lib\Net40\SilverlightExpressions.dll</HintPath>
-    </Reference>
-    <Reference Include="Simplog.Server.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Simplog.Server.Infrastructure\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.2.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\StackExchange.Redis.1.2.5\lib\net45\StackExchange.Redis.dll</HintPath>
@@ -399,7 +392,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net" />
@@ -536,7 +528,13 @@
       <HintPath>..\..\packages\UltimatePDF.1.0.0\lib\Net40\UltimatePdf.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.2.0.0\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.3.1803.7\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\UnifreightIIG.3.1803.7\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+    </Reference>
+    <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\UnifreightIIG.3.1803.7\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -1122,6 +1120,7 @@
     <Compile Include="Controllers\CRMModel\Extended\TicketExtendedController.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\SLALineViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierMasterController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\CourierPendingReasonController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsAirlineController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomBankController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomDocumentTypesController.cs" />
@@ -1133,6 +1132,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\CustomsDocumentPointerController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsHouseTypesController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsLoadTestController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\CustomsPartnerFtpExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsRequestSheetExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsSettingExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\DeclarartionController.cs" />
@@ -1186,6 +1186,8 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClaimImporterDeclarsPage3ViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClaimsRelatedEntitiesAmountViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClaimsRelatedEntitiesReasonViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClaimsRelatedEntitiesRefundViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClaimsRelatedEntitiesSeizureViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClaimsRelatedEntityViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClaimsRelatedEntsExpDeclarViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClaimsRelatedEntsReasonsExpViewsController.Generated.cs" />
@@ -1254,6 +1256,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsInsuranceCompanyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsItemDetailsHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsItemViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsPartnerFtpViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsPartnersItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsPaymentTermViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsRequestsSheetStatusViewsController.Generated.cs" />
@@ -1269,6 +1272,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DecCargoSplitConsItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DecCargoSplitConsPackDetViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DecCargoSplitConViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DecisionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationCargoSplitViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationConsAcceptanceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DeclarationConstraintViewsController.Generated.cs" />
@@ -1346,6 +1350,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PaymentProcessViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PaymentProtestTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PaymentTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PendingErrorPlaceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckOperationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckStatusMessageViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckViewsController.Generated.cs" />
@@ -1367,6 +1372,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RequiredGuaranteeTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReturnConditionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SalesTaxExemptionTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SeizureMethodTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SignatureTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SiteLookupViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SiteTypeViewsController.Generated.cs" />
@@ -1441,6 +1447,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsHouseTypeAdditionalController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsHouseTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsItemController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsPartnerFtpController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsPartnersItemController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsRequestsSheetController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsRequiredFieldController.Generated.cs" />
@@ -1471,6 +1478,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SupplierInvoiceController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TapagConnectionTableController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TapagController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TPGFileTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\UIMessageAdditionalController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\UIMessageController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\VehicleController.Generated.cs" />
@@ -2137,6 +2145,7 @@
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
     <Compile Include="Helpers\FlatFileHelper.cs" />
+    <Compile Include="Helpers\IISManager.cs" />
     <Compile Include="Helpers\LogBox\LogBoxMailgunAnalyzer.cs" />
     <Compile Include="Helpers\PasswordChangeHelper.cs" />
     <Compile Include="Helpers\QueueMessagesWebHelper.cs" />
@@ -2359,6 +2368,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\Category3UpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\Category4UpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\Category5UpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClaimsRelatedEntitiesRefundUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClaimsRelatedEntitiesSeizureUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientDrivingLicenseTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientDrivingLicenseUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierCustomStatusUpdateClass.cs" />
@@ -2373,10 +2384,12 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsAirlineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsDocumentsDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsInsuranceCompanyUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsPartnerFtpUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitCargoIdentifierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitConsItemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitConsPackDetUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecCargoSplitConUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DecisionTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationCargoSplitUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationConsAcceptanceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\DeclarationCourierStatusUpdateClass.cs" />
@@ -2396,6 +2409,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ManifestCargoStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MAWBTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PendingErrorPlaceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PointerLevelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeStatusUpdateClass.cs" />
@@ -2405,6 +2419,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RevaluationStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RevaluationUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SeizureMethodTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SharedLogisticsSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SLALineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SplitOrMergeReasonUpdateClass.cs" />
@@ -2602,6 +2617,7 @@
     <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
     <Content Include="ReportsWebServices\APInvoiceWebService.asmx" />
     <None Include="Properties\PublishProfiles\sendgrid.pubxml" />
@@ -6062,6 +6078,10 @@
     <ProjectReference Include="..\..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
       <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Unifreight.BL\Unifreight.BL.csproj">
       <Project>{0ec1bd46-2613-4227-a6d7-d345dd0978cd}</Project>

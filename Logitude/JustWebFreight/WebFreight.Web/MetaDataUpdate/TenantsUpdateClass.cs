@@ -241,7 +241,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.FillManifestCargoStatusTable();
                             updateClass.FillAcceptanceStatus();
                             updateClass.FillMamanStatus();
-
+                            updateClass.FillPendingErrorPlaceTable();
                             //updateClass.FillCourierDeclarationStatus();
                             //updateClass.FillCourierManifestStatus();
                             //updateClass.FillCourierPaymentStatus();

@@ -37,6 +37,8 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("CustomsCommandSendWSReceiveCorrelationWR");
             _CBWorkerRole.Items.Add("CustomsCommandDownloadDcaReceiveCorrelationWR");
             _CBWorkerRole.Items.Add("CustomsCommandAnalyzeResponseWR");
+            _CBWorkerRole.Items.Add("SendWebAPI2MamanGWMessageECTHRDataWR");
+            
 
             ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
         }
@@ -198,6 +200,11 @@ namespace AmitalCustomsWindowsService.Tester
                 case "CustomsCommandAnalyzeResponseWR":
                     d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsCommandAnalyzeResponseWR>(
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text) { ServiceStarted = true, };
+                    break;
+                case "SendWebAPI2MamanGWMessageECTHRDataWR":
+                    d = new AmitalCustomsWindowsService.BL.WorkerOnce<SendWebAPI2MamanGWMessageECTHRDataWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                    { ServiceStarted = true, };
                     break;
                 default:
                     return;
@@ -666,6 +673,31 @@ namespace AmitalCustomsWindowsService.Tester
             var tst = new CustomsWorkerRole.Test.clsTester();
             tst.TestAsDataSet("1306");
 
+        }
+
+        private void _CBWorkerRole_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void hAWBALDARMamanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var wr = new SendWebAPI2MamanGWMessageECTHRDataWR();
+            string data =
+                @"{""BaldarCode"":""2026"",""BaldarAwb"":""baldarAWb35"",""AirlineAwbPref"":""001"",""Master"":22222211,""Awb8"":88888888,""HawbExtnd"":""abcd1234 update"",""AirlineCode"":""1X"",""FltNo"":null,""FltDate"":null,""LandTime"":null,""DecNoOfPackags"":1,""DecWeight"":100.1,""DolarValue"":200.12345,""StoreTypeReq"":""67"",""Description"":""Description1 - 2026 update"",""CustomerName"":""Miriam"",""CustomerAddress"":""Ein Gedi"",""CustomerPhone"":""026765544"",""DestLineDesc"":""DestLineDesc"",""BaldarMessageTime"":""2018 - 10 - 16T17: 38:33.1365366 + 03:00"",""BaldarHp"":""2323231"",""OpenBaldarAwbDate"":""2018 - 10 - 15T17: 38:33.1365366 + 03:00"",""ResponseStatusCode"":null,""ResponseStatusMsg"":null}";
+            var service = new WebAPI2MamanGWMessageECTHRData(new Logitude.Customs.BL.Messaging.Maman.CourierHawbMamanCommunicationLogSettings()
+            {
+                DeclarationId = "",
+                username = "F_unitedf",
+                password = "Unit2019",
+                URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
+                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae",
+                Tenant = 1
+
+            });
+            var res = service.PostIt(data);
+
+            
         }
     }
 }

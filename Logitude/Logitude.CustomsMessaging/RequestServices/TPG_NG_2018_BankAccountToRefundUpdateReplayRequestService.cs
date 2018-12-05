@@ -28,7 +28,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             int.TryParse(requestParams.FileType, out fileType);
             myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay.FileIdentifier.FileType = fileType;
 
-
             CustomsSettingPM customsSetting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
             int customsAgentId;
             int.TryParse(customsSetting.CustomsAgentId, out customsAgentId);
@@ -72,7 +71,12 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = "בקשה להחזר פיקדון  " + requestParams.FileNumber;
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Deposit");
+            this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Deposit");
+            if (requestParams.LoggingObjectTableId == "Customs.Declaration" && !string.IsNullOrEmpty(requestParams.LoggingEntityId))
+            {
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
+            }
 
             return myTPG_NG_2018_MSG4_BankAccountToRefundUpdateReplay;
 

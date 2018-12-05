@@ -170,7 +170,7 @@
                                                     <td style="width: 10px;"><div></div></td>
 
                                                     <td style="width: 100px;">
-                                                        <LogLabel [ObjectFieldName]="'AccountCurrency'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.AccountCurrency'"></LogLabel>
+                                                        <LogLabel *ngIf="CountryCode != 'IL'" [ObjectFieldName]="'AccountCurrency'" [DataContext]="DataContext" [TextCode]="'Customs.BankAccountToRefundQuery.O.AccountCurrency'"></LogLabel>
                                                     </td>
                                                     <td style="width: 120px;">
                                                         <LogLov *ngIf="CountryCode != 'IL'" [ObjectFieldName]="'AccountCurrency'"

@@ -21,7 +21,15 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-   }
+        public List<CourierPendingReason> GetCourierPendingReasonByUnifreightStatus(string unifreightStatusCode)
+        {
+            List<CourierPendingReason> selectedcourierPendingReasons = (from courierPendingReasons in context.CourierPendingReasons
+                                              where courierPendingReasons.UnifreightStatusCode == unifreightStatusCode && !courierPendingReasons.Inactive
+                                              select courierPendingReasons).ToList();
+            return selectedcourierPendingReasons;
+        }
+
+    }
 
 }
    

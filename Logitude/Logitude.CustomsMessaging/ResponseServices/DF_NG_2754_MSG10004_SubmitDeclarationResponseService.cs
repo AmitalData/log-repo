@@ -27,6 +27,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private INF_MSG_GenericResponseData _MyDefaultResponseData;
         //ITZIK+MIRT public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption { get; set; }
 
+        public override void OnRequestFail(DF_NG_2754_MSG10004_ImportDeclarationResponse customResponse, GenericRequestParams requestParams)
+        {
+            if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
+            {
+                var customContext = CustomContext.GetContext(requestParams.Tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.AppicationId, false, false);
+                if (currentDeclarationCourierStatusPM == null)
+                {
+                    //DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), entityPOCO.Tenant);
+                    //DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(null);
+                    //declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                }
+            }
+            base.OnRequestFail(customResponse, requestParams);
+        }
+
+
         public override void Update(DF_NG_2754_MSG10004_ImportDeclarationResponse customResponse, GenericRequestParams requestParams)
         {
 

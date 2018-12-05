@@ -110,8 +110,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         updatedTextCode.Tenant = featureDetails.Tenant;
                         updatedTextCode.InActive = false;
 
-                        featuresRepository.Update(updatedFeature);
-                        textCodeReposit.Update(updatedTextCode);
+                    textCodeReposit.Update(updatedTextCode);//ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_919762609) הופר - מפתח אב לא נמצא
+                    featuresRepository.Update(updatedFeature);
+                        
                     }
                     //table.UpdateKey = NewKey;
                     //Repo.Update(table);

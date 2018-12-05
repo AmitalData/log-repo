@@ -428,5 +428,23 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
 
         }
+        public HttpResponseMessage GetSendECTHRDataMaman(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanService();
+                var response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
     }
 }

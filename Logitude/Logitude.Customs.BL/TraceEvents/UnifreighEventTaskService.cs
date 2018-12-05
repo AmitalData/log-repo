@@ -129,7 +129,7 @@ namespace Logitude.Customs.BL.TraceEvents
             {
                 DateTime dateTime = UnifreightEventDateTime.GetValueOrDefault();
 
-                EventDate = $"{dateTime.Date.Date:00}.{dateTime.Date.Month:00}.{dateTime.Date.Year:00}"; ;  //dateTime.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                EventDate = $"{dateTime.Date.Day:00}.{dateTime.Date.Month:00}.{dateTime.Date.Year:00}"; ;  //dateTime.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                 EventTime = $"{dateTime.Hour:00}:{dateTime.Minute:00}"; ;
             }
 

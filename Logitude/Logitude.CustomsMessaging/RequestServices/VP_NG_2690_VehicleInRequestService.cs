@@ -165,6 +165,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             int.TryParse(_MyVehicle.MedalNumber, out medalNumber);
             vehicleDetails.medalNumber = medalNumber;
             vehicleDetails.medalNumberSpecified = medalNumber > 0 ? true : false;
+            int taxiMedalOwner;
+            int.TryParse(_MyVehicle.TaxiMedalOwner, out taxiMedalOwner);
+            vehicleDetails.taxiMedalOwner = taxiMedalOwner;
+            vehicleDetails.taxiMedalOwnerSpecified = taxiMedalOwner > 0 ? true : false;
             vehicleDetails.commercialNickname = _MyVehicle.CommercialNickname;
             vehicleDetails.modelDescription = _MyVehicle.ModelDescription;
             vehicleDetails.numberOfSeats = _MyVehicle.NumberOfSeats;
@@ -194,12 +198,25 @@ namespace Logitude.CustomsMessaging.RequestServices
                 vehicleDetails.transmissionDateWithoutTax = _MyVehicle.TransmissionDateWithoutTax;
                 vehicleDetails.transmissionDateWithoutTaxSpecified = true;
             }
-
-            var clientPM = clientQueryService.GetSingle(_MyVehicle.ImporterIdentityId, false, false);
-            int importerIdentity;
-            int.TryParse(clientPM.Code, out importerIdentity);
-            vehicleDetails.importerIdentity = importerIdentity;
-            vehicleDetails.importerName = clientPM.FullName;
+            if (!string.IsNullOrWhiteSpace(_MyVehicle.ImporterIdentityId))
+            {
+                var clientPM = clientQueryService.GetSingle(_MyVehicle.ImporterIdentityId, false, false);
+                int importerIdentity = 0;
+                if (clientPM != null && !string.IsNullOrWhiteSpace(clientPM.Code))
+                {
+                    int.TryParse(clientPM.Code, out importerIdentity);
+                    if (importerIdentity > 0)
+                    {
+                        vehicleDetails.importerIdentity = importerIdentity;
+                        vehicleDetails.importerName = clientPM.FullName;
+                    }
+                }
+                vehicleDetails.importerIdentitySpecified = importerIdentity > 0 ? true : false;
+            }
+            else
+            {
+                vehicleDetails.importerName = _MyVehicle.PassportName;
+            }
             if (_MyVehicle.DateOnRoadAbroad != null)
             {
                 vehicleDetails.dateOnRoadAbroad = _MyVehicle.DateOnRoadAbroad;
@@ -273,6 +290,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
 
                     vehicleOwner.externalID = externalID;
+                    vehicleOwner.externalIDSpecified = externalID > 0 ? true : false;
                     vehicleOwner.lastNameOrCorporationName = ownerItem.LastNameOrCorporationName;
                     vehicleOwner.firstName = ownerItem.FirstName;
                     vehicleOwner.isMain = ownerItem.IsMain;

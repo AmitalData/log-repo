@@ -33,6 +33,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private ICustomContext _Context;
         CustomsDocumentPM _CustomsDocumentPM;
         CustomsDocumentsTicketPM _CustomsDocumentsTicketPM;
+        bool _IsSendAnywayWithoutAttachment = false;
 
         public override void ManipulateRequestParams(D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam requestParams)
         {
@@ -59,6 +60,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             this._Context = CustomContext.GetContext(requestParams.Tenant);
             var customsDocumentQueryService = new CustomsDocumentQueryService(_Context);
             var customsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_Context);
+            _CustomsDocumentsTicketPM = null;
 
             _CustomsDocumentPM = customsDocumentQueryService.GetSingle(requestParams.DocumentsFilingId, true, false);
             if (_CustomsDocumentPM == null)
@@ -66,7 +68,22 @@ namespace Logitude.CustomsMessaging.RequestServices
                 LogMessagingUtil.Instance.AppendLine("No customs Document for ID " + requestParams.DocumentsFilingId + " ,Document Ticket Id: " + requestParams.DocumentsTicketId);
                 throw new BusinessErrorException("No customs Document for ID " + requestParams.DocumentsFilingId);
             }
-            if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId))
+
+            if (!string.IsNullOrWhiteSpace(requestParams.DocumentsTicketId))
+            {
+                _CustomsDocumentsTicketPM = customsDocumentsTicketQueryService.GetSingle(requestParams.DocumentsTicketId, true, false);
+                CustomsDocumentPointerPM customsDocumentPointerPM = _CustomsDocumentsTicketPM.CustomsDocumentPointers.FirstOrDefault();
+                if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId))
+                {
+                    if (customsDocumentPointerPM.ParentEntityCode == "CustomsCollateral")
+                    {
+                        _IsSendAnywayWithoutAttachment = true;
+                        LogMessagingUtil.Instance.AppendLine("Customs Document already sent to Customs").AppendLine("_IsSendAnywayWithoutAttachment = true;");
+                    }
+                }
+            }
+
+            if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId) && !_IsSendAnywayWithoutAttachment)
             {
                 ToCancelSheetAfterGetRequest = true;
                 LogMessagingUtil.Instance.AppendLine("Customs Document already sent to Customs").AppendLine("_ToCancelSheetAfterGetRequest = true;");
@@ -85,12 +102,11 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             // If the document is required by customs- get connected entity details (By getting document pointer details)
             // If the document is required it will be linked to only one pointer
-            _CustomsDocumentsTicketPM = null;
             req.documentID = 0;
             req.documentIDSpecified = false;
             if (!string.IsNullOrWhiteSpace(requestParams.DocumentsTicketId))
             {
-                _CustomsDocumentsTicketPM = customsDocumentsTicketQueryService.GetSingle(requestParams.DocumentsTicketId, true, false);
+                //_CustomsDocumentsTicketPM = customsDocumentsTicketQueryService.GetSingle(requestParams.DocumentsTicketId, true, false);
                 if (_CustomsDocumentsTicketPM != null && _CustomsDocumentsTicketPM.RequestedCustomsDocId != null)
                 {
                     int requiredDocID = 0;
@@ -168,16 +184,20 @@ namespace Logitude.CustomsMessaging.RequestServices
                         this.MyRequestSheetParam.EntityId1 = myClaimPM.Id;
 
                         //relatedEntity.entityType = 12383;
-                        relatedEntity.entityType = 1008;
+//                        relatedEntity.entityType = 1008;
                         if (customsDocumentPointerPM.Child1EntityCode == "ClaimsRelatedEntity" && customsDocumentPointerPM.Child1EntityId != null)
                         {
                             int child1EntityId = 0;
                             int.TryParse(customsDocumentPointerPM.Child1EntityId, out child1EntityId);
                             ClaimsRelatedEntityPM claimsRelatedEntityPM = myClaimPM.ClaimsRelatedEntities.FirstOrDefault(si => si.EntityCounterKey == child1EntityId);
-                            relatedEntity.entityIdKey1 = claimsRelatedEntityPM.TapagNumber;
-                            if (claimsRelatedEntityPM.Numeral != null)
+                            if (!string.IsNullOrEmpty(claimsRelatedEntityPM.TapagNumber))
                             {
-                                relatedEntity.entityIdKey2 = claimsRelatedEntityPM.Numeral.ToString();
+                                relatedEntity.entityType = 1008;
+                                relatedEntity.entityIdKey1 = claimsRelatedEntityPM.TapagNumber;
+                                if (claimsRelatedEntityPM.Numeral != null)
+                                {
+                                    relatedEntity.entityIdKey2 = claimsRelatedEntityPM.Numeral.ToString();
+                                }
                             }
                         }
                     }
@@ -235,6 +255,15 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (!CustomsRequestsSheetDomainModelService<D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>.GetBlob(document.Tenant, document, out byteArray))
             {
                 throw new BusinessErrorException("Unable to get Bolb Of " + _CustomsDocumentPM.DocumentsFilingId);
+            }
+
+            if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId) && _IsSendAnywayWithoutAttachment)
+            {
+
+                var attachmentOnly = new Attachment();
+                attachmentOnly.externalAttachmentID = _CustomsDocumentPM.ExternalAttachmentId;
+                attachmentOnly.IsAttachment = "false";
+                return attachmentOnly;
             }
 
             var attachment = new Attachment();

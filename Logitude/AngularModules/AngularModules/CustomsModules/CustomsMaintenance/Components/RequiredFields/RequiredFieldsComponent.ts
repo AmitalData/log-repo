@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -83,7 +83,7 @@ export class RequiredFieldsComponent extends BaseComponent {
                 SelectedObjectTableName: this.SelectedTable.Name,
                 SelectedObjectFields: this.FieldsList,
             }
-            window.Show("./Customs/Components/Maintenance/RequiredFields/AddEditRequiredFieldsComponent");
+            window.Show("./CustomsModules/CustomsMaintenance/Components/RequiredFields/AddEditRequiredFieldsComponent");
             window.WindowClosed.subscribe(($event: any) => {
                 this.TableNameClicked(this.SelectedTable);
             });

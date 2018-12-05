@@ -205,7 +205,9 @@ import { CargoSplitRequestStatusListService } from './Services/StandardLists/Car
 import { TreatmentWayListService } from './Services/StandardLists/TreatmentWayListService';
 import { TPGFileTypeListService } from './Services/StandardLists/TPGFileTypeListService';
 import { CustomsAirlineListService } from './Services/StandardLists/CustomsAirlineListService';
-
+import { PendingErrorPlaceListService } from './Services/StandardLists/PendingErrorPlaceListService';
+import { DecisionTypeListService } from './Services/StandardLists/DecisionTypeListService';
+import { SeizureMethodTypeListService } from './Services/StandardLists/SeizureMethodTypeListService';
 
 //#endregion
 
@@ -319,6 +321,7 @@ import { DeclarationMenuButtonsHandler } from './Components/MenuButtons/Declarat
 import { VehicleMenuButtonsHandler } from './Components/MenuButtons/VehicleMenuButtonsHandler';
 import { PaymentOrderMenuButtonsHandler } from './Components/MenuButtons/PaymentOrderMenuButtonsHandler';
 import { ClaimMenuButtonsHandler } from './Components/MenuButtons/ClaimMenuButtonsHandler';
+import { PhysicalCheckMenuButtonsHandler } from './Components/MenuButtons/PhysicalCheckMenuButtonsHandler';
 import { DeclarationEditComponentController } from './Controller/DeclarationEditComponentController'
 import { VehicleEditComponentController } from './Controller/VehicleEditComponentController'
 import { VendorCommissionService } from './Services/WebServices/VendorCommissionService'
@@ -535,6 +538,9 @@ export class ModuleProviders {
             case "TreatmentWayListService": { myResult = new TreatmentWayListService(); break; }
             case "TPGFileTypeListService": { myResult = new TPGFileTypeListService(); break; }  
             case "CustomsAirlineListService": { myResult = new CustomsAirlineListService(); break; }
+            case "PendingErrorPlaceListService": { myResult = new PendingErrorPlaceListService(); break; }
+            case "DecisionTypeListService": { myResult = new DecisionTypeListService(); break; }
+            case "SeizureMethodTypeListService": { myResult = new SeizureMethodTypeListService(); break; }
             //#endregion                
 
             //#region StandardPMs
@@ -646,7 +652,7 @@ export class ModuleProviders {
             case "ClaimMenuButtonsHandler": { myResult = new ClaimMenuButtonsHandler(); break; }
             case "DeclarationEditComponentController": { myResult = new DeclarationEditComponentController(); break; }
             case "VehicleEditComponentController": { myResult = new VehicleEditComponentController(); break; }
-
+            case "PhysicalCheckMenuButtonsHandler": { myResult = new PhysicalCheckMenuButtonsHandler(); break; }
             case "VendorCommissionService": { myResult = new VendorCommissionService(); break; }
           
                 

@@ -57,6 +57,32 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             GITITEMPM entityGITITEMPM = MapPostGITITEMPMFromDto(entityPM);
             return Post(entityGITITEMPM);
         }
+        public HttpResponseMessage PostGITITEMPMList(GITITEMDto[] GITITEMDtoList)
+        {
+
+            try
+            {
+                List<GITITEMPM> list = GITITEMDtoList.ToList().Select(dto => MapPostGITITEMPMFromDto(dto)).ToList();
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+
+
+                    ItemsTableService itemsTableService = new ItemsTableService(list, authToken.Tenant);
+                    itemsTableService.OpenUnifreighTask("");
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, new { status = "ok" });
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         private GITITEMPM MapPostGITITEMPMFromDto(GITITEMDto entityPM)
         {
@@ -67,6 +93,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             entityGITITEMPM.SAPAKID = entityPM.SAPAKID;
             entityGITITEMPM.PRATID = entityPM.PRATID;
             entityGITITEMPM.NAMEENG = entityPM.NAMEENG;
+            if (string.IsNullOrWhiteSpace(entityGITITEMPM.NAMEENG))
+            {
+                entityGITITEMPM.NAMEENG = entityPM.ITEMNO;
+            }
+
+
             entityGITITEMPM.ORIGINCOUNTRY = entityPM.ORIGINCOUNTRY;
             entityGITITEMPM.UNITID = entityPM.UNITID;
 
@@ -95,8 +127,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         //service.Update(entityPM, true);
 
 
-                        
-                        ItemsTableService itemsTableService = new ItemsTableService(entityPM, authToken.Tenant);
+
+                        //ItemsTableService itemsTableService = new ItemsTableService(entityPM, authToken.Tenant);
+                        List<GITITEMPM> list = new List<GITITEMPM>() { entityPM };
+                        ItemsTableService itemsTableService = new ItemsTableService(list, authToken.Tenant);
                         itemsTableService.OpenUnifreighTask("");
 
                         scope.Complete();

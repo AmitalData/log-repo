@@ -1397,25 +1397,29 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ValidateField(emitPropertyChanged: boolean = true) {
+        var suppressValidateion: boolean = false;
+        if (this.InputType) {
+            switch (this.InputType.toLowerCase()) {
+                case 'text':
+                case 'ntext':
+                    {
+                        break;
+                    }
+                default: {
+                    if (this.TextValue && isNaN(Number(this.TextValue))) {
+                        this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
+                        suppressValidateion = true;
+                    }
+                    else {
+                        this.SetValidity(true, null);
+                        suppressValidateion = false;
+                    }
+                }
 
-        switch (this.InputType && this.InputType.toLowerCase()) {
-            case 'text':
-            case 'ntext':
-                {
-                    break;
-                }
-            default: {
-                if (isNaN(Number(this.TextValue))) {
-                    this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
-                }
-                else {
-                    this.SetValidity(true, null);
-                }
             }
-
         }
 
-        if (!this.NoValidation && this.uiProperty != null && this.uiProperty.ValidValue) {
+        if (!this.NoValidation && this.uiProperty != null && !suppressValidateion) {
             var errors = null;
             var table = window.ObjectTables.filter(d => d.Name === this.uiProperty.ObjectTableName)[0];
             if (table) {

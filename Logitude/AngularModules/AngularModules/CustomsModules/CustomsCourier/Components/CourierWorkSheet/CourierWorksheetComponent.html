@@ -159,11 +159,10 @@
                                                     </div>
 
                                                     <div class="ToggleButtonMenu" style="width:115px; left: 0px; right: initial ;top:22px;text-align:center">
-                                                        <!--[disabled]="!IsActionButtonsEnabled"-->
                                                         <button style="text-align:right" (click)="OpenCourierMaster('General')">{{'Customs.Declaration.TH.General' | TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="OpenCourierMaster('ConnectedDeclarations')">{{'General.O.ConnectedDeclarations' |TextCodeTranslationPipe }}</button>
                                                         <button style="text-align:right" (click)="DeclarationsStatusRequestMethod()" >{{'Customs.Declaration.O.DeclarationStatusRequest' | TextCodeTranslationPipe }}</button>
-                                                        <button style="text-align:right" (click)="SendFTPMamanRequestMethod()">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
+                                                        <button style="text-align:right" (click)="SendFTPMamanRequestMethod()" [disabled]="!IsMamanEnabled">{{'Customs.Declaration.O.DeclarationMamanRequest' | TextCodeTranslationPipe }}</button>
                                                     </div>
 
                                                 </div>
@@ -298,10 +297,10 @@
                                                                 <!--All-->
                                                                 <table *ngIf="_SelectedTabFilter.Code=='ALL' ">
                                                                     <tr>
-                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null 
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:140px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
-                                                                                          [ButtonText]="'Customs.CourierMaster.O.ReadyMNFToSendR' |TextCodeTranslationPipe" 
+                                                                                          [ButtonText]="'Customs.CourierMaster.O.ReadyMNFToSendR' |TextCodeTranslationPipe"
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="100">
 
                                                                                 <div class="class-MENUSplitButton-content">
@@ -336,7 +335,7 @@
 
                                                                         <td style="width:1px"></td>
 
-                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null 
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
                                                                             && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:150px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
                                                                                           [ButtonText]="'Customs.CourierMaster.O.ReadyDECToSendR' |TextCodeTranslationPipe"
@@ -447,6 +446,25 @@
                                                                         <td *ngIf="_SelectedItems != null && _SelectedItems.Collection.length > 0" style="width:100px; "><button class="Button" (click)="SendReadyLOWPAYToBatch()"> {{ 'תשלום Low מסומנים'}}</button></td>
                                                                         <td style="width:5px"></td>
                                                                         <td style="width:100px"></td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
+                                                                <!--ACC-->
+                                                                <table *ngIf="_SelectedTabFilter.Code=='ACC' ">
+                                                                    <tr>
+                                                                        <td style="width: 250px;">
+                                                                            <ul class="FiltersMenu" style="float:right; padding-right: 5px;">
+                                                                                <li (click)="ACCFilterClicked('W')" style="width:90px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'W'">
+                                                                                    {{'משובים שגויים'}}
+                                                                                    <!--{{'Customs.CourierMaster.ACC.Wrong' | TextCodeTranslationPipe }}-->
+                                                                                    <!--<span> {{' (' +this._ACC_W_Total + ')' }} </span>-->
+                                                                                </li>
+                                                                                <li (click)="ACCFilterClicked('A')" style="width:70px; height: 25px;" [class.SelectedFilter]="_SelectedACCValue === 'A'">
+                                                                                    {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                                                                    <!--<span> {{' (' +this._DOCTotal + ')' }} </span>-->
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>

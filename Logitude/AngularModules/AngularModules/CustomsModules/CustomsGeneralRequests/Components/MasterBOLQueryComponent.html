@@ -1,4 +1,4 @@
-﻿<!-- MasterBOLQueryComponent view  -->
+<!-- MasterBOLQueryComponent view  -->
 <div>
 
     <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false">
@@ -55,7 +55,7 @@
                                     <LogLabel [ObjectFieldName]="'ReturnAllInernalCargos'" [DataContext]="DataContext" [TextCode]="'Customs.MasterBOLQuery.O.ReturnAllInernalCargos'"></LogLabel>
                                 </td>
                                 <td style="width: 50px;">
-                                    <LogCheckBox [ObjectFieldName]="'ReturnAllInernalCargos'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                    <LogCheckBox [ObjectFieldName]="'ReturnAllInernalCargos'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [Checked]="ReturnAllInernalCargos"></LogCheckBox>
                                 </td>
 
                                 <td style="width: 5px;"><div></div></td>
@@ -64,7 +64,7 @@
                                     <LogLabel [ObjectFieldName]="'ExactMatch'" [DataContext]="DataContext" [TextCode]="'Customs.MasterBOLQuery.O.ExactMatch'"></LogLabel>
                                 </td>
                                 <td style="width: 50px;">
-                                    <LogCheckBox [ObjectFieldName]="'ExactMatch'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                    <LogCheckBox [ObjectFieldName]="'ExactMatch'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"[Checked]="ExactMatch"></LogCheckBox>
                                 </td>
                             </tr>
                         </table>

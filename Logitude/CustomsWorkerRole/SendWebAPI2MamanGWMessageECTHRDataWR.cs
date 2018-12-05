@@ -1,0 +1,432 @@
+﻿
+using CustomsWorkerRole.L2U;
+
+using Logitude.Server.Tools.Models;
+using Logitude.SystemLogs;
+using Microsoft.ServiceBus.Messaging;
+//using Microsoft.WindowsAzure.ServiceRuntime;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Azure;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using UnifreightIIG.UServer;
+using CustomsWorkerRole.Queue;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Simplog.Server.Infrastructure;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools;
+using Newtonsoft.Json;
+using System.Net.Http;
+using Logitude.Customs.BL.Messaging.Maman;
+using Microsoft.Practices.Unity;
+
+namespace CustomsWorkerRole
+{
+    /*
+Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('SendWebAPI2MamanGWMessageECTHRDataWR','SendWebAPI2MamanGWMessageECTHRDataWR');
+Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values ('SendWebAPI2MamanGWMessageECTHRDataWR',0,1);
+     */
+    public class SendWebAPI2MamanGWMessageECTHRDataWR : CustomsWorkerEntryPoint
+    {
+        QueueDescription _QueueDescription;
+        QueueClient _QueueClient;
+        public override void Run()
+        {
+
+            while (true)
+            {
+
+                if (!General.IsUpdating())
+                {
+                    try
+                    {
+
+                        WorkOnce();
+                        Thread.Sleep(TimeSpan.FromSeconds(1));
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "SendDataToAmitalWR : Run() Method", null);
+                        Thread.Sleep(10000);
+                    }
+                }
+                else
+                {
+                    Thread.Sleep(60000);
+                }
+
+
+            }
+
+        }
+        bool _OnStartDone = false;
+        private DbQueueService _IQueueService;
+        private ICommonDataContext _ICommonDataContext;
+        private ICommonDataContext _Context;
+        private CommunicationLogRepository _CommunicationLogRep;
+        private int _Tenant;
+        private string _CommunicationLogId;
+        private CommunicationLog _WaitingCommLog;
+        private QueueResponse _ReceivedBrokeredMessage;
+
+        public override bool OnStart()
+        {
+            try
+            {
+                if (_OnStartDone) return true;
+                _OnStartDone = true;
+                
+
+
+                var myClass = this.GetType().Name;
+
+                
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "amital send data worker role start", null, null);
+            }
+
+            // Set the maximum number of concurrent connections 
+            ServicePointManager.DefaultConnectionLimit = 12;
+
+            //DiagnosticMonitor.Start("DiagnosticsConnectionString");
+
+            // For information on handling configuration changes
+            // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
+
+
+            return base.OnStart();
+        }
+
+
+        public override void WorkOnce()
+        {
+
+            try
+            {
+                OnStart();
+
+                WorkUntilQEmpty_Db();
+
+
+            }
+            catch (Exception e)
+            {
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+                _OnStartDone = false;
+            }
+
+
+        }
+
+        private void WorkUntilQEmpty_Db()
+        {
+            while (true)
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    _IQueueService = new DbQueueService();
+                    _IQueueService.InitializeQueue(SBQueueNames.SendGWMessageECTHRData2MamanQ.ToString(), 0);
+
+                    _ReceivedBrokeredMessage = _IQueueService.Receive();
+
+                    if (_ReceivedBrokeredMessage == null || String.IsNullOrWhiteSpace(_ReceivedBrokeredMessage.MessageId))
+                    {
+                        //Thread.Sleep(TimeSpan.FromSeconds(5));
+                        Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
+                        break;
+                    }
+
+                    
+                    ProccessReceivedMessage();
+                    scope.Complete();
+                }
+            }
+        }
+
+
+
+
+        public void ProccessReceivedMessage()
+        {
+
+            LogMessagingUtil.Instance.Clear();
+
+            _CommunicationLogId = _ReceivedBrokeredMessage.MessageValues["CommunicationLogId"].ToString();
+            int.TryParse(_ReceivedBrokeredMessage.MessageValues["Tenant"].ToString(), out _Tenant);
+
+            LogMessagingUtil.Instance
+                .AppendLine("ProccessReceivedMessage()")
+                .AppendLine("QUEUEMessageId:"+_ReceivedBrokeredMessage.MessageId)
+                .AppendLine("RetryNumber:" + _ReceivedBrokeredMessage.RetryNumber)
+                .AppendLine("CommunicationLogId:"+_CommunicationLogId)
+                .AppendLine(",Tenant"+_Tenant);
+
+            _Context = CommonDataContext.GetContext(_Tenant);
+            _CommunicationLogRep = new CommunicationLogRepository(_Context);
+            
+            
+            _WaitingCommLog = _CommunicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
+            if (_WaitingCommLog == null)
+            {
+
+                var myEx = new Exception("GetSingleCommunicationLog(_CommunicationLogId:" + _CommunicationLogId + " , _Tenant:" + _Tenant.ToString() + ") == null");
+                ExceptionHandler.HandleException(myEx, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
+                _IQueueService.Complete(); //Stop Try !!
+                return;
+            }
+
+            
+            
+            try
+            {
+                if (_ReceivedBrokeredMessage.RetryNumber < 5)
+                {
+
+                    LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
+                    
+                    PostWebAPIAnalyzeAndSaveCommDone();//if failed throw exception
+
+                    _IQueueService.Complete();
+                    this.LogDoneItemInMemory();
+                }
+                else
+                {
+                    LogMessagingUtil.Instance.AppendLine("RetryNumber >= 5>>> Failed ");
+                    _WaitingCommLog.CommunicationStatusTypeCode = "F";
+                    _IQueueService.Complete();
+                }
+                LogMessagingUtil.Instance.AppendLine(":" + _WaitingCommLog.CommunicationStatusTypeCode);
+                _CommunicationLogRep.Update(_WaitingCommLog);
+                _CommunicationLogRep.SubmitChanges();
+                                
+
+                
+            }
+            catch (Exception exc)
+            {
+                ExceptionHandler.HandleException(exc, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
+                _WaitingCommLog.Retries++;
+                
+
+                
+                var s = "ProccessReceivedMessage()Exception:" + exc.Message;
+                _WaitingCommLog.ExceptionMessage = s.Substring(0, Math.Min(7999, s.Length));
+                _CommunicationLogRep.Update(_WaitingCommLog);
+                _CommunicationLogRep.SubmitChanges();
+                _IQueueService.Delay(TimeSpan.FromMinutes(1));
+                //throw;
+
+            }
+        }
+
+       
+
+        private bool PostWebAPIAnalyzeAndSaveCommDone( )
+        {
+            try
+            {
+
+
+                //LogMessagingUtil.Instance.Clear();
+                int tenant = _WaitingCommLog.Tenant;
+                ICommonDataContext commoncontext = CommonDataContext.GetContext(_WaitingCommLog.Tenant);
+                DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+
+                Document document = documentRepository.GetSingleDocument(_WaitingCommLog.Tenant, _WaitingCommLog.DocumentId);
+                Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = document.FileSize,
+                };
+
+                Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                byte[] filedata = storageservice.Read(fileInfo);
+
+                if (filedata == null)
+                {
+                    throw new Exception("The file data was not found!");
+                }
+                if (string.IsNullOrEmpty(_WaitingCommLog.LogSettings))
+                {
+                    throw new Exception("string.IsNullOrEmpty(waitingCommLog.LogSettings)");
+                }
+                var dataJson = System.Text.Encoding.UTF8.GetString(filedata.ToArray());
+                var courierHawbMamanCommunicationLogSettings = JsonConvert.DeserializeObject<CourierHawbMamanCommunicationLogSettings>(_WaitingCommLog.LogSettings);
+                if (courierHawbMamanCommunicationLogSettings == null)
+                {
+                    throw new Exception("(courierHawbMamanCommunicationLogSettings == null)");
+                }
+                LogMessagingUtil.Instance.AppendLine("courierHawbMamanCommunication DB is valid");
+                GWMessageECTHRData responeGWMessageECTHRData = null;
+                LogMessagingUtil.Instance.AppendLine($"Post {courierHawbMamanCommunicationLogSettings.URIBaldarCreateECTHRMessgae}");
+                string webAPIResultString = null;
+                var service = new WebAPI2MamanGWMessageECTHRData(courierHawbMamanCommunicationLogSettings);
+                webAPIResultString = service.PostIt(dataJson);
+                
+
+               
+                LogMessagingUtil.Instance.AppendLine("webAPIResultString:"+ webAPIResultString);
+                responeGWMessageECTHRData = JsonConvert.DeserializeObject<GWMessageECTHRData>(webAPIResultString);
+
+                var myWebAPICourierHawbMamanService = new WebAPICourierGWMessageECTHRDataMamanService();
+                myWebAPICourierHawbMamanService.AnalyzeResponse(courierHawbMamanCommunicationLogSettings, responeGWMessageECTHRData);
+
+
+
+
+                _WaitingCommLog.CommunicationStatusTypeCode = "D";
+                _WaitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(_WaitingCommLog.Tenant);
+                _WaitingCommLog.DoneDateUTC = DateTime.UtcNow;
+                _WaitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_WaitingCommLog.Tenant);
+                _WaitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                _WaitingCommLog.Logs = LogMessagingUtil.Instance.ToString();
+                //waitingCommLog.Logs
+                _CommunicationLogRep.Update(_WaitingCommLog);
+                _CommunicationLogRep.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+               
+
+                throw;
+            }
+            return true;
+        }
+
+        
+
+      
+
+    }
+
+    public class WebAPI2MamanGWMessageECTHRData
+    {
+        const string relativeUriToken = "Token";
+        const string BEARER_TOKEN = "Bearer";
+        const string agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
+        //StringBuilder _StringBuilder = new StringBuilder();
+        private CourierHawbMamanCommunicationLogSettings _CourierHawbMamanCommunicationLogSettings;
+
+        public WebAPI2MamanGWMessageECTHRData(CourierHawbMamanCommunicationLogSettings courierHawbMamanCommunicationLogSettings)
+        {
+            this._CourierHawbMamanCommunicationLogSettings = courierHawbMamanCommunicationLogSettings;
+        }
+
+        public string PostIt(string dataJson)
+        {
+            string myResultString = "";
+
+            string access_token = "";
+            string token_type = "";
+            
+            try
+            {
+
+
+                using (var client = new HttpClient())
+                {
+                    //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
+
+                    var ADD = "User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
+                    client.DefaultRequestHeaders.Add("User-Agent", agent);
+
+                    //var tokenUri = new Uri(new Uri(host), relativeUriToken);
+                    //webApiURI = @"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
+                    string tokenReq = "grant_type=password&username=f_moshe&Password=******";
+                    tokenReq = $"grant_type=password&username={_CourierHawbMamanCommunicationLogSettings.username}&Password={_CourierHawbMamanCommunicationLogSettings.password}";
+                    var content = new StringContent(tokenReq, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    LogMessagingUtil.Instance.AppendLine($"PostAsync({_CourierHawbMamanCommunicationLogSettings.URIToken}, {content})");
+                    var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIToken, content);
+                    Wait4Finsh(task, 1);
+                    myResultString = task.Result.Content.ReadAsStringAsync().Result;
+                    //{"access_token":"zkKDt-XnqqM5uoyDwrPxDPHb_vM5hplsUKr7sT5GA2w8Vpsl_HT5eBidUriiyw3Gn-Mne0NIq2LQO7MMT525GdrFutDzIQpRKR6c7oz2GbdSdGdEY3S3nfP0W7svtmShEeUx23SbW8ysLkyAnFP-IdQhvMs2lzxzHIDrnDqm_agwq54x9UiiDa5-9ZkEWBUrN83U4B5qddiYTU0whODGvrxEE9wyrQKoygG3Gi48gwv2_TI4H9yrd2Uys9l_jBivOsRRm1oXtyGsyIq9DwDn7pmcoxUjz-yNwm_hp18Y1qi4aXk1Z8IjeKRQl_8FMUg-","token_type":"bearer","expires_in":35999,"UserName":"F_unitedf","role":"General",".issued":"Mon, 12 Nov 2018 14:48:43 GMT",".expires":"Tue, 13 Nov 2018 00:48:43 GMT"}
+                    LogMessagingUtil.Instance.AppendLine($"PostAsyncResult ({myResultString})");
+                    dynamic d = JsonConvert.DeserializeObject(myResultString);
+                    access_token = d.access_token;
+                    token_type = d.token_type;
+                    //token_type=bearer
+                }
+
+                using (var client = new HttpClient())
+                {
+                    //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
+
+                    //string webApiURI = host;//URI + "APIAuthentication";
+                    //webApiURI = "https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";
+                    client.DefaultRequestHeaders.Add("User-Agent", agent);
+                    var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
+                    //Authorization: <type> <credentials>
+
+                    string credentials = "";
+                    //Authorization: Bearer O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY
+                    //credentials = "O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY";
+                    client.DefaultRequestHeaders.Add("Authorization", $"{token_type} {access_token}");
+                    LogMessagingUtil.Instance.AppendLine($"URIBaldarCreateECTHRMessgae.PostAsync....");
+                    var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIBaldarCreateECTHRMessgae, content);
+                    Wait4Finsh(task, 1);
+                    myResultString = task.Result.Content.ReadAsStringAsync().Result;
+                    LogMessagingUtil.Instance.AppendLine($"PostAsyncResult={myResultString }");
+
+                }
+
+
+
+                return myResultString;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private static void Wait4Finsh(Task
+          task, int TimeOutInMin)
+        {
+            var ts = Stopwatch.StartNew();
+            //task.Start();
+            while (ts.Elapsed < TimeSpan.FromMinutes(TimeOutInMin))
+            {
+                task.Wait(TimeSpan.FromSeconds(1));
+                if (task.IsCompleted)
+                {
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            if (!task.IsCompleted)
+            {
+                task.Dispose();
+                throw new Exception("Timeout SendWebAPI2MamanGWMessageECTHRDataWR 2Min ");
+
+            }
+        }
+
+        
+    }
+
+}

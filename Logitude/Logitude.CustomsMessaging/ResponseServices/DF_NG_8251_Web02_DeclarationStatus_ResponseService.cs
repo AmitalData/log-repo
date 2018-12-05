@@ -127,6 +127,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     {
                                         declarationPM.PaymentDate = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.SubmitDateTime;
                                         declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                                        declarationUpdateService.ToUpdateWithPaymentDate = true;
+                                        declarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.CreateUnifreightPaymentConst;
                                         declarationUpdateService.Update(declarationPM, true);
                                     }
                                 }
