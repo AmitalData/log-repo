@@ -99,12 +99,33 @@ export class JournalMenuButtonsHandler {
                             }
                         case "JournalVoid":
                             {
-                                if (this.EntityPM.StatusCode == "3" || this.EntityPM.AccountingEntityCode != "1") { // 3- Voided | 1- Journal
-                                    button.IsDisabled = true;
-                                }
-                                else if (this.EntityPM.StatusCode == "2" && this.EntityPM.OriginalJournalId == null) { // 2- Approved
+
+                                // the VOID button is only available on this case:          BUG #44819
+                                //    - Approved Journal, not storno
+
+                                if (this.EntityPM.StatusCode == "2"                 // 2- Approved
+                                    && this.EntityPM.AccountingEntityCode == "1"    // 1- Journal
+                                    && this.EntityPM.OriginalJournalId == null)     // Not Storno
+                                {
                                     button.IsDisabled = false;
                                 }
+                                else
+                                {
+                                    button.IsDisabled = true;
+                                }
+
+
+                                // if (this.EntityPM.StatusCode == "3" || this.EntityPM.AccountingEntityCode != "1") { // 3- Voided | 1- Journal
+                                //     button.IsDisabled = true;
+                                // }
+                                // else if( this.EntityPM.AccountingEntityCode == "1" && this.EntityPM.StatusCode == "2" && (this.EntityPM.OriginalJournalId != null)) // STORNO  1-Journal
+                                // {
+                                //     button.IsDisabled = true;
+                                // }
+                                // else if (this.EntityPM.StatusCode == "2" && this.EntityPM.AccountingEntityCode == "1" && this.EntityPM.OriginalJournalId == null) { // 2- Approved
+                                //     button.IsDisabled = false;
+                                // }
+
                                 break;
                             }
                         case "JournalPrint":

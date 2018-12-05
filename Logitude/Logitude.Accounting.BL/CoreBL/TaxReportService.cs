@@ -610,7 +610,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             TaxReportLineListQueryService trLineQS = new TaxReportLineListQueryService(MyContext);
-            List<TaxReportLineList> lines = trLineQS.GetReportLines(taxReport.Id, tenant);
+            IQueryable<TaxReportLineList> linesIQ = trLineQS.GetReportLines(taxReport.Id, tenant);
+            List<TaxReportLineList> lines = linesIQ.Where(a => a.TransmitStatusCode == "1").ToList();
 
             foreach (TaxReportLineList lineList in lines)
             {
@@ -618,8 +619,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (lineList.ReferenceDate == null) throw new ApplicationException("Reference Date is empty! line:" + lineList.Line);
 
                 //create line 
-                string line = "";
-                line += lineList.LineTypeCode;
+                myStringBuilder.Append(lineList.LineTypeCode);
 
                 myStringBuilder.Append(FormatString(lineList.VatNumber, 9, paddingDigit: '0'));
 

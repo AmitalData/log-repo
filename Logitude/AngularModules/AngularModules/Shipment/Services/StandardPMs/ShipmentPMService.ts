@@ -1981,6 +1981,7 @@ export class ShipmentPMService {
                 continue;
             }
 
+
             var itemPM: ShipmentPackageHarmonizePM;
             if (mapParent) { // get mapping
                 itemPM = new ShipmentPackageHarmonizePM(entityPM);

@@ -7960,6 +7960,25 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Local Address",
+                FullFieldLable = "LocalAddressId",
+                FieldName = "LocalAddressId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = AddressObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = TenantObject.Id,
+                ObjectTableName = TenantObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                ValidForQuerySection1 = "Tenant",
+                ListPropertyPath = "LocalAddressId",
+                PMPropertyPath = "LocalAddressId",                
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Address",
                 FullFieldLable = "CompanyAddress",
                 FieldName = "CompanyAddress",
@@ -15306,8 +15325,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "ContactPosition",
                 PMPropertyPath = "ContactPosition",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Signature",
@@ -64908,6 +64926,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             Feature GeneralFBLStockfeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FBLSTOCKS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.FBLStocks", NameTextCodeDefaultText = "FBL Stock", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
+            Feature tenantLocalAddressFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "OTH", Packagable = true, Code = "General.Features.CompanyLocalAddress", NameTextCodeCode = "General.Features.CompanyLocalAddress", NameTextCodeDefaultText = "Company Local Address" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature GeneralCreditCardTypeFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREDITCARDTYPES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CreditCardTypes", NameTextCodeDefaultText = "Credit Card Types", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralErrorLogsFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ERRORLOG", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ErrorLogs", NameTextCodeDefaultText = "Error Logs", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);

@@ -1590,5 +1590,36 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return isExist;
         }
 
+        public UserPM GetSinglePMLite(string id,int tenant)
+        {
+            UserPM entity = (from a in repository.context.Users.Include("Contact")
+                      where a.Tenant == tenant
+                      && a.Id == id
+                      select new UserPM()
+                      {
+                          Id = a.Id,
+                          Tenant = a.Tenant,
+                          Email = a.Contact.Email,
+                          EnglishName = a.Contact.EnglishName,
+                      }).FirstOrDefault();
+            return entity;
+        }
+
+
+        public UserPM GetSingleUserPMByEmailLite(string email, int tenant)
+        {
+           UserPM entity = (from a in repository.context.Users.Include("Contact")
+                      where a.Tenant == tenant
+                      && a.Contact.Email == email
+                      select new UserPM()
+                      {
+                          Id = a.Id,
+                          Tenant = a.Tenant,
+                          Email = a.Contact.Email,
+                          EnglishName = a.Contact.EnglishName,
+
+                      }).FirstOrDefault();
+            return entity;
+        }
     }
 }

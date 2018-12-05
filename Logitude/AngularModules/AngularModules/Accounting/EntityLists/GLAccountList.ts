@@ -90,6 +90,7 @@ export class GLAccountList {
 	TotalOpenChequesInLocalCur: number;
 	AutomaticReconcileLocalName: string;
 	ReconcileMethodLocalName: string;
+	TotFutureOpenChequesInLocalCur: number;
 	
 }
  

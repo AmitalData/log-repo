@@ -25,6 +25,7 @@ import {TaxReportExtendedPMService} from '../../../Services/ExtendedPMs/TaxRepor
 })
 
 export class TaxReportDetailsTabComponent extends BaseComponent implements OnInit {
+
     public EntityPM: TaxReportPM = null;
     public ObjectTableName = "TaxReport";
     public DataContext = this;
@@ -114,10 +115,11 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
     ReloadScreen(){
         this.GetStatuses();
-        this.FillGrids();
+        // this.FillGrids();
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
     }
+
 
     SetUIProperty() {
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, false);
@@ -340,7 +342,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         //this.InputsEquipmentsCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == true).length;
         //this.InputsOtherCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == false).length;
         //this.AllCount = lines.length;
-        //this.errorsCount = lines.filter((d: ReportLineModel) => d.TaxReportLinePM.StatusCode != "6" && d.TaxReportLinePM.TransmitStatusCode == "1").length;
+
+        var lines = this.ReportLines.Collection;
+        this.errorsCount = lines.filter((d) => d.TaxReportLinePM.StatusCode != "6" && d.TaxReportLinePM.TransmitStatusCode == "1").length;
         this.ShowErrorMsg = this.errorsCount > 0;
 
     }
@@ -362,7 +366,13 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             this.SelectedStatusItems.splice(itemIndex, 1);
         this.FilterLines();
     }
-
+    GetLinesWithErrorsCount(){
+        this._TaxReportExtendedPMService.getErrorsCount(this.EntityPM.Id).subscribe((myResult) => {
+            var __errorsCount = myResult.Result;
+            this.ShowErrorMsg = __errorsCount >= 1;
+            this.errorsCount = __errorsCount;
+        });
+    }
     //#endregion
 
     //#region Data
@@ -547,6 +557,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             {
             }
         });
+
+        this.GetLinesWithErrorsCount();
 
     }
 
