@@ -48,38 +48,24 @@ namespace Logitude.Customs.BL.Messaging.Maman
         {
             CourierMasterMamanModel courierMasterMamanModel = new CourierMasterMamanModel();
             //string space = " ";
-            courierMasterMamanModel.MAWB = _CourierMasterPM.MAWB != null ? _CourierMasterPM.MAWB : " ";
-            courierMasterMamanModel.AirlineId = _CourierMasterPM.AirlinePrefix != null ? _CourierMasterPM.AirlinePrefix : " ";
-            courierMasterMamanModel.HAWBShort = _CourierMasterPM.ShortHAWB != null ? _CourierMasterPM.ShortHAWB : " ";
-            courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode.Substring(0, 3) : "";
+            courierMasterMamanModel.MAWB = _CourierMasterPM.MAWB != null ? _CourierMasterPM.MAWB : "";
+            courierMasterMamanModel.AirlineId = _CourierMasterPM.AirlinePrefix != null ? _CourierMasterPM.AirlinePrefix : "";
+            courierMasterMamanModel.HAWBShort = _CourierMasterPM.ShortHAWB != null ? _CourierMasterPM.ShortHAWB : "";
+            courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode.Substring(_CourierMasterPM.GatewayPortCode.Length - 3) : "";
             courierMasterMamanModel.Weight = "K";
-            courierMasterMamanModel.PackageQuantity = _CourierMasterPM.PackageQuantity > 0 ? _CourierMasterPM.PackageQuantity.ToString() : " ";
-            courierMasterMamanModel.GrossMassMeasure = _CourierMasterPM.GrossMassMeasure > 0 ? _CourierMasterPM.GrossMassMeasure.ToString() : " ";
+            courierMasterMamanModel.PackageQuantity = _CourierMasterPM.PackageQuantity > 0 && _CourierMasterPM.PackageQuantity.ToString().Length <= 4 ? _CourierMasterPM.PackageQuantity.ToString() : "";
+            courierMasterMamanModel.GrossMassMeasure = _CourierMasterPM.GrossMassMeasure > 0 && _CourierMasterPM.GrossMassMeasure.ToString().Length <= 4 ? _CourierMasterPM.GrossMassMeasure.ToString() : "";
             courierMasterMamanModel.Description = "";
-            //if (!string.IsNullOrEmpty(line.Description))
-            //{
-            //    if (line.Description.Length > 15)
-            //    {
-            //        courierMasterMamanModel.Description= line.Description.Substring(0, 15);
-            //    }
-            //    else
-            //    {
-            //        courierMasterMamanModel.Description = line.Description;
-            //    }
-            //}
-            //else
-            //{
-            //    courierMasterMamanModel.Description = "";
-            //}
 
             var declarationQS = new DeclarationQueryService(_Context);
             string forwarder = declarationQS.GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _CourierMasterPM.Tenant);
+            forwarder = forwarder.Substring(forwarder.Length -3);
 
             courierMasterMamanModel.Agent = forwarder;
             courierMasterMamanModel.SystemDate = String.Format("{0:yyMMdd}", DateTime.Now);
             courierMasterMamanModel.Forwarder = forwarder;
             courierMasterMamanModel.Internet = "I";
-            courierMasterMamanModel.HAWB = _CourierMasterPM.HAWB != null ? _CourierMasterPM.HAWB : " ";
+            courierMasterMamanModel.HAWB = _CourierMasterPM.HAWB != null ? _CourierMasterPM.HAWB : "";
 
             StringBuilder messageToMaman = new StringBuilder(444);
             messageToMaman.Append(courierMasterMamanModel.MAWB.PadLeft(8,'0'));
