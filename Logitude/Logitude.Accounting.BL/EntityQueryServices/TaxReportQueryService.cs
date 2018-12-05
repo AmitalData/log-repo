@@ -35,6 +35,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return reportCounters;
         }
 
+        public int GetReportLinesWithErrors(string taxReportId, int tenant)
+        {
+            TaxReportLineRepository linesRepo = new TaxReportLineRepository(context);
+
+            IQueryable<TaxReportLine> lines = linesRepo.GetByReportId(taxReportId, tenant);
+            //var l = lines.ToList();
+            int count = lines.Where(d => d.StatusCode != "6" && d.TransmitStatusCode == "1").Count(); // 6- Ready for transmit , 1- For transmit
+
+            return count;
+        }
+
 
     }
 
