@@ -108,7 +108,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 CustomerName = _DeclarationPM.ImporterName,
                 CustomerAddress = _DeclarationPM.ImporterAddress,
                 CustomerPhone = _DeclarationPM.CasualImporterTel,
-                DestLineDesc = "",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
+                DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
                 BaldarMessageTime = DateTime.Now,
                 BaldarHp = _DeclarationPM.AgentId,
                 OpenBaldarAwbDate = GetOpenBaldarAwbDate(),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
