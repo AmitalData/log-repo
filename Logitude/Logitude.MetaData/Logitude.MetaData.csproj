@@ -132,6 +132,7 @@
     <Content Include="AutoGenerators\InfrastructureClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>InfrastructureClassesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\InfrastructureClassesGenerator.cs</LastOutputs>
     </Content>
     <Content Include="AutoGenerators\InvoiceClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -370,20 +371,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\GlobalModel\BluesnapContract.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\AnalyzeQueue.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\ApiCredintials.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\AWBMessagesCCSType.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\BatchServicesDefinition.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\BluesnapContract.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\PaymentChannel.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\PaymentCurrency.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\PaymentMethod.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\RecurringPeriod.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\TenantAddOn.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\TenantManagement.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\TenantManagementLicense.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\TenantManagmentPrivateLabels.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\TenantType.lxml" />
     <None Include="EntityFiles\GlobalModel\PaymentChannel.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -426,31 +413,6 @@
     <None Include="EntityFiles\InfrastructureModel\InboundEmailLine.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\APILogs.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\BusinessHour.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\BusinessHoursHoliday.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\ChargesGroup.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\CustomPickList.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\Direction.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\DWObjectField.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\DWObjectTable.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\EntityStatus.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\EventType.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\General.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\IATACode.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\InboundEmail.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\InboundEmailLine.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\MoveType.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\ObjectField.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\ObjectTable.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\PrepaidCollect.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\RatesTable.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\TaskSchedulerHistory.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\TasksScheduler.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\TransportMode.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\VolumeUnit.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ObjectField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ObjectTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\RatesTable.lxml" />
