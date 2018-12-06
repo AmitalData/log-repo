@@ -864,7 +864,7 @@
                                                                                                 </td>
 
                                                                                                 <td *ngIf="IsDSVConnectVisible" style="width:100px;float:right;vertical-align:central; text-align:center;">
-                                                                                                    <button class="Button" (click)="DSVConnectClicked()">DSV Connect</button>
+                                                                                                    <button [disabled]="!IsDSVConnectEnable" class="Button" (click)="DSVConnectClicked()">DSV Connect</button>
                                                                                                 </td>
                                                                                                 <td>
                                                                                                     <div></div>

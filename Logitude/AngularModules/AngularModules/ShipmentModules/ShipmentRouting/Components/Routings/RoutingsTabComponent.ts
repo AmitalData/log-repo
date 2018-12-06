@@ -1867,10 +1867,25 @@ export class RoutingItem extends BaseComponent {
 
             if (DateTool.GetDateParts(myDepartureDate).DateTicks < DateTool.GetDateParts(todayDate).DateTicks) {
                 myDepartureColor = FontTool.Red;
-            }
+            }            
 
-            if (this.EntityPM.ShipmentLevelCode != "H") {
-                this.IsSetActualDepartureVisible = true;
+            switch (this.LegType) {
+                case "Main Carriage":
+                case "Transshipment1":
+                case "Transshipment2":
+                case "Transshipment3":
+                    {
+                        if (this.EntityPM.ShipmentLevelCode != "H") {
+                            this.IsSetActualDepartureVisible = true;
+                        }
+
+                        break;
+                    }
+
+                default: {
+                    this.IsSetActualDepartureVisible = true;
+                    break;
+                }
             }
         }
 
@@ -1886,9 +1901,25 @@ export class RoutingItem extends BaseComponent {
                 myArrivalColor = FontTool.Red;
             }
 
-            if (this.EntityPM.ShipmentLevelCode != "H") {
-                this.IsSetActualArrivalVisible = true;
-            }
+
+            switch (this.LegType) {
+                case "Main Carriage":
+                case "Transshipment1":
+                case "Transshipment2":
+                case "Transshipment3":
+                    {
+                        if (this.EntityPM.ShipmentLevelCode != "H") {
+                            this.IsSetActualArrivalVisible = true;
+                        }
+
+                        break;
+                    }
+
+                default: {
+                    this.IsSetActualArrivalVisible = true;
+                    break;
+                }
+            }           
         }
 
         this.DepartureDate = myDepartureDate;
