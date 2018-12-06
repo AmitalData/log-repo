@@ -401,6 +401,16 @@ namespace MeatadataGeneratorTool.Helpers
             field.IsChecked = GetAttributeBoolValue(fieldNode.Attributes["IsChecked"]);
             field.IsDeleted = GetAttributeBoolValue(fieldNode.Attributes["IsDeleted"]);
             field.IsNew = GetAttributeBoolValue(fieldNode.Attributes["IsNew"]);
+
+            if (fieldNode.Attributes["CopyToDW"] != null)
+            {
+                field.CopyToDW = GetAttributeBoolValue(fieldNode.Attributes["CopyToDW"]);
+            }
+            else
+            {
+                field.CopyToDW = false;
+            }
+
             return field;
 
         }
