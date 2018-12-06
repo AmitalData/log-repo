@@ -1299,9 +1299,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var accountingContext = AccountingContext.GetContext(tenant);
                 var systemCheckTotals = new SystemCheckTotals();
                 systemCheckTotals.TotalSumMustBeZero(tenant);
+                var json =systemCheckTotals.TotalSumPerAccountGroupByDateTypeDiff(tenant);
 
-
-
+                _LabelResult.Text = json;
                 //var journalJson = JsonConvert.SerializeObject(journal);
                 //_LabelResult.Text = journalJson;
 

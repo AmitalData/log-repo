@@ -155,7 +155,7 @@ namespace MetaDataGenerator
                 }
 
                 this.RemoveOldNodes(doc, entityElement, "DataContracts");
-                if (!this.GenerateTableLXMLFields(doc, table, entityElement, fields))
+                if (!this.GenerateTableLXMLFields(doc, table, entityElement, fields, true))
                 {
                     errors += (table.Name + "fields not generated!" + Environment.NewLine);
                     //continue;
@@ -234,7 +234,7 @@ namespace MetaDataGenerator
                 object value = prop.GetValue(table);
                 if (value != null)
                 {
-                    if (prop.PropertyType == typeof(bool) || prop.PropertyType == typeof(int))
+                    if (prop.PropertyType == typeof(int))
                     {
                         SetAttribute(prop.Name, value.ToString().ToLower(), entityElement);
                     }
@@ -243,6 +243,13 @@ namespace MetaDataGenerator
 
                         SetAttribute(prop.Name, GetStringValue(value), entityElement);
 
+                    }
+                    else if(prop.PropertyType == typeof(bool))
+                    {
+                        if (xmlAttrValue != value.ToString().ToLower() && xmlAttrValue == "false")
+                        {
+                            SetAttribute(prop.Name, value.ToString().ToLower(), entityElement);
+                        }
                     }
                 }
             }
@@ -344,7 +351,7 @@ namespace MetaDataGenerator
             return true;
         }
 
-        private bool GenerateTableLXMLFields(XmlDocument doc, ObjectTable table, XmlElement entityElement, List<ObjectField> fields)
+        private bool GenerateTableLXMLFields(XmlDocument doc, ObjectTable table, XmlElement entityElement, List<ObjectField> fields, bool updateLXML = false)
         {
             string modelName = "CommonDataModel";
             string qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + table.Name);
@@ -419,9 +426,10 @@ namespace MetaDataGenerator
             }
 
 
-            RemoveOldNodes(doc, entityElement, "field");
+            //RemoveOldNodes(doc, entityElement, "field");
 
             List<string> addeddFields = new List<string>();
+            
 
             GeneratePocoFields(doc, entityElement, fields, table, pocoProperties, pmClassProperties, listClassProperties, addeddFields);
             GenerateObjectFieldFields(doc, entityElement, fields, pocoProperties, pmClassProperties, listClassProperties, addeddFields);
@@ -429,6 +437,23 @@ namespace MetaDataGenerator
             GenerateListOnlyFields(doc, entityElement, fields, table, listClassProperties, pocoProperties, addeddFields);
 
             return true;
+        }
+
+        private XmlElement GetFieldElement(XmlDocument doc, XmlElement entityElement, string fieldname)
+        {
+            XmlNodeList fieldsNodeList = doc.GetElementsByTagName("field");
+
+
+            foreach (XmlNode node in fieldsNodeList)
+            {
+                if (node.Attributes["FieldName"].Value.Trim('"') == fieldname)
+                {
+
+                    return (XmlElement)node;
+                }
+            }
+
+            return null;
         }
 
         private void GenerateMetadataEntities(ObjectTable table, List<ObjectField> fields, XmlDocument doc, XmlElement entityElement, bool updateExistingLXML = false)
@@ -467,6 +492,7 @@ namespace MetaDataGenerator
                                                   && a.Id != table.DescriptionTextCodeId
                                                   && a.Id != table.NewButtonTextCodeId
                                                   && a.TextCodeTypeCode.ToLower() != "f" && a.TextCodeTypeCode.ToLower() != "th"
+                                                  && a.TextCodeTypeCode.ToLower() != "h"
                                                   && !a.Code.Contains(".MenuButtons.")
                                                   && !a.Code.Contains(".Features.")
                                                   && !allFeatures.Any(f => f.NameTextCodeId == a.Id)
@@ -1118,11 +1144,14 @@ namespace MetaDataGenerator
             {
                 addeddFields.Add(f.FieldName);
 
-                XmlElement fieldElement = doc.CreateElement("field");
-                entityElement.AppendChild(fieldElement);
-
-                SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, f);
-                SetAttribute("FieldName", GetStringValue(f.FieldName), fieldElement, f);
+                XmlElement fieldElement = GetFieldElement(doc, entityElement, f.FieldName);//doc.CreateElement("field");
+                if (fieldElement == null)
+                {
+                    fieldElement = doc.CreateElement("field");
+                    entityElement.AppendChild(fieldElement);
+                    SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                    SetAttribute("FieldName", GetStringValue(f.FieldName), fieldElement, null);
+                }
                 SetAttribute("ObjectTableName", GetStringValue(f.ObjectTable.Name), fieldElement, f);
                 SetAttribute("FieldsDataType", GetStringValue(f.DataTypeCode), fieldElement, f);
                 if (f.LookUpTableId != null)
@@ -1316,7 +1345,7 @@ namespace MetaDataGenerator
                 }
 
 
-
+                SetAttribute("NoMetaDataField", "false", fieldElement, null);
             }
         }
 
@@ -1336,11 +1365,15 @@ namespace MetaDataGenerator
                     {
                         addeddFields.Add(prop.Name);
 
-                        XmlElement fieldElement = doc.CreateElement("field");
-
-                        entityElement.AppendChild(fieldElement);
-                        SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
-                        SetAttribute("FieldName", GetStringValue(prop.Name), fieldElement, null);
+                        XmlElement fieldElement = GetFieldElement(doc, entityElement, prop.Name);//doc.CreateElement("field");
+                        if (fieldElement == null)
+                        {
+                            fieldElement = doc.CreateElement("field");
+                            entityElement.AppendChild(fieldElement);
+                            SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                            SetAttribute("FieldName", GetStringValue(prop.Name), fieldElement, null);
+                        }
+                        
                         SetAttribute("ObjectTableName", GetStringValue(table.Name), fieldElement, null);
 
                         Type propertyType = prop.PropertyType;
@@ -1463,7 +1496,7 @@ namespace MetaDataGenerator
                             SetAttribute("DisplayInList", "false", fieldElement, null);
                         }
 
-                        SetAttribute("NoMetaDataField", "true", fieldElement, null);
+                         SetAttribute("NoMetaDataField", "true", fieldElement, null);
 
 
 
@@ -1516,9 +1549,14 @@ namespace MetaDataGenerator
 
                     bool isListOfObjectsProperty = pmProperty.PropertyType.Name.Contains("List");
 
-                    XmlElement fieldElement = doc.CreateElement("field");
-                    entityElement.AppendChild(fieldElement);
-                    SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                    XmlElement fieldElement = GetFieldElement(doc, entityElement, pmProperty.Name);//doc.CreateElement("field");
+                    if (fieldElement == null)
+                    {
+                        fieldElement = doc.CreateElement("field");
+                        entityElement.AppendChild(fieldElement);
+                        SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                        SetAttribute("FieldName", GetStringValue(pmProperty.Name), fieldElement, null);
+                    }
                     if (isListOfObjectsProperty)
                     {
                         SetAttribute("FieldsDataType", GetStringValue("List"), fieldElement, null);
@@ -1538,7 +1576,7 @@ namespace MetaDataGenerator
                         }
 
                     }
-                    SetAttribute("FieldName", GetStringValue(pmProperty.Name), fieldElement, null);
+                    //SetAttribute("FieldName", GetStringValue(pmProperty.Name), fieldElement, null);
 
                     SetAttribute("PMPropertyPath", GetStringValue(pmProperty.Name), fieldElement, null);
                     SetAttribute("ListPropertyPath", GetStringValue(pmProperty.Name), fieldElement, null);
@@ -1659,9 +1697,14 @@ namespace MetaDataGenerator
                 {
                     addeddFields.Add(listProperty.Name);
 
-                    XmlElement fieldElement = doc.CreateElement("field");
-                    entityElement.AppendChild(fieldElement);
-                    SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                    XmlElement fieldElement = GetFieldElement(doc, entityElement, listProperty.Name);//doc.CreateElement("field");
+                    if (fieldElement == null)
+                    {
+                        fieldElement = doc.CreateElement("field");
+                        entityElement.AppendChild(fieldElement);
+                        SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                        SetAttribute("FieldName", GetStringValue(listProperty.Name), fieldElement, null);
+                    }
 
                     SetAttribute("FieldName", GetStringValue(listProperty.Name), fieldElement, null);
 

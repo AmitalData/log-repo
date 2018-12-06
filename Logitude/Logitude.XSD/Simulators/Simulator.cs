@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using System.Xml;
 using System.Xml.Serialization;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.XSD.Simulators
 {
@@ -429,6 +430,14 @@ namespace Logitude.XSD.Simulators
                     GLSHKAnalyzer analyzer = new GLSHKAnalyzer(analyzeQueue, analyzeQueueReposiory);
                     analyzer.Run();
                 }
+            }
+
+            else
+            {
+                DbQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ChampAnalyzer", 0);
+                queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
+                queueservice.Complete();
             }
         }
     }

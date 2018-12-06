@@ -448,6 +448,7 @@
     <Compile Include="Tasks\DeleteDoneQueueMessagesTask.cs" />
     <Compile Include="Tasks\DeleteOldFilingInboxes.cs" />
     <Compile Include="Tasks\DeleteQueueMessagesDetailsTask.cs" />
+    <Compile Include="Tasks\FutureOpenChequesTask.cs" />
     <Compile Include="Tasks\ITaskManager.cs" />
     <Compile Include="Tasks\PayableARPaymentChequeTask.cs" />
     <Compile Include="Tasks\TaskManagerBase.cs" />

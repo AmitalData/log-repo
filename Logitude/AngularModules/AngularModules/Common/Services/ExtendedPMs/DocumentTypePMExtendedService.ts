@@ -263,8 +263,9 @@ export class DocumentTypePMExtendedService {
         return this._http.get(this._apiUrl + '/getdocumenttypebycode/?'+  'code=' + code + '&tenant=' + tenant , { headers: authHeader }).map(response => {
 
             var result = response.json();
+
             var entity: DocumentTypePM;
-            if(entity)
+            if(result)
                 entity = this.MapJsonToEntityPM(result);
 
             var pmresponse: ServiceResponse;

@@ -58,7 +58,7 @@
       <QueryColumn QueryCode="&quot;TodayDeposits&quot;" IndexOrder="6" ObjectFieldName="&quot;CreateDate&quot;" ColumnWidth="150" />
     </QueryColumns>
     <QueryFilters>
-      <QueryFilter QueryCode="&quot;TodayDeposits&quot;" PredefinedValue="&quot;#today&quot;" ObjectFieldName="&quot;DepositDate&quot;" IsPredefined="true" Operator="&quot;Between&quot;" IndexOrder="0" />
+      <QueryFilter QueryCode="&quot;TodayDeposits&quot;" PredefinedValue="&quot;#today&quot;" ObjectFieldName="&quot;DepositDate&quot;" IsPredefined="true" PredefinedValue2="&quot;#today&quot;" Operator="&quot;Between&quot;" IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query Code="&quot;cashDeposits&quot;" TextCode="&quot;Cash Deposit&quot;" LocalTextCode="&quot;הפקדות מזומן&quot;" QueryGroupCode="&quot;BNKD&quot;" IndexOrder="2" ObjectTableName="&quot;BankDeposit&quot;" QuerySection="&quot;BankDeposit&quot;" SystemLevel="true" IsAddNewEntity="true" IsPackagable="true" QueryGroupName="&quot;BankDeposit&quot;" TextCodeCode="&quot;BankDeposit.Q.cash&quot;" FeatureCode="&quot;CashBankDeposit&quot;" FeatureTextCodeCode="&quot;BankDeposit.Features.cashdepo&quot;" FeatureDefaultText="&quot;Cash Deposit&quot;" IsSpellChecked="false">

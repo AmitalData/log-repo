@@ -8,6 +8,7 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -27,38 +28,59 @@ namespace WebFreight.Web
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    HttpRequest iRequest = this.Request;
+                    Response.Clear();
+                    Response.ContentType = "text/xml";
 
-                    if (iRequest != null)
+                    NameValueCollection parr = Request.QueryString;
+
+                    bool iPasswordValid = false;
+
+                    string iPassword = parr["password"];
+                    if (iPassword == "logiutde")
                     {
-                        string iString = "";
+                        iPasswordValid = true;
+                    }
 
-                        using (var reader = new StreamReader(Request.InputStream))
+                    //http://localhost:9996/ChampMessaging.aspx?password=logiutde
+
+                    if (iPasswordValid)
+                    {
+                        HttpRequest iRequest = this.Request;
+
+                        if (iRequest != null)
                         {
-                            iString = reader.ReadToEnd();
+                            string iString = "";
+
+                            using (var reader = new StreamReader(Request.InputStream))
+                            {
+                                iString = reader.ReadToEnd();
+                            }
+
+                            //string jsonData = HttpUtility.UrlDecode(iString);
+
+                            //XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Envelope\":" + jsonData, "Root");
+
+                            //string xmlString = System.Xml.Linq.XElement.Parse(doc.OuterXml).ToString();
+
+                            if (!string.IsNullOrEmpty(iString))
+                            {
+                                this.SaveMessageToAnalyzeQueue(iString);
+                            }
                         }
 
-                        //string jsonData = HttpUtility.UrlDecode(iString);
+                        Response.Write("<status>OK</status>");
+                        Response.StatusCode = 200;
+                        Response.End();
+                    }
 
-                        //XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Envelope\":" + jsonData, "Root");
-
-                        //string xmlString = System.Xml.Linq.XElement.Parse(doc.OuterXml).ToString();
-
-                        if (!string.IsNullOrEmpty(iString))
-                        {
-                            this.SaveMessageToAnalyzeQueue(iString);
-                        }
+                    else
+                    {
+                        Response.Write("<status>Fail</status>");
+                        Response.StatusCode = 401;
+                        Response.End();
                     }
 
                     scope.Complete();
-
-                    Response.Clear();                    
-                    Response.ContentType = "text/xml";
-                    Response.Write("<status>OK</status>");
-
-                    //Response.StatusCode = 200;
-                    //Response.StatusDescription = "Success";
-                    Response.End();
                 }
             }
 
@@ -71,16 +93,11 @@ namespace WebFreight.Web
 
                 else
                 {
-
                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "ChampMessaging Page", "Page_Load Method", null);
 
-                    Response.Clear();
-                    Response.ContentType = "text/xml";
                     Response.Write("<status>Fail</status>");
                     Response.Write("<message>" + ex.Message + "</message>");
-
-                    //Response.StatusCode = 404;
-                    //Response.StatusDescription = ex.Message;
+                    Response.StatusCode = 500;
                     Response.End();
                 }
             }
@@ -89,7 +106,6 @@ namespace WebFreight.Web
         {
             base.Render(writer);
             Response.TrySkipIisCustomErrors = true;
-            //Response.StatusCode = 200;
         }
 
         private void SaveMessageToAnalyzeQueue(string xmlfileText)
