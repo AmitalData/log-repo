@@ -499,21 +499,6 @@
     <None Include="EntityFiles\InvoiceModel\ARPaymentStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\CreditCardType.lxml" />
     <None Include="EntityFiles\InvoiceModel\ExternalSystemsTablesCode.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\MarkUpType.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\Quote.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteCharge.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteClosingReason.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteCustomerType.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuotePackage.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuotePriceSteps.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteRating.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteSetting.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteStage.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteTemplate.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteTotalVAT.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteType.lxml" />
     <None Include="EntityFiles\QuoteModel\Quote.lxml">
       <SubType>Designer</SubType>
     </None>
