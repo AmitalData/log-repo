@@ -32,28 +32,28 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
     public class TaxReportOpController : ApiController
     {
-        public HttpResponseMessage PostDownloadPNC874File(TaxReportPM entityPM)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
-                int tenant = authToken.Tenant;
+        //public HttpResponseMessage PostDownloadPNC874File(TaxReportPM entityPM)
+        //{
+        //    try
+        //    {
+        //        string token = HttpContext.Current.Request.Headers["Token"];
+        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+        //        SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
+        //        int tenant = authToken.Tenant;
 
-                DocumentsFilingPM docOut = TaxReportService.CreatePNC874File(entityPM.Id, tenant);
+        //        DocumentsFilingPM docOut = TaxReportService.CreatePNC874File(entityPM.Id, tenant);
 
 
-                return Request.CreateResponse(HttpStatusCode.OK, docOut);
-            }
+        //        return Request.CreateResponse(HttpStatusCode.OK, docOut);
+        //    }
 
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //    }
 
-        }
+        //}
 
         public HttpResponseMessage PostDownloadPNC874FileInBatch(TaxReportPM entityPM)
         {
