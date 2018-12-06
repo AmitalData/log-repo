@@ -64,6 +64,32 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         computingPartnerCode = loggedContactInfo.ComputingPartnerCode;
                     }
 
+                    if (entity.MainAddress != null)
+                    {
+                        if (entity.MainAddress.Country == null)
+                        {
+                            throw new ApplicationException("Main address country is required");
+                        }
+
+                        if (entity.MainAddress.City == null)
+                        {
+                            throw new ApplicationException("Main address city is required");
+                        }
+                    }
+
+                    if (entity.BillingAddress != null)
+                    {
+                        if (entity.BillingAddress.Country == null)
+                        {
+                            throw new ApplicationException("Billing address country is required");
+                        }
+
+                        if (entity.BillingAddress.City == null)
+                        {
+                            throw new ApplicationException("Billing address city is required");
+                        }
+                    }
+
                     ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                     CustomerQueryService mappingService = new CustomerQueryService(authToken.Tenant);
                     CustomerPM entityPM = mappingService.CustomerCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
@@ -75,17 +101,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             throw new ApplicationException("Missing Main Address");
                         }
                         else
-                        {
-                            if (entity.MainAddress.Country == null)
-                            {
-                                throw new ApplicationException("Main address country is required");
-                            }
-
-                            if (entity.MainAddress.City == null)
-                            {
-                                throw new ApplicationException("Main address city is required");
-                            }
-
+                        {   
                             Tenant myTenant = MyContext.Tenants.Where(d => d.Id == authToken.Tenant).FirstOrDefault();
                             if (myTenant.IsCustomerTelRequired)
                             {
