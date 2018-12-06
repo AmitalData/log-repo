@@ -355,8 +355,25 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ItemsSource.Clear();
 
         if (!AppTool.IsNullOrEmpty(this.BillToId) && this.EntityPM.StatusCode != "VD") {
+
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                this.LoadPaymentInvoices_IsMatched();
+
+                if (this.EntityPM.PaymentInvoices.length == 1) {
+                    this.LoadPaymentInvoices_Created();
+                    //var iConnectedItem = new ARInvoiceList();
+                    //iConnectedItem.Id = this.EntityPM.PaymentInvoices[0].ARInvoiceId;
+                    //iConnectedItem.InvoiceCurrencyId = this.EntityPM.PaymentInvoices[0].ForeignCurrencyId;
+                    //iConnectedItem.InvoiceCurrencyExchangeRate = this.EntityPM.PaymentInvoices[0].ExchangeRate;
+                    //iConnectedItem.AmountInInvoiceCurrency = this.EntityPM.PaymentInvoices[0].ForeignAmount;
+                    //iConnectedItem.AmountInLocalCurrency = this.EntityPM.PaymentInvoices[0].LocalAmount;
+                    //iConnectedItem.Id = this.EntityPM.PaymentInvoices[0].ARInvoiceId;
+                    //iConnectedItem.MetodoPagoCode = this.EntityPM.PaymentInvoices[0].ARInvoiceMetodoPagoCode;
+                    //this.ConnectedList.push(iConnectedItem);
+                }
+
+                else {
+                    this.LoadPaymentInvoices_IsMatched();
+                }
             }
 
             else {
@@ -368,6 +385,27 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.UpdateSummary();
             this.IsDataLoaded = true;
         }
+    }
+    LoadPaymentInvoices_Created() {
+        var invoiceId = this.EntityPM.PaymentInvoices[0].ARInvoiceId;
+
+        var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 1;
+        filters.SortBy = "InvoiceDate";
+        filters.SortDirection = "Descending";
+
+        filters.addAdditionalFilter("Id", invoiceId, null, null, "Equals", false, false, false, "string");
+
+        var myService = new ARInvoiceListService();
+        myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+
+                this.ConnectedList = myResponse.Result;
+
+                this.LoadPaymentInvoices_IsMatched();
+            }
+        });
     }
     LoadPaymentInvoices_Connected() {
         var filters = new ApiQueryFilters();
