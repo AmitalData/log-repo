@@ -104,6 +104,19 @@
                     <td>
                         <table>
                             <tr>
+
+                                <td style="width:60px;"><div style="width:60px;">Category:</div></td>
+                                <td style="width:130px;">
+                                    <LogLov [ObjectFieldName]="'CategoryId'"
+                                            [DataContext]="DataContext"
+                                            [NoObjectField]="true"
+                                            [SelectedValue]="CategoryId"
+                                            [LookUpTableName]="'TMProjectCategory'" [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:10px;"><div style="width:10px"></div></td>
+
                                 <td style="width:60px;"><div style="width:60px;">Project:</div></td>
                                 <td style="width:130px;">
                                     <LogLov [NoObjectField]="true"
@@ -111,7 +124,7 @@
                                             [DataContext]="DataContext"
                                             [SelectedValue]="ProjectId"
                                             [LookUpTableName]="'TMProject'"
-                                              [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
+                                            [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
                                     </LogLov>
                                 </td>
                                 <td style="width:10px;"><div style="width:10px"></div></td>
