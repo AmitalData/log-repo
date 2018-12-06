@@ -137,6 +137,7 @@
     <Content Include="AutoGenerators\InvoiceClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>InvoiceClassesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\InvoiceClassesGenerator.cs</LastOutputs>
     </Content>
     <Content Include="AutoGenerators\LogitudeClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -479,43 +480,6 @@
     <None Include="EntityFiles\InvoiceModel\ARPayment.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingPaymentMethod.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingSystemsSetting.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingSystemsSyncStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingTransferHeader.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingTransferLine.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingTransferType.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoice.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceLine.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoicePayment.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceTotalVAT.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceTransferStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceType.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APPayment.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APPaymentMethod.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APPaymentStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APPaymentTransferStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoice.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceLine.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoicePayment.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceTotalVAT.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceTransferStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceType.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARPayment.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARPaymentStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARPaymentTransferStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\BankAccountLite.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\InvoiceModel\NewFiles\CreditCardType.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ExternalSystemsTablesCode.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\SATInterface.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\SATInterfaceSetting.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\SATInvoiceStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\SATPaymentMethod.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\SATTransferStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\SATInvoiceStatus.lxml">
       <SubType>Designer</SubType>
     </None>

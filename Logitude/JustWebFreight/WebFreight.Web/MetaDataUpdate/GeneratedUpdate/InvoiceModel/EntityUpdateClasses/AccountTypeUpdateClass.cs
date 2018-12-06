@@ -70,7 +70,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
-   public class APInvoiceTransferStatusUpdateClass
+   public class AccountTypeUpdateClass
    {  
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
@@ -78,12 +78,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "APInvoiceTransferStatus",
-			      				    DBTableName =  "APInvoiceTransferStatus",
-			      				    ObjectTableSingular =  "A/P Invoice Transfer Status",
-			      				    ObjectTablePlural =  "A/P Invoice Transfer Status",
-			      				    DefaultText =  "A/P Invoice Transfer Status",
-			      				    Name =  "APInvoiceTransferStatus",
+	             				    ObjectTableName =  "AccountType",
+			      				    DBTableName =  "AccountTypes",
+			      				    ObjectTableSingular =  "Account Type",
+			      				    ObjectTablePlural =  "Account Types",
+			      				    DefaultText =  "Account Type",
+			      				    Name =  "AccountType",
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "Code",
 			      				    LookUp2 =  "Name",
@@ -91,18 +91,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  true,
-			      				    CacheOnClient =  true,
-			      				    EditableFromAutoCompleteWindow =  true,
+			      				    CacheOnClient =  false,
+			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
+			      				    IsMain =  false,
 			      				    IsAutoComplete =  true,
 			      				    CustomFieldsCount =  0,
 			      				    HasCustomFields =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "APInvoiceTransferStatus,APInvoiceTransferStatus,,Code,",
+			      				    SearchFields =  "AccountType,AccountTypes,,Code,",
 			      				    IsSaveButtonVisible =  true,
 			      				    EnableSecurity =  false,
 			      				    ObjectTableTypeCode =  "MD",
@@ -113,7 +113,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  true,
 			      				    IsEditable =  true,
-			      				    ClientModuleName =  "Invoice",
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
@@ -131,14 +130,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Code",
-					  						ObjectTableName =  "APInvoiceTransferStatus",
+					  						ObjectTableName =  "AccountType",
 					  						FieldsDataType =  "Text",
 					  						DataTypeCode =  "Text",
 					  						MaxLength =  2,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  true,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -147,17 +146,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
-					  						DisplayInLookUpIndex =  1,
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
+					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "APInvoiceTransferStatus",
+					  						ValidForQuerySection1 =  "AccountType",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						IsRestrictable =  false,
@@ -191,14 +190,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "Name",
-					  						ObjectTableName =  "APInvoiceTransferStatus",
+					  						ObjectTableName =  "AccountType",
 					  						FieldsDataType =  "Text",
 					  						DataTypeCode =  "Text",
-					  						MaxLength =  20,
+					  						MaxLength =  30,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  true,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -207,17 +206,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						DisplayInSearchWindowFilters =  true,
+					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
-					  						DisplayInLookUpIndex =  1,
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
+					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "APInvoiceTransferStatus",
+					  						ValidForQuerySection1 =  "AccountType",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						IsRestrictable =  false,
@@ -251,17 +250,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "APInvoiceTransferStatus",
-					  						FieldsDataType =  "nText",
-					  						DataTypeCode =  "nText",
+					  						ObjectTableName =  "AccountType",
+					  						FieldsDataType =  "Text",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  1000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
 					  						DisplayOnLookUp =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  40,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Contains",
@@ -275,7 +274,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
-					  						ValidForQuerySection1 =  "APInvoiceTransferStatus",
+					  						ValidForQuerySection1 =  "AccountType",
+					  						ValidForQuerySection2 =  "AccountTypeFollowUp",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						IsRestrictable =  false,
@@ -291,8 +291,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search..",
+					  						DefaultText =  @"Search codes/ names",
 					  						HelpTextCode =  "SearchFields",
+					  						HelpTextDefaultText =  @"Searching by :\n1: code\n2: name",
 					  						Code =  "SearchFields",
 					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -324,7 +325,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable APInvoiceTransferStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APInvoiceTransferStatus" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable AccountTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountType" && d.Tenant == 0).FirstOrDefault(); 
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -336,23 +337,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 		   		   //--------------> Additional TextCodes <--------------\\
 
- 		   ObjectTable APInvoiceTransferStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APInvoiceTransferStatus" && d.Tenant == 0).FirstOrDefault(); 
+ 		   ObjectTable AccountTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountType" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode APInvoiceTransferStatusTextCode_APInvoiceTransferStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceTransferStatus", DefaultText = "A/P Invoice Transfer Status",LocalDefaultText = null, ObjectTableId = APInvoiceTransferStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode AccountTypeTextCode_AccountType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountType", DefaultText = "Account Type",LocalDefaultText = null, ObjectTableId = AccountTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
 }
 
 
-	    public void FillAPInvoiceTransferStatus()
+	    public void FillAccountType()
         { 
-            var repo = new APInvoiceTransferStatusRepository(0);
+            var repo = new AccountTypeRepository(0);
             var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
             new FillCloseTables().FillCloseTable<
-                                APInvoiceTransferStatus,
-                                Logitude.BL.InvoiceModel.APInvoiceTransferStatusDetails,
-                                APInvoiceTransferStatusRepository>(repo, dic);
+                                AccountType,
+                                Logitude.BL.InvoiceModel.AccountTypeDetails,
+                                AccountTypeRepository>(repo, dic);
         }
 
 	    
