@@ -94,6 +94,26 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.MasterCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
 
+                    if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
+                    {
+                        throw new ApplicationException("Missing volume unit code");
+                    }
+
+                    if (string.IsNullOrEmpty(entityPM.DimensionsUnitCode))
+                    {
+                        throw new ApplicationException("Missing dimensions unit code");
+                    }
+
+                    if (string.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
+                    {
+                        throw new ApplicationException("Missing gross weight unit code");
+                    }
+
+                    if (string.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
+                    {
+                        throw new ApplicationException("Missing chargeable weight unit code");
+                    }
+
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         if (entity.IsOperationalClosed)
@@ -136,7 +156,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                             }
                         }
-
+                        
                         if (entity.Houses.Count > 0)
                         {
                             ShipmentRepository shipmentRepository = new ShipmentRepository(authToken.Tenant);
@@ -343,6 +363,34 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 entityPM.FreightPrepaidCollectId = myIncoterm.Freight;
                                 entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
+                            }
+                        }
+
+                        AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
+                        if (!string.IsNullOrEmpty(entityPM.AgentId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.AgentAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.ShipperId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ShipperAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ConsigneeAddressId = address.Id;
                             }
                         }
 
