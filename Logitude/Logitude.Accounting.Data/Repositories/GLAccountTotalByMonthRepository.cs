@@ -37,7 +37,7 @@ namespace Logitude.Accounting.Data.Repositories
 
         public List<GLAccountTotalByMonth> GetMounthTotals(int year, int month, int tenant)
         {
-            var pocos = GetQuaryableMonthTotals(year, month, tenant).ToList();
+            var pocos = GetQuaryableMonthTotals(year, month, tenant, "1"/*GLAccountTotalDateTypeValues.Accoutingdate*/).ToList();
             return pocos;
         }
         public decimal GetLocalOpenBalanceForYearDateTypeCode(string DateTypeCode, string accountId, int year, int tenant)
@@ -63,9 +63,9 @@ namespace Logitude.Accounting.Data.Repositories
             return LocalOpenBalanceForYear;
         }
 
-        public IQueryable<EntityPOCOs.GLAccountTotalByMonth> GetQuaryableMonthTotals(int year, int month, int tenant,bool withoutControlGLAccount=false)
+        public IQueryable<EntityPOCOs.GLAccountTotalByMonth> GetQuaryableMonthTotals(int year, int month, int tenant,string DateTypeCode)
         {
-            return context.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == "1") //GLAccountTotalDateTypeValues.Accoutingdate)
+            return context.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == DateTypeCode) //GLAccountTotalDateTypeValues.Accoutingdate)
                 .Where(a => a.Tenant == tenant && a.Year == year && a.Month == month);
         }
 
