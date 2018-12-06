@@ -492,6 +492,7 @@ namespace MetaDataGenerator
                                                   && a.Id != table.DescriptionTextCodeId
                                                   && a.Id != table.NewButtonTextCodeId
                                                   && a.TextCodeTypeCode.ToLower() != "f" && a.TextCodeTypeCode.ToLower() != "th"
+                                                  && a.TextCodeTypeCode.ToLower() != "h"
                                                   && !a.Code.Contains(".MenuButtons.")
                                                   && !a.Code.Contains(".Features.")
                                                   && !allFeatures.Any(f => f.NameTextCodeId == a.Id)

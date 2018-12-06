@@ -501,7 +501,7 @@ namespace WebFreight.Web.InfrastructureModel
 
                 AddReport(tenant);
 
-             
+                AddTenantLoginPolicy(tenant);
 
 
                 #endregion
@@ -3046,7 +3046,20 @@ namespace WebFreight.Web.InfrastructureModel
             reportHelper.UpdateReports(theTenant);
         }
 
+        public static void AddTenantLoginPolicy(int theTenant)
+        {
+            TenantLoginPolicyRepository tenantLoginPolicyRepository = new TenantLoginPolicyRepository(theTenant);
+            TenantLoginPolicy tenantLoginPolicy = new TenantLoginPolicy()
+            {
+                Tenant = theTenant,
+                LoginPolicyCode = "NOREST",
+                SessionTimeout = 8,
+               
+            };
 
+            tenantLoginPolicyRepository.Add(tenantLoginPolicy);
+            tenantLoginPolicyRepository.SubmitChanges();
+        }
 
         public static void AddQuoteTemplate(int theTenant)
         {

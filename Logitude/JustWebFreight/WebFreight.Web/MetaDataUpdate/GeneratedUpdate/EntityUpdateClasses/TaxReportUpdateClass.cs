@@ -2169,7 +2169,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable TaxReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode TaxReportTextCode_TaxReportOFileBigNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.FileBigNumber", DefaultText = "There is a number with big value",LocalDefaultText = @"ישנו מספר עם ערך גדול", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

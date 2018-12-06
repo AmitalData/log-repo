@@ -5,97 +5,85 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
-import {Observable}     from 'rxjs/Rx';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
-import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
-import {CustomerList} from '../../EntityLists/CustomerList';
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Rx';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
+import { CustomerList } from '../../EntityLists/CustomerList';
 
 @Injectable()
 
 export class CustomerListService {
-	private _http: Http;
-    private _apiUrl: string;   
-	public static CachedData: Array<CustomerList> = [];
+    private _apiUrl: string;
+    private _http: Http;
+    private CachedData: Array<CustomerList> = [];
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/customerviews';  
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/customerviews';
+        this.CachedData = [];
     }
 
     getSingle(id: string) {
-	   
+
         var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, { headers: authHeader }).map(response => {
-
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
                 var list = response.json();
-                    
+
                 var entity: CustomerList;
-				if(list)
-				{
-                   entity = this.MapJsonToEntityList(list);
-                }   
+                if (list) {
+                    entity = this.MapJsonToEntityList(list);
+                }
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse(); 
-                serviceResponse.Result = entity;  
-				serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Customer", "GetSingleList", 'id=' + id); 
-
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     getAll() {
-        
-	   var authHeader = new Headers();
-       authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
-       return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
-              var allLists = response.json();
-              var _mappedListsArray: Array< CustomerList> = [];
-		      if(allLists)
-			  {
-				for (var key in  allLists) {				
-				   var entity: CustomerList;
-                   entity = this.MapJsonToEntityList(allLists[key]);
-				   _mappedListsArray.push(entity);
-				 }
-               }
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getall', {
+                headers: authHeader
+            }).map(response => {
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse(); 
+                var allLists = response.json();
+                var _mappedListsArray: Array<CustomerList> = [];
+                if (allLists) {
+                    for (var key in allLists) {
+
+                        var entity: CustomerList;
+                        entity = this.MapJsonToEntityList(allLists[key]);
+                        _mappedListsArray.push(entity);
+
+                    }
+                }
+
+                var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
-				serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Customer", "GetAllLists", ""); 
-
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-	
+
     getByFilters(filters: ApiQueryFilters) {
 
-        var callTime = new Date();
-		                        
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
+        var callTime = new Date();
         for (var i in mykeys) {
             var propName = mykeys[i];
             var propValue = filters[propName];
@@ -106,10 +94,7 @@ export class CustomerListService {
                 urlparameters = urlparameters.concat('&');
             }
             if (!ignoreFilter)
-                {
-					propValue = encodeURIComponent(propValue);
-					urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-				}
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
 
             if (propName == "AdditionalFilters" && propValue.length > 0)
                 addtionalFiltersValues = JSON.stringify(propValue);
@@ -121,51 +106,144 @@ export class CustomerListService {
         }
 
         var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var callUrl = this._apiUrl.concat(urlparameters);//
-        
-		
-	   return Observable.defer(() => {
+
+
+        return Observable.defer(() => {
             return this._http.get(callUrl, {
                 headers: authHeader
             }).map(response => {
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = response.json();
-                var _mappedListsArray: Array< CustomerList> = [];
-				if(serviceResponse.Result)
-				{
-                for (var key in serviceResponse.Result) {
-				
-				   var entity: CustomerList;
-                   entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-				   _mappedListsArray.push(entity);
+                var _mappedListsArray: Array<CustomerList> = [];
+                if (serviceResponse.Result) {
+                    for (var key in serviceResponse.Result) {
 
-				 }
-                }   
+                        var entity: CustomerList;
+                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                        _mappedListsArray.push(entity);
 
-                serviceResponse.Result = _mappedListsArray;       
-				serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Customer", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
-				           
+                    }
+                }
+
+                serviceResponse.Result = _mappedListsArray;
+                serviceResponse.CallTime = callTime;
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        });        
+        });
     }
 
-	
-	    MapJsonToEntityList(jsonList: any) {
-       
-            var entityList: CustomerList;
-            entityList = new CustomerList();
-            var jsonListKeys = Object.keys(jsonList);
+    getSingleFromCache(id: string) {
 
-            for (var key in jsonListKeys) {
-                var property = jsonListKeys[key];
-                entityList[property] = jsonList[property];
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var exists = this.CachedData.filter(a => a.Id === id).length;
+
+        var serviceResponse: ServiceResponse;
+        serviceResponse = new ServiceResponse();
+
+        if (exists === 0) {
+            return Observable.defer(() => {
+                return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, {
+                    headers: authHeader
+                }).map(response => {
+                    var list = response.json();
+
+                    var entity: CustomerList;
+                    if (list) {
+                        entity = this.MapJsonToEntityList(list);
+                    }
+
+                    serviceResponse.Result = entity;
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+            });
+        }
+
+        else {
+            var filteredData = this.CachedData.filter(a => a.Id === id)[0];
+            serviceResponse.Result = filteredData;
+            return Observable.of(serviceResponse);
+        }
+    }
+
+    getAllFromCache(filters: ApiQueryFilters) {
+        var urlparameters = '/getbyfilters?';
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
             }
-			
+            if (!ignoreFilter)
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+        }
+
+        if (addtionalFiltersValues) {
+            urlparameters = urlparameters.concat("AdditionalFilters=").concat(JSON.stringify(propValue));
+        }
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var callUrl = this._apiUrl.concat(urlparameters);//
+
+        var exists = this.CachedData.length;
+        if (exists === 0) {
+            return Observable.defer(() => {
+                return this._http.get(callUrl, {
+                    headers: authHeader
+                }).map(response => {
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = response.json();
+                    var _mappedListsArray: Array<CustomerList> = [];
+                    if (serviceResponse.Result) {
+                        for (var key in serviceResponse.Result) {
+
+                            var entity: CustomerList;
+                            entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                            _mappedListsArray.push(entity);
+
+                        }
+                    }
+
+                    serviceResponse.Result = _mappedListsArray;
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+            });
+        }
+
+        else {
+            var filteredData = InfraGenericFilter.GetFilteredArray(this.CachedData, filters);
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            serviceResponse.Result = filteredData;
+            return Observable.of(serviceResponse);
+        }
+    }
+
+    MapJsonToEntityList(jsonList: any) {
+
+        var entityList: CustomerList;
+        entityList = new CustomerList();
+        var jsonListKeys = Object.keys(jsonList);
+
+        for (var key in jsonListKeys) {
+            var property = jsonListKeys[key];
+            entityList[property] = jsonList[property];
+        }
+
 
         return entityList;
     }

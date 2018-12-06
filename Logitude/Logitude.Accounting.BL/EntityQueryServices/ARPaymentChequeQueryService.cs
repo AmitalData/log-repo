@@ -89,6 +89,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return this.GetEntityPM(poco);
         }
+
+
+        public List<ARPaymentChequePM> GetOpenARPaymentCheques( int tenant)
+        {
+            List<ARPaymentCheque> pocos = (from a in context.ARPaymentCheques
+                                    where a.ValueDate > DateTime.Today && a.Tenant == tenant
+                                    select a).ToList();
+
+            return pocos.Select(r => this.GetEntityPM(r)).ToList();
+        }
     }
 }
 
