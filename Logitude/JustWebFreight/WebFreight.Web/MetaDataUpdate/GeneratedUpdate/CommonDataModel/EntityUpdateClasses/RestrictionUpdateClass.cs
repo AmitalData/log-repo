@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DefaultText =  "Restriction",
 			      				    Name =  "Restriction",
 			      				    IsNewWizard =  false,
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -111,13 +110,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
+			      				    NoViewsController =  true,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -132,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Restriction",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ObjectTable",
-					  						Code =  "ObjectTableId",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -158,7 +151,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -169,14 +161,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "ObjectTableId",
+					  						DefaultText =  @"Table",
+					  						HelpTextCode =  "ObjectTableId",
+					  						Code =  "ObjectTableId",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "ObjectTableId",
-					  						DefaultText =  @"Table",
-					  						HelpTextCode =  "ObjectTableId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -188,7 +183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "Restriction",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ObjectField",
-					  						Code =  "ObjectFieldId",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -214,7 +209,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -225,14 +219,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "ObjectFieldId",
+					  						DefaultText =  @"Field",
+					  						HelpTextCode =  "ObjectFieldId",
+					  						Code =  "ObjectFieldId",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "ObjectFieldId",
-					  						DefaultText =  @"Field",
-					  						HelpTextCode =  "ObjectFieldId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -277,15 +274,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable RestrictionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Restriction" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode RestrictionTextCode_RestrictionOEditRestriction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.EditRestriction", DefaultText = "Edit Restriction",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode RestrictionTextCode_RestrictionOEditRestriction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.EditRestriction", DefaultText = "Edit Restriction",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode RestrictionTextCode_RestrictionOTable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.Table", DefaultText = "Table",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode RestrictionTextCode_RestrictionOAllValuesAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.AllValuesAllowed", DefaultText = "All Values Allowed",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode RestrictionTextCode_RestrictionOAllValuesAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.AllValuesAllowed", DefaultText = "All Values Allowed",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode RestrictionTextCode_RestrictionOTable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.Table", DefaultText = "Table",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode RestrictionTextCode_RestrictionOByField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.ByField", DefaultText = "By Field",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode RestrictionTextCode_RestrictionOByField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.ByField", DefaultText = "By Field",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode RestrictionTextCode_RestrictionOAllowedValues = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.AllowedValues", DefaultText = "Allowed Values",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode RestrictionTextCode_RestrictionOAllowedValues = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.AllowedValues", DefaultText = "Allowed Values",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode RestrictionTextCode_Restriction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction", DefaultText = "Restriction",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 

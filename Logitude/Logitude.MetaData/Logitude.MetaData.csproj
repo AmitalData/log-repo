@@ -107,6 +107,7 @@
     <Content Include="AutoGenerators\CommonClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CommonClassesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\CommonClassesGenerator.cs</LastOutputs>
     </Content>
     <Content Include="AutoGenerators\EntityControllersGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
