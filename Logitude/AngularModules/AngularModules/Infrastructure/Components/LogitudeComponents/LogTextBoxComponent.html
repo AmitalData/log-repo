@@ -138,7 +138,7 @@
                            [id]="InputId" #input ondrop="return false" (paste)="OnPaste($event)"/>
                 </div>
 
-                <div *ngIf="IsMultiline" [id]="InputDivId" class="InputDiv" [ngStyle]="InputDivStyle" style="height: 100%; max-height:unset;">
+                <div *ngIf="IsMultiline" [id]="InputDivId" class="InputDiv" [ngStyle]="InputDivStyle" style="height: 100%; max-height:unset; margin-bottom: 5px;">
                     <textarea [readonly]="IsDisabled" wrap="hard" [class.ArialFont]="UseArialFont == true"
                               [(ngModel)]="TextValue"
                               (focus)="onFocus()" [placeholder]="Placeholder"

@@ -48,14 +48,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(journalPM.Id, false, false);
                     if (journalPM != null)
                     {
-                        if (entityPM.TransmitStatusCode == "1") // 1- For transmit
-                            journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
-                        else if (entityPM.TransmitStatusCode == "3") // 3- Not for transmit at all
-                            journalAdditionalDataPM.TaxReportId = "1111";
-
-                        //update
-                        journalAdditionalDataPM.TaxReportTransmitStatusCode = "1";
-                        journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId; //updated by alaa task:45553
+                        
+                        journalAdditionalDataPM.TaxReportTransmitStatusCode = entityPM.TransmitStatusCode;
+                        journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
                         journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
                         journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
                         entityPM.IsManuallyChanged = false;
