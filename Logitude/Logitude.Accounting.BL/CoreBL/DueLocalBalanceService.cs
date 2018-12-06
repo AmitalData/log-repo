@@ -190,7 +190,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 #endif
 
-        public void ReBuild(int tenant)
+        public void ReBuild(int tenant,string AcountId)
         {
             int clientAndVendorTypeGLAccountIdsCount = -1;
             List<DueLocalBalanceM> myDueLocalBalanceListToUpdate;
@@ -203,7 +203,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
                     //InitDueLocalBalanceListToUpdate(accountingContext, tenant, true,true);
-                    InitDueLocalBalanceListToUpdate(accountingContext, tenant,false, false);// WHY I CHANGE TO FALSE FALSE (FROM TRUE*2) 1 NO TIME 2 THE REVERSE DUE DATE RETURN LISt
+                    InitDueLocalBalanceListToUpdate(accountingContext, tenant,"",false, false);// WHY I CHANGE TO FALSE FALSE (FROM TRUE*2) 1 NO TIME 2 THE REVERSE DUE DATE RETURN LISt
                     myDueLocalBalanceListToUpdate = _QDueLocalBalanceListToUpdate.ToList();
                     
                     myClientAndVendorTypeGLAccountIds = _QClientAndVendorTypeGLAccountIds.ToList();
@@ -294,7 +294,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 LogMessagingUtil.Instance.AppendLine("DueLocalBalanceService tenant= " + tenant + "  accountIdList.Count=" + clientAndVendorTypeGLAccountIdsCount + ") took:" + sw.Elapsed.ToString());
             }
         }
-        public List<DueLocalBalanceDiffM> ReverseEngineer(int tenant)
+        public List<DueLocalBalanceDiffM> ReverseEngineer(int tenant,string AccountId)
         {
             var sw = Stopwatch.StartNew();
             try
@@ -302,11 +302,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 using (var scope = TransactionFactory.GetTransaction())
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
-                    InitDueLocalBalanceListToUpdate(accountingContext, tenant, false,false);
+                    InitDueLocalBalanceListToUpdate(accountingContext, tenant, AccountId, false,false);
 
                     var myGLAccountQueryService = new GLAccountQueryService(accountingContext);
 
                     var qClientAndVendorTypeGLAccount = myGLAccountQueryService.GetQByAccountTypeCodeList(tenant, _clientAndVendorType);
+                    if (!String.IsNullOrWhiteSpace(AccountId))
+                    {
+                        qClientAndVendorTypeGLAccount = qClientAndVendorTypeGLAccount.Where(r => r.Id == AccountId);
+                    }
                     var dbGLaccount =
                         (
 
@@ -371,7 +375,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
         }
 
-        private void InitDueLocalBalanceListToUpdate(IAccountingContext accountingContext, int tenant, bool filterByNextDueDate,bool onlyWithActivity)
+        private void InitDueLocalBalanceListToUpdate(IAccountingContext accountingContext, int tenant,string AccountId, bool filterByNextDueDate,bool onlyWithActivity)
         {
             //using (var scope = TransactionFactory.GetTransaction())
             {
@@ -391,7 +395,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
                 qClientAndVendorTypeGLAccountIds = qClientAndVendorTypeGLAccount.Select(r => r.Id);
-
+                if (!string.IsNullOrWhiteSpace(AccountId))
+                {
+                    qClientAndVendorTypeGLAccountIds = qClientAndVendorTypeGLAccountIds.Where(r => r == AccountId);
+                }
 
                 var qTotalLocalAmountLastMonthDue =
                     (from totDueDate in repoGLAccountTotalByMonths.GetQTotalByDateTypeCodeUntil(tenant, _lastMonth, qClientAndVendorTypeGLAccountIds, GLAccountTotalDateTypeValues.DueDate)
@@ -401,7 +408,7 @@ namespace Logitude.Accounting.BL.CoreBL
                          AccountId = g.Key,
                          RealDueInLocal = 0,
                          TotalLocalAmountLastMonthDue = g.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit),
-                         TransLocalAmountDueMonth = decimalNull,
+                         TransLocalAmountDueMonth = 0,
                          TransNextDueDate = dateTimeMaxValue,
                      });
 
@@ -415,7 +422,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         AccountId = g.Key,
                         RealDueInLocal = 0,
-                        TotalLocalAmountLastMonthDue = decimalNull,
+                        TotalLocalAmountLastMonthDue = 0,
                         TransLocalAmountDueMonth = g.Sum(r => r.LocalAmountDebit - r.LocalAmountCredit),
                         TransNextDueDate = dateTimeMaxValue,
                     });
@@ -433,29 +440,35 @@ namespace Logitude.Accounting.BL.CoreBL
                      {
                          AccountId = g.Key,
                          RealDueInLocal = 0,
-                         TotalLocalAmountLastMonthDue = decimalNull,
-                         TransLocalAmountDueMonth = decimalNull,
+                         TotalLocalAmountLastMonthDue = 0,
+                         TransLocalAmountDueMonth = 0,
                          TransNextDueDate = g.Min(r => r.DueDate),
                      });
-
-                var all = qTotalLocalAmountLastMonthDue.Union(qLedgerTrans).Union(nextStep);
+                
+                    var all = qTotalLocalAmountLastMonthDue.Union(qLedgerTrans).Union(nextStep);
                 bool UnionreturnsDistinctvalues = true;
                 if (UnionreturnsDistinctvalues)
                 {
                     all = qTotalLocalAmountLastMonthDue.Concat(qLedgerTrans).Concat(nextStep);
                 }
-                    var theDueLocalBalanceListToUpdate =
-                    (from m in all
-                     group m by m.AccountId into g
-                     select new DueLocalBalanceM
-                     {
-                         AccountId = g.Key,
-                         RealDueInLocal = g.Sum(r => r.TotalLocalAmountLastMonthDue)??0 + g.Sum(r => r.TransLocalAmountDueMonth)??0,
-                         TotalLocalAmountLastMonthDue = decimalNull,
-                         TransLocalAmountDueMonth = decimalNull,
-                         TransNextDueDate = g.Min(r => r.TransNextDueDate),
-                     }
-                    );
+
+                if (!string.IsNullOrWhiteSpace(AccountId))
+                {
+                    var allList = all.ToList(); 
+                }
+                var theDueLocalBalanceListToUpdate =
+                (from m in all
+                 group m by m.AccountId into g
+                 select new DueLocalBalanceM
+                 {
+                     AccountId = g.Key,
+                     //RealDueInLocal = g.Sum(r => r.TotalLocalAmountLastMonthDue) ?? 0 + g.Sum(r => r.TransLocalAmountDueMonth) ?? 0,
+                     RealDueInLocal = g.Sum(r => r.TotalLocalAmountLastMonthDue  + r.TransLocalAmountDueMonth ) ?? 0,
+                     TotalLocalAmountLastMonthDue = decimalNull,
+                     TransLocalAmountDueMonth = decimalNull,
+                     TransNextDueDate = g.Min(r => r.TransNextDueDate),
+                 }
+                );
 
                 if (onlyWithActivity)
                 {
@@ -463,11 +476,14 @@ namespace Logitude.Accounting.BL.CoreBL
                         theDueLocalBalanceListToUpdate
                         .Where(g => g.TransNextDueDate != dateTimeMaxValue || g.RealDueInLocal != null);
                 }
-                
-
-                
 
 
+
+
+                if (!string.IsNullOrWhiteSpace(AccountId))
+                {
+                    var allList = theDueLocalBalanceListToUpdate.ToList();
+                }
                 _QDueLocalBalanceListToUpdate = theDueLocalBalanceListToUpdate;
                 _QClientAndVendorTypeGLAccountIds = qClientAndVendorTypeGLAccountIds
                     //.ToList()
@@ -492,7 +508,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 try
                 {
-                    this.ReBuild(tenant);
+                    this.ReBuild(tenant,"");
                 }
                 catch (Exception e)
                 {
