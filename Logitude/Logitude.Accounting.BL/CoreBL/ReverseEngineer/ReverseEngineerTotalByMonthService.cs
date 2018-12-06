@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -74,7 +75,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     var myGLAccountRepo = new GLAccountRepository(_AccountingContext);
                     var quaryAllControlAccount = myGLAccountRepo.GetQuaryAllControlAccount(_Tenant);
                     var myGLAccountTotalByMonthRepo = new GLAccountTotalByMonthRepository(_AccountingContext);
-                    var quaryablMonthTotals1 = myGLAccountTotalByMonthRepo.GetQuaryableMonthTotals(_SeedDate.Date.Year, _SeedDate.Date.Month, _Tenant);
+                    var quaryablMonthTotals1 = myGLAccountTotalByMonthRepo.GetQuaryableMonthTotals(_SeedDate.Date.Year, _SeedDate.Date.Month, _Tenant, GLAccountTotalDateTypeValues.Accountingdate);
 
 
                     var quaryablMonthTotalsWithoutControl = (
