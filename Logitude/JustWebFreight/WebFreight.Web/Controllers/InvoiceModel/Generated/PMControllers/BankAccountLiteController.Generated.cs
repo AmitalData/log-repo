@@ -56,6 +56,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                SecurityUtility.CheckContactFeature("BankAccountLite", "READ", authToken.Tenant);
                 BankAccountLiteQuery bankAccountLiteQuery = new BankAccountLiteQuery(authToken.Tenant);
                 BankAccountLitePM bankAccountLitePM = bankAccountLiteQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -86,6 +88,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("BankAccountLite", "NEW", authToken.Tenant);
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
                         BankAccountLiteService service = new BankAccountLiteService(MyContext, entityPM.Tenant);
@@ -133,6 +136,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("BankAccountLite", "UPDATE", authToken.Tenant);
 
                         string entityName = "BankAccountLite" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "BankAccountLitePM" + entityPM.Id + entityPM.Tenant;

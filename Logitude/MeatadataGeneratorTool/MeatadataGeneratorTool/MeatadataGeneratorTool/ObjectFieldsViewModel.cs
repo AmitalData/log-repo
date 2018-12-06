@@ -676,6 +676,15 @@ namespace MeatadataGeneratorTool
             set { textCase = value; FirePropertyChanged("TextCase"); }
         }
 
+        bool copyToDW;
+        public bool CopyToDW
+        {
+            get { return copyToDW; }
+            set { copyToDW = value; FirePropertyChanged("CopyToDW"); }
+        }
+
+    
+
         ObjectFieldsViewModel controlFieldViewModel1;
         public ObjectFieldsViewModel ControlFieldViewMode1
         {
