@@ -116,5 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool IsSpellCheckedShortLocalDefaultText { get; set; }
         public bool IsSpellCheckedListLocalDefaultText { get; set; }
         public bool CopyToDW { get; set; }
+        public string DataTypeCode { get; set; }
+        public bool AllowedInAirlineMessaging { get;  set; }
     }
 }
