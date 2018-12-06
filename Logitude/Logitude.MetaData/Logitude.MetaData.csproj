@@ -127,6 +127,7 @@
     <Content Include="AutoGenerators\GlobalClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GlobalClassesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\GlobalClassesGenerator.cs</LastOutputs>
     </Content>
     <Content Include="AutoGenerators\InfrastructureClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -620,42 +621,6 @@
     <None Include="EntityFiles\ShipmentsModel\CustomsTransmissionsStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\InsideShipmentPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ManifestStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AccountingInformationIdentifier.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBChargesCode.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBCustomsInformation.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBInformation.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBMessagingStock.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBOCI.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBSpecialHandlingCode.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\CustomsTransmissionsStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\FBLStock.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\InsideShipmentPackage.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\INTTRADocumentType.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ManifestStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\OBLType.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\OtherParticipantId.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\PickUpDeliveryTransportMode.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\Shipment.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentAssembly.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentAWBPrintOnly.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCommodity.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCustomerType.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCustomsMessageType.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCustomsTransmission.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentLevel.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPackage.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPayable.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPayableLineStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPayableStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentReceivable.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentReceivableLineStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentReceivableStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentType.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\SpecialServicesType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OtherParticipantId.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Shipment.lxml">
       <SubType>Designer</SubType>

@@ -69,7 +69,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public List<ARPayment> GetARPaymentsByBillTo(string billToId, int tenant)
         {
-            return (from a in context.ARPayments where a.BillToId == billToId && a.Tenant == tenant select a).ToList();
+            return (from a in context.ARPayments where a.BillToId == billToId && a.Tenant == tenant && a.StatusCode!="CL" select a).ToList();
         }
 
         public List<ARPayment> GetPaymentsListFromIdList(List<string> ids, int tenant)
