@@ -2546,6 +2546,7 @@ namespace WebFreight.Web
             SuccessMobile successMobile = new SuccessMobile();
             string log = "";
             string currentpassword = "";
+            bool isValid = true;
             ContactPasswordRepository contactPasswordRepository = new ContactPasswordRepository();
 
             if (!string.IsNullOrEmpty(param.Email)) param.Email = param.Email.ToLower();
@@ -2554,33 +2555,21 @@ namespace WebFreight.Web
             string newPassword = param.NewPassword;
             string oldPassword = param.OldPassword;
 
-
-
-            if (newPassword.Length < 8 || newPassword.Length > 16)
+            PasswordChangeHelper passwordChangeHelper = new PasswordChangeHelper();
+ 
+            try
             {
-                if (newPassword.Length < 8 && !ValidatePassword(newPassword))
-                {
-                    successMobile.ExceptionMessage = "Password must have at least 8 characters. You must combine letters and numbers.";
-                    successMobile.IsScceed = false;
-                }
-                else
-                {
-                    successMobile.ExceptionMessage = "Passwords must have a minimum length of 8 and a maximum length of 16";
-                    successMobile.IsScceed = false;
-                }
+                passwordChangeHelper.ValidationPassword(param.Email, newPassword, param.OldPassword);
             }
-            else if (!ValidatePassword(newPassword))
+            catch (Exception ex)
             {
-                successMobile.ExceptionMessage = "Password must combine letters and numbers.";
+                successMobile.ExceptionMessage = ex.Message;
                 successMobile.IsScceed = false;
+                isValid = false;
             }
-
-            else
+            
+            if (isValid)
             {
-
-                successMobile.IsScceed = false;
-
-                PasswordChangeHelper passwordChangeHelper = new PasswordChangeHelper();
                 IGlobalContext globalContext = GlobalContext.GetContext();
                 if (param.MobilePageType == "ChangePassword")
                 {
@@ -2676,7 +2665,6 @@ namespace WebFreight.Web
                     else log = "(Change password)  Change password failure ( the old Password entered was invalid )";
                 }
             }
-
 
 
             resetPasswordHelper.CreateChangePasswordLog(log, currentpassword, PasswordGenerator.GetBCryptHashedPassword(param.Email, newPassword), param.Email);

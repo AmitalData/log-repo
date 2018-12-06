@@ -106,6 +106,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         LocalBalanceInDue = md.LocalBalanceInDue,
                                                         NextDueDate = md.NextDueDate,
                                                         TotalOpenChequesInLocalCur = md.TotalOpenChequesInLocalCur,
+                                                        TotFutureOpenChequesInLocalCur = md.TotFutureOpenChequesInLocalCur,
                                                      });
             return query;
         }

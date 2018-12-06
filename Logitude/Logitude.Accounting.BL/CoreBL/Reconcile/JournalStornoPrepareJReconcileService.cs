@@ -35,10 +35,19 @@ namespace Logitude.Accounting.BL.CoreBL
         public bool CreateJournalReconcileFromStorno(JournalPM theStorno)
         {
             _TheStorno = theStorno;
+            if (!String.IsNullOrWhiteSpace(_JournalToVoidPM.ExternalNo))
+            {
+                return false;
+            }
+            if (!String.IsNullOrWhiteSpace(_JournalToVoidPM.ExternalSystem))
+            {
+                return false;
+            }
             if (!IsStornoJournal())
             {
                 return false;
             }
+            
             FetchlTransactionOfOriginalJournal(_JournalToVoidPM.Id, _JournalToVoidPM.Tenant);
             if (!_OrginalJornalLedgerTransactions.Any())
             {
