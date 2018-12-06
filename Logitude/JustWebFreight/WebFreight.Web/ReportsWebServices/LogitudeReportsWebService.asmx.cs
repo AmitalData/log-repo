@@ -9781,6 +9781,7 @@ namespace WebFreight.Web.ReportsWebServices
                             {
                                 timSheetItem.CustomerName = card.EnglishName;
                             }
+                            timSheetItem.Description = project.Description;
                         }
 
                         var wIWorkedDays = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2)/8;
