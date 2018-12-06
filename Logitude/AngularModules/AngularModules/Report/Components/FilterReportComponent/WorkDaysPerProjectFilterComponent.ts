@@ -24,7 +24,6 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
     OwnerId: string;
     ProjectId: string;
     BudgetId: string;
-    CategoryId: string;
     ExternalProjectNumber: string;
 
     queryFilterItems: QueryFilterItem[];
@@ -115,13 +114,6 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
             this.queryFilterItem.DisplayInList = false;
             this.queryFilterItem.FieldName = "BudgetId";
             this.queryFilterItem.FieldValue = this.BudgetId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CategoryId"; 
-            this.queryFilterItem.FieldValue = this.CategoryId;
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
 
