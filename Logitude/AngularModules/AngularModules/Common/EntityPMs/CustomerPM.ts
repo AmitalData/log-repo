@@ -1319,6 +1319,16 @@ export class CustomerPM {
     public set MainAddressId(newValue: string) { if (this.mainAddressId != newValue) { this.mainAddressId = newValue; this.MarkAsDirty("MainAddressId"); } }
        
 	 
+    private billingAddressId: string;
+    public get BillingAddressId() { return this.billingAddressId; }
+    public set BillingAddressId(newValue: string) { if (this.billingAddressId != newValue) { this.billingAddressId = newValue; this.MarkAsDirty("BillingAddressId"); } }
+       
+	 
+    private gLAccountId: string;
+    public get GLAccountId() { return this.gLAccountId; }
+    public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
+       
+	 
 
     public OldEntityPM: CustomerPM;
 		

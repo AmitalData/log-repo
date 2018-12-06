@@ -53,3 +53,24 @@ delete from TextCodes where Code = 'Quote.B.QuoteCopySeparator' and ObjectTableI
 
 delete from MenuButtons where LabelTextCodeId in (select id from TextCodes where Code = 'Quote.MenuButtons.QuoteBuildShipmentSeparator' and ObjectTableId not in (select id from objecttables where name = 'quote'))
 delete from TextCodes where Code = 'Quote.MenuButtons.QuoteBuildShipmentSeparator' and ObjectTableId not in (select id from objecttables where name = 'quote')
+
+
+update textcodes set code = 'CustomerTenantAccess.F.ContactName' where code = 'CustomerTenantAccess.F.Contact' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+update textcodes set code = 'CustomerTenantAccess.ContactHelpText' where code = 'CustomerTenantAccess.ContactNameHelpText' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+update textcodes set code = 'CustomerTenantAccess.F.CompanyVat' where code = 'CustomerTenantAccess.F.Company VAT' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+
+update textcodes set code = 'CustomerTenantAccess.F.CompanyName' where code = 'CustomerTenantAccess.F.Company' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+update textcodes set code = 'CustomerTenantAccess.F.CompanyEmail' where code = 'CustomerTenantAccess.F.Company Email' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+update textcodes set code = 'CustomerTenantAccess.F.ContactMobile' where code = 'CustomerTenantAccess.F.Contact Mobile' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+update textcodes set code = 'CustomerTenantAccess.F.ContactPhone' where code = 'CustomerTenantAccess.F.Contact Phone' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+update textcodes set code = 'CustomerTenantAccess.F.RequestDateTime' where code = 'CustomerTenantAccess.F.Request Date' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+
+update textcodes set code = 'CustomerTenantAccess.F.StockTypeCode' where code = 'CustomerTenantAccess.F.Stock Type' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+update textcodes set code = 'CustomerTenantAccess.F.UpdatedByUserId' where code = 'CustomerTenantAccess.F.Updated By User' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+update textcodes set code = 'CustomerTenantAccess.F.UpdatedByUserName' where code = 'CustomerTenantAccess.F.UpdatedByUser' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+
+update textcodes set code = 'CustomerTenantAccess.F.LastUpdateDate' where code = 'CustomerTenantAccess.F.Last Update Date' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+update textcodes set code = 'CustomerTenantAccess.F.LastShipmentDate' where code = 'CustomerTenantAccess.F.Last Shipment Date' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+
+update textcodes set code = 'CustomerTenantAccess.CH.CompanyVatListLable' where code = 'CustomerTenantAccess.CH.CompanyVATListLable' and objecttableid in (select id from objecttables where name = 'CustomerTenantAccess')
+

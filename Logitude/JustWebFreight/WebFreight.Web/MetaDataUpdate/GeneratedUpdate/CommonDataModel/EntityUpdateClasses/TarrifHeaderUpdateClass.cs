@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DefaultText =  "Tariff Header",
 			      				    Name =  "TarrifHeader",
 			      				    IsNewWizard =  false,
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -111,13 +110,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -132,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "TarrifHeader",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Card",
-					  						Code =  "CardId",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -158,7 +150,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -169,14 +160,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Card",
+					  						DefaultText =  @"Card",
+					  						HelpTextCode =  "Card",
+					  						Code =  "CardId",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Card",
-					  						DefaultText =  @"Card",
-					  						HelpTextCode =  "Card",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -188,7 +182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "TarrifHeader",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TarrifType",
-					  						Code =  "TarrifTypeCode",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  4,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -214,7 +208,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -225,14 +218,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "TarrifTypeCode",
+					  						DefaultText =  @"Tariff Type Code",
+					  						HelpTextCode =  "TarrifTypeCode",
+					  						Code =  "TarrifTypeCode",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "TarrifTypeCode",
-					  						DefaultText =  @"Tariff Type Code",
-					  						HelpTextCode =  "TarrifTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -243,7 +239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "FromDate",
 					  						ObjectTableName =  "TarrifHeader",
 					  						FieldsDataType =  "DateTime",
-					  						Code =  "FromDate",
+					  						DataTypeCode =  "DateTime",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -269,7 +265,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -280,14 +275,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "FromDate",
+					  						DefaultText =  @"From Date",
+					  						HelpTextCode =  "FromDate",
+					  						Code =  "FromDate",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "FromDate",
-					  						DefaultText =  @"From Date",
-					  						HelpTextCode =  "FromDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -298,7 +296,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "ToDate",
 					  						ObjectTableName =  "TarrifHeader",
 					  						FieldsDataType =  "DateTime",
-					  						Code =  "ToDate",
+					  						DataTypeCode =  "DateTime",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -324,7 +322,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -335,14 +332,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "ToDate",
+					  						DefaultText =  @"To Date",
+					  						HelpTextCode =  "ToDate",
+					  						Code =  "ToDate",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "ToDate",
-					  						DefaultText =  @"To Date",
-					  						HelpTextCode =  "ToDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -353,7 +353,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "CreateDate",
 					  						ObjectTableName =  "TarrifHeader",
 					  						FieldsDataType =  "DateTime",
-					  						Code =  "CreateDate",
+					  						DataTypeCode =  "DateTime",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -379,7 +379,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -390,14 +389,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "CreateDate",
+					  						DefaultText =  @"Create Date",
+					  						HelpTextCode =  "CreateDate",
+					  						Code =  "CreateDate",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
-					  						HelpTextCode =  "CreateDate",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -408,7 +410,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "InActive",
 					  						ObjectTableName =  "TarrifHeader",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "InActive",
+					  						DataTypeCode =  "Boolean",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -434,7 +436,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -445,14 +446,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "InActive",
+					  						DefaultText =  @"Inactive",
+					  						HelpTextCode =  "InActive",
+					  						Code =  "InActive",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "InActive",
-					  						DefaultText =  @"Inactive",
-					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -463,7 +467,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Notes",
 					  						ObjectTableName =  "TarrifHeader",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Notes",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -489,7 +493,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -500,14 +503,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Notes",
+					  						DefaultText =  @"Notes",
+					  						HelpTextCode =  "Notes",
+					  						Code =  "Notes",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "Notes",
-					  						DefaultText =  @"Notes",
-					  						HelpTextCode =  "Notes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -518,7 +524,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "TransitTimeNotes",
 					  						ObjectTableName =  "TarrifHeader",
 					  						FieldsDataType =  "Text",
-					  						Code =  "TransitTimeNotes",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -544,7 +550,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -555,14 +560,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "TransitTimeNotes",
+					  						DefaultText =  @"Transit Time Notes",
+					  						HelpTextCode =  "TransitTimeNotes",
+					  						Code =  "TransitTimeNotes",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "TransitTimeNotes",
-					  						DefaultText =  @"Transit Time Notes",
-					  						HelpTextCode =  "TransitTimeNotes",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -611,45 +619,45 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode TarrifHeaderTextCode_TarrifHeaderOCarrier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.Carrier", DefaultText = "Carrier",LocalDefaultText = @"מוביל", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderBAddSurchargeTarrif = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.B.AddSurchargeTarrif", DefaultText = "Add Surcharge Tariff",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderBAddSurchargeTarrif = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.B.AddSurchargeTarrif", DefaultText = "Add Surcharge Tariff",LocalDefaultText = @"הוסף תעריף חיוב נוסף", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderONotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.Notes", DefaultText = "Notes",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderONotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.Notes", DefaultText = "Notes",LocalDefaultText = @"הערות", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.From", DefaultText = "From",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.From", DefaultText = "From",LocalDefaultText = @"מ", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.To", DefaultText = "To",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.To", DefaultText = "To",LocalDefaultText = @"ל", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOActiveDates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.ActiveDates", DefaultText = "Active Dates",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOActiveDates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.ActiveDates", DefaultText = "Active Dates",LocalDefaultText = @"תאריכי הפעלה", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderONewDates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.NewDates", DefaultText = "New Dates",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderONewDates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.NewDates", DefaultText = "New Dates",LocalDefaultText = @"תאריכים חדשים", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOMakeInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.MakeInactive", DefaultText = "Make Inactive",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOMakeInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.MakeInactive", DefaultText = "Make Inactive",LocalDefaultText = @"הפוך ללא פעיל", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOAnyware = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.Anyware", DefaultText = "Anywhere",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOAnyware = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.Anyware", DefaultText = "Anywhere",LocalDefaultText = @"בכל מקום", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOPortsList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.PortsList", DefaultText = "Ports List",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOPortsList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.PortsList", DefaultText = "Ports List",LocalDefaultText = @"רשימת נמלים", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOCountriesList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.CountriesList", DefaultText = "Countries List",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOCountriesList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.CountriesList", DefaultText = "Countries List",LocalDefaultText = @"רשימת מדינות", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderMFromDateLessThanToDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.M.FromDateLessThanToDate", DefaultText = "From Date should be less than To Date.",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderMFromDateLessThanToDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.M.FromDateLessThanToDate", DefaultText = "From Date should be less than To Date",LocalDefaultText = @"השדה ''מתאריך'' צריך להיות קטן מהשדה ''עד תאריך''", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderMAddAtLeastOneCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.M.AddAtLeastOneCharge", DefaultText = "You must add at least one Charge.",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderMAddAtLeastOneCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.M.AddAtLeastOneCharge", DefaultText = "You must add at least one Charge",LocalDefaultText = @"חובה להוסיף לפחות חיוב אחד", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOShowActiveTarrifs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.ShowActiveTarrifs", DefaultText = "Show Active Tariffs",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOShowActiveTarrifs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.ShowActiveTarrifs", DefaultText = "Show Active Tariffs",LocalDefaultText = @"הצג מחירונים פעילים", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOShowAllTarrifs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.ShowAllTarrifs", DefaultText = "Show All Tariffs",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOShowAllTarrifs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.ShowAllTarrifs", DefaultText = "Show All Tariffs",LocalDefaultText = @"הצג את כל המחירונים", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOAddSurchargeTarrif = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.AddSurchargeTarrif", DefaultText = "Add Surcharge Tariff",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOAddSurchargeTarrif = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.AddSurchargeTarrif", DefaultText = "Add Surcharge Tariffs",LocalDefaultText = @"הוסף תעריפי חיובים נוספים", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOEditSurchargeTarrif = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.EditSurchargeTarrif", DefaultText = "Edit Surcharge Tariff",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOEditSurchargeTarrif = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.EditSurchargeTarrif", DefaultText = "Edit Surcharge Tariffs",LocalDefaultText = @"ערוך מחירוני חיובים נוספים", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderODate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.Date", DefaultText = "Date",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderODate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.Date", DefaultText = "Date",LocalDefaultText = @"תאריך", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOCreateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.CreateDate", DefaultText = "Create Date",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOCreateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.CreateDate", DefaultText = "Create Date",LocalDefaultText = @"תאריך יצירה", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOFromLocation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.FromLocation", DefaultText = "From Location",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOFromLocation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.FromLocation", DefaultText = "From Location",LocalDefaultText = @"ממיקום", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeaderOToLocation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.ToLocation", DefaultText = "To Location",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifHeaderTextCode_TarrifHeaderOToLocation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.ToLocation", DefaultText = "To Location",LocalDefaultText = @"למיקום", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TarrifHeaderTextCode_TarrifHeaderBAddFreightTariff = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.B.AddFreightTariff", DefaultText = "Add Freight Tariff",LocalDefaultText = @"הוסף תעריף הובלה", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
