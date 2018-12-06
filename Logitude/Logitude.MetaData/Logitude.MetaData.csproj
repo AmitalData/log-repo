@@ -127,6 +127,7 @@
     <Content Include="AutoGenerators\GlobalClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GlobalClassesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\GlobalClassesGenerator.cs</LastOutputs>
     </Content>
     <Content Include="AutoGenerators\InfrastructureClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
