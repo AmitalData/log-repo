@@ -332,7 +332,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         });
         if (this.SelectedFilter == "My Shipments") {
             this.columns.push({
-                FieldName: 'MyShipments',
+                FieldName: 'ActionButtonsListTemplate',//'MyShipments',
                 DataTypeCode: 'String',
                 Display: '',
                 Styles: { width: SessionLocator.PrivateLableSettings ? '270px' : '200px' },
@@ -348,7 +348,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
                 FieldName: 'ActionRequired',
                 DataTypeCode: 'String',
                 Display: '',
-                Styles: { width: '180px' },
+                Styles: { width: '225px' },
                 HtmlListComponentName: 'ActionButtonsListTemplate',
                 HtmlListComponentUrl: './Shipment/Components/ListTemplates/ApprovePaymentButtonListTemplate',
                 IsCustomTemplate: true,
@@ -359,7 +359,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         else {
             if ((this.SelectedFilter != "Recent" && this.isPrivateLabel) || !this.isPrivateLabel && (this.RequestedDocsLable == "Action Required" && this.SelectedFilter != this.RequestedDocsLable)) {
                 this.columns.push({
-                    FieldName: this.SelectedFilter,//'EditShipmentButtonListTemplate',
+                    FieldName: 'EditShipmentButtonListTemplate' + this.SelectedFilter,//this.SelectedFilter,//'EditShipmentButtonListTemplate',
                     DataTypeCode: 'String',
                     Display: '',
                     Styles: { width: '100px' },
@@ -487,6 +487,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
     private LoadImporterShipments() {
         this.SelectedRow = null;
+        this.ShipmentSelectedEvent.emit(this.SelectedRow);
         this.BuildColumns();
         this.LoadQueriesCounts();
         //if (this.filterAgrs == null) {
