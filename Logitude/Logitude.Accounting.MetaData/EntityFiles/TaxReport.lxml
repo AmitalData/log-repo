@@ -63,4 +63,8 @@
     </MenuButton>
   </MenuButtons>
   <DataContracts />
+  <AdditionalTextCodes>
+    <TextCode Code="&quot;TaxReport.O.FileBigNumber&quot;" DefaultText="&quot;There is a number with big value&quot;" LocalDefaultText="&quot;ישנו מספר עם ערך גדול&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+  </AdditionalTextCodes>
+  <AdditionalFeatures />
 </entity>

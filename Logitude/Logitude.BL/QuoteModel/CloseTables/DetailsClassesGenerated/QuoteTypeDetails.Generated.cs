@@ -23,14 +23,14 @@ namespace Logitude.BL.QuoteModel
 		    var all = new List<QuoteTypeDetails>();  
             all.Add(new QuoteTypeDetails()
             {    
-                SearchFields = "P,Routing Rates,", 
+                SearchFields = "P,Routing Rates", 
                 Code = "P", 
                 Name = "Routing Rates", 
 			});
 			 
             all.Add(new QuoteTypeDetails()
             {    
-                SearchFields = "A,Spot Rate,", 
+                SearchFields = "A,Spot Rate", 
                 Code = "A", 
                 Name = "Spot Rate", 
 			});

@@ -127,14 +127,17 @@
     <Content Include="AutoGenerators\GlobalClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>GlobalClassesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\GlobalClassesGenerator.cs</LastOutputs>
     </Content>
     <Content Include="AutoGenerators\InfrastructureClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>InfrastructureClassesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\InfrastructureClassesGenerator.cs</LastOutputs>
     </Content>
     <Content Include="AutoGenerators\InvoiceClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>InvoiceClassesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\InvoiceClassesGenerator.cs</LastOutputs>
     </Content>
     <Content Include="AutoGenerators\LogitudeClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -369,20 +372,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\GlobalModel\BluesnapContract.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\AnalyzeQueue.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\ApiCredintials.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\AWBMessagesCCSType.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\BatchServicesDefinition.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\BluesnapContract.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\PaymentChannel.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\PaymentCurrency.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\PaymentMethod.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\RecurringPeriod.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\TenantAddOn.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\TenantManagement.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\TenantManagementLicense.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\TenantManagmentPrivateLabels.lxml" />
-    <None Include="EntityFiles\GlobalModel\NewFiles\TenantType.lxml" />
     <None Include="EntityFiles\GlobalModel\PaymentChannel.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -425,31 +414,6 @@
     <None Include="EntityFiles\InfrastructureModel\InboundEmailLine.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\APILogs.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\BusinessHour.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\BusinessHoursHoliday.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\ChargesGroup.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\CustomPickList.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\Direction.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\DWObjectField.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\DWObjectTable.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\EntityStatus.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\EventType.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\General.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\IATACode.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\InboundEmail.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\InboundEmailLine.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\MoveType.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\ObjectField.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\ObjectTable.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\PrepaidCollect.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\RatesTable.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\TaskSchedulerHistory.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\TasksScheduler.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\TransportMode.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\NewFiles\VolumeUnit.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ObjectField.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ObjectTable.lxml" />
     <None Include="EntityFiles\InfrastructureModel\RatesTable.lxml" />
@@ -516,43 +480,6 @@
     <None Include="EntityFiles\InvoiceModel\ARPayment.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingPaymentMethod.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingSystemsSetting.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingSystemsSyncStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingTransferHeader.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingTransferLine.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\AccountingTransferType.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoice.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceLine.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoicePayment.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceTotalVAT.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceTransferStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APInvoiceType.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APPayment.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APPaymentMethod.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APPaymentStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\APPaymentTransferStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoice.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceLine.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoicePayment.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceTotalVAT.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceTransferStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARInvoiceType.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARPayment.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARPaymentStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ARPaymentTransferStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\BankAccountLite.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\InvoiceModel\NewFiles\CreditCardType.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\ExternalSystemsTablesCode.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\SATInterface.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\SATInterfaceSetting.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\SATInvoiceStatus.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\SATPaymentMethod.lxml" />
-    <None Include="EntityFiles\InvoiceModel\NewFiles\SATTransferStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\SATInvoiceStatus.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -572,21 +499,6 @@
     <None Include="EntityFiles\InvoiceModel\ARPaymentStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\CreditCardType.lxml" />
     <None Include="EntityFiles\InvoiceModel\ExternalSystemsTablesCode.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\MarkUpType.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\Quote.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteCharge.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteClosingReason.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteCustomerType.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuotePackage.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuotePriceSteps.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteRating.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteSetting.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteStage.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteTemplate.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteTotalVAT.lxml" />
-    <None Include="EntityFiles\QuoteModel\NewFiles\QuoteType.lxml" />
     <None Include="EntityFiles\QuoteModel\Quote.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -620,42 +532,6 @@
     <None Include="EntityFiles\ShipmentsModel\CustomsTransmissionsStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\InsideShipmentPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ManifestStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AccountingInformationIdentifier.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBChargesCode.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBCustomsInformation.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBInformation.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBMessagingStock.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBOCI.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\AWBSpecialHandlingCode.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\CustomsTransmissionsStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\FBLStock.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\InsideShipmentPackage.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\INTTRADocumentType.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ManifestStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\OBLType.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\OtherParticipantId.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\PickUpDeliveryTransportMode.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\Shipment.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentAssembly.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentAWBPrintOnly.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCommodity.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCustomerType.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCustomsMessageType.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentCustomsTransmission.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentLevel.lxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPackage.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPayable.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPayableLineStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentPayableStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentReceivable.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentReceivableLineStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentReceivableStatus.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\ShipmentType.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\NewFiles\SpecialServicesType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OtherParticipantId.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Shipment.lxml">
       <SubType>Designer</SubType>

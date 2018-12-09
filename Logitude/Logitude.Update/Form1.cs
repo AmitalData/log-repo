@@ -3352,6 +3352,11 @@ User/Pass",
             }
 
         }
+
+        private void button38_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 
 

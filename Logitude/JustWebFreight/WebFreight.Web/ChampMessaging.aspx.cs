@@ -36,12 +36,11 @@ namespace WebFreight.Web
                     bool iPasswordValid = false;
 
                     string iPassword = parr["password"];
+
                     if (iPassword == "logiutde")
                     {
                         iPasswordValid = true;
                     }
-
-                    //http://localhost:9996/ChampMessaging.aspx?password=logiutde
 
                     if (iPasswordValid)
                     {
@@ -56,21 +55,22 @@ namespace WebFreight.Web
                                 iString = reader.ReadToEnd();
                             }
 
-                            //string jsonData = HttpUtility.UrlDecode(iString);
-
-                            //XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Envelope\":" + jsonData, "Root");
-
-                            //string xmlString = System.Xml.Linq.XElement.Parse(doc.OuterXml).ToString();
-
                             if (!string.IsNullOrEmpty(iString))
                             {
                                 this.SaveMessageToAnalyzeQueue(iString);
+
+                                Response.Write("<status>OK</status>");
+                                Response.StatusCode = 200;
+                                Response.End();
+                            }
+
+                            else
+                            {
+                                Response.Write("<status>Fail</status>");
+                                Response.StatusCode = 401;
+                                Response.End();
                             }
                         }
-
-                        Response.Write("<status>OK</status>");
-                        Response.StatusCode = 200;
-                        Response.End();
                     }
 
                     else
@@ -102,11 +102,12 @@ namespace WebFreight.Web
                 }
             }
         }
-        protected override void Render(HtmlTextWriter writer)
-        {
-            base.Render(writer);
-            Response.TrySkipIisCustomErrors = true;
-        }
+
+        //protected override void Render(HtmlTextWriter writer)
+        //{
+        //    base.Render(writer);
+        //    Response.TrySkipIisCustomErrors = true;
+        //}
 
         private void SaveMessageToAnalyzeQueue(string xmlfileText)
         {

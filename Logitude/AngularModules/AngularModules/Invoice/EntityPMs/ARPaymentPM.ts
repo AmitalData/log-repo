@@ -323,6 +323,11 @@ export class ARPaymentPM {
     public set SATTransferStatusName(newValue: string) { if (this.sATTransferStatusName != newValue) { this.sATTransferStatusName = newValue; this.MarkAsDirty("SATTransferStatusName"); } }
        
 	 
+    private sATApprovalDate: Date;
+    public get SATApprovalDate() { return this.sATApprovalDate; }
+    public set SATApprovalDate(newValue: Date) { if (this.sATApprovalDate != newValue) { this.sATApprovalDate = newValue; this.MarkAsDirty("SATApprovalDate"); } }
+       
+	 
      
 	private paymentInvoices: ARPaymentInvoicePM[];
     get  PaymentInvoices() {
@@ -382,12 +387,12 @@ export class ARPaymentPM {
     private setReTransfer: boolean;
     public get SetReTransfer() { return this.setReTransfer; }
     public set SetReTransfer(newValue: boolean) { if (this.setReTransfer != newValue) { this.setReTransfer = newValue; this.MarkAsDirty("SetReTransfer"); } }
-
-
+       
+	 
     private setReSendQBO: boolean;
     public get SetReSendQBO() { return this.setReSendQBO; }
     public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
-
+       
 	 
     private bankAccountId: string;
     public get BankAccountId() { return this.bankAccountId; }
@@ -424,6 +429,11 @@ export class ARPaymentPM {
     public set BankAccountLiteId(newValue: string) { if (this.bankAccountLiteId != newValue) { this.bankAccountLiteId = newValue; this.MarkAsDirty("BankAccountLiteId"); } }
        
 	 
+    private bankAccountName: string;
+    public get BankAccountName() { return this.bankAccountName; }
+    public set BankAccountName(newValue: string) { if (this.bankAccountName != newValue) { this.bankAccountName = newValue; this.MarkAsDirty("BankAccountName"); } }
+       
+	 
     private metodoPagoCode: string;
     public get MetodoPagoCode() { return this.metodoPagoCode; }
     public set MetodoPagoCode(newValue: string) { if (this.metodoPagoCode != newValue) { this.metodoPagoCode = newValue; this.MarkAsDirty("MetodoPagoCode"); } }
@@ -453,10 +463,7 @@ export class ARPaymentPM {
     public get BranchName() { return this.branchName; }
     public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
-    private sATApprovalDate: Date;
-    public get SATApprovalDate() { return this.sATApprovalDate; }
-    public set SATApprovalDate(newValue: Date) { if (this.sATApprovalDate != newValue) { this.sATApprovalDate = newValue; this.MarkAsDirty("SATApprovalDate"); } }
-
+	 
 
     public OldEntityPM: ARPaymentPM;
 		

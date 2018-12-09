@@ -1470,7 +1470,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
                         ARPaymentPM entityPM = paymentQuery.GetSinglePM(paymentId, tenant);
 
+                        Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, entityPM.SATXML);
 
+                        /*
+                         * Catalog EstadoCancelacion
+                           EnProceso  
+                           SinRespuesta
+                           CanceladoSinAceptacion
+                           CanceladoConAceptacion
+                           PlazoVencido
+
+                         * */
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, "");
                     }
@@ -1488,6 +1498,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+
+
         public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
         {
             if (ModelState.IsValid)
@@ -1504,6 +1516,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(tenant);
                         ARInvoicePM entityPM = invoiceQuery.GetSinglePM(invoiceId, tenant);
+                        Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, entityPM.SATXML);
 
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, "");

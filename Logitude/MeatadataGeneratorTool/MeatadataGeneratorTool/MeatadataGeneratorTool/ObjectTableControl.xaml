@@ -969,7 +969,7 @@
                                                              ItemsSource="{Binding SelectedItem.QueryFiltersObsList,
                                                                                    ElementName=QueriesListBox}"
                                                              SelectedIndex="0"
-                                                             SelectedItem="{Binding SelectedQueryColumn,
+                                                             SelectedItem="{Binding SelectedQueryFilter,
                                                                                     Mode=TwoWay}">
 
                                                             <ListBox.ItemContainerStyle>

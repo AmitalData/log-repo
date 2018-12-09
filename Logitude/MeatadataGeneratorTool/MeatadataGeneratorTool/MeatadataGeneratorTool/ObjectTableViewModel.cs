@@ -2917,6 +2917,13 @@ namespace MeatadataGeneratorTool
             {
                 selectedQuery = value;
                 FirePropertyChanged("SelectedQuery");
+
+                if (value != null && value.QueryFiltersObsList != null)
+                {
+                    this.SelectedQueryFilter = value.QueryFiltersObsList.FirstOrDefault();
+                }
+                else
+                    this.SelectedQueryFilter = null;
             }
         }
 
@@ -3289,6 +3296,8 @@ namespace MeatadataGeneratorTool
             {
                 selectedQueryColumn = value;
                 FirePropertyChanged("SelectedQueryColumn");
+
+             
             }
         }
 

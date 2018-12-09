@@ -1783,6 +1783,7 @@
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARInvoiceTypeQueryService.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\QueryService\ARInvoiceQueryService.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\AccountingTransferTypeDetails.Generated.cs" />
+    <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\AccountTypeDetails.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\APInvoiceStatusDetails.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\APInvoiceTransferStatusDetails.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\APInvoiceTypeDetails.Generated.cs" />
@@ -1798,6 +1799,7 @@
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\SATPaymentMethodDetails.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\SATTransferStatusDetails.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\AccountingTransferTypeStruct.Generated.cs" />
+    <Compile Include="InvoiceModel\CloseTables\EnumGenerated\AccountTypeStruct.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\APInvoiceStatusStruct.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\APInvoiceTransferStatusStruct.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\APInvoiceTypeStruct.Generated.cs" />
@@ -2298,6 +2300,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\InsideShipmentPackagePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\MappedShipmentDirectionsPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\NextLegPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\OBLTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsRequestsCountPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsRequestPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusesPM.cs" />

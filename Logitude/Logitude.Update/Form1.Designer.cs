@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
@@ -151,6 +152,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
+            this.button38 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -324,21 +326,21 @@
             // fillCustomsTableToolStripMenuItem
             // 
             this.fillCustomsTableToolStripMenuItem.Name = "fillCustomsTableToolStripMenuItem";
-            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.fillCustomsTableToolStripMenuItem.Text = "FillCustomsTable";
             this.fillCustomsTableToolStripMenuItem.Click += new System.EventHandler(this.FillCustomsTableToolStripMenuItem_Click);
             // 
             // updateDocTypeToolStripMenuItem
             // 
             this.updateDocTypeToolStripMenuItem.Name = "updateDocTypeToolStripMenuItem";
-            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.updateDocTypeToolStripMenuItem.Text = "UpdateDocType";
             this.updateDocTypeToolStripMenuItem.Click += new System.EventHandler(this.updateDocTypeToolStripMenuItem_Click);
             // 
             // loadTextCodesToolStripMenuItem
             // 
             this.loadTextCodesToolStripMenuItem.Name = "loadTextCodesToolStripMenuItem";
-            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.loadTextCodesToolStripMenuItem.Text = "LoadTextCodes";
             this.loadTextCodesToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodesToolStripMenuItem_Click);
             // 
@@ -349,7 +351,7 @@
             this.toolStripMenuItemExportTofil,
             this.loadTextCodeFromDiskToolStripMenuItem});
             this.textCodesToolStripMenuItem.Name = "textCodesToolStripMenuItem";
-            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.textCodesToolStripMenuItem.Text = "TextCodes";
             // 
             // toolStripTextBoxFilePath
@@ -361,28 +363,28 @@
             // toolStripMenuItemExportTofil
             // 
             this.toolStripMenuItemExportTofil.Name = "toolStripMenuItemExportTofil";
-            this.toolStripMenuItemExportTofil.Size = new System.Drawing.Size(200, 22);
+            this.toolStripMenuItemExportTofil.Size = new System.Drawing.Size(199, 22);
             this.toolStripMenuItemExportTofil.Text = "SaveTextCodeToDisk";
             this.toolStripMenuItemExportTofil.Click += new System.EventHandler(this.toolStripMenuItemExportTofil_Click);
             // 
             // loadTextCodeFromDiskToolStripMenuItem
             // 
             this.loadTextCodeFromDiskToolStripMenuItem.Name = "loadTextCodeFromDiskToolStripMenuItem";
-            this.loadTextCodeFromDiskToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.loadTextCodeFromDiskToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.loadTextCodeFromDiskToolStripMenuItem.Text = "LoadTextCodeFromDisk";
             this.loadTextCodeFromDiskToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodeFromDiskToolStripMenuItem_Click);
             // 
             // internationalSiteToolStripMenuItem
             // 
             this.internationalSiteToolStripMenuItem.Name = "internationalSiteToolStripMenuItem";
-            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.internationalSiteToolStripMenuItem.Text = "InternationalSite";
             this.internationalSiteToolStripMenuItem.Click += new System.EventHandler(this.internationalSiteToolStripMenuItem_Click);
             // 
             // createDecToolStripMenuItem
             // 
             this.createDecToolStripMenuItem.Name = "createDecToolStripMenuItem";
-            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.createDecToolStripMenuItem.Text = "CreateDec";
             this.createDecToolStripMenuItem.Click += new System.EventHandler(this.createDecToolStripMenuItem_Click);
             // 
@@ -1298,6 +1300,7 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.button38);
             this.tabPage1.Controls.Add(this.button37);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.UpdateINFlble);
@@ -1407,6 +1410,16 @@
             this.EncryptionDocumentLabel.Size = new System.Drawing.Size(100, 13);
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
+            // 
+            // button38
+            // 
+            this.button38.Image = ((System.Drawing.Image)(resources.GetObject("button38.Image")));
+            this.button38.Location = new System.Drawing.Point(664, 485);
+            this.button38.Name = "button38";
+            this.button38.Size = new System.Drawing.Size(63, 52);
+            this.button38.TabIndex = 85;
+            this.button38.UseVisualStyleBackColor = true;
+            this.button38.Click += new System.EventHandler(this.button38_Click);
             // 
             // Form1
             // 
@@ -1576,6 +1589,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label EncryptionDocumentLabel;
         private System.Windows.Forms.Button button37;
+        private System.Windows.Forms.Button button38;
     }
 }
 

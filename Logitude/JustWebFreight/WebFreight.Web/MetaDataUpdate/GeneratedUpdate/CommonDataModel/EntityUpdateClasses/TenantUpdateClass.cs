@@ -6168,7 +6168,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode TenantTextCode_TenantQAllTenants = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.Q.AllTenants", DefaultText = "All Tenants",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TenantTextCode_TenantMustHavePrimaryContactHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.Must Have Primary ContactHelpText", DefaultText = "null",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TenantTextCode_TenantMustHavePrimaryContactHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.Must Have Primary ContactHelpText", DefaultText = null,LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

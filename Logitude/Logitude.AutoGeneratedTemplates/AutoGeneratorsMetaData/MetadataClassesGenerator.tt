@@ -486,7 +486,7 @@ foreach(XElement featureElement in AdditionalFeatures.Elements("Feature")){
 <#+
 foreach(XElement textCodeElement in AdditionalTextCodes.Elements("TextCode")){
 				    var Code = textCodeElement.Attributes().Where(a => a.Name == "Code").FirstOrDefault().Value.Trim('"');
-					var DefaultText = (textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault() != null?textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "''").Replace("\n",  "\\n"):"null");
+					var DefaultText = (textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault() != null? '"'  + textCodeElement.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "''").Replace("\n",  "\\n") + '"' :"null");
 					var LocalDefaultText = (textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault() != null?   (!textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value.Trim('"').Contains("\"")? "@":"") +'"' + (textCodeElement.Attributes().Where(a => a.Name == "LocalDefaultText").FirstOrDefault().Value.Trim('"').Replace("\"",  "''").Replace("\n",  "\\n")) +'"'  :"null");
 					var TextCodeTypeCode = textCodeElement.Attributes().Where(a => a.Name == "TextCodeTypeCode").FirstOrDefault().Value;
  					var IsSpellChecked = textCodeElement.Attributes().Where(a => a.Name == "IsSpellChecked").FirstOrDefault().Value;
@@ -495,7 +495,7 @@ foreach(XElement textCodeElement in AdditionalTextCodes.Elements("TextCode")){
         var className = regex.Replace(Code, "");					 
 
 #>
- 		   TextCode <#= ObjectTbl.Trim('"') #>TextCode_<#=className#> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= Code #>", DefaultText = "<#= DefaultText #>",LocalDefaultText = <#= LocalDefaultText #>, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = <#= TextCodeTypeCode #>, IsSpellChecked = <#= IsSpellChecked #> }, TextCodeRepository, TextCodes);
+ 		   TextCode <#= ObjectTbl.Trim('"') #>TextCode_<#=className#> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= Code #>", DefaultText = <#= DefaultText #>,LocalDefaultText = <#= LocalDefaultText #>, ObjectTableId = <#= ObjectTbl.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = <#= TextCodeTypeCode #>, IsSpellChecked = <#= IsSpellChecked #> }, TextCodeRepository, TextCodes);
 
 <#+
 	  
@@ -574,7 +574,13 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 				{  
 					if(p.Name != "Id" && p.Name != "ObjectFieldNotRequired" && p.Name != "IsForeignKey" && p.Name != "ForeignEntity"&& p.Name != "NavigationPropertyName"&& p.Name != "IsPrimaryKey"&& p.Name != "Order" && p.Name != "IsNullable" && p.Name != "HasDataBaseField"&& p.Name != "HasPMField" && p.Name != "AssociationName" && p.Name != "ThisKey" && p.Name != "OtherKey" && p.Name != "IsComposition" && p.Name != "NoMetaDataField" && p.Name != "GenerateInList" 
 					&& p.Name != "IsSpellCheckedFullFieldLable" && p.Name != "IsSpellCheckedHelpLocalDefaultText" && p.Name != "IsSpellCheckedShortLocalDefaultText" && p.Name != "IsSpellCheckedListLocalDefaultText"
-					&& p.Name != "IsChecked" && p.Name != "IsDeleted" && p.Name != "IsNew" && p.Name != "IsRequiered"  && p.Name != "LookUpTableId")
+					&& p.Name != "IsChecked" && p.Name != "IsDeleted" && p.Name != "IsNew" && p.Name != "IsRequiered"  && p.Name != "LookUpTableId"
+					&& p.Name != "FullNameTextCodeId"
+					&& p.Name != "HelpTextCodeId"
+					&& p.Name != "ListTextCodeId" && p.Name != "LookUpTableId"
+					
+
+)
 					{
 					if(!string.IsNullOrEmpty(p.Value.Trim('"')))
 					{

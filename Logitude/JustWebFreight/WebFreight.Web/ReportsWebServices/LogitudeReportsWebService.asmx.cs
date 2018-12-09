@@ -7435,12 +7435,17 @@ namespace WebFreight.Web.ReportsWebServices
                                  MainCarriageATA = myShipment.MainCarriageATA,
                                  MainCarriageATD = myShipment.MainCarriageATD,
                                  ShipmentNumber = myShipment.ShipmentNumber,
-
                                  OperationalDate = myShipment.OperationalDate,
                                  Quantity = myShipment.PackagesQuantity,
                                  GrossWeight = myShipment.GrossWeightInKG,
                                  ChargeableWeight = myShipment.ChargeableWeightInKG,
-                                 TEU = myShipment.TEU,
+                                 TEU = myShipment.TEU,                                 
+                                 FirstPickupETD = myShipment.FirstPickupETD,
+                                 MainCarriageETD = myShipment.MainCarriageETD,
+                                 MainCarriagePortCode = myShipment.MainCarriageFromPortCode,
+                                 FinalDestinationPortCode = myShipment.MainCarriageFinalDestinationPortCode,
+                                 TransportMode = myShipment.TransportModeName,
+                                 ValueOfGoods = myShipment.ValueOfGoods,
 
                                  ChargeTypeId = myItem.ChargesTypeId,
                                  ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
@@ -7470,12 +7475,17 @@ namespace WebFreight.Web.ReportsWebServices
                                  MainCarriageATA = myShipment.MainCarriageATA,
                                  MainCarriageATD = myShipment.MainCarriageATD,
                                  ShipmentNumber = myShipment.ShipmentNumber,
-
                                  OperationalDate = myShipment.OperationalDate,
                                  Quantity = myShipment.PackagesQuantity,
                                  GrossWeight = myShipment.GrossWeightInKG,
                                  ChargeableWeight = myShipment.ChargeableWeightInKG,
                                  TEU = myShipment.TEU,
+                                 FirstPickupETD = myShipment.FirstPickupETD,
+                                 MainCarriageETD = myShipment.MainCarriageETD,
+                                 MainCarriagePortCode = myShipment.MainCarriageFromPortCode,
+                                 FinalDestinationPortCode = myShipment.MainCarriageFinalDestinationPortCode,
+                                 TransportMode = myShipment.TransportModeName,
+                                 ValueOfGoods = myShipment.ValueOfGoods,
 
                                  ChargeTypeId = myItem.ChargesTypeId,
                                  ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
@@ -7507,6 +7517,12 @@ namespace WebFreight.Web.ReportsWebServices
                                 d.GrossWeight,
                                 d.ChargeableWeight,
                                 d.TEU,
+                                d.FirstPickupETD,
+                                d.MainCarriageETD,
+                                d.MainCarriagePortCode,
+                                d.FinalDestinationPortCode,
+                                d.TransportMode,
+                                d.ValueOfGoods
                             })
 
                             .Select(s => new ShipmentsReceivablesPayablesList()
@@ -7528,6 +7544,12 @@ namespace WebFreight.Web.ReportsWebServices
                                 GrossWeight = s.Key.GrossWeight,
                                 ChargeableWeight = s.Key.ChargeableWeight,
                                 TEU = s.Key.TEU,
+                                FirstPickupETD = s.Key.FirstPickupETD,
+                                MainCarriageETD = s.Key.MainCarriageETD,
+                                MainCarriagePortCode = s.Key.MainCarriagePortCode,
+                                FinalDestinationPortCode = s.Key.FinalDestinationPortCode,
+                                TransportMode = s.Key.TransportMode,
+                                ValueOfGoods = s.Key.ValueOfGoods,
                                 ChargeTypeId = s.Key.ChargeTypeId,
                                 ChargeTypeCode = s.Key.ChargeTypeCode,
                                 ChargeTypeName = s.Key.ChargeTypeName,
@@ -7625,6 +7647,12 @@ namespace WebFreight.Web.ReportsWebServices
                                         GrossWeight = a.GrossWeight,
                                         ChargeableWeight = a.ChargeableWeight,
                                         TEU = a.TEU,
+                                        FirstPickupETD = a.FirstPickupETD,
+                                        MainCarriageETD = a.MainCarriageETD,
+                                        MainCarriagePortCode = a.MainCarriagePortCode,
+                                        FinalDestinationPortCode = a.FinalDestinationPortCode,
+                                        TransportMode = a.TransportMode,
+                                        ValueOfGoods = a.ValueOfGoods,
                                         Receivables_OPEN = 0,
                                         Receivables_ACCT = 0,
                                         Payables_OPEN = myPayables_OPEN,
@@ -7722,6 +7750,12 @@ namespace WebFreight.Web.ReportsWebServices
                                         GrossWeight = a.GrossWeight,
                                         ChargeableWeight = a.ChargeableWeight,
                                         TEU = a.TEU,
+                                        FirstPickupETD = a.FirstPickupETD,
+                                        MainCarriageETD = a.MainCarriageETD,
+                                        MainCarriagePortCode = a.MainCarriagePortCode,
+                                        FinalDestinationPortCode = a.FinalDestinationPortCode,
+                                        TransportMode = a.TransportMode,
+                                        ValueOfGoods = a.ValueOfGoods,
                                         Receivables_OPEN = myReceivables_OPEN,
                                         Receivables_ACCT = myReceivables_ACCT,
                                         Payables_OPEN = 0,
@@ -7794,6 +7828,11 @@ namespace WebFreight.Web.ReportsWebServices
                     record.TotalGrossWeight = a.GrossWeight;
                     record.TotalChargeableWeight = a.ChargeableWeight;
                     record.TotalTEU = a.TEU;
+                    record.DateOfLoading = a.FirstPickupETD != null ? a.FirstPickupETD : a.MainCarriageETD;
+                    record.Origin = a.MainCarriagePortCode;
+                    record.Destination = a.FinalDestinationPortCode;
+                    record.TransportMode = a.TransportMode;
+                    record.ValueOfGoods = a.ValueOfGoods;
 
                     totalData.ShipmentAnalysisRecordList.Add(record);
                 }
@@ -9559,7 +9598,6 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_BudgetId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BudgetId").FirstOrDefault();
-            QueryFilterItem filterItem_CategoryId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryId").FirstOrDefault();
             QueryFilterItem filterItem_ExternalProjectNumber = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ExternalProjectNumber").FirstOrDefault();
 
             DateTime? fromDate = null;
@@ -9567,7 +9605,6 @@ namespace WebFreight.Web.ReportsWebServices
             string customerId = null;
             string employeeUserId = null;
             string budgetId = null;
-            string categoryId = null;
             string projectId = null;
             string ownerId = null;
             string externalProjectNumber = null;
@@ -9612,15 +9649,7 @@ namespace WebFreight.Web.ReportsWebServices
                     budgetId = filterItem_BudgetId.FieldValue.ToString();
                 }
             }
-            if (filterItem_CategoryId != null)
-            {
-                if (filterItem_CategoryId.FieldValue != null)
-                {
-                    categoryId = filterItem_CategoryId.FieldValue.ToString();
-                }
-            }
 
-           
             if (filterItem_ExternalProjectNumber != null)
             {
                 if (filterItem_ExternalProjectNumber.FieldValue != null)
@@ -9730,20 +9759,7 @@ namespace WebFreight.Web.ReportsWebServices
                               select myTMEmployeeTime);
             }
 
-            if (categoryId != null)
-            {
-                iQueryable = (from myTMEmployeeTime in iQueryable
-                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
-                              from myProjct in joinedData
-                              where myTMEmployeeTime.Tenant == tenant
-                              && myProjct.Tenant == tenant
-                              && myProjct.CategoryId == categoryId
-                              && myProjct.IsProrated == false
-                              select myTMEmployeeTime);
-            }
-
-
-            if (externalProjectNumber != null)
+            if(externalProjectNumber != null)
             {
                 iQueryable = (from myTMEmployeeTime in iQueryable
                               join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
@@ -9761,7 +9777,6 @@ namespace WebFreight.Web.ReportsWebServices
             result.ProjectId = projectId;
             result.CustomerId = customerId;
             result.BudgetId = budgetId;
-            result.CategoryId = categoryId;
 
             WorkDaysPerProjectData timSheetItem_Detailed = null;
             WorkDaysPerProjectData timSheetItem = null;
@@ -9789,7 +9804,6 @@ namespace WebFreight.Web.ReportsWebServices
                                           ProjectId = g.Key.ProjectId,
                                       });
 
-
                 foreach (var item in daysList_Total)
                 {
                     List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => d.ProjectId == item.ProjectId).ToList();
@@ -9805,17 +9819,6 @@ namespace WebFreight.Web.ReportsWebServices
                             if (card != null)
                             {
                                 timSheetItem.CustomerName = card.EnglishName;
-                            }
-                            timSheetItem.Description = project.Description;
-                           
-
-                            if(project.CategoryId != null)
-                            {
-                                TMProjectCategory category = new TMProjectCategory();
-                                TMProjectCategoryRepository repo = new TMProjectCategoryRepository(tenant);
-                                category = repo.GetSingle(project.CategoryId, tenant);
-                                if(category != null)
-                                    timSheetItem.Category = category.Name;
                             }
                         }
 

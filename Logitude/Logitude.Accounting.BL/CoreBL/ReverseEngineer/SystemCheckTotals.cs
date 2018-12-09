@@ -99,7 +99,13 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
         }
-
+        /// <summary>
+        /// ניתן היה לסכום כל DATETYPE ולוודא שהינו שווה לאפס
+        /// אבל
+        /// יותר מדוייק לבצע לפי כרטיס כך ניתן למצוא את הכרטיטסים הלא תקינים ומכאן את פ היומן ?!!?!
+        /// </summary>
+        /// <param name="tenant"></param>
+        /// <returns></returns>
         public string TotalSumPerAccountGroupByDateTypeDiff(int tenant)
         {
             using (var scope = TransactionFactory.GetTransaction())
