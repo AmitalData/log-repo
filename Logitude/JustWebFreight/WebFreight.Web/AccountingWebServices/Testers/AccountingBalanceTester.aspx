@@ -847,7 +847,7 @@ div#two {
                         <li>
                             <asp:Button ID="_ButtonJournalApprove" runat="server" Text=".WorkWithoutQueue" OnClick="_ButtonJournalApprove_Click" /></li>
                                                 <li>
-                            <asp:Button ID="Button3" runat="server" Text=".RE STREAM JournalWhileStreamingHadErrorWithStatus4" OnClick="_WorkWithoutQueueStatus4_Click" /></li>
+                            </li>
 
                     </ul>
                 </li>

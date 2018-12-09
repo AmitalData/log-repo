@@ -444,8 +444,7 @@ export class QuotesComponent extends BaseComponent {
         this.IsNoDataVisible_RecentQuotes = false;
 
         this.myDomainService.GetRecentQuotes("all", "all").subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {             
-
+            if (!myResponse.HasError) {
                 this.RecentQuotesList = myResponse.Result;
 
                 if (this.RecentQuotesList.length == 0) {

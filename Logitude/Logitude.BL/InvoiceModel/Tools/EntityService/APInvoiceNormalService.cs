@@ -294,8 +294,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.VoidAPInvoiceInFullAccounting(entityPM, entityPM.SetVoided);
 
             var IsSetApproved = entityPM.SetApproved;
+
+
+
             APInvoiceHelper helper = new APInvoiceHelper();
-            helper.APInvoiceQuickbooksValidating(entityPM, IsSetApproved, isNewEntity,this.objectContext,this.myCommonContext);
+            if (entityPM.SetReSendQBO)
+            {
+                helper.APInvoiceQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext);
+
+            }
+            else
+            {
+                helper.APInvoiceQuickbooksValidating(entityPM, IsSetApproved, isNewEntity, this.objectContext, this.myCommonContext);
+            }
+
+
+
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
 
             // DropBox

@@ -63,7 +63,6 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     public IconBackground = "./Images/single-tick.png";
     public ShareAsDefault: boolean = false;
     public IsDSVConnectVisible: boolean = false;
-    public IsDSVConnectEnable: boolean = false;
     public IsHebrewSettings = false;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
 
@@ -155,13 +154,6 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
 
         if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
             this.IsLogBox = true;
-        }
-
-        if (SessionLocator.PrivateLableSettings) {
-            this.IsDSVConnectVisible = true;
-        }
-        else {
-            this.IsDSVConnectVisible = false;
         }
 
         this.PageIndex = 1;
@@ -875,10 +867,10 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             }
 
             if (AppTool.IsNullOrEmpty(entity.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entity.StatusName) && entity.StatusName.toLocaleLowerCase() != "in progress") {
-                this.IsDSVConnectEnable = true;
+                this.IsDSVConnectVisible = true;
             }
             else {
-                this.IsDSVConnectEnable = false;
+                this.IsDSVConnectVisible = false;
             }
 
             this.Route = entity.Routing;
@@ -989,10 +981,10 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                     }
 
                     if (AppTool.IsNullOrEmpty(entityList.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entityList.StatusName) && entityList.StatusName.toLocaleLowerCase() != "in progress") {
-                        this.IsDSVConnectEnable = true;
+                        this.IsDSVConnectVisible = true;
                     }
                     else {
-                        this.IsDSVConnectEnable = false;
+                        this.IsDSVConnectVisible = false;
                     }
                     this.Route = entityList.Routing;
                     this.EntityNumber = AppTool.IsNullOrEmpty(entityList.ForwarderShipmentNumber) ? entityList.CustomerReference1 : entityList.ForwarderShipmentNumber;
@@ -1008,7 +1000,6 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         this.Route = null;
         this.Customer = null;
         this.EntityId = null;
-        this.IsDSVConnectEnable = false;
         if (this.SelectedFilingInbox != null) {
             this.SelectedFilingInbox.FilingInboxAttachments.forEach(item => {
                 item.DocumentTypeId = null;
@@ -1415,7 +1406,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                     if (SessionLocator.PrivateLableSettings) {
                         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
                         this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.EntityId, SessionLocator.Tenant).subscribe(res => {
-                            if (res.Result == false) {
+                            if (res.Result == false && summary.Attaches.filter(a => a.IsSharedWithAgent == true).length == 0) {
                                 hasSharedDocs = false;
                             }
                             else {
@@ -1483,10 +1474,10 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                         if ((ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") || SessionLocator.PrivateLableSettings) {
                             this.EntityNumber = AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) ? shipment.CustomerReference1 : shipment.ForwarderShipmentNumber;
                             if (AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(shipment.StatusName) && shipment.StatusName.toLocaleLowerCase() != "in progress") {
-                                this.IsDSVConnectEnable = true;
+                                this.IsDSVConnectVisible = true;
                             }
                             else {
-                                this.IsDSVConnectEnable = false;
+                                this.IsDSVConnectVisible = false;
                             }
                         }
                         else {

@@ -39,12 +39,15 @@ namespace WebFreight.Web.DataProviders
         public double? AccountedReceivables { get; set; }
         public double? OpenPayables { get; set; }
         public double? AccountedPayables { get; set; }
-
-        public int? TotalQuantity { get; set; } //(packages quantity)
-        public double? TotalGrossWeight { get; set; } //(in kg)
-        public double? TotalChargeableWeight { get; set; } //(in kg)
+        public int? TotalQuantity { get; set; }
+        public double? TotalGrossWeight { get; set; }
+        public double? TotalChargeableWeight { get; set; }
         public double? TotalTEU { get; set; }
-
         public DateTime? OperationalDate { get; set; }
+        public DateTime? DateOfLoading { get; set; }
+        public string TransportMode { get; set; }
+        public string Origin { get; set; }
+        public string Destination { get; set; }
+        public double? ValueOfGoods { get; set; }
     }
 }
