@@ -57,6 +57,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -3723,21 +3724,45 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (string.IsNullOrEmpty(entityPM.BookingId))
                     {
-                        //if ((entityMasterData.Master != entityPM.Master || entityPM.MainCarriageCarrierId != entityMasterData.MainCarriageCarrierId) && entityPM.MAWBTakenFromStack == false)
-                        //{
-                        //    if (!String.IsNullOrEmpty(entityPM.Master) && entityPM.MainCarriageCarrierId != null)
-                        //    {
-                        //        MAWBStack stack = mawStackRepository.GetSingleMAWBStackByNumberAirline(long.Parse(entityPM.Master), tenant, entityPM.MainCarriageCarrierId);
-                        //        if (stack != null)
-                        //        {
-                        //            string msg = TranslateTextsClass.Translate("Shipment.M.ThisAirlineMAWBStackFoundInStack", tenant);
-                        //            throw new ApplicationException(msg);
-                        //        }
-                        //    }
-                        //}
-
                         if (!string.IsNullOrEmpty(entityPM.Master))
                         {
+                            if (!Regex.IsMatch(entityPM.Master, "^[0-9]*$"))
+                            {
+                                throw new ApplicationException("Master Field must be all digits");
+                            }
+
+                            else
+                            {
+                                if (entityPM.CarrierIsLimitedLength && entityPM.Master.Length != 8)
+                                {
+                                    throw new ApplicationException("Master Field length must be 8 digits");
+                                }
+                                else
+                                {
+                                    if (entityPM.CarrierIsCheckDigit)
+                                    {
+                                        string myPrefix = entityPM.Master.Substring(0, 7);
+                                        string myCheckDegit = entityPM.Master.Substring(7, 1);
+
+                                        int myPrefixInteger = 0;
+
+                                        int.TryParse(myPrefix, out myPrefixInteger);
+
+                                        int myMod = myPrefixInteger % 7;
+
+                                        if (myMod >= 7)
+                                        {
+                                            myMod = myMod % 7;
+                                        }
+
+                                        if (myMod.ToString() != myCheckDegit)
+                                        {
+                                            throw new ApplicationException("Master Field invalid check digit");
+                                        }
+                                    }
+                                }
+                            }
+
                             if (string.IsNullOrEmpty(entityPM.MAWBStackAirlineId))
                             {
                                 if (entityPM.MAWBTakenFromStack == false && entityPM.MainCarriageIsFromStack == false)
