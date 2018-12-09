@@ -2093,6 +2093,43 @@ namespace Logitude.BL.InvoiceModel.Tools
         }
 
 
+        public static Profact.TimbraCFDI.ResultadoConsultaEstatusSAT GetSATStatus(int tenant, string entitySATXML)
+        {
+            Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = null;
+            Profact.TimbraCFDI33.Conector conector = GetProfactConnector(tenant);
+            Profact.TimbraCFDI33.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(entitySATXML);
+            if (comprobante.Complemento.Any != null)
+            {
+                List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+                var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+                if (timbreFiscalDigitalElement != null)
+                {
+                    Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+                    string rfcEmisor = comprobante.Emisor.Rfc.Trim();
+                    //Folio Fiscal - UUID
+                    string uuID = digitalTi.UUID.Trim();
+
+                    resultadoConsultaEstatusSAT = conector.ConsultaEstatusSAT(uuID);//"43b5277e-c306-4c83-8a4d-b15af03b7804");
+
+                }
+            }
+
+            return resultadoConsultaEstatusSAT;
+        }
+
+        public static Profact.TimbraCFDI33.Conector GetProfactConnector(int tenant)
+        {
+            Simplog.Data.InvoiceModel.Repositories.SATInterfaceSettingRepository sATInterfaceSettingRepository = new Simplog.Data.InvoiceModel.Repositories.SATInterfaceSettingRepository(tenant);
+            Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
+
+            bool isProduction = satSetting.Token != "mvpNUXmQfK8=";
+            Profact.TimbraCFDI33.Conector conector = new Profact.TimbraCFDI33.Conector(isProduction);
+            //Establecemos las credenciales para el permiso de conexión
+            conector.EstableceCredenciales(satSetting.Token);
+
+            return conector;
+        }
+
 
         public XmlElement Serialize(object target)
         {

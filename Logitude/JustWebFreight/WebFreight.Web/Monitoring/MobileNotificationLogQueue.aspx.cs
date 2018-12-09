@@ -65,6 +65,7 @@ namespace WebFreight.Web.Monitoring
 
                     messagecount = StorageAcountDetails.NameSpaceManager.GetQueue(emailqueueName).MessageCount;
                     QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName, ReceiveMode.PeekLock);
+                   // StorageAcountDetails.NameSpaceManager.DeleteQueue(emailqueueName);
                 }
 
 

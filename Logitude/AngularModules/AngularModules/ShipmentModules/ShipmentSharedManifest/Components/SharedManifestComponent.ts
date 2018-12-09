@@ -189,7 +189,7 @@ export class SharedManifestComponent {
         }
 
         else if (this.CurrentEntity.StatusCode == "CANC") {
-            this.ButtonChangeStatusLable = "Reactivate";
+            this.ButtonChangeStatusLable = "reactive";
             this.IsEnableCreateMasterButton = false;
             this.WidthButtonStatusChange = "70px";
         }
