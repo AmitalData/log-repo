@@ -2298,6 +2298,7 @@
     <Compile Include="ShipmentsModel\EntityPMs\InsideShipmentPackagePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\MappedShipmentDirectionsPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\NextLegPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\OBLTypePM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsRequestsCountPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsRequestPM.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusesPM.cs" />
