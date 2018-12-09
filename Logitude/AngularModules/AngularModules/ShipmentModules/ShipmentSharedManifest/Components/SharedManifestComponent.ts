@@ -83,7 +83,7 @@ export class SharedManifestComponent {
 
                         if (this.CurrentEntity.CancelledBySenderAgent) {
                             this.ValidationWarningsList = [];
-                            this.ValidationWarningsList.push("The manifest was cancelled by the sender.You are not allowed to reactive it.");
+                            this.ValidationWarningsList.push("The manifest has got cancelled by the sender.You are not allowed to reactive it.");
                             this.IsDisableEdit = true;
                         }
                         else if (!AppTool.IsNullOrEmpty(this.ManifestSL.MasterNumber) && this.ManifestSL.TransportModeId == "A") {
@@ -189,7 +189,7 @@ export class SharedManifestComponent {
         }
 
         else if (this.CurrentEntity.StatusCode == "CANC") {
-            this.ButtonChangeStatusLable = "Reactivate";
+            this.ButtonChangeStatusLable = "reactive";
             this.IsEnableCreateMasterButton = false;
             this.WidthButtonStatusChange = "70px";
         }

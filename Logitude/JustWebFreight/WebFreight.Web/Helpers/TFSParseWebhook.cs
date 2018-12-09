@@ -186,7 +186,7 @@ namespace WebFreight.Web.Helpers
             var projectId = tmProjectRepository.GetTMProjectByNumber(Details.ProjectNumber, Tenant);
             if (assignedToUser != null && updatedByUser != null)
             {
-                if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && (Details.TaskState == "In Progress" || Details.TaskState == "Committed"))
+                if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && (Details.TaskState == "In Progress" || Details.TaskState == "Committed" || Details.TaskState == "Done"))
                 {
                     var newItem = new TMEmployeeTime();
                     newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
