@@ -104,6 +104,16 @@ export class LogBoxDocumentsComponent extends BaseComponent implements OnInit, A
         }
         this.ShipmentSelectedEvent.subscribe((res) => {
             //SessionLocator.CurrentSession.StartBusyIndicator("Loading ...");//
+            if (res == null)
+            {
+                this.externalDocs = [];
+                this.SignReqDocs = [];
+                this.externalRequestedDocs = [];
+                this.AllHeader = "By Category (0)";
+                this.RequestedCount = 0;
+                this.SignRequiredCount = 0;
+                return;
+            }
             this.DisableAddDocumentButton = false;
             this.StartBusyIndicator("Loading ...");
             var div = document.getElementById("DocsTab");

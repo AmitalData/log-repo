@@ -820,6 +820,12 @@ export class QuotesComponent extends BaseComponent {
                 });;
         }
     }
+
+    OnImageError(item: any, field: string) {
+        if (item && field) {
+            item[field] = "--";
+        }
+    }
 }
 export class TopQuoteItem {
     public entityList: QuoteList;

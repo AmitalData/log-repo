@@ -120,14 +120,14 @@ namespace MetaDataGenerator
             return true;
         }
 
-       
 
-        public bool RegenerateExisting_Old_ModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath,ref string errors)
+
+        public bool RegenerateExisting_Old_ModelEntityLXMLs(List<ObjectTable> modelTables, string directoryPath, ref string errors)
         {
             if (string.IsNullOrEmpty(errors))
                 errors = "";
             directoryPath = directoryPath + @"\";
-              
+
             foreach (ObjectTable table in modelTables)
             {
                 List<ObjectField> fields = (from a in this.allFields
@@ -144,9 +144,10 @@ namespace MetaDataGenerator
                 XmlDocument doc = new XmlDocument();
                 doc.Load(filePath);
 
-                XmlElement entityElement = (XmlElement)doc.GetElementsByTagName("entity")[0];
 
-                
+                XmlElement entityElement = (XmlElement)doc.GetElementsByTagName("entity")[0];
+                this.UpdateEntityElement(entityElement, doc, table, tableTextCodes);
+
                 List<XmlNode> dataContractsNodesList = new List<XmlNode>();
                 foreach (XmlNode node in doc.GetElementsByTagName("DataContracts"))
                 {
@@ -154,7 +155,7 @@ namespace MetaDataGenerator
                 }
 
                 this.RemoveOldNodes(doc, entityElement, "DataContracts");
-                if (!this.GenerateTableLXMLFields(doc, table, entityElement, fields))
+                if (!this.GenerateTableLXMLFields(doc, table, entityElement, fields, true))
                 {
                     errors += (table.Name + "fields not generated!" + Environment.NewLine);
                     //continue;
@@ -177,6 +178,8 @@ namespace MetaDataGenerator
                 {
                     tableName = table.Name.Split('.')[1];
                 }
+
+                XmlDocument newdoc = new XmlDocument();
                 doc.Save(directoryPath + tableName + ".lxml");
 
                 #endregion
@@ -184,6 +187,132 @@ namespace MetaDataGenerator
 
             return true;
         }
+
+        #region GenerateEntityElement
+
+
+        private XmlElement UpdateEntityElement(XmlElement entityElement, XmlDocument doc, ObjectTable table, List<TextCode> tableTextCodes)
+        {
+
+            //SetAttribute("Id", GetStringValue(Guid.NewGuid()), entityElement, null);
+            if (string.IsNullOrEmpty(this.GetAttributeValue("ObjectTableName", entityElement)))
+                SetAttribute("ObjectTableName", GetStringValue(table.Name), entityElement);
+            if (string.IsNullOrEmpty(this.GetAttributeValue("DBTableName", entityElement)))
+                SetAttribute("DBTableName", (!string.IsNullOrEmpty(table.DBTableName) ? GetStringValue(table.DBTableName) : GetStringValue("NONE")), entityElement);
+
+            TextCode tableTextCode = (from a in tableTextCodes
+                                      where a.Tenant == 0 && a.Code == table.Name
+                                      select a).FirstOrDefault();
+            if (tableTextCode != null)
+            {
+                SetAttribute("ObjectTableSingular", GetStringValue(tableTextCode.DefaultText), entityElement);
+                SetAttribute("ObjectTablePlural", GetStringValue(tableTextCode.DefaultTextPlural), entityElement);
+                SetAttribute("DefaultText", GetStringValue(tableTextCode.DefaultText), entityElement);
+            }
+            if (table.DescriptionTextCode != null)
+            {
+                SetAttribute("DescriptionDefaultText", GetStringValue(table.DescriptionTextCode.DefaultText), entityElement);
+
+            }
+
+            PropertyInfo[] objectTableProperties = table.GetType().GetProperties().Where(
+                f => f.Name != "ObjectTableSingular" &&
+                    f.Name != "ObjectTablePlural" &&
+                    f.Name != "DescriptionDefaultText" &&
+                     f.Name != "Id" &&
+                      f.Name != "Tenant" &&
+                      f.Name != "ObjectTableName" &&
+                      f.Name != "DBTableName"
+                      && f.Name != "HeaderScreenId"
+
+                     ).ToArray();
+
+            foreach (var prop in objectTableProperties)
+            {
+                string xmlAttrValue = this.GetAttributeValue(prop.Name, entityElement);
+
+                object value = prop.GetValue(table);
+                if (value != null)
+                {
+                    if (prop.PropertyType == typeof(int))
+                    {
+                        SetAttribute(prop.Name, value.ToString().ToLower(), entityElement);
+                    }
+                    else if (prop.PropertyType == typeof(string))
+                    {
+
+                        SetAttribute(prop.Name, GetStringValue(value), entityElement);
+
+                    }
+                    else if(prop.PropertyType == typeof(bool))
+                    {
+                        if (xmlAttrValue != value.ToString().ToLower() && xmlAttrValue == "false")
+                        {
+                            SetAttribute(prop.Name, value.ToString().ToLower(), entityElement);
+                        }
+                    }
+                }
+            }
+
+            IEnumerable<IGrouping<string, Query>> tableQueries = this.allQueries.Where(q => q.ObjectTableId == table.Id && q.QueryGroupCode != null && q.SystemLevel == true).GroupBy(q => q.QueryGroupCode);
+
+            int? index = null;
+            foreach (var item in tableQueries)
+            {
+                QueryGroup qg = this.allQueryGroups.Where(g => g.Code == item.Key).FirstOrDefault();
+                SetAttribute("Code" + (index != null ? index.Value.ToString() : ""), GetStringValue(qg.Code), entityElement, null);
+                SetAttribute("Name" + (index != null ? index.Value.ToString() : ""), GetStringValue(qg.Name), entityElement, null);
+
+                if (index == null)
+                {
+                    index = 1;
+                }
+                else
+                    index++;
+            }
+
+            if (table.IsClosed)
+            {
+                ObjectField codeField = this.allFields.Where(q => q.ObjectTableId == table.Id && q.FieldName == "Code").FirstOrDefault();
+                if (codeField == null)
+                {
+                    codeField = this.allFields.Where(q => q.ObjectTableId == table.Id && q.FieldName == "Id").FirstOrDefault();
+                }
+
+                ObjectField nameField = this.allFields.Where(q => q.ObjectTableId == table.Id && q.FieldName == "Name" || q.FieldName == "EnlglishName").FirstOrDefault();
+                if (codeField != null)
+                    SetAttribute("CloseTableCode", GetStringValue(codeField.FieldName), entityElement, null);
+
+                if (nameField != null)
+                    SetAttribute("CloseTableName", GetStringValue(nameField.FieldName), entityElement, null);
+            }
+
+
+
+            return entityElement;
+
+        }
+
+        public string GetAttributeValue(string attName, XmlElement entityElement)
+        {
+
+            XmlAttribute att = entityElement.Attributes[attName];
+            string result = null;
+            if (att != null)
+            {
+                if (!string.IsNullOrEmpty(att.Value))
+                {
+                    if (att.Value != null)
+                    {
+                        result = att.Value.Trim('"').ToLower();
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
 
         public bool GenerateNewEntityLXML(ObjectTable table)
         {
@@ -222,7 +351,7 @@ namespace MetaDataGenerator
             return true;
         }
 
-        private bool GenerateTableLXMLFields(XmlDocument doc, ObjectTable table, XmlElement entityElement, List<ObjectField> fields)
+        private bool GenerateTableLXMLFields(XmlDocument doc, ObjectTable table, XmlElement entityElement, List<ObjectField> fields, bool updateLXML = false)
         {
             string modelName = "CommonDataModel";
             string qName = Assembly.CreateQualifiedName("Simplog.Data", "Simplog.Data." + modelName + ".EntityPOCOs." + table.Name);
@@ -297,9 +426,10 @@ namespace MetaDataGenerator
             }
 
 
-            RemoveOldNodes(doc, entityElement, "field");
+            //RemoveOldNodes(doc, entityElement, "field");
 
             List<string> addeddFields = new List<string>();
+            
 
             GeneratePocoFields(doc, entityElement, fields, table, pocoProperties, pmClassProperties, listClassProperties, addeddFields);
             GenerateObjectFieldFields(doc, entityElement, fields, pocoProperties, pmClassProperties, listClassProperties, addeddFields);
@@ -307,6 +437,23 @@ namespace MetaDataGenerator
             GenerateListOnlyFields(doc, entityElement, fields, table, listClassProperties, pocoProperties, addeddFields);
 
             return true;
+        }
+
+        private XmlElement GetFieldElement(XmlDocument doc, XmlElement entityElement, string fieldname)
+        {
+            XmlNodeList fieldsNodeList = doc.GetElementsByTagName("field");
+
+
+            foreach (XmlNode node in fieldsNodeList)
+            {
+                if (node.Attributes["FieldName"].Value.Trim('"') == fieldname)
+                {
+
+                    return (XmlElement)node;
+                }
+            }
+
+            return null;
         }
 
         private void GenerateMetadataEntities(ObjectTable table, List<ObjectField> fields, XmlDocument doc, XmlElement entityElement, bool updateExistingLXML = false)
@@ -325,16 +472,16 @@ namespace MetaDataGenerator
 
         private void GenerateAdditionalTextCodes(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields)
         {
-//            select* from textcodes where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
- //and textcodetypecode<> 'f' and TextCodeTypeCode<> 'TH'
-//and Code not like '%.MenuButtons.%'
-//and Code not like '%.Features.%'
-//and Id not in (select LabelTextCodeId from MenuButtons where LabelTextCodeId is not null and Tenant = 0 and MenuButtonGroupId in (select Id from MenuButtonGroups where  ObjectTableId in (select id from objecttables where name = 'shipment'))
-//)
-//and(select COUNT(*)   from ObjectFields where Tenant = 0 and ObjectTableId in (select id from objecttables where name = 'shipment')
-//and(ObjectFields.FullNameTextCodeId = textcodes.Id or  textcodes.id = ObjectFields.ListTextCodeId  or textcodes.id = ObjectFields.HelpTextCodeId)) = 0
-//and Id not in (select NameTextCodeId from features where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
-//and Id not in (select NameTextCodeId from Queries where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
+            //            select* from textcodes where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
+            //and textcodetypecode<> 'f' and TextCodeTypeCode<> 'TH'
+            //and Code not like '%.MenuButtons.%'
+            //and Code not like '%.Features.%'
+            //and Id not in (select LabelTextCodeId from MenuButtons where LabelTextCodeId is not null and Tenant = 0 and MenuButtonGroupId in (select Id from MenuButtonGroups where  ObjectTableId in (select id from objecttables where name = 'shipment'))
+            //)
+            //and(select COUNT(*)   from ObjectFields where Tenant = 0 and ObjectTableId in (select id from objecttables where name = 'shipment')
+            //and(ObjectFields.FullNameTextCodeId = textcodes.Id or  textcodes.id = ObjectFields.ListTextCodeId  or textcodes.id = ObjectFields.HelpTextCodeId)) = 0
+            //and Id not in (select NameTextCodeId from features where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
+            //and Id not in (select NameTextCodeId from Queries where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
 
             RemoveOldNodes(doc, entityElement, "AdditionalTextCodes");
             XmlElement additionalTextCodesListXElement = doc.CreateElement("AdditionalTextCodes");
@@ -345,6 +492,7 @@ namespace MetaDataGenerator
                                                   && a.Id != table.DescriptionTextCodeId
                                                   && a.Id != table.NewButtonTextCodeId
                                                   && a.TextCodeTypeCode.ToLower() != "f" && a.TextCodeTypeCode.ToLower() != "th"
+                                                  && a.TextCodeTypeCode.ToLower() != "h"
                                                   && !a.Code.Contains(".MenuButtons.")
                                                   && !a.Code.Contains(".Features.")
                                                   && !allFeatures.Any(f => f.NameTextCodeId == a.Id)
@@ -353,7 +501,7 @@ namespace MetaDataGenerator
                                                   && !tableObjectFields.Any(f => f.FullNameTextCodeId == a.Id || f.ListTextCodeId == a.Id || f.HelpTextCodeId == a.Id)
                                                   select a).ToList();
 
-            foreach(TextCode tcode in additionalTextCodes)
+            foreach (TextCode tcode in additionalTextCodes)
             {
                 XmlElement codeXElement = doc.CreateElement("TextCode");
                 additionalTextCodesListXElement.AppendChild(codeXElement);
@@ -363,32 +511,32 @@ namespace MetaDataGenerator
                 SetAttribute("LocalDefaultText", GetStringValue(tcode.LocalDefaultText), codeXElement);
                 SetAttribute("TextCodeTypeCode", GetStringValue(tcode.TextCodeTypeCode), codeXElement);
                 SetAttribute("IsSpellChecked", tcode.IsSpellChecked.ToString().ToLower(), codeXElement);
-              
+
             }
         }
 
         private void GenerateAdditionalFeatures(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields)
         {
-//            select* from Features where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
-//and Code<> 'NEW'and Code<> 'UPDATE'and Code<> 'READ'and Code<> 'Module'
-//and Id not in (select FeatureId from MenuButtons where FeatureId is not null and Tenant = 0 and MenuButtonGroupId in (select Id from MenuButtonGroups where  ObjectTableId in (select id from objecttables where name = 'shipment'))
-//)
-//and Id not in (select FeatureId from ObjectTableTabs where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
-//and Id not in (select FeatureId from Queries where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
+            //            select* from Features where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') 
+            //and Code<> 'NEW'and Code<> 'UPDATE'and Code<> 'READ'and Code<> 'Module'
+            //and Id not in (select FeatureId from MenuButtons where FeatureId is not null and Tenant = 0 and MenuButtonGroupId in (select Id from MenuButtonGroups where  ObjectTableId in (select id from objecttables where name = 'shipment'))
+            //)
+            //and Id not in (select FeatureId from ObjectTableTabs where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
+            //and Id not in (select FeatureId from Queries where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
 
             RemoveOldNodes(doc, entityElement, "AdditionalFeatures");
             XmlElement additionalTextCodesListXElement = doc.CreateElement("AdditionalFeatures");
             entityElement.AppendChild(additionalTextCodesListXElement);
 
             List<Feature> additionalFeatures = (from a in allFeatures
-                                                  where a.ObjectTableId == table.Id && a.Tenant == 0
-                                                  && a.Code.ToUpper() != "NEW" && a.Code.ToUpper() != "UPDATE" && a.Code.ToUpper() != "READ"
-                                                  && a.Code.ToUpper() != "MODULE"  
-                                                  && !allTabs.Any(f => f.FeatureId == a.Id)
-                                                  && !allQueries.Any(f => f.FeatureId == a.Id)
-                                                  && !allMenuButtons.Any(f => f.FeatureId == a.Id)
-                                                  
-                                                  select a).ToList();
+                                                where a.ObjectTableId == table.Id && a.Tenant == 0
+                                                && a.Code.ToUpper() != "NEW" && a.Code.ToUpper() != "UPDATE" && a.Code.ToUpper() != "READ"
+                                                && a.Code.ToUpper() != "MODULE"
+                                                && !allTabs.Any(f => f.FeatureId == a.Id)
+                                                && !allQueries.Any(f => f.FeatureId == a.Id)
+                                                && !allMenuButtons.Any(f => f.FeatureId == a.Id)
+
+                                                select a).ToList();
 
             foreach (Feature feature in additionalFeatures)
             {
@@ -575,7 +723,7 @@ namespace MetaDataGenerator
                     object entity = dataList.Current;
                     XmlElement eventXElement = doc.CreateElement("Record");
                     recordsListXElement.AppendChild(eventXElement);
-                    List<ObjectField> tableFields = this.allFields.Where(q => q.ObjectTableId == table.Id && classPropInfo.POCOClassProperites.Any(p=>p.Name == q.FieldName)).OrderBy(f => f.DisplayInLookUpIndex).ToList();//&& q.FieldName != "SearchFields"
+                    List<ObjectField> tableFields = this.allFields.Where(q => q.ObjectTableId == table.Id && classPropInfo.POCOClassProperites.Any(p => p.Name == q.FieldName)).OrderBy(f => f.DisplayInLookUpIndex).ToList();//&& q.FieldName != "SearchFields"
                     foreach (var field in tableFields)
                     {
                         PropertyInfo propInfo = entity.GetType().GetProperty(field.FieldName);
@@ -596,7 +744,7 @@ namespace MetaDataGenerator
                                 {
                                     SetAttribute(field.FieldName, propValue.ToString(), eventXElement);
                                 }
-                               
+
                             }
                         }
                     }
@@ -606,7 +754,7 @@ namespace MetaDataGenerator
 
         private void GenerateQueries(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields, bool updateExistingLXML = false)
         {
-          
+
             RemoveOldNodes(doc, entityElement, "Query");
             List<Query> tableQueries = this.allQueries.Where(q => q.ObjectTableId == table.Id && q.SystemLevel).OrderBy(q => q.IndexOrder).ToList();
             foreach (Query q in tableQueries)
@@ -631,7 +779,7 @@ namespace MetaDataGenerator
                 SetAttribute("SystemLevel", q.SystemLevel.ToString().ToLower(), queryXElement);
                 SetAttribute("QuerySection", GetStringValue(q.QuerySection), queryXElement);
                 SetAttribute("IndexOrder", q.IndexOrder.ToString().ToLower(), queryXElement);
-               
+
                 if (!string.IsNullOrEmpty(q.QueryGroupCode))
                 {
                     QueryGroup qg = this.allQueryGroups.Where(g => g.Code == q.QueryGroupCode).FirstOrDefault();
@@ -931,9 +1079,9 @@ namespace MetaDataGenerator
                     SetAttribute("EventCode", GetStringValue(mb.EventCode), mBXElement);
                     SetAttribute("TextCodeCode", GetStringValue(lblTextCode.Code), mBXElement);
                     SetAttribute("DefaultText", GetStringValue(lblTextCode.DefaultText), mBXElement);
-                    SetAttribute("LocalDefaultText", GetStringValue(lblTextCode.LocalDefaultText), mBXElement); 
+                    SetAttribute("LocalDefaultText", GetStringValue(lblTextCode.LocalDefaultText), mBXElement);
 
-                     
+
                     SetAttribute("MenuButtonType", GetStringValue(mb.MenuButtonType), mBXElement);
                     SetAttribute("IndexOrder", mindex.ToString(), mBXElement);
                     SetAttribute("Style", GetStringValue(mb.Style), mBXElement);
@@ -996,11 +1144,14 @@ namespace MetaDataGenerator
             {
                 addeddFields.Add(f.FieldName);
 
-                XmlElement fieldElement = doc.CreateElement("field");
-                entityElement.AppendChild(fieldElement);
-
-                SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, f);
-                SetAttribute("FieldName", GetStringValue(f.FieldName), fieldElement, f);
+                XmlElement fieldElement = GetFieldElement(doc, entityElement, f.FieldName);//doc.CreateElement("field");
+                if (fieldElement == null)
+                {
+                    fieldElement = doc.CreateElement("field");
+                    entityElement.AppendChild(fieldElement);
+                    SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                    SetAttribute("FieldName", GetStringValue(f.FieldName), fieldElement, null);
+                }
                 SetAttribute("ObjectTableName", GetStringValue(f.ObjectTable.Name), fieldElement, f);
                 SetAttribute("FieldsDataType", GetStringValue(f.DataTypeCode), fieldElement, f);
                 if (f.LookUpTableId != null)
@@ -1069,7 +1220,7 @@ namespace MetaDataGenerator
 
                 if (f.FullNameTextCode != null)
                 {
-                    
+
                     //FullNameTextCodeId = objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable;
                     string fullLable = f.FullNameTextCode.Code.Split('.').Length > 2 ? f.FullNameTextCode.Code.Split('.')[2] : f.FullNameTextCode.Code.Split('.')[1];
                     SetAttribute("FullFieldLable", GetStringValue(fullLable), fieldElement, f);
@@ -1194,7 +1345,7 @@ namespace MetaDataGenerator
                 }
 
 
-
+                SetAttribute("NoMetaDataField", "false", fieldElement, null);
             }
         }
 
@@ -1214,11 +1365,15 @@ namespace MetaDataGenerator
                     {
                         addeddFields.Add(prop.Name);
 
-                        XmlElement fieldElement = doc.CreateElement("field");
-
-                        entityElement.AppendChild(fieldElement);
-                        SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
-                        SetAttribute("FieldName", GetStringValue(prop.Name), fieldElement, null);
+                        XmlElement fieldElement = GetFieldElement(doc, entityElement, prop.Name);//doc.CreateElement("field");
+                        if (fieldElement == null)
+                        {
+                            fieldElement = doc.CreateElement("field");
+                            entityElement.AppendChild(fieldElement);
+                            SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                            SetAttribute("FieldName", GetStringValue(prop.Name), fieldElement, null);
+                        }
+                        
                         SetAttribute("ObjectTableName", GetStringValue(table.Name), fieldElement, null);
 
                         Type propertyType = prop.PropertyType;
@@ -1341,7 +1496,7 @@ namespace MetaDataGenerator
                             SetAttribute("DisplayInList", "false", fieldElement, null);
                         }
 
-                        SetAttribute("NoMetaDataField", "true", fieldElement, null);
+                         SetAttribute("NoMetaDataField", "true", fieldElement, null);
 
 
 
@@ -1394,9 +1549,14 @@ namespace MetaDataGenerator
 
                     bool isListOfObjectsProperty = pmProperty.PropertyType.Name.Contains("List");
 
-                    XmlElement fieldElement = doc.CreateElement("field");
-                    entityElement.AppendChild(fieldElement);
-                    SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                    XmlElement fieldElement = GetFieldElement(doc, entityElement, pmProperty.Name);//doc.CreateElement("field");
+                    if (fieldElement == null)
+                    {
+                        fieldElement = doc.CreateElement("field");
+                        entityElement.AppendChild(fieldElement);
+                        SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                        SetAttribute("FieldName", GetStringValue(pmProperty.Name), fieldElement, null);
+                    }
                     if (isListOfObjectsProperty)
                     {
                         SetAttribute("FieldsDataType", GetStringValue("List"), fieldElement, null);
@@ -1416,7 +1576,7 @@ namespace MetaDataGenerator
                         }
 
                     }
-                    SetAttribute("FieldName", GetStringValue(pmProperty.Name), fieldElement, null);
+                    //SetAttribute("FieldName", GetStringValue(pmProperty.Name), fieldElement, null);
 
                     SetAttribute("PMPropertyPath", GetStringValue(pmProperty.Name), fieldElement, null);
                     SetAttribute("ListPropertyPath", GetStringValue(pmProperty.Name), fieldElement, null);
@@ -1537,9 +1697,14 @@ namespace MetaDataGenerator
                 {
                     addeddFields.Add(listProperty.Name);
 
-                    XmlElement fieldElement = doc.CreateElement("field");
-                    entityElement.AppendChild(fieldElement);
-                    SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                    XmlElement fieldElement = GetFieldElement(doc, entityElement, listProperty.Name);//doc.CreateElement("field");
+                    if (fieldElement == null)
+                    {
+                        fieldElement = doc.CreateElement("field");
+                        entityElement.AppendChild(fieldElement);
+                        SetAttribute("Id", GetStringValue(Guid.NewGuid()), fieldElement, null);
+                        SetAttribute("FieldName", GetStringValue(listProperty.Name), fieldElement, null);
+                    }
 
                     SetAttribute("FieldName", GetStringValue(listProperty.Name), fieldElement, null);
 
@@ -1626,7 +1791,7 @@ namespace MetaDataGenerator
 
             SetAttribute("Id", GetStringValue(Guid.NewGuid()), entityElement, null);
             SetAttribute("ObjectTableName", GetStringValue(table.Name), entityElement);
-            SetAttribute("DBTableName", (!string.IsNullOrEmpty(table.DBTableName)?GetStringValue(table.DBTableName): GetStringValue("NONE")), entityElement);
+            SetAttribute("DBTableName", (!string.IsNullOrEmpty(table.DBTableName) ? GetStringValue(table.DBTableName) : GetStringValue("NONE")), entityElement);
 
             TextCode tableTextCode = (from a in tableTextCodes
                                       where a.Tenant == 0 && a.Code == table.Name

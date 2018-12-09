@@ -2170,6 +2170,60 @@ namespace Logitude.XSD.INTTRA.BL
                         myResult.StateProvince = this.FormatString(myState.EnglishName, 9);
                     }
                 }
+
+                //List<string> AddressLines = new List<string>();
+                //if (myResult.AddressLine != null)
+                //{
+                //    AddressLines = myResult.AddressLine.ToList();
+                //}
+
+                //if (AddressLines.Count < 4)
+                //{
+                //    if (!string.IsNullOrEmpty(myResult.City))
+                //    {
+                //        AddressLines.Add(myResult.City);
+                //    }
+                //}
+
+                //if (AddressLines.Count < 4)
+                //{
+                //    if (!string.IsNullOrEmpty(myResult.PostalCode))
+                //    {
+                //        AddressLines.Add(myResult.PostalCode);
+                //    }
+                //}
+
+                //if (AddressLines.Count < 4)
+                //{
+                //    if (!string.IsNullOrEmpty(myResult.CountryCode))
+                //    {
+                //        AddressLines.Add(myResult.CountryCode);
+                //    }
+                //}
+
+                //if (AddressLines.Count < 4)
+                //{
+                //    if (!string.IsNullOrEmpty(myResult.StateProvince))
+                //    {
+                //        AddressLines.Add(myResult.StateProvince);
+                //    }
+                //}
+
+                //if (myResult.Street != null)
+                //{
+                //    foreach(string item in myResult.Street)
+                //    {
+                //        if (AddressLines.Count < 4)
+                //        {
+                //            AddressLines.Add(item);
+                //        }
+                //    }
+                //}
+
+
+                string iAddressString = this.GetAddress_OneLine(myAddress);
+
+                myResult.AddressLine = this.GetStringList(iAddressString, 4, 35).ToArray<string>();
             }
 
             return myResult;
@@ -2334,6 +2388,50 @@ namespace Logitude.XSD.INTTRA.BL
             }
 
             return myResult;
+        }
+        private string GetAddress_OneLine(Address address)
+        {
+            string resultAddress = "";
+
+            if (address != null)
+            {
+                resultAddress = address.Address1 != null ? address.Address1 : "";
+
+                if (!string.IsNullOrEmpty(address.Address2))
+                {
+                    resultAddress = resultAddress + ", " + address.Address2;
+                }
+
+                if (!string.IsNullOrEmpty(address.City))
+                {
+                    resultAddress = resultAddress + ", " + address.City;
+                }
+
+                if (address.State != null)
+                {
+                    resultAddress = resultAddress + ", " + (address.State.Code != null ? address.State.Code : "");
+                }
+
+                if (!string.IsNullOrEmpty(address.ZipCode))
+                {
+                    resultAddress = resultAddress + ", " + address.ZipCode;
+                }
+
+                if (address.Country != null)
+                {
+                    if (address.IsLocalLanguage)
+                    {
+                        resultAddress = resultAddress + ", " + address.Country.LocalName;
+                    }
+
+                    else
+                    {
+                        resultAddress = resultAddress + ", " + address.Country.EnglishName;
+                    }
+                }
+            }
+
+            return resultAddress;
         }
 
         public enum INTTRAPattern

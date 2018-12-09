@@ -21,9 +21,5 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         public int Tenant { get; set; }
         public string SecurityKey { get; set; }
         public string DocumentId { get; set; }
-        public string PrimaryKey { get; set; }
-
-
-
     }
 }

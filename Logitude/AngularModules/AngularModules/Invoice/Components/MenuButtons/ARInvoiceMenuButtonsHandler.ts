@@ -221,6 +221,9 @@ export class ARInvoiceMenuButtonsHandler {
                                    button.DisplayText = "Resend to QBO";
                                 }
                                 if (this.EntityPM.ApprovedDate == null) {
+                                    if (this.EntityPM.ARInvoiceTypeCode == "CD")
+                                        myButtonIsDisabled = false;
+                                    else
                                     myButtonIsDisabled = true;
                                 }
                                 else {
@@ -913,7 +916,7 @@ export class ARInvoiceMenuButtonsHandler {
             myReference = !AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) ? this.EntityPM.InvoiceNumber : "Draft: " + this.EntityPM.DraftNumber;
             this.StartPrinting(myEntityId, myChildEntityId, myObjectTableName, mychildObjectTableId, myDocumentTypeCode, myReference);
         }
-        else if (this.EntityPM.IsConsolidationInvoice) {
+        else if (this.EntityPM.IsGeneralInvoice) {
             myEntityId = this.EntityPM.Id;
             myChildEntityId = null;
             mychildObjectTableId = null;

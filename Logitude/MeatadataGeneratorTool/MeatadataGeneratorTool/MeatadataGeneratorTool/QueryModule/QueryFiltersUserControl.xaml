@@ -50,8 +50,18 @@
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    Text="Predefined Value2 :" />
-                        
-                        
+                        <TextBlock Height="25"
+                                   Margin="5"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Text="Operator :" />
+                        <TextBlock Height="25"
+                                   Margin="5"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Text="Index Order :" />
+
+
                         <TextBlock Height="25"
                                    Margin="5"
                                    VerticalAlignment="Center"
@@ -80,6 +90,19 @@
                                  Margin="5"
                                  VerticalAlignment="Center"
                                  Text="{Binding PredefinedValue2,
+                                                Mode=TwoWay}" />
+                        <ComboBox Grid.Row="20"
+                                  Grid.Column="1"
+                                  Height="22"
+                                  Margin="2"
+                                  VerticalAlignment="Center"
+                                  ItemsSource="{Binding OperatorsList}"
+                                  SelectedItem="{Binding Operator,
+                                                         Mode=TwoWay}" />
+                        <TextBox Height="25"
+                                 Margin="5"
+                                 VerticalAlignment="Center"
+                                 Text="{Binding IndexOrder,
                                                 Mode=TwoWay}" />
                         <TextBox Height="25"
                                  Margin="5"

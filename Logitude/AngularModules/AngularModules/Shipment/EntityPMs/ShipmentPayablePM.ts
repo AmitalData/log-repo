@@ -287,10 +287,12 @@ export class ShipmentPayablePM {
     public get QuoteCostMinAmount() { return this.quoteCostMinAmount; }
     public set QuoteCostMinAmount(newValue: number) { if (this.quoteCostMinAmount != newValue) { this.quoteCostMinAmount = newValue; this.MarkAsDirty("QuoteCostMinAmount"); } }
        
+	 
     private quoteCostMaxAmount: number;
     public get QuoteCostMaxAmount() { return this.quoteCostMaxAmount; }
     public set QuoteCostMaxAmount(newValue: number) { if (this.quoteCostMaxAmount != newValue) { this.quoteCostMaxAmount = newValue; this.MarkAsDirty("QuoteCostMaxAmount"); } }
-
+       
+	 
     private quoteChargeId: string;
     public get QuoteChargeId() { return this.quoteChargeId; }
     public set QuoteChargeId(newValue: string) { if (this.quoteChargeId != newValue) { this.quoteChargeId = newValue; this.MarkAsDirty("QuoteChargeId"); } }
@@ -410,4 +412,4 @@ export class ShipmentPayablePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

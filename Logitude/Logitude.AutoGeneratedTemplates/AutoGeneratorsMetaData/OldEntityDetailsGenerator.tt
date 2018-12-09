@@ -339,11 +339,11 @@ namespace <#= detailsnamespacestring.Replace(".CloseTable","").TrimEnd('s') #>
         {
             get
             {
-                throw new NotImplementedException();
+                return this.Id;
             }
             set
             {
-                throw new NotImplementedException();
+                this.Id = value;
             }
         }<#+
 		}

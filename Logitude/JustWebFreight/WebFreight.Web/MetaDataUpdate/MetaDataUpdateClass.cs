@@ -36305,7 +36305,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowFilters = false,
                 DisplayInSearchWindowList = true,
                 DisplayInLookUpIndex = 1,
-                FullFieldLable = "Contact",
+                FullFieldLable = "ContactName",
                 FieldName = "ContactName",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36323,6 +36323,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListLocalDefaultText = "Contact",
                 ValidForQuerySection1 = "CustomerTenantAccess",
+                HelpTextCode = "Contact",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -36333,7 +36334,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowFilters = false,
                 DisplayInSearchWindowList = true,
                 DisplayInLookUpIndex = 1,
-                FullFieldLable = "Company VAT",
+                FullFieldLable = "CompanyVat",
                 FieldName = "CompanyVat",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36343,7 +36344,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableName = CustomerTenantAccessObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
-                ListFieldLable = "CompanyVATListLable",
+                ListFieldLable = "CompanyVatListLable",
                 ListLableDefaultText = "VAT #",
                 DisplayInList = true,
                 ListPropertyPath = "CompanyVat",
@@ -36351,6 +36352,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListLocalDefaultText = "CompanyVAT",
                 ValidForQuerySection1 = "CustomerTenantAccess",
+                HelpTextCode = "Company VAT",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -36358,7 +36360,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Company Name",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Company",
+                FullFieldLable = "CompanyName",
                 FieldName = "CompanyName",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36376,13 +36378,14 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "CompanyName",
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 Operator = "StartsWith",
+                HelpTextCode = "Company",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Company Email",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Company Email",
+                FullFieldLable = "CompanyEmail",
                 FieldName = "CompanyEmail",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36399,13 +36402,14 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "CompanyEmail",
                 PMPropertyPath = "CompanyEmail",
+                HelpTextCode = "Company Email",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Contact Mobile",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Contact Mobile",
+                FullFieldLable = "ContactMobile",
                 FieldName = "ContactMobile",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36421,14 +36425,16 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactMobile",
-                PMPropertyPath = "ContactMobile"
+                PMPropertyPath = "ContactMobile",
+                HelpTextCode = "Contact Mobile",
+
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Contact Phone",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Contact Phone",
+                FullFieldLable = "ContactPhone",
                 FieldName = "ContactPhone",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36444,14 +36450,15 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactPhone",
-                PMPropertyPath = "ContactPhone"
+                PMPropertyPath = "ContactPhone",
+                HelpTextCode = "Contact Phone",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "RequestDateTime",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Request Date",
+                FullFieldLable = "RequestDateTime",
                 FieldName = "RequestDateTime",
                 FieldsDataType = "DateTime",
                 IsRequired = false,
@@ -36466,6 +36473,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "RequestDateTime",
                 PMPropertyPath = "RequestDateTime",
+                HelpTextCode = "Request Date",
                 //ConverterName = "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -36518,7 +36526,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Stock Type",
-                FullFieldLable = "Stock Type",
+                FullFieldLable = "StockTypeCode",
                 FieldName = "StockTypeCode",
                 FieldsDataType = "Text",
                 MaxLength = 15,
@@ -36543,7 +36551,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DefaultText = "UpdatedBy UserId",
                 DisplayOnLookUp = false,
                 IsRequired = false,
-                FullFieldLable = "Updated By User",
+                FullFieldLable = "UpdatedByUserId",
                 FieldName = "UpdatedByUserId",
                 FieldsDataType = "LookUp",
                 LookUpTableId = UsersObject.Id,
@@ -36560,6 +36568,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 ListPropertyPath = "UpdatedByUserId",
                 PMPropertyPath = "UpdatedByUserId",
+                HelpTextCode = "Updated By User",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -36567,7 +36576,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DefaultText = "Updated By",
                 DisplayOnLookUp = false,
                 IsRequired = false,
-                FullFieldLable = "UpdatedByUser",
+                FullFieldLable = "UpdatedByUserName",
                 FieldName = "UpdatedByUserName",
                 FieldsDataType = "Text",
                 MaxLength = 60,
@@ -36588,7 +36597,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Last Update Date",
-                FullFieldLable = "Last Update Date",
+                FullFieldLable = "LastUpdateDate",
                 FieldName = "LastUpdateDate",
                 FieldsDataType = "DateTime",
                 ObjectTableId = CustomerTenantAccessObject.Id,
@@ -36632,7 +36641,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Last Shipment Date",
-                FullFieldLable = "Last Shipment Date",
+                FullFieldLable = "LastShipmentDate",
                 FieldName = "LastShipmentDate",
                 FieldsDataType = "DateTime",
                 ObjectTableId = CustomerTenantAccessObject.Id,
@@ -62778,6 +62787,11 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.UnableToDoAllIn", DefaultText = "Unable to do All In..", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.IfMatchesFrieghtCharge", DefaultText = "Only if matches the Frieght Charge UOM and Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisPackage", DefaultText = "Delete this package?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.BuildShipmentMessage", DefaultText = "Build Shipment is Available Only if Ad-hoc Quotes", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.QuoteCancelMessage", DefaultText = "Quote cannot be Cancelled, since it has connected Shipments", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.QuoteReturnMessage", DefaultText = "Quote can't be returned to draft since it is connected to a shipment", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region Overview
@@ -62939,7 +62953,7 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Routings", DefaultText = "Routings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.DeclineReason", DefaultText = "Decline Reason", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             ObjectContext.SaveChanges();
         }
@@ -66336,6 +66350,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APInvoiceFeature_C05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINT", FeatureTypeCode = "ACT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.Print", NameTextCodeDefaultText = "Print", FullLocalDefaultText = "הדפסה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_C06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiRate", FeatureTypeCode = "ACT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.EnableMultiRate", NameTextCodeDefaultText = "Enable multi-rate", FullLocalDefaultText = "אפשר ריבוי שערים" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_C07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APInvoiceEditExchangeRate", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.EditExchangeRate", NameTextCodeDefaultText = "Edit Exchange Rate", FullLocalDefaultText = "ערוך שער חליפין", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature APInvoiceFeature_C08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.SendToQBO", NameTextCodeDefaultText = "Send to QBO", FullLocalDefaultText = "Send to QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
 
             Feature APInvoiceFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.AllInvoices", NameTextCodeDefaultText = "All Invoices", FullLocalDefaultText = "כל החשבוניות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAITAPPROVAL", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.WaitingForApproval", NameTextCodeDefaultText = "Waiting for Approval", FullLocalDefaultText = "ממתין לאישור" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -66406,6 +66422,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APPaymentFeature17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MARKEDASBLOCKEDFORTRANSFER", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.MarkedAsBlockedForTransfer", NameTextCodeDefaultText = "Marked as blocked for transfer", FullLocalDefaultText = "סמן כחסום להעברה", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APPaymentFeature18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RecalculateExternals", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.RecalculateExternals", NameTextCodeDefaultText = "Recalculate External IDs" , FullLocalDefaultText = "חישוב מזהים חיצונים מחדש", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APPaymentFeature19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiCurrency", Packagable = true, FeatureTypeCode = "ACT", ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.EnableMultiCurrency", NameTextCodeDefaultText = "Enable multi-currency", FullLocalDefaultText = "לאפשר ריבוי מטבעות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature APPaymentFeature20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.SendToQBO", NameTextCodeDefaultText = "Send To QBO", FullLocalDefaultText = "Send To QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
