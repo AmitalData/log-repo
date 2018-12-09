@@ -7435,12 +7435,17 @@ namespace WebFreight.Web.ReportsWebServices
                                  MainCarriageATA = myShipment.MainCarriageATA,
                                  MainCarriageATD = myShipment.MainCarriageATD,
                                  ShipmentNumber = myShipment.ShipmentNumber,
-
                                  OperationalDate = myShipment.OperationalDate,
                                  Quantity = myShipment.PackagesQuantity,
                                  GrossWeight = myShipment.GrossWeightInKG,
                                  ChargeableWeight = myShipment.ChargeableWeightInKG,
-                                 TEU = myShipment.TEU,
+                                 TEU = myShipment.TEU,                                 
+                                 FirstPickupETD = myShipment.FirstPickupETD,
+                                 MainCarriageETD = myShipment.MainCarriageETD,
+                                 MainCarriagePortCode = myShipment.MainCarriageFromPortCode,
+                                 FinalDestinationPortCode = myShipment.MainCarriageFinalDestinationPortCode,
+                                 TransportMode = myShipment.TransportModeName,
+                                 ValueOfGoods = myShipment.ValueOfGoods,
 
                                  ChargeTypeId = myItem.ChargesTypeId,
                                  ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
@@ -7470,12 +7475,17 @@ namespace WebFreight.Web.ReportsWebServices
                                  MainCarriageATA = myShipment.MainCarriageATA,
                                  MainCarriageATD = myShipment.MainCarriageATD,
                                  ShipmentNumber = myShipment.ShipmentNumber,
-
                                  OperationalDate = myShipment.OperationalDate,
                                  Quantity = myShipment.PackagesQuantity,
                                  GrossWeight = myShipment.GrossWeightInKG,
                                  ChargeableWeight = myShipment.ChargeableWeightInKG,
                                  TEU = myShipment.TEU,
+                                 FirstPickupETD = myShipment.FirstPickupETD,
+                                 MainCarriageETD = myShipment.MainCarriageETD,
+                                 MainCarriagePortCode = myShipment.MainCarriageFromPortCode,
+                                 FinalDestinationPortCode = myShipment.MainCarriageFinalDestinationPortCode,
+                                 TransportMode = myShipment.TransportModeName,
+                                 ValueOfGoods = myShipment.ValueOfGoods,
 
                                  ChargeTypeId = myItem.ChargesTypeId,
                                  ChargeTypeCode = myItem.ChargesType == null ? null : myItem.ChargesType.Code,
@@ -7507,6 +7517,12 @@ namespace WebFreight.Web.ReportsWebServices
                                 d.GrossWeight,
                                 d.ChargeableWeight,
                                 d.TEU,
+                                d.FirstPickupETD,
+                                d.MainCarriageETD,
+                                d.MainCarriagePortCode,
+                                d.FinalDestinationPortCode,
+                                d.TransportMode,
+                                d.ValueOfGoods
                             })
 
                             .Select(s => new ShipmentsReceivablesPayablesList()
@@ -7528,6 +7544,12 @@ namespace WebFreight.Web.ReportsWebServices
                                 GrossWeight = s.Key.GrossWeight,
                                 ChargeableWeight = s.Key.ChargeableWeight,
                                 TEU = s.Key.TEU,
+                                FirstPickupETD = s.Key.FirstPickupETD,
+                                MainCarriageETD = s.Key.MainCarriageETD,
+                                MainCarriagePortCode = s.Key.MainCarriagePortCode,
+                                FinalDestinationPortCode = s.Key.FinalDestinationPortCode,
+                                TransportMode = s.Key.TransportMode,
+                                ValueOfGoods = s.Key.ValueOfGoods,
                                 ChargeTypeId = s.Key.ChargeTypeId,
                                 ChargeTypeCode = s.Key.ChargeTypeCode,
                                 ChargeTypeName = s.Key.ChargeTypeName,
@@ -7625,6 +7647,12 @@ namespace WebFreight.Web.ReportsWebServices
                                         GrossWeight = a.GrossWeight,
                                         ChargeableWeight = a.ChargeableWeight,
                                         TEU = a.TEU,
+                                        FirstPickupETD = a.FirstPickupETD,
+                                        MainCarriageETD = a.MainCarriageETD,
+                                        MainCarriagePortCode = a.MainCarriagePortCode,
+                                        FinalDestinationPortCode = a.FinalDestinationPortCode,
+                                        TransportMode = a.TransportMode,
+                                        ValueOfGoods = a.ValueOfGoods,
                                         Receivables_OPEN = 0,
                                         Receivables_ACCT = 0,
                                         Payables_OPEN = myPayables_OPEN,
@@ -7722,6 +7750,12 @@ namespace WebFreight.Web.ReportsWebServices
                                         GrossWeight = a.GrossWeight,
                                         ChargeableWeight = a.ChargeableWeight,
                                         TEU = a.TEU,
+                                        FirstPickupETD = a.FirstPickupETD,
+                                        MainCarriageETD = a.MainCarriageETD,
+                                        MainCarriagePortCode = a.MainCarriagePortCode,
+                                        FinalDestinationPortCode = a.FinalDestinationPortCode,
+                                        TransportMode = a.TransportMode,
+                                        ValueOfGoods = a.ValueOfGoods,
                                         Receivables_OPEN = myReceivables_OPEN,
                                         Receivables_ACCT = myReceivables_ACCT,
                                         Payables_OPEN = 0,
@@ -7794,6 +7828,11 @@ namespace WebFreight.Web.ReportsWebServices
                     record.TotalGrossWeight = a.GrossWeight;
                     record.TotalChargeableWeight = a.ChargeableWeight;
                     record.TotalTEU = a.TEU;
+                    record.DateOfLoading = a.FirstPickupETD != null ? a.FirstPickupETD : a.MainCarriageETD;
+                    record.Origin = a.MainCarriagePortCode;
+                    record.Destination = a.FinalDestinationPortCode;
+                    record.TransportMode = a.TransportMode;
+                    record.ValueOfGoods = a.ValueOfGoods;
 
                     totalData.ShipmentAnalysisRecordList.Add(record);
                 }

@@ -247,7 +247,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         //ShipmentCompField.LastDocumentDateTime = DateTime.Now;
                         DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                         var EntityDirection = documentsFilingQuery.GetDirectionForEntity(Poco.EntityId, theEntityPm.ObjectTableId, tenant);
-                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile)
+                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile && this.entityPM.FileExtension.ToLower() == "pdf")
                         {
                             ShipmentCompField.IsDigitalSignRequired = true;
                             Poco.IsDigitalSignRequired = true;
@@ -469,7 +469,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         ShipmentCompField.DocumentsSearchFields = entityRepository.GetEntityDocumentsSearchFields(this.Poco.EntityId, this.Poco.ObjectTableId, this.Poco.Tenant);
                         DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                         var EntityDirection = documentsFilingQuery.GetDirectionForEntity(Poco.EntityId, theEntityPm.ObjectTableId, tenant);
-                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile)
+                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile && this.entityPM.FileExtension.ToLower() == "pdf")
                         {
                             ShipmentCompField.IsDigitalSignRequired = true;
                             Poco.IsDigitalSignRequired = true;
@@ -671,7 +671,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         ShipmentCompField.DocumentsSearchFields = entityRepository.GetEntityDocumentsSearchFields(this.Poco.EntityId, this.Poco.ObjectTableId, this.Poco.Tenant);
                         DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                         var EntityDirection = documentsFilingQuery.GetDirectionForEntity(Poco.EntityId, theEntityPm.ObjectTableId, tenant);
-                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile)
+                        if (CheckIfSignRequired(EntityDirection, this.entityPM.DocumentTypeId, this.entityPM.Tenant) && !this.entityPM.IsDigitallySigned && this.entityPM.HasFile && this.entityPM.FileExtension.ToLower() == "pdf")
                         {
                             ShipmentCompField.IsDigitalSignRequired = true;
                             Poco.IsDigitalSignRequired = true;

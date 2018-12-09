@@ -12,14 +12,11 @@ namespace Logitude.Server.Tools.Helpers
             }
             return TranslateText;
         }
-        public static string TranslateText(string textCodeCode, int tenant, bool useLoggedContact) // get logged contact and translate to local/englsih
+        public static string TranslateText(string textCodeCode, int tenant, bool showLocal) 
         {
-            Helpers.TextCodesTranslator translator = new Helpers.TextCodesTranslator();
-            var TranslateText = translator.Translate(textCodeCode, tenant,true);
-            if (string.IsNullOrWhiteSpace(TranslateText))
-            {
-                TranslateText = "$Text(" + textCodeCode + ")";//Our Version Of Uniface Convention   
-            }
+            TextCodesTranslator translator = new TextCodesTranslator();
+            var TranslateText = translator.Translate(textCodeCode, tenant, showLocal);
+
             return TranslateText;
         }
     }

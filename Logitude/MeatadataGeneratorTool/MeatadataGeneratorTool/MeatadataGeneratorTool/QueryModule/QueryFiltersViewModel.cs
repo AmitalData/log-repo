@@ -12,10 +12,17 @@ namespace MeatadataGeneratorTool.QueryModule
 {
     public class QueryFiltersViewModel : PropertyChangedImplementation
     {
+
+
+
+
+
+
         ObjectTableViewModel viewModel;
         QueryViewModel queryviewModel;
         bool IsNew;
         public ObservableCollection<ObjectFieldsViewModel> ObsList { get; set; }
+        public List<string> OperatorsList { get { return new List<string>() { "Equal", "NotEqual", "StartsWith", "Contains", "LargerThan", "LessThan", "GreaterThanOrEqual", "Between", "Custom", }; } }
         public QueryFiltersViewModel(ObjectTableViewModel OTViewModel, QueryViewModel QViewModel, bool IsNew)
         {
             this.IsNew = IsNew;
@@ -26,6 +33,8 @@ namespace MeatadataGeneratorTool.QueryModule
             {
                 ButtonsVisibility = Visibility.Visible;
             }
+
+            
         }
 
         private string queryCode;
@@ -181,7 +190,7 @@ namespace MeatadataGeneratorTool.QueryModule
             if (string.IsNullOrEmpty(PredefinedValue))
             {
                 str.AppendLine("Predefined Value is Required");
-            }  
+            }
             ErrorMessages = str.ToString();
             if (ErrorMessages != "")
             {
@@ -200,9 +209,9 @@ namespace MeatadataGeneratorTool.QueryModule
             get { return new RelayCommand<QueryViewModel>(m => this.RemoveFilterMethod(m)); }
         }
 
-        public int IndexOrder { get; internal set; }
-        public string Operator { get; internal set; }
- 
+        public int IndexOrder { get; set; }
+        public string Operator { get; set; }
+
         private void RemoveFilterMethod(QueryViewModel QModel)
         {
             QModel.QueryFiltersObsList.Remove(this);

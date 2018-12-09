@@ -1083,7 +1083,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             dynamic param = null;
             var paramDefault = new
             {
-                MyTenant = 989,
+                MyTenant = 1064,
+                
 
             };
             try
@@ -1104,7 +1105,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var tenant = (int)param.MyTenant;
                 Response.Clear();
                 var myDueLocalBalanceService = new DueLocalBalanceService();
-                myDueLocalBalanceService.ReBuild(tenant);
+                myDueLocalBalanceService.ReBuild(tenant, "");
 
                 //var myAllCardServiceDS = new GLAccountDashboard();
                 //var dic = myAllCardServiceDS.GetCardsLocalBalanceGByChartOfAccountsTypeCode(tenant);
@@ -1138,7 +1139,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             dynamic param = null;
             var paramDefault = new
             {
-                MyTenant = 989,
+                MyTenant = 1064,
+                AccountId = "1-216569"
 
             };
             try
@@ -1157,9 +1159,10 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
 
                 var tenant = (int)param.MyTenant;
+                string AccountId = param.AccountId;
                 Response.Clear();
                 var myDueLocalBalanceService = new DueLocalBalanceService();
-                var listDiff = myDueLocalBalanceService.ReverseEngineer(tenant);
+                var listDiff = myDueLocalBalanceService.ReverseEngineer(tenant, AccountId);
 
                 //var myAllCardServiceDS = new GLAccountDashboard();
                 //var dic = myAllCardServiceDS.GetCardsLocalBalanceGByChartOfAccountsTypeCode(tenant);
@@ -1299,9 +1302,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var accountingContext = AccountingContext.GetContext(tenant);
                 var systemCheckTotals = new SystemCheckTotals();
                 systemCheckTotals.TotalSumMustBeZero(tenant);
+                var json =systemCheckTotals.TotalSumPerAccountGroupByDateTypeDiff(tenant);
 
-
-
+                _LabelResult.Text = json;
                 //var journalJson = JsonConvert.SerializeObject(journal);
                 //_LabelResult.Text = journalJson;
 

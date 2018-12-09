@@ -653,6 +653,11 @@ export class ARInvoicePM {
     public set Intercompany(newValue: boolean) { if (this.intercompany != newValue) { this.intercompany = newValue; this.MarkAsDirty("Intercompany"); } }
        
 	 
+    private sATApprovalDate: Date;
+    public get SATApprovalDate() { return this.sATApprovalDate; }
+    public set SATApprovalDate(newValue: Date) { if (this.sATApprovalDate != newValue) { this.sATApprovalDate = newValue; this.MarkAsDirty("SATApprovalDate"); } }
+       
+	 
     private bankAccountLiteId: string;
     public get BankAccountLiteId() { return this.bankAccountLiteId; }
     public set BankAccountLiteId(newValue: string) { if (this.bankAccountLiteId != newValue) { this.bankAccountLiteId = newValue; this.MarkAsDirty("BankAccountLiteId"); } }
@@ -835,15 +840,8 @@ export class ARInvoicePM {
      private setVoided: boolean;
     public get SetVoided() { return this.setVoided; }
     public set SetVoided(newValue: boolean) { if (this.setVoided != newValue) { this.setVoided = newValue; this.MarkAsDirty("SetVoided"); } }
-
-
-
-
-    private setReSendQBO: boolean;
-    public get SetReSendQBO() { return this.setReSendQBO; }
-    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
-    
-
+       
+	 
     private setAsSent: boolean;
     public get SetAsSent() { return this.setAsSent; }
     public set SetAsSent(newValue: boolean) { if (this.setAsSent != newValue) { this.setAsSent = newValue; this.MarkAsDirty("SetAsSent"); } }
@@ -867,6 +865,11 @@ export class ARInvoicePM {
     private isExternalAPI: boolean;
     public get IsExternalAPI() { return this.isExternalAPI; }
     public set IsExternalAPI(newValue: boolean) { if (this.isExternalAPI != newValue) { this.isExternalAPI = newValue; this.MarkAsDirty("IsExternalAPI"); } }
+       
+	 
+    private setReSendQBO: boolean;
+    public get SetReSendQBO() { return this.setReSendQBO; }
+    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
        
 	 
     private journalId: string;
@@ -943,10 +946,7 @@ export class ARInvoicePM {
     public get TotalVAT() { return this.totalVAT; }
     public set TotalVAT(newValue: number) { if (this.totalVAT != newValue) { this.totalVAT = newValue; this.MarkAsDirty("TotalVAT"); } }
        
-    private sATApprovalDate: Date;
-    public get SATApprovalDate() { return this.sATApprovalDate; }
-    public set SATApprovalDate(newValue: Date) { if (this.sATApprovalDate != newValue) { this.sATApprovalDate = newValue; this.MarkAsDirty("SATApprovalDate"); } }
-
+	 
 
     public OldEntityPM: ARInvoicePM;
 		
