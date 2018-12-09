@@ -15,6 +15,7 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { TaxDeductionReportExtendedPMService } from '../../Services/ExtendedPMs/TaxDeductionReportExtendedPMService';
 import { TaxDeductionReportPM } from '../../EntityPMs/TaxDeductionReportPM';
+import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 declare var window;
 
@@ -38,6 +39,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
     btePM: any;
     bteList: BatchTaskExecutionList;
     timer: any;
+    public isRTL: boolean = false;
 
     _DocumentsFilingViewsExtService: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
     _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
@@ -46,6 +48,9 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
 
     constructor() {
         super();
+
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
     }
     ngOnDestroy() {
         if (this.timer) {
@@ -249,6 +254,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
         var msgbox = new MessageWindow();
         // msgbox.Width = 500;
         // msgbox.Height = 400;
+        msgbox.RTL = this.isRTL;
         msgbox.Show(msg);
     }
     //#endregion
