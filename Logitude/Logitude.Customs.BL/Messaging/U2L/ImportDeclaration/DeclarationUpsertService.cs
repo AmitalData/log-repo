@@ -338,10 +338,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if (_AmitalCustomsFile.Mode == "CANCEL") // moran 25.12.13 - task 2431
                 {
                     this._MyDeclarationPM.IsCancelled = true;
+                    this._MyDeclarationPM.CustomFileNo = "C" + this._MyDeclarationPM.CustomFileNo;//Eitan H 44723 9/12/18
                 }
                 else if (_AmitalCustomsFile.Mode == "UNCANCEL")
                 {
                     this._MyDeclarationPM.IsCancelled = false;
+                    if (this._MyDeclarationPM.CustomFileNo.StartsWith("C")) this._MyDeclarationPM.CustomFileNo = this._MyDeclarationPM.CustomFileNo.Substring(1);//Eitan H 44723 9/12/18
                 }
 
                 //           if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.ReferentUserId))
