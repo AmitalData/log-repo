@@ -117,6 +117,28 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             throw new ApplicationException("Missing chargeable weight unit code");
                         }
 
+                        if (entityPM.TransportModeId == "A")
+                        {
+                            if (string.IsNullOrEmpty(entityPM.MainCarriageCarrierId))
+                            {
+                                if (!string.IsNullOrEmpty(entityPM.Master) || !string.IsNullOrEmpty(entityPM.MainCarriageCarrierNumber))
+                                {
+                                    throw new ApplicationException("Missing Main carriage carrier");
+                                }
+                            }
+
+                            else
+                            {
+                                AirlineRepository airlineRepository = new AirlineRepository(authToken.Tenant);
+                                Airline airline = airlineRepository.GetSingleAirline(entityPM.MainCarriageCarrierId, authToken.Tenant);
+                                if (airline != null)
+                                {
+                                    entityPM.CarrierIsCheckDigit = airline.CheckDigit;
+                                    entityPM.CarrierIsLimitedLength = airline.LimitedLength;
+                                }
+                            }
+                        }
+
                         if (entity.IsOperationalClosed)
                         {
                             string errorMessage = "";
