@@ -11,6 +11,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { UIProperties } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { error } from 'util';
 
 
 
@@ -51,6 +52,9 @@ export class NewOpenFormatReportComponent extends BaseComponent {
     set FromDate(value: Date) {
         if (this.entityPM.FromDate != value) {
             this.entityPM.FromDate = value;
+            if (this.ToDate < value) {
+                this.entityPM.UIProperties.SetValidity("FromoDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.O.MustBeLarger"));
+            }
         }
     }
 
@@ -60,6 +64,9 @@ export class NewOpenFormatReportComponent extends BaseComponent {
     set ToDate(value: Date) {
         if (this.entityPM.ToDate != value) {
             this.entityPM.ToDate = value;
+            if (this.FromDate > value) {
+                this.entityPM.UIProperties.SetValidity("ToDate", this.ObjectTableName,false, TextCodeTranslator.Translate("Accounting.O.MustBeLarger"));
+            }
         }
     }
 
@@ -74,7 +81,9 @@ export class NewOpenFormatReportComponent extends BaseComponent {
        // this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         Validator.TryValidateObject(this.entityPM, this.ObjectTableName, errors);
 
-
+        if (this.ToDate < this.FromDate) {
+            errors.push(TextCodeTranslator.Translate("Accounting.O.MustBeLarger"));
+        }
 
         this.ValidationErrorsList = errors;
 
@@ -88,15 +97,15 @@ export class NewOpenFormatReportComponent extends BaseComponent {
 
                     SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
 
-                    //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                    //    SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-                    //    .then(cmpRef => {
-                    //        cmpRef.instance.ComponentRef = cmpRef;
-                    //        cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
-                    //        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                    //            this.CancelButtonClicked();
-                    //        });
-                    //    });
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
+                        SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                this.CancelButtonClicked();
+                            });
+                        });
                     SessionLocator.CurrentSession.StopBusyIndicator();
                 }
 
