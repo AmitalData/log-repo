@@ -259,11 +259,11 @@ namespace Logitude.Accounting.BL.CoreBL
                                 var deltaLocalBalanceInDue = item2update.RealDueInLocal -pm.LocalBalanceInDue.GetValueOrDefault();
                                 pm.LocalBalanceInDue = pm.LocalBalanceInDue.GetValueOrDefault() + deltaLocalBalanceInDue;
                                 DateTime? nextDate = item2update.TransNextDueDate.Date;
-                                if (nextDate== DateTime.MinValue)
+                                if (nextDate== DateTime.MinValue || nextDate == DateTime.MinValue.Date)
                                 {
                                     nextDate= null;
                                 }
-                                if (nextDate == DateTime.MaxValue)
+                                if (nextDate == DateTime.MaxValue || nextDate == DateTime.MaxValue.Date)
                                 {
                                     nextDate = null;
                                 }
