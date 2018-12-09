@@ -221,6 +221,9 @@ export class ARInvoiceMenuButtonsHandler {
                                    button.DisplayText = "Resend to QBO";
                                 }
                                 if (this.EntityPM.ApprovedDate == null) {
+                                    if (this.EntityPM.ARInvoiceTypeCode == "CD")
+                                        myButtonIsDisabled = false;
+                                    else
                                     myButtonIsDisabled = true;
                                 }
                                 else {

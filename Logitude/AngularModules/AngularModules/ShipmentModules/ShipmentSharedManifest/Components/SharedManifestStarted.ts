@@ -191,7 +191,7 @@ export class SharedManifestStarted {
 
             var partnerItem: PartnerItem = new PartnerItem(this, "AGENT");
             var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Title = "Share Update Agent";
+            logitudeWindow.Title = "Share Updated Agent";
             logitudeWindow.DataContext = partnerItem;
             logitudeWindow.Show("./ShipmentModules/ShipmentSharedManifest/Components/SharedManifestEditAgentComponent");
             logitudeWindow.WindowClosed.subscribe(s => {
