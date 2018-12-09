@@ -512,7 +512,13 @@
     </script>
 
     <script type="text/javascript">
+
+
         var isResetRequest = false;
+        var UserEmailText;
+        var IsWarringErrorShow = false;
+
+
         function setCaretToPos(id, cursorPosition) {
             document.getElementById(id).selectionStart = cursorPosition;
             document.getElementById(id).selectionEnd = cursorPosition;
@@ -521,7 +527,9 @@
 
 
             onCurrentPasswordChanged = function () {
-            $("#errorsList").hide();
+             if (!IsWarringErrorShow) {
+                $("#errorsList").hide();
+            }
             var passtring = $("#CurrentPassword").val();
             if (passtring) {
                 var cursorPosition = document.getElementById("CurrentPassword").selectionStart;
@@ -539,7 +547,9 @@
 
 
         onConfirmPasswordChanged = function () {
-            $("#errorsList").hide();
+            if (!IsWarringErrorShow) {
+                $("#errorsList").hide();
+            }
             var passtring = $("#ConfirmPassword").val();
             if (passtring) {
                 var cursorPosition = document.getElementById("ConfirmPassword").selectionStart;
@@ -554,7 +564,10 @@
 
 
         onPasswordChanged = function () {
-            $("#errorsList").hide();
+            if (!IsWarringErrorShow) {
+                  $("#errorsList").hide();
+            }
+         
             var passtring = $("#Password").val();
             if (passtring) {
                 var cursorPosition = document.getElementById("Password").selectionStart;
@@ -568,6 +581,7 @@
 
 
         Passwordkeyup = function (passtring) {
+            $("#errorsList").hide();
 
             document.getElementById("PasswordLenghtDiv").style.color = "gray";
             document.getElementById("PasswordContainsCharactersDiv").style.color = "gray";
@@ -582,7 +596,7 @@
 
             if (passtring) {
 
-                if (passtring.length >= 8 && passtring.length <= 16) {
+                if (passtring.length >= 8) {
                     document.getElementById("PasswordLenghtDiv").style.color = "green";
                     document.getElementById("PasswordLenghtImg").src = "images/verifiedGreen.png";
                 }
@@ -602,9 +616,16 @@
                     document.getElementById("PasswordContainsSymbolImg").src = "images/verifiedGreen.png";
                 }
 
-                
-
-
+                if (UserEmailText) {
+                    var errorMessage = PasswordValidation(passtring, UserEmailText);
+                     document.getElementById("errorsList").innerHTML = errorMessage;
+                    if (errorMessage) {
+                        $("#errorsList").show();
+                        IsWarringErrorShow = true;
+                    }
+                    else  $("#errorsList").hide();
+                 
+                }
             }
 
         }
@@ -620,6 +641,7 @@
         }
 
 
+ 
         function validate(userEmail) {
             
             var valid = true;
@@ -926,7 +948,7 @@
            
             var requestNumber = "";
 
-
+          
 
 
             var hash = $(location).attr('href');
@@ -998,7 +1020,7 @@
           
   
 
-
+            UserEmailText = email;
 
             window.sessionStorage.setItem("email", email);
             window.sessionStorage.setItem("requestNumber", requestNumber); 
@@ -1083,6 +1105,8 @@
 
                 document.getElementById("errorsList").innerHTML = "";
                 $("#errorsList").hide();
+                IsWarringErrorShow = false;
+         
 
                 if (!validate(email)) {
 
