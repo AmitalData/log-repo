@@ -369,6 +369,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
             poco.InternalNumber= CodeCounter.GetNumber("GLAccount", poco.Tenant).ToString();
             int curr = (++_Counter);
             poco.DisplayNumber = _DisplayNumberProvider.GetDisplayNumber15CHAR(poco.ChartOfAccountsTypeCode, true, curr, poco.Tenant);
+            poco.SearchFields += poco.DisplayNumber;
             _GLAccountRepository.AddPocoFromBuildTenant(poco);
 
             _GLAccountMoreDataRepository = _GLAccountMoreDataRepository ?? new GLAccountMoreDataRepository(accountingContext);

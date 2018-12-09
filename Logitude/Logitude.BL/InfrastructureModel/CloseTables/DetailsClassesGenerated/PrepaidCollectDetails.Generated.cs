@@ -68,7 +68,7 @@ namespace Logitude.BL.InfrastructureModel
             }
             set
             {
-                this.Code = value;
+                this.Id = value;
             }
         }
    }

@@ -1,5 +1,4 @@
 ﻿
-
 declare var window: any;
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -346,7 +345,12 @@ export class JournalMenuButtonsHandler {
 
 
 
+            } else {
+                var msg = new MessageWindow();
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                msg.Show("No document type found!");
             }
+
         });
 
 
