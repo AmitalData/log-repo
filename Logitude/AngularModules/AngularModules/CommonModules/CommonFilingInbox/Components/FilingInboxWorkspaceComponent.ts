@@ -1406,7 +1406,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                     if (SessionLocator.PrivateLableSettings) {
                         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
                         this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.EntityId, SessionLocator.Tenant).subscribe(res => {
-                            if (res.Result == false) {
+                            if (res.Result == false && summary.Attaches.filter(a => a.IsSharedWithAgent == true).length == 0) {
                                 hasSharedDocs = false;
                             }
                             else {

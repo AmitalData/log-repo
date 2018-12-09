@@ -1,4 +1,4 @@
-﻿
+
 <div style="overflow-x:auto;height:100%;width:100%">
     <table style="min-width:1075px" *ngIf="IsResourcesReady">
         <tr style="height: 1px;">
@@ -260,9 +260,9 @@
 
                                                                         <!-- Routing -->
                                                                         <td style="width:120px;">
-                                                                            <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="item.FromCountryCode | CountryFlagPipe" [attr.title]="item.FromPortCountry" />
+                                                                            <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="item.FromCountryCode | CountryFlagPipe" [attr.title]="item.FromPortCountry" alt="" (error)="OnImageError(item, 'FromCountryCode')" />
                                                                             <span class="Value" style="font-size: 10px; padding-left: 5px; padding-right: 5px; text-align: center;"> > </span>
-                                                                            <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="item.ToCountryCode | CountryFlagPipe" [attr.title]="item.ToPortCountry" />
+                                                                            <img style="margin-bottom: -4px; width: 16px; height: 16px;" [attr.src]="item.ToCountryCode | CountryFlagPipe" [attr.title]="item.ToPortCountry" alt="" (error)="OnImageError(item, 'ToCountryCode')" />
                                                                         </td>
 
                                                                         <td style="width: 5px;">
