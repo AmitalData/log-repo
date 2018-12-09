@@ -335,7 +335,7 @@ export class QuoteMenuButtonsHandler {
         if (this.isValid) {
             if (this.EntityPM.QuoteTypeCode != "A") {
                 var window = new MessageWindow();
-                window.Show("Build Shipment is Available Only if Ad-hoc Quotes");
+                window.Show(TextCodeTranslator.Translate("Quote.M.BuildShipmentMessage"));
 
                 this.isButtonClicked = false;
             }
@@ -547,7 +547,7 @@ export class QuoteMenuButtonsHandler {
                             window.Width = 450;
                             window.Height = 180;
                             window.Title = TextCodeTranslator.Translate("Quote.B.CancelQuote");
-                            window.Show("Quote cannot be Cancelled, since it has connected Shipments !");
+                            window.Show(TextCodeTranslator.Translate("Quote.M.QuoteCancelMessage"));
                             this.isButtonClicked = false;
                         }
 
@@ -615,7 +615,7 @@ export class QuoteMenuButtonsHandler {
              
                     if (result) {
                         var window = new MessageWindow();
-                        window.Show("Quote can't be returned to draft since it is connected to a shipment");
+                        window.Show(TextCodeTranslator.Translate("Quote.M.QuoteReturnMessage"));
                         this.isButtonClicked = false;
                     }
                     else {
