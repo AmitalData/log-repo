@@ -62887,7 +62887,7 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Routings", DefaultText = "Routings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.DeclineReason", DefaultText = "Decline Reason", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             ObjectContext.SaveChanges();
         }
