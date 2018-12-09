@@ -204,7 +204,7 @@ namespace Logitude.XSD.INTTRA.BL
             CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(this.CommonContext);
 
             string xmlTarget = "INTTRA";
-            string xmlSubject = "Message";
+            string xmlSubject = "Shipping Instructions";
 
             Document document = new Document()
             {

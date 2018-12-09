@@ -627,6 +627,7 @@
     <Content Include="images\icons\arrow-down-n.png" />
     <Content Include="images\icons\arrow-up-n.png" />
     <Content Include="images\icons\AutomationIcon.png" />
+    <Content Include="images\icons\CellTooltip.png" />
     <Content Include="images\icons\DigitallyNotSigned.png" />
     <Content Include="images\icons\DigitallySigned.png" />
     <Content Include="images\LoginScreen\CRM.png" />

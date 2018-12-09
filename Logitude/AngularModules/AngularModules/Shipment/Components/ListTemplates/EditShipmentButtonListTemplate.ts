@@ -60,7 +60,7 @@ export class EditShipmentButtonListTemplate {
             }
         }
         this.fieldName = fieldName;
-        if (AppTool.IsNullOrEmpty(this.rowData['ForwarderShipmentNumber']) && this.fieldName == "All Shipments") {
+        if (AppTool.IsNullOrEmpty(this.rowData['ForwarderShipmentNumber']) && this.fieldName == "EditShipmentButtonListTemplate" + "All Shipments") {
             this.ShowButtons = false;
         }
         //var myService: WebFreightDomainService = new WebFreightDomainService();

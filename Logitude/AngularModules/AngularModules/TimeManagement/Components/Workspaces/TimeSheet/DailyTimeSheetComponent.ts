@@ -271,10 +271,10 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var items: ItemSourceItem[] = this.ItemSource.Collection;
         var itemsChanges: ItemSourceItem[] = this.ItemSource.Collection.filter(f => f.HasChanges == true);
         if (itemsChanges.length > 0) {
-            if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
-                this.IsValid = false;
-                this.ShowMessage("Time and Description fields are required for each line");
-            }
+            //if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
+            //    this.IsValid = false;
+            //    this.ShowMessage("Time and Description fields are required for each line");
+            //}
             if (this.IsValid) {
                 SessionLocator.CurrentSession.StartBusyIndicatorSaving();
                 this.HasChanges = false;
@@ -306,10 +306,10 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var itemsChanges: ItemSourceItem[] = this.ItemSource.Collection.filter(f => f.HasChanges == true);
         if (itemsChanges.length > 0) {
 
-            if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
-                this.IsValid = false;
-                this.ShowMessage("Time and Description fields are required for each line");
-            }
+            //if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
+            //    this.IsValid = false;
+            //    this.ShowMessage("Time and Description fields are required for each line");
+            //}
             if (this.IsValid) {
                 SessionLocator.CurrentSession.StartBusyIndicatorSaving();
                 this.HasChanges = false;
