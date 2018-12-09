@@ -5491,6 +5491,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void DeleteShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM insideItemPM)
         {
             ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(insideItemPM.Id);
+
+            PickUpDeliveryPackageHarmonizeQuery pickUpDeliveryPackageHarmonizeQuery = new PickUpDeliveryPackageHarmonizeQuery(pickUpDeliveryPackageHarmonizeRepository);
+            List<PickUpDeliveryPackageHarmonizePM> PickUpDeliveryPackageHarmonize = pickUpDeliveryPackageHarmonizeQuery.GetPickUpDeliveryPackageHarmonizes(insideItemPM.Id, tenant);
+            foreach (PickUpDeliveryPackageHarmonizePM harmonizeItemPM in PickUpDeliveryPackageHarmonize)
+            {
+                PickUpDeliveryPackageHarmonize harmonizeItem = pickUpDeliveryPackageHarmonizeRepository.GetSinglePickUpDeliveryPackageHarmonize(harmonizeItemPM.Id, tenant);
+                pickUpDeliveryPackageHarmonizeRepository.Remove(harmonizeItem);
+            }
+
             shipmentPickUpDeliveryPackageRepository.Remove(insideItemPoco);
         }
 
