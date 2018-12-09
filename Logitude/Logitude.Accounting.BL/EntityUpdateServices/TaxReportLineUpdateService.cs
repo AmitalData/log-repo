@@ -30,41 +30,36 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
         {
-            Validate(entityPM);
-            // TASK 43057
-            //if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-            //{
+            JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
+            JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(entityPM.Tenant);
+            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+            JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 
+
+            Validate(entityPM);
+
+            // TASK 43057
             if (this.EntityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 if (entityPM.IsManuallyChanged == true)
-                {
-                    JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
-                    JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(entityPM.Tenant);
-                    IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-                    JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-
-                    JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
-                    JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(journalPM.Id, false, false);
-                    if (journalPM != null)
-                    {
-                        
-                        journalAdditionalDataPM.TaxReportTransmitStatusCode = entityPM.TransmitStatusCode;
-                        journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
-                        journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
-                        journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
-                        entityPM.IsManuallyChanged = false;
-
-                    }
-
-                    //}
-                }
+                    entityPM.IsManuallyChanged = false;
             }
             else
             {
-
                 entityPM.IsManuallyChanged = true;
             }
+
+            // Update Journal
+            JournalPM journalPM = journalQuery.GetSingle(EntityPM.JournalId, false, false);
+            JournalAdditionalDataPM journalAdditionalDataPM = additionalDataQueryService.GetSingle(journalPM.Id, false, false);
+            if (journalPM != null)
+            {
+                journalAdditionalDataPM.TaxReportTransmitStatusCode = entityPM.TransmitStatusCode;
+                journalAdditionalDataPM.TaxReportId = entityPM.TaxReportId;
+                journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                journalAdditionalDataUpdateService.Update(journalAdditionalDataPM, true);
+            }
+
             base.OnUpdating(entityPM, entityPOCO);
         }
 
