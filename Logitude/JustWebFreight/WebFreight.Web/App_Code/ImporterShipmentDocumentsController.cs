@@ -481,7 +481,7 @@ namespace WebFreight.Web.App_Code
                                 }
                                 else
                                 {
-                                    documentsFilingService.Update(ImporterDocumentFilingPM, ImporterDocumentFilingPM.FileData);
+                                    documentsFilingService.Update(ImporterDocumentFilingPM, ImporterDocumentFilingPM.FileData, null, true);
                                 }
                                 DocumentsMetaDataTypeRepository DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(ImporterDocumentFilingPM.Tenant);
                                 var LBF = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("LBF", ImporterDocumentFilingPM.Tenant);
@@ -685,7 +685,7 @@ namespace WebFreight.Web.App_Code
                             var User = contactRepository.GetSingleContactByEmail("system@tenant" + DocumentFilingPM.Tenant + ".com", DocumentFilingPM.Tenant, true);
                             ICommonDataContext objectContext = CommonDataContext.GetContext(DocumentFilingPM.Tenant);
                             DocumentsFilingService documentsFilingService = new DocumentsFilingService(objectContext, DocumentFilingPM.Tenant);
-                            documentsFilingService.Update(DocumentFilingPM, null, User.Id);
+                            documentsFilingService.Update(DocumentFilingPM, null, User.Id, true);
                             msg = "Document deleted successfully " + DateTime.Now;
                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
 

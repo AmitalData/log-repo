@@ -595,7 +595,6 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
             this.ShowSaleCurrencyColumn = false;
             this.ShowLocalCurrencyColumn = false;
             this.ShowChargeDescription = false;
-            this.ShowSaleMaxMinAmountColumn = false;
 
     }
 

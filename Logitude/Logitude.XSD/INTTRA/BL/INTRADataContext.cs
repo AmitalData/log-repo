@@ -2140,7 +2140,7 @@ namespace Logitude.XSD.INTTRA.BL
                 myResult = new INTTRA_Out.AddressInformation()
                 {
                     AddressLine = this.GetStringList(myAddress.Address1, 4, 35).ToArray<string>(),
-                    City = this.FormatString(myAddress.City, 35),
+                    City = this.FormatString(myAddress.City, 35),                     
                 };
 
                 if (!string.IsNullOrEmpty(myAddress.Address2))
@@ -2389,7 +2389,6 @@ namespace Logitude.XSD.INTTRA.BL
 
             return myResult;
         }
-
         private string GetAddress_OneLine(Address address)
         {
             string resultAddress = "";
@@ -2434,7 +2433,6 @@ namespace Logitude.XSD.INTTRA.BL
 
             return resultAddress;
         }
-
 
         public enum INTTRAPattern
         {
