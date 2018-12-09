@@ -446,7 +446,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
         }
-        if (this.CustomerReference2.length > 30) {
+        if (this.CustomerReference2 && this.CustomerReference2.length > 30) {
             this.ValidationErrorsList.push("My Reference can't be more than 30 characters");
         }
         if (this.ValidationErrorsList.length == 0) {

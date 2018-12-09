@@ -1,4 +1,4 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
@@ -11,11 +11,12 @@ import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
 
-    template: `<table *ngIf="ShowButtons == true">
+    template: `<table>
                 <tr style="height:1px;"> 
                     <td>
                         <div style="height:30px;">
-                            <button class="Button" (click)="ApproveButtonClicked()" style="width:122px;margin:4px;">Declaration Approval</button>
+                            <button *ngIf="ShowButtons == true" class="Button" (click)="ApproveButtonClicked()" style="width:122px;;float: left;margin:4px;">Declaration Approval</button>
+                            <button class="Button" (click)="RemoveTasksButtonClicked()" style="width:85px;float: right;margin:4px;">Remove Tasks</button>
                         </div>
                     </td>
                 </tr>
@@ -102,6 +103,31 @@ export class ApprovePaymentButtonListTemplate {
                 
             }
         });
+    }
+
+    RemoveTasksButtonClicked() {
+        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Title = "Confirm Deletion";
+        confirmWindow.Show("Are you sure you want to cancel tasks for this shipment ?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                SessionLocator.CurrentSession.StartBusyIndicator("Loading ..")
+                this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe(myResult => {
+                    if (!myResult.HasError) {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                        SessionLocator.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
+
+                    }
+                });
+            }
+
+            else {
+
+            }
+        });
+
     }
 
 }
