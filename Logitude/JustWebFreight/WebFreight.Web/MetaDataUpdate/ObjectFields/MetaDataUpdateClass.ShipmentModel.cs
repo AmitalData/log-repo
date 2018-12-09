@@ -97,6 +97,33 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private void CreateShipmentFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Forwarder Partner Id",
+                FullFieldLable = "ForwarderPartnerId",
+                FieldName = "ForwarderPartnerId",
+                FieldsDataType = "LookUp",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                LookUpTableId = HybridPartnerObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ListFieldLable = "ForwarderPartnerIdListLable",
+                Operator = "Equals",
+                ListPropertyPath = "ForwarderPartnerId",
+                PMPropertyPath = "ForwarderPartnerId",
+                DisplayInList = true,
+                ListLableDefaultText = "Forwarder Partner Id",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Project #",

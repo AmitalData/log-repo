@@ -101,6 +101,7 @@
             this.button30 = new System.Windows.Forms.Button();
             this.button31 = new System.Windows.Forms.Button();
             this.button37 = new System.Windows.Forms.Button();
+            this.button38 = new System.Windows.Forms.Button();
             this.BuildZipFileslbl = new System.Windows.Forms.Label();
             this.button27 = new System.Windows.Forms.Button();
             this.ConvertXmalTemplateToHtmlButton = new System.Windows.Forms.Button();
@@ -152,7 +153,6 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
-            this.button38 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -811,6 +811,17 @@
             this.button37.Visible = false;
             this.button37.Click += new System.EventHandler(this.button37_Click);
             // 
+            // button38
+            // 
+            this.button38.Image = ((System.Drawing.Image)(resources.GetObject("button38.Image")));
+            this.button38.Location = new System.Drawing.Point(664, 485);
+            this.button38.Name = "button38";
+            this.button38.Size = new System.Drawing.Size(63, 52);
+            this.button38.TabIndex = 85;
+            this.toolTip1.SetToolTip(this.button38, "Exit");
+            this.button38.UseVisualStyleBackColor = true;
+            this.button38.Click += new System.EventHandler(this.button38_Click);
+            // 
             // BuildZipFileslbl
             // 
             this.BuildZipFileslbl.AutoSize = true;
@@ -1410,16 +1421,6 @@
             this.EncryptionDocumentLabel.Size = new System.Drawing.Size(100, 13);
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
-            // 
-            // button38
-            // 
-            this.button38.Image = ((System.Drawing.Image)(resources.GetObject("button38.Image")));
-            this.button38.Location = new System.Drawing.Point(664, 485);
-            this.button38.Name = "button38";
-            this.button38.Size = new System.Drawing.Size(63, 52);
-            this.button38.TabIndex = 85;
-            this.button38.UseVisualStyleBackColor = true;
-            this.button38.Click += new System.EventHandler(this.button38_Click);
             // 
             // Form1
             // 

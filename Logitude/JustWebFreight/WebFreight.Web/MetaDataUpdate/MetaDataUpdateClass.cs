@@ -62787,6 +62787,11 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.UnableToDoAllIn", DefaultText = "Unable to do All In..", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.IfMatchesFrieghtCharge", DefaultText = "Only if matches the Frieght Charge UOM and Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisPackage", DefaultText = "Delete this package?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.BuildShipmentMessage", DefaultText = "Build Shipment is Available Only if Ad-hoc Quotes", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.QuoteCancelMessage", DefaultText = "Quote cannot be Cancelled, since it has connected Shipments", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.QuoteReturnMessage", DefaultText = "Quote can't be returned to draft since it is connected to a shipment", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region Overview
@@ -62948,7 +62953,7 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Routings", DefaultText = "Routings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.DeclineReason", DefaultText = "Decline Reason", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             ObjectContext.SaveChanges();
         }
@@ -66345,6 +66350,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APInvoiceFeature_C05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINT", FeatureTypeCode = "ACT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.Print", NameTextCodeDefaultText = "Print", FullLocalDefaultText = "הדפסה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_C06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiRate", FeatureTypeCode = "ACT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.EnableMultiRate", NameTextCodeDefaultText = "Enable multi-rate", FullLocalDefaultText = "אפשר ריבוי שערים" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_C07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APInvoiceEditExchangeRate", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.EditExchangeRate", NameTextCodeDefaultText = "Edit Exchange Rate", FullLocalDefaultText = "ערוך שער חליפין", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature APInvoiceFeature_C08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.SendToQBO", NameTextCodeDefaultText = "Send to QBO", FullLocalDefaultText = "Send to QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
 
             Feature APInvoiceFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.AllInvoices", NameTextCodeDefaultText = "All Invoices", FullLocalDefaultText = "כל החשבוניות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAITAPPROVAL", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.WaitingForApproval", NameTextCodeDefaultText = "Waiting for Approval", FullLocalDefaultText = "ממתין לאישור" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -66415,6 +66422,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APPaymentFeature17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MARKEDASBLOCKEDFORTRANSFER", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.MarkedAsBlockedForTransfer", NameTextCodeDefaultText = "Marked as blocked for transfer", FullLocalDefaultText = "סמן כחסום להעברה", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APPaymentFeature18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RecalculateExternals", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.RecalculateExternals", NameTextCodeDefaultText = "Recalculate External IDs" , FullLocalDefaultText = "חישוב מזהים חיצונים מחדש", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APPaymentFeature19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiCurrency", Packagable = true, FeatureTypeCode = "ACT", ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.EnableMultiCurrency", NameTextCodeDefaultText = "Enable multi-currency", FullLocalDefaultText = "לאפשר ריבוי מטבעות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature APPaymentFeature20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.SendToQBO", NameTextCodeDefaultText = "Send To QBO", FullLocalDefaultText = "Send To QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 

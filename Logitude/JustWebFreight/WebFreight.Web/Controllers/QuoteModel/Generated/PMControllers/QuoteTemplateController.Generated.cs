@@ -56,6 +56,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(authToken.Tenant);
                 QuoteTemplatePM quoteTemplatePM = quoteTemplateQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -86,6 +88,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("QuoteTemplate", "NEW", authToken.Tenant);
                 
                         IQuotesContext MyContext = QuotesContext.GetContext(entityPM.Tenant);
                         QuoteTemplateService service = new QuoteTemplateService(MyContext, entityPM.Tenant);
@@ -132,6 +135,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("QuoteTemplate", "UPDATE", authToken.Tenant);
 
                         string entityName = "QuoteTemplate" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "QuoteTemplatePM" + entityPM.Id + entityPM.Tenant;

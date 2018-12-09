@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';
 import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
@@ -587,16 +587,15 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
     DisablePricingSetting() {
-            this.ShowChargeCode = false;
-            this.ShowChargeName = false;
-            this.ShowMeasurement = false;
-            this.ShowPrice1 = false;
-            this.ShowPrice2 = false;
-            this.ShowSaleCurrencyColumn = false;
-            this.ShowLocalCurrencyColumn = false;
-            this.ShowChargeDescription = false;
-            this.ShowSaleMaxMinAmountColumn = false;
-
+        this.ShowChargeCode = false;
+        this.ShowChargeName = false;
+        this.ShowMeasurement = false;
+        this.ShowPrice1 = false;
+        this.ShowPrice2 = false;
+        this.ShowSaleCurrencyColumn = false;
+        this.ShowLocalCurrencyColumn = false;
+        this.ShowChargeDescription = false;
+        this.ShowSaleMaxMinAmountColumn = false;
     }
 
 

@@ -141,8 +141,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.UpdateInvoiceEntities();
             this.BuildSearchFields();
             var IsSetApproved = entityPM.SetApproved;
+
+
             APInvoiceMultipleShipmentsHelper helper = new APInvoiceMultipleShipmentsHelper();
-            helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, IsSetApproved, isNewEntity, this.objectContext, this.myCommonContext);
+            if (entityPM.SetReSendQBO)
+            {
+                helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext);
+
+            }
+            else
+            {
+                helper.APInvoiceMultipleShipmentsQuickbooksValidating(entityPM, IsSetApproved, isNewEntity, this.objectContext, this.myCommonContext);
+            }
+
+
+
+
 
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
             invoiceRepository.Update(invoice);
