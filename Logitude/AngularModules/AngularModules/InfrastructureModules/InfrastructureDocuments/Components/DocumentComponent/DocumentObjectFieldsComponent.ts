@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {ObjectTablePM} from '../../../../Infrastructure/EntityPMs/ObjectTablePM';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -136,6 +136,11 @@ export class DocumentObjectFieldsComponent implements OnInit {
             }
 
             this.objectFieldsList.forEach((field) => {
+
+                if (field.FieldName == "OBLTypeCode") {
+                    var d = "f";
+                }
+
                 var view = new DocumentObjectFieldsRowViewModel(field, field.FieldName, this.ObjectTypeField);
                 this.ObsList.push(view);
                 this.ObsListAll.push(view);

@@ -9559,7 +9559,6 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_BudgetId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BudgetId").FirstOrDefault();
-            QueryFilterItem filterItem_CategoryId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryId").FirstOrDefault();
             QueryFilterItem filterItem_ExternalProjectNumber = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ExternalProjectNumber").FirstOrDefault();
 
             DateTime? fromDate = null;
@@ -9567,7 +9566,6 @@ namespace WebFreight.Web.ReportsWebServices
             string customerId = null;
             string employeeUserId = null;
             string budgetId = null;
-            string categoryId = null;
             string projectId = null;
             string ownerId = null;
             string externalProjectNumber = null;
@@ -9612,15 +9610,7 @@ namespace WebFreight.Web.ReportsWebServices
                     budgetId = filterItem_BudgetId.FieldValue.ToString();
                 }
             }
-            if (filterItem_CategoryId != null)
-            {
-                if (filterItem_CategoryId.FieldValue != null)
-                {
-                    categoryId = filterItem_CategoryId.FieldValue.ToString();
-                }
-            }
 
-           
             if (filterItem_ExternalProjectNumber != null)
             {
                 if (filterItem_ExternalProjectNumber.FieldValue != null)
@@ -9730,20 +9720,7 @@ namespace WebFreight.Web.ReportsWebServices
                               select myTMEmployeeTime);
             }
 
-            if (categoryId != null)
-            {
-                iQueryable = (from myTMEmployeeTime in iQueryable
-                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
-                              from myProjct in joinedData
-                              where myTMEmployeeTime.Tenant == tenant
-                              && myProjct.Tenant == tenant
-                              && myProjct.CategoryId == categoryId
-                              && myProjct.IsProrated == false
-                              select myTMEmployeeTime);
-            }
-
-
-            if (externalProjectNumber != null)
+            if(externalProjectNumber != null)
             {
                 iQueryable = (from myTMEmployeeTime in iQueryable
                               join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
@@ -9761,7 +9738,6 @@ namespace WebFreight.Web.ReportsWebServices
             result.ProjectId = projectId;
             result.CustomerId = customerId;
             result.BudgetId = budgetId;
-            result.CategoryId = categoryId;
 
             WorkDaysPerProjectData timSheetItem_Detailed = null;
             WorkDaysPerProjectData timSheetItem = null;
@@ -9789,7 +9765,6 @@ namespace WebFreight.Web.ReportsWebServices
                                           ProjectId = g.Key.ProjectId,
                                       });
 
-
                 foreach (var item in daysList_Total)
                 {
                     List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => d.ProjectId == item.ProjectId).ToList();
@@ -9805,17 +9780,6 @@ namespace WebFreight.Web.ReportsWebServices
                             if (card != null)
                             {
                                 timSheetItem.CustomerName = card.EnglishName;
-                            }
-                            timSheetItem.Description = project.Description;
-                           
-
-                            if(project.CategoryId != null)
-                            {
-                                TMProjectCategory category = new TMProjectCategory();
-                                TMProjectCategoryRepository repo = new TMProjectCategoryRepository(tenant);
-                                category = repo.GetSingle(project.CategoryId, tenant);
-                                if(category != null)
-                                    timSheetItem.Category = category.Name;
                             }
                         }
 

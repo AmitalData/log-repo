@@ -9,7 +9,6 @@ namespace WebFreight.Web.DataProviders
     {
         public string EmployeeUserId { get; set; }
         public string BudgetId { get; set; }
-        public string CategoryId { get; set; }
         public string CustomerId { get; set; }
         public string EmployeeName { get; set; }
         public string CustomerName { get; set; }
@@ -39,7 +38,6 @@ namespace WebFreight.Web.DataProviders
         public string TotalWIWorkedDays { get; set; }
         public string WINumber { get; set; }
         public string Description { get; set; }
-        public string Category { get; set; }
         public string ExternalProjectNumber { get; set; }
         
     }
