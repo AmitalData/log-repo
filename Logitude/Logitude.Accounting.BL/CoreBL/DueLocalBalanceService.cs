@@ -190,7 +190,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 #endif
 
-        public void ReBuild(int tenant,string AcountId)
+        public void ReBuild(int tenant,string AcountId,bool fastRun= false)
         {
             int clientAndVendorTypeGLAccountIdsCount = -1;
             List<DueLocalBalanceM> myDueLocalBalanceListToUpdate;
@@ -202,8 +202,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(5)))
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
-                    //InitDueLocalBalanceListToUpdate(accountingContext, tenant, true,true);
-                    InitDueLocalBalanceListToUpdate(accountingContext, tenant,"",false, false);// WHY I CHANGE TO FALSE FALSE (FROM TRUE*2) 1 NO TIME 2 THE REVERSE DUE DATE RETURN LISt
+                    if (fastRun)
+                    {
+                        InitDueLocalBalanceListToUpdate(accountingContext, tenant, "",true,true);
+                    }
+                    else
+                    {
+                        InitDueLocalBalanceListToUpdate(accountingContext, tenant, "", false, false);// WHY I CHANGE TO FALSE FALSE (FROM TRUE*2) 1 NO TIME 2 THE REVERSE DUE DATE RETURN LISt
+                        
+                    }
+
                     myDueLocalBalanceListToUpdate = _QDueLocalBalanceListToUpdate.ToList();
                     
                     myClientAndVendorTypeGLAccountIds = _QClientAndVendorTypeGLAccountIds.ToList();
@@ -259,11 +267,11 @@ namespace Logitude.Accounting.BL.CoreBL
                                 var deltaLocalBalanceInDue = item2update.RealDueInLocal -pm.LocalBalanceInDue.GetValueOrDefault();
                                 pm.LocalBalanceInDue = pm.LocalBalanceInDue.GetValueOrDefault() + deltaLocalBalanceInDue;
                                 DateTime? nextDate = item2update.TransNextDueDate.Date;
-                                if (nextDate== DateTime.MinValue)
+                                if (nextDate== DateTime.MinValue || nextDate == DateTime.MinValue.Date)
                                 {
                                     nextDate= null;
                                 }
-                                if (nextDate == DateTime.MaxValue)
+                                if (nextDate == DateTime.MaxValue || nextDate == DateTime.MaxValue.Date)
                                 {
                                     nextDate = null;
                                 }
@@ -508,7 +516,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 try
                 {
-                    this.ReBuild(tenant,"");
+                    this.ReBuild(tenant,"",true);
                 }
                 catch (Exception e)
                 {
