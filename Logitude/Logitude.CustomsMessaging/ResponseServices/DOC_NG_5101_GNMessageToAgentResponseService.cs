@@ -78,6 +78,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                         notificationDescription = notificationDescription + " בגין הצהרה מספר " + notificationDeclaration; //eitan h 4/3/15 task 11572
                     }
+                    if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
+                    {
+                        notificationDescription = notificationDescription + " בגין בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1; 
+                    }
                     notificationStatusCode = "VAN";
                     break;
                 case 6:
@@ -219,6 +223,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //this.MyRequestSheetParam.EntityId1 = requestParams.AppicationId;
                 //this.MyRequestSheetParam.ObjectTableId1 = ObjectTabelRepository.GetObjectTableByName("Customs.Declaration");
             }
+            else if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)  // Collateral
+            {
+                LogMessagingUtil.Instance.AppendLine("Notification Collateral= " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1);
+                var customsCollateralQueryService = new CustomsCollateralQueryService(context);
+                requestParams.AppicationId = customsCollateralQueryService.GetIdByCollateralRequestNumber(customResponse.MessageToAgent.RelatedEntity.entityIdKey1, requestParams.Tenant);
+                if (String.IsNullOrWhiteSpace(requestParams.AppicationId))
+                {
+                    LogMessagingUtil.Instance.AppendLine("Can not found Collateral" + requestParams.AppicationId);
+                    MyResponseData = new INF_MSG_GenericResponseData() { Succeeded = false, HasException = false, UserMessage = "Can not found Collateral" + requestParams.AppicationId };
+                    return;
+                }
+                this.MyRequestSheetParam.EntityId1 = requestParams.AppicationId;
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral");
+            }
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
             MyResponseData.ApplicationID = requestParams.AppicationId;
@@ -268,11 +286,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customerId = this._MyDeclarationPM.CustomerId;
                 referentUserId = this._MyDeclarationPM.ReferentUserId;
             }
+            if(MyRequestSheetParam.ObjectTableId1 == ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral"))
+            {
+                newNotificationPM.EntityId = MyRequestSheetParam.EntityId1;
+                newNotificationPM.ObjectTableId = MyRequestSheetParam.ObjectTableId1;
+            }
             if (this._MyDeclarationPM != null && !string.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId)) newNotificationPM.CustomerId = this._MyDeclarationPM.CustomerId; // moran 20.6.16 - Task 20789
 
             newNotificationPM.AssigneToId =
-               NotificationBase.
-               CalcAssigneToId(newNotificationPM.Tenant, customerId, referentUserId, notificationDefinitionCode, "");
+               NotificationBase.CalcAssigneToId(newNotificationPM.Tenant, customerId, referentUserId, notificationDefinitionCode, "");
 
             if (this._MyDeclarationPM != null && !string.IsNullOrWhiteSpace(newNotificationPM.DeclarationOfficeCode))
             {

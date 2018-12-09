@@ -37,7 +37,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             DeclarationCourierStatusPM dbOccDeclarationCourierStatusPM = GetDBEntity(dirtyDeclarationCourierStatusPM);
 
-            if (!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.CourierPendingReasonCode) && dirtyDeclarationCourierStatusPM.CourierPendingReasonCode != dbOccDeclarationCourierStatusPM.CourierPendingReasonCode)
+            if ((!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.CourierPendingReasonCode) && dirtyDeclarationCourierStatusPM.CourierPendingReasonCode != dbOccDeclarationCourierStatusPM.CourierPendingReasonCode)
+                 || (!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.PendingRemarks) && dirtyDeclarationCourierStatusPM.PendingRemarks != dbOccDeclarationCourierStatusPM.PendingRemarks))
             {
                 CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
                 CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(dirtyDeclarationCourierStatusPM.CourierPendingReasonCode, false, false);
