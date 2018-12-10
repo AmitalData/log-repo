@@ -108,6 +108,12 @@ export class CustomsPartnerFtpListComponent
             
         });
     }
+
+    IsRequierd() {
+        this.UIProperties.SetRequired("InterfaceName1", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InterfaceName));
+        this.UIProperties.SetRequired("PartnerCode1", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PartnerCode));
+        this.UIProperties.SetRequired("TypeCode1", this.ObjectTableName, AppTool.IsNullOrEmpty(this.TypeCode));
+    }
     ReLoadList() {
         SessionLocator.CurrentSession.StartBusyIndicator("");
         this._InEditMode = false;
@@ -196,7 +202,7 @@ export class CustomsPartnerFtpListComponent
         this._IsNew = true;
         this._CustomsPartnerFtpPM = new CustomsPartnerFtpPM();
         this._CustomsPartnerFtpPM.Tenant = SessionLocator.Tenant;
-        this._SettingsHost = null;
+        this.ClearScreen()//this._SettingsHost = null;
         
         this._InEditMode = true;
       //  this._CustomsPartnerFtpResultList.Insert(new CustomsPartnerFtpVM(new CustomsPartnerFtpPM(), true));
@@ -223,7 +229,10 @@ export class CustomsPartnerFtpListComponent
     }
     private EditButtonClicked(item: CustomsPartnerFtpList) {
         this._IsNew = false;
-        this._SettingsHost = null;
+        
+        this.ClearScreen();
+        
+        
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         this._CustomsPartnerFtpPMService.get(item.Id)
             .subscribe(myResponse => {
@@ -284,17 +293,22 @@ export class CustomsPartnerFtpListComponent
 
 
     public get TypeCode() { return this._CustomsPartnerFtpPM.TypeCode; }
-    public set TypeCode(newValue: string) { if (this._CustomsPartnerFtpPM.TypeCode != newValue) { this._CustomsPartnerFtpPM.TypeCode = newValue; } }
+    public set TypeCode(newValue: string) { if (this._CustomsPartnerFtpPM.TypeCode != newValue) { this._CustomsPartnerFtpPM.TypeCode = newValue; this.IsRequierd();} }
 
 
 
     public get PartnerCode() { return this._CustomsPartnerFtpPM.PartnerCode; }
-    public set PartnerCode(newValue: string) { if (this._CustomsPartnerFtpPM.PartnerCode != newValue) { this._CustomsPartnerFtpPM.PartnerCode = newValue; } }
+    public set PartnerCode(newValue: string) { if (this._CustomsPartnerFtpPM.PartnerCode != newValue) { this._CustomsPartnerFtpPM.PartnerCode = newValue; this.IsRequierd();} }
 
 
 
     public get InterfaceName() { return this._CustomsPartnerFtpPM.InterfaceName; }
-    public set InterfaceName(newValue: string) { if (this._CustomsPartnerFtpPM.InterfaceName != newValue) { this._CustomsPartnerFtpPM.InterfaceName = newValue; } }
+    public set InterfaceName(newValue: string) {
+        if (this._CustomsPartnerFtpPM.InterfaceName != newValue) {
+            this._CustomsPartnerFtpPM.InterfaceName = newValue;
+            this.IsRequierd();
+        }
+    }
 
 
 
@@ -328,16 +342,27 @@ export class CustomsPartnerFtpListComponent
     public get Password() { return this._WebApiDefinition.Password; }
     public set Password(newValue: string) { if (this._WebApiDefinition.Password != newValue) { this._WebApiDefinition.Password = newValue; } }
 
+    ClearScreen() {
+        this.ValidationErrorsList = [];
+        this._SettingsHost = null;
+        this._WebApiDefinition = new WebApiDefinition();
+        this.IsRequierd();
+        //this.WEBAPIAuthenticationURL = this.WEBAPIURL = null;
+        //this.Password = this.User = null;
+
+    }
     TypeCodeChanged(selectControl: any) {
         this._CustomsPartnerFtpPM.TypeCode = selectControl.value;
+        this.IsRequierd()
     }
     PartnerCodeChanged(selectControl: any) {
         this._CustomsPartnerFtpPM.PartnerCode = selectControl.value;
+        this.IsRequierd()
     }
     _InterfaceDetail: InterfaceDetails;
     InterfaceNameChanged(selectControl: any) {
         this._CustomsPartnerFtpPM.InterfaceName = selectControl.value;
-        
+        this.IsRequierd()
         this.SetFromServer();
     }
     SetFromServer() {

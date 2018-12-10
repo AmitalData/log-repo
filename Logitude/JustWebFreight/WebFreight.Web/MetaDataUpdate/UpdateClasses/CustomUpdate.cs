@@ -674,6 +674,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             FeaturePM declarationFeature_DocumentsPanel = features.Where(d => d.Code == "DOCUMENTSPANEL" && d.ObjectTableId == declarationTableId).FirstOrDefault();
             FeaturePM declarationFeature_SendManifest = features.Where(d => d.Code == "SENDMANIFEST" && d.ObjectTableId == declarationTableId).FirstOrDefault();
             FeaturePM declarationFeature_CourierPendingReason = features.Where(d => d.Code == "CourierPendingReason" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            FeaturePM declarationFeature_DeclarationClosure = features.Where(d => d.Code == "DeclarationClosure" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             string paymentOrderTableId = ObjectContext.ObjectTables.Where(f => f.Name == "Customs.PaymentOrder" && f.Tenant == tenant).FirstOrDefault().Id;
 
@@ -1036,7 +1037,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             MenuButton CourierPendingReasonButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
             {
                 EventCode = "CourierPendingReason",
-                Index = 5,
+                Index = 8,
                 IsActive = true,
                 LabelTextCodeCode = "Customs.Declaration.B.CourierPendingReason",
                 LabelTextCodeDefaultText = "Courier Pending Reason",
@@ -1052,7 +1053,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             MenuButton CourierPendingReasonDelButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
             {
                 EventCode = "CourierPendingReasonDel",
-                Index = 5,
+                Index = 9,
                 IsActive = true,
                 LabelTextCodeCode = "Customs.Declaration.B.CourierPendingReasonDel",
                 LabelTextCodeDefaultText = "Courier Pending Reason",
@@ -1062,6 +1063,40 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 MenuButtonGroupId = declarationMenuButtonGroup.Id,
                 ParentMenuButtonId = actionButton.Id,
                 FeatureId = declarationFeature_CourierPendingReason.Id,
+                MenuButtonType = "menuitem",
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            #endregion
+
+            #region Declaration Closure
+            MenuButton DeclarationClosureButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "Vehicle Modifications",
+                Index = 10,
+                IsActive = true,
+                LabelTextCodeCode = "Customs.Declaration.B.DeclarationClosure",
+                LabelTextCodeDefaultText = "Declaration Closure",
+                LocalDefaultText = "סגירת הצהרה",
+                ObjectTableId = declarationTableId,
+                Tenant = tenant,
+                MenuButtonGroupId = declarationMenuButtonGroup.Id,
+                ParentMenuButtonId = actionButton.Id,
+                FeatureId = declarationFeature_DeclarationClosure.Id,
+                MenuButtonType = "menuitem",
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+
+            MenuButton CancelDeclarationClosureButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "Vehicle Modifications",
+                Index = 11,
+                IsActive = true,
+                LabelTextCodeCode = "Customs.Declaration.B.CancelDeclarationClosure",
+                LabelTextCodeDefaultText = "Cancel Declaration Closure",
+                LocalDefaultText = "ביטול סגירת הצהרה",
+                ObjectTableId = declarationTableId,
+                Tenant = tenant,
+                MenuButtonGroupId = declarationMenuButtonGroup.Id,
+                ParentMenuButtonId = actionButton.Id,
+                FeatureId = declarationFeature_DeclarationClosure.Id,
                 MenuButtonType = "menuitem",
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
@@ -15028,7 +15063,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature GeneralCourierMasterFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COURIERMASTER", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CourierMaster", NameTextCodeDefaultText = "Courier Master", FullLocalDefaultText = "בלדר ראשי", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralDocumentsDefinitionFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsDefinition", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.DocumentsDefinition", NameTextCodeDefaultText = "Documents Definition", FullLocalDefaultText = "הגדרת סוגי מסמך", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralCourierPendingReasonFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CourierPendingReason", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CourierPendingReason", NameTextCodeDefaultText = "Pending", FullLocalDefaultText = "Pending", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            
+            Feature GeneralDeclarationClosureFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DeclarationClosure", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.DeclarationClosure", NameTextCodeDefaultText = "Declaration Closure", FullLocalDefaultText = "Declaration Closure", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
             Feature CustomsPartnerFtpFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CPARTNERFTP", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CustomsPartnerFtp", NameTextCodeDefaultText = "הגדרות FTP לשותפים", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
 
@@ -16467,6 +16503,30 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
 
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "DCS",
+                EnglishName = "Declaration Close",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "הצהרה נסגרה",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+            }, EventTypesRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "CDCS",
+                EnglishName = "Cancel Declaration Close",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "ביטול סגירת הצהרה",
+                ObjectTableId = declarationObject.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
             }, EventTypesRepository, tenantEventTypes);
 
             ObjectTablePM paymentOrderObject = ObjectTableQuery.GetObjectTableByCode("Customs.PaymentOrder", 0);

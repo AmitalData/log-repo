@@ -94,6 +94,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
                             declarationPM.CourierCustomStatusCode = "1";
+                            declarationPM.IsClose = true;
                             MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
                             break;
                         case 5: // released cancelled
@@ -102,6 +103,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "6";
                             declarationPM.HatraDate = null; //Yuval Chalup 17.01.2018 - Delete date
+                            declarationPM.IsClose = false;
                             MyRequestSheetParam.RequestDescription = "ביטול התרה. תיק מספר: " + declarationPM.CustomFileNo;//eitan h 26/2/15 task 11525
                             break;
                         case 9: // Pre clearance
