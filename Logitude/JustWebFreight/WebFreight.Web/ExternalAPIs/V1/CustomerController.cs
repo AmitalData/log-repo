@@ -1,4 +1,6 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -23,6 +25,7 @@ using System.Web.Http;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers.ExternalAPIHelpers;
 using WebFreight.Web.Security;
+using Currency = Simplog.Data.CommonDataModel.EntityPOCOs.Currency;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -130,26 +133,139 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
 
                         #region GLAccount
-                        //if (entity.GLAccount != null)
-                        //{
-                        //    CardRepository cardRepository = new CardRepository(authToken.Tenant);
-                        //    Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(entityPM.Id, authToken.Tenant);
-                        //    if(card != null)
-                        //    {
-                        //        if(entity.GLAccount.IsMultiCurrency == false && string.IsNullOrEmpty(entity.GLAccount.CurrencyId))
-                        //        {
-                        //            throw new ApplicationException("GLAccount currency is required");
-                        //        }
+                        if (entity.GLAccount != null)
+                        {
+                            FullAccountingHelper fullAccountingHelper = new FullAccountingHelper();
 
-                        //        GLAccountPM gLAccountEntity = new GLAccountPM()
-                        //        {
-                        //            CurrencyId = entity.GLAccount.Currency,
-                        //        };
+                            CardRepository cardRepository = new CardRepository(MyContext);
+                            Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cardRepository.GetSingleCard(entityPM.Id, authToken.Tenant);
+                            if (card != null)
+                            {
+                                GLAccountPM gLAccountEntity = new GLAccountPM();
+                                gLAccountEntity.Tenant = authToken.Tenant;
+                                gLAccountEntity.PassedFromAPI = true;
+                                gLAccountEntity.ChartOfAccountsTypeCode = "3";
+                                gLAccountEntity.RevenueExpenseType = "3";
+                                gLAccountEntity.AccountTypeCode = "2";
+                                gLAccountEntity.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                                
+                                //DisplayNumber
+                                if (string.IsNullOrEmpty(entity.GLAccount.DisplayNumber))
+                                {
+                                    gLAccountEntity.DisplayNumber = card.Code;
+                                }
+                                else
+                                {
+                                    gLAccountEntity.DisplayNumber = entity.GLAccount.DisplayNumber;
+                                }
 
-                        //        FullAccountingHelper fullAccountingHelper = new FullAccountingHelper();
-                        //        string glAccountId = fullAccountingHelper.CreateGLAccount(card);
-                        //    }                            
-                        //}
+                                //EnglishName
+                                if (string.IsNullOrEmpty(entity.GLAccount.EnglishName))
+                                {
+                                    gLAccountEntity.EnglishName = card.EnglishName;
+                                }
+                                else
+                                {
+                                    gLAccountEntity.EnglishName = entity.GLAccount.EnglishName;
+                                }
+
+                                //LocalName
+                                if (string.IsNullOrEmpty(entity.GLAccount.LocalName))
+                                {
+                                    gLAccountEntity.LocalName = card.LocalName;
+                                }
+                                else
+                                {
+                                    gLAccountEntity.LocalName = entity.GLAccount.LocalName;
+                                }
+
+                                //ChartOfAccount
+                                if (entity.GLAccount.ChartOfAccount == null)
+                                {
+                                    throw new ApplicationException("GL Account Chart of Account is required");
+                                }
+                                else
+                                {
+                                    ChartOfAccountRepository chartOfAccountRepository = new ChartOfAccountRepository(authToken.Tenant);
+                                    ChartOfAccount chartOfAccount = new ChartOfAccount();
+
+                                    if (!string.IsNullOrEmpty(entity.GLAccount.ChartOfAccount.Id))
+                                    {
+                                        chartOfAccount = chartOfAccountRepository.GetSingle(entity.GLAccount.ChartOfAccount.Id, authToken.Tenant);
+                                    }
+                                    else
+                                    {
+                                        chartOfAccount = chartOfAccountRepository.GetSingleByCode(entity.GLAccount.ChartOfAccount.Code, authToken.Tenant);
+                                    }                                    
+
+                                    if (chartOfAccount == null)
+                                    {
+                                        throw new ApplicationException("ChartOfAccount doesn't exist");
+                                    }
+
+                                    else
+                                    {
+                                        gLAccountEntity.ChartOfAccountsId = chartOfAccount.Id;
+                                    }
+                                }
+
+                                //Currency
+                                if (entity.GLAccount.IsMultiCurrency == true)
+                                {
+                                    gLAccountEntity.IsMultiCurrency = true;
+                                    gLAccountEntity.ReconcileMethodCode = "0";
+                                }
+
+                                else
+                                {
+                                    if (entity.GLAccount.Currency == null)
+                                    {
+                                        throw new ApplicationException("GL Account Currency is required");
+                                    }
+                                    else
+                                    {
+                                        CurrencyRepository currencyRepository = new CurrencyRepository(MyContext);
+                                        Currency currency = currencyRepository.GetSingleCurrencyByCode(entity.GLAccount.Currency.Code, authToken.Tenant);
+                                        if (currency == null)
+                                        {
+                                            throw new ApplicationException("Currency with Code " + entity.GLAccount.Currency.Code + " doesn't exist");
+                                        }
+
+                                        else
+                                        {
+                                            gLAccountEntity.CurrencyId = currency.Id;
+                                        }
+                                    }
+
+                                    if (entity.GLAccount.ReconcileMethod == null)
+                                    {
+                                        throw new ApplicationException("GL Account Reconcile Method is required");
+                                    }
+                                    else
+                                    {
+                                        ReconcileMethodRepository reconcileMethodRepository = new ReconcileMethodRepository(authToken.Tenant);
+                                        ReconcileMethod reconcileMethod = reconcileMethodRepository.GetSingle(entity.GLAccount.Currency.Code);
+                                        if (reconcileMethod == null)
+                                        {
+                                            throw new ApplicationException("reconcile Method with Code " + entity.GLAccount.ReconcileMethod.Code + " doesn't exist");
+                                        }
+
+                                        else
+                                        {
+                                            gLAccountEntity.ReconcileMethodCode = reconcileMethod.Code;
+                                        }
+                                    }
+                                }                             
+                                
+                                string glAccountId = fullAccountingHelper.CreateGLAccount(gLAccountEntity);
+                                if(!string.IsNullOrEmpty(glAccountId))
+                                {
+                                    card.GLAccountId = glAccountId;
+                                    cardRepository.Update(card);
+                                    cardRepository.SubmitChanges();
+                                }
+                            }
+                        }
                         #endregion
 
                         scope.Complete();

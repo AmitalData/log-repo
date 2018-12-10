@@ -95,11 +95,9 @@ using Simplog.Data.QuoteModel;
 				   temp.SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice;
 				   temp.CostContainerType5UnitPrice = item.CostContainerType5UnitPrice;
 				   temp.SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice;
-                   temp.SaleMaxAmount = item.SaleMaxAmount;
-                   temp.SaleMinAmount = item.SaleMinAmount;
-
-
-                    MyList.Add(temp);
+				   temp.SaleMaxAmount = item.SaleMaxAmount;
+				   temp.SaleMinAmount = item.SaleMinAmount;					
+					MyList.Add(temp);
 				}
 					
 				   return MyList;
@@ -197,7 +195,9 @@ using Simplog.Data.QuoteModel;
 					temp.CostContainerType4UnitPrice = item.CostContainerType4UnitPrice;
 					temp.SaleContainerType4UnitPrice = item.SaleContainerType4UnitPrice;
 					temp.CostContainerType5UnitPrice = item.CostContainerType5UnitPrice;
-					temp.SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice;					   
+					temp.SaleContainerType5UnitPrice = item.SaleContainerType5UnitPrice;
+					temp.SaleMaxAmount = item.SaleMaxAmount;
+					temp.SaleMinAmount = item.SaleMinAmount;					   
 						MyList.Add(temp);
 					}
 						

@@ -48,6 +48,7 @@ import {RevaluationDetailsComponent} from './Components/EditTabs/Revaluation/Rev
 import {GLAccountTaxWithholdingTabComponent} from './Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent';
 import {BankCodeGeneralTabComponent} from './Components/EditTabs/BankCode/BankCodeGeneralTabComponent';
 import {ExternalRecoDetailsTabComponent} from './Components/EditTabs/ExternalReconciliation/ExternalRecoDetailsTabComponent';
+import { OpenFormatReportLogTabComponent } from './Components/EditTabs/OpenFormatReport/OpenFormatReportLogTabComponent';
 
 import {GlAccountLedgerTransactionsListTemplate} from './Components/ListTemplates/GlAccountLedgerTransactionsListTemplate';
 import {ReconcileExternalPageListTemplate} from './Components/ListTemplates/ReconcileExternalPageListTemplate';
@@ -145,6 +146,7 @@ export const Components =
         BankCodeGeneralTabComponent,
         EditTaxReportLineComponent,
         TaxDeductionReportLogTabComponent,
+        OpenFormatReportLogTabComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         ReconcileExternalPageListTemplate,
@@ -240,7 +242,8 @@ export class ModuleDeclarations {
             case "GLAccountTaxWithholdingTabComponent": { myResult = GLAccountTaxWithholdingTabComponent; break; }
             case "BankCodeGeneralTabComponent": { myResult = BankCodeGeneralTabComponent; break; }
             case "EditTaxReportLineComponent": { myResult = EditTaxReportLineComponent; break; }
-            case "TaxDeductionReportLogTabComponent": { myResult = TaxDeductionReportLogTabComponent; break;}
+            case "TaxDeductionReportLogTabComponent": { myResult = TaxDeductionReportLogTabComponent; break; }
+            case "OpenFormatReportLogTabComponent": { myResult = OpenFormatReportLogTabComponent; break; }
             //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }

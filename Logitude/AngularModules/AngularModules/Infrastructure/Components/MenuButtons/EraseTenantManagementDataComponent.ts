@@ -1,8 +1,11 @@
-﻿import {Component}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {InfrastructureDomainService, BusinessRecordsSummary} from '../../Services/InfrastructureDomainService';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
+import { BatchTaskExecutionPM } from '../../EntityPMs/BatchTaskExecutionPM';
+import { BatchTaskExecutionListService } from '../../Services/StandardLists/BatchTaskExecutionListService';
+import { BatchTaskExecutionList } from '../../EntityLists/BatchTaskExecutionList';
 
 @Component({
     moduleId: module.id,
@@ -36,9 +39,11 @@ export class EraseTenantManagementDataComponent {
             SessionLocator.CurrentSession.StopBusyIndicator();
         });
     }
-        
+
+    private type: string;
     public DeleteClicked(type: string) {
         this.Message = null;
+        this.type = type;
 
         switch (type) {
             case "B": {                
@@ -84,6 +89,15 @@ export class EraseTenantManagementDataComponent {
         }        
     }
 
+    public IsResponseProgressVisible: boolean = false;
+    public TimerStoppedByUser: boolean = false;
+    CloseResponseProgressClicked() {
+        this.IsResponseProgressVisible = false;
+        this.TimerStoppedByUser = true;        
+        this.StopTimer();        
+    }
+
+    private batchEntity: BatchTaskExecutionPM;
     private DoDelete(type: string) {
         this.Message = null;
 
@@ -91,34 +105,115 @@ export class EraseTenantManagementDataComponent {
 
         this.myService.DeleteDataForTenant(this.entityId, type).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                this.GetCounts();
-                
-                var window: MessageWindow = new MessageWindow();
+                var mm: ServiceResponse = response;
+                this.batchEntity = mm.Result;
 
-                switch (type) {
-                    case "B": {
-                        window.Show("Erasing Business Records Completed Succesfully");
-                        break;
-                    }
-
-                    case "P": {
-                        window.Show("Erasing Shippers & Consignees Completed Succesfully");
-                        break;
-                    }
-
-                    case "T": {
-                        window.Show("Erasing Tickets Completed Succesfully");
-                        break;
-                    }
-
-                    case "C": {
-                        window.Show("Erasing CRM Data Completed Succesfully");
-                        break;
-                    }
+                if (this.batchEntity != null) {
+                    this.StartTimer();
                 }
             }
 
             SessionLocator.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    // Timer
+    private Retries: number = 0;
+    private timerToken: any;
+    private timerSeconds: number = 1;
+    private IsLoading: boolean = false;
+    public StopTimer() {
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+        
+        this.IsResponseProgressVisible = false;
+    }
+    public StartTimer() {
+        this.Retries = 0;
+        this.timerToken = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
+        this.IsResponseProgressVisible = true;
+    }
+    private IncreaseTimer() {
+        clearTimeout(this.timerToken);
+        this.timerToken = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
+    }
+    private AdjustTimerSpeed() {
+        if (this.Retries <= 60) {
+            if (this.timerSeconds != 1) {
+                this.timerSeconds = 1;
+                this.IncreaseTimer();
+            }
+        }
+
+        else if (this.Retries <= 120) {
+            if (this.timerSeconds != 5) {
+                this.timerSeconds = 5;
+                this.IncreaseTimer();
+            }
+        }
+
+        else if (this.Retries <= 180) {
+            if (this.timerSeconds != 60) {
+                this.timerSeconds = 60;
+                this.IncreaseTimer();
+            }
+        }
+
+        else {
+            this.StopTimer();
+        }
+    }
+    private RunTimerFunction() {
+        if (!this.IsLoading) {
+            this.Retries++;
+            this.GetBTE();
+            this.AdjustTimerSpeed();
+        }
+    }
+
+    private bteList: BatchTaskExecutionList;
+    GetBTE() {
+        var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe(myResult => {
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.bteList = mm.Result;
+                if (this.bteList.StatusCode == "D") // D- Done
+                {
+                    this.GetCounts();
+
+                    var window: MessageWindow = new MessageWindow();
+
+                    switch (this.type) {
+                        case "B": {
+                            window.Show("Erasing Business Records Completed Succesfully");
+                            break;
+                        }
+
+                        case "P": {
+                            window.Show("Erasing Shippers & Consignees Completed Succesfully");
+                            break;
+                        }
+
+                        case "T": {
+                            window.Show("Erasing Tickets Completed Succesfully");
+                            break;
+                        }
+
+                        case "C": {
+                            window.Show("Erasing CRM Data Completed Succesfully");
+                            break;
+                        }
+                    }
+                    this.StopTimer();
+                }
+
+                else if (this.bteList.StatusCode == "F") // F- Failed
+                {
+                    this.StopTimer();
+                }
+            }
         });
     }
 
