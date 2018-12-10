@@ -1038,7 +1038,12 @@ After that Remove file  from DCA  .. ");
 
 
             var communicationLogStep = GetCommunicationLogStep();
-            if (!this.IsInteractive && MessageController.ToRetry(_CurrentCustomsRequestStepEnum, communicationLogStep.Retries))
+            bool onlyOneChanceToSend = //20180718.ConcurrentKiller
+                _CurrentCustomsRequestStepEnum == CustomsStepEnum.ReceivedCustomResponseCorrelation &&
+                CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList()
+                .Contains(_RequestParams.InterfaceTypeCode);
+
+            if (!onlyOneChanceToSend && !this.IsInteractive && MessageController.ToRetry(_CurrentCustomsRequestStepEnum, communicationLogStep.Retries))
             {
                 EndStepWithoutTransactionScope(null, CommStatusEnum.W);
                 return new

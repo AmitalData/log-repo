@@ -227,6 +227,7 @@ export class ExportDeclarationDataComponent
             logitudeWindow.WindowArgs = item.VehicleList;
             //logitudeWindow.Show('./Customs/Components/CustomsRequests/DeclarationRequests/VehicleForGoodsItemComponent');
             logitudeWindow.Show('./CustomsModules/CustomsRequests/Components/DeclarationRequests/VehicleForGoodsItemComponent');
+
         }
     }
 

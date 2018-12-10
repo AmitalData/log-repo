@@ -830,7 +830,7 @@ User/Pass",
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (Environment.MachineName == "ABDULLAH-PC") btnUpdateAccounting_Click(null, null);
+            //if (Environment.MachineName == "ABDULLAH-PC") btnUpdateAccounting_Click(null, null);
 
             //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             //LogitudeSettings.DatabaseManagementSystem = dbms;

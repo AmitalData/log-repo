@@ -22,6 +22,7 @@ using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using UnifreightIIG.Common.MessageLib.Fault;
 using UnifreightIIG.Common.MessageLib.ID;
 using UnifreightIIG.Common.MessageLib.Collateral;
+using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -102,7 +103,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var importDeclarationServiceReferenceResponse = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.Response>
                         .DeSerializeObject(customResponseResponseXml);
                     ////5117 5117 5117 5117 5117
-                    this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, requestParams.Tenant);
+                    List<error> systemMessagesList = new List<error>();
+                    if (customResponse.CollateralRequests != null && customResponse.CollateralRequests.Count() > 0) // Update Declaration Correction Pointer
+                    {
+                        foreach (var collateralRequestItem in customResponse.CollateralRequests)
+                        {
+                            var myError = new error();
+                            myError.ListVersionID = "A";
+                            myError.MessageError = "המשוב להצהרה כולל דרישה לבטוחה " + " - מספר בטוחה " + collateralRequestItem.collateralRequestNumber;
+                            systemMessagesList.Add(myError);
+                        }
+                    }
+                    this._MyDeclarationPM.CorrectionsXml = myDeclarationCorrectionsPointerService.AnalyzeCorrectionsPointer(this._MyDeclarationPM.CorrectionsXml, importDeclarationServiceReferenceResponse, systemMessagesList, requestParams.Tenant);
                 }
                 if (_MyDeclarationPM.UserNotes == "LoadTestOnProgress")
                 {
