@@ -2133,6 +2133,7 @@
     <Compile Include="Helpers\APICredentialsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\ComputeHelper.cs" />
     <Compile Include="Helpers\APIHelpers\DateHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\EraseTenantDataHelper.cs" />
     <Compile Include="Helpers\APIHelpers\FieldsUpdateHelper.cs" />
     <Compile Include="Helpers\APIHelpers\FVRServiceArgs.cs" />
     <Compile Include="Helpers\APIHelpers\PartnerExternalAccountsServicePM.cs" />
