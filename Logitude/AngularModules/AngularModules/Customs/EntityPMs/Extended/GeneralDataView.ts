@@ -1,4 +1,4 @@
-import { AmendmentView } from './AmendmentView';
+import { AmendmentView, error  } from './AmendmentView';
 export class GeneralDataView {
     CorrectionDate: Date;
     Version: string;
