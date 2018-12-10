@@ -16,7 +16,6 @@ export class ShipmentPMCustomCode {
             
         //}
 
-        entityPM.UIProperties.SetVisibility("ProjectNumber", "Shipment", entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C");
     }
 
 }

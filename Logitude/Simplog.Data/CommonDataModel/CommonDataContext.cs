@@ -433,6 +433,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new TemperatureUnitMap());
             modelBuilder.Configurations.Add(new HybridPartnersPermissionMap());
             modelBuilder.Configurations.Add(new DWHSettingMap());
+            modelBuilder.Configurations.Add(new PaymentGatewayPartnersMap()); 
 
             base.OnModelCreating(modelBuilder);
         }
@@ -983,6 +984,14 @@ namespace Simplog.Data.CommonDataModel
             get;
             set;
         }
+
+        public IDbSet<PaymentGatewayPartners> PaymentGatewayPartners
+        {
+            get;
+            set;
+        }
+
+        
 
         public DbConnection GetConnection()
         {
