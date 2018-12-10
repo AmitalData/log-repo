@@ -365,6 +365,7 @@ export class ShipmentList {
 		LastSharedEventName: string;
 		GrossWeightPerTon: number;
 		ManifestLastSharingDate: Date;
+		MainCarriageFinalDestinationPortCode: string;
 		WarehouseLegWarehouseId: string;
 		WarehouseLegAddressId: string;
 		WarehouseLegTerminalCode: string;
