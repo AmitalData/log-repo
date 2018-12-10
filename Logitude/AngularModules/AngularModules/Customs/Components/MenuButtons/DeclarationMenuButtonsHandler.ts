@@ -57,6 +57,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     //Services
     private declarationPMService: DeclarationPMService = new DeclarationPMService();
+    private declarationWebService: DeclarationWebService = new DeclarationWebService();
     private declarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -304,6 +305,18 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     }
 
+                    if (button.EventCode == "DeclarationClosure") {
+                        if (!this.EntityPM.IsClose) {
+                            button.IsHidden = true;
+                        }
+                    }
+
+                    if (button.EventCode == "CancelDeclarationClosure") {
+                        if (this.EntityPM.IsClose) {
+                            button.IsHidden = true;
+                        }
+                    }
+
                 }
                 this.IsDisplayOnlyCheckDone = true;
                 return menuButtons;
@@ -453,6 +466,16 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     case "CourierPendingReasonDel":
                         {
                             this.CourierPendingReasonDeleteMethod();
+                            break;
+                        }
+                    case "DeclarationClosure":
+                        {
+                            this.DeclarationClosureMethod();
+                            break;
+                        }
+                    case "CancelDeclarationClosure":
+                        {
+                            this.DeclarationClosureMethod();
                             break;
                         }
                 }
@@ -1144,6 +1167,50 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
             else {
                 let window = new MessageWindow();
                 window.Show(" Pending לא ניתן לבצע מחיקה, לתיק לא מוגדר ");
+            }
+        });
+    }
+
+    DeclarationClosureMethod() {
+
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 300;
+        confirmWindow.Show("האם ברצונך לסגור את ההצהרה ?");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.declarationWebService.DeclarationClosureMethod(this.EntityPM.Id, this.EntityPM.Tenant)
+                    .subscribe((response: ServiceResponse) => {
+                        console.log("[response] DeclarationClosureMethod: ", response);
+                        if (!response.HasError) {
+                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            let messageWindow = new MessageWindow();
+                            messageWindow.Width = 300;
+                            messageWindow.Height = 180;
+                            messageWindow.Show("ההצהרה נסגרה בהצלחה");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.ClosePhysicalCheck"));
+                        }
+                    });
+            }
+        });
+    }
+
+    CancelDeclarationClosureMethod() {
+
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 300;
+        confirmWindow.Show("האם ברצונך לבטל סגירת ההצהרה ?");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.declarationWebService.CancelDeclarationClosureMethod(this.EntityPM.Id, this.EntityPM.Tenant)
+                    .subscribe((response: ServiceResponse) => {
+                        console.log("[response] CancelDeclarationClosureMethod: ", response);
+                        if (!response.HasError) {
+                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            let messageWindow = new MessageWindow();
+                            messageWindow.Width = 300;
+                            messageWindow.Height = 180;
+                            messageWindow.Show("ביטול סגירה בוצע בהצלחה");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.ClosePhysicalCheck"));
+                        }
+                    });
             }
         });
     }
