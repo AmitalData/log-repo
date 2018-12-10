@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component,OnDestroy} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -13,13 +13,14 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ObjectsUpdater} from '../../../../Infrastructure/Locators/ObjectsUpdater';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     moduleId: module.id,
     templateUrl: './TransferSettingsComponent.html',
 })
 
-export class TransferSettingsComponent extends BaseComponent {
+export class TransferSettingsComponent extends BaseComponent implements OnDestroy {
     public EntityPM: AccountingSettingPM;
     public DataContext = this;
     public ObjectTableName: string = "AccountingSetting";
@@ -37,10 +38,16 @@ export class TransferSettingsComponent extends BaseComponent {
         return false;
     }
 
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.QBOWindowSessionEvent);
+    }
+    private QBOWindowSessionEvent: any = null;
+
+
     constructor(entityResourceService: EntityResourceService) {
         super();
         this.OldSessionAccountingSystem = SessionLocator.AccountingSystemPM;
-        SessionLocator.CurrentSession.SessionEvent.subscribe(res => {
+        this.QBOWindowSessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(res => {
             if (res.Name == "QBOWindowCLosed") {
                 this.QBOWindowCLosed(res.Timer);
                 this.RefreshData();
@@ -65,12 +72,24 @@ export class TransferSettingsComponent extends BaseComponent {
             if (!myResponse.HasError) {
                 this.EntityPM.QBOAccessToken = myResponse.Result.QBOAccessToken;
                 this.EntityPM.QBOAccessTokenSecret = myResponse.Result.QBOAccessTokenSecret;
-                this.EntityPM.QBOrealMeID = myResponse.Result.QBOrealMeID;
+                var temp = this.EntityPM.QBOrealMeID;
+                this.EntityPM.QBOrealMeID = myResponse.Result.QBOrealMeID;               
             }
 
             this.SetQuickBookProperties();
             SessionLocator.CurrentSession.StopBusyIndicator();
-            this.IsResourcesReady = true;
+
+            if (!AppTool.IsNullOrEmpty(temp) && this.EntityPM.QBOrealMeID != temp) {
+                var window: MessageWindow = new MessageWindow();
+                window.ShowWarningIcon = true;
+                window.Show("You are connecting to a different QBO environment than the previously connected. Please notice that old QBO translations will be erased");
+                window.WindowClosed.subscribe((P: any) => {
+                    this.IsResourcesReady = true;                    
+                });
+            }
+            else {
+                this.IsResourcesReady = true;
+            }
         });
     }
 
@@ -406,7 +425,6 @@ export class TransferSettingsComponent extends BaseComponent {
     DissConnectQBO(loadeding = true) {
         if (loadeding) {
             SessionLocator.CurrentSession.StartBusyIndicator("Disconnecting..");
-            this.EntityPM.QBOrealMeID = null;
             this.EntityPM.QBOAccessToken = null;
             this.EntityPM.QBOAccessTokenSecret = null;
         }
@@ -541,9 +559,9 @@ export class TransferSettingsComponent extends BaseComponent {
             SessionLocator.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.AccountingSystemCode != "QBO" && this.AccountingSystemCode != "QBOG") {
-                if (this.EntityPM.QBOrealMeID) {
-                    this.EntityPM.QBOrealMeID = null;
-                }
+                //if (this.EntityPM.QBOrealMeID) {
+                //    this.EntityPM.QBOrealMeID = null;
+                //}
 
                 if (this.EntityPM.QBOAccessToken) {
                     this.EntityPM.QBOAccessToken = null;

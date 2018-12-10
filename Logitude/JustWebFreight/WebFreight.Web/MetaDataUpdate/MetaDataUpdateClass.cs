@@ -57383,6 +57383,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature aRGeneralInvoiceFeature_Approval = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "APPROVALGENERALINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aRGeneralInvoiceFeature_All = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "ALLGENERALINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aRInvoiceFeature_SATFailed = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "SATFAILEDINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            Feature aRInvoiceFeature_QBOFailedTransmission = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "QBOFailedTransmission" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
 
             Query aRInvoiceQuery_All = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.AllInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "All Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_All.Id }, QueriesRepository, tenantQueries);
@@ -57393,6 +57394,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Query aRInvoiceQuery_ErrorInTransfer = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.ErrorInTransferInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Error In Transfer Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 5, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Ascending", DefaultSortName = "InvoiceDate", FeatureId = aRInvoiceFeature_ErrorInTransfer.Id, EditWizardName = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferEditControl", EditWizardComponentPath = "./InvoiceModules/ARInvoice/Components/NewEntity/ARInvoiceTransferTemplate" }, QueriesRepository, tenantQueries);
             Query aRInvoiceQuery_OpenConstituent = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.OpenConstituentInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "OpenConstituent", QueryGroupCode = invoicesGroup.Code, IndexOrder = 6, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_OpenConstituent.Id }, QueriesRepository, tenantQueries);
             Query aRInvoiceQuery_FailedSAT = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.FailedSAT" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Invoices Failed to Open in SAT", QueryGroupCode = invoicesGroup.Code, IndexOrder = 7, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_SATFailed.Id }, QueriesRepository, tenantQueries);
+            Query aRInvoiceQuery_QBOFailedTransmission = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.QBOFailedTransmission" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "QBOFailedTransmission", QueryGroupCode = invoicesGroup.Code, IndexOrder = 8, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_QBOFailedTransmission.Id }, QueriesRepository, tenantQueries);
 
             // Genaral Invoices 
             Query aRGeneralInvoiceQuery_Draft = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.DraftGeneralInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Draft General Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRGeneralInvoiceFeature_Draft.Id }, QueriesRepository, tenantQueries);
@@ -57557,7 +57559,25 @@ namespace WebFreight.Web.MetaDataUpdate
             AdvancedQueryFilter invoiceSATFailed_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "TE", QueryId = aRInvoiceQuery_FailedSAT.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
+            #region QBO failed transmission
+            QueryColumn QBOFailedTransmitionColumn_01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 0, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_03 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 2, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 190 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_04 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 3, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 4, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 5, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 50 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 6, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
+            AdvancedQueryFilter QBOFailedTransmition_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "QBOFailedTransmission" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
+
+            #endregion
+
+
+
+
+
+
+
 
             #region (A/P) Invoice
             Feature aPInvoiceFeature_All = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "ALLINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
@@ -60659,8 +60679,9 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.DraftGeneralInvoices", DefaultText = "Draft Invoices", LocalDefaultText = "חשבוניות בסטטוס טיוטה", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.ApprovalGeneralInvoices", DefaultText = "Approval Invoices", LocalDefaultText = "חשבוניות מאושרות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.FailedSAT", DefaultText = "SAT Failed Invoices", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.QBOFailedTransmission", DefaultText = "QBO failed transmission", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
 
-            
+
             #endregion
 
             #region Accounts Queries
@@ -66256,6 +66277,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARInvoiceFeature_Q010 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLGENERALINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.AllGeneralInvoice", NameTextCodeDefaultText = "All General Invoice", FullLocalDefaultText = "כל החשבוניות הכלליות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATFAILEDINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.SATFailedInvoices", NameTextCodeDefaultText = "Invoices Failed to Open in SAT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKSATSTATUS", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.CheckSATStatus", NameTextCodeDefaultText = "Check SAT Status", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ARInvoiceFeature_Q13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QBOFailedTransmission", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.QBOFailedTransmission", NameTextCodeDefaultText = "QBO failed transmission", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
