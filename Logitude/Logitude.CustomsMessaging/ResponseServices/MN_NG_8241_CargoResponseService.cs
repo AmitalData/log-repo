@@ -763,13 +763,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     using (_AmitalContext = AmitalContext.GetContext(_MyDeclarationPM.Tenant))
                     {
-                        if (_MyDeclarationPM.Consignments[0].CargoTypeCode == "11" || _MyDeclarationPM.Consignments[0].CargoTypeCode == "20")
-                        {
-                            if (!String.IsNullOrWhiteSpace(customResponse.Cargo.MasterBolNumber) || !String.IsNullOrWhiteSpace(customResponse.Cargo.BillOfLadingNumber))
-                            {
-                                var myFileAdditionalData = GetFileAdditionalDataXML(customResponse);
-                            }
-                        }
                         if (_MyDeclarationPM.Consignments != null && (_MyDeclarationPM.Consignments[0].CargoTypeCode == "11" || _MyDeclarationPM.Consignments[0].CargoTypeCode == "20"))
                         {
                             if (!String.IsNullOrWhiteSpace(customResponse.Cargo.MasterBolNumber) || !String.IsNullOrWhiteSpace(customResponse.Cargo.BillOfLadingNumber))
