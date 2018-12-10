@@ -1,10 +1,12 @@
-﻿import {Component, AfterContentInit, Output, EventEmitter, ChangeDetectorRef, OnDestroy}  from '@angular/core';
+import {Component, AfterContentInit, Output, EventEmitter, ChangeDetectorRef, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../DataContracts/EntityArgs';
 import {BaseComponent} from '../Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../Components/LogitudeComponents/UIProperties'
 import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
 import {SessionInfo} from '../Utilities/SessionInfo';
-import {AppTool} from '../Tools';
+import { AppTool } from '../Tools';
+import { SessionLocator } from '../Utilities/SessionLocator';
+
 declare var window: any;
 
 @Component({
@@ -23,9 +25,14 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     public IsNewEntityCall: boolean;
     public ShowNoFieldsText: boolean = false;
     ShowTitle: boolean = false;
+    public IsCustomerCare: boolean = false;
+
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     constructor(private cd: ChangeDetectorRef) {
         super();
+        this.IsCustomerCare = true; //SessionLocator.LoggedUserPM.IsCustomerCare;
+
     }
 
     public Run(entityPM: any, objectTableName: string, screenCode: string, isNewEntityCall: boolean = false, showTitle: boolean = false) {
