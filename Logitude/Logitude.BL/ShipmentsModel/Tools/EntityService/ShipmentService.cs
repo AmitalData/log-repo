@@ -54,6 +54,10 @@ using Logitude.Server.Tools.StorageService;
 using Simplog.Server.Infrastructure.Azure;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
+using System.Text.RegularExpressions;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
@@ -2320,7 +2324,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.IsRemovingStackEvents = false;
             entityPM.CalculateStatus = false;
 
-            ComputeShipmentStatus();
+            this.ComputeShipmentStatus();
+            this.UpdateCustomerWorkingDates();
 
             if (isNewEntity)
             {
@@ -2361,10 +2366,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                {
-                    this.UpdateCustomerWorkingDates();
-                }
+                //if (!string.IsNullOrEmpty(entityPM.CustomerId))
+                //{
+                //    this.UpdateCustomerWorkingDates();
+                //}
 
                 if (!entityPM.IsHybrid)
                 {
@@ -3719,21 +3724,45 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
                     if (string.IsNullOrEmpty(entityPM.BookingId))
                     {
-                        //if ((entityMasterData.Master != entityPM.Master || entityPM.MainCarriageCarrierId != entityMasterData.MainCarriageCarrierId) && entityPM.MAWBTakenFromStack == false)
-                        //{
-                        //    if (!String.IsNullOrEmpty(entityPM.Master) && entityPM.MainCarriageCarrierId != null)
-                        //    {
-                        //        MAWBStack stack = mawStackRepository.GetSingleMAWBStackByNumberAirline(long.Parse(entityPM.Master), tenant, entityPM.MainCarriageCarrierId);
-                        //        if (stack != null)
-                        //        {
-                        //            string msg = TranslateTextsClass.Translate("Shipment.M.ThisAirlineMAWBStackFoundInStack", tenant);
-                        //            throw new ApplicationException(msg);
-                        //        }
-                        //    }
-                        //}
-
                         if (!string.IsNullOrEmpty(entityPM.Master))
                         {
+                            if (!Regex.IsMatch(entityPM.Master, "^[0-9]*$"))
+                            {
+                                throw new ApplicationException("Master Field must be all digits");
+                            }
+
+                            else
+                            {
+                                if (entityPM.CarrierIsLimitedLength && entityPM.Master.Length != 8)
+                                {
+                                    throw new ApplicationException("Master Field length must be 8 digits");
+                                }
+                                else
+                                {
+                                    if (entityPM.CarrierIsCheckDigit)
+                                    {
+                                        string myPrefix = entityPM.Master.Substring(0, 7);
+                                        string myCheckDegit = entityPM.Master.Substring(7, 1);
+
+                                        int myPrefixInteger = 0;
+
+                                        int.TryParse(myPrefix, out myPrefixInteger);
+
+                                        int myMod = myPrefixInteger % 7;
+
+                                        if (myMod >= 7)
+                                        {
+                                            myMod = myMod % 7;
+                                        }
+
+                                        if (myMod.ToString() != myCheckDegit)
+                                        {
+                                            throw new ApplicationException("Master Field invalid check digit");
+                                        }
+                                    }
+                                }
+                            }
+
                             if (string.IsNullOrEmpty(entityPM.MAWBStackAirlineId))
                             {
                                 if (entityPM.MAWBTakenFromStack == false && entityPM.MainCarriageIsFromStack == false)
@@ -5119,12 +5148,20 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
 
                 ShipmentPickUpDeliveryPackageQuery shipmentPickUpDeliveryPackageQuery = new ShipmentPickUpDeliveryPackageQuery(shipmentPickUpDeliveryPackageRepository);
+                PickUpDeliveryPackageHarmonizeQuery pickUpDeliveryPackageHarmonizeQuery = new PickUpDeliveryPackageHarmonizeQuery(pickUpDeliveryPackageHarmonizeRepository);
 
                 List<ShipmentPickUpDeliveryPackagePM> PickUpDeliveryPackage = shipmentPickUpDeliveryPackageQuery.GetShipmentPickUpDeliveryPackages(itemPM.Id, tenant);
                 foreach (ShipmentPickUpDeliveryPackagePM insideItemPM in PickUpDeliveryPackage)
                 {
                     ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(insideItemPM.Id);
                     shipmentPickUpDeliveryPackageRepository.Remove(insideItemPoco);
+
+                    List<PickUpDeliveryPackageHarmonizePM> PickUpDeliveryPackageHarmonize = pickUpDeliveryPackageHarmonizeQuery.GetPickUpDeliveryPackageHarmonizes(insideItemPM.Id, tenant);
+                    foreach (PickUpDeliveryPackageHarmonizePM harmonizeItemPM in PickUpDeliveryPackageHarmonize)
+                    {
+                        PickUpDeliveryPackageHarmonize harmonizeItem = pickUpDeliveryPackageHarmonizeRepository.GetSinglePickUpDeliveryPackageHarmonize(harmonizeItemPM.Id, tenant);
+                        pickUpDeliveryPackageHarmonizeRepository.Remove(harmonizeItem);
+                    }
                 }
 
                 shipmentPickUpDeliveryRepository.Remove(itemPoco);
@@ -5454,6 +5491,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         private void DeleteShipmentPickUpDeliveryPackage(ShipmentPickUpDeliveryPackagePM insideItemPM)
         {
             ShipmentPickUpDeliveryPackage insideItemPoco = shipmentPickUpDeliveryPackageRepository.GetSingleShipmentPickUpDeliveryPackage(insideItemPM.Id);
+
+            PickUpDeliveryPackageHarmonizeQuery pickUpDeliveryPackageHarmonizeQuery = new PickUpDeliveryPackageHarmonizeQuery(pickUpDeliveryPackageHarmonizeRepository);
+            List<PickUpDeliveryPackageHarmonizePM> PickUpDeliveryPackageHarmonize = pickUpDeliveryPackageHarmonizeQuery.GetPickUpDeliveryPackageHarmonizes(insideItemPM.Id, tenant);
+            foreach (PickUpDeliveryPackageHarmonizePM harmonizeItemPM in PickUpDeliveryPackageHarmonize)
+            {
+                PickUpDeliveryPackageHarmonize harmonizeItem = pickUpDeliveryPackageHarmonizeRepository.GetSinglePickUpDeliveryPackageHarmonize(harmonizeItemPM.Id, tenant);
+                pickUpDeliveryPackageHarmonizeRepository.Remove(harmonizeItem);
+            }
+
             shipmentPickUpDeliveryPackageRepository.Remove(insideItemPoco);
         }
 
@@ -6184,10 +6230,48 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             customer.LastShipmentDate = todayDate;
                         }
 
-
                         customerRepository.Update(customer);
                         customerRepository.SubmitChanges();
                     }
+                }
+            }
+
+            else
+            {
+                if (this.entityPM.CustomerId != this.entityPoco.CustomerId)
+                {
+                    CustomerRepository customerRepository = new CustomerRepository(tenant);                    
+
+                    if (!string.IsNullOrEmpty(this.entityPM.CustomerId))
+                    {
+                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, tenant, false);
+                        if (customer != null)
+                        {
+                            customer.LastShipmentDate = this.entityPM.CreateDateTime;
+                            customerRepository.Update(customer);
+                            customerRepository.SubmitChanges();
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(this.entityPoco.CustomerId))
+                    {
+                        Customer customer = customerRepository.GetSingleCustomerWithCardOnly(this.entityPoco.CustomerId, tenant, false);
+                        if (customer != null)
+                        {
+                            List<Shipment> shipments = this.objectContext.Shipments.Where(d => d.CustomerId == customer.Id && d.Id != this.entityPoco.Id).ToList();
+                            if (shipments.Count > 0)
+                            {
+                                Shipment shipment = shipments.OrderByDescending(s => s.CreateDateTime).FirstOrDefault();
+
+                                if (shipment != null)
+                                {
+                                    customer.LastShipmentDate = shipment.CreateDateTime;
+                                    customerRepository.Update(customer);
+                                    customerRepository.SubmitChanges();
+                                }
+                            }
+                        }
+                    }                    
                 }
             }
         }

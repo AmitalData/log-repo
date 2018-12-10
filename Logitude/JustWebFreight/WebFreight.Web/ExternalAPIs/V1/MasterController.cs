@@ -94,8 +94,50 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     MasterQueryService mappingService = new MasterQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.MasterCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);
 
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    if (string.IsNullOrEmpty(entityPM.VolumeUnitCode))
                     {
+                        throw new ApplicationException("Missing volume unit code");
+                    }
+
+                    if (string.IsNullOrEmpty(entityPM.DimensionsUnitCode))
+                    {
+                        throw new ApplicationException("Missing dimensions unit code");
+                    }
+
+                    if (string.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
+                    {
+                        throw new ApplicationException("Missing gross weight unit code");
+                    }
+
+                    if (string.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
+                    {
+                        throw new ApplicationException("Missing chargeable weight unit code");
+                    }
+
+                    if (entityPM.TransportModeId == "A")
+                    {
+                        if (string.IsNullOrEmpty(entityPM.MainCarriageCarrierId))
+                        {
+                            if (!string.IsNullOrEmpty(entityPM.Master) || !string.IsNullOrEmpty(entityPM.MainCarriageCarrierNumber))
+                            {
+                                throw new ApplicationException("Missing Main carriage carrier");
+                            }
+                        }
+
+                        else
+                        {
+                            AirlineRepository airlineRepository = new AirlineRepository(authToken.Tenant);
+                            Airline airline = airlineRepository.GetSingleAirline(entityPM.MainCarriageCarrierId, authToken.Tenant);
+                            if(airline != null)
+                            {
+                                entityPM.CarrierIsCheckDigit = airline.CheckDigit;
+                                entityPM.CarrierIsLimitedLength = airline.LimitedLength;
+                            }
+                        }
+                    }
+
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    { 
                         if (entity.IsOperationalClosed)
                         {
                             string errorMessage = "";
@@ -136,7 +178,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 entityPM.AccountingCloseDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                             }
                         }
-
+                        
                         if (entity.Houses.Count > 0)
                         {
                             ShipmentRepository shipmentRepository = new ShipmentRepository(authToken.Tenant);
@@ -334,7 +376,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 }
                             }
                         }
-
+                        
                         if (!string.IsNullOrEmpty(entityPM.IncotermId))
                         {
                             IncotermRepository myIncotermRepository = new IncotermRepository(entityPM.Tenant);
@@ -343,6 +385,34 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             {
                                 entityPM.FreightPrepaidCollectId = myIncoterm.Freight;
                                 entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
+                            }
+                        }
+
+                        AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
+                        if (!string.IsNullOrEmpty(entityPM.AgentId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.AgentId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.AgentAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.ShipperId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ShipperAddressId = address.Id;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+                        {
+                            Address address = addressRepository.GetMainAddressByCardId(entityPM.ConsigneeId, authToken.Tenant);
+                            if (address != null)
+                            {
+                                entityPM.ConsigneeAddressId = address.Id;
                             }
                         }
 
@@ -365,6 +435,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (allHouses.Count > 0)
                         {
+                            ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(MyContext);
+                            ShipmentComputedFields entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(entityPM.Id, entityPM.Tenant);
+                            if(entityComputedFields != null)
+                            {
+                                entityComputedFields.NumberOfHouses = allHouses.Count;
+                                shipmentComputedFieldsRepository.Update(entityComputedFields);
+                                shipmentComputedFieldsRepository.SubmitChanges();
+                            }
+
                             foreach (Shipment item in allHouses)
                             {
                                 if (entityPM.IsOperationalClosed)

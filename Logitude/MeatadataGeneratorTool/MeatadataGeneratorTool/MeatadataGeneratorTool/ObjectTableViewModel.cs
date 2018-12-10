@@ -280,6 +280,8 @@ namespace MeatadataGeneratorTool
             DisplayLookUpFieldsList = new ObservableCollection<ObjectFieldsViewModel>();
             ToBeDisplayOnLookUpList = new ObservableCollection<ObjectFieldsViewModel>();
             ObjectTableTypes = new List<ObjectTableType>() { new ObjectTableType { Code = "MD", Name = "Master Data" }, new ObjectTableType() { Code = "BR", Name = "Business Record" } };
+            this.AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
+            this.AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
         }
 
         public void BuildObsList(List<ObjectFieldsViewModel> fields)
@@ -1495,7 +1497,8 @@ namespace MeatadataGeneratorTool
             set
             {
                 selectedObjectField = value;
-                FieldLength = value.Length;
+                if (value != null)
+                    FieldLength = value.Length;
                 FirePropertyChanged("SelectedObjectField");
             }
         }
@@ -2914,6 +2917,13 @@ namespace MeatadataGeneratorTool
             {
                 selectedQuery = value;
                 FirePropertyChanged("SelectedQuery");
+
+                if (value != null && value.QueryFiltersObsList != null)
+                {
+                    this.SelectedQueryFilter = value.QueryFiltersObsList.FirstOrDefault();
+                }
+                else
+                    this.SelectedQueryFilter = null;
             }
         }
 
@@ -3286,6 +3296,8 @@ namespace MeatadataGeneratorTool
             {
                 selectedQueryColumn = value;
                 FirePropertyChanged("SelectedQueryColumn");
+
+             
             }
         }
 

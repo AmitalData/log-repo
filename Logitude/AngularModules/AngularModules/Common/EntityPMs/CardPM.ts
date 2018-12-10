@@ -159,6 +159,11 @@ export class CardPM {
     public set MainAddressId(newValue: string) { if (this.mainAddressId != newValue) { this.mainAddressId = newValue; this.MarkAsDirty("MainAddressId"); } }
        
 	 
+    private billingAddressId: string;
+    public get BillingAddressId() { return this.billingAddressId; }
+    public set BillingAddressId(newValue: string) { if (this.billingAddressId != newValue) { this.billingAddressId = newValue; this.MarkAsDirty("BillingAddressId"); } }
+       
+	 
     private website: string;
     public get Website() { return this.website; }
     public set Website(newValue: string) { if (this.website != newValue) { this.website = newValue; this.MarkAsDirty("Website"); } }

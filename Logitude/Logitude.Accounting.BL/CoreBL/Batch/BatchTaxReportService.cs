@@ -28,7 +28,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             PNCFileArgs parameterArgs = serializer.Deserialize(stringReader) as PNCFileArgs;
 
             // Call the service
-            DocumentsFilingPM docFilingPM = TaxReportService.CreatePNC874File(parameterArgs.ReportId, parameterArgs.Tenant);
+            DocumentsFilingPM docFilingPM = TaxReportService.CreatePNC874File(parameterArgs.ReportId, parameterArgs.Tenant, BatchTaskExecution.CreatedByUserId);
 
         }
     }

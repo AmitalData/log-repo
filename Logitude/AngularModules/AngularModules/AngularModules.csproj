@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -37,6 +37,7 @@
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountSearchWindowComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountTaxWithholdingTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\NewConnectedGLAccountComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\PaymentCheque\PaymentChequeGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\ExternalReconciliation\ExternalRecoDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\Reconciliation\ReconciliationDetailsTabComponent.html" />
@@ -218,7 +219,10 @@
     <Content Include="Images\ArrowLeft.png" />
     <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
+    <Content Include="Images\Flags\--.png" />
     <Content Include="Images\Flags\XK.png" />
+    <Content Include="Images\train.png" />
+    <Content Include="Images\truck.png" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessRoleNewComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Team\TeamGeneralTabComponent.html" />
@@ -291,12 +295,14 @@
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelLoadComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\OpenFormatReportList.ts" />
+    <TypeScriptCompile Include="Accounting\EntityPMCustomCode\OpenFormatReportPMCustomCode.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\JournalAdditionalDataPM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatDateTypePM.ts" />
     <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatReportPM.ts" />
@@ -334,6 +340,7 @@
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\EditTabs\Overview\TicketOverviewTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\ChooseShipmentComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.ts" />
+    <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />
@@ -519,6 +526,13 @@
     <TypeScriptCompile Include="Accounting\Services\StandardLists\VatReportStatusListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportPMService.ts" />
     <TypeScriptCompile Include="Controls\Pipes\DateToMonthPipe.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Activities\ActivitiesModule.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Activities\NewEntity\NewAppointment.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Activities\NewEntity\NewPhoneCall.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Activities\NewEntity\NewTask.ts" />
+    <TypeScriptCompile Include="e2e\CRM\CRMModule-spec.ts" />
+    <TypeScriptCompile Include="e2e\CRM\CRMModule.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Opportunities\NewOpportunity.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessRoleNewComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\Components\BusinessProcessQueue\QueueNewComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBusinessProcess\Components\Team\TeamGeneralTabComponent.ts" />
@@ -544,11 +558,13 @@
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWObjectTableList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryColumnList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryFilterList.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityLists\DWSubQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityLists\DWQueryList.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectFieldPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWObjectTablePM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryColumnPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryFilterPM.ts" />
+    <TypeScriptCompile Include="Infrastructure\EntityPMs\DWSubQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\DWQueryPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\LBPTeamMemberPM.ts" />
     <TypeScriptCompile Include="Infrastructure\EntityPMs\SharedLogisticsSettingPM.ts" />
@@ -557,6 +573,7 @@
     <TypeScriptCompile Include="Infrastructure\EntityPMs\BusinessRolePM.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\BusinessProcessDomainService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedLists\BusinessRoleExtendedListService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWQueryBuilderService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessProcessQueueListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\BusinessRoleListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\ExtendedPMs\DWObjectFieldExtendedPMService.ts" />
@@ -564,6 +581,8 @@
     <TypeScriptCompile Include="Infrastructure\Services\StandardLists\DWObjectTableListService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWObjectFieldPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWObjectTablePMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWSubQueryPMService.ts" />
+    <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\DWQueryPMService.ts" />
     <TypeScriptCompile Include="Infrastructure\Services\StandardPMs\SharedLogisticsSettingPMService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\ModuleAPInvoice.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\ModuleAPPayment.ts" />
@@ -1151,17 +1170,12 @@
     <Content Include="Infrastructure\Components\StimulsoftComponent\ExportSettingAdvanceComponent.html" />
     <Content Include="Infrastructure\Components\StimulsoftDesigner\StimulsoftDesigner.html" />
     <Content Include="Invoice\Components\AccountingTab\AccountingTab_APPaymentMethod.html" />
-    <Content Include="Invoice\Components\AccountingTab\AccountingTab_ARPaymentMethod.html" />
     <Content Include="InvoiceModules\APInvoice\Components\EditTabs\AddEditAPGeneralInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\APInvoice\Components\EditTabs\AddEditMultipleAPInvoiceLineComponent.html" />
     <Content Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceDetailsTabGeneral.html" />
     <Content Include="InvoiceModules\APInvoice\Components\EditTabs\EditMultipleShipmentComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentTransferTabComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceGeneralTabComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARPayment\ARPaymentGeneralTabComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARPayment\EditMultiCurrency.html" />
     <Content Include="Invoice\Components\EditTabs\TransferHeader\TransferHeaderDetailsTabComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARPayment\ARPaymentTransferTabComponent.html" />
     <Content Include="Invoice\Components\Helpers\AccountingTransferHeaderHelperComponent.html" />
     <Content Include="Invoice\Components\MenuButtonsComponents\ARInvoiceMenuButtonsComponent.html" />
     <Content Include="InvoiceModules\APInvoice\Components\NewEntity\APInvoiceTransferTemplate.html" />
@@ -1476,6 +1490,7 @@
     <TypeScriptCompile Include="Invoice\EntityPMCustomCode\ARPaymentPMCustomCode.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\ARPaymentPMInitService.ts" />
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\BankAccountLitePMInitService.ts" />
+    <TypeScriptCompile Include="Invoice\EntityPMs\AccountingPaymentMethodPM.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\AccountingPaymentMethodListService.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentTransferStatusListService.ts" />
@@ -4594,7 +4609,6 @@
     <TypeScriptCompile Include="Infrastructure\Validators\EntityWarningsValidator.ts" />
     <TypeScriptCompile Include="Infrastructure\Validators\TenantManagementValidator.ts" />
     <TypeScriptCompile Include="Invoice\Components\AccountingTab\AccountingTab_APPaymentMethod.ts" />
-    <TypeScriptCompile Include="Invoice\Components\AccountingTab\AccountingTab_ARPaymentMethod.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\AddEditAPGeneralInvoiceLineComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\AddEditAPInvoiceLineComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\AddEditMultipleAPInvoiceLineComponent.ts" />
@@ -4602,12 +4616,6 @@
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceMultipleDetailsTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APInvoice\Components\EditTabs\EditMultipleShipmentComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentTransferTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARInvoice\AddEditARGeneralInvoiceLineComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceDetailsTabGeneral.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceGeneralTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARPayment\ARPaymentGeneralTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARPayment\ARPaymentTransferTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARPayment\EditMultiCurrency.ts" />
     <TypeScriptCompile Include="Invoice\Components\EditTabs\TransferHeader\TransferHeaderDetailsTabComponent.ts" />
     <TypeScriptCompile Include="Invoice\Components\Helpers\AccountingTransferHeaderHelperComponent.ts" />
     <TypeScriptCompile Include="Invoice\Components\ListHeaderTemplates\ARInvoiceSentHeaderTemplate.ts" />
@@ -5502,18 +5510,6 @@
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentDetailsTabComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentDocsInTabComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentDocsOutTabComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARInvoice\AddEditARGeneralInvoiceLineComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARInvoice\AddEditARInvoiceLineComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceDetailsTabConsolidation.html" />
-    <Content Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceDetailsTabGeneral.html" />
-    <Content Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceDetailsTabNormal.html" />
-    <Content Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceDocsInTabComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceDocsOutTabComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARInvoice\ARInvoicePaymentsTabComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceTransferTabComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARPayment\ARPaymentDocsInTabComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARPayment\ARPaymentDocsOutTabComponent.html" />
-    <Content Include="Invoice\Components\EditTabs\ARPayment\ARPaymentDetailsTabComponent.html" />
     <Content Include="Invoice\Components\Helpers\APInvoiceHelperComponent.html" />
     <Content Include="Invoice\Components\Helpers\APPaymentHelperComponent.html" />
     <Content Include="Invoice\Components\Helpers\ARInvoiceHelperComponent.html" />
@@ -6427,17 +6423,6 @@
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentDetailsTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentDocsInTabComponent.ts" />
     <TypeScriptCompile Include="InvoiceModules\APPayment\Components\EditTabs\APPaymentDocsOutTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARInvoice\AddEditARInvoiceLineComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceDetailsTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceDetailsTabConsolidation.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceDetailsTabNormal.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceDocsInTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceDocsOutTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARInvoice\ARInvoicePaymentsTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARInvoice\ARInvoiceTransferTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARPayment\ARPaymentDocsInTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARPayment\ARPaymentDocsOutTabComponent.ts" />
-    <TypeScriptCompile Include="Invoice\Components\EditTabs\ARPayment\ARPaymentDetailsTabComponent.ts" />
     <TypeScriptCompile Include="Invoice\Components\Helpers\APInvoiceHelperComponent.ts" />
     <TypeScriptCompile Include="Invoice\Components\Helpers\APPaymentHelperComponent.ts" />
     <TypeScriptCompile Include="Invoice\Components\Helpers\ARInvoiceHelperComponent.ts" />
@@ -6790,6 +6775,9 @@
     <Folder Include="Customs\CustomFilters\" />
     <Folder Include="Customs\EntityPMInitServices\" />
     <Folder Include="Dashboard\Components\Graphs\" />
+    <Folder Include="e2e\CRM\Activities\EditEntity\" />
+    <Folder Include="e2e\CRM\Customers\" />
+    <Folder Include="e2e\CRM\Quotes\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
     <Folder Include="Logitude\Components\Customization\" />

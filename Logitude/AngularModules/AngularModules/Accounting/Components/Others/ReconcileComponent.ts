@@ -242,14 +242,14 @@ class LineModel extends BaseComponent {
         // [i] copied from list template
         //
 
-        if (!AppTool.IsNullOrEmpty(ReconcileEventManager.GLAccountReconcileMethodCode)) {
+        if (!AppTool.IsNullOrEmpty(this.parent.GLAccountPM.ReconcileMethodCode)) {
             // this code was copied to reconcile window, if it need change, please chenge it in reconcile window too
-            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") { // 0-local currency
+            if (this.parent.GLAccountPM.ReconcileMethodCode == "0") { // 0-local currency
 
                 // local
                 return SessionLocator.TenantPM.CurrencySign;
 
-            } else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") { // 1-foreign currency
+            } else if (this.parent.GLAccountPM.ReconcileMethodCode == "1") { // 1-foreign currency
 
                 // foreign
                 return this.ledgerTransaction.CurrencySign;
@@ -332,6 +332,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     SetWindowArgs(args: any) {
         if (args != null) {
             this.GLAccountPM = args.GLAccountPM;
+
+            ReconcileEventManager.GLAccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
 
             if (!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId)) {
                 this.CurrencyId = this.GLAccountPM.CurrencyId;
@@ -943,9 +945,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
 
     CalculateOriginalAmount(row: LineModel) {
-        if (!AppTool.IsNullOrEmpty(ReconcileEventManager.GLAccountReconcileMethodCode)) {
+        if (!AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode)) {
 
-            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") { // 0-local currency
+            if (this.GLAccountPM.ReconcileMethodCode == "0") { // 0-local currency
 
                 if (AppTool.IsNullOrZero(row.LocalAmountCredit)) {
                     return row.LocalAmountDebit;
@@ -953,7 +955,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                     return -1 * row.LocalAmountCredit;
                 }
 
-            } else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") { // 1-foreign currency
+            } else if (this.GLAccountPM.ReconcileMethodCode == "1") { // 1-foreign currency
 
                 if (AppTool.IsNullOrZero(row.ForeignAmountCredit)) {
                     return row.ForeignAmountDebit;
@@ -982,10 +984,17 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         this.TotalCredit = 0;
         this.TotalDebit = 0;
         for (let line of this.SelectedLines.Collection) {
+
             if (line.AmountToReconcile < 0)
                 this.TotalDebit += +line.AmountToReconcile * -1; //cast number
             else
                 this.TotalCredit += +line.AmountToReconcile;
+
+            // due this.TotalCredit + amountToReconcile;  == 335.78999999999996 <>335.79
+            this.TotalDebit = AppTool.Round(this.TotalDebit, 2);
+            this.TotalCredit = AppTool.Round(this.TotalCredit, 2);
+
+
         }
         var def = (this.TotalCredit - this.TotalDebit)
         this.TotalsDeference = def < 0 ? def * -1 : def

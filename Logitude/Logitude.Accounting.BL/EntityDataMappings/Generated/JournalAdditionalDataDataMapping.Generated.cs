@@ -25,7 +25,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         JournalId, 
 	         TaxReportId, 
-	         TaxReportStatusCode,
+	         TaxReportTransmitStatusCode,
 	      }
 
 
@@ -35,7 +35,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         JournalId, 
 	         TaxReportId, 
-	         TaxReportStatusCode,
+	         TaxReportTransmitStatusCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -54,9 +54,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.TaxReportId = entityPM.TaxReportId;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportStatusCode))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportTransmitStatusCode))
             {
-				entityPOCO.TaxReportStatusCode = entityPM.TaxReportStatusCode;
+				entityPOCO.TaxReportTransmitStatusCode = entityPM.TaxReportTransmitStatusCode;
 			}
 			}
 
@@ -78,9 +78,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.TaxReportId = entityPOCO.TaxReportId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TaxReportStatusCode))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TaxReportTransmitStatusCode))
             {
-					entityPM.TaxReportStatusCode = entityPOCO.TaxReportStatusCode;
+					entityPM.TaxReportTransmitStatusCode = entityPOCO.TaxReportTransmitStatusCode;
             }
 
 		}
@@ -99,9 +99,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.TaxReportId = entityPM.TaxReportId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportStatusCode))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxReportTransmitStatusCode))
             {
-                oldEntityPM.TaxReportStatusCode = entityPM.TaxReportStatusCode;
+                oldEntityPM.TaxReportTransmitStatusCode = entityPM.TaxReportTransmitStatusCode;
             }
 			
 		}

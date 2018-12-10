@@ -97,6 +97,33 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private void CreateShipmentFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Forwarder Partner Id",
+                FullFieldLable = "ForwarderPartnerId",
+                FieldName = "ForwarderPartnerId",
+                FieldsDataType = "LookUp",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                LookUpTableId = HybridPartnerObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ListFieldLable = "ForwarderPartnerIdListLable",
+                Operator = "Equals",
+                ListPropertyPath = "ForwarderPartnerId",
+                PMPropertyPath = "ForwarderPartnerId",
+                DisplayInList = true,
+                ListLableDefaultText = "Forwarder Partner Id",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Project #",
@@ -21636,7 +21663,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1,
                 MinLength = 0,
                 ObjectTableId = ShipmentTypesObject.Id,
-                ObjectTableName = "TransportModeId",
+                ObjectTableName = "ShipmentType",
                 Tenant = 0,
                 TextCodeType = "F",
                 LookUpTableId = null,
@@ -28766,6 +28793,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "DeliveryTransportModeNameListLable",
                 ListLableDefaultText = "Delivery Transport Mode",
                 DisplayInList = true,
+                HasTemplate = true,
                 Operator = "StartsWith",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -28808,6 +28836,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "ECRTransportModeNameListLable",
                 ListLableDefaultText = "Return Transport Mode",
                 DisplayInList = true,
+                HasTemplate = true,
                 Operator = "StartsWith",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -29014,7 +29043,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 15,
                 MinLength = 0,
                 ObjectTableId = ShipmentAssemblyObject.Id,
-                ObjectTableName = "Shipment",
+                ObjectTableName = ShipmentAssemblyObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
@@ -29049,7 +29078,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 15,
                 MinLength = 0,
                 ObjectTableId = ShipmentAssemblyObject.Id,
-                ObjectTableName = "Shipment",
+                ObjectTableName = ShipmentAssemblyObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",

@@ -107,6 +107,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetApproved = false;
             entityPM.SetCancelApproval = false;
             entityPM.SetReTransfer = false;
+            entityPM.SetReSendQBO = false;
+
         }
 
         public static void MapInvoiceLine(APInvoiceLinePM entityPM, APInvoiceLine entity, bool isNewState)

@@ -31,6 +31,8 @@ namespace WebFreight.Web.DataContracts
         //public List<ObjectFieldOperator> Operators { get; set; }
         public object TextValue { get; set; }
         public ObjectFieldOperator Operation { get; set; }
+        public string OperationCode { get; set; }
+        public string OperationName { get; set; }
         public string AndOr { get; set; }
          
     }

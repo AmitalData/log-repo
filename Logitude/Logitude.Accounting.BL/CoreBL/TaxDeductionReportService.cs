@@ -131,7 +131,14 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append("a" + item.SumOfTaxDeductionLocalAmount.Value.ToString().PadLeft(9, '0'));
 
                     myStringBuilder.Append("00000000");
-                    myStringBuilder.Append(item.EndYearBalance.Value.ToString().PadLeft(8, '0'));
+
+                if (item.EndYearBalance != null)
+                {
+                    if (item.EndYearBalance.Value.ToString().Length > 8) item.EndYearBalance.Value.ToString().Substring(0, 8);
+
+                    myStringBuilder.Append("a" + item.EndYearBalance.Value.ToString().PadLeft(8, '0'));
+                }
+             
                 if (item.TaxDeductionPercentage != null)
                 {
                     if (item.TaxDeductionPercentage.Value.ToString().Length > 2)  item.TaxDeductionPercentage.Value.ToString().Substring(0, 2);
@@ -293,7 +300,16 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(item.Month);
                 }
 
-                    myStringBuilder.Append("a" + data.ByVendorList.Where(d => d.Month == item.Month).Count());
+                if (item.TotalVendors.ToString().Length < 6)
+                {
+                    myStringBuilder.Append(item.TotalVendors.ToString().PadLeft(6, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append(item.TotalVendors);
+                }
+
+                
 
                     if (item.TotalPaymentsWithoutDivided != null)
                     {

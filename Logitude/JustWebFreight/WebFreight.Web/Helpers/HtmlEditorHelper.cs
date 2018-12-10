@@ -2890,7 +2890,7 @@ namespace WebFreight.Web.Helpers
 
             }
 
-            if (theEntity == null && pmtype != null)
+             if (theEntity == null && pmtype != null)
             {
                 theEntity = Activator.CreateInstance(pmtype);
             }
@@ -4181,48 +4181,11 @@ namespace WebFreight.Web.Helpers
 
                         if (!string.IsNullOrWhiteSpace(resultValue))
                         {
-
                             if ((field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal"))
                             {
-                                if (resultValue.Contains("."))
-                                {
-                                    string[] digits = resultValue.Split('.');
-                                    var trimmedStr = digits[1].Trim('0');
-                                    if (string.IsNullOrEmpty(trimmedStr))
-                                    {
-                                        resultValue = digits[0];
-                                        return resultValue;
-                                    }
-                                }
-                                else
-                                {
-                                    return resultValue;
-                                }
+                                resultValue = FormatNumber(resultValue, field);
                             }
-                            if (field.DataTypeCode.ToLower() == "double")
-                            {
-                                double db = 0;
-                                if (double.TryParse(resultValue, out db))
-                                {
-                                    string rounded = db.ToString("#,##0." + new string('0', 2));
-                                    if (rounded.EndsWith("00"))
-                                        rounded = db.ToString("#,##0." + new string('0', 3));
 
-                                    resultValue = rounded;
-                                }
-                            }
-                            else if (field.DataTypeCode.ToLower() == "decimal")
-                            {
-                                decimal db = 0;
-                                if (decimal.TryParse(resultValue, out db))
-                                {
-                                    string rounded = db.ToString("#,##0." + new string('0', 2));
-                                    if (rounded.EndsWith("00"))
-                                        rounded = db.ToString("#,##0." + new string('0', 3));
-
-                                    resultValue = rounded;
-                                }
-                            }
                         }
                     }
 
@@ -4267,6 +4230,62 @@ namespace WebFreight.Web.Helpers
 
 
             return resultValue;
+        }
+
+        private  string FormatNumber(string value, ObjectField field)
+        {
+
+            string result = string.Empty;
+          //  bool isEndZero = false;
+            //if (value.Contains("."))
+            //{
+            //    string[] digits = value.Split('.');
+            //    var trimmedStr = digits[1].Trim('0');
+            //    if (string.IsNullOrEmpty(trimmedStr)) isEndZero = true;
+
+            //}
+
+            result = ShowDigitsAfterPoint(value, field);
+
+            //if ((!value.Contains(".") || isEndZero) && result.Contains("00"))
+            //{
+            //    result = result.Split('.')[0];
+            //}
+            //else if (!isEndZero && value.Contains(".") && result.Contains("00"))
+            //{
+            //    result = ShowDigitsAfterPoint(value, field,3);
+            //}
+
+
+            return result;
+        }
+
+        private static string ShowDigitsAfterPoint(string value, ObjectField field,int digitsAfterPoint =2)
+        {
+            string result = string.Empty;
+            if (field.DataTypeCode.ToLower() == "double")
+            {
+                double db = 0;
+                double.TryParse(value, out db);
+                if (digitsAfterPoint ==3)
+                {
+                    result = db.ToString("#,##0." + new string('0', 3));
+                }
+               else result = db.ToString("N");
+            }
+
+            if (field.DataTypeCode.ToLower() == "decimal")
+            {
+                decimal db = 0;
+                decimal.TryParse(value, out db);
+                if (digitsAfterPoint == 3)
+                {
+                    result = db.ToString("#,##0." + new string('0',3));
+                }
+                else result = db.ToString("N");
+            }
+
+            return result;
         }
 
         #endregion

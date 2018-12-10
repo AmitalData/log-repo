@@ -1091,6 +1091,9 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                         }
                         else {
                             if (!this.DisableZeroPadding) {
+                                if(AppTool.IsNullOrEmpty(this.DigitsAfterPoint)){
+                                    this.DigitsAfterPoint=3;
+                                }
                                 this.TextValue = val.toFixed(this.DigitsAfterPoint);
                             }
                         }

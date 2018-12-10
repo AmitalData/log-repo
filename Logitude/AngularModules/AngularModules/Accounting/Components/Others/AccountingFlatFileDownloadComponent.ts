@@ -15,6 +15,7 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { TaxDeductionReportExtendedPMService } from '../../Services/ExtendedPMs/TaxDeductionReportExtendedPMService';
 import { TaxDeductionReportPM } from '../../EntityPMs/TaxDeductionReportPM';
+import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 declare var window;
 
@@ -38,6 +39,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
     btePM: any;
     bteList: BatchTaskExecutionList;
     timer: any;
+    public isRTL: boolean = false;
 
     _DocumentsFilingViewsExtService: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
     _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
@@ -46,6 +48,9 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
 
     constructor() {
         super();
+
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
     }
     ngOnDestroy() {
         if (this.timer) {
@@ -57,11 +62,11 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
             this.ChangeStatus();
 
             this.ObjectTableName = args.ObjectTableName;
-          
+
             // Tax Report
             if (this.ObjectTableName == "TaxReport") {
                 this.reportPM = args.EntityPM;
-                // if the file does not need rebuild, show download button 
+                // if the file does not need rebuild, show download button
                 if (!this.reportPM.NeedsRebulid) {
                     //update status
                     this.ChangeStatus("inprogress");
@@ -69,13 +74,13 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
                     //get documentid
                     this.GetDocument();
                 }
-              
+
             }
             else if (this.ObjectTableName == "TaxDeductionReport") {
                 this.taxDeductionPM = args.EntityPM;
             }
 
-           
+
             if (args.StartDirectly)
                 this.RunService(false);
 
@@ -222,9 +227,9 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
                 if (!mm.HasError) {
                     this.docFilingPM = mm.Result;
 
-                    
+
                         this.ChangeStatus("ready");
-                   
+
 
                 }
                 else {
@@ -247,8 +252,9 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
     ShowError() {
         var msg = this.bteList.ErrorLog;
         var msgbox = new MessageWindow();
-        msgbox.Width = 500;
-        msgbox.Height = 400;
+        // msgbox.Width = 500;
+        // msgbox.Height = 400;
+        msgbox.RTL = this.isRTL;
         msgbox.Show(msg);
     }
     //#endregion
@@ -300,7 +306,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
                 this.LabelText = TextCodeTranslator.Translate("General.O.ErrorwhileCreating");
                 //this.LabelText = "Error while creating!";
                 break;
-            }  
+            }
             default: {
                 this.Loading = false;
                 this.Success = false;
@@ -308,7 +314,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
                 this.LabelText = TextCodeTranslator.Translate("General.O.clicktoStartCreatingFile");
                 //this.LabelText = "Please click create to start creating file";
                 break;
-            }   
+            }
         }
     }
 

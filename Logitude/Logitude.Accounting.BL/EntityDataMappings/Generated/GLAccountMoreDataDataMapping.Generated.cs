@@ -27,7 +27,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         BalanceInLocalCurrency, 
 	         LocalBalanceInDue, 
 	         NextDueDate, 
-	         TotalOpenChequesInLocalCur,
+	         TotalOpenChequesInLocalCur, 
+	         TotFutureOpenChequesInLocalCur,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         BalanceInLocalCurrency, 
 	         LocalBalanceInDue, 
 	         NextDueDate, 
-	         TotalOpenChequesInLocalCur,
+	         TotalOpenChequesInLocalCur, 
+	         TotFutureOpenChequesInLocalCur,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -71,6 +73,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalOpenChequesInLocalCur))
             {
 				entityPOCO.TotalOpenChequesInLocalCur = entityPM.TotalOpenChequesInLocalCur;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotFutureOpenChequesInLocalCur))
+            {
+				entityPOCO.TotFutureOpenChequesInLocalCur = entityPM.TotFutureOpenChequesInLocalCur;
 			}
 			}
 
@@ -107,6 +114,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.TotalOpenChequesInLocalCur = entityPOCO.TotalOpenChequesInLocalCur;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotFutureOpenChequesInLocalCur))
+            {
+					entityPM.TotFutureOpenChequesInLocalCur = entityPOCO.TotFutureOpenChequesInLocalCur;
+            }
+
 		}
 
 		public void PMToOldPM(GLAccountMoreDataPM entityPM, GLAccountMoreDataPM oldEntityPM)
@@ -136,6 +148,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalOpenChequesInLocalCur))
             {
                 oldEntityPM.TotalOpenChequesInLocalCur = entityPM.TotalOpenChequesInLocalCur;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotFutureOpenChequesInLocalCur))
+            {
+                oldEntityPM.TotFutureOpenChequesInLocalCur = entityPM.TotFutureOpenChequesInLocalCur;
             }
 			
 		}

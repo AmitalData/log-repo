@@ -168,11 +168,6 @@ export class ARInvoiceLinePM {
     public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
        
 	 
-    private objectTableId: string;
-    public get ObjectTableId() { return this.objectTableId; }
-    public set ObjectTableId(newValue: string) { if (this.objectTableId != newValue) { this.objectTableId = newValue; this.MarkAsDirty("ObjectTableId"); } }
-       
-	 
     private entityReference: string;
     public get EntityReference() { return this.entityReference; }
     public set EntityReference(newValue: string) { if (this.entityReference != newValue) { this.entityReference = newValue; this.MarkAsDirty("EntityReference"); } }
@@ -251,11 +246,6 @@ export class ARInvoiceLinePM {
     private isExpense: boolean;
     public get IsExpense() { return this.isExpense; }
     public set IsExpense(newValue: boolean) { if (this.isExpense != newValue) { this.isExpense = newValue; this.MarkAsDirty("IsExpense"); } }
-       
-	 
-    private autoCreditDummyReceivableId: string;
-    public get AutoCreditDummyReceivableId() { return this.autoCreditDummyReceivableId; }
-    public set AutoCreditDummyReceivableId(newValue: string) { if (this.autoCreditDummyReceivableId != newValue) { this.autoCreditDummyReceivableId = newValue; this.MarkAsDirty("AutoCreditDummyReceivableId"); } }
        
 	 
 

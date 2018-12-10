@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .TitleBackGround {
         background: #F0F0F0; /* For browsers that do not support gradients */
         background: -webkit-linear-gradient(#F0F0F0, #C5C7C7); /* For Safari 5.1 to 6.0 */
@@ -71,7 +71,7 @@
                                             <tr>
                                                 <td>
                                                     <!--<LogListBox [DataSource]="unSelectedList" [Height]="'494'" [Binding]="'ListTextCodeCode'" [event]="onUnSelectedDataLoadedEvent"  (SelectedItemChanged)="onFieldSelectedItemChanged($event)"></LogListBox>-->
-                                                    <LogListBox [DataSource]="unSelectedList" [Height]="'394'" [DataSourceChanged]="onUnselectedDataSourceChangedEvent" [Binding]="'ListTextCodeCode'" [event]="onUnSelectedDataLoadedEvent" (SelectedItemChanged)="onFieldSelectedItemChanged($event)"></LogListBox>
+                                                    <LogListBox [DataSource]="unSelectedList" [Sort]="true" [Height]="'394'" [DataSourceChanged]="onUnselectedDataSourceChangedEvent" [Binding]="'ListTextCodeCode'" [event]="onUnSelectedDataLoadedEvent" (SelectedItemChanged)="onFieldSelectedItemChanged($event)"></LogListBox>
                                                 </td>
                                             </tr>
                                             <tr><td style="height:100%;"></td></tr>

@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';
 import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
@@ -571,19 +571,31 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     }
 
 
-    
+    ShowSaleMaxMinAmountColumnKey: string = Guid.newGuid();
+    get ShowSaleMaxMinAmountColumn() {
+        var showSaleMaxMinAmountColumn: boolean = false;
+        if (this.QuoteTemplateSettingPM) showSaleMaxMinAmountColumn = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountPackages : this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountContainers;
+        return showSaleMaxMinAmountColumn;
+    }
+    set ShowSaleMaxMinAmountColumn(value: boolean) {
+        if (this.QuoteTemplateSettingPM != null) {
+            if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountPackages = value;
+            else this.QuoteTemplateSettingPM.ShowSaleMaxMinAmountContainers = value;
+        }
+    }
+
 
 
     DisablePricingSetting() {
-            this.ShowChargeCode = false;
-            this.ShowChargeName = false;
-            this.ShowMeasurement = false;
-            this.ShowPrice1 = false;
-            this.ShowPrice2 = false;
-            this.ShowSaleCurrencyColumn = false;
-            this.ShowLocalCurrencyColumn = false;
-            this.ShowChargeDescription = false;
-
+        this.ShowChargeCode = false;
+        this.ShowChargeName = false;
+        this.ShowMeasurement = false;
+        this.ShowPrice1 = false;
+        this.ShowPrice2 = false;
+        this.ShowSaleCurrencyColumn = false;
+        this.ShowLocalCurrencyColumn = false;
+        this.ShowChargeDescription = false;
+        this.ShowSaleMaxMinAmountColumn = false;
     }
 
 

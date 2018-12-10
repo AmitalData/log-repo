@@ -599,6 +599,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                                 this.SelectedExternalViewModel.DocumentHasFile = false;
                                 this.SelectedExternalViewModel.FileName = null;
                                 this.SelectedExternalViewModel.Extention = null;
+                                this.SelectedExternalViewModel.DocumentHasFile = false;
 
 
                                 this.DeleteAttachmentButtonEnable = false;

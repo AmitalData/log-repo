@@ -81,14 +81,12 @@ export class SharedManifestComponent {
                             this.MessageNoHouseFound = "This is a direct shipment";
                         }
 
-                        //if (this.CurrentEntity.CancelledBySenderAgent) {
-                        //    this.ValidationWarningsList = [];
-                        //    this.ValidationWarningsList.push("The manifest has got cancelled by the sender.You are bot allowed to reactive it.");
-                        //    this.IsDisableEdit = true;
-                        //}
-                        //else 
-
-                        if (!AppTool.IsNullOrEmpty(this.ManifestSL.MasterNumber) && this.ManifestSL.TransportModeId == "A") {
+                        if (this.CurrentEntity.CancelledBySenderAgent) {
+                            this.ValidationWarningsList = [];
+                            this.ValidationWarningsList.push("The manifest was cancelled by the sender.You are not allowed to reactivate it.");
+                            this.IsDisableEdit = true;
+                        }
+                        else if (!AppTool.IsNullOrEmpty(this.ManifestSL.MasterNumber) && this.ManifestSL.TransportModeId == "A") {
                             this.CheckIfAnyShipmentHaveMasterNumber(this.ManifestSL.MasterNumber, this.ManifestSL.LongMaster);
                         }
                     
@@ -191,7 +189,7 @@ export class SharedManifestComponent {
         }
 
         else if (this.CurrentEntity.StatusCode == "CANC") {
-            this.ButtonChangeStatusLable = "Reactivate";
+            this.ButtonChangeStatusLable = "reactivate";
             this.IsEnableCreateMasterButton = false;
             this.WidthButtonStatusChange = "70px";
         }

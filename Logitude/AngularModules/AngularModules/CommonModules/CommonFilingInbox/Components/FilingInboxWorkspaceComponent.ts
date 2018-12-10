@@ -1,30 +1,30 @@
-import {Component, OnInit, OnDestroy, EventEmitter, Output, AfterViewInit} from '@angular/core';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {FilingInboxPM} from '../../../Common/EntityPMs/FilingInboxPM'; 
-import {FilingInboxPMService} from '../../../Common/Services/StandardPMs/FilingInboxPMService'; 
-import {FilingInboxAttachmentPM} from '../../../Common/EntityPMs/FilingInboxAttachmentPM'; 
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {CommonDomainService, FilingInboxSummary, FilingInboxAttachItem} from'../../../Common/Services/CommonDomainService'; 
-import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import {ShipmentList} from '../../../Shipment/EntityLists/ShipmentList';
-import {ShipmentPMService} from '../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import {QuoteList} from '../../../Quote/EntityLists/QuoteList';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {UserPMService} from '../../../Common/Services/StandardPMs/UserPMService';
-import {DocumentTypeListExtendedService} from '../../../Common/Services/ExtendedLists/DocumentTypeListExtendedService';
-import {DocumentsFilingPM} from '../../../Common/EntityPMs/DocumentsFilingPM';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
-import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
-import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { Component, OnInit, OnDestroy, EventEmitter, Output, AfterViewInit } from '@angular/core';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { FilingInboxPM } from '../../../Common/EntityPMs/FilingInboxPM';
+import { FilingInboxPMService } from '../../../Common/Services/StandardPMs/FilingInboxPMService';
+import { FilingInboxAttachmentPM } from '../../../Common/EntityPMs/FilingInboxAttachmentPM';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { CommonDomainService, FilingInboxSummary, FilingInboxAttachItem } from '../../../Common/Services/CommonDomainService';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ShipmentList } from '../../../Shipment/EntityLists/ShipmentList';
+import { ShipmentPMService } from '../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import { QuoteList } from '../../../Quote/EntityLists/QuoteList';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { UserPMService } from '../../../Common/Services/StandardPMs/UserPMService';
+import { DocumentTypeListExtendedService } from '../../../Common/Services/ExtendedLists/DocumentTypeListExtendedService';
+import { DocumentsFilingPM } from '../../../Common/EntityPMs/DocumentsFilingPM';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 
 
@@ -63,6 +63,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     public IconBackground = "./Images/single-tick.png";
     public ShareAsDefault: boolean = false;
     public IsDSVConnectVisible: boolean = false;
+    public IsHebrewSettings = false;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
 
     constructor() {
@@ -77,6 +78,10 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         this.SetUIPropertires();
     }
     ngOnInit() {
+
+        if (this.IsLogBox || SessionLocator.PrivateLableSettings) {
+            this.IsHebrewSettings = true;
+        }
         if (FeatureLocator.HasFeaturePermession("FilingInbox", "DigitallySign")) {
             this.CheckDigitalSign();
         }
@@ -155,7 +160,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         this.QueryPageIndex = 0;
     }
 
-    public IsDigitallySignDisabled = false; 
+    public IsDigitallySignDisabled = false;
     CheckDigitalSign() {
         if (this.myCommonDomainService == null) {
             this.myCommonDomainService = new CommonDomainService();
@@ -330,7 +335,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 var result: FilingInboxPM[] = response.Result;
 
                 if (result != null && !AppTool.IsNullOrEmpty(this.searchFields)) {
-                    result = result.filter(d => d.SearchFields && d.SearchFields.toUpperCase().indexOf(this.searchFields.toUpperCase()) > -1);
+                    result = result.filter(d => d.SearchFields != null && d.SearchFields && d.SearchFields.toUpperCase().indexOf(this.searchFields.toUpperCase()) > -1);
                 }
 
                 result.forEach(item => {
@@ -861,13 +866,13 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 this.Customer = entity.ShipperName;
             }
 
-            if (AppTool.IsNullOrEmpty(entity.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entity.StatusName) && entity.StatusName.toLocaleLowerCase() == "in progress") {
+            if (AppTool.IsNullOrEmpty(entity.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entity.StatusName) && entity.StatusName.toLocaleLowerCase() != "in progress") {
                 this.IsDSVConnectVisible = true;
             }
             else {
                 this.IsDSVConnectVisible = false;
             }
-        
+
             this.Route = entity.Routing;
             this.EntityNumber = AppTool.IsNullOrEmpty(entity.ForwarderShipmentNumber) ? entity.CustomerReference1 : entity.ForwarderShipmentNumber;
             this.EntityId = entity.Id;
@@ -937,7 +942,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                             else {
                                 this.Customer = entityList.CustomerName;
                             }
-                          
+
                             this.Route = entityList.Routing;
                             if (s.EntityObjectTableName == "House") {
                                 this.SelectedAttachment.HouseNumber = entityList.ShipmentNumber;
@@ -964,7 +969,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         newWindow.WindowArgs = windowArgs;
         newWindow.Show('./CommonModules/CommonFilingInbox/Components/ForwarderChooseShipmentsComponent');
         newWindow.ComponentLoaded.subscribe(s => {
-            newWindow.WindowClosed.subscribe(d => {   
+            newWindow.WindowClosed.subscribe(d => {
                 var entityList = null;
                 entityList = s.SelectedRow;
                 if (entityList != null) {
@@ -975,7 +980,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                         this.Customer = entityList.ShipperName;
                     }
 
-                    if (AppTool.IsNullOrEmpty(entityList.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entityList.StatusName) && entityList.StatusName.toLocaleLowerCase() == "in progress") {
+                    if (AppTool.IsNullOrEmpty(entityList.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entityList.StatusName) && entityList.StatusName.toLocaleLowerCase() != "in progress") {
                         this.IsDSVConnectVisible = true;
                     }
                     else {
@@ -1028,7 +1033,11 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             }
             this.isMailBody = false;
             if (value != null) {
-                if (value.FileName != null && (value.FileName.split('.')[1].toUpperCase().trim() == "PDF")) {
+
+                if (value.FileName != null && value.FileName == "Mail Body") {
+                    this.isMailBody = true;
+                }
+                if (value.FileName != null && value.FileName.split('.') != null && value.FileName.split('.')[1] != null && (value.FileName.split('.')[1].toUpperCase().trim() == "PDF")) {
                     this.IsPDF = true;
                     this.myCommonDomainService.GetFilingAttachPdfReport(value.DocumentId).subscribe((response: ServiceResponse) => {
                         if (!response.HasError) {
@@ -1202,7 +1211,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 var isDescriptionFilled = true;
                 var docsErrorMsg = "";
                 this.SelectedFilingInbox.FilingInboxAttachments.forEach(item => {
-                   
+
                     if (!AppTool.IsNullOrEmpty(item.DocumentTypeId)) {
                         if (item.AttachLogs != null && item.AttachLogs.length > 0) {
                             docsErrorMsg += item.FileName + ", ";
@@ -1260,7 +1269,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 }
                 else {
                     SessionLocator.CurrentSession.StopBusyIndicator();
-                    var msg = ""; 
+                    var msg = "";
                     if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" && this.EntityObjectTableName == "Shipment") {
                         if (!isDescriptionFilled) {
                             msg += "Please fill Description fields for all attachments. ";
@@ -1278,7 +1287,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             }
         }
     }
-    FileAndDeleteButtonClicked(arg:boolean) {
+    FileAndDeleteButtonClicked(arg: boolean) {
         if (this.SelectedFilingInbox != null) {
             SessionLocator.CurrentSession.StartBusyIndicator("Filing & Delete...");
             var summary: FilingInboxSummary = new FilingInboxSummary();
@@ -1397,7 +1406,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                     if (SessionLocator.PrivateLableSettings) {
                         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
                         this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.EntityId, SessionLocator.Tenant).subscribe(res => {
-                            if (res.Result == false) {
+                            if (res.Result == false && summary.Attaches.filter(a => a.IsSharedWithAgent == true).length == 0) {
                                 hasSharedDocs = false;
                             }
                             else {
@@ -1464,7 +1473,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                         this.EntityId = shipment.Id;
                         if ((ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") || SessionLocator.PrivateLableSettings) {
                             this.EntityNumber = AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) ? shipment.CustomerReference1 : shipment.ForwarderShipmentNumber;
-                            if (AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(shipment.StatusName) && shipment.StatusName.toLocaleLowerCase() == "in progress") {
+                            if (AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(shipment.StatusName) && shipment.StatusName.toLocaleLowerCase() != "in progress") {
                                 this.IsDSVConnectVisible = true;
                             }
                             else {
@@ -1502,9 +1511,9 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
 export class FilingInboxData {
 
     public FilingInboxPM: FilingInboxPM;
-    public FilingInboxAttachments : FilingInboxAttachment[] = [];
+    public FilingInboxAttachments: FilingInboxAttachment[] = [];
     public Background = "White";
-    public HasAttachmanets = false; 
+    public HasAttachmanets = false;
     constructor(filingInboxPM: FilingInboxPM, public father: FilingInboxWorkspaceComponent) {
         this.FilingInboxPM = filingInboxPM;
         this.FillFilingInboxAttachments();
@@ -1517,10 +1526,15 @@ export class FilingInboxData {
     FillFilingInboxAttachments() {
         this.FilingInboxAttachments = [];
         this.FilingInboxAttachments = [];
-        this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null && (a.FileName.split('.')[1] != null && a.FileName.split('.')[1].toUpperCase() == "PDF")).forEach(item => {
-            this.FilingInboxAttachments.push(new FilingInboxAttachment(item, this.father));
-        });
-        this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null && (a.FileName.split('.')[1] != null && a.FileName.split('.')[1].toUpperCase() != "PDF")).forEach(item => {
+        //this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null && (a.FileName.split('.')[1] != null && a.FileName.split('.')[1].toUpperCase() == "PDF")).forEach(item => {
+        //    this.FilingInboxAttachments.push(new FilingInboxAttachment(item, this.father));
+        //});
+        //this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null && (a.FileName.split('.')[1] != null && a.FileName.split('.')[1].toUpperCase() != "PDF")).forEach(item => {
+        //    this.FilingInboxAttachments.push(new FilingInboxAttachment(item, this.father));
+        //});
+
+        this.FilingInboxPM.FilingInboxAttachments.filter(a => a.FileName != null).forEach(item => {
+
             this.FilingInboxAttachments.push(new FilingInboxAttachment(item, this.father));
         });
     }
@@ -1591,13 +1605,14 @@ export class FilingInboxAttachment extends BaseComponent {
     constructor(entity: FilingInboxAttachmentPM, public father: FilingInboxWorkspaceComponent) {
         super();
         this.entity = entity;
+
         this.AttachLogs = entity != null ? entity.AttachLogs : [];
         if (this.AttachLogs != null && this.AttachLogs.length > 0) {
             this.IsSingleTick = false;
         }
-  
+
         this.IsSharedWithAgent = father.ShareAsDefault;
-        
+
         this.CalculatingWidth();
         this.HouseFilters = new ApiQueryFilters();
         this.HouseFilters.PageIndex = 0;
@@ -1608,7 +1623,7 @@ export class FilingInboxAttachment extends BaseComponent {
 
     SetDescriptionUIProperties() {
         if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2" && this.father.EntityObjectTableName == "Shipment") {
-           // var isreq = AppTool.IsNullOrEmpty(this.Description);
+            // var isreq = AppTool.IsNullOrEmpty(this.Description);
             //this.UIProperties.SetRequired("Description", null, isreq);
         }
     }
@@ -1787,7 +1802,7 @@ export class FilingInboxAttachment extends BaseComponent {
         }
     }
 
-    private isSharedWithAgent = false; 
+    private isSharedWithAgent = false;
     get IsSharedWithAgent() {
         return this.isSharedWithAgent;
     }

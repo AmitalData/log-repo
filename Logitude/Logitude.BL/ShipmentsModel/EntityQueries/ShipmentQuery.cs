@@ -7530,7 +7530,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         public IQueryable<ShipmentList> GetShipmentListTenant(int tenant)
         {
-            IQueryable<ShipmentList> shipmentsList = from s in repository.context.Shipments.Include("MainCarriageFromPort").Include("MainCarriageToPort")
+            IQueryable<ShipmentList> shipmentsList = from s in repository.context.Shipments.Include("MainCarriageFromPort").Include("MainCarriageToPort").Include("MainCarriageFinalDestinationPort")
                                                      join sm in repository.context.ShipmentMasterDatas
                                                      on s.MasterShipmentDataId equals sm.Id into shipmentJoin
                                                      from m in shipmentJoin.DefaultIfEmpty()
@@ -7573,6 +7573,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          EstimateProfitInProfitCurrency = s.EstimateProfitInProfitCurrency,
                                                          MainCarriageFinalDestinationETA = m.MainCarriageFinalDestinationETA,
                                                          MainCarriageFinalDestinationATA = m.MainCarriageFinalDestinationATA,
+                                                         MainCarriageFinalDestinationPortCode = m.MainCarriageFinalDestinationPort == null ? null : m.MainCarriageFinalDestinationPort.Code,
                                                          FreightForwarderId = s.FreightForwarderId,
                                                          FreightForwarderName = s.FreightForwarderCard != null ? s.FreightForwarderCard.EnglishName : null,
                                                          FromPort = m.MainCarriageFromPort.Code,

@@ -196,23 +196,31 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public SaleLocalAmountHeader: any[] = [];
     public SalePriceHeader: any = [];
     public SaleAmountHeader: any = [];
+    public CostMinAmountHeader: any = [];
+    public CostMaxAmountHeader: any = [];
+    public SaleMinAmountHeader: any = [];
+    public SaleMaxAmountHeader: any = [];
     SetLabels() {
-        this.CostQuentityHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostQuantity").split('%n');
-        this.CostPriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostPrice").split('%n');
-        this.CostAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostAmount").split('%n');
-        this.SaleQuantityHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleQuantity").split('%n');
-        this.SaleLocalAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmountLocal").replace("%LocalCurrencyCode", this.LocalCurrencyCode).split('%n');
+        this.CostQuentityHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostQuantity", false).split('%n');
+        this.CostPriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostPrice", false).split('%n');
+        this.CostAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostAmount", false).split('%n');
+        this.SaleQuantityHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleQuantity", false).split('%n');
+        this.SaleLocalAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmountLocal", false).replace("%LocalCurrencyCode", this.LocalCurrencyCode).split('%n');
+        this.CostMinAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostMinAmount", false).split('%n');
+        this.CostMaxAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.CostMaxAmount", false).split('%n');
+        this.SaleMinAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleMinAmount", false).split('%n');
+        this.SaleMaxAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleMaxAmount", false).split('%n');
         this.SetLabelsAttached();
     }
     SetLabelsAttached() {
         if (this.IsSaleCurrencySameAsCost) {
-            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
-            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
+            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
+            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", "").replace("(", "").replace(")", "").split('%n');
         }
 
         else {
-            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", this.SaleCurrencyCode).split('%n');
-            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", this.SaleCurrencyCode).split('%n');
+            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", this.SaleCurrencyCode).split('%n');
+            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", this.SaleCurrencyCode).split('%n');
         }
     }
 
@@ -958,7 +966,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     }
     VATDetailsClicked() {
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Title = "VAT Details";
+        logitudeWindow.Title = TextCodeTranslator.Translate("Quote.O.Charges.VATDetails");
         logitudeWindow.WindowArgs = { IsLocalCurrency: this.IsLocalCurrency, SaleCurrencyCode: this.SaleCurrencyCode, IsCurrencyFilterVisible: this.IsCurrencyFilterVisible, TotalVATs: this.EntityPM.TotalVATs };
         logitudeWindow.Show('./QuoteModules/QuoteCharges/Components/QuoteVATDetailsComponent');
     }
@@ -1969,7 +1977,7 @@ export class QuoteChargeItem extends BaseComponent {
 
         var value = ivalue;
 
-        if (value) {
+        if (value != null) {
             if (this.SaleMinAmount != null) {
                 if (value < this.SaleMinAmount) {
                     value = this.SaleMinAmount;
@@ -2011,7 +2019,7 @@ export class QuoteChargeItem extends BaseComponent {
 
         var value = ivalue;
 
-        if (value) {
+        if (value != null) {
             var iTotalAmount = null;
 
             if (!AppTool.IsNullOrEmpty(value)) {
@@ -2462,14 +2470,14 @@ export class QuoteChargeItem extends BaseComponent {
     SetEditScreenGridHeaders() {
         if (this.fatherComponent.IsSaleCurrencySameAsCost) {
             var myCurrencyCode = AppTool.IsNullOrEmpty(this.CostCurrencyCode) ? "" : this.CostCurrencyCode;
-            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
-            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
+            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice",false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
+            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
         }
 
         else {
             var myCurrencyCode = AppTool.IsNullOrEmpty(this.fatherComponent.SaleCurrencyCode) ? "" : this.fatherComponent.SaleCurrencyCode;
-            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice").replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
-            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount").replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
+            this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
+            this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
         }
     }
 }

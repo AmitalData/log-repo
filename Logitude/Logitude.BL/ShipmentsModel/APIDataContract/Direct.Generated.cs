@@ -83,8 +83,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public string Master { get; set; }
     
-    public string MainCarriageCarrier { get; set; }
-    
     public string ShipmentNumber { get; set; }
     
     public User CreatedByUser { get; set; }
@@ -108,5 +106,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public double? ValueOfGoods { get; set; }
     
     public Currency ValueOfGoodsCurrency { get; set; }
+    
+    public string MainCarriageCarrierNumber { get; set; }
+    
+    public Card MainCarriageCarrier { get; set; }
     }
 } 

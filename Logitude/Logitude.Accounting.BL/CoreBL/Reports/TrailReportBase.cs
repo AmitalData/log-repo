@@ -57,7 +57,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         }
 
-
+   
         public List<TrailReportM> Execute()
         {
             _TrailReportParam.FromDate = _TrailReportParam.FromDate.Date;
@@ -89,7 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category1))
             {
                 myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category5Id == _TrailReportParam.Category1);
+                    .Where(a => a.Category1Id == _TrailReportParam.Category1);
             }
             if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category5))
             {

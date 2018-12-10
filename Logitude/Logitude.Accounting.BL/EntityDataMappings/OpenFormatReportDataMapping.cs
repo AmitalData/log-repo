@@ -11,6 +11,11 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs; 
 using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Security;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -31,9 +36,73 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPOCOToPM(OpenFormatReportPM entityPM, OpenFormatReport entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.StatusTypeCode);
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.CreatedByUserId);
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.DateTypeCode);
+
+
+
+            if (entityPOCO.StatusTypeCode != null)
+            {
+                OpenFormatReportStatusQueryService statusQueryService = new OpenFormatReportStatusQueryService(entityPOCO.Tenant);
+                OpenFormatReportStatusPM status = statusQueryService.GetSingle(entityPOCO.StatusTypeCode, false, false);
+                if (status != null)
+                {
+                    ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                    if (loggedContact.DontShowLocal)
+                    {
+
+                        entityPM.Status = status.EnglishName;
+                    }
+                    else { entityPM.Status = status.LocalName; }
+                   
+
+                }
+
+            }
+
+            if (entityPOCO.CreatedByUserId != null)
+            {
+                ContactQuery query = new ContactQuery(entityPOCO.Tenant);
+                ContactPM contact = query.GetSinglePM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
+                if (contact != null)
+                {
+                    ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                    if (loggedContact.DontShowLocal)
+                    {
+
+                        entityPM.CreatedByUserName = contact.EnglishName;
+                    }
+                    else { entityPM.CreatedByUserName = contact.LocalName; }
+
+
+                }
+
+            }
+
+
+            if (entityPOCO.DateTypeCode != null)
+            {
+                OpenFormatDateTypeQueryService typeQueryService = new OpenFormatDateTypeQueryService(entityPOCO.Tenant);
+                OpenFormatDateTypePM dateType = typeQueryService.GetSingle(entityPOCO.DateTypeCode, false, false);
+                if (dateType != null)
+                {
+                    ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                    if (loggedContact.DontShowLocal)
+                    {
+
+                        entityPM.DateTypeName = dateType.EnglishName;
+                    }
+                    else { entityPM.DateTypeName = dateType.LocalName; }
+
+
+                }
+
+            }
+
+
         }
-   }
+    }
 
 
 }
