@@ -242,6 +242,7 @@
     <Compile Include="CommonDataModel\APIDataContract\Department.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\DimensionsUnit.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\DocumentsFiling.Generated.cs" />
+    <Compile Include="CommonDataModel\APIDataContract\GLAccount.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Incoterm.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Measurement.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\PaymentTerm.Generated.cs" />
