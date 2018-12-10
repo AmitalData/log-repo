@@ -320,12 +320,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private static string GetLoggedContactId(GLAccountPM entityPM)
         {
-            return AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-            //string email = HttpContext.Current.User.Identity.Name;
-            //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-            //string loggedContactId = loggedContact.Id;
-            //return loggedContactId;
+            string contactId = null;
+
+            if (entityPM.PassedFromAPI)
+            {
+                UserQuery userQuery = new UserQuery(entityPM.Tenant);
+                UserPM MyUserPM = userQuery.GetSingleUserPMByEmail("system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant, false);
+            }
+
+            else
+            {
+                contactId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+            }
+
+            return contactId;
         }
 
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
