@@ -78,7 +78,7 @@ export class NewOpenFormatReportComponent extends BaseComponent {
         this.entityPM.UpdateDate = new Date();
   
         var errors: string[] = [];
-       // this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        //this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         Validator.TryValidateObject(this.entityPM, this.ObjectTableName, errors);
 
         if (this.ToDate < this.FromDate) {
