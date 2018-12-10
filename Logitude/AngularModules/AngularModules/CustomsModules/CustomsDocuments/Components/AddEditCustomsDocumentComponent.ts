@@ -830,6 +830,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     SelectedTab: string = "";
 
     BuildTabs() {
+        this.TabsSource = [];
         if (!this.IsUserTabSelected) {
             this.SelectedTab = "CustomsDocumentRemarks";
         }
