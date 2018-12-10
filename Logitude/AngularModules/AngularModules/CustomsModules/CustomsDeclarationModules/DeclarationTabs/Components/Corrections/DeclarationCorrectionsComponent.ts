@@ -20,7 +20,7 @@ import {ConsignmentPM} from '../../../../../Customs/EntityPMs/ConsignmentPM';
 import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 import {AmendmentView} from '../../../../../Customs/EntityPMs/Extended/AmendmentView';
 import { GeneralDataView } from '../../../../../Customs/EntityPMs/Extended/GeneralDataView';
-import { error } from '../../../../../Customs/EntityPMs/Extended/AmendmentView'; // aot error : Cannot find module
+import { error } from '../../../../../Customs/EntityPMs/Extended/AmendmentView';
 import {DeclarationCorrectionView} from '../../../../../Customs/EntityPMs/Extended/DeclarationCorrectionView';
 import {DeclarationConstraintPM} from '../../../../../Customs/EntityPMs/DeclarationConstraintPM';
 import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
