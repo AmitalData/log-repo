@@ -46,7 +46,8 @@ import {UserListService} from '../../../../../Common/Services/StandardLists/User
 import {CustomsSettingListService} from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import {CustomBankListService} from '../../../../../Customs/Services/StandardLists/CustomBankListService';
 import {CustomBankCardExtendedPMService} from '../../../../../Customs/Services/ExtendedPMs/CustomBankCardExtendedPMService';
-import {PaymentMethodTypeListService} from '../../../../../Customs/Services/StandardLists/PaymentMethodTypeListService';
+import { PaymentMethodTypeListService } from '../../../../../Customs/Services/StandardLists/PaymentMethodTypeListService';
+import { CustomerActivityTypeListService } from '../../../../../Customs/Services/StandardLists/CustomerActivityTypeListService';
 import { IIGGeneralMessagesService } from '../../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
 import { DeclarationPaymentPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPaymentPMService';
@@ -83,6 +84,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
     userListService: UserListService = new UserListService();
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     paymentMethodTypeListService: PaymentMethodTypeListService = new PaymentMethodTypeListService();
+    customerActivityTypeListService: CustomerActivityTypeListService = new CustomerActivityTypeListService();
     declarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
     _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     PaymentMethodsList: ObservableCollection;
@@ -660,22 +662,42 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                 return;
             }
         }
-        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
-            .subscribe(
-            (response: ServiceResponse) => {
-                let obj = response.Result;
-                if (obj) {
-                    let DefaultValue = obj['DefaultValue'];
 
-                    if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
-                        if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
-                            this.JustAutoFillPaymentScreen();
+        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_PAYCASH_FIL", "NON", this.DeclarationPM.CustomerCode, SessionLocator.Tenant)
+            .subscribe((response: ServiceResponse) => {
+                    let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
+                        if (DefaultValue == "A") {
+                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                                this.JustAutoFillPaymentScreenCash();
+                            }
+                        }
+                        else {
+                            this.AutoFillPaymentScreen();
                         }
                     }
-                }
-            }
-            );
+                });
+        
     }
+
+    AutoFillPaymentScreen() {
+        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_PAYHAND_FIL", "NON", "NON", SessionLocator.Tenant)
+            .subscribe(
+                (response: ServiceResponse) => {
+                    let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
+
+                        if (DefaultValue == "A") {//==AutoFillPaymentScreen //if (customsSetting.AutoFillPaymentScreen) {
+                            if (this.PaymentMethodsList && this.PaymentMethodsList.Collection) {
+                                this.JustAutoFillPaymentScreen();
+                            }
+                        }
+                    }
+                });
+    }
+
     JustAutoFillPaymentScreen() {
         for (let method of this.PaymentMethodsList.Collection) {
             method.Amount = this.DeclarationPM.TotalTax;
@@ -683,10 +705,23 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             this.paymentMethodTypeListService.getSingleFromCache("1").subscribe((response: ServiceResponse) => {
                 method.MethodTypeName = response.Result.LocalName;
             });
-
-
         }
     }
+
+    JustAutoFillPaymentScreenCash() {
+        for (let method of this.PaymentMethodsList.Collection) {
+            method.Amount = this.DeclarationPM.TotalTax;
+            method.MethodTypeCode = "2";
+            this.paymentMethodTypeListService.getSingleFromCache("2").subscribe((response: ServiceResponse) => {
+                method.MethodTypeName = response.Result.LocalName;
+            });
+            method.PayerActivityTypeCode = "0";
+            this.customerActivityTypeListService.getSingleFromCache("0").subscribe((response: ServiceResponse) => {
+                method.PayerActivityTypeName = response.Result.LocalName;
+            });
+        }
+    }
+
     OldAutoFillPaymentScreen() {
         this.customsSettingListService.getAll().subscribe((response: ServiceResponse) => {
             var list = response.Result;

@@ -475,7 +475,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         }
                     case "CancelDeclarationClosure":
                         {
-                            this.DeclarationClosureMethod();
+                            this.CancelDeclarationClosureMethod();
                             break;
                         }
                 }
