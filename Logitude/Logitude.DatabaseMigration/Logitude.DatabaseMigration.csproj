@@ -94,10 +94,6 @@
     <Compile Include="Migrations\201810110920077_JornalMoreDATA.Designer.cs">
       <DependentUpon>201810110920077_JornalMoreDATA.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810110922231_RemoveTheRelationBetweenHybridPartnerAndForwardingPartnerId_Rabaia.cs" />
-    <Compile Include="Migrations\201810110922231_RemoveTheRelationBetweenHybridPartnerAndForwardingPartnerId_Rabaia.Designer.cs">
-      <DependentUpon>201810110922231_RemoveTheRelationBetweenHybridPartnerAndForwardingPartnerId_Rabaia.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201810111215464_JornalMoreDATA2.cs" />
     <Compile Include="Migrations\201810111215464_JornalMoreDATA2.Designer.cs">
       <DependentUpon>201810111215464_JornalMoreDATA2.cs</DependentUpon>
@@ -254,10 +250,6 @@
     <Compile Include="Migrations\201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.Designer.cs">
       <DependentUpon>201811071439112_AbedEditFieldSessionTimeoutTableTenantLoginPolicy.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811080215327_AddCustomFieldsToShipmentDataView_Maheera.cs" />
-    <Compile Include="Migrations\201811080215327_AddCustomFieldsToShipmentDataView_Maheera.Designer.cs">
-      <DependentUpon>201811080215327_AddCustomFieldsToShipmentDataView_Maheera.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.cs" />
     <Compile Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.Designer.cs">
       <DependentUpon>201811081200180_JournalLineExternalReconcileNumberMigration.cs</DependentUpon>
@@ -269,10 +261,6 @@
     <Compile Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.cs" />
     <Compile Include="Migrations\201811071639283_AddShipmentPackageHarmonizeModification.Designer.cs">
       <DependentUpon>201811071639283_AddShipmentPackageHarmonizeModification.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811110643152_MissingMigrationsSinceR4_Rabaia.cs" />
-    <Compile Include="Migrations\201811110643152_MissingMigrationsSinceR4_Rabaia.Designer.cs">
-      <DependentUpon>201811110643152_MissingMigrationsSinceR4_Rabaia.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.cs" />
     <Compile Include="Migrations\201811110859039_AddPickUpDeliveryPackageHarmonize_Samar.Designer.cs">
@@ -411,9 +399,6 @@
     <EmbeddedResource Include="Migrations\201810110920077_JornalMoreDATA.resx">
       <DependentUpon>201810110920077_JornalMoreDATA.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201810110922231_RemoveTheRelationBetweenHybridPartnerAndForwardingPartnerId_Rabaia.resx">
-      <DependentUpon>201810110922231_RemoveTheRelationBetweenHybridPartnerAndForwardingPartnerId_Rabaia.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810111215464_JornalMoreDATA2.resx">
       <DependentUpon>201810111215464_JornalMoreDATA2.cs</DependentUpon>
     </EmbeddedResource>
@@ -525,14 +510,8 @@
     <EmbeddedResource Include="Migrations\201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.resx">
       <DependentUpon>201811070848046_AddTwentyCustomeFieldsOnShipment_Maheera.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811080215327_AddCustomFieldsToShipmentDataView_Maheera.resx">
-      <DependentUpon>201811080215327_AddCustomFieldsToShipmentDataView_Maheera.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.resx">
       <DependentUpon>201811081200180_JournalLineExternalReconcileNumberMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811110643152_MissingMigrationsSinceR4_Rabaia.resx">
-      <DependentUpon>201811110643152_MissingMigrationsSinceR4_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.resx">
       <DependentUpon>201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs</DependentUpon>
@@ -597,11 +576,11 @@
     <EmbeddedResource Include="Migrations\201811211426578_FixSubQueryTableName_Rabaia.resx">
       <DependentUpon>201811211426578_FixSubQueryTableName_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811251315249_NewField_BTE.resx">
-      <DependentUpon>201811251315249_NewField_BTE.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.resx">
       <DependentUpon>201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811251315249_NewField_BTE.resx">
+      <DependentUpon>201811251315249_NewField_BTE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.resx">
       <DependentUpon>201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs</DependentUpon>
