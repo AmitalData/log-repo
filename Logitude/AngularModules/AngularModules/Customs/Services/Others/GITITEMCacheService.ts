@@ -20,13 +20,15 @@ export class GITITEMCacheService {
   private static _instance: GITITEMCacheService;
   private constructor() {
     this._ItemCode_LocalCache = [];
-    this.GetCountryPURForItems();
+      this.GetCountryPURForItems();
+      this.GetUnitPURForItems();
   }
 
   GITITEMExtendedPMService: GITITEMExtendedPMService = new GITITEMExtendedPMService();
 
 
-  public IsCountryPURForItems: boolean = false;
+    public IsCountryPURForItems: boolean = false;
+    public IsUnitPURForItems: boolean = false;
 
   private _ItemCode_LocalCache: ItemCodeComponent[];
   public get ItemCode_LocalCache(): ItemCodeComponent[] {
@@ -50,7 +52,18 @@ export class GITITEMCacheService {
   }
 
 
-  public SaveItemCodeLocalCache() {
+    private GetUnitPURForItems() {
+        var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_UNIT", "NON", "NON", SessionLocator.Tenant)
+            .subscribe(response => {
+                if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+                    this.IsUnitPURForItems = true;
+                }
+            });
+    }
+
+    public SaveItemCodeLocalCache() {
+        let listGITITEMDto: GITITEMDto[] = [];
     if (this.ItemCode_LocalCache != null && this.ItemCode_LocalCache.length > 0) {
       for (let item of this.ItemCode_LocalCache) {
         if (item.IsNew) {
@@ -68,14 +81,29 @@ export class GITITEMCacheService {
           myGITITEMPM.ORIGINCOUNTRY = item.OriginCountryCode;
           myGITITEMPM.UNITID = item.InvoiceQuantityType;
 
-          this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe(myResult => {
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-              //this.entity = mm.Result;
-            }
-          });
+          //this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe(myResult => {
+          //  var mm: ServiceResponse = myResult;
+          //  if (!mm.HasError) {
+          //    //this.entity = mm.Result;
+          //  }
+          //});
+            listGITITEMDto.push(myGITITEMPM);
         }
-      }
+        }
+
+        let i = 0;
+        let j = 0;
+        let chunk = 50;
+        for (i = 0, j = listGITITEMDto.length; i < j; i += chunk) {
+            let chunkDtos = listGITITEMDto.slice(i, i + chunk);
+            this.GITITEMExtendedPMService.insert(chunkDtos).subscribe(myResult => {
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    var entity = mm.Result;
+                }
+            });
+        }
+
     }
   }
 

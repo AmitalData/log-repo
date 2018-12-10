@@ -664,6 +664,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isACCTab ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsACCTab  
+	   {
+	    
+	     get
+		{
+		   return isACCTab;
+		 }
+		 set
+		 {
+		   if(isACCTab != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsACCTab",OldValue=isACCTab,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isACCTab=value;
+		   }
+			
+		 }
+	   }
 	  private string courierSearchFields ;
 	  	  
        
@@ -867,6 +890,75 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierSuspentionReasonName",OldValue=courierSuspentionReasonName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   courierSuspentionReasonName=value;
+		   }
+			
+		 }
+	   }
+	  private string acceptanceStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AcceptanceStatusCode  
+	   {
+	    
+	     get
+		{
+		   return acceptanceStatusCode;
+		 }
+		 set
+		 {
+		   if(acceptanceStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AcceptanceStatusCode",OldValue=acceptanceStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   acceptanceStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string mamanStatusCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MamanStatusCode  
+	   {
+	    
+	     get
+		{
+		   return mamanStatusCode;
+		 }
+		 set
+		 {
+		   if(mamanStatusCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanStatusCode",OldValue=mamanStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mamanStatusCode=value;
+		   }
+			
+		 }
+	   }
+	  private string mamanErrorXml ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MamanErrorXml  
+	   {
+	    
+	     get
+		{
+		   return mamanErrorXml;
+		 }
+		 set
+		 {
+		   if(mamanErrorXml != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MamanErrorXml",OldValue=mamanErrorXml,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mamanErrorXml=value;
 		   }
 			
 		 }

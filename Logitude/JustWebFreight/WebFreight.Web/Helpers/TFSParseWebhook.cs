@@ -65,7 +65,7 @@ namespace WebFreight.Web.Helpers
             string accountUri = "https://logitudeteam.visualstudio.com";
             var personalAccessToken = "qcxofyaix25ph4bxun4n2pzmicxhp3d3t2w6bgissmpgsjwn4egq";
             int workItemId = wi;
-           
+
             // new VssOAuthAccessTokenCredential(personalAccessToken)
             VssConnection connection = new VssConnection(new Uri(accountUri), new VssBasicCredential("logitudo@live.com", personalAccessToken));
             // Get an instance of the work item tracking client
@@ -87,7 +87,7 @@ namespace WebFreight.Web.Helpers
                 }
                 if (projectNo == null)
                 {
-                   
+
                     var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
                     if (relation != null)
                     {
@@ -201,6 +201,10 @@ namespace WebFreight.Web.Helpers
                     newItem.UpdatedByUserId = updatedByUser.Id;
                     newItem.CreatedByUserId = updatedByUser.Id;
                     newItem.AnalyzeQueueId = this.AnalyzeQueueId;
+                    var sprint = computingPartnerHelper.GetLogitudeCodeTranslation(Details.IterationPath, "G-TFS", "Sprint");
+                    SprintRepository sprintRepository = new SprintRepository(Tenant);
+                    var sprintPOCO = sprintRepository.GetSprintByName(sprint, Tenant);
+                    newItem.SprintId = sprintPOCO != null ? sprintPOCO.Id : null;
                     tmEmployeeTimeRepository.Add(newItem);
                     tmEmployeeTimeRepository.SubmitChanges();
                 }

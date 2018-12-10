@@ -949,6 +949,24 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./Common/Components/Maintenance/CustomsInterface/CustomsInterfaceSettingsComponent');
                     break;
                 }
+                case "CFTP": {
+                    let LoggedUserPMCode = SessionLocator.LoggedUserPM.Code || "";
+                    LoggedUserPMCode = LoggedUserPMCode.toLowerCase();
+                    let allowed = false;
+                    allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital."));
+                    if (!SessionLocator.LoggedUserPM.IsCustomerCare && allowed) {
+
+                        let messageWindow = new MessageWindow()
+                        messageWindow.Show("Logged User Is not Customer Care ");
+                        return;
+                    }
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = " הגדרות FTP לשותפים";
+                    logitudeWindow.Width = 900;
+                    logitudeWindow.Height = 530;
+                    logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsPartnerFtpListComponent');
+                    break;
+                }
                 case "MTTC": {
                     this._entityResourceService.getEntityResourceByTableName("TicketClassification", 0).subscribe((resp: any) => {
                         SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketClassificationMaintenanceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
@@ -1082,7 +1100,8 @@ export class MaintenanceComponent {
                     logitudeWindow.Height = 400;
                     logitudeWindow.Width = 500;
 
-                    logitudeWindow.Show('./Customs/Components/CustomsRequests/GeneralRequests/RecallSuppliersFromFileComponent');
+                    //logitudeWindow.Show('./Customs/Components/CustomsRequests/GeneralRequests/RecallSuppliersFromFileComponent');
+                    logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/RecallSuppliersFromFileComponent');
                     break;
                 }
             case "MTDD": {

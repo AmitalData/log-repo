@@ -170,16 +170,31 @@
     <Compile Include="Migrations\201810180041541_AddSprintIdToTMEmployeeTabes_Maheera.Designer.cs">
       <DependentUpon>201810180041541_AddSprintIdToTMEmployeeTabes_Maheera.cs</DependentUpon>
     </Compile>
-     <Compile Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.cs" />
+    <Compile Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.cs" />
     <Compile Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.Designer.cs">
       <DependentUpon>201810141302279_ModifyInttraSettingOutSettingOptional.cs</DependentUpon>
     </Compile>
-	<Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\201810210928033_NewField_BTE_Subject.cs" />
+    <Compile Include="Migrations\201810210928033_NewField_BTE_Subject.Designer.cs">
+      <DependentUpon>201810210928033_NewField_BTE_Subject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810220153008_ModifyTheNameFieldOfSprint_Maheera.cs" />
+    <Compile Include="Migrations\201810220153008_ModifyTheNameFieldOfSprint_Maheera.Designer.cs">
+      <DependentUpon>201810220153008_ModifyTheNameFieldOfSprint_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810220655058_ChangeFieldsType_Refs.cs" />
+    <Compile Include="Migrations\201810220655058_ChangeFieldsType_Refs.Designer.cs">
+      <DependentUpon>201810220655058_ChangeFieldsType_Refs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811060825038_missingCustoms-MM.cs" />
+    <Compile Include="Migrations\201811060825038_missingCustoms-MM.Designer.cs">
+      <DependentUpon>201811060825038_missingCustoms-MM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
       <DependentUpon>201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs</DependentUpon>
     </Compile>
-    
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Migrations\201802141437145_ClassifiedREmarks.resx">
       <DependentUpon>201802141437145_ClassifiedREmarks.cs</DependentUpon>
@@ -247,8 +262,20 @@
     <EmbeddedResource Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.resx">
       <DependentUpon>201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
-   <EmbeddedResource Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.resx">
+    <EmbeddedResource Include="Migrations\201810141302279_ModifyInttraSettingOutSettingOptional.resx">
       <DependentUpon>201810141302279_ModifyInttraSettingOutSettingOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810210928033_NewField_BTE_Subject.resx">
+      <DependentUpon>201810210928033_NewField_BTE_Subject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810220153008_ModifyTheNameFieldOfSprint_Maheera.resx">
+      <DependentUpon>201810220153008_ModifyTheNameFieldOfSprint_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810220655058_ChangeFieldsType_Refs.resx">
+      <DependentUpon>201810220655058_ChangeFieldsType_Refs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811060825038_missingCustoms-MM.resx">
+      <DependentUpon>201811060825038_missingCustoms-MM.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

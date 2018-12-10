@@ -911,7 +911,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
 
                 var res = AnalyzeCore(requestParams, customsResponse, false);
-                CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentKey(requestParams);
+                bool tryConcurrentKiller = ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+                if (tryConcurrentKiller)
+                {
+                    CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentKey(requestParams);
+                }
                 ContextObjectTag = res.ContextObjectTag;
                 return res
                 ;
@@ -945,6 +949,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             try
             {
+                //var communicationLogStep = _CustomsRequestsSheetService.GetCommunicationLogStep();
+                //communicationLogStep.Retries>0
 
                 bool tryConcurrentKiller = ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
                 if (tryConcurrentKiller)

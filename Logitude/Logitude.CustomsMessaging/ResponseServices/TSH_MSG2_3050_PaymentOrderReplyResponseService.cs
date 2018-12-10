@@ -320,7 +320,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             _PaymentOrderPM.CustomsRequestsSheetId = requestParams.CustomsRequestsSheetId;
             paymentOrderUpdateService.Update(_PaymentOrderPM, true);
-            LogMessagingUtil.Instance.AppendLine("Update payment " + _PaymentOrderPM.PaymentNumber + " succeeded");
+            
 
             // Add Document- Printed Payment Form
             AnalyzePaymentDocument(customResponse.PaymentOrderReply.PrintedPaymentForm, requestParams);
@@ -650,6 +650,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
 
+            documentsFilingService.OnlyIfChangeUpdateAndAddVersion = true;
+            
             documentsFilingService.Update(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
 
             if (_DeclarationPM != null)

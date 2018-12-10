@@ -7,17 +7,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unifreight.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.Messaging.Maman
 {
     public class CourierMasterMamanService
     {
         private CourierMasterPM _CourierMasterPM;
+        private ICustomContext _Context;
 
         public string SendFTPMamanRequest(string courierMasterId, int tenant)
         {
-            var context = CustomContext.GetContext(tenant);
-            var myCourierMasterQueryService = new CourierMasterQueryService(context);
+            _Context = CustomContext.GetContext(tenant);
+            var myCourierMasterQueryService = new CourierMasterQueryService(_Context);
 
             _CourierMasterPM = myCourierMasterQueryService.GetSingle(courierMasterId, false, false);
             if (_CourierMasterPM == null)
@@ -33,7 +35,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 byte[] bytearray = Encoding.UTF8.GetBytes(messageToMaman);
                 //http://192.116.221.103:584/Courier58/api/couriermasters/getsingle?id=1-106
 
-                var myFTPMamanService = new FTPMamanService();
+                var myFTPMamanService = new FTPOutMamanSubManifestService();
                 myFTPMamanService.BuildCommunicationLog(bytearray, 1, courierMasterId);
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
@@ -46,34 +48,24 @@ namespace Logitude.Customs.BL.Messaging.Maman
         {
             CourierMasterMamanModel courierMasterMamanModel = new CourierMasterMamanModel();
             //string space = " ";
-            courierMasterMamanModel.MAWB = _CourierMasterPM.MAWB != null ? _CourierMasterPM.MAWB : " ";
-            courierMasterMamanModel.AirlineId = _CourierMasterPM.AirlineId != null ? _CourierMasterPM.AirlineId : " ";
-            courierMasterMamanModel.HAWBShort = _CourierMasterPM.ShortHAWB != null ? _CourierMasterPM.ShortHAWB : " ";
-            courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode : " ";
+            courierMasterMamanModel.MAWB = _CourierMasterPM.MAWB != null ? _CourierMasterPM.MAWB : "";
+            courierMasterMamanModel.AirlineId = _CourierMasterPM.AirlinePrefix != null ? _CourierMasterPM.AirlinePrefix : "";
+            courierMasterMamanModel.HAWBShort = _CourierMasterPM.ShortHAWB != null ? _CourierMasterPM.ShortHAWB : "";
+            courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode.Substring(_CourierMasterPM.GatewayPortCode.Length - 3) : "";
             courierMasterMamanModel.Weight = "K";
-            courierMasterMamanModel.PackageQuantity = _CourierMasterPM.PackageQuantity > 0 ? _CourierMasterPM.PackageQuantity.ToString() : " ";
-            courierMasterMamanModel.GrossMassMeasure = _CourierMasterPM.GrossMassMeasure > 0 ? _CourierMasterPM.GrossMassMeasure.ToString() : " ";
+            courierMasterMamanModel.PackageQuantity = _CourierMasterPM.PackageQuantity > 0 && _CourierMasterPM.PackageQuantity.ToString().Length <= 4 ? _CourierMasterPM.PackageQuantity.ToString() : "";
+            courierMasterMamanModel.GrossMassMeasure = _CourierMasterPM.GrossMassMeasure > 0 && _CourierMasterPM.GrossMassMeasure.ToString().Length <= 4 ? _CourierMasterPM.GrossMassMeasure.ToString() : "";
             courierMasterMamanModel.Description = "";
-            //if (!string.IsNullOrEmpty(line.Description))
-            //{
-            //    if (line.Description.Length > 15)
-            //    {
-            //        courierMasterMamanModel.Description= line.Description.Substring(0, 15);
-            //    }
-            //    else
-            //    {
-            //        courierMasterMamanModel.Description = line.Description;
-            //    }
-            //}
-            //else
-            //{
-            //    courierMasterMamanModel.Description = "";
-            //}
-            courierMasterMamanModel.Agent = "";
+
+            var declarationQS = new DeclarationQueryService(_Context);
+            string forwarder = declarationQS.GetDefault("ISRAEL", "CGO_CUST_FORW", "NON", "NON", _CourierMasterPM.Tenant);
+            forwarder = forwarder.Substring(forwarder.Length -3);
+
+            courierMasterMamanModel.Agent = forwarder;
             courierMasterMamanModel.SystemDate = String.Format("{0:yyMMdd}", DateTime.Now);
-            courierMasterMamanModel.Forwarder = "";
+            courierMasterMamanModel.Forwarder = forwarder;
             courierMasterMamanModel.Internet = "I";
-            courierMasterMamanModel.HAWB = _CourierMasterPM.HAWB != null ? _CourierMasterPM.HAWB : " ";
+            courierMasterMamanModel.HAWB = _CourierMasterPM.HAWB != null ? _CourierMasterPM.HAWB : "";
 
             StringBuilder messageToMaman = new StringBuilder(444);
             messageToMaman.Append(courierMasterMamanModel.MAWB.PadLeft(8,'0'));
@@ -84,8 +76,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             messageToMaman.Append(courierMasterMamanModel.Weight);
             messageToMaman.Append(courierMasterMamanModel.PackageQuantity.PadLeft(4, '0'));
             messageToMaman.Append(courierMasterMamanModel.GrossMassMeasure.PadLeft(6, '0')); // to check round????
-            messageToMaman.Append(' ', 15);
-            messageToMaman.Append(courierMasterMamanModel.Description.PadRight(15));
+            messageToMaman.Append(' ', 15); // Description
             messageToMaman.Append(courierMasterMamanModel.Agent.PadRight(3));
             messageToMaman.Append(courierMasterMamanModel.SystemDate);
             messageToMaman.Append(courierMasterMamanModel.Forwarder.PadRight(3));
@@ -114,7 +105,6 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         }
     }
-
 
     public class CourierMasterMamanModel
     {

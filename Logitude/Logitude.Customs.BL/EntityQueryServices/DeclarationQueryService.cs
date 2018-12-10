@@ -912,6 +912,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     generalData.AmendmentViews = new List<AmendmentView>();
                     generalData.CorrectionDate = item.IssueDateTime;
                     generalData.Version = item.VersionId;
+                    generalData.SystemMessageViews = new List<error>();
 
                     foreach (Additional additional in item.AdditionalInformation)
                     {
@@ -1082,7 +1083,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         }
                     }
 
+                    foreach (error errorItem in item.SystemMessages)
+                    {
+                        error systemMessagesError = new error();
+                        systemMessagesError.Code = errorItem.Code;
+                        systemMessagesError.ListVersionID = errorItem.ListVersionID;
+                        systemMessagesError.MessageError = errorItem.MessageError;
+                        generalData.SystemMessageViews.Add(systemMessagesError);
 
+                    }
 
                     correctionView.GeneralDataViews.Add(generalData);
 

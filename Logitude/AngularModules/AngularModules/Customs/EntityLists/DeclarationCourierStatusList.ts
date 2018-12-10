@@ -36,6 +36,7 @@ export class DeclarationCourierStatusList {
 	IsMNFRTab: boolean;
 	IsDECRTab: boolean;
 	IsHOLDTab: boolean;
+	IsACCTab: boolean;
 	CourierSearchFields: string;
 	CourierCustomStatusCode: string;
 	ImporterName: string;
@@ -45,6 +46,9 @@ export class DeclarationCourierStatusList {
 	CourierPendingReasonName: string;
 	PendingRemarks: string;
 	CourierSuspentionReasonName: string;
+	AcceptanceStatusCode: string;
+	MamanStatusCode: string;
+	MamanErrorXml: string;
 	
 }
  

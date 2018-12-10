@@ -57,7 +57,40 @@ export class VendorExtendedSearchComponent extends BaseComponent {
     searchText: string = null;
     Search(text: string) {
         this.searchText = text;
-        this.LoadData();
+        if (!this._HavePeriodDecResult) {
+            this.LoadData();
+        } else {
+            this.FilterLocal()
+        }
+
+    }
+    FilterLocal() {
+
+        if (AppTool.IsNullOrEmpty(this.searchText)) {
+            this._PeriodDeclarationList.InsertCollection(this._PeriodDeclarationListSave);
+            return;
+        }
+
+        var searchList = this._PeriodDeclarationListSave.filter(periodDecRow => this.ShowPeriodDeclaration(periodDecRow));
+        this._PeriodDeclarationList.Clear();
+        this._PeriodDeclarationList.InsertCollection(searchList);
+
+    }
+    ShowPeriodDeclaration(periodDeclaration: any): boolean {
+        if (periodDeclaration == null) return false;
+        let VendorID: string = "";
+        if (!AppTool.IsNullOrEmpty(periodDeclaration.VendorID)) {
+            VendorID = periodDeclaration.VendorID;
+        }
+        let VendorName: string = "";
+        if (!AppTool.IsNullOrEmpty(periodDeclaration.VendorName)) {
+            VendorName = periodDeclaration.VendorName;
+        }
+        let searchField: string = "";
+        searchField += VendorID;
+        searchField += VendorName;
+        return searchField.toLowerCase().includes(this.searchText.toLowerCase());
+
 
     }
 
@@ -239,9 +272,10 @@ export class VendorExtendedSearchComponent extends BaseComponent {
 
     }
     _PeriodDeclarationList: ObservableCollection;
+    _PeriodDeclarationListSave: any[]=[];
     _HavePeriodDecResult: boolean = false;
     UpdateImporterDeposition() {
-
+        this.searchText = "";
         SessionLocator.CurrentSession.StartBusyIndicator("");
         let customSendOptionsArgs: CustomSendOptionsArgs = new CustomSendOptionsArgs();
         //var month = new Date().getMonth();
@@ -287,7 +321,12 @@ export class VendorExtendedSearchComponent extends BaseComponent {
 
                     if (myServiceResponse.Result.PeriodDeclarationList != null && myServiceResponse.Result.PeriodDeclarationList.length > 0) {
                         this._HavePeriodDecResult = true;
-                        this._PeriodDeclarationList.InsertCollection(myServiceResponse.Result.PeriodDeclarationList);
+                        this.IsChecked = true;
+                        this.ShowOnlyValid = true;
+
+                        this._PeriodDeclarationListSave = myServiceResponse.Result.PeriodDeclarationList;
+                        //this._PeriodDeclarationList.InsertCollection(myServiceResponse.Result.PeriodDeclarationList);
+                        this.FilterLocal();
                     }
                     if ((myServiceResponse.Result.PeriodDeclarationList != null && myServiceResponse.Result.PeriodDeclarationList.length > 0)
                         || myServiceResponse.Result.HasException == true) {
@@ -308,14 +347,14 @@ export class VendorExtendedSearchComponent extends BaseComponent {
     }
     SearchAddVendorRequest(rowData) {
         this.SelectedRow = rowData;
-       
-        
+
+
 
         if (!AppTool.IsNullOrEmpty(rowData.DBVendorID)) {
             let mm = new MessageWindow();
             mm.Show("קיים במערכת")
             return;
-        } 
+        }
         var searchParams = new VendorSearchByCustomsAgentRequestParams()
         searchParams.IsFakeResponse = true;
         searchParams.LoggingEnabled = false;
@@ -355,7 +394,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
                 var VendorResults: any[] = response.VendorResults;
 
                 if (VendorResults.length == 1) {
-                    
+
                     if (VendorResults[0].StatusCode == '3') {
 
                         var confirmWindow = new ConfirmWindow();
@@ -364,17 +403,17 @@ export class VendorExtendedSearchComponent extends BaseComponent {
                         var confirmWindow = new ConfirmWindow();
                         confirmWindow.Show("Already Exists");
                     } else {
-                        
+
                         this.AddButtonClicked(VendorResults[0]);
                     }
                 } else {
 
                     var confirmWindow = new ConfirmWindow();
-                    confirmWindow.Show(VendorResults.length.toString()+ "מצפה לספק אחד בלבד התקבל ");
+                    confirmWindow.Show(VendorResults.length.toString() + "מצפה לספק אחד בלבד התקבל ");
                 }
-                
 
-               
+
+
 
 
             }
@@ -434,7 +473,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
                     this.SelectedRow.DBVendorID = newVendor.Id;
                     this.SelectedRow.DBCountryCode = newVendor.CountryCode;
                     // after success
-                    
+
 
                 }
                 else {
@@ -463,12 +502,12 @@ export class VendorExtendedSearchComponent extends BaseComponent {
         } else {
             this.SelectedRow = item;
             SessionLocator.CurrentSession.CloseCurrentWindowEmit("close");
-        //periodDec.DBVendorID = dbVendor.Id;
-        //periodDec.DBCountryCode = dbVendor.CountryCode;
+            //periodDec.DBVendorID = dbVendor.Id;
+            //periodDec.DBCountryCode = dbVendor.CountryCode;
         }
 
-            
-        
+
+
 
 
     }

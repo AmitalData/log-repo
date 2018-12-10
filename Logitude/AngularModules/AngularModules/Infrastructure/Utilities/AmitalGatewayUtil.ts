@@ -1,4 +1,4 @@
-﻿
+
 
 declare var window: any;
 import { UserPM } from '../../Common/EntityPMs/UserPM';
@@ -204,6 +204,14 @@ export class AmitalGatewayUtil {
                     
                     let mapDocumentTypeCustomsData = new MapDocumentTypeCustomsData();
                     mapDocumentTypeCustomsData .Run(myParam);
+                }
+                break;
+            case "MapPendingReasonCodeData":
+                {
+                    this.SelectCustomsRequestMenu(MaintenanceMenu);
+                    
+                    let mapPendingReasonCodeData = new MapPendingReasonCodeData();
+                    mapPendingReasonCodeData.Run(myParam);
                 }
                 break;
             case "ShowDeclarationStatusQuery":
@@ -484,7 +492,8 @@ export class AmitalGatewayUtil {
 
                                 });
 
-                                logWindow.Show('./Customs/Components/Declaration/DeclarationPayment/SupplierInvoiceSelectionComponent');
+                                //logWindow.Show('./Customs/Components/Declaration/DeclarationPayment/SupplierInvoiceSelectionComponent');
+                                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/SupplierInvoiceSelectionComponent.');
                             });
                         return;
                     }
@@ -955,7 +964,8 @@ export class MapDocumentTypeCustomsData {
         logWindow.ShowCloseButton = true;
         logWindow.Show(
             //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
-            './Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+            //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+            './CustomsModules/CustomsMaintenance/Components/DocumentTypeCustomsDataComponent'
         );
 
         logWindow.WindowClosed.subscribe(($event1: any) => {
@@ -964,6 +974,27 @@ export class MapDocumentTypeCustomsData {
         });
 
     }
+}
   
+
+export class MapPendingReasonCodeData {
+    public Run(unifreightMessage: UnifreightMessageM) {
+        let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 400;
+        logWindow.Title = 'קשר סטטוס לסיבת Pending';
+        logWindow.WindowArgs = {
+            "UnifreightStatusCode": UnifreightEntityNumber,
+            "FromUnifreight": true,
+        };
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/AddEditCourierPendingReasonComponent');
+        logWindow.WindowClosed.subscribe(($event1: any) => {
+            AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+        });
+
+    }
 
 }

@@ -2651,10 +2651,17 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(value)) {
             this.InvoiceQuantityTypeName = value.LocalName;
 
-
         } else {
             this.InvoiceQuantityTypeName = null;
             this.InvoiceQuantityType = null;
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsUnitPURForItems) {
+            var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+            if (itemCodeDetails != null) {
+                itemCodeDetails.InvoiceQuantityType = this.InvoiceQuantityType;
+                itemCodeDetails.IsNew = true;
+            }
         }
     }
 
@@ -2687,10 +2694,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginCountryName = value.LocalName;
-          if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsCountryPURForItems) {
+            if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsCountryPURForItems) {
                 //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-              var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-              
+                var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+
                 if (itemCodeDetails != null) {
                     itemCodeDetails.OriginCountryCode = value.Code;
                     itemCodeDetails.OriginCountryName = value.LocalName;
@@ -2700,9 +2707,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         } else {
             this.OriginCountryName = null;
             this.OriginCountryCode = null;
-          if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsCountryPURForItems) {
+            if (!AppTool.IsNullOrEmpty(this.ItemCode) && GITITEMCacheService.Instance.IsCountryPURForItems) {
                 //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-              var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
                 if (itemCodeDetails != null) {
                     itemCodeDetails.OriginCountryCode = null;
                     itemCodeDetails.OriginCountryName = null;
@@ -3144,23 +3151,26 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 if (itemCodeDetails == null) {
                     var originCountryCode: string = null;
                     var originCountryName: string = null;
+                    var invoiceQuantityType: string = null;
                   if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
                         originCountryCode = this.OriginCountryCode;
                         originCountryName = this.OriginCountryName;
-                  }
-
-                  
-                  
+                    }
+                    if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                        invoiceQuantityType = this.InvoiceQuantityType;
+                    }
                     //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType));
-                  GITITEMCacheService.Instance.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
+                  GITITEMCacheService.Instance.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode));
                 }
                 else {
                     if (itemCodeDetails.ClassificationCode != this.ClassificationCode || itemCodeDetails.ItemDescription != this.ItemDescription) {
                         itemCodeDetails.ClassificationCode = this.ClassificationCode;
                         itemCodeDetails.ItemDescription = this.ItemDescription;
                         itemCodeDetails.VendorNumber = this.Parent.vendorNumber;
-                        itemCodeDetails.InvoiceQuantityType = this.InvoiceQuantityType;
-                      if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                        if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                            itemCodeDetails.InvoiceQuantityType = this.InvoiceQuantityType;
+                        }
+                      if (GITITEMCacheService.Instance.IsCountryPURForItems) {
                             itemCodeDetails.OriginCountryCode = this.OriginCountryCode;
                             itemCodeDetails.OriginCountryName = this.OriginCountryName;
                         }
@@ -3220,11 +3230,14 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
 
             var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-            if (itemCodeDetails != null) {
+          if (itemCodeDetails != null) {
+              itemCodeDetails.IsNew = true;
                 this.ClassificationCode = itemCodeDetails.ClassificationCode;
                 this.ItemDescription = itemCodeDetails.ItemDescription;
-                this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
-              if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                   this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
+                }
+                if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
                     this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
                     this.OriginCountryName = itemCodeDetails.OriginCountryName;
                 }
@@ -3300,11 +3313,14 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 item.ItemCode = partnersItem.ItemCode;
                 item.ClassificationCode = partnersItem.ClassificationCode;
                 item.ItemDescription = partnersItem.Name;
-              if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
                     item.OriginCountryCode = partnersItem.OriginCountryCode;
                     item.OriginCountryName = partnersItem.OriginCountryName;
                 }
-                item.InvoiceQuantityType = partnersItem.InvoiceQuantityType;
+                if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                    item.InvoiceQuantityType = partnersItem.InvoiceQuantityType;
+                }
+                
               //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType));
               GITITEMCacheService.Instance.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
                 this.GetQuantityType();

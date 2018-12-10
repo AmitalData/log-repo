@@ -68,6 +68,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsMNFRTab, 
 	         IsDECRTab, 
 	         IsHOLDTab, 
+	         IsACCTab, 
 	         CourierSearchFields, 
 	         CourierCustomStatusCode, 
 	         ImporterName, 
@@ -76,7 +77,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierPendingReasonCode, 
 	         CourierPendingReasonName, 
 	         PendingRemarks, 
-	         CourierSuspentionReasonName,
+	         CourierSuspentionReasonName, 
+	         AcceptanceStatusCode, 
+	         MamanStatusCode, 
+	         MamanErrorXml,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -33,6 +33,9 @@ using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Unifreight.Data.AmitalModel.Repsitories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.Models;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -662,7 +665,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         VendorId = rec.SAPAKID,
                         SearchFields = rec.SEARCHENG,
                         OriginCountryCode = rec.ORIGINCOUNTRY,
-                        //InvoiceQuantityType = rec.UNITID,
+                        InvoiceQuantityType = rec.UNITID,
                     })
                 select new { itm };
                 if (!string.IsNullOrWhiteSpace(customerCode))
@@ -757,7 +760,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         VendorId = rec.SAPAKID,
                         SearchFields = rec.SEARCHENG,
                         OriginCountryCode = rec.ORIGINCOUNTRY,
-                        //InvoiceQuantityType = rec.UNITID,
+                        InvoiceQuantityType = rec.UNITID,
                     })
                 select new { itm };
                 if (!string.IsNullOrWhiteSpace(customerCode))
@@ -846,7 +849,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         VendorId = rec.SAPAKID,
                         SearchFields = rec.SEARCHENG,
                         OriginCountryCode = rec.ORIGINCOUNTRY,
-                        //InvoiceQuantityType = rec.UNITID,
+                        InvoiceQuantityType = rec.UNITID,
                     })
                 select new { itm };
                 if (!string.IsNullOrWhiteSpace(customerCode))
@@ -1160,6 +1163,32 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 DeclarationQueryService queryService = new DeclarationQueryService(myContext);
                 var result = queryService.CheckFreightAmountsByIncoterm(declarationId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetDeclarationClosureMethod(string declarationId, int tenant)
+        {
+            try
+            {
+                var mess = DeclarationUpdateService.DeclarationClosure(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, mess);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetCancelDeclarationClosureMethod(string declarationId, int tenant)
+        {
+            try
+            {
+                var mess = DeclarationUpdateService.CancelDeclarationClosure(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, mess);
             }
             catch (Exception ex)
             {

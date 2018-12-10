@@ -4,15 +4,10 @@ import { AppTool, DateTool } from '../../../../../../Infrastructure/Tools';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 import { CustomSendOptionsArgs } from '../../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from '../../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';import { EntityArgs } from '../../../../../../Infrastructure/DataContracts/EntityArgs';
-import { FeatureLocator } from '../../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DepositPM } from '../../../../../../Customs/EntityPMs/DepositPM';
-import { DeclarationList } from '../../../../../../Customs/EntityLists/DeclarationList';
-import { EntityPMService } from '../../../../../../Infrastructure/Services/EntityPMService';
-import { BaseComponent } from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { ObservableCollection } from '../../../../../../Infrastructure/Utilities/ObservableCollection';
 import { CustomBankListService } from '../../../../../../Customs/Services/StandardLists/CustomBankListService';
 import { BankAccountToRefundRequestParams } from '../../../../../../Customs/DataContract/RequestParams/BankAccountToRefundRequestParams';
 import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
@@ -40,6 +35,7 @@ export class BankAccountToRefundComponent
     _TapagMessagesService: TapagMessagesService = new TapagMessagesService();
     _CustomBankListService: CustomBankListService = new CustomBankListService();
     public banksList: CustomBankList[] = [];
+    private declarationId: string;
 
     @ViewChild(CustomMessageWrapperComponent)
     SuperCustomMessageWrapperComponent: CustomMessageWrapperComponent = new CustomMessageWrapperComponent();
@@ -59,8 +55,8 @@ export class BankAccountToRefundComponent
 
         if (!AppTool.IsNullOrEmpty(entityArgs)) {
             this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response: any) => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.Deposit").subscribe((response: any) => {
-                                this.LoadBanks();
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.Deposit").subscribe((response: any) => {
+                            this.LoadBanks();
                 });
             });
         }
@@ -84,7 +80,7 @@ export class BankAccountToRefundComponent
 
     SetMenuArg(MenuArg) {
         this.OnMassageDisplayMethod();
-        //this.DeclarationNumber = MenuArg.DeclarationNumber;
+        this.declarationId = MenuArg.DeclarationId;
     }
 
     get FileTypeCode() { return this.RequestParams ? this.RequestParams.FileType : null; }
@@ -358,6 +354,8 @@ export class BankAccountToRefundComponent
         currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
         currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.LoggingEntityId = this.declarationId;
+        currRequestParams.LoggingObjectTableId = "Customs.Declaration";
 
         currRequestParams.FileType = "2";//this.FileTypeCode;
         currRequestParams.FileNumber = this.FileNumber;

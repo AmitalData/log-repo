@@ -1917,7 +1917,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                                     var logWindow = new LogitudeWindow();
 
                                                     logWindow.Width = 770;
-                                                    logWindow.Height = 650;
+                                                    logWindow.Height = 750;
                                                     //logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditDeclarationCargoSplit");
                                                     logWindow.Title = "בקשת פיצול מטען ";// + myResponse.Result != null ? ((!AppTool.IsNullOrEmpty(myResponse.Result.RequestNumber) ? myResponse.Result.RequestNumber : null) + ((!AppTool.IsNullOrEmpty(myResponse.Result.ResponseStatusName) ? " - " + myResponse.Result.ResponseStatusName : null))) : null;
                                                     if (myResponse.Result != null) {
@@ -2301,6 +2301,14 @@ export class ListComponent implements OnInit, AfterViewInit {
             logWindow.NewWizardArgs = { IsNewEntity: true };
 
             switch (this.ObjectTableName) {
+                case "Customs.Vehicle":
+                    {
+                        logWindow.Width = 1300;
+                        logWindow.Height = 650;
+                        logWindow.ShowCloseButton = true;
+                        break;
+                    }
+
                 case "Customs.Client": {
                     logWindow.Width = 800;
                     logWindow.Height = 500;
@@ -2320,8 +2328,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                 case "Customs.DeclarationCargoSplit":
                     {
-                        logWindow.Width = 800;
-                        logWindow.Height = 550;
+                        logWindow.Width = 770;
+                        logWindow.Height = 750;
                         logWindow.ShowCloseButton = true;
                         break;
                     }

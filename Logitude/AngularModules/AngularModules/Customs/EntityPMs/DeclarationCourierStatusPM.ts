@@ -164,6 +164,11 @@ export class DeclarationCourierStatusPM {
     public set IsHOLDTab(newValue: boolean) { if (this.isHOLDTab != newValue) { this.isHOLDTab = newValue; this.MarkAsDirty("IsHOLDTab"); } }
        
 	 
+    private isACCTab: boolean;
+    public get IsACCTab() { return this.isACCTab; }
+    public set IsACCTab(newValue: boolean) { if (this.isACCTab != newValue) { this.isACCTab = newValue; this.MarkAsDirty("IsACCTab"); } }
+       
+	 
     private courierSearchFields: string;
     public get CourierSearchFields() { return this.courierSearchFields; }
     public set CourierSearchFields(newValue: string) { if (this.courierSearchFields != newValue) { this.courierSearchFields = newValue; this.MarkAsDirty("CourierSearchFields"); } }
@@ -207,6 +212,21 @@ export class DeclarationCourierStatusPM {
     private courierSuspentionReasonName: string;
     public get CourierSuspentionReasonName() { return this.courierSuspentionReasonName; }
     public set CourierSuspentionReasonName(newValue: string) { if (this.courierSuspentionReasonName != newValue) { this.courierSuspentionReasonName = newValue; this.MarkAsDirty("CourierSuspentionReasonName"); } }
+       
+	 
+    private acceptanceStatusCode: string;
+    public get AcceptanceStatusCode() { return this.acceptanceStatusCode; }
+    public set AcceptanceStatusCode(newValue: string) { if (this.acceptanceStatusCode != newValue) { this.acceptanceStatusCode = newValue; this.MarkAsDirty("AcceptanceStatusCode"); } }
+       
+	 
+    private mamanStatusCode: string;
+    public get MamanStatusCode() { return this.mamanStatusCode; }
+    public set MamanStatusCode(newValue: string) { if (this.mamanStatusCode != newValue) { this.mamanStatusCode = newValue; this.MarkAsDirty("MamanStatusCode"); } }
+       
+	 
+    private mamanErrorXml: string;
+    public get MamanErrorXml() { return this.mamanErrorXml; }
+    public set MamanErrorXml(newValue: string) { if (this.mamanErrorXml != newValue) { this.mamanErrorXml = newValue; this.MarkAsDirty("MamanErrorXml"); } }
        
 	 
 

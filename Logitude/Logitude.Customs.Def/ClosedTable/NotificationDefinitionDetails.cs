@@ -579,6 +579,14 @@ namespace Logitude.Customs.Def.ClosedTable
                 AssigneeNotificationTypeCode = "I",
             });
 
+            all.Add(new NotificationDefinitionDetails() // Mirit 07/03/16 Task 20546
+            {
+                Code = "5114N",
+                EnglishName = "Acceptance/Rejection Claim Message",
+                LocalName = "אישור/דחיית תביעה",
+                AssigneeNotificationTypeCode = "A",
+            });
+
             return all;
         }
 

@@ -52,6 +52,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
 
         public bool IsFromCustomsFeedback { get; set; }
+        public bool ToUpdateWithPaymentDate { get; set; }
         protected override void OnCreating(DeclarationPM entityPM, EntityPM entityParentPM)
         {
             entityPM.Id = IdCounter.GetNumber("Customs.Declaration", entityPM.Tenant);
@@ -563,6 +564,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             //Check if Declaration was already paid, constraint in progress or Future payment was done
             var declarationValidator = new Logitude.Customs.BL.Validators.DeclarationValidator(myDeclarationPM);
+            if (ToUpdateWithPaymentDate) declarationValidator.ToUpdateWithPaymentDate = true;
             declarationValidator.DeclarationViewDisplayOnlyChecks();
             if (declarationValidator.ErrorCode.Count > 0)
             {

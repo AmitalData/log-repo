@@ -2895,6 +2895,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<TreatmentWay> TreatmentWays { get; set; }
         public IDbSet<DecCargoSplitConsItem> DecCargoSplitConsItems { get; set; }
         public IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets { get; set; }
+        public IDbSet<DecCargoSplitCargoIdentifier> DecCargoSplitCargoIdentifiers { get; set; }
 
         #endregion
 
@@ -4048,7 +4049,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TreatmentWayMap());
             modelBuilder.Configurations.Add(new DecCargoSplitConsItemMap());
             modelBuilder.Configurations.Add(new DecCargoSplitConsPackDetMap());
-
+            modelBuilder.Configurations.Add(new DecCargoSplitCargoIdentifierMap());
+            
             #endregion
 
             #region Accounting

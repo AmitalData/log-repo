@@ -56,6 +56,8 @@ namespace Logitude.Customs.BL.Models
             SentClaimToCustoms,
             MN_MSG4_SendManifestFeedBack_MessageResponseService,
             DOC_NG_5101_GNMessageToAgentResponseService,
+            DeclarationClosure,
+            CancelDeclarationClose,
         }
         public ProccessEnum CallProccessID { get; set; } //CargoExitFromCheckSite196
         //public PhysicalCheckPM DBOcc { get; set; } 

@@ -1,4 +1,4 @@
-﻿import { AddEditRequiredFieldsComponent } from './Components/RequiredFields/AddEditRequiredFieldsComponent';
+import { AddEditRequiredFieldsComponent } from './Components/RequiredFields/AddEditRequiredFieldsComponent';
 import { CustomsClosedTablesComponent } from './Components/CustomsClosedTablesComponent';
 import { ClosedTableNotExistedComponent } from './Components/ClosedTableNotExistedComponent';
 import { CustomsSettingsComponent } from './Components/CustomsSettingsComponent';
@@ -10,6 +10,9 @@ import { SignStationsComponent } from './Components/SignStationsComponent';
 import { DocumentTypeCustomsDataComponent } from './Components/DocumentTypeCustomsDataComponent';
 import { CustomsDocumentsDefinitionComponent } from './Components/CustomsDocumentsDefinitionComponent';
 import { AddEditCustomsAirlineComponent } from './Components/AddEditCustomsAirlineComponent';
+import { CustomsPartnerFtpListComponent } from './Components/CustomsPartnerFtpListComponent';
+//import { CustomsPartnerFtpEditComponent } from './Components/CustomsPartnerFtpEditComponent';
+
 
 export const Components =
     [
@@ -25,6 +28,8 @@ export const Components =
         DocumentTypeCustomsDataComponent,
         CustomsDocumentsDefinitionComponent,
         AddEditCustomsAirlineComponent,
+        CustomsPartnerFtpListComponent,
+        //CustomsPartnerFtpEditComponent,
     ];
 
 export class ModuleDeclarations {
@@ -45,6 +50,9 @@ export class ModuleDeclarations {
             case "DocumentTypeCustomsDataComponent": { myResult = DocumentTypeCustomsDataComponent; break; }
             case "CustomsDocumentsDefinitionComponent": { myResult = CustomsDocumentsDefinitionComponent; break; }
             case "AddEditCustomsAirlineComponent": { myResult = AddEditCustomsAirlineComponent; break; }
+            case "CustomsPartnerFtpListComponent": { myResult = CustomsPartnerFtpListComponent; break; }
+            //case "CustomsPartnerFtpEditComponent": { myResult = CustomsPartnerFtpEditComponent; break; }
+                
 
         }
 

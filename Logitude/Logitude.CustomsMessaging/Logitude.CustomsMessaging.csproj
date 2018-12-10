@@ -123,7 +123,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.2.0.0\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.7\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnifreightIIG.3.1803.7\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -173,6 +176,7 @@
     <Compile Include="MessagingServices\CL_MSG100_AddClientMassagingService.cs" />
     <Compile Include="MessagingServices\CL_NG_8343_ClientSearchByIDParamMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInCLAIM_2300_MissingDocumentRequestMessagingServices.cs" />
+    <Compile Include="MessagingServices\DCAInCLAIM_5114_AcceptanceOrRejectionClaimMessageMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInCLAIM_5115_ContinuousMessageMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInDEPO_NG_2753_MSG4_DepositBankAccountToRefundUpdateRequestMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInST_60_SpecialActivityExecutionReportMessagingService.cs" />
@@ -275,6 +279,7 @@
     <Compile Include="ResponseServices\CB_NG_8316_CustomItemLegalDemandsResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2300_MissingDocumentRequestResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2345_ClaimAnswerResponseService.cs" />
+    <Compile Include="ResponseServices\CLAIM_5114_AcceptanceOrRejectionClaimMessageResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_5115_ContinuousMessageResponseService.cs" />
     <Compile Include="ResponseServices\CL_3630_AddUpdateDeleteAddressContactResponseService.cs" />
     <Compile Include="ResponseServices\CL_MSG100_AddClientResponseService.cs" />
@@ -439,7 +444,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Dca\Deploy\ftp.cmd" />
     <None Include="Dca\Deploy\Xap\XapFftp.cmd" />
   </ItemGroup>

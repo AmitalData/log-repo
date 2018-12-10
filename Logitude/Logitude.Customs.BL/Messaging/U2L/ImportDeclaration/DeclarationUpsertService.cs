@@ -338,10 +338,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if (_AmitalCustomsFile.Mode == "CANCEL") // moran 25.12.13 - task 2431
                 {
                     this._MyDeclarationPM.IsCancelled = true;
+                    this._MyDeclarationPM.CustomFileNo = "C" + this._MyDeclarationPM.CustomFileNo;//Eitan H 44723 9/12/18
                 }
                 else if (_AmitalCustomsFile.Mode == "UNCANCEL")
                 {
                     this._MyDeclarationPM.IsCancelled = false;
+                    if (this._MyDeclarationPM.CustomFileNo.StartsWith("C")) this._MyDeclarationPM.CustomFileNo = this._MyDeclarationPM.CustomFileNo.Substring(1);//Eitan H 44723 9/12/18
                 }
 
                 //           if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.ReferentUserId))
@@ -607,6 +609,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     _MyDeclarationPM.CasualSupplierName = _AmitalCustomsFile.CasualSupplierName;
                     _MyDeclarationPM.CasualSupplierAddress = _AmitalCustomsFile.CasualSupplierAddress;
                     _MyDeclarationPM.CourierHAWB = _AmitalCustomsFile.CourierHawb;
+                    _MyDeclarationPM.CasualImporterAddress1 = _AmitalCustomsFile.CasualImporterAddress1;
+                    _MyDeclarationPM.CasualImporterAddress2 = _AmitalCustomsFile.CasualImporterAddress2;
+                    _MyDeclarationPM.CasualImporterCity = _AmitalCustomsFile.CasualImporterCity;
+                    _MyDeclarationPM.CasualImporterZipCode = _AmitalCustomsFile.CasualImporterZipCode;
+                    _MyDeclarationPM.CasualImporterFax = _AmitalCustomsFile.CasualImporterFax;
+                    _MyDeclarationPM.CasualImporterEmail = _AmitalCustomsFile.CasualImporterEmail;
+                    _MyDeclarationPM.CasualImporterTel = _AmitalCustomsFile.CasualImportelTel;
+                    _MyDeclarationPM.CasualImporterContact = _AmitalCustomsFile.CasualImporterContact;
                     if (_MyDeclarationPM.Consignments.Count == 1)
                     {
                         _MyDeclarationPM.Consignments[0].CargoTypeCode = _AmitalCustomsFile.CargoTypeCode;

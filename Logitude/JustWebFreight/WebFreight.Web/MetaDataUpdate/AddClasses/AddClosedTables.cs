@@ -3154,5 +3154,29 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 mamanStatusRepository.Add(newMamanStatus);
             }
         }
+
+        public static void AddPendingErrorPlace(PendingErrorPlace pendingErrorPlaceDetails, PendingErrorPlaceRepository pendingErrorPlaceRepository)
+        {
+            Dictionary<string, PendingErrorPlace> tenantPendingErrorPlace = pendingErrorPlaceRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenantPendingErrorPlace.Keys.Contains(pendingErrorPlaceDetails.Code))
+            {
+                PendingErrorPlace pendingErrorPlace = pendingErrorPlaceRepository.GetSingle(pendingErrorPlaceDetails.Code);
+                pendingErrorPlace.LocalName = pendingErrorPlaceDetails.LocalName;
+                pendingErrorPlace.EnglishName = pendingErrorPlaceDetails.EnglishName;
+                pendingErrorPlace.SearchFields = (pendingErrorPlaceDetails.Code + "," + pendingErrorPlaceDetails.LocalName).ToLower();
+                pendingErrorPlaceRepository.Update(pendingErrorPlace);
+            }
+            else
+            {
+                PendingErrorPlace newPendingErrorPlace = new PendingErrorPlace() {
+                    Code = pendingErrorPlaceDetails.Code,
+                    LocalName = pendingErrorPlaceDetails.LocalName,
+                    EnglishName = pendingErrorPlaceDetails.EnglishName,
+                    SearchFields = (pendingErrorPlaceDetails.Code + "," + pendingErrorPlaceDetails.LocalName).ToLower()
+                };
+                pendingErrorPlaceRepository.Add(newPendingErrorPlace);
+            }
+        }
     }
 }

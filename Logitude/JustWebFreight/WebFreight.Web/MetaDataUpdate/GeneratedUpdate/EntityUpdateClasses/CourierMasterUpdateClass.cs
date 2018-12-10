@@ -113,7 +113,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    Code1 =  "6b98",
+			      				    Code1 =  "44e8",
 			      				    Name1 =  " Query Group",
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
@@ -1759,8 +1759,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "PackageQuantity",
 					  						OldFieldName =  "PackageQuantity",
-					  						IsNew =  true,
-					  						IsChecked =  true,
+					  						IsNew =  false,
+					  						IsChecked =  false,
 					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "Integer",
@@ -1825,7 +1825,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "GrossMassMeasure",
 					  						OldFieldName =  "GrossMassMeasure",
-					  						IsNew =  true,
+					  						IsNew =  false,
 					  						IsChecked =  false,
 					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
@@ -1893,7 +1893,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ShortHAWB",
 					  						OldFieldName =  "ShortHAWB",
-					  						IsNew =  true,
+					  						IsNew =  false,
 					  						IsChecked =  false,
 					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
@@ -1958,7 +1958,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "FlightNumber",
 					  						OldFieldName =  "FlightNumber",
-					  						IsNew =  true,
+					  						IsNew =  false,
 					  						IsChecked =  false,
 					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
@@ -2023,7 +2023,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "DepartureDate",
 					  						OldFieldName =  "DepartureDate",
-					  						IsNew =  true,
+					  						IsNew =  false,
 					  						IsChecked =  false,
 					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
@@ -2088,8 +2088,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EstimatedArrivalDateOnly",
 					  						OldFieldName =  "EstimatedArrivalDateOnly",
-					  						IsNew =  true,
-					  						IsChecked =  true,
+					  						IsNew =  false,
+					  						IsChecked =  false,
 					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "DateTime",
@@ -2153,8 +2153,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EstimatedArrivalTimeOnly",
 					  						OldFieldName =  "EstimatedArrivalTimeOnly",
-					  						IsNew =  true,
-					  						IsChecked =  true,
+					  						IsNew =  false,
+					  						IsChecked =  false,
 					  						IsDeleted =  false,
 					  						ObjectTableName =  "Customs.CourierMaster",
 					  						FieldsDataType =  "DateTime",
@@ -2262,7 +2262,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	         Screen CourierMasterCustomsCourierMasterHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CourierMaster.Customs.CourierMasterHeaderScreen", Name = "Customs.CourierMasterHeaderScreen", ObjectTableId = CourierMasterObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
       
-            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineId").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+            ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "AirlineName").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          
             ScreenField CourierMasterCustomsCourierMasterHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = CourierMasterObjectFields.Where(d => d.FieldName == "EstimatedArrivalDate").FirstOrDefault().Id, ScreenId = CourierMasterCustomsCourierMasterHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
          

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.Vendor;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -31,6 +32,50 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             ImporterDespositionPM myImporterDespositionPM = new ImporterDespositionPM();
             EventContextTagModel myInsertEventContextTagModel = new EventContextTagModel();
+
+            //add checks here, task 44761
+            string importerFromResponse;
+            string vendorFromResponse;
+            if (!string.IsNullOrEmpty(customResponse.ImporterPeriodicDeclarationReplyMessage.importerExternalId.ToString()))
+            {
+                importerFromResponse = clientQueryService.GetIdByCode(customResponse.ImporterPeriodicDeclarationReplyMessage.importerExternalId.ToString(), requestParams.Tenant, true);
+                if (String.IsNullOrWhiteSpace(importerFromResponse))
+                {
+                    var errMess = "Importer: " + customResponse.ImporterPeriodicDeclarationReplyMessage.importerExternalId.ToString() + " doesn't exists as a Client in DB";
+                    LogMessagingUtil.Instance.AppendLine(errMess);
+                    this.MyResponseData.UserMessage = errMess;
+                    //??? this.MyResponseData.HasException = true;
+                    return;
+                }
+            }
+            else
+            {
+                var errMess = "No Importer received";
+                LogMessagingUtil.Instance.AppendLine(errMess);
+                this.MyResponseData.UserMessage = errMess;
+                //??? this.MyResponseData.HasException = true;
+                return;
+            }
+            if (!string.IsNullOrEmpty(customResponse.ImporterPeriodicDeclarationReplyMessage.vendorID.ToString()))
+            {
+                vendorFromResponse = vendorQueryService.GetIdByVendorNumber(customResponse.ImporterPeriodicDeclarationReplyMessage.vendorID.ToString(), requestParams.Tenant);
+                if (String.IsNullOrWhiteSpace(vendorFromResponse))
+                {
+                    var errMess = "Vendor: " + customResponse.ImporterPeriodicDeclarationReplyMessage.vendorID.ToString() + " doesn't exists as a Vendor in DB";
+                    LogMessagingUtil.Instance.AppendLine(errMess);
+                    this.MyResponseData.UserMessage = errMess;
+                    //??? this.MyResponseData.HasException = true;
+                    return;
+                }
+            }
+            else
+            {
+                var errMess = "No Vendor received";
+                LogMessagingUtil.Instance.AppendLine(errMess);
+                this.MyResponseData.UserMessage = errMess;
+                //??? this.MyResponseData.HasException = true;
+                return;
+            }
 
             string myImporterDespositionId = importerDespositionQueryService.GetImporterDespositionByDepositionNumber(customResponse.ImporterPeriodicDeclarationReplyMessage.declarationID, requestParams.Tenant);
             if (!string.IsNullOrWhiteSpace(myImporterDespositionId))
@@ -51,14 +96,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             myImporterDespositionPM.CurrentContextTag = myInsertEventContextTagModel;
             myImporterDespositionPM.ImporterDepositionStatusCode = customResponse.ImporterPeriodicDeclarationReplyMessage.importerPeriodicDeclarationStatusID.ToString();
-            myImporterDespositionPM.ImporterlId = clientQueryService.GetIdByCode(customResponse.ImporterPeriodicDeclarationReplyMessage.importerExternalId.ToString(), requestParams.Tenant,true);
+            myImporterDespositionPM.ImporterlId = importerFromResponse;// clientQueryService.GetIdByCode(customResponse.ImporterPeriodicDeclarationReplyMessage.importerExternalId.ToString(), requestParams.Tenant,true);
             if (!String.IsNullOrWhiteSpace(myImporterDespositionPM.ImporterlId))
             {
                 var imporetePM = clientQueryService.GetSingle(myImporterDespositionPM.ImporterlId, false, false);
                 myImporterDespositionPM.ImporterName = imporetePM.FullName;
                 myImporterDespositionPM.ImporterCode = customResponse.ImporterPeriodicDeclarationReplyMessage.importerExternalId.ToString();
             }
-            myImporterDespositionPM.VendorID = vendorQueryService.GetIdByVendorNumber(customResponse.ImporterPeriodicDeclarationReplyMessage.vendorID.ToString(), requestParams.Tenant);
+            myImporterDespositionPM.VendorID = vendorFromResponse;// vendorQueryService.GetIdByVendorNumber(customResponse.ImporterPeriodicDeclarationReplyMessage.vendorID.ToString(), requestParams.Tenant);
             if (!String.IsNullOrWhiteSpace(myImporterDespositionPM.VendorID))
             {
                 var vendorPM = vendorQueryService.GetSingle(myImporterDespositionPM.VendorID, false, false);

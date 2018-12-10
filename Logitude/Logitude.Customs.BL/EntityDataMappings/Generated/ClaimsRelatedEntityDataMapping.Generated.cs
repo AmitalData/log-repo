@@ -44,7 +44,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CustomsExceptions, 
 	         TapagNumber, 
 	         Numeral, 
-	         CustomsBranchCode,
+	         CustomsBranchCode, 
+	         DecisionCode, 
+	         DecisionNote, 
+	         EilatVatRefoundDecision, 
+	         DepositingAmount, 
+	         RefundAmount,
 	      }
 
 
@@ -79,7 +84,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         TapagNumber, 
 	         Numeral, 
 	         CustomsBranchCode, 
-	         IsSendClaimsRelatedEntity,
+	         IsSendClaimsRelatedEntity, 
+	         DecisionCode, 
+	         DecisionName, 
+	         DecisionNote, 
+	         EilatVatRefoundDecision, 
+	         DepositingAmount, 
+	         RefundAmount,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -191,6 +202,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBranchCode))
             {
 				entityPOCO.CustomsBranchCode = entityPM.CustomsBranchCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DecisionCode))
+            {
+				entityPOCO.DecisionCode = entityPM.DecisionCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DecisionNote))
+            {
+				entityPOCO.DecisionNote = entityPM.DecisionNote;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EilatVatRefoundDecision))
+            {
+				entityPOCO.EilatVatRefoundDecision = entityPM.EilatVatRefoundDecision;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositingAmount))
+            {
+				entityPOCO.DepositingAmount = entityPM.DepositingAmount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RefundAmount))
+            {
+				entityPOCO.RefundAmount = entityPM.RefundAmount;
 			}
 			}
 
@@ -312,6 +348,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CustomsBranchCode = entityPOCO.CustomsBranchCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DecisionCode))
+            {
+					entityPM.DecisionCode = entityPOCO.DecisionCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DecisionNote))
+            {
+					entityPM.DecisionNote = entityPOCO.DecisionNote;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EilatVatRefoundDecision))
+            {
+					entityPM.EilatVatRefoundDecision = entityPOCO.EilatVatRefoundDecision;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DepositingAmount))
+            {
+					entityPM.DepositingAmount = entityPOCO.DepositingAmount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RefundAmount))
+            {
+					entityPM.RefundAmount = entityPOCO.RefundAmount;
+            }
+
 		}
 
 		public void PMToOldPM(ClaimsRelatedEntityPM entityPM, ClaimsRelatedEntityPM oldEntityPM)
@@ -423,6 +484,31 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CustomsBranchCode = entityPM.CustomsBranchCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DecisionCode))
+            {
+                oldEntityPM.DecisionCode = entityPM.DecisionCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DecisionNote))
+            {
+                oldEntityPM.DecisionNote = entityPM.DecisionNote;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EilatVatRefoundDecision))
+            {
+                oldEntityPM.EilatVatRefoundDecision = entityPM.EilatVatRefoundDecision;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DepositingAmount))
+            {
+                oldEntityPM.DepositingAmount = entityPM.DepositingAmount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RefundAmount))
+            {
+                oldEntityPM.RefundAmount = entityPM.RefundAmount;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ClaimsRelatedEntityPM entityPM)
@@ -439,6 +525,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CustomsExceptions)) //T4 find type == nText 
             {
                 entityPM.CustomsExceptions = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CustomsExceptions));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.DecisionNote)) //T4 find type == nText 
+            {
+                entityPM.DecisionNote = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DecisionNote));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.EilatVatRefoundDecision)) //T4 find type == nText 
+            {
+                entityPM.EilatVatRefoundDecision = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.EilatVatRefoundDecision));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

@@ -134,7 +134,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         bool IsVatNumberExisit(string AirlineCode, string AirlinePrefix, int tenant, string entityId = null)
         {
             CustomsAirlineRepository repo = new CustomsAirlineRepository(tenant);
-            var exist = repo.GetByAirlineAndPrefix(AirlineCode, AirlinePrefix, entityId);
+            var exist = repo.GetByAirlineAndPrefix(AirlineCode, AirlinePrefix, tenant, entityId);
 
             return ( (exist != null) ? true : false );
 

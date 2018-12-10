@@ -937,7 +937,7 @@ namespace Logitude.Customs.BL.Validators
         }
 
 
-        public static CustomsRequiredFieldErrors GetRequiredFieldErrorsForCourierDeclaration(string declarationId, int tenant, DeclarationPM declarationPM = null)
+        public static CustomsRequiredFieldErrors GetRequiredFieldErrorsForCourierDeclaration(string declarationId, int tenant, DeclarationPM paramDeclarationPM = null)
         {
             DeclarationPM declaration = null;
             CustomsRequiredFieldErrors requiredErrors = new CustomsRequiredFieldErrors() { RequiredFields = new List<CustomsRequiredFieldsErrorItem>(), };
@@ -960,24 +960,24 @@ namespace Logitude.Customs.BL.Validators
             ClientAddressRepository clientAddressRep = new ClientAddressRepository(context);
 
             CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(context);
-           
-     
-            var fromCache = true;
-            if (fromCache)
-            {
-                var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
-                declaration = CacheManager.CacheWrapper.Remove(cacheKey) as DeclarationPM;
 
-            }
+            var fromCache = true;
+            declaration = paramDeclarationPM;
+            
             if (declaration == null)
             {
-                declarationQueryService.LoadSupplierInvoicesWithItems = false;
-                declaration = declarationQueryService.GetSingle(declarationId, true, false);
-            }
+                
+                if (fromCache)
+                {
+                    var cacheKey = "DeclarationPM.RequiredVldAfterUpdate" + declarationId;
+                    declaration = CacheManager.CacheWrapper.Remove(cacheKey) as DeclarationPM;
 
-            if (declarationPM != null)
-            {
-                declaration = declarationPM;
+                }
+                if (declaration == null)
+                {
+                    declarationQueryService.LoadSupplierInvoicesWithItems = false;
+                    declaration = declarationQueryService.GetSingle(declarationId, true, false);
+                }
             }
 
             DeclarationPaymentQueryService DeclarationPaymentQuery = new DeclarationPaymentQueryService(context);

@@ -13,5 +13,6 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationCorrectionPoin
         public string VersionId { get; set; }
         public List<Additional> AdditionalInformation { get; set; }
         public List<Entity> Amendments { get; set; }
+        public List<error> SystemMessages { get; set; }
     }
 }

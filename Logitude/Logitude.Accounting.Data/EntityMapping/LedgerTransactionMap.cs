@@ -55,11 +55,11 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate").HasPrecision(16, 5);
 
-            this.Property(t => t.Reference1).HasColumnName("Reference1").HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.Reference1).HasColumnName("Reference1").HasMaxLength(30).IsUnicode(true);
 
-            this.Property(t => t.Reference2).HasColumnName("Reference2").HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.Reference2).HasColumnName("Reference2").HasMaxLength(30).IsUnicode(true);
 
-            this.Property(t => t.Reference3).HasColumnName("Reference3").HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.Reference3).HasColumnName("Reference3").HasMaxLength(30).IsUnicode(true);
 
             this.Property(t => t.OpenAmount).HasColumnName("OpenAmount").HasPrecision(16, 2);
 

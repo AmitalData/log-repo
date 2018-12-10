@@ -1,10 +1,15 @@
-﻿<table style="margin:5px">
+<style>
+    .EditMe {
+        width:250px;
+    }
+</style>
+<table style="margin:5px">
 
-   
 
-    <tr  style="height:32px" class="FormFieldRow">
-       
-       
+
+    <tr style="height:32px" class="FormFieldRow">
+
+
         <td style="width: 150px;" *ngIf="ImporterVisibility">
             <LogLabel [ObjectFieldName]="'ImporterTypeCode'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
@@ -27,9 +32,9 @@
                     [ObjectTableName]="ObjectTableName"
                     [DataContext]="DataContext"
                     [LookUpTableName]="'Customs.CustomerIdentifyType'"
-                      [DisplayMemberPath]="'LocalName'"
-                     (SelectedItemChanged)="CustomerIdentifyType = $event"
-                [SelectedValue]="ImporterTypeCode"
+                    [DisplayMemberPath]="'LocalName'"
+                    (SelectedItemChanged)="CustomerIdentifyType = $event"
+                    [SelectedValue]="ImporterTypeCode"
                     [HideColumns]="true">
             </LogLov>
         </td>
@@ -38,11 +43,10 @@
             <LogLov [ObjectFieldName]="'EntitleImporterTypeCode'"
                     [ObjectTableName]="ObjectTableName"
                     [DataContext]="DataContext"
-                        (SelectedItemChanged)="EntitleCustomerIdentifyType = $event"
+                    (SelectedItemChanged)="EntitleCustomerIdentifyType = $event"
                     [LookUpTableName]="'Customs.CustomerIdentifyType'"
-                       [DisplayMemberPath]="'LocalName'"
-
-                [SelectedValue]="EntitleImporterTypeCode"
+                    [DisplayMemberPath]="'LocalName'"
+                    [SelectedValue]="EntitleImporterTypeCode"
                     [HideColumns]="true">
             </LogLov>
         </td>
@@ -50,11 +54,10 @@
             <LogLov [ObjectFieldName]="'TransferImporterTypeCode'"
                     [ObjectTableName]="ObjectTableName"
                     [DataContext]="DataContext"
-                        (SelectedItemChanged)="TransferCustomerIdentifyType = $event"
+                    (SelectedItemChanged)="TransferCustomerIdentifyType = $event"
                     [LookUpTableName]="'Customs.CustomerIdentifyType'"
-                     [DisplayMemberPath]="'LocalName'"
-
-                [SelectedValue]="TransferImporterTypeCode"
+                    [DisplayMemberPath]="'LocalName'"
+                    [SelectedValue]="TransferImporterTypeCode"
                     [HideColumns]="true">
             </LogLov>
         </td>
@@ -62,9 +65,9 @@
         <td style="width:40px"><div></div></td>
         <td><div></div></td>
     </tr>
-    <tr  style="height:32px" class="FormFieldRow">
-       
-       
+    <tr style="height:32px" class="FormFieldRow">
+
+
         <td *ngIf="ImporterVisibility">
             <LogLabel [ObjectFieldName]="'ImporterPassportNumber'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
@@ -81,8 +84,9 @@
 
         <td *ngIf="ImporterVisibility">
             <!--<LogTextBox [ObjectFieldName]="'ImporterPassportNumber'" [ObjectTableName]="ObjectTableName"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
-            <SearchBox [ObjectTableName]="'Customs.Client'"
+                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
+            <!--[ObjectTableName]="'Customs.Client'"-->
+            <SearchBox [ObjectTableName]="'Client'"
                        [IsQuickSearch]="true"
                        [DropDownWidth]="143"
                        [DisplayMember]="'PassportNumber'"
@@ -138,11 +142,11 @@
         </td>
         <td><div></div></td>
         <td><div></div></td>
-    </tr >
-    <tr  style="height:32px" class="FormFieldRow">
-       
-      
-       
+    </tr>
+    <tr style="height:32px" class="FormFieldRow">
+
+
+
         <td *ngIf="ImporterVisibility">
             <LogLabel [ObjectFieldName]="'ImporterPassCountryCode'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
@@ -163,7 +167,7 @@
                     [DataContext]="DataContext"
                     [LookUpTableName]="'Customs.CustomsCountry'"
                     [HideColumns]="true"
-                     [SelectedValue]="ImporterPassCountryCode">
+                    [SelectedValue]="ImporterPassCountryCode">
             </LogLov>
         </td>
         <td *ngIf="EntitleVisibility">
@@ -181,16 +185,15 @@
                     [DataContext]="DataContext"
                     [LookUpTableName]="'Customs.CustomsCountry'"
                     [HideColumns]="true"
-                    [SelectedValue]="TransferImporterCountryCode"
-                    >
+                    [SelectedValue]="TransferImporterCountryCode">
             </LogLov>
         </td>
         <td><div></div></td>
         <td><div></div></td>
     </tr>
-    <tr  style="height:32px"  class="FormFieldRow">
-       
-      
+    <tr style="height:32px" class="FormFieldRow">
+
+
         <td *ngIf="ImporterVisibility">
             <LogLabel [ObjectFieldName]="'MainImporterEntitlemntTypeCode'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
@@ -233,10 +236,10 @@
         <td><div></div></td>
         <td><div></div></td>
     </tr>
-    <tr  style="height:32px" class="FormFieldRow">
-      
-     
-       
+    <tr style="height:32px" class="FormFieldRow">
+
+
+
         <td *ngIf="ImporterVisibility">
             <LogLabel [ObjectFieldName]="'ImporterName'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
@@ -249,23 +252,23 @@
             <LogLabel [ObjectFieldName]="'TransferImporterName'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td  colspan="2" *ngIf="ImporterVisibility">
+        <td class="EditMe" *ngIf="ImporterVisibility">
             <LogTextBox [ObjectFieldName]="'ImporterName'" [ObjectTableName]="ObjectTableName" [Text]="ImporterName"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
-        <td colspan="2" *ngIf="EntitleVisibility">
+        <td class="EditMe" *ngIf="EntitleVisibility">
             <LogTextBox [ObjectFieldName]="'EntitleImporterName'" [ObjectTableName]="ObjectTableName" [Text]="EntitleImporterName"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
-        <td colspan="2" *ngIf="TransferVisibility">
+        <td class="EditMe" *ngIf="TransferVisibility">
             <LogTextBox [ObjectFieldName]="'TransferImporterName'" [ObjectTableName]="ObjectTableName" [Text]="TransferImporterName"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
-      
+
     </tr>
-    <tr  style="height:32px" class="FormFieldRow">
-        
-       
+    <tr style="height:32px" class="FormFieldRow" *ngIf="!isCourierDeclaration">
+
+
         <td *ngIf="ImporterVisibility">
             <LogLabel [ObjectFieldName]="'ImporterAddress'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
@@ -278,27 +281,122 @@
             <LogLabel [ObjectFieldName]="'TransferImporterAddress'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
-        <td  colspan="2" *ngIf="ImporterVisibility">
+        <td class="EditMe" *ngIf="ImporterVisibility  && !isCourierDeclaration">
             <LogTextBox [ObjectFieldName]="'ImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="ImporterAddress"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
-        <td colspan="2" *ngIf="EntitleVisibility">
+
+        <td class="EditMe" *ngIf="EntitleVisibility">
             <LogTextBox [ObjectFieldName]="'EntitleImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="EntitleImporterAddress"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
-        <td colspan="2" *ngIf="TransferVisibility">
+        <td class="EditMe" *ngIf="TransferVisibility">
             <LogTextBox [ObjectFieldName]="'TransferImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="TransferImporterAddress"
                         [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
         </td>
-       
+
+
     </tr>
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterAddress1'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td class="EditMe">
+            <LogTextBox [ObjectFieldName]="'CasualImporterAddress1'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterAddress1"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+
+    </tr>
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterAddress2'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+            <LogTextBox [ObjectFieldName]="'CasualImporterAddress2'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterAddress2"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+    </tr>
+
+
+    
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterCity'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+            <LogTextBox [ObjectFieldName]="'CasualImporterCity'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterCity"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+    </tr>
+
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterZipCode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+            <LogTextBox [ObjectFieldName]="'CasualImporterZipCode'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterZipCode"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+    </tr>
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterFax'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+            <LogTextBox [ObjectFieldName]="'CasualImporterFax'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterFax"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+    </tr>
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterEmail'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+            <LogTextBox [ObjectFieldName]="'CasualImporterEmail'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterEmail"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+    </tr>
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterTel'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext" [Text]="'טלפון'"></LogLabel>
+        </td>
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+            <LogTextBox [ObjectFieldName]="'CasualImporterTel'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterTel"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+    </tr>
+    <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
+        <td>
+            <LogLabel [ObjectFieldName]="'CasualImporterContact'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td class="EditMe" *ngIf="ImporterVisibility  && isCourierDeclaration">
+            <LogTextBox [ObjectFieldName]="'CasualImporterContact'" [ObjectTableName]="ObjectTableName" [Text]="CasualImporterContact"
+                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+        </td>
+    </tr>
+
     <tr><td><div></div></td></tr>
-  
+
     <tr style="height: 32px;">
         <td colspan="4" style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
                     <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="DeleteImporterDetailsButtonClicked()" *ngIf="ImporterVisibility  && isCourierDeclaration">מחק פרטי יבואן</button>
+                    </td>
+                    <td style="width: 5px;">
                         <div></div>
                     </td>
 
@@ -318,5 +416,5 @@
         </td>
     </tr>
 
- 
+
 </table>

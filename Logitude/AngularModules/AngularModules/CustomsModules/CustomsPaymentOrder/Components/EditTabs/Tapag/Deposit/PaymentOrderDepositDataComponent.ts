@@ -38,7 +38,6 @@ export class PaymentOrderDepositDataComponent extends BaseComponent {
 
     public PaymentOrderPM: PaymentOrderPM = null;
     private Tapag: TapagList = new TapagList();
-    IsControlEnabled: any; // html component requires this property. AOT;
 
     public ConnectedEntitiesList: ObservableCollection;
     public DepositConditions: ObservableCollection;
@@ -66,6 +65,7 @@ export class PaymentOrderDepositDataComponent extends BaseComponent {
                                     this.PaymentOrderPM = entityArgs.EntityPM;
                                     this.LoadDepositData(this.PaymentOrderPM.PaymentNumber, null, this.PaymentOrderPM.Tenant);
                                 }
+                                this.InitPaymentOrderDepositDataScreen();
                                 this.IsLoaded = true;
                             });
                         });
@@ -91,6 +91,7 @@ export class PaymentOrderDepositDataComponent extends BaseComponent {
                 SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.InitPaymentOrderDepositDataScreen();
                     }
                 })
             );
@@ -114,6 +115,30 @@ export class PaymentOrderDepositDataComponent extends BaseComponent {
             this.IsTab = true;
             this.IsLoaded = true;
         }
+    }
+
+    InitPaymentOrderDepositDataScreen() {
+
+        this.UIProperties.SetEnabled("LeadingFileNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CustomerName", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ImporterId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ProfessionUnitTypeName", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CustomsBranchCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("ProfessionUnitTypeCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CustomsBranchName", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("EntityTypeCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("EntityNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("DepositEssenceTypeCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("DepositAmount", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("TradeMarkNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("LawyerNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("VehicleChassisNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("EngineNumber", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("BirthDate", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PaymentNumber", this.ObjectTableName, false);
+
     }
 
     LoadDepositData(paymentNumber: string, tapagId: string, tenant: number) {
@@ -245,20 +270,14 @@ export class PaymentOrderDepositDataComponent extends BaseComponent {
     }
 
     BankAccountToRefundButtonClicked() {
-
-        //var logitudeWindow = new LogitudeWindow();
-        //var windowArgs: any = {};
-        //logitudeWindow.Width = 600;
-        //logitudeWindow.Height = 480;
-        //logitudeWindow.IsShowCloseButton = false;
-        //logitudeWindow.Title = TextCodeTranslator.Translate("Customs.General.O.BankAccountToRefundMessage");;
-        //logitudeWindow.WindowArgs = windowArgs;
-        //logitudeWindow.Show('./CustomsModules/CustomsPaymentOrder/Components/EditTabs/Tapag/Deposit/BankAccountToRefundComponent');
-
+        var declarationId: string;
+        if (this.ConnectedEntitiesList != null && this.ConnectedEntitiesList.Length > 0) {
+            declarationId = this.ConnectedEntitiesList.Collection[0].Id;
+        }
 
         let customsRequestMenuService = new CustomsRequestMenuService();
         let my = {
-            "DeclarationId": this.EntityPM.Id,
+            "DeclarationId": declarationId,
         };
         customsRequestMenuService.WindowClosed.subscribe((myarg) => { });
         customsRequestMenuService.ShowModalAsEditMenuAction("2018", my);

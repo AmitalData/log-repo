@@ -404,6 +404,18 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             this.EntityPM.ImporterPassportNumber = null;
            // this.EntityPM.ImporterName = null;
             this.EntityPM.ImporterPassCountryCode = null;
+
+            this.EntityPM.ImporterName = "";//
+
+            this.EntityPM.CasualImporterAddress1 = "";
+            this.EntityPM.CasualImporterAddress2 = "";
+            this.EntityPM.CasualImporterCity = "";
+            this.EntityPM.CasualImporterZipCode = "";
+            this.EntityPM.CasualImporterFax = "";
+            this.EntityPM.CasualImporterEmail = "";
+            this.EntityPM.CasualImporterTel = "";
+            this.EntityPM.CasualImporterContact = "";
+
         }
 
 
@@ -677,7 +689,8 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             windowArgs.Type = "Importer";
             this.Type = "Importer";
             logWindow.Width = 550;
-            logWindow.Height = 350;
+        logWindow.Height = this.EntityPM.IsCourierDeclaration ? 550 : 350;
+        
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = true;
             logWindow.WindowArgs = windowArgs;

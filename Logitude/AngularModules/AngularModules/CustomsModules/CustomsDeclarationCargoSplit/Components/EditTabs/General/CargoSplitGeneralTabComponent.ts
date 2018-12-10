@@ -67,6 +67,8 @@ export class CargoSplitGeneralTabComponent
     public DisplayOnlyMessage: string = "";
     public ImporterCode: string = "";
     public IsCustomsFileRetrieved: boolean = false;
+public CargoIdentifiersList: ObservableCollection;
+
     FIELD_IS_REQUIERD: string;
   RequestVIA: SendRequestVIA;
   ItemsList: ObservableCollection;
@@ -111,18 +113,20 @@ export class CargoSplitGeneralTabComponent
         //this.entityArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
         this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCon").subscribe(response => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsItem").subscribe(response => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsPackDet").subscribe(response => {
-                            this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
-                            //this.Init();
-                            //this.EntityPM = this.entityArgs.EntityPM;
-                                //this.ObjectTableName = this.entityArgs.ObjectTableName;
-                                this._EntityResourceFinished= true;
+                this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCargoIdentifier").subscribe(response => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitCon").subscribe(response => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsItem").subscribe(response => {
+                            this.EntityResourceService.getEntityResourceByTableName("Customs.DecCargoSplitConsPackDet").subscribe(response => {
+                                this.EntityResourceService.getEntityResourceByTableName("Customs.Client").subscribe(response => {
+                                //this.Init();
+                                //this.EntityPM = this.entityArgs.EntityPM;
+                                    //this.ObjectTableName = this.entityArgs.ObjectTableName;
+                                    this._EntityResourceFinished= true;
 
-                            this.Listen();
-                            //this.BuildTabs();
-                            this.GetFileData();
+                                this.Listen();
+                                //this.BuildTabs();
+                                
+                                });
                             });
                         });
                     });
@@ -130,7 +134,11 @@ export class CargoSplitGeneralTabComponent
             });                  
         });
         this.declarationCargoSplitController = new DeclarationCargoSplitController(this.EntityPM);
-        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+        this.CargoIdentifiersList = new ObservableCollection([]);
+        if(!AppTool.IsNullOrEmpty(this.EntityPM) && this.EntityPM.DecCargoSplitCargoIdentifiers != null && this.EntityPM.DecCargoSplitCargoIdentifiers.length > 0)
+        {
+                this.CargoIdentifiersList.InsertCollection(this.EntityPM.DecCargoSplitCargoIdentifiers);
+        }
         this._entityListService = new EntityListService();
         if (this.IsDisplayOnly) {
             this.SetDisplayFields(this.ResponseStatusCode);
@@ -164,6 +172,8 @@ export class CargoSplitGeneralTabComponent
     Init() {
         
         this.SetDisplayFields(this.ResponseStatusCode);
+        this.GetFileData();
+        this.InitCargoIdentifiers();
         //if (this.entityArgs == null || (this.entityArgs != null && this.entityArgs.EntityPM == null)) {
         //    if (this.EntityPM != null && this.entityArgs != null) this.entityArgs.EntityPM = this.EntityPM;
         //    return;
@@ -283,7 +293,8 @@ export class CargoSplitGeneralTabComponent
                 SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.RefreshEntity();
+                        //this.RefreshEntity();
+                        
                     }
                 })
             );
@@ -299,7 +310,7 @@ export class CargoSplitGeneralTabComponent
                 SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.currentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DEGC") {
-                            this.RefreshEntity();
+                            //this.RefreshEntity();
                             this.DisplayOnlyCheck();
                         }
                     }
@@ -897,7 +908,18 @@ export class CargoSplitGeneralTabComponent
                 this.SendButtonEnabled = false;
             }
         });
-        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+        if(!AppTool.IsNullOrEmpty(this.EntityPM) && this.EntityPM.DecCargoSplitCargoIdentifiers != null && this.EntityPM.DecCargoSplitCargoIdentifiers.length > 0)
+        {
+                this.CargoIdentifiersList.InsertCollection(this.EntityPM.DecCargoSplitCargoIdentifiers);
+        }
+    }
+
+    InitCargoIdentifiers() {
+        
+        if(!AppTool.IsNullOrEmpty(this.EntityPM) && this.EntityPM.DecCargoSplitCargoIdentifiers != null && this.EntityPM.DecCargoSplitCargoIdentifiers.length > 0)
+        {
+                this.CargoIdentifiersList.InsertCollection(this.EntityPM.DecCargoSplitCargoIdentifiers);
+        }
     }
 
     private SaveEntityChanges(customSendOptionsArgs) {
@@ -1097,7 +1119,7 @@ export class CargoSplitGeneralTabComponent
                 */
             });
             //}
-            this.RefreshEntity();
+            //this.RefreshEntity();
         }
         
     }
@@ -1231,44 +1253,6 @@ export class CargoSplitGeneralTabComponent
         //}
         return errors;
     }
-
-
-    DataSource = {
-
-        pageSize: 10,
-        rowCount: null,
-        sortingCol: "LineNumber",
-        sortingDir: "Ascending",
-        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-
-            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-            return tempo;
-
-        },
-
-    };
-
-
-    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        if (filters == null) {
-            filters = new ApiQueryFilters();
-        }
-
-        filters.PageSize = take;
-        filters.PageIndex = skip;
-        filters.GetAll = false;
-        filters.GetCount = true;
-        filters.SortBy = sortingCol;
-        filters.SortDirection = sortingDir;
-
-        filters.addAdditionalFilter("DeclarationCargoSplitId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-
-        return this._entityListService.getExtendedByFilters("Customs.DecCargoSplitCargoIdentifier", filters);
-
-    }
-
-    filterAgrs: ApiQueryFilters;
-
 }
 
 export class XRayAvailableItem {

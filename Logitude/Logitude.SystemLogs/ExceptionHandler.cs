@@ -4,6 +4,7 @@ using Simplog.Server.Infrastructure.Azure;
 using System.Diagnostics;
 using System.Data.SqlClient;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.SystemLogs
 {
@@ -14,6 +15,14 @@ namespace Logitude.SystemLogs
             if (!DbContextBaseUtil.MaxPoolSizeWasReachedWhileSave.HasValue && exception != null && exception.ToString().Contains("max pool size was reached"))//  The timeout period elapsed prior to obtaining a connection from the pool.  This may have occurred because all pooled connections were in use and max pool size was reached.
             {
                 DbContextBaseUtil.MaxPoolSizeWasReachedWhileSave = DateTime.Now;
+            }
+            if (exception.ToString().Contains("max pool size was reached"))
+            {
+                if (InjectionUtil.Instance.IISManager != null)
+                {
+                    InjectionUtil.Instance.IISManager.RecycleMe();
+                }
+
             }
             AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Error);
             string ErrorMessage = "";

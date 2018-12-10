@@ -19,6 +19,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Unifreight.Data.AmitalModel;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -35,6 +36,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO)
         {
+            UpdateUnifreight(entityPM);
+
             base.OnUpdating(entityPM, entityPOCO);
         }
 
@@ -56,6 +59,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public DeclarationCourierStatusPM CalculateDeclarationCourierStatus(DeclarationPM declarationPM)
         {
+            CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(declarationPM);
+            return calculateDeclarationCourierStatus.CalcAll();
+
             if (declarationPM.IsCourierDeclaration)
             {
                 //task 39471 added GetSingle here

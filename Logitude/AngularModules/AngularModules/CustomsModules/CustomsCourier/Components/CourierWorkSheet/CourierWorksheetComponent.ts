@@ -25,9 +25,8 @@ import { CustomBankListService } from '../../../../Customs/Services/StandardList
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { SendPayReadyLowRequestParams } from '../../../../Customs/DataContract/RequestParams/SendPayReadyLowRequestParams';
 import { SendALLCorrectRequestParams } from '../../../../Customs/DataContract/RequestParams/SendALLCorrectRequestParams';
-
 import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/DataChange/CourierWorksheetSharedDataService';
-
+import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
 
 
@@ -85,12 +84,14 @@ implements OnDestroy
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
     _SelectedDOCValue: string = 'A'; // All/Correction/CorrectionUploaded
+    _SelectedACCValue: string = 'A';//'W'; // All/Wrong eitan temp
 
     public columns: any[] = null;
 
     IsActionButtonsEnabled: boolean = false;
     IsLoaded: boolean = false;
     IsFiltered: boolean = false;
+    IsMamanEnabled: boolean = false;
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() onQueryChangeEvent = new EventEmitter();
@@ -108,6 +109,7 @@ implements OnDestroy
         this._TabFilterList.push(new TabFilter("DEC", "בעיות בהצהרה", null, null));
         this._TabFilterList.push(new TabFilter("PAY", "תשלום", null, null));
         this._TabFilterList.push(new TabFilter("HOLD", "Pending", null, null));
+        this._TabFilterList.push(new TabFilter("ACC", "מסוף", null, null));
         this._SelectedTabFilter = this._TabFilterList[0];
         //SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
         //this.PseventRowSelectEventSubscribe =
@@ -118,7 +120,7 @@ implements OnDestroy
         //            }
         //        });
         //);
-
+        this.GetMamanPUR();
         
     }
     //PseventRowSelectEventSubscribe: any;
@@ -139,7 +141,9 @@ implements OnDestroy
         this._SelectedTabFilter = item;
         this._SelectedMNFValue = 'A';
         this._SelectedDECValue = 'A';
-        this._SelectedDOCValue = 'A'; 
+        this._SelectedDOCValue = 'A';
+        this._SelectedACCValue = 'A';
+
         switch (item.Code) {
             case "DECR": 
                 this._ReadyDECToBatchSend = item.Value;
@@ -152,6 +156,9 @@ implements OnDestroy
                 break;
             case "DOC":
                 this._SelectedDOCValue = 'A';
+                break;
+            case "ACC":
+                this._SelectedACCValue = 'W';
                 break;
         }
 
@@ -221,7 +228,13 @@ implements OnDestroy
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
-        //this.SendALLCorrectManifest_OLD(courierDeclarationStatusCode);
+        if (this._CorrectMNFToBatchSend == 0 && courierDeclarationStatusCode == "RV") {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            return;
+        }
 
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
@@ -230,6 +243,9 @@ implements OnDestroy
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.HAWB = this.entityPM.HAWB;
         currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        }
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe(res => {
                 SessionLocator.CurrentSession.StopBusyIndicator();
@@ -356,6 +372,14 @@ implements OnDestroy
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
+        if (this._CorrectDECToBatchSend == 0 && courierDeclarationStatusCode == "RV") {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            return;
+        }
+
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -535,6 +559,9 @@ implements OnDestroy
     _DEC_C_Total = 0;
     _MNF_W_Total = 0;
     _MNF_C_Total = 0;
+    //_ACC_W_Total = 0;
+    _CorrectMNFToBatchSend = 0;
+    _CorrectDECToBatchSend = 0;
 
     RefreshStatistic() {
         SessionLocator.CurrentSession.StartBusyIndicatorCreating();
@@ -551,9 +578,19 @@ implements OnDestroy
                             this._ReadyDECToBatchSend = item.Value;
                             break;
                         }
+                        case "DECR_RV": {
+                            //statements; 
+                            this._CorrectDECToBatchSend = item.Value;
+                            break;
+                        }
                         case "MNFR": {
                             //statements; 
                             this._ReadyMNFToBatchSend = item.Value;
+                            break;
+                        }
+                        case "MNFR_RV": {
+                            //statements; 
+                            this._CorrectMNFToBatchSend = item.Value;
                             break;
                         }
                         case "SVG": {
@@ -649,7 +686,7 @@ implements OnDestroy
             FieldName: 'ProcedureCurrentName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.ProcedureCurrentName"),
-            Styles: { width: '200px' },
+            Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
         });
@@ -698,7 +735,7 @@ implements OnDestroy
             FieldName: 'IsCourierMissingClassification',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsCourierMissingClassification"),
-            Styles: { width: '60px' },
+            Styles: { width: '55px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -709,7 +746,7 @@ implements OnDestroy
             FieldName: 'CourierManifestStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierManifestStatusCode"),
-            Styles: { width: '60px' },
+            Styles: { width: '55px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -720,7 +757,7 @@ implements OnDestroy
             FieldName: 'CourierDeclarationStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierDeclarationStatusCode"),
-            Styles: { width: '60px' },
+            Styles: { width: '55px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -731,7 +768,7 @@ implements OnDestroy
             FieldName: 'CourierPaymentStatusCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPaymentStatusCode"),
-            Styles: { width: '60px' },
+            Styles: { width: '55px' },
             IsCustomTemplate: true,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
@@ -742,7 +779,18 @@ implements OnDestroy
             FieldName: 'CourierCustomStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierCustomStatusName"),
-            Styles: { width: '100px' },
+            Styles: { width: '80px' },
+            IsCustomTemplate: true,
+            ServerSideSortable: false,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
+        });
+
+        this.columns.push({
+            FieldName: 'MamanStatusCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.MamanStatusCode"),
+            Styles: { width: '55px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
             HtmlListComponentName: 'CourierWorksheetListTemplate',
@@ -765,6 +813,8 @@ implements OnDestroy
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
+            HtmlListComponentName: 'CourierWorksheetListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CourierWorksheetListTemplate',
         });
 
         this.columns.push({
@@ -840,7 +890,7 @@ implements OnDestroy
         return myout;
     }
 
-    getRowsOld(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+   /*getRowsOld(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
         if (filters == null) {
             filters = new ApiQueryFilters();
@@ -942,6 +992,28 @@ implements OnDestroy
             }
         }
 
+        switch (this._SelectedAvailableValue) {
+            case "AD": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "AV": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "1", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "NAV": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "0", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
+        switch (this._SelectedACCValue) {
+            case "W": {
+                filters.addAdditionalFilter("MamanStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
         }
@@ -950,7 +1022,7 @@ implements OnDestroy
         var myout = this._EntityListService.getExtendedByFilters("Customs.DeclarationCourierStatus", filters);
 
         return myout;
-    }
+    }*/
 
     BuildFiltersForQuery(filters: ApiQueryFilters = null) {
 
@@ -961,6 +1033,7 @@ implements OnDestroy
         filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
 
         switch (this._SelectedTabFilter.Code) {
+            case "ACC":
             case "ALL": {
                 break;
             }
@@ -1040,6 +1113,28 @@ implements OnDestroy
             }
         }
 
+        switch (this._SelectedAvailableValue) {
+            case "AD": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "AV": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "1", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "NAV": {
+                filters.addAdditionalFilter("AcceptanceStatusCode", "0", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
+        switch (this._SelectedACCValue) {
+            case "W": {
+                filters.addAdditionalFilter("MamanStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
+
         if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
             filters.addAdditionalFilter("CourierSearchFields", this.SearchFilter, null, null, "Contains", false, false, false, "string", false, true);
         }
@@ -1076,6 +1171,14 @@ implements OnDestroy
 
         if (this._SelectedDOCValue != value) {
             this._SelectedDOCValue = value;
+            this.RefreshList();
+        }
+    }
+
+    ACCFilterClicked(value: string) {
+
+        if (this._SelectedACCValue != value) {
+            this._SelectedACCValue = value;
             this.RefreshList();
         }
     }
@@ -1331,17 +1434,34 @@ implements OnDestroy
             });
     }
 
-}
-
-export class KeyValuePair {
-    constructor(public Key: string, public Value) { }
-}
-
-export class TabFilter {
-
-    constructor(public Code: string,public Header: string, public Total?: number, public Filter? :string ) {
+    private GetMamanPUR() {
+        var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", SessionLocator.Tenant)
+            .subscribe(response => {
+                this.IsMamanEnabled = false;
+                if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
+                    this.IsMamanEnabled = true;
+                }
+                myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGO_HWBBMMN", "NON", "NON", SessionLocator.Tenant)
+                    .subscribe(res => {
+                        if (!res.HasError && res.Result != null && res.Result.DefaultValue == "Y") {
+                            this._CourierWorksheetSharedDataService.IsWebAPICourierGWMessageECTHRDataMamanEnable = true;
+                        }
+                    });
+            });
     }
 
 
 }
+
+
+    export class KeyValuePair {
+        constructor(public Key: string, public Value) { }
+    }
+
+    export class TabFilter {
+
+        constructor(public Code: string,public Header: string, public Total?: number, public Filter? :string ) {
+        }
+    }
 

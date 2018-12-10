@@ -27,6 +27,8 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.Server.Tools.Models;
 using Unifreight.Data.AmitalModel.Repsitories;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -130,9 +132,9 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        private Declaration BuildDeclaration(MANIFESTRequestRequestParams requestParams)
+        private UnifreightIIG.Common.MANIFESTRequestServiceReference.Declaration BuildDeclaration(MANIFESTRequestRequestParams requestParams)
         {
-            Declaration _DeclarationPM = new Declaration();
+            UnifreightIIG.Common.MANIFESTRequestServiceReference.Declaration _DeclarationPM = new UnifreightIIG.Common.MANIFESTRequestServiceReference.Declaration();
 
             //Get Declaration
             DeclarationQueryService myDeclarationQueryService = new DeclarationQueryService(_Context);
@@ -173,8 +175,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             if (!string.IsNullOrWhiteSpace(_CourierMasterPM.AirlinePrefix))
             {
-                AirlineRepository airlineRepository = new AirlineRepository(_Tenant.Id);
-                Airline airline = airlineRepository.GetSingleAirlineByPrefix(_CourierMasterPM.AirlinePrefix, _Tenant.Id);
+                CustomsAirlineRepository airlineRepository = new CustomsAirlineRepository(_Tenant.Id);
+                CustomsAirline airline = airlineRepository.GetByPrefix(_CourierMasterPM.AirlinePrefix, _Tenant.Id);
                 if (airline != null)
                 {
                     List<DeclarationCarrier> declarationCarrierList = new List<DeclarationCarrier>();
@@ -185,6 +187,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     declarationCarrierList.Add(declarationCarrier);
                     _DeclarationPM.Carrier = declarationCarrierList.ToArray();
                 }
+                
             }
 
             _DeclarationPM.ID = new DeclarationIdentificationIDType() { Value = _CourierMasterPM.ManifestNumber };

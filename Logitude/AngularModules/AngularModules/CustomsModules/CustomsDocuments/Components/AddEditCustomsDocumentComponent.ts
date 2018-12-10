@@ -521,6 +521,12 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         //*********************** task 32398 new version button********************//
 
         if (this.CustomsDocument) {
+
+            if (this.CustomsDocument.CustomsDocId) {
+                this.IsMetaDataEditEnabled = false;
+                this.IsSendDocumentEnabled = false;
+            }
+
             var statusCodes = ['1', '7'];
             if (statusCodes.indexOf(this.CustomsDocument.DocumentStatusCode)>-1 && !AppTool.IsNullOrEmpty(this.CustomsDocument.CustomsDocId)
                 && this.CustomsDocumentsTicket && AppTool.IsNullOrEmpty(this.CustomsDocumentsTicket.RequestedCustomsDocId)

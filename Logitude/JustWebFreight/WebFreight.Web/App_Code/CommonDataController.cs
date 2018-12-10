@@ -39,7 +39,9 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
- 
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+
 namespace WebFreight.Web
 {
     public class CommonDataController : ApiController
@@ -240,6 +242,13 @@ namespace WebFreight.Web
                 myResult.LocalCurrencyCode = myTenant.Currency.Code;
                 myResult.ProfitCurrencyCode = myTenant.ProfitCurrency.Code;
                 myResult.TenantDateTimeFormat = myTenant.DateTimeFormat;
+            }
+
+            SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(tenant);
+            SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(tenant.ToString(), tenant);
+            if (sharedLogisticsSetting != null)
+            {
+                myResult.IsInvoicesMenuEnabled = sharedLogisticsSetting.IsInvoicesMenuEnabled;
             }
 
             return myResult;

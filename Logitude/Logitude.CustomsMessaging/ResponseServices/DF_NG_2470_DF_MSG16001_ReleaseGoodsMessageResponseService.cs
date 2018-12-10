@@ -94,6 +94,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "7";
                             declarationPM.CourierCustomStatusCode = "1";
+                            declarationPM.IsClose = true;
                             MyRequestSheetParam.RequestDescription = "התרה לתיק. מספר הצהרה: " + declarationNumber;//eitan h 26/2/15 task 11525
                             break;
                         case 5: // released cancelled
@@ -102,6 +103,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             myEventContextTagModel.StatusDateTime = statusDateTime;
                             declarationPM.DeclarationStatusTypeCode = "6";
                             declarationPM.HatraDate = null; //Yuval Chalup 17.01.2018 - Delete date
+                            declarationPM.IsClose = false;
                             MyRequestSheetParam.RequestDescription = "ביטול התרה. תיק מספר: " + declarationPM.CustomFileNo;//eitan h 26/2/15 task 11525
                             break;
                         case 9: // Pre clearance
@@ -147,7 +149,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         Succeeded = true,
                         HasException = false,
-                        DeclarationNumber = declarationPM.Id,
+                        DeclarationNumber = declarationPM.DeclarationNumber,
                         UserMessage = MyRequestSheetParam.RequestDescription,
                     };
                     GetResponseData(this.MyResponseData,customResponse, declarationPM);
@@ -174,7 +176,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(declarationPM.Tenant);
                 DeclarationPM fullDeclarationPM = declarationQueryService.GetSingle(declarationPM.Id, true, false);
                 MyResponseData.FileNumber = fullDeclarationPM.CustomFileNo;
-                if(fullDeclarationPM.SupplierInvoices != null && fullDeclarationPM.SupplierInvoices.Count() > 0)
+                MyResponseData.CifValueNis = fullDeclarationPM.CIFValue > 0 ? fullDeclarationPM.CIFValue.ToString() : "";
+                if (fullDeclarationPM.SupplierInvoices != null && fullDeclarationPM.SupplierInvoices.Count() > 0)
                 {
                     MyResponseData.GoodsItemsList = new List<GoodsItems>();
                     foreach (var supplierInvoice in fullDeclarationPM.SupplierInvoices)
@@ -186,6 +189,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             goodsItems.GoodsItemPath = supplierInvoiceItem.LineNumber.ToString();
                             goodsItems.CustomItemID = supplierInvoiceItem.ClassificationCode;
                             MyResponseData.GoodsItemsList.Add(goodsItems);
+                        }
+                        if (supplierInvoice.IsPrimarySupplierInvoice)
+                        {
+                            MyResponseData.CurrencyTypeCode = supplierInvoice.InvoiceCurrencyTypeCode;
+                            MyResponseData.ExchangeRate = supplierInvoice.ExchangeRate > 0 ? supplierInvoice.ExchangeRate.ToString() : "";
                         }
                     }
                 }
