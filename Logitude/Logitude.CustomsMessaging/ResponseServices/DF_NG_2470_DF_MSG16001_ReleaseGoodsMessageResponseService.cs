@@ -176,7 +176,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeclarationQueryService declarationQueryService = new DeclarationQueryService(declarationPM.Tenant);
                 DeclarationPM fullDeclarationPM = declarationQueryService.GetSingle(declarationPM.Id, true, false);
                 MyResponseData.FileNumber = fullDeclarationPM.CustomFileNo;
-                MyResponseData.CifValueNis = fullDeclarationPM.CIFValue > 0 ? fullDeclarationPM.CIFValue.ToString() : "";
+                
                 if (fullDeclarationPM.SupplierInvoices != null && fullDeclarationPM.SupplierInvoices.Count() > 0)
                 {
                     MyResponseData.GoodsItemsList = new List<GoodsItems>();
@@ -193,7 +193,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         if (supplierInvoice.IsPrimarySupplierInvoice)
                         {
                             MyResponseData.CurrencyTypeCode = supplierInvoice.InvoiceCurrencyTypeCode;
-                            MyResponseData.ExchangeRate = supplierInvoice.ExchangeRate > 0 ? supplierInvoice.ExchangeRate.ToString() : "";
+                            
                         }
                     }
                 }
@@ -210,6 +210,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //    MyResponseData.releaseDate = customResponse.GeneralData.releaseDate.TimeOfDay.ToString("hh:mm") + "   " + MyResponseData.releaseDate;
                     //}
                     if(customResponse.GeneralData.dealValueNISSpecified)MyResponseData.dealValueNIS = customResponse.GeneralData.dealValueNIS.ToString();
+                    //if (customResponse.GeneralData.CifValueNisSpecified) MyResponseData.CifValueNis = customResponse.GeneralData.CifValueNis.ToString();
+                    //if (customResponse.GeneralData.ExchangeRateSpecified) MyResponseData.ExchangeRate = customResponse.GeneralData.ExchangeRate.ToString();
                 }
                 if (customResponse.Consignment != null && customResponse.Consignment[0] != null)
                 {

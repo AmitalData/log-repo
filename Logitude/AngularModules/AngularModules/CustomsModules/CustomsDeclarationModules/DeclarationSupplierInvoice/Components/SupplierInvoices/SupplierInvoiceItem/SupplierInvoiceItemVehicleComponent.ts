@@ -27,6 +27,7 @@ import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../../../Infrast
 import { CardListService } from '../../../../../../Common/Services/StandardLists/CardListService'
 import { CardList } from '../../../../../../Common/EntityLists/CardList';
 import { DeclarationPM } from '../../../../../../Customs/EntityPMs/DeclarationPM';
+import {CustomsSettingExtendedListService} from '../../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 @Component({
     moduleId: module.id,
@@ -48,6 +49,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
     public OriginalItemPM: SupplierInvoiceItemPM;
     public ClonedItemPM: SupplierInvoiceItemPM;
     public entityResourceService: EntityResourceService = new EntityResourceService();
+    public IsReleaseFileDisplay: boolean = false;
 
     vehiclePMService: VehiclePMService = new VehiclePMService();
     vehicleExtendedPMService: VehicleExtendedPMService = new VehicleExtendedPMService();
@@ -55,6 +57,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
 
     cardListService: CardListService = new CardListService();
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
+    _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
 
     constructor() {
         super();
@@ -84,6 +87,23 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
                         this.SearchButtonVisibility = true;
                     }
                     this.declarationPM = args.declarationPM;
+                    if (this.declarationPM.IsReleaseFile) {
+                        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_VEHICLE_BLK", "NON", this.declarationPM.CustomerCode, SessionLocator.Tenant)
+                        .subscribe(
+                        (response: ServiceResponse) => {
+                            let obj = response.Result;
+                            if (obj) {
+                                let DefaultValue = obj['DefaultValue'];
+                                if (DefaultValue == "Y") {
+                                    this.IsReleaseFileDisplay = true;
+                                }
+                            }
+                        }
+                        );
+                    }
+                    
+
+
                     this.supplierInvoicePM = args.SupplierInvoicePM;
 
                     var featureVehicle = FeatureLocator.Features.filter(f => f.Code == "LOADVEHICLESFROMUNI")[0];
@@ -116,7 +136,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
     VehiclesFilesButtonVisibility: boolean = false;
     SearchButtonVisibility: boolean;
     Add(supplierInvoiceItemVehiclePM: SupplierInvoiceItemVehiclePM) {
-        if (!this.IsDisplayOnly) {
+        if (!this.IsDisplayOnly&&!this.IsReleaseFileDisplay) {
 
             //if (!this.ValidateList())
             //    return;
