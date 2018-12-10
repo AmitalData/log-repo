@@ -103,7 +103,7 @@ namespace CommunicationWorkerRole
         {
 
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
-            string filename = (!string.IsNullOrEmpty(document.FileName) ? document.FileName : document.Id) + "_" + documentFiling.Code + "." + document.Extension;
+            string filename = (!string.IsNullOrEmpty(documentFiling.Description) ? documentFiling.Description : (!string.IsNullOrEmpty(document.FileName) ? document.FileName : document.Id)) + "_" + documentFiling.Code + "." + document.Extension;
             if ((!string.IsNullOrEmpty(documentFiling.EntityNumber) || !string.IsNullOrEmpty(documentFiling.EntityId)) && !string.IsNullOrEmpty(documentFiling.ObjectTableId))
             {
                 ObjectTable table = objectTableRepository.GetSingleObjectTable(documentFiling.ObjectTableId, 0, false);
@@ -118,7 +118,7 @@ namespace CommunicationWorkerRole
                             else
                                 forwarderShipmentNumber = shipmentRepository.GetForwarderShipmentNumberByShipmentIdTenant(documentFiling.EntityId, documentFiling.Tenant);
 
-                            filename = documentFiling.Tenant + "_" + documentType.Code + "_" + documentFiling.Code + (!string.IsNullOrWhiteSpace(forwarderShipmentNumber) ? ("_" + forwarderShipmentNumber) : "") + (!string.IsNullOrEmpty(document.FileName) ? "_" + document.FileName : "") + "." + document.Extension;
+                            filename = documentFiling.Tenant + "_" + documentType.Code + "_" + documentFiling.Code + (!string.IsNullOrWhiteSpace(forwarderShipmentNumber) ? ("_" + forwarderShipmentNumber) : "") + (!string.IsNullOrEmpty(documentFiling.Description) ? "_" + documentFiling.Description : "") + "." + document.Extension;
                             break;
                         }
                     default:
@@ -128,6 +128,5 @@ namespace CommunicationWorkerRole
 
             return filename;
         }
-
     }
 }
