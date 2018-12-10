@@ -12,5 +12,7 @@ namespace Logitude.Accounting.Def.EntityPMs
     public partial class GLAccountPM : EntityPM
     {
         public string Application { get; set; }
+
+        public bool PassedFromAPI { get; set; }
     }
 }
