@@ -1070,7 +1070,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region Declaration Closure
             MenuButton DeclarationClosureButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
             {
-                EventCode = "Vehicle Modifications",
+                EventCode = "Declaration Closure",
                 Index = 10,
                 IsActive = true,
                 LabelTextCodeCode = "Customs.Declaration.B.DeclarationClosure",
@@ -1086,7 +1086,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 
             MenuButton CancelDeclarationClosureButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
             {
-                EventCode = "Vehicle Modifications",
+                EventCode = "Cancel Declaration Closure",
                 Index = 11,
                 IsActive = true,
                 LabelTextCodeCode = "Customs.Declaration.B.CancelDeclarationClosure",
