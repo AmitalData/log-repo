@@ -616,8 +616,8 @@
                     document.getElementById("PasswordContainsSymbolImg").src = "images/verifiedGreen.png";
                 }
 
-                if (UserEmailText) {
-                    var errorMessage = PasswordValidation(passtring, UserEmailText);
+                var errorMessage = PasswordValidation(passtring, UserEmailText);
+
                      document.getElementById("errorsList").innerHTML = errorMessage;
                     if (errorMessage) {
                         $("#errorsList").show();
@@ -625,7 +625,7 @@
                     }
                     else  $("#errorsList").hide();
                  
-                }
+                
             }
 
         }
@@ -744,8 +744,6 @@
         function PasswordValidation(password, userEmail) {
 
   
-
-        //Password Contains User Email
         if (userEmail) {
 
             var ContainsEmail = false;
