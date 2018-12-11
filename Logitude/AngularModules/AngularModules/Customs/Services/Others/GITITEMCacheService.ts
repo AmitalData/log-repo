@@ -14,6 +14,7 @@ import { ItemCodeComponent } from '../../../CustomsModules/CustomsDeclarationMod
 import { GITITEMDto } from '../../EntityPMs/Extended/GITITEMDto';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 @Injectable()
 export class GITITEMCacheService {
@@ -38,6 +39,49 @@ export class GITITEMCacheService {
   //  this._ItemCode_LocalCache = value;
   //}
 
+    //public const  ToChangeRow ="ToChangeRow"
+    OnItemCodeAdd(mySupplierInvoiceItemPM, itemCodeDetails): Promise<OnItemCodeAddResult> {
+        //ToChangeRowTrue_ToChangeDBFalse
+        return new Promise<OnItemCodeAddResult>(resolve => {
+            let isChanged: boolean = false;
+            if (!AppTool.IsNullOrEmpty(mySupplierInvoiceItemPM.ClassificationCode) && mySupplierInvoiceItemPM.ClassificationCode != itemCodeDetails.ClassificationCode) {
+                isChanged = true;
+            }
+            if (!AppTool.IsNullOrEmpty(mySupplierInvoiceItemPM.ItemDescription) && mySupplierInvoiceItemPM.ItemDescription != itemCodeDetails.ItemDescription) {
+                isChanged = true;
+            }
+            if (GITITEMCacheService.Instance.IsUnitPURForItems && !AppTool.IsNullOrEmpty(mySupplierInvoiceItemPM.InvoiceQuantityType) && mySupplierInvoiceItemPM.InvoiceQuantityType != itemCodeDetails.InvoiceQuantityType) {
+                isChanged = true;
+            }
+            if (GITITEMCacheService.Instance.IsCountryPURForItems && !AppTool.IsNullOrEmpty(mySupplierInvoiceItemPM.OriginCountryCode) && mySupplierInvoiceItemPM.OriginCountryCode != itemCodeDetails.OriginCountryCode) {
+                isChanged = true;
+            }
+
+
+
+            if (!isChanged) {
+                resolve(OnItemCodeAddResult.voidDoNothing);
+                return;
+            }
+            let confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("הערכים בטבלת פריטים שונים , האם לדרוס ערכי השורה ?")
+            console.log("אחרת הנתונים הנ'ל יועדכנו ב DB !!!!!!!!!!!");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    console.log("לדרוס ערכי השורה ")
+
+                    resolve(OnItemCodeAddResult.OverwriteRowFromDB);
+                    return;
+                } else if (confirmWindow.No) {
+                    console.log("אחרת הנתונים הנ'ל יועדכנו ב DB !!!!!!!!!!!");
+                    resolve(OnItemCodeAddResult.AddTaskToUpdateDB);
+                    return;
+                }
+            })
+        });
+
+
+    }
 
   private GetCountryPURForItems() {
     //SessionLocator.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
@@ -110,4 +154,7 @@ export class GITITEMCacheService {
   public static get Instance() {
     return this._instance || (this._instance = new this());
   }
+}
+export enum OnItemCodeAddResult {
+    voidDoNothing=0,OverwriteRowFromDB=1,AddTaskToUpdateDB=2
 }
