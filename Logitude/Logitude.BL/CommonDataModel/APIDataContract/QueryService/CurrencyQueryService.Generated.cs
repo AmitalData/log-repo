@@ -86,7 +86,9 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
 				   temp.EnglishName = MyEntityPM.EnglishName;
-				   temp.LocalName = MyEntityPM.LocalName;					
+				   temp.LocalName = MyEntityPM.LocalName;
+				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Currency");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -109,7 +111,21 @@ using Simplog.Data.CommonDataModel;
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
 						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
-					} 					   
+					} 
+					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{
+						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"Currency");
+					    if(string.IsNullOrEmpty(MyCode))
+						{
+						  throw new ApplicationException("Currency with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+						}
+						temp = query.GetSinglePMByCode(MyCode, Tenant);
+						
+						
+					}
+					
+					   					   
 					if(temp == null)
 					{
 					    throw new ApplicationException("Currency with Code " + MyEntity.Code + " doesn't exist");
@@ -123,7 +139,11 @@ using Simplog.Data.CommonDataModel;
 						temp.Code = MyEntity.Code;
 					}
 					temp.EnglishName = MyEntity.EnglishName;
-					temp.LocalName = MyEntity.LocalName;					   
+					temp.LocalName = MyEntity.LocalName;
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+						temp.Code = MyEntity.PartnerCode;
+					}					   
 					   return temp;
 		    }
             catch (Exception ex)

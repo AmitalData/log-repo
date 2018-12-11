@@ -13,24 +13,30 @@ using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
 
-namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
+namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
    
-    public class Measurement
+    public class Receivable
     {
 
 	    
 	[XmlAttribute]
     public string Id { get; set; }
     
-	[XmlAttribute]
-    public string Code { get; set; }
+    public ChargesType ChargesType { get; set; }
     
-    public string Name { get; set; }
+    public Measurement Measurement { get; set; }
     
-    public string ShortName { get; set; }
+    public double? Quantity { get; set; }
     
-	[XmlAttribute]
-    public string PartnerCode { get; set; }
+    public double? UnitPrice { get; set; }
+    
+    public double? TotalAmount { get; set; }
+    
+    public Currency Currency { get; set; }
+    
+    public double? Rate { get; set; }
+    
+    public PrepaidCollect PrepaidCollect { get; set; }
     }
 } 
