@@ -57,7 +57,7 @@ export class CourierWorksheetListTemplate {
     IsDeclarationStatusGreen: boolean = false;
     IsDeclarationStatusBlue: boolean = false;
     IsDeclarationStatusOrange: boolean = false;
-    IsPaymentStatusRed: boolean = false;
+    IsPaymentStatusBlueChecked: boolean = false;
     IsPaymentStatusGreen: boolean = false;
     IsPaymentStatusBlue: boolean = false;
     IsPaymentStatusOrange: boolean = false;
@@ -187,11 +187,11 @@ export class CourierWorksheetListTemplate {
         if (this._CourierWorksheet.CourierPaymentStatusCode != null) {
             switch (this._CourierWorksheet.CourierPaymentStatusCode) {
                 case "R": {
-                    this.IsPaymentStatusRed = true;
+                    this.IsPaymentStatusOrange = true;
                     break;
                 }
                 case "P": {
-                    this.IsPaymentStatusGreen = true;
+                    this.IsPaymentStatusBlueChecked = true;
                     break;
                 }
                 case "I": {
@@ -199,7 +199,7 @@ export class CourierWorksheetListTemplate {
                     break;
                 }
                 case "O": {
-                    this.IsPaymentStatusOrange = true;
+                    this.IsPaymentStatusGreen = true;
                     break;
                 }
             }

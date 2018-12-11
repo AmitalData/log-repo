@@ -94,6 +94,13 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             var rec = (from a in context.CCUFILEMs
                        where a.CUSTOMFILENO == lCUSTOMFILENO
                        select a).FirstOrDefault();
+            if (rec == null && lCUSTOMFILENO.ToString().StartsWith("999"))//44723 10.12.18
+            {
+                long fileno = long.Parse(lCUSTOMFILENO.ToString().Substring(3));
+                rec = (from a in context.CCUFILEMs
+                       where a.CUSTOMFILENO == fileno
+                       select a).FirstOrDefault();
+            }
             if (rec == null)
             {
                 return null;

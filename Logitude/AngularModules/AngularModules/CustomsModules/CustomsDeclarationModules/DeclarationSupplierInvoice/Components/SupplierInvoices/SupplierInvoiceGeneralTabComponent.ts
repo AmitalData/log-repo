@@ -3226,22 +3226,58 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
 
       //if (this.Parent.Parent.ItemCode_LocalCache != null && this.Parent.Parent.ItemCode_LocalCache.length > 0) {
-      if (GITITEMCacheService.Instance.ItemCode_LocalCache != null && GITITEMCacheService.Instance.ItemCode_LocalCache.length > 0) {
+        if (GITITEMCacheService.Instance.ItemCode_LocalCache != null && GITITEMCacheService.Instance.ItemCode_LocalCache.length > 0) {
             //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
 
             var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-          if (itemCodeDetails != null) {
-              itemCodeDetails.IsNew = true;
-                this.ClassificationCode = itemCodeDetails.ClassificationCode;
-                this.ItemDescription = itemCodeDetails.ItemDescription;
-                if (GITITEMCacheService.Instance.IsUnitPURForItems) {
-                   this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
+            if (itemCodeDetails != null) {
+                let b = true;
+                if (b) {
+                    GITITEMCacheService.Instance.OnItemCodeAdd(this.entityPM, itemCodeDetails)
+                        .then(myOnItemCodeAddResult => {
+                            switch (myOnItemCodeAddResult) {
+
+                                case 2/*OnItemCodeAddResult.AddTaskToUpdateDB*/:
+                                    {
+                                        GITITEMCacheService.Instance.ItemCode_LocalCache.push(
+                                            new ItemCodeComponent(
+                                                this.ItemCode,
+                                                this.ClassificationCode,
+                                                this.ItemDescription,
+                                                this.Parent.vendorNumber,
+                                                this.OriginCountryCode,
+                                                this.OriginCountryName, true,
+                                                this.InvoiceQuantityType,
+                                                this.Parent.declarationPM.CustomerCode
+                                            )
+                                        );
+                                    }
+                                    break;
+                                //case OnItemCodeAddResult.OverwriteRowFromDB:
+                                //case OnItemCodeAddResult.voidDoNothing:
+                                default:
+                                    {
+                                        itemCodeDetails.IsNew = true;
+                                        this.ClassificationCode = itemCodeDetails.ClassificationCode;
+                                        this.ItemDescription = itemCodeDetails.ItemDescription;
+                                        if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                                            this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
+                                        }
+                                        if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                                            this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
+                                            this.OriginCountryName = itemCodeDetails.OriginCountryName;
+                                        }
+                                        this.GetQuantityType();
+                                    }
+                                    break;
+                            }
+                            return;
+                        });
                 }
-                if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
-                    this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
-                    this.OriginCountryName = itemCodeDetails.OriginCountryName;
-                }
-                this.GetQuantityType();
+
+
+
+
                 return;
             }
         }
@@ -3310,20 +3346,55 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(partnersItem)) {
             console.log("Response returned: ", partnersItem);
             if (!AppTool.IsNullOrEmpty(partnersItem.ItemCode) || !AppTool.IsNullOrEmpty(partnersItem.ClassificationCode)) {
-                item.ItemCode = partnersItem.ItemCode;
-                item.ClassificationCode = partnersItem.ClassificationCode;
-                item.ItemDescription = partnersItem.Name;
-                if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
-                    item.OriginCountryCode = partnersItem.OriginCountryCode;
-                    item.OriginCountryName = partnersItem.OriginCountryName;
+                let b = true;
+                if (b) {
+                    GITITEMCacheService.Instance.OnItemCodeAdd(this.entityPM, partnersItem)
+                        .then(myOnItemCodeAddResult => {
+                            switch (myOnItemCodeAddResult) {
+
+                                case 2: //OnItemCodeAddResult.AddTaskToUpdateDB:
+                                    {
+                                        GITITEMCacheService.Instance.ItemCode_LocalCache.push(
+                                            new ItemCodeComponent(
+                                                item.ItemCode,
+                                                item.ClassificationCode,
+                                                item.ItemDescription,
+                                                this.Parent.vendorNumber,
+                                                item.OriginCountryCode,
+                                                item.OriginCountryName, true,
+                                                item.InvoiceQuantityType,
+                                                this.Parent.declarationPM.CustomerCode
+                                            )
+                                        );
+                                        this.GetQuantityType();
+
+                                    }
+                                    break;
+                                //case OnItemCodeAddResult.OverwriteRowFromDB:
+                                //case OnItemCodeAddResult.voidDoNothing:
+                                default:
+                                    {
+                                        item.ItemCode = partnersItem.ItemCode;
+                                        item.ClassificationCode = partnersItem.ClassificationCode;
+                                        item.ItemDescription = partnersItem.Name;
+                                        if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                                            item.OriginCountryCode = partnersItem.OriginCountryCode;
+                                            item.OriginCountryName = partnersItem.OriginCountryName;
+                                        }
+                                        if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                                            item.InvoiceQuantityType = partnersItem.InvoiceQuantityType;
+                                        }
+
+                                        //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType));
+                                        GITITEMCacheService.Instance.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
+                                        this.GetQuantityType();
+
+                                    }
+                                    break;
+                            }
+                            return;
+                        });
                 }
-                if (GITITEMCacheService.Instance.IsUnitPURForItems) {
-                    item.InvoiceQuantityType = partnersItem.InvoiceQuantityType;
-                }
-                
-              //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType));
-              GITITEMCacheService.Instance.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
-                this.GetQuantityType();
             }
         }
     }
