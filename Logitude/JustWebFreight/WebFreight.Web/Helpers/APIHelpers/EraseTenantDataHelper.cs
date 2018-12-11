@@ -47,7 +47,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             cmd.Parameters.Add(param1);
 
                             cn.Open();
-                            cmd.CommandTimeout = 10;
                             cmd.ExecuteNonQuery();
                             cn.Close();
                         }
