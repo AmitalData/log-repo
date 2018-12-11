@@ -413,6 +413,21 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 myAnalyzeQueue.Status = "F";
             }
 
+            else if (ex.Message.StartsWith("There is no airline with prefix"))
+            {
+                myAnalyzeQueue.Status = "F";
+            }
+
+            else if (ex.Message.StartsWith("There is no shipment"))
+            {
+                myAnalyzeQueue.Status = "F";
+            }
+
+            else if (ex.Message.StartsWith("There is no tenant for this TTY") || ex.Message.StartsWith("There is no TTY for this tenant"))
+            {
+                myAnalyzeQueue.Status = "F";
+            }
+
             else
             {
                 myAnalyzeQueue.Retries++;

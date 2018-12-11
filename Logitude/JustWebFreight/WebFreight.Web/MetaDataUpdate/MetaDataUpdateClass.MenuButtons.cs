@@ -98,6 +98,7 @@ namespace WebFreight.Web.MetaDataUpdate
             FeaturePM APInvoiceFeature_ReTransfer = features.Where(d => d.Code == "EnableReTransfer" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
             FeaturePM APInvoiceFeature_Print = features.Where(d => d.Code == "PRINT" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
             FeaturePM ARInvoiceFeature_CHECKSATStatus = features.Where(d => d.Code == "CHECKSATSTATUS" && d.ObjectTableId == ARInvoiceTableId).FirstOrDefault();
+            FeaturePM APInvoiceFeature_SendQBO = features.Where(d => d.Code == "SendToQBO" && d.ObjectTableId == APInvoiceTableId).FirstOrDefault();
 
             FeaturePM ARPaymentFeature_CancelApproval = features.Where(d => d.Code == "CANCELAPPROVAL" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
             FeaturePM ARPaymentFeature_Void = features.Where(d => d.Code == "VOID" && d.ObjectTableId == ARPaymentTableId).FirstOrDefault();
@@ -114,6 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate
             FeaturePM APPaymentFeature_Void = features.Where(d => d.Code == "VOID" && d.ObjectTableId == APPaymentTableId).FirstOrDefault();
             FeaturePM APPaymentFeature_Approve = features.Where(d => d.Code == "APPROVE" && d.ObjectTableId == APPaymentTableId).FirstOrDefault();
             FeaturePM APPaymentFeature_Print = features.Where(d => d.Code == "PRINT" && d.ObjectTableId == APPaymentTableId).FirstOrDefault();
+            FeaturePM APPaymentFeature_SendToQBO = features.Where(d => d.Code == "SendToQBO" && d.ObjectTableId == APPaymentTableId).FirstOrDefault();
 
             FeaturePM LogFeature_Resend = features.Where(d => d.Code == "RESEND" && d.ObjectTableId == CommLogTableId).FirstOrDefault();
             FeaturePM LogFeature_Messages = features.Where(d => d.Code == "MESSAGES" && d.ObjectTableId == CommLogTableId).FirstOrDefault();
@@ -1432,7 +1434,23 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
 
-       
+            #region SendToQbo
+            MenuButton APInvoiceSendToQBOButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "SendToQBO",
+                Index = 14,
+                IsActive = true,
+                LabelTextCodeCode = "APInvoice.B.SendToQBO",
+                LabelTextCodeDefaultText = "Send to QBO",
+                LocalDefaultText = "Send to QBO",
+                ObjectTableId = APinvoiceObject.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = APInvoiceMenuButtonGroup.Id,
+                ParentMenuButtonId = APInvoiceActionButton.Id,
+                MenuButtonType = "menuitem",
+                FeatureId = APInvoiceFeature_SendQBO.Id,
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+            #endregion
 
             #endregion
 
@@ -1717,6 +1735,25 @@ namespace WebFreight.Web.MetaDataUpdate
                 MenuButtonType = "button",
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
             #endregion
+
+
+            MenuButton APPaymentSendToQBOButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            {
+                EventCode = "SendToQBO",
+                Index = 10,
+                IsActive = true,
+                LabelTextCodeCode = "APPayment.B.SendToQBO",
+                LabelTextCodeDefaultText = "Send To QBO",
+                LocalDefaultText = "Send To QBO",
+                ObjectTableId = theAPPaymentObject.Id,
+                Tenant = tenant,
+                MenuButtonGroupId = APPaymentMenuButtonGroup.Id,
+                ParentMenuButtonId = APPaymentActionButton.Id,
+                MenuButtonType = "menuitem",
+                FeatureId = APPaymentFeature_SendToQBO.Id,
+            }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
+
+
             #endregion
 
             #region communicationLog Buttons

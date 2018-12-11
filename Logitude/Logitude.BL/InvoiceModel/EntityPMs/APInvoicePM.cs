@@ -271,6 +271,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool SetApproved { get; set; }
         public bool SetCancelApproval { get; set; }
         public bool SetReTransfer { get; set; }
+        public bool SetReSendQBO { get; set; }
 
         public string JournalNumber { get; set; }
     }
