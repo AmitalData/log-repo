@@ -2654,13 +2654,14 @@ namespace WebFreight.Web.WebServices
                         packageline.IsDangerous = "No";
                     }
 
-                    if (!string.IsNullOrEmpty(package.Harmonize))
+                    if (!string.IsNullOrEmpty(packageline.HSCode))
                     {
                         if (!string.IsNullOrEmpty(packageline.PackageDescriptionOfGoods))
                         {
                             packageline.PackageDescriptionOfGoods += Environment.NewLine;
                         }
-                        packageline.PackageDescriptionOfGoods += "HS Code: " + package.Harmonize;
+
+                        packageline.PackageDescriptionOfGoods += packageline.HSCode;
                     }
 
                     if (string.IsNullOrEmpty(myDataProvider.GeneralPackageslinesDescriptionOfGoods))
