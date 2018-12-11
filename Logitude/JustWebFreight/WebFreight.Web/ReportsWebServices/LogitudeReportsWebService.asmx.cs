@@ -9598,6 +9598,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_BudgetId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BudgetId").FirstOrDefault();
+            QueryFilterItem filterItem_CategoryId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CategoryId").FirstOrDefault();
             QueryFilterItem filterItem_ExternalProjectNumber = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ExternalProjectNumber").FirstOrDefault();
 
             DateTime? fromDate = null;
@@ -9605,10 +9606,11 @@ namespace WebFreight.Web.ReportsWebServices
             string customerId = null;
             string employeeUserId = null;
             string budgetId = null;
+            string categoryId = null;
             string projectId = null;
             string ownerId = null;
             string externalProjectNumber = null;
-            bool IncludeInnerProject = false ;
+            bool IncludeInnerProject = false;
 
             if (filterItem_CustomerId != null)
             {
@@ -9649,6 +9651,14 @@ namespace WebFreight.Web.ReportsWebServices
                     budgetId = filterItem_BudgetId.FieldValue.ToString();
                 }
             }
+            if (filterItem_CategoryId != null)
+            {
+                if (filterItem_CategoryId.FieldValue != null)
+                {
+                    categoryId = filterItem_CategoryId.FieldValue.ToString();
+                }
+            }
+
 
             if (filterItem_ExternalProjectNumber != null)
             {
@@ -9657,7 +9667,7 @@ namespace WebFreight.Web.ReportsWebServices
                     externalProjectNumber = filterItem_ExternalProjectNumber.FieldValue.ToString();
                 }
             }
-            
+
             if (filterItem_ProjectId != null)
             {
                 if (filterItem_ProjectId.FieldValue != null)
@@ -9738,7 +9748,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 iQueryable = (from myTMEmployeeTime in iQueryable
-                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId  equals db_Projects.Id into joinedData
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
                               from myProjct in joinedData
                               where myTMEmployeeTime.Tenant == tenant
                               && myProjct.Tenant == tenant
@@ -9747,7 +9757,7 @@ namespace WebFreight.Web.ReportsWebServices
                               select myTMEmployeeTime);
             }
 
-            if(budgetId != null)
+            if (budgetId != null)
             {
                 iQueryable = (from myTMEmployeeTime in iQueryable
                               join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
@@ -9759,7 +9769,20 @@ namespace WebFreight.Web.ReportsWebServices
                               select myTMEmployeeTime);
             }
 
-            if(externalProjectNumber != null)
+            if (categoryId != null)
+            {
+                iQueryable = (from myTMEmployeeTime in iQueryable
+                              join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
+                              from myProjct in joinedData
+                              where myTMEmployeeTime.Tenant == tenant
+                              && myProjct.Tenant == tenant
+                              && myProjct.CategoryId == categoryId
+                              && myProjct.IsProrated == false
+                              select myTMEmployeeTime);
+            }
+
+
+            if (externalProjectNumber != null)
             {
                 iQueryable = (from myTMEmployeeTime in iQueryable
                               join db_Projects in allProjects on myTMEmployeeTime.ProjectId equals db_Projects.Id into joinedData
@@ -9777,6 +9800,7 @@ namespace WebFreight.Web.ReportsWebServices
             result.ProjectId = projectId;
             result.CustomerId = customerId;
             result.BudgetId = budgetId;
+            result.CategoryId = categoryId;
 
             WorkDaysPerProjectData timSheetItem_Detailed = null;
             WorkDaysPerProjectData timSheetItem = null;
@@ -9804,6 +9828,7 @@ namespace WebFreight.Web.ReportsWebServices
                                           ProjectId = g.Key.ProjectId,
                                       });
 
+
                 foreach (var item in daysList_Total)
                 {
                     List<TMEmployeeTime> itemGrouplist = iQueryable.Where(d => d.ProjectId == item.ProjectId).ToList();
@@ -9820,9 +9845,20 @@ namespace WebFreight.Web.ReportsWebServices
                             {
                                 timSheetItem.CustomerName = card.EnglishName;
                             }
+                            timSheetItem.Description = project.Description;
+
+
+                            if (project.CategoryId != null)
+                            {
+                                TMProjectCategory category = new TMProjectCategory();
+                                TMProjectCategoryRepository repo = new TMProjectCategoryRepository(tenant);
+                                category = repo.GetSingle(project.CategoryId, tenant);
+                                if (category != null)
+                                    timSheetItem.Category = category.Name;
+                            }
                         }
 
-                        var wIWorkedDays = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2)/8;
+                        var wIWorkedDays = Math.Round((itemGrouplist.Sum(a => a.TimeInMinutes)) / 60.0, 2) / 8;
                         totalWIWorkedDays += wIWorkedDays;
                         timSheetItem.TotalWIWorkedDays = DateFormat(wIWorkedDays);
 
@@ -9891,7 +9927,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         timSheetItem_Detailed.WINumber = item.WINumber;
                         timSheetItem_Detailed.Description = item.Description;
-         
+
                         TMEmployeeTime myTMEmployeeTime = employeeTimeRepository.GetSingleByPrjectandEmployeeandWIandDescription(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, tenant);
                         var wIWorkedHours_Employee = Math.Round(myTMEmployeeTime.FullDuration / 60.0, 2);
                         totalWIWorkedDays_Employee += wIWorkedHours_Employee;
@@ -9905,6 +9941,7 @@ namespace WebFreight.Web.ReportsWebServices
             return result;
         }
         #endregion
+
 
         #region Tasks Without Projects 
         [WebMethod]
@@ -11945,9 +11982,6 @@ namespace WebFreight.Web.ReportsWebServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             AddressRepository addressRepository = new AddressRepository(commonContext);
 
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
-            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
-
             #region Report Filters
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -11956,7 +11990,6 @@ namespace WebFreight.Web.ReportsWebServices
 
             QueryFilterItem filterItem_tODate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
-            
             //ToDate
             DateTime? toDate = null;
             if (filterItem_tODate != null)
@@ -11976,9 +12009,10 @@ namespace WebFreight.Web.ReportsWebServices
                     FromDate = (DateTime)filterItem_FromDate.FieldValue;
                 }
             }
-            #endregion
 
-            #region Base Data Filtered
+            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
+
 
             shipments = shipments.Where(d => d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H");
             if (FromDate != null)
@@ -11990,9 +12024,7 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 shipments = shipments.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.CreateDateTime) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
             }
-            #endregion
 
-            #region Fill Report Data
             List<ShipmentDataView> Shipments = shipments.ToList();
 
             if (Shipments.Count > 0)
@@ -12000,6 +12032,10 @@ namespace WebFreight.Web.ReportsWebServices
                 totalData.Shipments = new List<ShipmentDetals>();
                 foreach (ShipmentDataView Item in Shipments)
                 {
+
+
+
+
                     Currency ValueOfgoodsCurrency = (from d in commonContext.Currencies where d.Id == Item.ValueOfGoodsCurrencyId select d).FirstOrDefault();
                     Department ShipmentDepartment = (from d in commonContext.Departments where d.Id == Item.DepartmentId select d).FirstOrDefault();
 
@@ -12018,9 +12054,12 @@ namespace WebFreight.Web.ReportsWebServices
                       select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
 
                     ShipmentDetals shipment = new ShipmentDetals();
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, Item, shipment);
 
                     if (myLastPickup != null)
                     {
+
                         switch (myLastPickup.PickUpDeliveryFromTypeCode)
                         {
                             case "PART":
@@ -12066,6 +12105,7 @@ namespace WebFreight.Web.ReportsWebServices
                                     break;
                                 }
                         }
+
                     }
 
                     if (myLastDelivery != null)
@@ -12101,6 +12141,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         {
                                             shipment.DeliveryToName = myPort.EnglishName;
                                             shipment.DeliveryTocity = myPort.StateName;
+
                                         }
                                     }
 
@@ -12128,8 +12169,8 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.ShipperRef1 = Item.ShipperReference1;
                     shipment.ShipperRef2 = Item.ShipperReference2;
                     shipment.CountOfInvoices = Item.MainHarmonize;
-                    shipment.ShipperInvoiceNumber = Item.Field10;
                     shipment.BUImporte = Item.ConsigneeNotImporterName;
+                    shipment.Consignee = Item.ConsigneeName;
                     shipment.ConsigneeRef1 = Item.ConsigneeReference1;
                     shipment.ConsigneeRef2 = Item.ConsigneeReference2;
                     shipment.Agent = Item.AgentName;
@@ -12153,6 +12194,7 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.MAWBMBL = Item.Master;
                     shipment.HAWBHBL = Item.House;
                     shipment.HAWBDate = Item.HAWBDate;
+                    shipment.NumberofPackages = Item.NumberOfInsidePackages == 0 ? Item.NumberOfPackages : Item.NumberOfInsidePackages;
                     shipment.GrossWeightKgs = Item.GrossWeightInKG;
                     shipment.Volumem3 = Item.VolumeInCBM;
                     shipment.ChargeableWeightKgs = Item.ChargeableWeightInKG;
@@ -12161,53 +12203,39 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.DGR = Item.IsDangerous;
                     shipment.DescriptionofGoods = Item.DescriptionOfGoods;
                     shipment.Routing = Item.Routing;
-                    shipment.Numberofpickups = Item.Field7;
                     shipment.PortofDeparture = Item.MainCarriageFromPortCode;
                     shipment.CountryofDeparture = Item.MainCarriageFromPortCountryName;
                     shipment.ViaCity = Item.Transshipment1FromPortCode;
                     shipment.CountryofDestination = Item.MainCarriageToPortCountryName;
                     shipment.PortofDestination = Item.MainCarriageToPortCode;
                     shipment.CreateDate = Item.CreateDateTime;
-                    shipment.NotificationDate = Item.Field1;
-                    shipment.GoodsReadinessDate = Item.Field5;
-                    shipment.DocumentsReadinessDate = Item.Field6;
-                    shipment.PickupFromDate = myFirstPickup != null ? myFirstPickup.ATD : null;
-                    shipment.GroupageDate = Item.Field9;
+                    shipment.PickupFromDate = myLastPickup != null ? myLastPickup.ATD : null;
+                    shipment.GroupageDate = Item.CutoffDate;
                     shipment.DateonboardOrigin = Item.MainCarriageATD != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageATD) : (Item.MainCarriageETD != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageETD) + " (estimated)" : "");
                     shipment.Dateofarrivaltoport = Item.MainCarriageATA != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageATA) : (Item.MainCarriageETA != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageETA) + " (estimated)" : "");
                     shipment.ImportDeclarationDate = Item.DeclarationDate;
                     shipment.CustomsClearanceDate = Item.CustomsClearanceDate;
-                    shipment.DeliveryDate = myLastDelivery != null ? myLastDelivery.ATA : null;
+                    shipment.DeliveryDate = myLastDelivery != null ? (myLastDelivery.ATA != null ? String.Format("{0:dd.MMM.yy}", myLastDelivery.ATA) : (myLastDelivery.ETA != null ? String.Format("{0:dd.MMM.yy}", myLastDelivery.ETA) + " (Estimated)" : "")) : "";
                     shipment.ClosedDate = Item.OperationalCloseDate;
                     shipment.IncludeCustoms = Item.IncludesCustoms;
                     shipment.ImportDeclarationNumber = Item.DeclarationNumber;
-                    shipment.CustomsDeclaration = Item.Field2;
-                    shipment.CustomsInspection = Item.Field3;
-                    shipment.ExportDeclarationNumber = Item.Field15;
-                    shipment.ExportDeclarationdate = Item.Field16;
-                    shipment.CountsofCITES = Item.Field8;
-                    shipment.CountLocalAuthorityApproval = Item.Field4;
                     shipment.LocalInspection = Item.SalesmanUserName;
-                    shipment.CountofUndertakingLetter = Item.Field18;
-                    shipment.CountofCertificateofOrigin = Item.Field19;
-                    shipment.CountofCertificateofConformity = Item.Field20;
                     shipment.CountofLegalisedDocuments = Item.AMSBL;
                     shipment.ShipperInvoiceValue = Item.ValueOfGoods;
                     shipment.CurrencyofShipperInvoice = ValueOfgoodsCurrency != null ? ValueOfgoodsCurrency.Code : null;
-                    shipment.RefundInvno = Item.Field17;
-                    shipment.InsuranceClaimNumber = Item.Field11;
-                    shipment.InsuranceClaimCurrency = Item.Field12;
-                    shipment.InsuranceClaimAmount = Item.Field13;
-                    shipment.InsuranceClaimDate = Item.Field14;
                     shipment.Status = Item.ShipmentStatusName;
                     shipment.Dept = ShipmentDepartment != null ? ShipmentDepartment.EnglishName : null;
                     shipment.Branch = Item.BranchName;
                     totalData.Shipments.Add(shipment);
+
                 }
 
-                totalData.FromDate = FromDate;
-                totalData.ToDate = toDate;
+            
+
             }
+
+            totalData.FromDate = FromDate;
+            totalData.ToDate = toDate;
             #endregion
 
             return totalData;

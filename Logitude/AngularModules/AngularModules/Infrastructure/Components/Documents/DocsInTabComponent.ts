@@ -32,13 +32,13 @@ import {BaseComponent} from '../LogitudeComponents/BaseComponent';
     moduleId: module.id,
     selector: "DocsInTabControl",
     templateUrl: './DocsInTabComponent.html',
-    inputs: ['EntityPM' , 'EntityId', 'ChildEntityId', 'ObjectTableId', 'ChildObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference'],
+    inputs: ['EntityPM', 'EntityId', 'ChildEntityId', 'ObjectTableId', 'ChildObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference'],
     providers: [DocumentTypeListExtendedService, DocumentsFilingExtendedPMService, DocumentsFilingPMService, ServiceArgs, ImageLibraryService, DocumentTypeListService],
 })
 
 export class DocsInTabComponent extends BaseComponent implements OnInit {
 
-    public DataContext: DocsInTabComponent=this;
+    public DataContext: DocsInTabComponent = this;
     public ItemsSource: ObservableCollection;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public EntityId: string = "";
@@ -70,7 +70,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     IsLoadDocumentsFilingListsComplete: boolean = false;
     IsLoadDocumentTypeListsComplete: boolean = false;
 
-    constructor(public _documentTypeListService: DocumentTypeListService , public _imageLibraryService: ImageLibraryService,public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
+    constructor(public _documentTypeListService: DocumentTypeListService, public _imageLibraryService: ImageLibraryService, public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.ItemsSource = new ObservableCollection([]);
         this.TabHeaderTextCode = "DocsIn.O.DocsIn"; // entityArgs.ObjectTableName + ".TH.DocsIn";
@@ -119,7 +119,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                             }
                     }
                 }
-                
+
 
                 this.LoadData();
             });
@@ -139,7 +139,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             this.RefreshDocInEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "RefreshDocIn") {
                     this.RefreshButtonClicked();
-                } 
+                }
             });
         }
 
@@ -176,7 +176,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     }
 
     LoadData() {
-    
+
         this.IsLoadDocumentsFilingListsComplete = false;
         this.IsLoadDocumentTypeListsComplete = false;
 
@@ -270,7 +270,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         if (!this.StaticDocumentsList) {
             this.StaticDocumentsList = [];
         }
-   
+
         if (this.DocumentTypes != null) {
             this.DocumentTypes.forEach((docType) => {
                 var exists = this.StaticDocumentsList.filter(d => d.Id == docType.Id)[0];
@@ -293,7 +293,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                     if (!exists) {
                         exists = this.StaticDocumentsList.filter(d => d.Id == docType.Id)[0];
                     }
-                  
+
                     if (!exists) {
                         var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId);
                         docVeiwModel.HasFollowUp = true;
@@ -319,17 +319,38 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
             });
 
-           
+
         }
 
-    
+
         this.DocumentsList = this.SortItemSource(this.StaticDocumentsList);
 
         this.SelectedExternalViewModel = this.DocumentsList[0];
+
+        if (this.SelectedExternalViewModel) {
+            if (!this.SelectedExternalViewModel.Received) {
+                this.SelectedExternalViewModel.SetReceivedButtonVisibility = true;
+            }
+            else {
+                this.SelectedExternalViewModel.SetReceivedButtonVisibility = false;
+            }
+            if (!this.SelectedExternalViewModel.DocumentHasFile) {
+                this.SelectedExternalViewModel.SetAttachedButtonVisibility = true;
+                this.SelectedExternalViewModel.DownloadButtonVisibility = false;
+            }
+            else {
+                this.SelectedExternalViewModel.SetAttachedButtonVisibility = false;
+                this.SelectedExternalViewModel.DownloadButtonVisibility = true;
+            }
+
+        }
+
+
+
         if (this.additional != null) {
             var additionalView = this.StaticDocumentsList.filter(d => d.ExternalDocumentId == this.additional.Id)[0];
             if (additionalView != null) {
-         
+
                 additionalView.UploadButtonClicked();
             }
         }
@@ -341,12 +362,12 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     FillDocumentTypes() {
 
         if (this.AllDocumentTypeList) {
-                var objecttableid: string = "";
-                if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) && this.ChildObjectTableId) objecttableid = this.ChildObjectTableId;
-                else objecttableid = this.ObjectTableId;
-       
-                this.DocumentTypes = this.AllDocumentTypeList.filter(d => d.ObjectTableId == objecttableid && d.IsDocIn && !d.InActive);
-                if (!AppTool.IsNullOrEmpty(this.TransportModeId)) {
+            var objecttableid: string = "";
+            if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) && this.ChildObjectTableId) objecttableid = this.ChildObjectTableId;
+            else objecttableid = this.ObjectTableId;
+
+            this.DocumentTypes = this.AllDocumentTypeList.filter(d => d.ObjectTableId == objecttableid && d.IsDocIn && !d.InActive);
+            if (!AppTool.IsNullOrEmpty(this.TransportModeId)) {
                 switch (this.TransportModeId) {
                     case "A":
                         {
@@ -419,8 +440,10 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
     OnMouseOver(item: DocsInDataViewModel) {
 
+        var selectedId: string = this.SelectedExternalViewModel ? this.SelectedExternalViewModel.Id : null;
+
         this.DocumentsList.forEach((item) => {
-            if (item.Id != this.SelectedExternalViewModel.Id) {
+            if (item.Id != selectedId) {
                 item.DownloadButtonVisibility = false;
                 item.SetAttachedButtonVisibility = false;
                 item.SetReceivedButtonVisibility = false;
@@ -428,11 +451,13 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
             else {
                 if (item.DocumentId) {
-                    if (this.SelectedExternalViewModel.DocumentId) {
-                        if (item.CurrentDocument.DocumentId != this.SelectedExternalViewModel.CurrentDocument.DocumentId) {
-                            item.DownloadButtonVisibility = false;
-                            item.SetAttachedButtonVisibility = false;
-                            item.SetReceivedButtonVisibility = false;
+                    if (this.SelectedExternalViewModel && this.SelectedExternalViewModel.DocumentId) {
+                        if (item.CurrentDocument && this.SelectedExternalViewModel && this.SelectedExternalViewModel.CurrentDocument) {
+                            if (item.CurrentDocument.DocumentId != this.SelectedExternalViewModel.CurrentDocument.DocumentId) {
+                                item.DownloadButtonVisibility = false;
+                                item.SetAttachedButtonVisibility = false;
+                                item.SetReceivedButtonVisibility = false;
+                            }
                         }
                     }
                 }
@@ -461,9 +486,9 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
 
     OnMouseleave(item: DocsInDataViewModel) {
-
+        var selectedId: string = this.SelectedExternalViewModel ? this.SelectedExternalViewModel.Id : null;
         this.DocumentsList.forEach((item) => {
-            if (item.Id != this.SelectedExternalViewModel.Id) {
+            if (item.Id != selectedId) {
                 item.DownloadButtonVisibility = false;
                 item.SetAttachedButtonVisibility = false;
                 item.SetReceivedButtonVisibility = false;
@@ -471,11 +496,13 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
             else {
                 if (item.DocumentId) {
-                    if (this.SelectedExternalViewModel.DocumentId) {
-                        if (item.CurrentDocument.DocumentId != this.SelectedExternalViewModel.CurrentDocument.DocumentId) {
-                            item.DownloadButtonVisibility = false;
-                            item.SetAttachedButtonVisibility = false;
-                            item.SetReceivedButtonVisibility = false;
+                    if (this.SelectedExternalViewModel && this.SelectedExternalViewModel.DocumentId) {
+                        if (item.CurrentDocument && this.SelectedExternalViewModel.CurrentDocument) {
+                            if (item.CurrentDocument.DocumentId != this.SelectedExternalViewModel.CurrentDocument.DocumentId) {
+                                item.DownloadButtonVisibility = false;
+                                item.SetAttachedButtonVisibility = false;
+                                item.SetReceivedButtonVisibility = false;
+                            }
                         }
                     }
                 }
@@ -532,10 +559,11 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
 
 
-    SelectedRow: any;
+
     OnSelectedDocumentInList(item: DocsInDataViewModel) {
-        this.SelectedRow = item;
+
         this.SelectedExternalViewModel = item;
+
         if (this.SelectedExternalViewModel.DocumentHasFile) {
             this.DeleteAttachmentButtonEnable = true;
         }
@@ -580,31 +608,14 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                         if (!this.IsDeleteAttachment) {
                             this.IsDeleteAttachment = true;
                             SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
-                            this.SelectedExternalViewModel.SetAttachedIconVisibility = false;
-
                             this._imageLibraryService.RemoveFile(document.Id, document.Tenant).subscribe(result => {
-                                this.documentsFilingPMService.get(this.SelectedExternalViewModel.CurrentDocument.Id).subscribe(res => {
-                                    var pmResponse: ServiceResponse = res;
-                                    if (!pmResponse.HasError) {
-                                        var currentdocument = pmResponse.Result;
-                                        if (currentdocument) {
-                                            this.SelectedExternalViewModel.CurrentDocument = currentdocument;
-                                        }
+                                this.externalDocs = this.externalDocs.filter(d => d.Id != this.SelectedExternalViewModel.ExternalDocumentId);
 
-                                    }
-
-                                });
-
-
-                                this.SelectedExternalViewModel.DocumentHasFile = false;
-                                this.SelectedExternalViewModel.FileName = null;
-                                this.SelectedExternalViewModel.Extention = null;
-
-
+                                this.SelectedExternalViewModel.RemoveDocument();
                                 this.DeleteAttachmentButtonEnable = false;
                                 this.UndoReceivedButtonEnable = true;
-                                //this.SelectedExternalViewModel.UndoReceived();
                                 this.IsDeleteAttachment = false;
+
                                 SessionLocator.CurrentSession.StopBusyIndicator();
 
                             });
@@ -634,7 +645,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
     LoadComplete() {
 
-        if (this.IsLoadDocumentsFilingListsComplete && this.IsLoadDocumentsFilingListsComplete ) {
+        if (this.IsLoadDocumentsFilingListsComplete && this.IsLoadDocumentsFilingListsComplete) {
             this.StaticDocumentsList = [];
             if (this.externalDocs != null) {
                 this.externalDocs.forEach((docin) => {
