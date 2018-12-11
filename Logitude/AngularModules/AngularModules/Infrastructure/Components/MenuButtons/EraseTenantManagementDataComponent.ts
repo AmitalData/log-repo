@@ -100,9 +100,7 @@ export class EraseTenantManagementDataComponent {
     private batchEntity: BatchTaskExecutionPM;
     private DoDelete(type: string) {
         this.Message = null;
-
-        SessionLocator.CurrentSession.StartBusyIndicator("Erasing Data...");
-
+        
         this.myService.DeleteDataForTenant(this.entityId, type).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 var mm: ServiceResponse = response;
@@ -111,9 +109,7 @@ export class EraseTenantManagementDataComponent {
                 if (this.batchEntity != null) {
                     this.StartTimer();
                 }
-            }
-
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            }            
         });
     }
 
