@@ -2625,6 +2625,28 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortLocalDefaultText = "שגיאה בהעברת חשבוניות",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "QBO failed transmission",
+                FullFieldLable = "QBOFailedTransmission",
+                FieldName = "QBOFailedTransmission",
+                FieldsDataType = "Boolean",
+                IsCustomFilter = true,
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = InvoiceObject.Id,
+                ObjectTableName = "ARInvoice",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "ARInvoice",
+                ListPropertyPath = "QBOFailedTransmission",
+                PMPropertyPath = "QBOFailedTransmission",
+                FullLocalDefaultText = "QBO failed transmission",
+                ListLocalDefaultText = "QBO failed transmission",
+                ShortLocalDefaultText = "QBO failed transmission",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Is General Invoice",
@@ -6997,8 +7019,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "TipoCadenaPago",
                 PMPropertyPath = "TipoCadenaPago",
-                HelpLocalDefaultText = "Clave del tipo de cadena de pago que genera la entidad receptora de pago",
-                HelpTextDefaultText = "Payment Transfer Way",
+               
+                HelpTextDefaultText = "Clave del tipo de cadena de pago que genera la entidad receptora de pago%nPayment Transfer Way",
 
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -7023,8 +7045,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "CertPago",
                 PMPropertyPath = "CertPago",
                 MultiLine = true,
-                HelpLocalDefaultText = "Certificado que corresponde al pago",
-                HelpTextDefaultText = "The certificate that corresponds to the payment. It is a text chain of 64 base format",
+                
+                HelpTextDefaultText = "Certificado que corresponde al pago%nThe certificate that corresponds to the payment. It is a text chain of 64 base format",
 
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -7049,8 +7071,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "CadPago",
                 PMPropertyPath = "CadPago",
-                HelpLocalDefaultText = "Cadena Original del Comprobante de Pago generado por la entidad emisora de la cuenta beneficiaria",
-                HelpTextDefaultText = "Payment original chain sent by the beneficiary's bank institution",
+                
+                HelpTextDefaultText = "Cadena Original del Comprobante de Pago generado por la entidad emisora de la cuenta beneficiaria%nPayment original chain sent by the beneficiary's bank institution",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -7076,8 +7098,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SelloPago",
                 PMPropertyPath = "SelloPago",
                 MultiLine = true,
-                HelpLocalDefaultText = "Sello digital que se asocie el pago",
-                HelpTextDefaultText = "The digital seal associates the payment. It is a text chain of 64 base format",
+                
+                HelpTextDefaultText = "Sello digital que se asocie el pago%The digital seal associates the payment. It is a text chain of 64 base format",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -7103,7 +7125,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "MetodoPagoCode",
                 PMPropertyPath = "MetodoPagoCode",
-                HelpTextDefaultText = "Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
+                HelpTextDefaultText = "Way to Pay:%n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice%n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
 
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 

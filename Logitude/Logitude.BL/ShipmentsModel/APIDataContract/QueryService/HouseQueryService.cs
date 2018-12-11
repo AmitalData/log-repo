@@ -9,6 +9,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
@@ -323,6 +325,185 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     {
                         item.PickUpDeliveryToTypeCode = "PORT";
                     }
+                }
+
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(Tenant);
+                MeasurementRepository measurementRepository = new MeasurementRepository(Tenant);
+                foreach (ShipmentReceivablePM item in temp.ShipmentReceivables)
+                {
+                    if (!string.IsNullOrEmpty(item.ChargesTypeId))
+                    {
+                        Simplog.Data.CommonDataModel.EntityPOCOs.ChargesType chargesType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, Tenant);
+                        if (chargesType != null)
+                        {
+                            item.DueTypeCode = chargesType.DueTypeCode;
+                            item.VatTypeId = chargesType.VatTypeId;
+                            item.IATACodeId = chargesType.IATACodeId;
+                            item.IsExpense = chargesType.IsExpense;
+
+                            if (string.IsNullOrEmpty(item.PrepaidCollectId))
+                            {
+                                if (chargesType.ChargesGroupCode == "FRT")
+                                {
+                                    item.PrepaidCollectId = temp.FreightPrepaidCollectId;
+                                }
+
+                                else
+                                {
+                                    item.PrepaidCollectId = temp.OtherPrepaidCollectId;
+                                }
+                            }
+
+                            if (string.IsNullOrEmpty(item.CurrencyId))
+                            {
+                                if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
+                                {
+                                    item.CurrencyId = MyTenantPM.FreightCurrencyId;
+                                }
+
+                                else
+                                {
+                                    item.CurrencyId = MyTenantPM.OtherChargesCurrencyId;
+                                }
+                            }
+
+                            if (string.IsNullOrEmpty(item.MeasurementId))
+                            {
+                                if (MethodHelper.IsLCLEntity(temp.TransportModeId, temp.ShipmentTypeId))
+                                {
+                                    item.MeasurementId = chargesType.MeasurementId;
+                                }
+
+                                else
+                                {
+                                    item.MeasurementId = chargesType.ContainerMeasurementId != null ? chargesType.ContainerMeasurementId : chargesType.MeasurementId;
+                                }
+                            }
+                        }
+                    }
+
+                    if (MyTenantPM.CurrencyId == item.CurrencyId)
+                    {
+                        item.Rate = 1;
+                    }
+
+                    string measurementCode = "";
+                    if (item.Quantity == null)
+                    {
+                        Simplog.Data.CommonDataModel.EntityPOCOs.Measurement measurement = measurementRepository.GetSingleMeasurement(item.MeasurementId, Tenant);
+                        if (measurement != null)
+                        {
+                            measurementCode = measurement.Code;
+
+                            switch (measurementCode)
+                            {
+                                case "GRWT": { item.Quantity = temp.GrossWeight; break; }
+                                case "CHWT": { item.Quantity = temp.ChargeableWeight; break; }
+                                case "VOLU": { item.Quantity = temp.Volume; break; }
+                                case "BTEU": { item.Quantity = temp.TEU; break; }
+                                case "FIXD": { item.Quantity = 1; break; }
+                                case "GWTN": { item.Quantity = temp.GrossWeightPerTon; break; }
+                                case "QTY": { item.Quantity = MethodHelper.IsLCLEntity(temp.TransportModeId, temp.ShipmentTypeId) ? temp.NumberOfPackages : temp.NumberOfContainers; break; }
+
+                                case "PRVL":
+                                    {
+                                        item.Quantity = temp.ValueOfGoods;
+                                        //this.CurrencyId = this.ShipmentPM.ValueOfGoodsCurrencyId;
+                                        break;
+                                    }
+
+                                case "PRFR":
+                                    {
+                                        //item.Quantity = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount");
+                                        //this.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                                        break;
+                                    }
+
+                                case "BCNT":
+                                    {
+                                        //this.IsByContainerType = true;
+                                        //this.BuildByContainersItemsSource();
+                                        break;
+                                    }
+
+                                default:
+                                    {
+                                        //var myGrouped: ByPckageType[] = ShipmentTool.GetByPckageTypeGrouped(this.ShipmentPM);
+                                        //var itemGrouped = myGrouped.filter(f => f.MeasurementId == this.MeasurementId)[0];
+                                        //if (itemGrouped != null)
+                                        //{
+                                        //    item.Quantity = itemGrouped.Quantity;
+                                        //}
+
+                                        break;
+                                    }
+                            }
+                        }
+                    }
+
+                    if (item.Quantity != null && item.UnitPrice != null)
+                    {
+                        if (item.ShipmentReceivableLineStatusCode != "OAMT")
+                        {
+                            item.ShipmentReceivableLineStatusCode = "OAMT";
+                        }
+                    }
+
+                    else
+                    {
+                        if (item.ShipmentReceivableLineStatusCode != "EMPT")
+                        {
+                            item.ShipmentReceivableLineStatusCode = "EMPT";
+                        }
+                    }
+
+                    double? iAmount = null;
+
+                    if (item.Quantity != null && item.UnitPrice != null)
+                    {
+                        if (measurementCode == "PRVL" || measurementCode == "PRFR")
+                        {
+                            double? price = item.UnitPrice / 100;
+                            iAmount = item.Quantity * price;
+                        }
+
+                        else
+                        {
+                            iAmount = item.Quantity * item.UnitPrice;
+                        }
+                    }
+
+                    /* MinMax */
+                    if (iAmount != null)
+                    {
+                        if (item.QuoteSaleMinAmount != null)
+                        {
+                            if (iAmount < item.QuoteSaleMinAmount)
+                            {
+                                iAmount = item.QuoteSaleMinAmount;
+                            }
+                        }
+
+                        if (item.QuoteSaleMaxAmount != null)
+                        {
+                            if (iAmount > item.QuoteSaleMaxAmount)
+                            {
+                                iAmount = item.QuoteSaleMaxAmount;
+                            }
+                        }
+                    }
+
+                    item.TotalAmount = Math.Round(iAmount.Value, 2);
+                   
+                    if (item.TotalAmount != null && item.Rate != null)
+                    {
+                        item.TotalAmountLocal = Math.Round(item.TotalAmount.Value * item.Rate.Value, 2);
+                    }
+                }
+
+                foreach (ShipmentPayablePM item in temp.ShipmentPayables)
+                {
+
                 }
 
                 return temp;

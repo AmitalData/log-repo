@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
 import {ARInvoicePaymentPM} from '../../../../Invoice/EntityPMs/ARInvoicePaymentPM';
@@ -363,6 +363,15 @@ export class ARInvoicePaymentItem {
     ConnectClicked() {
         if (this.fatherComponent.EntityPM.StatusCode == "PD" || this.fatherComponent.EntityPM.IsClosed) {
             this.fatherComponent.RunReachedBoundsMessage();
+        }
+
+        else if (this.fatherComponent.EntityPM.AmountDue <= 0) {
+            var messageText = "Amount paid equals or bigger than invoice amount";
+
+            var window: MessageWindow = new MessageWindow();
+            window.Width = 400;
+            window.Height = 150;
+            window.Show(messageText);
         }
 
         else {

@@ -33,13 +33,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 try
                 {
                     if (blobInfo.BlobChunk.Length > 100000) throw new ApplicationException("Blob chunk must not be larger than 100 KB");
-                
+
                     #region Authentication
 
                     string token = HttpContext.Current.Request.Headers["Token"];
 
-                    if(string.IsNullOrEmpty(blobInfo.SecurityKey) && string.IsNullOrEmpty(token)) throw new AutenticationException("Sorry! this user is not authorized!");
-             
+                    if (string.IsNullOrEmpty(blobInfo.SecurityKey) && string.IsNullOrEmpty(token)) throw new AutenticationException("Sorry! this user is not authorized!");
+
                     bool isUsedToken = false;
                     string shipmentId = string.Empty;
                     ShipmentQuery shipmentQuery = new ShipmentQuery(blobInfo.Tenant);
@@ -55,7 +55,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         shipmentId = shipmentQuery.GetShipmentIdByShipmentNumber(blobInfo.ShipmentNumber, blobInfo.Tenant);
                         isUsedToken = true;
                     }
-                  
+
                     if (string.IsNullOrEmpty(shipmentId))
                     {
                         bool isExist = shipmentQuery.CheckIfShipmentExistByShipmentNumber(blobInfo.ShipmentNumber, blobInfo.Tenant);
@@ -63,13 +63,12 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         else
                         {
                             if (isUsedToken) throw new AutenticationException("Sorry! this user is not authorized!");
-                             else throw new ApplicationException("זיהוי משלוח לא תקין- אנא פנה לסוכן מכס");
+                            else throw new ApplicationException("זיהוי משלוח לא תקין- אנא פנה לסוכן מכס");
                         }
 
                     }
 
                     #endregion
-
 
                     #region UploadDocument
 

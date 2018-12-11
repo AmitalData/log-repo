@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Rx';
@@ -220,7 +220,7 @@ export class INTTRASettingsHelper {
     Items: INTTRASettingsHelperItem[];
 }
 export class INTTRASettingsHelperItem {
-    Id: string;
+    CompinedId: string;
     Code: string;
     Name: string;
     Notes: string;
@@ -228,6 +228,9 @@ export class INTTRASettingsHelperItem {
     BranchId: string;
     RegisteredCarrierId: string;
     IsRegistered: boolean;
+    Tenant: number;
+    IsFromTenantZero: boolean;
+    ShippingLineId: string;
 }
 export class INTTRACommunicationSettingsHelper {
     Id: string;

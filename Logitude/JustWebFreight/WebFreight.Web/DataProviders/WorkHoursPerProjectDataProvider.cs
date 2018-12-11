@@ -41,6 +41,6 @@ namespace WebFreight.Web.DataProviders
         public string Description { get; set; }
         public string Category { get; set; }
         public string ExternalProjectNumber { get; set; }
-        
+
     }
 }

@@ -26,6 +26,8 @@ namespace WebFreight.Web
         {
             try
             {
+                // https://stackoverflow.com/questions/123726/401-response-code-for-json-requests-with-asp-net-mvc
+
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     Response.Clear();
@@ -36,12 +38,11 @@ namespace WebFreight.Web
                     bool iPasswordValid = false;
 
                     string iPassword = parr["password"];
+
                     if (iPassword == "logiutde")
                     {
                         iPasswordValid = true;
                     }
-
-                    //http://localhost:9996/ChampMessaging.aspx?password=logiutde
 
                     if (iPasswordValid)
                     {
@@ -56,27 +57,34 @@ namespace WebFreight.Web
                                 iString = reader.ReadToEnd();
                             }
 
-                            //string jsonData = HttpUtility.UrlDecode(iString);
-
-                            //XmlDocument doc = JsonConvert.DeserializeXmlNode("{\"Envelope\":" + jsonData, "Root");
-
-                            //string xmlString = System.Xml.Linq.XElement.Parse(doc.OuterXml).ToString();
-
                             if (!string.IsNullOrEmpty(iString))
                             {
                                 this.SaveMessageToAnalyzeQueue(iString);
+
+                                Response.Clear();
+                                Response.ContentType = "text/xml";
+                                Response.Write("<status>OK</status>");
+                                Response.StatusCode = 200;
+                                Response.End();
+                            }
+
+                            else
+                            {
+                                Response.Clear();
+                                Response.ContentType = "text/xml";
+                                Response.Write("<status>Fail</status>");
+                                Response.StatusCode = 404;
+                                Response.End();
                             }
                         }
-
-                        Response.Write("<status>OK</status>");
-                        Response.StatusCode = 200;
-                        Response.End();
                     }
 
                     else
                     {
+                        Response.Clear();
+                        Response.ContentType = "text/xml";
                         Response.Write("<status>Fail</status>");
-                        Response.StatusCode = 401;
+                        Response.StatusCode = 404;
                         Response.End();
                     }
 
@@ -102,6 +110,7 @@ namespace WebFreight.Web
                 }
             }
         }
+
         protected override void Render(HtmlTextWriter writer)
         {
             base.Render(writer);

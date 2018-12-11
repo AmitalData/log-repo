@@ -1867,7 +1867,7 @@ export class RoutingItem extends BaseComponent {
 
             if (DateTool.GetDateParts(myDepartureDate).DateTicks < DateTool.GetDateParts(todayDate).DateTicks) {
                 myDepartureColor = FontTool.Red;
-            }            
+            }
 
             switch (this.LegType) {
                 case "Main Carriage":
@@ -1919,7 +1919,7 @@ export class RoutingItem extends BaseComponent {
                     this.IsSetActualArrivalVisible = true;
                     break;
                 }
-            }           
+            }
         }
 
         this.DepartureDate = myDepartureDate;

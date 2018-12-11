@@ -97,6 +97,13 @@ using Simplog.Data.CommonDataModel;
 					   					   temp.BillingAddress = AddressService2.GetAddressById(MyEntityPM.BillingAddressId,Tenant); 
 			       
 					   				   }
+				   			  
+				   if(MyEntityPM.GLAccountId != null)
+				   {
+					   GLAccountQueryService GLAccountService3 = new GLAccountQueryService(Tenant);
+					   					   temp.GLAccount = GLAccountService3.GLAccountCustomDataMapping(MyEntityPM.GLAccountId,Tenant); 
+			       
+					   				   }
 				   					
 				   return temp;
 			}
@@ -170,8 +177,8 @@ using Simplog.Data.CommonDataModel;
 					}
 					if(MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
 					{
-						ContactQueryService ContactService3 = new ContactQueryService(Tenant);
-						temp.Contacts = ContactService3.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName);
+						ContactQueryService ContactService4 = new ContactQueryService(Tenant);
+						temp.Contacts = ContactService4.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName);
 					}
 
 								 					AddressQueryService BillingAddressAddressService = new AddressQueryService(Tenant);
@@ -181,6 +188,17 @@ using Simplog.Data.CommonDataModel;
 												if(myBillingAddressPM != null)
 						{
 							temp.BillingAddressId = myBillingAddressPM.Id;
+						}
+						 
+					}
+			
+										GLAccountQueryService GLAccountGLAccountService = new GLAccountQueryService(Tenant);
+					if(MyEntity.GLAccount != null)
+					{
+						var myGLAccountPM = GLAccountGLAccountService.GLAccountCustomDataMappingAndValidatin(MyEntity.GLAccount,Tenant);
+												if(myGLAccountPM != null)
+						{
+							temp.GLAccountId = myGLAccountPM.Id;
 						}
 						 
 					}

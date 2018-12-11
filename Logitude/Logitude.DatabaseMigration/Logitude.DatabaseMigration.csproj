@@ -346,6 +346,10 @@
     <Compile Include="Migrations\201811211426578_FixSubQueryTableName_Rabaia.Designer.cs">
       <DependentUpon>201811211426578_FixSubQueryTableName_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811251315249_NewField_BTE.cs" />
+    <Compile Include="Migrations\201811251315249_NewField_BTE.Designer.cs">
+      <DependentUpon>201811251315249_NewField_BTE.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs" />
     <Compile Include="Migrations\201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.Designer.cs">
       <DependentUpon>201811261243522_AbedAddCancelledBySenderAgenttToAgentSharedManifest.cs</DependentUpon>
@@ -353,10 +357,6 @@
     <Compile Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs" />
     <Compile Include="Migrations\201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.Designer.cs">
       <DependentUpon>201811290730349_AbedAddNewFieldShowSaleMinMaxToQuoteTemplateSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811251315249_NewField_BTE.cs" />
-    <Compile Include="Migrations\201811251315249_NewField_BTE.Designer.cs">
-      <DependentUpon>201811251315249_NewField_BTE.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.cs" />
     <Compile Include="Migrations\201811291126498_DeleteOpenFormatCreatedByUserIdQueryColumnMigration.Designer.cs">
@@ -373,6 +373,18 @@
     <Compile Include="Migrations\201812041135359_GLAccountMoreDataTotalFutureOpenChequeInLocalCurrencyMigration.cs" />
     <Compile Include="Migrations\201812041135359_GLAccountMoreDataTotalFutureOpenChequeInLocalCurrencyMigration.Designer.cs">
       <DependentUpon>201812041135359_GLAccountMoreDataTotalFutureOpenChequeInLocalCurrencyMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.cs" />
+    <Compile Include="Migrations\201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.Designer.cs">
+      <DependentUpon>201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.cs" />
+    <Compile Include="Migrations\201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.Designer.cs">
+      <DependentUpon>201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812110737024_AddLOVAdditionalColumnsToDWObjectField_Rabaia.cs" />
+    <Compile Include="Migrations\201812110737024_AddLOVAdditionalColumnsToDWObjectField_Rabaia.Designer.cs">
+      <DependentUpon>201812110737024_AddLOVAdditionalColumnsToDWObjectField_Rabaia.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -508,7 +520,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811081200180_JournalLineExternalReconcileNumberMigration.resx">
       <DependentUpon>201811081200180_JournalLineExternalReconcileNumberMigration.cs</DependentUpon>
-    </EmbeddedResource>     
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811110707419_SATApprovalDate_ARPayment_ARInvoice.resx">
       <DependentUpon>201811110707419_SATApprovalDate_ARPayment_ARInvoice.cs</DependentUpon>
     </EmbeddedResource>
@@ -592,6 +604,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812041135359_GLAccountMoreDataTotalFutureOpenChequeInLocalCurrencyMigration.resx">
       <DependentUpon>201812041135359_GLAccountMoreDataTotalFutureOpenChequeInLocalCurrencyMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.resx">
+      <DependentUpon>201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.resx">
+      <DependentUpon>201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812110737024_AddLOVAdditionalColumnsToDWObjectField_Rabaia.resx">
+      <DependentUpon>201812110737024_AddLOVAdditionalColumnsToDWObjectField_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

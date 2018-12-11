@@ -146,19 +146,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetSingle(GLAccountId, false, false);
                         GLAccountMoreDataUpdateService updateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-
-                        if ((entityPM.StatusCode == "1" || entityPM.StatusCode == "2") && entityPM.ValueDate > DateTime.Today)
+                        moreDataPM.TotFutureOpenChequesInLocalCur = 0;
+                        moreDataPM.TotalOpenChequesInLocalCur = 0;
+                        foreach (ARPaymentChequePM item in aRPaymentChequePMs)
                         {
-                            moreDataPM.TotFutureOpenChequesInLocalCur = aRPaymentChequePMs.Sum(d => d.LocalAmount);
-                          
-                        }
-                        else
-                        {
-                            moreDataPM.TotalOpenChequesInLocalCur = aRPaymentChequePMs.Sum(d => d.LocalAmount);
-                          
+                            if (item.StatusCode != "6" && item.StatusCode != "5")
+                            {
+                                if ((item.StatusCode == "2") || (item.StatusCode == "1" && item.ValueDate > DateTime.Today))
+                                {
+                                    moreDataPM.TotFutureOpenChequesInLocalCur += item.LocalAmount;
 
+                                }
+                                else
+                                {
+                                    moreDataPM.TotalOpenChequesInLocalCur += item.LocalAmount;
+
+
+                                }
+                            }
                         }
-                       
+                      
                         moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                         updateService.Update(moreDataPM, true);
                         SubmitChanges();

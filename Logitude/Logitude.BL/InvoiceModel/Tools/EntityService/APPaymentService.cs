@@ -191,6 +191,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             var setApproved = theEntityPm.SetApproved;
             var setVoided = theEntityPm.SetVoided;
             var setCancelApproved = theEntityPm.SetCancelApproval;
+            var SetReSendQBO = theEntityPm.SetReSendQBO;
+
             APPaymentMapping.MapEntity(theEntityPm, payment, isNewEntity);   
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();           
@@ -199,7 +201,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.UpdatePaymentOpenAmount();
 
             APPaymentHelper service = new APPaymentHelper();
-            if (payment.ExternalAccountingEntityId != null)
+            if (payment.ExternalAccountingEntityId != null || SetReSendQBO)
             {
                 service.APPaymentQuickbooksValidating(theEntityPm, true, false, payment, this.objectContext, this.myCommonContext, setCancelApproved);
             }

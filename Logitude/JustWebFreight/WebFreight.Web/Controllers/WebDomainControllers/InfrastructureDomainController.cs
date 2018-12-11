@@ -63,6 +63,10 @@ using Simplog.Global.Data.GlobalModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using System.Threading;
 using Logitude.Server.Tools.QueueService;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using System.Xml.Serialization;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -1206,96 +1210,37 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     throw new Exception("Not logged in from company IP");
                 }
 
-                switch (type)
+                EraseTenantDataArgs args = new EraseTenantDataArgs() { Type = type, EntityId = entityId };
+                var stringwriter = new System.IO.StringWriter();
+                var serializer = new XmlSerializer(typeof(EraseTenantDataArgs));
+                serializer.Serialize(stringwriter, args);
+                string xmlParameters = stringwriter.ToString();
+
+                BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
                 {
-                    case "B":
-                        {
-                            //Thread.Sleep(180000);
-                            string strConnString = this.GetConnection(entityId);
-                            using (SqlConnection cn = new SqlConnection(strConnString))
-                            {
-                                SqlCommand cmd = new SqlCommand("dbo.usp_DeleteBusinessRecords", cn);
-                                cmd.CommandType = CommandType.StoredProcedure;
+                    Subject = "Delete Records",
+                    Tenant = tenant,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ClassName = "WebFreight.Web.Helpers.APIHelpers.EraseTenantDataHelper,WebFreight.Web",
+                    CreateDate = DateTime.Now,
+                    PrametersXml = xmlParameters,
+                    StatusCode = "C",
+                };
 
-                                SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.VarChar);
-                                param1.Direction = ParameterDirection.Input;
-                                param1.Value = entityId;
-                                cmd.Parameters.Add(param1);
+                IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
+                BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                bteUpdateService.Update(taskExe, true);
 
-                                cn.Open();
-                                cmd.CommandTimeout = 10;
-                                cmd.ExecuteNonQuery();
-                                cn.Close();
-                            }
+                // 2- Send to queue
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+                queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant", tenant.ToString() }
+                });
 
-                            break;
-                        }
-
-                    case "P":
-                        {
-                            string strConnString = this.GetConnection(entityId);
-                            using (SqlConnection cn = new SqlConnection(strConnString))
-                            {
-                                SqlCommand cmd = new SqlCommand("dbo.usp_DeleteCustomerRecords", cn);
-                                cmd.CommandType = CommandType.StoredProcedure;
-
-                                SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.VarChar);
-                                param1.Direction = ParameterDirection.Input;
-                                param1.Value = entityId;
-                                cmd.Parameters.Add(param1);
-
-                                cn.Open();
-                                cmd.ExecuteNonQuery();
-                                cn.Close();
-                            }
-
-                            break;
-                        }
-
-                    case "T":
-                        {
-                            string strConnString = this.GetConnection(entityId);
-                            using (SqlConnection cn = new SqlConnection(strConnString))
-                            {
-                                SqlCommand cmd = new SqlCommand("dbo.usp_DeleteTicketsRecords", cn);
-                                cmd.CommandType = CommandType.StoredProcedure;
-
-                                SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.VarChar);
-                                param1.Direction = ParameterDirection.Input;
-                                param1.Value = entityId;
-                                cmd.Parameters.Add(param1);
-
-                                cn.Open();
-                                cmd.ExecuteNonQuery();
-                                cn.Close();
-                            }
-
-                            break;
-                        }
-
-                    case "C":
-                        {
-                            string strConnString = this.GetConnection(entityId);
-                            using (SqlConnection cn = new SqlConnection(strConnString))
-                            {
-                                SqlCommand cmd = new SqlCommand("dbo.usp_DeleteCRMRecords", cn);
-                                cmd.CommandType = CommandType.StoredProcedure;
-
-                                SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.VarChar);
-                                param1.Direction = ParameterDirection.Input;
-                                param1.Value = entityId;
-                                cmd.Parameters.Add(param1);
-
-                                cn.Open();
-                                cmd.ExecuteNonQuery();
-                                cn.Close();
-                            }
-
-                            break;
-                        }
-                }                
-
-                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+                return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
 
             catch (Exception ex)

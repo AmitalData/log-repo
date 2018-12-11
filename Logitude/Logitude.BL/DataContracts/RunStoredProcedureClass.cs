@@ -60,6 +60,28 @@ namespace Logitude.BL.DataContracts
                 cn.Close();
             }
         }
+
+
+
+
+        public static void DeleteQBOTranslations(int tenant)
+        {
+            string strConnString = GetConnection(tenant);
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("dbo.usp_DeleteQBOTranslations", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.VarChar);
+                param1.Direction = ParameterDirection.Input;
+                param1.Value = tenant;
+                cmd.Parameters.Add(param1);
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+        }
         public static void UpdateShipmentFinalArrivalDate(string shipmentId, int tenant)
         {
             string strConnString = GetConnection(tenant);

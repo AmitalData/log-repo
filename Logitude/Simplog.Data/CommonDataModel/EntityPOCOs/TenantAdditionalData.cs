@@ -17,6 +17,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string DropBoxState { get; set; }
         public string DropBoxUID { get; set; }
         public string DropBoxUEmail { get; set; }
+        public string PaymentGatewayPartnerCode { get; set; }
+        public string PaymentGatewayConnectionString { get; set; }
+
+        public PaymentGatewayPartners PaymentGatewayPartner { get; set; }
 
     }
 }
