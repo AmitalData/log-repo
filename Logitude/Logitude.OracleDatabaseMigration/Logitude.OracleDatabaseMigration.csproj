@@ -144,6 +144,10 @@
     <Compile Include="Migrations\201812020755198_CustomsPartnerFtpNullable.Designer.cs">
       <DependentUpon>201812020755198_CustomsPartnerFtpNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812110709089_AddMigrationSeizureFactorType.cs" />
+    <Compile Include="Migrations\201812110709089_AddMigrationSeizureFactorType.Designer.cs">
+      <DependentUpon>201812110709089_AddMigrationSeizureFactorType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -234,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812020755198_CustomsPartnerFtpNullable.resx">
       <DependentUpon>201812020755198_CustomsPartnerFtpNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812110709089_AddMigrationSeizureFactorType.resx">
+      <DependentUpon>201812110709089_AddMigrationSeizureFactorType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
