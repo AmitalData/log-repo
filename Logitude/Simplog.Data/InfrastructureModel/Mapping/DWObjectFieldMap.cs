@@ -24,6 +24,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.AggregationTypeCode).HasMaxLength(5).IsUnicode(false);
             this.Property(t => t.Category1).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.Category2).HasMaxLength(150).IsUnicode(false);
+            this.Property(t => t.LOVAdditionalColumns).HasMaxLength(1000).IsUnicode(false);
 
 
             this.ToTable("DWObjectFields");
@@ -43,6 +44,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DisplayInQueryBuilder).HasColumnName("DisplayInQueryBuilder");
             this.Property(t => t.Category1).HasColumnName("Category1"); 
             this.Property(t => t.Category2).HasColumnName("Category2");
+            this.Property(t => t.LOVAdditionalColumns).HasColumnName("LOVAdditionalColumns");
 
 
 

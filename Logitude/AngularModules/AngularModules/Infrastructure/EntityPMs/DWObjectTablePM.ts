@@ -54,7 +54,9 @@ export class DWObjectTablePM {
     public get IsClosed() { return this.isClosed; }
     public set IsClosed(newValue: boolean) { if (this.isClosed != newValue) { this.isClosed = newValue; this.MarkAsDirty("IsClosed"); } }
        
-	 
+    private defaultFilterBy: string;
+    public get DefaultFilterBy() { return this.defaultFilterBy; }
+    public set DefaultFilterBy(newValue: string) { if (this.defaultFilterBy != newValue) { this.defaultFilterBy = newValue; this.MarkAsDirty("DefaultFilterBy"); } }
 
     public OldEntityPM: DWObjectTablePM;
 		

@@ -73,8 +73,11 @@ namespace Logitude.Accounting.BL.Utils
                                 ARPaymentChequeQueryService queryService = new ARPaymentChequeQueryService(tenant.Id);
                                 aRPaymentCheques = queryService.GetOpenARPaymentCheques(tenant.Id);
 
+                            
+
                                 foreach (ARPaymentChequePM entityPM in aRPaymentCheques)
                                 {
+
                                     ARPaymentRepository repo = new ARPaymentRepository(tenant.Id);
                                     IAccountingContext MyContext = AccountingContext.GetContext(tenant.Id);
                                     GLAccountMoreDataUpdateService updateService = new GLAccountMoreDataUpdateService(MyContext, new Dictionary<string, IContext>(), tenant.Id);
@@ -106,8 +109,20 @@ namespace Logitude.Accounting.BL.Utils
                                             GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetSingle(GLAccountId, false, false);
 
 
-                                            moreDataPM.TotalOpenChequesInLocalCur = aRPaymentChequePMs.Sum(d => d.LocalAmount);
-                                            moreDataPM.TotFutureOpenChequesInLocalCur = moreDataPM.TotalOpenChequesInLocalCur;
+                                           
+                                          
+                                                if (entityPM.StatusCode != "6" && entityPM.StatusCode != "5")
+                                                {
+                                                   
+                                                    if (moreDataPM.TotalOpenChequesInLocalCur == null) moreDataPM.TotalOpenChequesInLocalCur = 0;
+                                                    if (moreDataPM.TotFutureOpenChequesInLocalCur == null) moreDataPM.TotFutureOpenChequesInLocalCur = 0;
+                                                    moreDataPM.TotalOpenChequesInLocalCur += entityPM.LocalAmount;
+                                                    moreDataPM.TotFutureOpenChequesInLocalCur -= entityPM.LocalAmount;
+
+
+                                                
+                                                }
+                                       
                                             moreDataPM.ChangeSetOp = ChangeSetOperation.Update;
                                             updateService.Update(moreDataPM, true);
 

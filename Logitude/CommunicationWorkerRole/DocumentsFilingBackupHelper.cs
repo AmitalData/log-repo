@@ -128,6 +128,5 @@ namespace CommunicationWorkerRole
 
             return filename;
         }
-
     }
 }

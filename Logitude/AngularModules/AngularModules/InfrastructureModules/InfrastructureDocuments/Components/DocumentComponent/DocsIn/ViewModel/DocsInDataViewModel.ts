@@ -12,7 +12,7 @@ import {GeneralDocumentFollowUpHelper} from '../../../../../../Infrastructure/He
 import {DownloadManager} from '../../../../../../Infrastructure/Utilities/DownloadManager';
 import {AppTool, DateTool} from '../../../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-export class DocsInDataViewModel extends BaseComponent {
+export class DocsInDataViewModel extends BaseComponent{
     Name: string;
     Code: string;
     public FirstTime: boolean = true;
@@ -43,7 +43,7 @@ export class DocsInDataViewModel extends BaseComponent {
     private receivedDate: Date;
     public get ReceivedDate() {
         if (this.CurrentDocument) {
-            return this.CurrentDocument.ReceivedDate;
+           return this.CurrentDocument.ReceivedDate;
         }
         else return null;
     }
@@ -79,7 +79,7 @@ export class DocsInDataViewModel extends BaseComponent {
     }
     set SecurityId(newValue: string) {
         if (this.CurrentDocument && this.CurrentDocument.SecurityId != newValue) {
-            this.CurrentDocument.SecurityId = newValue;
+            this.CurrentDocument.SecurityId  = newValue;
 
         }
     }
@@ -97,7 +97,7 @@ export class DocsInDataViewModel extends BaseComponent {
     }
     public set Note(newValue: string) {
 
-        if (this.CurrentDocument != null && this.CurrentDocument.Notes != newValue) {
+        if (this.CurrentDocument != null && this.CurrentDocument.Notes != newValue ) {
             this.CurrentDocument.Notes = newValue;
         }
     }
@@ -124,7 +124,7 @@ export class DocsInDataViewModel extends BaseComponent {
         if (this.CurrentDocument) {
             return this.CurrentDocument.Id;
         } else return null;
-
+        
     }
     public set ExternalDocumentId(newValue: string) {
         if (this.CurrentDocument != null) {
@@ -244,7 +244,7 @@ export class DocsInDataViewModel extends BaseComponent {
     DocsInComponent: DocsInTabComponent;
     DocumentTypeId: string = "";
     DocumentTypeName: string = "";
-
+   
     public HasFollowUp: boolean = false;
     constructor(currentDocument: DocumentsFilingPM, docsInTabComponent: DocsInTabComponent, documentType: any, entityId: string, childEntityId: string, childReference: string, externalDocuments: DocumentsFilingPM[], objectTableId: string) {
         super();
@@ -261,7 +261,7 @@ export class DocsInDataViewModel extends BaseComponent {
         this.DocumentTypeId = documentType.Id;
         this.DocumentTypeName = documentType.Name;
         this.CurrentDocument = currentDocument;
-
+ 
         if (!this.CurrentDocument) {
 
             if (this.ExternalDocuments) {
@@ -269,7 +269,7 @@ export class DocsInDataViewModel extends BaseComponent {
             }
         }
         if (this.CurrentDocument) {
-
+         
             this.ReceivedByUserId = this.CurrentDocument.ReceivedByUserId;
             this.ReceivedByUserName = this.CurrentDocument.ReceivedByUserName;
             this.ExternalDocumentId = this.CurrentDocument.Id;
@@ -278,9 +278,9 @@ export class DocsInDataViewModel extends BaseComponent {
             this.DocumentId = this.CurrentDocument.DocumentId;
             this.DocumentHasFile = this.CurrentDocument.HasFile;
 
-            this.SecurityId = this.CurrentDocument.SecurityId;
-            this.FileName = this.CurrentDocument.FileExtension ? this.CurrentDocument.FileName + "." + this.CurrentDocument.FileExtension : this.CurrentDocument.FileName;
-            this.Note = this.CurrentDocument.Notes;
+                this.SecurityId = this.CurrentDocument.SecurityId;
+                this.FileName = this.CurrentDocument.FileExtension ? this.CurrentDocument.FileName+"." + this.CurrentDocument.FileExtension : this.CurrentDocument.FileName;
+               this.Note = this.CurrentDocument.Notes;
 
 
             if (this.CurrentDocument.FileExtension) {
@@ -295,11 +295,11 @@ export class DocsInDataViewModel extends BaseComponent {
 
     }
 
-    public OnUploadComplete(event: any = null) {
-
+    public OnUploadComplete(event:any=null) {
+     
         if (this.CurrentDocument != null) {
-
-            this.FileName = this.CurrentDocument.FileName;
+   
+            this.FileName =this.CurrentDocument.FileName;
 
             this.DocsInComponent.DeleteAttachmentButtonEnable = true;
             if (this.CurrentDocument.FileExtension) {
@@ -318,7 +318,7 @@ export class DocsInDataViewModel extends BaseComponent {
             this.SetReceivedButtonVisibility = false;
             this.DownloadButtonVisibility = true;
             this.Received = this.CurrentDocument.Received;
-
+         
 
         }
 
@@ -344,7 +344,7 @@ export class DocsInDataViewModel extends BaseComponent {
                                 this.CurrentDocument.Notes = value;
                                 break;
 
-
+                          
 
                             case "Received":
                                 this.CurrentDocument.Received = value;
@@ -398,7 +398,7 @@ export class DocsInDataViewModel extends BaseComponent {
                     break;
 
                 case "ReceivedDate":
-                    // this.CurrentDocument.ReceivedDate = value;
+                   // this.CurrentDocument.ReceivedDate = value;
                     break;
 
                 case "Received":
@@ -454,12 +454,12 @@ export class DocsInDataViewModel extends BaseComponent {
 
         }
     }
-
+    
 
 
     EditNote(item: DocsInDataViewModel) {
         if (item.CurrentDocument != null) {
-            item.SubmitChanges("Saving Notes..");
+                item.SubmitChanges("Saving Notes..");
         }
         else {
             item.CreateDocument("Note", item.Note);
@@ -550,7 +550,7 @@ export class DocsInDataViewModel extends BaseComponent {
             else {
                 this.isUpload = true;
                 this.Exists = true;
-                // this.DocsInComponent.IsClickToUpload = false;
+               // this.DocsInComponent.IsClickToUpload = false;
             }
 
         }
@@ -559,7 +559,7 @@ export class DocsInDataViewModel extends BaseComponent {
     IsEnableLinkAttachExternal: boolean;
 
     ShowAttachExternal() {
-
+ 
         //var OnCloseAttachmentUploadEvent= new EventEmitter();
 
 
@@ -585,7 +585,7 @@ export class DocsInDataViewModel extends BaseComponent {
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/AttachDocs/AttachmentUploaderComponent");
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
-
+        
             this.DocsInComponent.IsClickToUpload = false;
         });
 
@@ -596,8 +596,8 @@ export class DocsInDataViewModel extends BaseComponent {
     VeiwDocumentButtonClicked(item: DocsInDataViewModel) {
 
         if (item.CurrentDocument != null) {
-
-            DownloadManager.DownloadPage("", item.SecurityId);
+  
+            DownloadManager.DownloadPage("",item.SecurityId);
         }
     }
 
@@ -605,21 +605,21 @@ export class DocsInDataViewModel extends BaseComponent {
 
 
 
-    RefreshFileName(fileName: string, fileExtension: string) {
-        if (this.CurrentDocument != null) {
-            this.CurrentDocument.FileName = fileName;
-            this.CurrentDocument.FileExtension = fileExtension;
-            this.DocsInComponent.DeleteAttachmentButtonEnable = true;
-            this.FileName = this.CurrentDocument.FileName;
+      RefreshFileName(fileName: string, fileExtension: string) {
+          if (this.CurrentDocument != null) {
+              this.CurrentDocument.FileName = fileName;
+              this.CurrentDocument.FileExtension = fileExtension;
+              this.DocsInComponent.DeleteAttachmentButtonEnable = true;
+              this.FileName = this.CurrentDocument.FileName;
 
-            //this.CurrentDocument.FileExtension ? this.CurrentDocument.FileName + this.CurrentDocument.FileExtension : this.CurrentDocument.FileName;
-            if (this.CurrentDocument.FileExtension) {
-                this.Extention = this.CurrentDocument.FileExtension.toUpperCase();
-                this.SetAttachedIconVisibility = true;
-            }
-            else {
-                this.SetAttachedIconVisibility = false;
-            }
+//this.CurrentDocument.FileExtension ? this.CurrentDocument.FileName + this.CurrentDocument.FileExtension : this.CurrentDocument.FileName;
+              if (this.CurrentDocument.FileExtension) {
+                  this.Extention = this.CurrentDocument.FileExtension.toUpperCase();
+                  this.SetAttachedIconVisibility = true;
+              }
+              else {
+                  this.SetAttachedIconVisibility = false;
+              }
 
         }
 
@@ -659,7 +659,7 @@ export class DocsInDataViewModel extends BaseComponent {
         this.DownloadButtonVisibility = false;
         this.SetReceivedButtonVisibility = false;
         this.SetAttachedButtonVisibility = true;
-
+        
         if (!this.Received) this.SetReceivedButtonVisibility = true;
 
     }
