@@ -1109,7 +1109,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.IndexOrder = ParentClass.SelectedFieldsDataSource.length;
         }
         if (DWObjectField != null) {
-
+            this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
             this.Name = DWObjectField.Name;
             this.Code = DWObjectField.Code;
             this.DWObjectTableCode = DWObjectField.DWObjectTableCode; 
@@ -1127,6 +1127,10 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
     Items: any[] = [];
     FilterItems: DWObjectFieldsDetails[] = [];
+
+    private lOVAdditionalColumns: string;
+    public get LOVAdditionalColumns() { return this.lOVAdditionalColumns; }
+    public set LOVAdditionalColumns(newValue: string) { this.lOVAdditionalColumns = newValue; }
 
     private category1: string;
     public get Category1() { return this.category1; }
