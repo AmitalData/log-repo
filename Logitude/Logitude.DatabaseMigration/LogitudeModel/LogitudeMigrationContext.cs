@@ -881,6 +881,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<DWHSetting> DWHSettings { get; set; }
 
 
+        public IDbSet<CustomsShipper> CustomsShippers { get; set; }
+        public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
+
+
+
+
         #endregion
 
         #region Webfreight Context
@@ -4718,6 +4724,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
             modelBuilder.Configurations.Add(new ShipmentPackageHarmonizeMap());
             modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
+
+
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
+            modelBuilder.Configurations.Add(new CustomerDepositionMap());
+
 
             base.OnModelCreating(modelBuilder);
         }

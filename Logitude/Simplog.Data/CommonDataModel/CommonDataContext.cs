@@ -433,7 +433,9 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new TemperatureUnitMap());
             modelBuilder.Configurations.Add(new HybridPartnersPermissionMap());
             modelBuilder.Configurations.Add(new DWHSettingMap());
-            modelBuilder.Configurations.Add(new PaymentGatewayPartnersMap()); 
+            modelBuilder.Configurations.Add(new PaymentGatewayPartnersMap());
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
+            modelBuilder.Configurations.Add(new CustomerDepositionMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -991,7 +993,8 @@ namespace Simplog.Data.CommonDataModel
             set;
         }
 
-        
+       public IDbSet<CustomsShipper> CustomsShippers { get; set; }
+        public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
 
         public DbConnection GetConnection()
         {
