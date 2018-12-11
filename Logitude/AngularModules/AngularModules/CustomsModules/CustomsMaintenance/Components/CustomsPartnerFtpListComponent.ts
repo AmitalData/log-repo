@@ -110,6 +110,7 @@ export class CustomsPartnerFtpListComponent
     }
 
     IsRequierd() {
+        if (this._CustomsPartnerFtpPM == null) { return;}
         this.UIProperties.SetRequired("InterfaceName1", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InterfaceName));
         this.UIProperties.SetRequired("PartnerCode1", this.ObjectTableName, AppTool.IsNullOrEmpty(this.PartnerCode));
         this.UIProperties.SetRequired("TypeCode1", this.ObjectTableName, AppTool.IsNullOrEmpty(this.TypeCode));
