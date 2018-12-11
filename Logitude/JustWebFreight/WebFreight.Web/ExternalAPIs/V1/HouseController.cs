@@ -93,6 +93,48 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         computingPartnerCode = loggedContactInfo.ComputingPartnerCode;
                     }
 
+                    if (entity.Receivables != null && entity.Receivables.Count > 0)
+                    {
+                        foreach (Receivable item in entity.Receivables)
+                        {
+                            if(item.ChargesType == null)
+                            {
+                                throw new ApplicationException("Receivable Charges Type is required");
+                            }
+
+                            if (item.Measurement == null)
+                            {
+                                throw new ApplicationException("Receivable Measurement is required");
+                            }
+
+                            if (item.Currency == null)
+                            {
+                                throw new ApplicationException("Receivable Currency is required");
+                            }
+                        }
+                    }
+
+                    if (entity.Payables != null && entity.Payables.Count > 0)
+                    {
+                        foreach (Payable item in entity.Payables)
+                        {
+                            if (item.ChargesType == null)
+                            {
+                                throw new ApplicationException("Payable Charges Type is required");
+                            }
+
+                            if (item.Measurement == null)
+                            {
+                                throw new ApplicationException("Payable Measurement is required");
+                            }
+
+                            if (item.Currency == null)
+                            {
+                                throw new ApplicationException("Payable Currency is required");
+                            }
+                        }
+                    }
+
                     IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     HouseQueryService mappingService = new HouseQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.HouseCustomDataMappingAndValidatin(entity, authToken.Tenant, computingPartnerCode);

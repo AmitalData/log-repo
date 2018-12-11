@@ -208,6 +208,9 @@ namespace Simplog.Data.CommonDataModel
 
         IDbSet<TemperatureUnit> TemperatureUnits { get; set; }
 
+        IDbSet<CustomsShipper> CustomsShippers { get; set; }
+        IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();
