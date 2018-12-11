@@ -656,6 +656,7 @@ export class SInvoiceItemClassificationLine extends BaseComponent {
     digit: string = null;
     checkDigit: number = 0;
     public SetDirty() {
+        if (SessionLocator.CurrentSession.CurrentEditComponent == null) return;
         var declarationPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM as DeclarationPM;
         declarationPM.IsDirty = true;
         this.entityPM.ChangeSetOp = "Update";
