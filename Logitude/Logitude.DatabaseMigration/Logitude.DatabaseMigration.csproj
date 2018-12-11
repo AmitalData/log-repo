@@ -378,6 +378,10 @@
     <Compile Include="Migrations\201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.Designer.cs">
       <DependentUpon>201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.cs" />
+    <Compile Include="Migrations\201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.Designer.cs">
+      <DependentUpon>201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -599,6 +603,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.resx">
       <DependentUpon>201812091142449_AddPaymentsGatewayFieldsAndTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.resx">
+      <DependentUpon>201812101205391_AddDefaultSortByToDWObjectTable_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
