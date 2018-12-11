@@ -172,5 +172,71 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  };
             return result;
         }
+
+        public MeasurementPM GetSinglePMByCode(string code, int tenant)
+        {
+            MeasurementPM entity = null;
+            string entityName = "MeasurementPM" + code + tenant;
+            if (HttpContext.Current != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+
+                    var systems = (from a in repository.context.Measurements
+                                   where a.Code == code
+                                   select new MeasurementPM()
+                                   {
+                                       Id = a.Id,
+                                       Tenant = a.Tenant,
+                                       InActive = a.InActive,
+                                       IsContainer = a.IsContainer,
+                                       IsContainerMeasurement = a.IsContainerMeasurement,
+                                       Code = a.Code,
+                                       Name = a.Name,
+                                       ShortName = a.ShortName,
+                                       SearchFields = a.SearchFields,
+                                       LocalName = a.LocalName,
+                                   });
+
+                    foreach (var c in systems)
+                    {
+                        string cname = "MeasurementPM" + c.Id + c.Tenant;
+
+                        if (CacheManager.CacheWrapper.Get(cname) == null)
+                        {
+                            CacheManager.CacheWrapper.Insert(cname, c, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        }
+                    }
+
+                    entity = (MeasurementPM)CacheManager.CacheWrapper.Get(entityName);
+
+                }
+                else
+                {
+                    entity = (MeasurementPM)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            else
+            {
+                entity = (from a in repository.context.Measurements
+                          where a.Code == code
+                          select new MeasurementPM()
+                          {
+                              Id = a.Id,
+                              Tenant = a.Tenant,
+                              InActive = a.InActive,
+                              IsContainer = a.IsContainer,
+                              IsContainerMeasurement = a.IsContainerMeasurement,
+                              Code = a.Code,
+                              Name = a.Name,
+                              ShortName = a.ShortName,
+                              SearchFields = a.SearchFields,
+                              LocalName = a.LocalName,
+                          }).FirstOrDefault();
+            }
+
+            return entity;
+        }
+
     }
 }

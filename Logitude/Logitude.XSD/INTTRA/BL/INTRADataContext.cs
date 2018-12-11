@@ -1804,6 +1804,49 @@ namespace Logitude.XSD.INTTRA.BL
 
                         list.Add(itemDescription);
 
+                        if (myShipmentPackage.IsMultiHarmonize)
+                        {
+                            List<ShipmentPackageHarmonize> iHarmonizes = this.AllHarmonizes.Where(d => d.PackageId == myShipmentPackage.Id).ToList();
+
+                            if (iHarmonizes.Count > 0)
+                            {
+                                string iHarmonizeDescription = null;
+
+                                foreach (ShipmentPackageHarmonize itemHarmonize in iHarmonizes)
+                                {
+                                    if (iHarmonizeDescription == null)
+                                    {
+                                        iHarmonizeDescription = "HS Code: " + itemHarmonize.Harmonize;
+                                    }
+
+                                    else
+                                    {
+                                        iHarmonizeDescription += ", " + itemHarmonize.Harmonize;
+                                    }
+                                }
+
+                                list.Add(new INTTRA_Out.PackageDetailComments()
+                                {
+                                    CommentType = INTTRA_Out.PackageDetailCommentsCommentType.GoodsDescription,
+                                    Value = iHarmonizeDescription,
+                                });
+                            }
+                        }
+
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
+                            {
+                                string iHarmonizeDescription = "HS Code: " + myShipmentPackage.Harmonize;
+
+                                list.Add(new INTTRA_Out.PackageDetailComments()
+                                {
+                                    CommentType = INTTRA_Out.PackageDetailCommentsCommentType.GoodsDescription,
+                                    Value = iHarmonizeDescription,
+                                });
+                            }
+                        }
+
                         itemGoodsDetails.PackageDetailComments = list.ToArray<INTTRA_Out.PackageDetailComments>();
                     }
 

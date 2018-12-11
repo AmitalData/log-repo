@@ -1029,7 +1029,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 ICashBookQueryServiceExt cashBookQuery = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;
                 CashBookPM cashBook = cashBookQuery.GetByPaymentAndCurrencyAndBranch(theEntityPm.PaymentCurrencyId,"1",theEntityPm.BranchId, theEntityPm.Tenant);
-                creditAccoutId = cashBook != null ? cashBook.Id: null; 
+                creditAccoutId = cashBook != null ? cashBook.AccountId: null; 
             }
             else if (theEntityPm.PaymentMethodCode == "CH")
             {
