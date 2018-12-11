@@ -88,7 +88,7 @@ export class SupplierInvoiceItemVehicleComponent extends BaseComponent {
                     }
                     this.declarationPM = args.declarationPM;
                     if (this.declarationPM.IsReleaseFile) {
-                        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CIM_VEHICLE_BLK", "NON", this.declarationPM.CustomerCode, SessionLocator.Tenant)
+                        this._CustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_VEHICLE_BLK", "NON", "NON", SessionLocator.Tenant)
                         .subscribe(
                         (response: ServiceResponse) => {
                             let obj = response.Result;
