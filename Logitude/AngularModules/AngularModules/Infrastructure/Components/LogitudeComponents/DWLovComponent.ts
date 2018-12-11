@@ -126,6 +126,8 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
     public set SelectedValue(newValue: any) {
         if (this.selectedValue != newValue) {
             this.selectedValue = newValue;
+            this.SearchTextNgModel = newValue;
+            //this.ValueChanged.emit(this.SelectedValue);
         }
     }
     @Input() RunToggleMode: boolean;
