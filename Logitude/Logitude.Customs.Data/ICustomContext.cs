@@ -240,6 +240,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<RequiredGuaranteeType> RequiredGuaranteeTypes { get; }
 		 IDbSet<ReturnCondition> ReturnConditions { get; }
 		 IDbSet<SalesTaxExemptionType> SalesTaxExemptionTypes { get; }
+		 IDbSet<SeizureFactorType> SeizureFactorTypes { get; }
 		 IDbSet<SeizureMethodType> SeizureMethodTypes { get; }
 		 IDbSet<SignatureType> SignatureTypes { get; }
 		 IDbSet<SiteLookup> SiteLookups { get; }
