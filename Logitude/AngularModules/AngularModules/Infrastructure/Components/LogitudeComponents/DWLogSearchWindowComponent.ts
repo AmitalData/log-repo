@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 declare var System: any;
 import {Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterViewInit} from '@angular/core';
 //import {NgForm, NgStyle, NgFormControl, CORE_DIRECTIVES, FORM_DIRECTIVES,  FormBuilder, ControlGroup, Validators, Control} from '@angular/common';
@@ -49,6 +49,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     public DataContext: DWLogSearchWindowComponent = this;
     public ObjectTableName: string;
     public ObjectFieldName: string;
+    public LOVAdditionalColumns: string;
     public ObjectTableId: string;
     public columns: any[] = [];
     
@@ -109,14 +110,20 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     SetWindowArgs(args: CustomEntityArgs) {
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectFieldName = args.DisplayFieldsFromList;
+        this.LOVAdditionalColumns = args.LOVAdditionalColumns;
         this.Args = args;
        
     }
 
     BuildColumns() {
         this.columns = [];
+        var AdditionalColumns = [];
+        if (this.LOVAdditionalColumns) {
+            AdditionalColumns = this.LOVAdditionalColumns.split(',');
+        }
+       
         this.columns.push({
-            FieldName: 'Name', 
+            FieldName: 'Field', 
             DataTypeCode: 'text',
             Display: this.ObjectFieldName.replace('[', '').replace(']',''),
             Styles: { width: '250px' },  
@@ -124,6 +131,21 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
             HtmlListComponentName: 'DWLogSearchWindowFieldsComponent',
             HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent',
         });
+        if (AdditionalColumns.length > 0) {
+            var index = 1;
+            AdditionalColumns.forEach((field) => {
+                this.columns.push({
+                    FieldName: 'Field' + index,
+                    DataTypeCode: 'text',
+                    Display: field.replace('[', '').replace(']', ''),
+                    Styles: { width: '150px' },
+                    IsCustomTemplate: true,
+                    HtmlListComponentName: 'DWLogSearchWindowFieldsComponent',
+                    HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent',
+                });
+                index++;
+            });
+        }
    
     }
 
@@ -169,6 +191,12 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 
         filters.Filter1Name = this.ObjectTableName;
         filters.Filter2Name = this.ObjectFieldName;
+        if (this.LOVAdditionalColumns) {
+            filters.Filter3Name = this.LOVAdditionalColumns;
+        }
+        //else {
+        //    filters.Filter3Name = null;
+        //}
         if (searchfields) {
             filters.Filter2Value = searchfields;
         }
@@ -193,7 +221,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (this.preventSelect == false) {
             if ($event != null) {
                 var entityList = $event.rowData;
-                var selectedEntity = $event.rowData["Name"];
+                var selectedEntity = $event.rowData["Field"];
                 
                 SessionLocator.CurrentSession.CloseCurrentWindowEmit(selectedEntity);
             }
@@ -214,6 +242,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
 export class CustomEntityArgs {
     public ObjectTableName: string = null;
     public ObjectTableId: string = null;
+    public LOVAdditionalColumns: string = null;
     public SelectedItem: any = null;
     public ShowInActive: boolean = false;
     public IsTenantZeroSearch: boolean = null;

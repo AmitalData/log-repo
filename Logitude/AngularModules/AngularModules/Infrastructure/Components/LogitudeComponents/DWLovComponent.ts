@@ -18,7 +18,7 @@ import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {FieldValidator} from '../../Validators/FieldValidator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CustomEntityArgs} from './LogSearchWindowComponent';
+import {CustomEntityArgs} from './DWLogSearchWindowComponent';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/throttleTime';
@@ -47,7 +47,7 @@ import {DWQueryBuilderService} from '../../Services/ExtendedPMs/DWQueryBuilderSe
     templateUrl: './DWLovComponent.html',
     providers: [EntityListService, ServiceArgs, EntityResourceService],
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'DisplayMemberPath', 'SelectedValuePath',
-        "AutoFocus", "IsFreeText", "AlwaysEnabled","Operation"],
+        "AutoFocus", "IsFreeText", "AlwaysEnabled", "Operation","LOVAdditionalColumns"],
 })
 
 export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -72,6 +72,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
     public ShowHelp: boolean = false;
     public ObjectField: ObjectFieldPM;
     public ObjectFieldName: string = null;
+    public LOVAdditionalColumns: string = null;
     public ObjectTableName: string = null;
     public Operation: string;
     public AutoFocus: boolean;
@@ -766,6 +767,8 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
 
         args.ObjectTableName = this.ObjectTableName;
         args.DisplayFieldsFromList = this.ObjectFieldName;
+        args.LOVAdditionalColumns = this.LOVAdditionalColumns;
+        
         //args.IsAllDataVisible = this.IsAllDataVisible;
         //args.ShowInActive = this.ShowInActive;
         //args.PartnerTypes = this.PartnerTypes;

@@ -32,6 +32,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.DisplayInQueryBuilder = entityPM.DisplayInQueryBuilder;
             entityPOCO.Category1 = entityPM.Category1;
             entityPOCO.Category2 = entityPM.Category2;
+            entityPOCO.LOVAdditionalColumns = entityPM.LOVAdditionalColumns;
 
 
         }
