@@ -165,6 +165,7 @@
     <Compile Include="Azure\IErrorLogsRepository.cs" />
     <Compile Include="Azure\Repositories\CommunicationLogsRepository.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.cs" />
+    <Content Include="InfrastructureModel\DeleteQBOTranslations.sql" />
     <Content Include="InfrastructureModel\DeleteBusinessRecords.sql" />
     <Content Include="InfrastructureModel\DeleteCRMRecords.sql" />
     <Content Include="InfrastructureModel\DeleteCustomerRecords.sql" />
