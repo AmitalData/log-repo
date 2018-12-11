@@ -33,7 +33,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<ARInvoiceLinePM> GetInvoiceLinePMsByInvoiceId(string invoiceId, int tenant)
         {
-            List<ARInvoiceLinePM> list = (from a in repository.context.ARInvoiceLines
+            List<ARInvoiceLinePM> list = (from a in repository.context.ARInvoiceLines.Include("ARInvoiceLineAction")
                                           where a.Tenant == tenant && a.ARInvoiceId == invoiceId
                                           select new ARInvoiceLinePM()
                                           {

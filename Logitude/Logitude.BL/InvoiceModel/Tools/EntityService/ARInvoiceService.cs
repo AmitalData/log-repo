@@ -437,6 +437,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
                 }
+
+                // Full Accounting - Tax Fields Work 
+                this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
+                
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);
                 invoiceRepository.SubmitChanges();
@@ -3213,12 +3217,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #endregion
 
         #region Tax Report variables 
-        private void CalculationOfTaxReportfields(ARInvoicePM theEntityPm)
+        private void CalculationOfTaxReportfields(ARInvoicePM theEntityPm, bool isApprovingInvoice)
         {
             int tenant = theEntityPm.Tenant;
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-            if (tenantPOCO.AccountingActivated)
+            if (tenantPOCO.AccountingActivated && isApprovingInvoice)
             {
                 if (theEntityPm.InvoiceLines != null && theEntityPm.InvoiceLines.Count() > 0)
                 {
@@ -3364,9 +3368,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 // Journal Work
                 this.AddARInvoiceJournalAndJournalLines(entityPM, this.isApprovingInvoice);
 
-                // Tax Fields Work 
-                this.CalculationOfTaxReportfields(entityPM);
-
+              
                 // DropBox
                 this.CreateARInvoiceMessage(this.isApprovingInvoice);
 

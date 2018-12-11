@@ -254,7 +254,21 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.ValueOfGoodsCurrency = CurrencyService16.GetCurrencyById(MyEntityPM.ValueOfGoodsCurrencyId,Tenant); 
 			       
 					   				   }
-				   					
+				   
+				if(MyEntityPM.ShipmentReceivables != null && MyEntityPM.ShipmentReceivables.Count > 0)
+				{
+					 ReceivableQueryService ReceivableService17 = new ReceivableQueryService(Tenant);
+					 temp.Receivables = ReceivableService17.ReceivableDataMapping(MyEntityPM.ShipmentReceivables,Tenant);
+				}
+
+							 
+				if(MyEntityPM.ShipmentPayables != null && MyEntityPM.ShipmentPayables.Count > 0)
+				{
+					 PayableQueryService PayableService17 = new PayableQueryService(Tenant);
+					 temp.Payables = PayableService17.PayableDataMapping(MyEntityPM.ShipmentPayables,Tenant);
+				}
+
+							 					
 				   return temp;
 			}
             catch (Exception ex)
@@ -523,7 +537,21 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										   
+					
+					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
+					{
+						ReceivableQueryService ReceivableService17 = new ReceivableQueryService(Tenant);
+						temp.ShipmentReceivables = ReceivableService17.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
+					}
+
+								 
+					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
+					{
+						PayableQueryService PayableService17 = new PayableQueryService(Tenant);
+						temp.ShipmentPayables = PayableService17.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName);
+					}
+
+								 					   
 					   return temp;
 		    }
             catch (Exception ex)
