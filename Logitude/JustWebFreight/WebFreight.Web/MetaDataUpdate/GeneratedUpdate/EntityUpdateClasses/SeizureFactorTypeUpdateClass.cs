@@ -71,6 +71,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.SeizureFactorType",
 			      				    IsNew =  true,
 			      				    DBTableName =  "Customs.SeizureFactorTypes",
+			      				    OldDBTableName =  "Customs.SeizureFactorTypes",
 			      				    ObjectTableSingular =  "SeizureFactorType",
 			      				    ObjectTablePlural =  "SeizureFactorTypes",
 			      				    HasCustomFilter =  false,
@@ -104,7 +105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "גורם מעקל",
 			      				    DefaultText =  "Seizure Factor Type",
-			      				    Code =  "0ca8",
+			      				    Code =  "a5be",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -131,6 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
+					  						OldFieldName =  "Code",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -196,6 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
+					  						OldFieldName =  "LocalName",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -214,7 +217,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "LocalName",
 					  						ListPropertyPath =  "LocalName",
 					  						DisplayInLookUpIndex =  1,
@@ -261,6 +264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -281,6 +285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -322,6 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
+					  						OldFieldName =  "EnglishName",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -343,6 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EnglishName",
 					  						ListPropertyPath =  "EnglishName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -386,6 +393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
+					  						OldFieldName =  "Inactive",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -406,6 +414,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Inactive",
 					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -451,7 +460,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup SeizureFactorTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0ca8", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup SeizureFactorTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a5be", Name = " Query Group" }, queryGroupRepository);
 	        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable SeizureFactorTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.SeizureFactorType" && d.Tenant == 0).FirstOrDefault();
