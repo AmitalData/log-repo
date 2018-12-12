@@ -161,6 +161,13 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get WeightValueCode() { return this.EntityPM.WeightValueCode; }
+    set WeightValueCode(value: string) {
+        if (this.EntityPM.WeightValueCode != value) {
+            this.EntityPM.WeightValueCode = value;
+        }
+    }
+
     AirLineIdLostFocus(value: any) {
 
         //this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.EntityPM.AirlineId, this.EntityPM.HAWB, this.EntityPM.MAWB).subscribe(Result => {

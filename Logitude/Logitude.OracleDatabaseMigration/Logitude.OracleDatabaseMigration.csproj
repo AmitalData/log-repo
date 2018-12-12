@@ -148,6 +148,14 @@
     <Compile Include="Migrations\201812110709089_AddMigrationSeizureFactorType.Designer.cs">
       <DependentUpon>201812110709089_AddMigrationSeizureFactorType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812120858343_AddMigrationWeightValueCode.cs" />
+    <Compile Include="Migrations\201812120858343_AddMigrationWeightValueCode.Designer.cs">
+      <DependentUpon>201812120858343_AddMigrationWeightValueCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812121305212_AddMigrationMamanSpecialAction.cs" />
+    <Compile Include="Migrations\201812121305212_AddMigrationMamanSpecialAction.Designer.cs">
+      <DependentUpon>201812121305212_AddMigrationMamanSpecialAction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -241,6 +249,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812110709089_AddMigrationSeizureFactorType.resx">
       <DependentUpon>201812110709089_AddMigrationSeizureFactorType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120858343_AddMigrationWeightValueCode.resx">
+      <DependentUpon>201812120858343_AddMigrationWeightValueCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812121305212_AddMigrationMamanSpecialAction.resx">
+      <DependentUpon>201812121305212_AddMigrationMamanSpecialAction.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

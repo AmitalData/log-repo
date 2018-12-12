@@ -1,272 +1,277 @@
 <table style="height:350px; width:750px">
 
-  <tr style="height:50px; width:700px" class="TabTitleRow">
-    <td>
-      <table>
-        <tr>
-          <td style="font-size:14px; width:200px;right:10px"> {{'General.O.CourierMaster' | TextCodeTranslationPipe}}</td>
-        </tr>
-      </table>
-    </td>
-    <td><div></div></td>
-  </tr>
+    <tr style="height:50px; width:700px" class="TabTitleRow">
+        <td>
+            <table>
+                <tr>
+                    <td style="font-size:14px; width:200px;right:10px"> {{'General.O.CourierMaster' | TextCodeTranslationPipe}}</td>
+                </tr>
+            </table>
+        </td>
+        <td><div></div></td>
+    </tr>
 
-  <tr style="height:40px; width:700px">
-    <td>
+    <tr style="height:40px; width:700px">
+        <td>
 
-      <table>
-        <tr>
-          <td style="width:110px">
-            <LogLabel [ObjectFieldName]="'AirlinePrefix'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-          </td>
-          <td colspan="2" style="width:180px">
-            <LogLov [ObjectFieldName]="'AirlineId'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    [HideColumns]="false"
-                    [SelectedValue]="AirlineId"
-                    [LookUpTableName]="'Customs.CustomsAirline'"
-                    [DependencyFilter1Value]="'AL'">
-            </LogLov>
-          </td>
-        </tr>
-      </table>
-    </td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'AirlinePrefix'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td colspan="2" style="width:180px">
+                        <LogLov [ObjectFieldName]="'AirlineId'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="false"
+                                [SelectedValue]="AirlineId"
+                                [LookUpTableName]="'Customs.CustomsAirline'"
+                                [DependencyFilter1Value]="'AL'">
+                        </LogLov>
+                    </td>
+                </tr>
+            </table>
+        </td>
 
-    <td>
-      <table>
-        <tr>
-          <td style="width:110px">
-            <LogLabel [ObjectFieldName]="'MAWB'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-          </td>
-          <td style="width:150px">
-            <LogTextBox [ObjectFieldName]="'MAWB'" [InputType]="'text'" [DataContext]="DataContext"
-                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'MAWB'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogTextBox [ObjectFieldName]="'MAWB'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
-          </td>
-        </tr>
-      </table>
-    </td>
+                    </td>
+                </tr>
+            </table>
+        </td>
 
-    <td>
-      <table>
-        <tr>
-          <td style="width:20px"></td>
-          <td style="width:90px">
-            <LogLabel [ObjectFieldName]="'IsOpen'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-          </td>
-          <td style="width:100px">
-            <CheckBox (Checked)="IsOpen = $event" [IsChecked]="IsOpen"></CheckBox>
-          </td>
-        </tr>
-      </table>
-    </td>
-    <td><div></div></td>
-  </tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:20px"></td>
+                    <td style="width:90px">
+                        <LogLabel [ObjectFieldName]="'IsOpen'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:100px">
+                        <CheckBox (Checked)="IsOpen = $event" [IsChecked]="IsOpen"></CheckBox>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td><div></div></td>
+    </tr>
 
-  <tr style="height:40px; width:700px">
-    <td>
-      <table>
-        <tr>
-          <td style="width:110px">
-            <LogLabel [ObjectFieldName]="'HAWB'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-          </td>
-          <td style="width:150px">
-            <LogTextBox [ObjectFieldName]="'HAWB'" [InputType]="'text'" [DataContext]="DataContext"
-                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-          </td>
-          <td style="width:30px"></td>
-        </tr>
-      </table>
-    </td>
+    <tr style="height:40px; width:700px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'HAWB'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogTextBox [ObjectFieldName]="'HAWB'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                    </td>
+                    <td style="width:30px"></td>
+                </tr>
+            </table>
+        </td>
 
-    <td><div></div></td>
-  </tr>
+        <td><div></div></td>
+    </tr>
 
-  <tr style="height:40px; width:700px">
-    <td>
-      <table>
-        <tr>
-          <td style="width:110px">
-            <LogLabel [ObjectFieldName]="'GatewayPortCode'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-          </td>
-          <td style="width:150px">
-            <LogLov [ObjectFieldName]="'GatewayPortCode'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    [HideColumns]="true"
-                    [SelectedValue]="GatewayPortCode"
-                    [LookUpTableName]="'Customs.InternationalSite'">
-            </LogLov>
-          </td>
-          <td style="width:30px"></td>
-        </tr>
-      </table>
-    </td>
+    <tr style="height:40px; width:700px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'GatewayPortCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogLov [ObjectFieldName]="'GatewayPortCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [SelectedValue]="GatewayPortCode"
+                                [LookUpTableName]="'Customs.InternationalSite'">
+                        </LogLov>
+                    </td>
+                    <td style="width:30px"></td>
+                </tr>
+            </table>
+        </td>
 
-    <td>
-      <table>
-        <tr>
-          <td style="width:110px">
-            <LogLabel [ObjectFieldName]="'OriginPortCode'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-          </td>
-          <td style="width:150px">
-            <LogLov [ObjectFieldName]="'OriginPortCode'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    [HideColumns]="true"
-                    [SelectedValue]="OriginPortCode"
-                    [LookUpTableName]="'Customs.InternationalSite'">
-            </LogLov>
-          </td>
-        </tr>
-      </table>
-    </td>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'OriginPortCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogLov [ObjectFieldName]="'OriginPortCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [SelectedValue]="OriginPortCode"
+                                [LookUpTableName]="'Customs.InternationalSite'">
+                        </LogLov>
+                    </td>
+                </tr>
+            </table>
+        </td>
 
-    <td></td>
-    <td><div></div></td>
-  </tr>
+        <td></td>
+        <td><div></div></td>
+    </tr>
 
-  <tr style="height:40px; width:700px">
-    <td>
-      <table>
-        <tr>
-          <td style="width:110px">
-            <LogLabel [ObjectFieldName]="'FlightNumber'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-          </td>
-          <td style="width:150px">
-            <LogTextBox [ObjectFieldName]="'FlightNumber'" [InputType]="'text'" [DataContext]="DataContext"
-                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-          </td>
-          <td style="width:30px"></td>
-        </tr>
-      </table>
-    </td>
+    <tr style="height:40px; width:700px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'FlightNumber'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogTextBox [ObjectFieldName]="'FlightNumber'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                    </td>
+                    <td style="width:30px"></td>
+                </tr>
+            </table>
+        </td>
 
-    <td>
-      <table>
-        <tr>
-          <td style="width:110px">
-            <LogLabel [ObjectFieldName]="'DepartureDate'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-          </td>
-          <td style="width:150px">
-            <LogDatePicker [ObjectFieldName]="'DepartureDate'" [ObjectTableName]="ObjectTableName"
-                           [DataContext]="DataContext" [HideColumns]="true"
-                           [SelectedDateValue]="DepartureDate"></LogDatePicker>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'DepartureDate'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogDatePicker [ObjectFieldName]="'DepartureDate'" [ObjectTableName]="ObjectTableName"
+                                       [DataContext]="DataContext" [HideColumns]="true"
+                                       [SelectedDateValue]="DepartureDate"></LogDatePicker>
 
-          </td>
-        </tr>
-      </table>
-    </td>
+                    </td>
+                </tr>
+            </table>
+        </td>
 
-    <td></td>
-    <td><div></div></td>
-  </tr>
+        <td></td>
+        <td><div></div></td>
+    </tr>
 
-  <tr style="height:40px; width:700px">
-    <td>
-      <table>
-        <tr>
-          <td style="width:110px">
-            <LogLabel [ObjectFieldName]="'EstimatedArrivalDate'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-          </td>
-          <td style="width: 150px;">
-            <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'EstimatedArrivalDateOnly'" [ObjectTableName]="ObjectTableName"
-                           [InputType]="'date'" [DataContext]="DataContext"
-                           [HideColumns]="true"></LogDatePicker>
-          </td>
-          <td style="width:30px"></td>
-        </tr>
-      </table>
-
-
-    </td>
-
-    <td>
-      <table>
-        <tr>
-          <td style="width:110px">
-            <LogLabel [ObjectFieldName]="'EstimatedArrivalTimeOnly'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"> </LogLabel>
-          </td>
-          <td style="width: 150px;">
-            <LogDatePicker [ObjectFieldName]="'EstimatedArrivalTimeOnly'"
-                           [ObjectTableName]="ObjectTableName"
-                           [InputType]="'time'" [DataContext]="DataContext"
-                           [TimeMode]="24" [SelectedDateValue]="EstimatedArrivalTimeOnly"
-                           [HideColumns]="true"></LogDatePicker>
-          </td>
-        </tr>
-      </table>
-    </td>
-
-    <td></td>
-    <td><div></div></td>
-  </tr>
-
-  <tr style="height:40px; width:700px">
-    <td>
-      <table>
-        <tr>
-          <td style="width:110px">
-            <LogLabel [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-          </td>
-          <td style="width:150px">
-            <LogTextBox [ObjectFieldName]="'PackageQuantity'" [InputType]="'text'" [DataContext]="DataContext"
-                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-          </td>
-          <td style="width:30px"></td>
-        </tr>
-      </table>
-    </td>
-
-    <td>
-      <table>
-        <tr>
-          <td style="width:110px">
-            <LogLabel [ObjectFieldName]="'GrossMassMeasure'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-          </td>
-          <td style="width:150px">
-            <LogTextBox [ObjectFieldName]="'GrossMassMeasure'" [InputType]="'text'" [DataContext]="DataContext"
-                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-          </td>
-        </tr>
-      </table>
-    </td>
-
-    <td><div></div></td>
-  </tr>
-  <!--remarked due to task 43202-->
-  <!--<tr style="height:40px; width:700px">
-      <td>
-          <table>
-              <tr>
-                  <td style="width:110px">
-                      <LogLabel [ObjectFieldName]="'ManifestNumber'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
-                  </td>
-                  <td style="width:150px">
-                      <LogTextBox [ObjectFieldName]="'ManifestNumber'" [InputType]="'text'" [DataContext]="DataContext"
-                                  [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                  </td>
-                  <td style="width:30px"></td>
-              </tr>
-          </table>
-      </td>
-
-      <td><div></div></td>
-  </tr>-->
+    <tr style="height:40px; width:700px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'EstimatedArrivalDate'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width: 150px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'EstimatedArrivalDateOnly'" [ObjectTableName]="ObjectTableName"
+                                       [InputType]="'date'" [DataContext]="DataContext"
+                                       [HideColumns]="true"></LogDatePicker>
+                    </td>
+                    <td style="width:30px"></td>
+                </tr>
+            </table>
 
 
-  <tr></tr>
+        </td>
+
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'EstimatedArrivalTimeOnly'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"> </LogLabel>
+                    </td>
+                    <td style="width: 150px;">
+                        <LogDatePicker [ObjectFieldName]="'EstimatedArrivalTimeOnly'"
+                                       [ObjectTableName]="ObjectTableName"
+                                       [InputType]="'time'" [DataContext]="DataContext"
+                                       [TimeMode]="24" [SelectedDateValue]="EstimatedArrivalTimeOnly"
+                                       [HideColumns]="true"></LogDatePicker>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td></td>
+        <td><div></div></td>
+    </tr>
+
+    <tr style="height:40px; width:700px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'PackageQuantity'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogTextBox [ObjectFieldName]="'PackageQuantity'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                    </td>
+                    <td style="width:30px"></td>
+                </tr>
+            </table>
+        </td>
+
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'GrossMassMeasure'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogTextBox [ObjectFieldName]="'GrossMassMeasure'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        <td><div></div></td>
+    </tr>
+
+    <tr style="height:40px; width:700px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'WeightValueCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogLov [ObjectFieldName]="'WeightValueCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [SelectedValue]="WeightValueCode"
+                                [LookUpTableName]="'Customs.FreightPaymentMethod'">
+                        </LogLov>
+                    </td>
+                    <td style="width:30px"></td>
+                </tr>
+            </table>
+        </td>
+
+        <td></td>
+        <td><div></div></td>
+    </tr>
+
+    <tr></tr>
 </table>
