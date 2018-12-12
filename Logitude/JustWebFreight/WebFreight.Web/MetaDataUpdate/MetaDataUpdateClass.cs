@@ -17745,7 +17745,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInLookUpIndex = 1,
                 DisplayInSearchWindowFiltersIndex = 1,
                 DisplayInSearchWindowListIndex = 1,
-                FullFieldLable = "English Name",
+                FullFieldLable = "EnglishName",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
                 IsRequired = true,

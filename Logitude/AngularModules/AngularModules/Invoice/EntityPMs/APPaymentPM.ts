@@ -195,11 +195,6 @@ export class APPaymentPM {
     private valueDate: Date;
     public get ValueDate() { return this.valueDate; }
     public set ValueDate(newValue: Date) { if (this.valueDate != newValue) { this.valueDate = newValue; this.MarkAsDirty("ValueDate"); } }
-
-    private setReSendQBO: boolean;
-    public get SetReSendQBO() { return this.setReSendQBO; }
-    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
-
        
 	 
     private bank: string;
@@ -326,6 +321,11 @@ export class APPaymentPM {
     private vendorPartnerTypeId: string;
     public get VendorPartnerTypeId() { return this.vendorPartnerTypeId; }
     public set VendorPartnerTypeId(newValue: string) { if (this.vendorPartnerTypeId != newValue) { this.vendorPartnerTypeId = newValue; this.MarkAsDirty("VendorPartnerTypeId"); } }
+       
+	 
+    private setReSendQBO: boolean;
+    public get SetReSendQBO() { return this.setReSendQBO; }
+    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
        
 	 
     private taxDeductionLocalAmount: number;

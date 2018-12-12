@@ -188,6 +188,68 @@ namespace MetaDataGenerator
             return true;
         }
 
+        public bool RegenerateExisting_Old_ModelEntityLXMLs_ClosedData(List<ObjectTable> modelTables, string directoryPath, ref string errors)
+        {
+            if (string.IsNullOrEmpty(errors))
+                errors = "";
+            directoryPath = directoryPath + @"\";
+
+            foreach (ObjectTable table in modelTables)
+            {
+                List<ObjectField> fields = (from a in this.allFields
+                                            where a.ObjectTableId == table.Id
+                                            select a).ToList();
+
+                List<TextCode> tableTextCodes = allTextCodes.Where(t => t.ObjectTableId == table.Id).ToList();
+
+                //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+                //DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+                //string solutionDirectory = solutionDir.FullName;
+                string filePath = directoryPath + table.Name + ".lxml";
+
+                XmlDocument doc = new XmlDocument();
+                doc.Load(filePath);
+
+
+                XmlElement entityElement = (XmlElement)doc.GetElementsByTagName("entity")[0];
+                //this.UpdateEntityElement(entityElement, doc, table, tableTextCodes);
+
+                List<XmlNode> dataContractsNodesList = new List<XmlNode>();
+                foreach (XmlNode node in doc.GetElementsByTagName("DataContracts"))
+                {
+                    dataContractsNodesList.Add(node);
+                }
+
+                this.RemoveOldNodes(doc, entityElement, "DataContracts");
+ 
+
+                if (table.IsClosed)
+                    GenerateTableDataRecords(doc, entityElement, table, fields);
+
+                foreach (XmlNode node in dataContractsNodesList)
+                {
+                    XmlNode newNode = doc.CreateElement("DataContracts");
+                    entityElement.AppendChild(node);
+                }
+
+                #region Write Xml To file
+
+
+                string tableName = table.Name;
+                if (table.Name.Contains("."))
+                {
+                    tableName = table.Name.Split('.')[1];
+                }
+
+                XmlDocument newdoc = new XmlDocument();
+                doc.Save(directoryPath + tableName + ".lxml");
+
+                #endregion
+            }
+
+            return true;
+        }
+
         #region GenerateEntityElement
 
 
@@ -715,6 +777,7 @@ namespace MetaDataGenerator
             if (querableEntities == null)
                 return;
 
+            int addedRecords = 0;
             IEnumerator dataList = querableEntities.GetEnumerator();
             if (dataList != null)
             {
@@ -748,7 +811,14 @@ namespace MetaDataGenerator
                             }
                         }
                     }
+
+                    addedRecords++;
                 }
+            }
+
+            if(addedRecords == 0)
+            {
+                Console.WriteLine("no record found for table: " + table.Name);
             }
         }
 
