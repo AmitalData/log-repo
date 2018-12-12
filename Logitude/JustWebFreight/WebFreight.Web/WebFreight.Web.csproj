@@ -983,6 +983,7 @@
     <Compile Include="Controllers\CommonDataModel\Extended\AgentSharedDocumentExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentFilingBackupBatchExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\HybridTenantStateExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\ImporterDepositionController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplateExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\ReportsTemplatesVersionExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\WarehouseExtendedController.cs" />
@@ -2163,6 +2164,7 @@
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
     <Compile Include="Helpers\FlatFileHelper.cs" />
+    <Compile Include="Helpers\ImporterDepositionHelper.cs" />
     <Compile Include="Helpers\LogBox\LogBoxMailgunAnalyzer.cs" />
     <Compile Include="Helpers\LogitudeLeadHelper.cs" />
     <Compile Include="Helpers\PasswordChangeHelper.cs" />
@@ -4082,6 +4084,7 @@
     <Content Include="WcfApi\GlobalZoneWcfService.svc" />
     <Content Include="WcfApi\HybridPartnersPermissionsWcfService.svc" />
     <Content Include="WcfApi\HybridTenantStateWcfService.svc" />
+    <Content Include="WcfApi\ImporterDepositionWcfService.svc" />
     <Content Include="WcfApi\IncotermWcfService.svc" />
     <Content Include="WcfApi\InsertCommTaskWcfService.svc" />
     <Content Include="WcfApi\LoginWcfService.svc" />
@@ -5569,9 +5572,13 @@
     <Compile Include="WcfApi\IHybridPartnersPermissionsWcfService.cs" />
     <Compile Include="WcfApi\IHybridPartnerWcfService.cs" />
     <Compile Include="WcfApi\IHybridTenantStateWcfService.cs" />
+    <Compile Include="WcfApi\IImporterDepositionWcfService.cs" />
     <Compile Include="WcfApi\IIncotermWcfService.cs" />
     <Compile Include="WcfApi\IInsertCommTaskWcfService.cs" />
     <Compile Include="WcfApi\ILoginWcfService.cs" />
+    <Compile Include="WcfApi\ImporterDepositionWcfService.svc.cs">
+      <DependentUpon>ImporterDepositionWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\IncotermWcfService.svc.cs">
       <DependentUpon>IncotermWcfService.svc</DependentUpon>
     </Compile>
