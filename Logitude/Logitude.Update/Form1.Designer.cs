@@ -1286,7 +1286,7 @@
             this.button36.Name = "button36";
             this.button36.Size = new System.Drawing.Size(184, 22);
             this.button36.TabIndex = 82;
-            this.button36.Text = "Update Infrastructure";
+            this.button36.Text = "Update Business Infrastructure";
             this.button36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button36.UseVisualStyleBackColor = true;
             this.button36.Click += new System.EventHandler(this.button36_Click);
