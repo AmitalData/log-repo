@@ -125,6 +125,13 @@ namespace Logitude.BL.CommonDataModel
                 Id = "WH", 
                 Name = "Warehouse", 
 			});
+			 
+            all.Add(new PartnerTypeDetails()
+            {    
+                SearchFields = "ch,customs shipper", 
+                Id = "CH", 
+                Name = "Customs Shipper", 
+			});
 			
             return all;
        }
