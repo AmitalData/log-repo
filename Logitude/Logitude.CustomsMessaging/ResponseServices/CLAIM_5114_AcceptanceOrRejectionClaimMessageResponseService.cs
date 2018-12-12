@@ -63,8 +63,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     claimsRelatedEntityPM.ChangeSetOp = ChangeSetOperation.Update;
                     claimsRelatedEntityPM.DecisionCode = customResponse.AcceptanceOrRejectionClaimMessage.decisionCode.ToString();
                     claimsRelatedEntityPM.DecisionNote = customResponse.AcceptanceOrRejectionClaimMessage.decisionNote;
-                    //claimsRelatedEntityPM.EilatVatRefoundDecision = customResponse.AcceptanceOrRejectionClaimMessage.;
-                    //claimsRelatedEntityPM.DepositingAmount = customResponse.AcceptanceOrRejectionClaimMessage.depositingAmount;
+                    claimsRelatedEntityPM.EilatVatRefoundDecision = customResponse.AcceptanceOrRejectionClaimMessage.eilatVatRefoundDecision;
+                    claimsRelatedEntityPM.DepositingAmount = customResponse.AcceptanceOrRejectionClaimMessage.depositingAmount;
                     claimsRelatedEntityPM.RefundAmount = claimsRelatedEntityItem.refundAmount;
 
                     //foreach (var refundItem in claimsRelatedEntityItem.RefundQuntity)
@@ -77,15 +77,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //    claimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds.Add(claimsRelatedEntitiesRefundPM);
                     //}
 
-                    //foreach (var seizureItem in customResponse.Seizure)
-                    //{
-                    //    ClaimsRelatedEntitiesSeizurePM claimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM();
-                    //    claimsRelatedEntitiesSeizurePM.ChangeSetOp = ChangeSetOperation.Insert;
-                    //    claimsRelatedEntitiesSeizurePM.SeizureFactorCode = seizureItem.SeizureFactorCode;
-                    //    claimsRelatedEntitiesSeizurePM.SeizureMethodCode = seizureItem.SeizureMethodCode;
-                    //    claimsRelatedEntitiesSeizurePM.SeizureAmount = seizureItem.SeizureAmount;
-                    //    claimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures.Add(claimsRelatedEntitiesSeizurePM);
-                    //}
+                    foreach (var seizureItem in customResponse.Seizure)
+                    {
+                        ClaimsRelatedEntitiesSeizurePM claimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM();
+                        claimsRelatedEntitiesSeizurePM.ChangeSetOp = ChangeSetOperation.Insert;
+                        claimsRelatedEntitiesSeizurePM.SeizureFactorCode = seizureItem.seizureFactorCode.ToString();
+                        claimsRelatedEntitiesSeizurePM.SeizureMethodCode = seizureItem.seizureMethodCode.ToString();
+                        claimsRelatedEntitiesSeizurePM.SeizureAmount = seizureItem.seizureAmount;
+                        claimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures.Add(claimsRelatedEntitiesSeizurePM);
+                    }
 
                     myClaimsRelatedEntityUpdateService.Update(claimsRelatedEntityPM,true);
                 }

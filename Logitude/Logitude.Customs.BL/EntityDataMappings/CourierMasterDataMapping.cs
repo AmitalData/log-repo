@@ -40,6 +40,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.EstimatedArrivalTimeOnly);
             this.CustomMappedPMProperties.Add(PMPropertyNames.OriginPortName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.GatewayPortName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.WeightValueName);
 
             CustomsAirlineRepository rep = new CustomsAirlineRepository(entityPM.Tenant);
             UserRepository userRep = new UserRepository(entityPM.Tenant);
@@ -85,6 +86,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (internationalSitePM != null)
                 {
                     entityPM.GatewayPortName = internationalSitePM.LocalName;
+                }
+            }
+
+            if (entityPOCO.WeightValueCode != null)
+            {
+                FreightPaymentMethodQueryService freightPaymentMethodQueryService = new FreightPaymentMethodQueryService(entityPOCO.Tenant);
+                FreightPaymentMethodPM freightPaymentMethodPM = freightPaymentMethodQueryService.GetSingle(entityPOCO.WeightValueCode, false, true);
+                if (freightPaymentMethodPM != null)
+                {
+                    entityPM.WeightValueName = freightPaymentMethodPM.LocalName;
                 }
             }
 

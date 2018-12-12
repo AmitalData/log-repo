@@ -54,7 +54,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        PackageQuantity = a.PackageQuantity,
                                                        ShortHAWB = a.ShortHAWB,
                                                        UpdatedByUserId = a.UpdatedByUserId,
-        });
+                                                       WeightValueCode = a.WeightValueCode,
+                                                       WeightValueName = a.FreightPaymentMethod != null ? a.FreightPaymentMethod.LocalName : null,
+                                                    });
             return query;
 		}
 
@@ -63,7 +65,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return iQueryable;
 
         }
-			}
+	}
 
 
 }
