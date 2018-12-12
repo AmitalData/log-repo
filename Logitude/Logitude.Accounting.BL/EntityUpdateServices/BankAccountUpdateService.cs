@@ -145,6 +145,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             BankAccountValidateService validateService = new BankAccountValidateService(MainContext as IAccountingContext);
             validateService.Validate(entityPM);
+            if (validateService.ErrorsList.Count > 0)
+            {
+                foreach(string error in validateService.ErrorsList)
+                {
+                    this.ErrorsList.Add(error);
+                }
+            }
             base.Validate(entityPM);
         }
 

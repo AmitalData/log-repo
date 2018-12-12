@@ -160,6 +160,7 @@
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
+            this.button39 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1325,6 +1326,7 @@
             this.tabPage1.Controls.Add(this.lblUCommon);
             this.tabPage1.Controls.Add(this.lblUInvoice);
             this.tabPage1.Controls.Add(this.lblUQuote);
+            this.tabPage1.Controls.Add(this.button39);
             this.tabPage1.Controls.Add(this.button38);
             this.tabPage1.Controls.Add(this.button37);
             this.tabPage1.Controls.Add(this.button1);
@@ -1507,6 +1509,17 @@
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
             // 
+            // button39
+            // 
+            this.button39.Location = new System.Drawing.Point(280, 259);
+            this.button39.Name = "button39";
+            this.button39.Size = new System.Drawing.Size(184, 25);
+            this.button39.TabIndex = 86;
+            this.button39.Text = "TestFutureCheques";
+            this.toolTip1.SetToolTip(this.button39, "When finished, Click on Update Tenants, Then Build Zip files");
+            this.button39.UseVisualStyleBackColor = true;
+            this.button39.Click += new System.EventHandler(this.button39_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1683,6 +1696,7 @@
         private System.Windows.Forms.Label lblUQuote;
         private System.Windows.Forms.Button btnUpdateTenantZeroNew;
         private System.Windows.Forms.Label lblTenantNew;
+        private System.Windows.Forms.Button button39;
     }
 }
 
