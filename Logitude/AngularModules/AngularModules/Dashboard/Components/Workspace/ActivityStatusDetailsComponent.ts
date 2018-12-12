@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter, OnInit, AfterViewInit, ViewEncapsulation} from '@angular/core'
+import {Component, Output, EventEmitter, OnInit, AfterViewInit, ViewEncapsulation} from '@angular/core'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {DashBoardFilters} from '../../../Infrastructure/DataContracts/Dashboard/DashboardFilters';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -147,7 +147,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     set SelectedDirectionFilterCustomers(newValue: string) {
         if (this.selectedDirectionFilterCustomers != newValue) {
             this.selectedDirectionFilterCustomers = newValue;
-            this.FillCustomersPie();
+            this.LoadCustomers();
         }
     }
 
@@ -156,7 +156,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     set SelectedTransportFilterCustomers(newValue: string) {
         if (this.selectedTransportFilterCustomers != newValue) {
             this.selectedTransportFilterCustomers = newValue;
-            this.FillCustomersPie();
+            this.LoadCustomers();
         }
 
     } private filterName_DateType: string = "DateType";
@@ -252,7 +252,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     CommonFiltersCustomers() {
         var service = new DashboardDomainService();
         var days = this.ComputeDays();
-        service.GetTop10DashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers).subscribe(myResult => {
+        service.GetTop10DashBoard(this.SelectedDateTypeItem.Index, 0, days, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe(myResult => {
             this.FinalCustomersData = myResult;
             this.FillCustomersPie();
         });

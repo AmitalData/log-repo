@@ -940,7 +940,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
 
-        public HttpResponseMessage GetTop10DashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers)
+        public HttpResponseMessage GetTop10DashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers,string directionid,string transportmodeId)
         {
             try
             {
@@ -955,7 +955,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", currentTenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(currentTenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoard(type, lastMonths, lastDays, measurment, currentTenant, top, includeOthers).AsQueryable().ToList();
+                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoard(type, lastMonths, lastDays, measurment, currentTenant, top, includeOthers, directionid,transportmodeId).AsQueryable().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
             }
