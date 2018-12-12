@@ -17,7 +17,8 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             IWebFreightContext ObjectContext = WebFreightContext.GetContext(0);
             EmailAlertSettingRepository = new EmailAlertSettingRepository(ObjectContext);
-
+            if (objectTabelQuery == null)
+                objectTabelQuery = new Logitude.BL.InfrastructureModel.EntityQueries.ObjectTableQuery(0);
             List<ObjectTablePM> objectTables = objectTabelQuery.GetObjectPMsByTenant(0).ToList();
 
             #region object tables

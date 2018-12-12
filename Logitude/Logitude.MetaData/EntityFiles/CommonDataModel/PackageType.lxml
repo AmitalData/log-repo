@@ -62,7 +62,7 @@
     <ScreenFields>
       <ScreenField ObjectFieldName="&quot;Code&quot;" ScreenName="PackageType.HeaderScreen" Row="0" Column="0" />
       <ScreenField ObjectFieldName="&quot;EnglishName&quot;" ScreenName="PackageType.HeaderScreen" Row="1" Column="0" />
-      <ScreenField ObjectFieldName="&quot;AddedManually&quot;" ScreenName="PackageType.HeaderScreen" Row="6" Column="0" />
+      <ScreenField ObjectFieldName="&quot;AddedManually&quot;" ScreenName="PackageType.HeaderScreen" Row="3" Column="0" />
     </ScreenFields>
   </Screen>
   <Tab Code="&quot;PKGC&quot;" ObjectTableName="&quot;PackageType&quot;" IndexOrder="0" TextCode="&quot;PackageType.TH.General&quot;" ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;" TabName="&quot;General&quot;" IsSpellChecked="false" IsPackagable="False" FeatureCode="&quot;GENERAL&quot;" FeatureTextCodeCode="&quot;PackageType.Features.General&quot;" FeatureDefaultText="&quot;General&quot;" />

@@ -1612,7 +1612,7 @@ namespace MeatadataGeneratorTool
                     SetAttribute("DefaultText", GetStringValue(f.DefaultText), MenuButtonElement, null);
                     SetAttribute("MenuButtonType", GetStringValue(f.SelectedMenuButtonType), MenuButtonElement, null);
                     SetAttribute("Style", GetStringValue(f.Style), MenuButtonElement, null);
-                    SetAttribute("IndexOrder", table.MenuButtonsObsList.IndexOf(f).ToString(), MenuButtonElement, null);
+                    SetAttribute("IndexOrder", f.IndexOrder.ToString(), MenuButtonElement, null);
                     if (!string.IsNullOrEmpty(f.LocalDefaultText))
                     {
                         SetAttribute("LocalDefaultText", GetStringValue(f.LocalDefaultText), MenuButtonElement, null);
@@ -1643,7 +1643,7 @@ namespace MeatadataGeneratorTool
                             SetAttribute("DefaultText", GetStringValue(item.DefaultText), MenuItemElement, null);
                             SetAttribute("MenuButtonType", GetStringValue(item.SelectedMenuButtonType), MenuItemElement, null);
                             SetAttribute("Style", GetStringValue(item.Style), MenuItemElement, null);
-                            SetAttribute("IndexOrder", f.MenuButtonItems.IndexOf(item).ToString(), MenuItemElement, null);
+                            SetAttribute("IndexOrder", item.IndexOrder.ToString(), MenuItemElement, null);
                             if (!string.IsNullOrEmpty(item.LocalDefaultText))
                             {
                                 SetAttribute("LocalDefaultText", GetStringValue(item.LocalDefaultText), MenuItemElement, null);
