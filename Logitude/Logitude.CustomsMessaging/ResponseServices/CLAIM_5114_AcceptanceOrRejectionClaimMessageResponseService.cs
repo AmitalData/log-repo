@@ -34,15 +34,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var claimsRelatedEntityQueryService = new ClaimsRelatedEntityQueryService(myDbContext);
             var myClaimsRelatedEntityUpdateService = new ClaimsRelatedEntityUpdateService(myDbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var claimQueryService = new ClaimQueryService(myDbContext);
+            string userMessage = "אישור/דחיה תביעה";
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
-            this.MyResponseData.UserMessage = "אישור/דחיה תביעה ";// + customResponse.AcceptanceOrRejectionClaimMessage.TPGIdentifier.fileNumber;
+            this.MyResponseData.UserMessage = userMessage;
 
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Claim");
-            //this.MyRequestSheetParam.RequestDescription = "אישור/דחיה תביעה " + customResponse..TPGIdentifier.fileNumber;
+            this.MyRequestSheetParam.RequestDescription = userMessage;
 
             foreach (var claimsRelatedEntityItem in customResponse.ClaimFileList)
             {
@@ -50,13 +51,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (claimsRelatedEntityPM != null)
                 {
                     ClaimPM claimPM = claimQueryService.GetSingle(claimsRelatedEntityPM.ClaimId, false, true);
-                    string decisionTypeName = GetDecisionTypeName(customResponse.AcceptanceOrRejectionClaimMessage.decisionCode, requestParams.Tenant);
 
+                    userMessage = userMessage + " " + claimsRelatedEntityItem.TPGIdentifier.fileNumber;
+                    this.MyRequestSheetParam.EntityId1 = claimsRelatedEntityPM.ClaimId;
+                    this.MyRequestSheetParam.RequestDescription = userMessage;
+                    this.MyResponseData.UserMessage = userMessage;
+
+                    string decisionTypeName = GetDecisionTypeName(customResponse.AcceptanceOrRejectionClaimMessage.decisionCode, requestParams.Tenant);
                     string description = "תיק תביעה: " + claimsRelatedEntityItem.TPGIdentifier.fileNumber.ToString() + "\n"
                         + "מספר רץ: " + claimsRelatedEntityItem.TPGIdentifier.numeral + "\n"
                         + "תיק מוביל: " + customResponse.AcceptanceOrRejectionClaimMessage.leadingFileNumber + "\n"
-                        + "החלטה: " + decisionTypeName + "\n";
-                        //+ "סכום שהופקד" + customResponse.AcceptanceOrRejectionClaimMessage.depositingAmount;
+                        + "החלטה: " + decisionTypeName + "\n"
+                        + "סכום שהופקד" + customResponse.AcceptanceOrRejectionClaimMessage.depositingAmount;
 
                     DoUpdateNotification("5114N", claimPM, requestParams.Tenant, claimsRelatedEntityPM.ExternalClaimNumber, description, "A");
 
@@ -67,15 +73,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     claimsRelatedEntityPM.DepositingAmount = customResponse.AcceptanceOrRejectionClaimMessage.depositingAmount;
                     claimsRelatedEntityPM.RefundAmount = claimsRelatedEntityItem.refundAmount;
 
-                    //foreach (var refundItem in claimsRelatedEntityItem.RefundQuntity)
-                    //{
-                    //    ClaimsRelatedEntitiesRefundPM claimsRelatedEntitiesRefundPM = new ClaimsRelatedEntitiesRefundPM();
-                    //    claimsRelatedEntitiesRefundPM.ChangeSetOp = ChangeSetOperation.Insert;
-                    //    claimsRelatedEntitiesRefundPM.InvoiceNumber = refundItem.InvoiceNumber;
-                    //    claimsRelatedEntitiesRefundPM.SequenceNumeric = refundItem.SequenceNumeric;
-                    //    claimsRelatedEntitiesRefundPM.RefundQuntity = refundItem.refundQuntity;
-                    //    claimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds.Add(claimsRelatedEntitiesRefundPM);
-                    //}
+                    if (claimsRelatedEntityItem.RefundQuantity != null)
+                    {
+                        ClaimsRelatedEntitiesRefundPM claimsRelatedEntitiesRefundPM = new ClaimsRelatedEntitiesRefundPM();
+                        claimsRelatedEntitiesRefundPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        claimsRelatedEntitiesRefundPM.InvoiceNumber = claimsRelatedEntityItem.RefundQuantity.InvoicesequenceNumber;
+                        claimsRelatedEntitiesRefundPM.SequenceNumeric = claimsRelatedEntityItem.RefundQuantity.InvoicesequenceNumber;
+                        claimsRelatedEntitiesRefundPM.RefundQuntity = claimsRelatedEntityItem.RefundQuantity.refundQuantity;
+                        claimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds.Add(claimsRelatedEntitiesRefundPM);
+                    }
 
                     foreach (var seizureItem in customResponse.Seizure)
                     {
@@ -90,6 +96,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     myClaimsRelatedEntityUpdateService.Update(claimsRelatedEntityPM,true);
                 }
             }
+
         }
 
         private string GetDecisionTypeName(int decisionTypeCode, int tenant)
