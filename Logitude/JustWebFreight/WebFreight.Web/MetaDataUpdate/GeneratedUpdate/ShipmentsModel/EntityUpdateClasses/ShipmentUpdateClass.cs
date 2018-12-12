@@ -38315,11 +38315,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
 		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable ShipmentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Shipment" && d.Tenant == 0).FirstOrDefault();       
-    
-			   Feature ShipmentFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Actions", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
-			   Feature ShipmentFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPERATIONALCLOSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.OperationalClose", NameTextCodeDefaultText = "Shipment Operational close", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable ShipmentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Shipment" && d.Tenant == 0).FirstOrDefault(); 			   Feature ShipmentFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPERATIONALCLOSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.OperationalClose", NameTextCodeDefaultText = "Shipment Operational close", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGCLOSE", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AccountingClose", NameTextCodeDefaultText = "Shipment Accounting close", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPERATIONALREOPEN", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.OperationalReopen", NameTextCodeDefaultText = "Shipment Operational Reopen", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ShipmentFeature_MB03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGREOPEN", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.AccoutingReopen", NameTextCodeDefaultText = "Shipment Accounting Reopen", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -38350,15 +38346,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   MenuButton ShipmentMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Actions",
-						Index = 0, 
-						IsActive = true,
+						Index = 100, 
+						IsActive = false,
 						LabelTextCodeCode = "Shipment.B.Actions",
 						LabelTextCodeDefaultText = "More",
 						Tenant = 0,
 						MenuButtonGroupId = ShipmentMenuButtonGroup.Id,
 						ObjectTableId = ShipmentObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = ShipmentFeature_MB0.Id,
+						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

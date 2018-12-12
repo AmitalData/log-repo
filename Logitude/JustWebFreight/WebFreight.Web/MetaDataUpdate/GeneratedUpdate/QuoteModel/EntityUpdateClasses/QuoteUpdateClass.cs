@@ -13143,10 +13143,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
     
 			   Feature QuoteFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUOTEQUOTATION", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Quotation", NameTextCodeDefaultText = "Quotation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-      
-    
-			   Feature QuoteFeature_MB4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Actions", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
 			   Feature QuoteFeature_MB40 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETASSENT", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.SetAsSent", NameTextCodeDefaultText = "Set As Sent to Customer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature QuoteFeature_MB41 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RETURNTODRAFT", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.ReturnToDraft", NameTextCodeDefaultText = "Return Quote To Draft", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature QuoteFeature_MB42 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "COPY", ObjectTableId = QuoteObjectTable.Id, Tenant = 0, NameTextCodeCode = "Quote.Features.Copy", NameTextCodeDefaultText = "Copy Quote", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -13235,15 +13231,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 			   MenuButton QuoteMenuButton4 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Actions",
-						Index = 4, 
-						IsActive = true,
+						Index = 100, 
+						IsActive = false,
 						LabelTextCodeCode = "Quote.B.Actions",
 						LabelTextCodeDefaultText = "More",
 						Tenant = 0,
 						MenuButtonGroupId = QuoteMenuButtonGroup.Id,
 						ObjectTableId = QuoteObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = QuoteFeature_MB4.Id,
+						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
@@ -13303,7 +13299,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					{
 						EventCode = "QuoteCopySeparator",
 						Index = 3, 
-						IsActive = true,
+						IsActive = false,
 						LabelTextCodeCode = "Quote.B.QuoteCopySeparator",
 						LabelTextCodeDefaultText = "",
 						Tenant = 0,

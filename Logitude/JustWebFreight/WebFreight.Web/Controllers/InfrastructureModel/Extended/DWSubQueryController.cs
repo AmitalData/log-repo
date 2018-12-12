@@ -92,11 +92,27 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 var FiltersXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.Filters);
                 //var temp = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(XML);
                 //var temp1 = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(FilterXML);
+
+                string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+                UserRepository userRepository = new UserRepository(authToken.Tenant);
+                User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, authToken.Tenant, true);
+
+
                 var entityPM = QueryData.SubQueryData;
+                IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
+                DWQueryService Qservice = new DWQueryService(objectContext, entityPM.Tenant);
+                var MyQuery = new DWQueryPM();
+                MyQuery.CreatedDate = DateTime.Now;
+                MyQuery.UpdatedDate = DateTime.Now;
+                MyQuery.CreatedByUserId = loggedUser.Id;
+                MyQuery.UpdateByUserId = loggedUser.Id;
+
+                Qservice.Create(MyQuery);
+                entityPM.DWQueryId = MyQuery.Id;
                 entityPM.ColumnsXML = ColumnsXML;
                 entityPM.FiltersXML = FiltersXML;
 
-                IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
+               
                 DWSubQueryService service = new DWSubQueryService(objectContext, entityPM.Tenant);
                 service.Create(entityPM);
 

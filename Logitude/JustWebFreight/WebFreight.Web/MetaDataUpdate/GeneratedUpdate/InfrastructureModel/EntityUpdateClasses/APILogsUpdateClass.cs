@@ -1373,11 +1373,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
 		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable APILogsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APILogs" && d.Tenant == 0).FirstOrDefault();       
-    
-			   Feature APILogsFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Actions", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
-			   Feature APILogsFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReturnToQueue", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.ReturnToQueue", NameTextCodeDefaultText = "Return To Queue", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+		   ObjectTable APILogsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APILogs" && d.Tenant == 0).FirstOrDefault(); 			   Feature APILogsFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReturnToQueue", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.ReturnToQueue", NameTextCodeDefaultText = "Return To Queue", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -1393,15 +1389,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   MenuButton APILogsMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Actions",
-						Index = 0, 
-						IsActive = true,
+						Index = 100, 
+						IsActive = false,
 						LabelTextCodeCode = "ApiLogs.B.Actions",
 						LabelTextCodeDefaultText = "More",
 						Tenant = 0,
 						MenuButtonGroupId = APILogsMenuButtonGroup.Id,
 						ObjectTableId = APILogsObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = APILogsFeature_MB0.Id,
+						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

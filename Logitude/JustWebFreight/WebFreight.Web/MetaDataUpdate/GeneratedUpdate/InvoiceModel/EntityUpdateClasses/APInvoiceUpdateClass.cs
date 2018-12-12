@@ -4929,10 +4929,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
     
 			   Feature APInvoiceFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "APInvoice.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-      
-    
-			   Feature APInvoiceFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Actions", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "APInvoice.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
 			   Feature APInvoiceFeature_MB30 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCELAPPROVAL", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "APInvoice.Features.CancelApproval", NameTextCodeDefaultText = "Cancel Approval", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature APInvoiceFeature_MB31 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableReTransfer", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "APInvoice.Features.EnableReTransfer", NameTextCodeDefaultText = "Enable accounting re-transfer", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature APInvoiceFeature_MB32 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VOID", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "APInvoice.Features.Void", NameTextCodeDefaultText = "Void", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -5002,15 +4998,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton APInvoiceMenuButton3 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Actions",
-						Index = 3, 
-						IsActive = true,
+						Index = 100, 
+						IsActive = false,
 						LabelTextCodeCode = "APInvoice.B.Actions",
 						LabelTextCodeDefaultText = "More",
 						Tenant = 0,
 						MenuButtonGroupId = APInvoiceMenuButtonGroup.Id,
 						ObjectTableId = APInvoiceObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = APInvoiceFeature_MB3.Id,
+						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "ביטול",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
@@ -5053,7 +5049,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					{
 						EventCode = "VoidAPInvoiceOperationsSeparator",
 						Index = 2, 
-						IsActive = true,
+						IsActive = false,
 						LabelTextCodeCode = "APInvoice.B.VoidAPInvoiceOperationsSeparator",
 						LabelTextCodeDefaultText = "",
 						Tenant = 0,
