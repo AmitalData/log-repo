@@ -125,7 +125,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
                 //if ((!Environment.MachineName.Equals("itzik-7-new", StringComparison.OrdinalIgnoreCase)) && (!Environment.MachineName.Equals("yuval-7-new", StringComparison.OrdinalIgnoreCase))) return;
-                if (String.IsNullOrWhiteSpace(_DirtyDeclarationPM.CustomFileNo))
+                if (String.IsNullOrWhiteSpace(_DirtyDeclarationPM.CustomFileNo) && !(_DirtyDeclarationPM.IsCancelled == true && !String.IsNullOrWhiteSpace(_DBOccDeclarationPM.CustomFileNo)))
                 {
                     return;
                 }
@@ -135,12 +135,23 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     return;
                 }
                 //Yuval Chalup 19.11.2015 TASK-17450 --->
-
-                if (!long.TryParse(_DirtyDeclarationPM.CustomFileNo, out lCUSTOMFILENO))
+                if (_DirtyDeclarationPM.IsCancelled == true)
                 {
-                    throw new BusinessErrorException("dirtyDeclarationPM.CustomFileNo could not convert to long ");
+                    if (String.IsNullOrWhiteSpace(_DirtyDeclarationPM.CustomFileNo) && !String.IsNullOrWhiteSpace(_DBOccDeclarationPM.CustomFileNo))
+                    {
+                        if (!long.TryParse(_DBOccDeclarationPM.CustomFileNo, out lCUSTOMFILENO))
+                        {
+                            throw new BusinessErrorException("dirtyDeclarationPM.CustomFileNo could not convert to long ");
+                        }
+                    }
                 }
-
+                if(lCUSTOMFILENO < 0)
+                {
+                    if (!long.TryParse(_DirtyDeclarationPM.CustomFileNo, out lCUSTOMFILENO))
+                    {
+                        throw new BusinessErrorException("dirtyDeclarationPM.CustomFileNo could not convert to long ");
+                    }
+                }
                 // moran 22.2.16 - Task 19654 - enter into 'if', not save changes always
                 if (_DirtyDeclarationPM.CurrentContextTag == Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst ||
                     _DirtyDeclarationPM.CurrentContextTag == Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.CreateUnifreightPaymentConst ||

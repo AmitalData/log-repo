@@ -212,7 +212,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     //Yuval Chalup 04.03.2015 TASK-11617 --->
 
                     //Dont allow to cancel if there is a connected vehicle (SupplierInvoiceItemVehicle)
-                    if (_AmitalCustomsFile.Mode == "CANCEL")
+                    if (_AmitalCustomsFile.Mode == "CANCEL" || _AmitalCustomsFile.Mode == "DELETE")
                     {
                         var supplierInvoiceItemVehicleQueryService = new SupplierInvoiceItemVehicleQueryService(_context);
                         List<SupplierInvoiceItemVehiclePM> supplierInvoiceItemVehicles = supplierInvoiceItemVehicleQueryService.GetAllSupplierInvoiceItemVehiclesForDeclaration(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
@@ -338,12 +338,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 if (_AmitalCustomsFile.Mode == "CANCEL") // moran 25.12.13 - task 2431
                 {
                     this._MyDeclarationPM.IsCancelled = true;
-                    this._MyDeclarationPM.CustomFileNo = "999" + this._MyDeclarationPM.CustomFileNo;//Eitan H 44723 9/12/18
+                }
+                else if (_AmitalCustomsFile.Mode == "DELETE")
+                {
+                    this._MyDeclarationPM.IsCancelled = true;
+                    this._MyDeclarationPM.CustomFileNo = null;
                 }
                 else if (_AmitalCustomsFile.Mode == "UNCANCEL")
                 {
                     this._MyDeclarationPM.IsCancelled = false;
-                    if (this._MyDeclarationPM.CustomFileNo.StartsWith("999")) this._MyDeclarationPM.CustomFileNo = this._MyDeclarationPM.CustomFileNo.Substring(3);//Eitan H 44723 9/12/18
                 }
 
                 //           if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.ReferentUserId))
