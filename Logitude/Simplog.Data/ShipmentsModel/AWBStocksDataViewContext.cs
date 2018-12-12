@@ -44,7 +44,7 @@ namespace Simplog.Data.ShipmentsModel
         {
             Database.SetInitializer<ShipmentsContext>(null);
             Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
-            modelBuilder.Configurations.Add(new AWBStocksDataViewMap());
+            modelBuilder.Configurations.Add(new MessagingStockDataViewMap());
            
             base.OnModelCreating(modelBuilder);
         }

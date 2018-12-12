@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.ShipmentsModel.Mapping
 {
-    public class AWBStockUsageHistoryMap : EntityTypeConfiguration<AWBStockUsageHistory>
+    public class MessagingStockUsageHistoryMap : EntityTypeConfiguration<MessagingStockUsageHistory>
     {
-        public AWBStockUsageHistoryMap()
+        public MessagingStockUsageHistoryMap()
         {
             this.HasKey(t => t.Id);
 
@@ -25,7 +25,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MAWB).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.HAWB).HasMaxLength(20).IsUnicode(false);
 
-            this.ToTable("AWBStockUsageHistories");
+            this.ToTable("MessagingStockUsageHistories");
+
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.StockId).HasColumnName("StockId");

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
-    public class AWBStockUsageHistory
+    public class MessagingStockUsageHistory
     {
         [Key]
         public string Id { get; set; }
@@ -28,7 +28,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string LastActionByUserId { get; set; }
 
         [ForeignKey("StockId")]
-        public AWBMessagingStock Stock { get; set; }
+        public MessagingStock Stock { get; set; }
 
         [ForeignKey("FirstActionByUserId")]
         public User FirstActionByUser { get; set; }

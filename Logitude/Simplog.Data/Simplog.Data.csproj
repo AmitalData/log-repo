@@ -697,9 +697,9 @@
     <Compile Include="ShipmentsModel\AWBStocksDataViewContext.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\AccountingInformationIdentifier.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\AWBAdditionalHandlingInfo.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\AWBMessagingStock.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\AWBStocksDataView.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\AWBStockUsageHistory.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\MessagingStock.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\MessagingStockDataView.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\MessagingStockUsageHistory.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\FBLStock.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransmissionsStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\OceanInsightsStatuses.cs" />
@@ -834,9 +834,9 @@
     <Compile Include="ShipmentsModel\IAWBStocksDataViewContext.cs" />
     <Compile Include="ShipmentsModel\Mapping\AccountingInformationIdentifierMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\AWBAdditionalHandlingInfoMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\AWBMessagingStockMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\AWBStocksDataViewMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\AWBStockUsageHistoryMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\MessagingStockMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\MessagingStockDataViewMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\MessagingStockUsageHistoryMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\FBLStockMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransmissionsStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OceanInsightsStatusesMap.cs" />

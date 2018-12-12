@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
-    public class AWBMessagingStock
+    public class MessagingStock
     {
         [Key]
         public string Id { get; set; }

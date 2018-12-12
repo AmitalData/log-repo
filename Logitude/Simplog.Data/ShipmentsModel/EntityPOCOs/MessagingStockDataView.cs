@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
-    public class AWBStocksDataView
+    public class MessagingStockDataView
     {
         [Key]
         public string Id { get; set; }

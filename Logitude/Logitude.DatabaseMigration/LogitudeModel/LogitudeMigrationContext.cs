@@ -4585,8 +4585,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SpecialServicesTypeMap());
             modelBuilder.Configurations.Add(new EmailProviderMap());
             modelBuilder.Configurations.Add(new RegionMap());
-            modelBuilder.Configurations.Add(new AWBMessagingStockMap());
-            modelBuilder.Configurations.Add(new AWBStockUsageHistoryMap());
+            modelBuilder.Configurations.Add(new MessagingStockMap());
+            modelBuilder.Configurations.Add(new MessagingStockUsageHistoryMap());
             modelBuilder.Configurations.Add(new QuoteStageMap());
             modelBuilder.Configurations.Add(new QuoteRatingMap());
             modelBuilder.Configurations.Add(new CountryCityMap());
