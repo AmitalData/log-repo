@@ -2243,7 +2243,7 @@ namespace Logitude.XSD.INTTRA.BL
 
                         if (!string.IsNullOrEmpty(myAddress.ZipCode))
                         {
-                            iField += "," + myAddress.ZipCode;
+                            iField += " - " + myAddress.ZipCode;
                         }
 
                         AddressLines.Add(this.FormatString(iField, 35));
