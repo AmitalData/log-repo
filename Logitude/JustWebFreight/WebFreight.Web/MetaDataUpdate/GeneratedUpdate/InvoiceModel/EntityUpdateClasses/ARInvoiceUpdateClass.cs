@@ -6896,14 +6896,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   TextCode ARInvoiceTextCode_11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.FailedSAT", DefaultText = @"SAT Failed Invoices",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ARInvoiceFeature_11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATFAILEDINVOICES", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.SATFailedInvoices", NameTextCodeDefaultText = "Invoices Failed to Open in SAT", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-
-
-            TextCode ARInvoiceTextCode_12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.QBOFailedTransmission", DefaultText = @"QBO failed transmission", LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-            Feature ARInvoiceFeature_12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QBOFailedTransmission", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.QBOFailedTransmission", NameTextCodeDefaultText = "QBO failed transmission", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
-
-
-            TextCodeRepository.SubmitChanges();
+	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
@@ -7782,10 +7775,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
     
 			   Feature ARInvoiceFeature_MB3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKSATSTATUS", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.CheckSATStatus", NameTextCodeDefaultText = "Check SAT Status", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-      
-    
-			   Feature ARInvoiceFeature_MB4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Actions", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
 			   Feature ARInvoiceFeature_MB40 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelDraft", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.CancelDraft", NameTextCodeDefaultText = "Cancel Draft", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ARInvoiceFeature_MB41 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTOCREDIT", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.AutoCredit", NameTextCodeDefaultText = "Auto Credit", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature ARInvoiceFeature_MB42 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SETASSENT", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.SetAsSent", NameTextCodeDefaultText = "Set As Sent", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -7807,7 +7796,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "SaveAsDraft",
-						Index = 0, 
+						Index = 10, 
 						IsActive = true,
 						LabelTextCodeCode = "ARInvoice.B.SaveAsDraft",
 						LabelTextCodeDefaultText = "Save as Draft",
@@ -7824,7 +7813,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "SaveAndApprove",
-						Index = 1, 
+						Index = 11, 
 						IsActive = true,
 						LabelTextCodeCode = "ARInvoice.B.Approve",
 						LabelTextCodeDefaultText = "Approve",
@@ -7841,7 +7830,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "PrintInvoice",
-						Index = 2, 
+						Index = 12, 
 						IsActive = true,
 						LabelTextCodeCode = "ARInvoice.B.Print",
 						LabelTextCodeDefaultText = "Print",
@@ -7858,7 +7847,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton3 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CheckSATStatus",
-						Index = 3, 
+						Index = 13, 
 						IsActive = true,
 						LabelTextCodeCode = "ARInvoice.B.CheckSATStatus",
 						LabelTextCodeDefaultText = "Check SAT Status",
@@ -7875,15 +7864,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton4 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Actions",
-						Index = 4, 
-						IsActive = true,
+						Index = 100, 
+						IsActive = false,
 						LabelTextCodeCode = "ARInvoice.B.Actions",
 						LabelTextCodeDefaultText = "More",
 						Tenant = 0,
 						MenuButtonGroupId = ARInvoiceMenuButtonGroup.Id,
 						ObjectTableId = ARInvoiceObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = ARInvoiceFeature_MB4.Id,
+						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "Send to QBO",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
@@ -7891,7 +7880,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton40 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CancelDraft",
-						Index = 0, 
+						Index = 2, 
 						IsActive = true,
 						LabelTextCodeCode = "ARInvoice.B.CancelDraft",
 						LabelTextCodeDefaultText = "Cancel Draft",
@@ -7908,7 +7897,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton41 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "AutoCredit",
-						Index = 1, 
+						Index = 3, 
 						IsActive = true,
 						LabelTextCodeCode = "ARInvoice.B.AutoCredit",
 						LabelTextCodeDefaultText = "Auto Credit",
@@ -7925,8 +7914,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton42 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "InvoiceOperationsSeparator",
-						Index = 2, 
-						IsActive = true,
+						Index = 5, 
+						IsActive = false,
 						LabelTextCodeCode = "ARInvoice.B.InvoiceOperationsSeparator",
 						LabelTextCodeDefaultText = "",
 						Tenant = 0,
@@ -7942,7 +7931,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton43 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "SetAsSent",
-						Index = 3, 
+						Index = 6, 
 						IsActive = true,
 						LabelTextCodeCode = "ARInvoice.B.SetAsSent",
 						LabelTextCodeDefaultText = "Set as Sent",
@@ -7959,7 +7948,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton44 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "ReTransfer",
-						Index = 4, 
+						Index = 7, 
 						IsActive = true,
 						LabelTextCodeCode = "ARInvoice.B.ReTransfer",
 						LabelTextCodeDefaultText = "Enable accounting re-transfer",
@@ -7976,8 +7965,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton45 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "VoidARInvoiceOperationsSeparator",
-						Index = 5, 
-						IsActive = true,
+						Index = 8, 
+						IsActive = false,
 						LabelTextCodeCode = "ARInvoice.B.VoidARInvoiceOperationsSeparator",
 						LabelTextCodeDefaultText = "",
 						Tenant = 0,
@@ -7993,7 +7982,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton46 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "VoidARInvoice",
-						Index = 6, 
+						Index = 9, 
 						IsActive = true,
 						LabelTextCodeCode = "ARInvoice.B.Void",
 						LabelTextCodeDefaultText = "Void",
@@ -8010,7 +7999,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton ARInvoiceMenuButton47 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "SendToQBO",
-						Index = 7, 
+						Index = 14, 
 						IsActive = true,
 						LabelTextCodeCode = "ARInvoice.B.SendToQBO",
 						LabelTextCodeDefaultText = "Send to QBO",

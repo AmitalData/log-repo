@@ -3741,12 +3741,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
     
 			   Feature APPaymentFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINT", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.Print", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-      
-    
-			   Feature APPaymentFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Actions", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
 			   Feature APPaymentFeature_MB20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCELAPPROVAL", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.CancelApproval", NameTextCodeDefaultText = "Cancel Approval", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature APPaymentFeature_MB21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VOID", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.Void", NameTextCodeDefaultText = "Void", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+             			   Feature APPaymentFeature_MB22 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.SendToQBO", NameTextCodeDefaultText = "Send To QBO", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -3762,7 +3759,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton APPaymentMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "ApproveAPPayment",
-						Index = 0, 
+						Index = 6, 
 						IsActive = true,
 						LabelTextCodeCode = "APPayment.B.Approve",
 						LabelTextCodeDefaultText = "Approve",
@@ -3779,7 +3776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton APPaymentMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "PrintAPPayment",
-						Index = 1, 
+						Index = 7, 
 						IsActive = true,
 						LabelTextCodeCode = "APPayment.B.Print",
 						LabelTextCodeDefaultText = "Print",
@@ -3796,23 +3793,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton APPaymentMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Actions",
-						Index = 2, 
-						IsActive = true,
+						Index = 100, 
+						IsActive = false,
 						LabelTextCodeCode = "APPayment.B.Actions",
 						LabelTextCodeDefaultText = "More",
 						Tenant = 0,
 						MenuButtonGroupId = APPaymentMenuButtonGroup.Id,
 						ObjectTableId = APPaymentObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = APPaymentFeature_MB2.Id,
+						FeatureId = null,
 						Style = null,
-						LocalDefaultText = "ביטול",
+						LocalDefaultText = "Send To QBO",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 
 			   MenuButton APPaymentMenuButton20 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "CancelApproval",
-						Index = 0, 
+						Index = 2, 
 						IsActive = true,
 						LabelTextCodeCode = "APPayment.B.CancelApproval",
 						LabelTextCodeDefaultText = "Cancel Approval",
@@ -3829,8 +3826,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton APPaymentMenuButton21 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "VoidAPPaymentOperationsSeparator",
-						Index = 1, 
-						IsActive = true,
+						Index = 3, 
+						IsActive = false,
 						LabelTextCodeCode = "APPayment.B.VoidAPPaymentOperationsSeparator",
 						LabelTextCodeDefaultText = "",
 						Tenant = 0,
@@ -3846,7 +3843,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   MenuButton APPaymentMenuButton22 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "VoidAPPayment",
-						Index = 2, 
+						Index = 4, 
 						IsActive = true,
 						LabelTextCodeCode = "APPayment.B.Void",
 						LabelTextCodeDefaultText = "Void",
@@ -3856,6 +3853,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 						ObjectTableId = APPaymentObjectTable.Id,
 						MenuButtonType = "menuitem",
 						FeatureId=  APPaymentFeature_MB21.Id,
+						Style = null,
+						LocalDefaultText = null,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+	   
+			   MenuButton APPaymentMenuButton23 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "SendToQBO",
+						Index = 10, 
+						IsActive = true,
+						LabelTextCodeCode = "APPayment.B.SendToQBO",
+						LabelTextCodeDefaultText = "Send To QBO",
+						Tenant = 0,
+						MenuButtonGroupId = APPaymentMenuButtonGroup.Id,
+						ParentMenuButtonId = APPaymentMenuButton2.Id,
+						ObjectTableId = APPaymentObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId=  APPaymentFeature_MB22.Id,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

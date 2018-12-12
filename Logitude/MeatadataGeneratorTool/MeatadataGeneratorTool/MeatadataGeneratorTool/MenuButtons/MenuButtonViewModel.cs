@@ -31,7 +31,8 @@ namespace MeatadataGeneratorTool.MenuButtons
                 {
                     //SelectedMenuButtonType = "menuitem";
                     return new List<Type>() { 
-                        new Type() { Code = "menuitem", Name = "Menu Item" }
+                        new Type() { Code = "menuitem", Name = "Menu Item" },
+                         new Type() { Code = "separator", Name = "Separator" }
                     };  
                 }
                 else
@@ -91,7 +92,7 @@ namespace MeatadataGeneratorTool.MenuButtons
         {
             get
             {
-                if (Type == "Item")
+                if (Type == "Item" && selectedMenuButtonType == null)
                 {
                     selectedMenuButtonType = "menuitem";
                 }

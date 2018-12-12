@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                           BankBranch = a.BankBranch,
                                                           BankAccount = a.BankAccount,
                                                           StatusName = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.EnglishName : "",
-                                                          
+                                                          StatusCode = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.Code : "",
 
                                                       }).FirstOrDefault();
             return paymentCheques;

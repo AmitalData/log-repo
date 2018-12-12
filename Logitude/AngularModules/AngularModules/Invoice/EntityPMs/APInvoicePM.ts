@@ -71,11 +71,7 @@ export class APInvoicePM {
     private vATNumber: string;
     public get VATNumber() { return this.vATNumber; }
     public set VATNumber(newValue: string) { if (this.vATNumber != newValue) { this.vATNumber = newValue; this.MarkAsDirty("VATNumber"); } }
-
-    private setReSendQBO: boolean;
-    public get SetReSendQBO() { return this.setReSendQBO; }
-    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
-
+       
 	 
     private invoiceDate: Date;
     public get InvoiceDate() { return this.invoiceDate; }
@@ -661,6 +657,11 @@ export class APInvoicePM {
     private setReTransfer: boolean;
     public get SetReTransfer() { return this.setReTransfer; }
     public set SetReTransfer(newValue: boolean) { if (this.setReTransfer != newValue) { this.setReTransfer = newValue; this.MarkAsDirty("SetReTransfer"); } }
+       
+	 
+    private setReSendQBO: boolean;
+    public get SetReSendQBO() { return this.setReSendQBO; }
+    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
        
 	 
     private journalNumber: string;
