@@ -110,6 +110,11 @@ export class DWObjectFieldPM {
     public set Category2(newValue: string) { if (this.category2 != newValue) { this.category2 = newValue; this.MarkAsDirty("Category2"); } }
        
 	 
+    private lOVAdditionalColumns: string;
+    public get LOVAdditionalColumns() { return this.lOVAdditionalColumns; }
+    public set LOVAdditionalColumns(newValue: string) { if (this.lOVAdditionalColumns != newValue) { this.lOVAdditionalColumns = newValue; this.MarkAsDirty("LOVAdditionalColumns"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		

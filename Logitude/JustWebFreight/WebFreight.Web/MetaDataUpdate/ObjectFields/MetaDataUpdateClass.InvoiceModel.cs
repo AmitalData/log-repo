@@ -2625,6 +2625,28 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortLocalDefaultText = "שגיאה בהעברת חשבוניות",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "QBO failed transmission",
+                FullFieldLable = "QBOFailedTransmission",
+                FieldName = "QBOFailedTransmission",
+                FieldsDataType = "Boolean",
+                IsCustomFilter = true,
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = InvoiceObject.Id,
+                ObjectTableName = "ARInvoice",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "ARInvoice",
+                ListPropertyPath = "QBOFailedTransmission",
+                PMPropertyPath = "QBOFailedTransmission",
+                FullLocalDefaultText = "QBO failed transmission",
+                ListLocalDefaultText = "QBO failed transmission",
+                ShortLocalDefaultText = "QBO failed transmission",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Is General Invoice",

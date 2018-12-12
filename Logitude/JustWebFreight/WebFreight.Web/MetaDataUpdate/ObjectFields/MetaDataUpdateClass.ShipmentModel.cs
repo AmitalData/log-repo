@@ -21642,7 +21642,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 40,
                 MinLength = 0,
                 ObjectTableId = ShipmentTypesObject.Id,
-                ObjectTableName = "ShipmentType",
+                ObjectTableName = ShipmentTypesObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 LookUpTableId = null,
@@ -21663,7 +21663,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1,
                 MinLength = 0,
                 ObjectTableId = ShipmentTypesObject.Id,
-                ObjectTableName = "ShipmentType",
+                ObjectTableName = ShipmentTypesObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 LookUpTableId = null,
@@ -21684,7 +21684,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1000,
                 MinLength = 0,
                 ObjectTableId = ShipmentTypesObject.Id,
-                ObjectTableName = "ShipmentType",
+                ObjectTableName = ShipmentTypesObject.Name,
                 ObjectTablePlural = "ShipmentTypes",
                 ObjectTableSingular = "ShipmentType",
                 Tenant = 0,
@@ -24784,7 +24784,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Measurement",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Measurement",
+                FullFieldLable = "MeasurementId",
                 FieldName = "MeasurementId",
                 ShortFieldLable = "MeasurementId",
                 ShortFieldLableDefaultText = "UOM",
@@ -24977,7 +24977,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Charges Type",
-                FullFieldLable = "ChargesType",
+                FullFieldLable = "ChargesTypeId",
                 FieldName = "ChargesTypeId",
                 FieldsDataType = "LookUp",
                 IsRequired = true,
@@ -25498,7 +25498,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Charges Type",
                 DisplayOnLookUp = false,
-                FullFieldLable = "ChargesType",
+                FullFieldLable = "ChargesTypeId",
                 FieldName = "ChargesTypeId",
                 FieldsDataType = "LookUp",
                 IsCustom = false,

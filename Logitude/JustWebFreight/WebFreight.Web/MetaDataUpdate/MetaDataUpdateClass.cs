@@ -22,10 +22,10 @@ namespace WebFreight.Web.MetaDataUpdate
         private ObjectFieldQuery objectFieldsQuery;
         private ObjectTableQuery objectTabelQuery;
 
-        public void LoadUpdateTenantZero(IWebFreightContext context)
+        public void LoadUpdateTenantZero(IWebFreightContext context,bool updateMetadatafields = true)
         {
             isUpdate = true;
-            LoadObjectsTenantZero(context);
+            LoadObjectsTenantZero(context, updateMetadatafields);
         }
 
         public void CreateJustOT(IWebFreightContext context)
@@ -107,7 +107,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         #region LoadObjectsTenantZero()
         bool isUpdate = false;
-        public void LoadObjectsTenantZero(IWebFreightContext context)
+        public void LoadObjectsTenantZero(IWebFreightContext context, bool updateMetadatafields = true)
         {
             CommonDataDomainService commonDomain = new CommonDataDomainService();
             ObjectContext = context;//WebFreightContext.GetContext(0);
@@ -149,230 +149,232 @@ namespace WebFreight.Web.MetaDataUpdate
             CreateDropDirectionCounterDefinitions();
             CreateAllTablesTips(tips, textCodes);
 
-            // Models
-            CreateShipmentModelObjectFields(objectFields, textCodes);
-            CreateQuoteModelObjectFields(objectFields, textCodes);
-            CreateInvoiceModelObjectFields(objectFields, textCodes);
+            if (updateMetadatafields)
+            {
+                // Models
+                CreateShipmentModelObjectFields(objectFields, textCodes);
+                CreateQuoteModelObjectFields(objectFields, textCodes);
+                CreateInvoiceModelObjectFields(objectFields, textCodes);
 
-            CreateFollowUpFields(objectFields, textCodes);
-            CreateVatTypeFields(objectFields, textCodes);
-            CreateVatTypePercentageFields(objectFields, textCodes);
-            CreateCardFields(objectFields, textCodes);
-            CreateCarrierFields(objectFields, textCodes);
-            CreateCustomerFields(objectFields, textCodes);
-            CreateAgentFields(objectFields, textCodes);
-            CreateCustomAgentFields(objectFields, textCodes);
-            CreateShippingAgentFields(objectFields, textCodes);
-            CreateAirlineFields(objectFields, textCodes);
-            CreateShippingLineFields(objectFields, textCodes);
-            CreateTruckerFields(objectFields, textCodes);
-            CreateVendorFields(objectFields, textCodes);
-            CreateAddressFields(objectFields, textCodes);
-            CreateContactFields(objectFields, textCodes);
-            CreateBranchFields(objectFields, textCodes);
-            CreateChargeTypeFields(objectFields, textCodes);
-            CreateChargeTypeAccountingFields(objectFields, textCodes);
-            CreateCountryFields(objectFields, textCodes);
-            CreateCurrencyFields(objectFields, textCodes);
-            CreateDepartmentFields(objectFields, textCodes);
-            CreateExternalDocumentFields();
-            CreateInternalDocumentFields();
-            CreateGlobalZoneFields(objectFields, textCodes);
-            CreateIncotermFields(objectFields, textCodes);
-            CreatePaymentTermsFields(objectFields, textCodes);
-            CreatePortFields(objectFields, textCodes);
-            CreateStatesFields(objectFields, textCodes);
-            CreateCityFields(objectFields, textCodes);
-            CreateUserFields(objectFields, textCodes);
-            CreateVesselFields(objectFields, textCodes);
-            CreateWareHouseFields(objectFields, textCodes);
-            CreateTraceEventFields(objectFields, textCodes);
-            CreateEventTypeFields(objectFields, textCodes);
-            CreateDocumentTypeFields(objectFields, textCodes);
-            CreateDocumentsFilingsFields(objectFields, textCodes);
-            CreatePackageTypeFields(objectFields, textCodes);
-            CreateWeightUnitFields(objectFields, textCodes);
-            CreateRateClassFields(objectFields, textCodes);
-            CreateDimensionsUnitFields(objectFields, textCodes);
-            CreateAccountingSystemFields(objectFields, textCodes);
-            CreateAccountSettingFields(objectFields, textCodes);
-            CreateAWBChargesCodeFields(objectFields, textCodes);
-            CreateAWBSpecialHandlingCodeFields(objectFields, textCodes);
-            CreateVolumeUnitFields(objectFields, textCodes);
-            CreateMesaurmentFields(objectFields, textCodes);
-            CreateDueTypeFields(objectFields, textCodes);
-            CreatePrepaidCollectFields(objectFields, textCodes);
-            CreateContainerTypeFields(objectFields, textCodes);
-            CreateFollowUpTypeFields(objectFields, textCodes);
-            CreateRatesTableFields(objectFields, textCodes);
-            CreateTransportModeFields(objectFields, textCodes);
-            CreateObjectTableFields(objectFields, textCodes);
-            CreateEntityStatusFields(objectFields, textCodes);
-            CreatePartnerTypeFields(objectFields, textCodes);
-            CreateChargeGroupFields(objectFields, textCodes);
-            CreateIATACodesFields(objectFields, textCodes);
-            CreateTemplateFormatFields(objectFields, textCodes);
-            CreateDocumentTypeTemplateFields(objectFields, textCodes);
-            CreateDocumentTypeCustomFields(objectFields, textCodes);
-            CreateDirectionFields(objectFields, textCodes);
-            CreateSystemDataFields(objectFields, textCodes);
-            CreateSharedLogisticsFields(objectFields, textCodes);
-            CreateTenantFields(objectFields, textCodes);
-            CreateDescriptionOfGoodsFields(objectFields, textCodes);
-            CreateCounterDefinitionFields(objectFields, textCodes);
-            CreateTarrifTypesFields(objectFields, textCodes);
-            CreateTarrifFromToTypesFields(objectFields, textCodes);
-            CreateTarrifChargesFields(objectFields, textCodes);
-            CreateTarrifFromTosFields(objectFields, textCodes);
-            CreateTarrifHeadersFields(objectFields, textCodes);
-            CreateTarrifStepsFields(objectFields, textCodes);
-            CreateTextCodeFields(objectFields, textCodes);
-            CreateMAWBStackFields(objectFields, textCodes);
-            CreateRestrictionFields(objectFields, textCodes);
-            CreateRoleFields(objectFields, textCodes);
-            CreateAccountFields(objectFields, textCodes);
-            CreateAccountTypesFields(objectFields, textCodes);
-            CreateRankFields(objectFields, textCodes);
-            CreateCommunicationLogsFields(objectFields, textCodes);
-            CreateCommunicationLogTypesFields(objectFields, textCodes);
-            CreateWarehouseTypesFields(objectFields, textCodes);
-            CreateCommunicationStatusTypesFields(objectFields, textCodes);
-            CreatePasswordPoliciesFields(objectFields, textCodes);
-            CreatePackageFields(objectFields, textCodes);
-            CreateTenantManagementFields(objectFields, textCodes);
-            CreateRecurringPeriodFields(objectFields, textCodes);
-            CreatePaymentChannelFields(objectFields, textCodes);
-            CreateEventTypeCategoryFields(objectFields, textCodes);
-            LoadCreateTestFields(objectFields, textCodes);
-            CreateTermsofUseSignaturesFields(objectFields, textCodes);
-            CreateAnalyzeQueueFields(objectFields, textCodes);
-            CreateCreditCardTypeFields(objectFields, textCodes);
-            CreateErrorLogFields(objectFields, textCodes);
-            CreateSharedLogisticsInvitationStatusFields(objectFields, textCodes);
-            CreateAccountingTransferHeaderFields(objectFields, textCodes);
-            CreateAccountingTransferLineFields(objectFields, textCodes);
-            CreateAccountingTransferTypeFields(objectFields, textCodes);
-            CreateMoveTypeFields(objectFields, textCodes);
-            CreateReportFields(objectFields, textCodes);
-            CreateCommodityFields(objectFields, textCodes);
-            CreateLeadSourceFields(objectFields, textCodes);
-            CreateIndustryFields(objectFields, textCodes);
-            CreateProductTypeFields(objectFields, textCodes);
-            CreateProductPeriodFields(objectFields, textCodes);
-            CreateCustomerProductFields(objectFields, textCodes);
-            CreateCustomerProductActualDataFields(objectFields, textCodes);
-            CreateCustomerProductLocationFields(objectFields, textCodes);
-            CreateCustomerProductLocationActualDataFields(objectFields, textCodes);
-            CreateCompetitorsFields(objectFields, textCodes);
-            CreateCustomerAdditionalServiceFields(objectFields, textCodes);
-            CreateContactDoneMethodFields(objectFields, textCodes);
-            CreateAdditionalServiceFields(objectFields, textCodes);
-            CreateLogitudeLeadFields(objectFields, textCodes);
-            CreateBorderTypeFields(objectFields, textCodes);
-            CreateExternalSystemsTablesCodeFields(objectFields, textCodes);
-            CreateVatUniqueTypeFields(objectFields, textCodes);
-            CreateVatMandatoryTypeFields(objectFields, textCodes);
-            CreateVatFormatTypeFields(objectFields, textCodes);
-            CreateCustomerSalesNoteFields(objectFields, textCodes);
-            CreateAccountingSystemsSettingFields(objectFields, textCodes);
-            CreateAccountingSystemsSyncStatusFields(objectFields, textCodes);
-            CreateCustomerStatusFields(objectFields, textCodes);
-            CreateBusinessUnitFields(objectFields, textCodes);
-            CreateFeatureAccessLevelFields(objectFields, textCodes);
-            CreateSpecialServicesTypeFields(objectFields, textCodes);
-            CreateRegionFields(objectFields, textCodes);
-            CreatePaymentCurrencyFields(objectFields, textCodes);
-            CreateCustomerSizeFields(objectFields, textCodes);
-            CreateDistributorFields(objectFields, textCodes);
-            CreateAccountingInformationIdentifierFields(objectFields, textCodes);
-            CreateComputingPartnerFields(objectFields, textCodes);
-            CreateComputingPartnerCodeFields(objectFields, textCodes);
-            CreateComputingPartnerTableFields(objectFields, textCodes);
-            CreateComputingPartnerTranslationFields(objectFields, textCodes);
-            CreateBluesnapContractFields(objectFields, textCodes);
-            CreateAWBMessagesCCSTypeFields(objectFields, textCodes);
-            CreateDocumentFolderFields(objectFields, textCodes);
-            CreateManifestStatusFields(objectFields, textCodes);
-            CreateCustomsTransmissionsStatusFields(objectFields, textCodes);
-            CreateInboundEmailFields(objectFields, textCodes);
-            CreateInboundEmailLineFields(objectFields, textCodes);
-            CreateDocumentTypeCategoryFields(objectFields, textCodes);
-            CreateCustomerTenantAccessFields(objectFields, textCodes);
-            CreateCustomerTenantAccessStatusType(objectFields, textCodes);
-            CreateCustomerTenantAccessCardFields(objectFields, textCodes);
-            CreateCustomerTenantAccessRequestFields(objectFields, textCodes);
-            CreateHybridPartnerFields(objectFields, textCodes);
-            CreateBusinessHourFields(objectFields, textCodes);
-            CreateBusinessHoursHolidayFields(objectFields, textCodes);
-            CreateAPILogsFields(objectFields, textCodes);
-            CreatePaymentMethodFields(objectFields, textCodes);
-            CreateAPILogsDataFields(objectFields, textCodes);
-            CreateBatchServicesLogFields(objectFields, textCodes);
-            CreateTenantTypeFields(objectFields, textCodes);
-            CreateQueueMessageMoreDetailsFields(objectFields, textCodes);
-            CreateCustomerTenantAccessCardBatchFields(objectFields, textCodes);
-            CreateParticipantFields(objectFields, textCodes);
-            CreateApiCredintials(objectFields, textCodes);
-            CreateAirlineStatisticsFields(objectFields, textCodes);
-            CreateAWBDescriptionOfGoodsFields(objectFields, textCodes);
-            CreateTransmissionLogFields(objectFields, textCodes);
-            CreateFeaturePackageTypeFields(objectFields, textCodes);
-            CreateTenantManagementLicenseFields(objectFields, textCodes);
-            CreatePackageConnectedPackageFields(objectFields, textCodes);
-            CreateUserLicenseFields(objectFields, textCodes);
-            CreateTenantAddOnFields(objectFields, textCodes);
-            CreateAirlineMessagingRuleFields(objectFields, textCodes);
-            CreateAuomationFields(objectFields, textCodes);
-            CreatePaymentTermDateTypeFields(objectFields, textCodes);
-            CreateCustomerFieldsUpdateSettingFields(objectFields, textCodes);
-            CreateTenantManagmentPrivateLabelsFields(objectFields, textCodes);
-            CreateCreditLimitSettingFields(objectFields, textCodes);
-            CreateAgentSharedManifestFields(objectFields, textCodes);
-            CreateCustomerAccountManagerByProductFields(objectFields, textCodes);
-            CreateCardExternalAccountsByProductFields(objectFields, textCodes);
-            CreateCustomsInterfaceFields(objectFields, textCodes);
-            CreateCustomsInterfaceSettingFields(objectFields, textCodes);
-            CreateFTPDetailFields(objectFields, textCodes);
-            CreateSATInterfaceFields(objectFields, textCodes);
-            CreateSATInterfaceSettingFields(objectFields, textCodes);
-            CreateFBLStockFields(objectFields, textCodes);
-            CreateSATPaymentMethodFields(objectFields, textCodes);
-            CreateCardExternalCodeByCurrencyFields(objectFields, textCodes);
-            CreateLoginPolicyFields(objectFields, textCodes);
-            CreateTenantLoginPolicy(objectFields, textCodes);
-            TwoFactorAuthenticationDeviceFields(objectFields, textCodes);
-            CreateMetodoPagoFields(objectFields, textCodes);
-            CreateBatchServicesDefinitionsFields(objectFields, textCodes);
-            CreateAgentSharedDocumentFields(objectFields, textCodes);
-            CreateChargesExternalAccountsByProductFields(objectFields, textCodes);
-            CreateRegistryDateTypeFields(objectFields, textCodes);
-            CreateUsoCFDIFields(objectFields, textCodes);
-            CreateReportsTemplateFields(objectFields, textCodes);
-            CreateReportsTemplatesVersionFields(objectFields, textCodes);
-            CreateObjectFieldFields(objectFields, textCodes);
-            CreateFilingInboxFields(objectFields, textCodes);
-            CreateFilingInboxAttachmentFields(objectFields, textCodes);
-            CreateFilingInboxAttachmentLogFields(objectFields, textCodes);
-            CreateTasksSchedulerObjectFields(objectFields, textCodes);
-            CreateINTTRASettingFields(objectFields, textCodes);
-            CreateINTTRASettingModeFields(objectFields, textCodes);
-            CreateINTTRABranchRegisteredCarrierFields(objectFields, textCodes);
-            CreateTemperatureUnitFields(objectFields, textCodes);
-            CreateINTTRADocumentTypeFields(objectFields, textCodes);
+                CreateFollowUpFields(objectFields, textCodes);
+                CreateVatTypeFields(objectFields, textCodes);
+                CreateVatTypePercentageFields(objectFields, textCodes);
+                CreateCardFields(objectFields, textCodes);
+                CreateCarrierFields(objectFields, textCodes);
+                CreateCustomerFields(objectFields, textCodes);
+                CreateAgentFields(objectFields, textCodes);
+                CreateCustomAgentFields(objectFields, textCodes);
+                CreateShippingAgentFields(objectFields, textCodes);
+                CreateAirlineFields(objectFields, textCodes);
+                CreateShippingLineFields(objectFields, textCodes);
+                CreateTruckerFields(objectFields, textCodes);
+                CreateVendorFields(objectFields, textCodes);
+                CreateAddressFields(objectFields, textCodes);
+                CreateContactFields(objectFields, textCodes);
+                CreateBranchFields(objectFields, textCodes);
+                CreateChargeTypeFields(objectFields, textCodes);
+                CreateChargeTypeAccountingFields(objectFields, textCodes);
+                CreateCountryFields(objectFields, textCodes);
+                CreateCurrencyFields(objectFields, textCodes);
+                CreateDepartmentFields(objectFields, textCodes);
+                CreateExternalDocumentFields();
+                CreateInternalDocumentFields();
+                CreateGlobalZoneFields(objectFields, textCodes);
+                CreateIncotermFields(objectFields, textCodes);
+                CreatePaymentTermsFields(objectFields, textCodes);
+                CreatePortFields(objectFields, textCodes);
+                CreateStatesFields(objectFields, textCodes);
+                CreateCityFields(objectFields, textCodes);
+                CreateUserFields(objectFields, textCodes);
+                CreateVesselFields(objectFields, textCodes);
+                CreateWareHouseFields(objectFields, textCodes);
+                CreateTraceEventFields(objectFields, textCodes);
+                CreateEventTypeFields(objectFields, textCodes);
+                CreateDocumentTypeFields(objectFields, textCodes);
+                CreateDocumentsFilingsFields(objectFields, textCodes);
+                CreatePackageTypeFields(objectFields, textCodes);
+                CreateWeightUnitFields(objectFields, textCodes);
+                CreateRateClassFields(objectFields, textCodes);
+                CreateDimensionsUnitFields(objectFields, textCodes);
+                CreateAccountingSystemFields(objectFields, textCodes);
+                CreateAccountSettingFields(objectFields, textCodes);
+                CreateAWBChargesCodeFields(objectFields, textCodes);
+                CreateAWBSpecialHandlingCodeFields(objectFields, textCodes);
+                CreateVolumeUnitFields(objectFields, textCodes);
+                CreateMesaurmentFields(objectFields, textCodes);
+                CreateDueTypeFields(objectFields, textCodes);
+                CreatePrepaidCollectFields(objectFields, textCodes);
+                CreateContainerTypeFields(objectFields, textCodes);
+                CreateFollowUpTypeFields(objectFields, textCodes);
+                CreateRatesTableFields(objectFields, textCodes);
+                CreateTransportModeFields(objectFields, textCodes);
+                CreateObjectTableFields(objectFields, textCodes);
+                CreateEntityStatusFields(objectFields, textCodes);
+                CreatePartnerTypeFields(objectFields, textCodes);
+                CreateChargeGroupFields(objectFields, textCodes);
+                CreateIATACodesFields(objectFields, textCodes);
+                CreateTemplateFormatFields(objectFields, textCodes);
+                CreateDocumentTypeTemplateFields(objectFields, textCodes);
+                CreateDocumentTypeCustomFields(objectFields, textCodes);
+                CreateDirectionFields(objectFields, textCodes);
+                CreateSystemDataFields(objectFields, textCodes);
+                CreateSharedLogisticsFields(objectFields, textCodes);
+                CreateTenantFields(objectFields, textCodes);
+                CreateDescriptionOfGoodsFields(objectFields, textCodes);
+                CreateCounterDefinitionFields(objectFields, textCodes);
+                CreateTarrifTypesFields(objectFields, textCodes);
+                CreateTarrifFromToTypesFields(objectFields, textCodes);
+                CreateTarrifChargesFields(objectFields, textCodes);
+                CreateTarrifFromTosFields(objectFields, textCodes);
+                CreateTarrifHeadersFields(objectFields, textCodes);
+                CreateTarrifStepsFields(objectFields, textCodes);
+                CreateTextCodeFields(objectFields, textCodes);
+                CreateMAWBStackFields(objectFields, textCodes);
+                CreateRestrictionFields(objectFields, textCodes);
+                CreateRoleFields(objectFields, textCodes);
+                CreateAccountFields(objectFields, textCodes);
+                CreateAccountTypesFields(objectFields, textCodes);
+                CreateRankFields(objectFields, textCodes);
+                CreateCommunicationLogsFields(objectFields, textCodes);
+                CreateCommunicationLogTypesFields(objectFields, textCodes);
+                CreateWarehouseTypesFields(objectFields, textCodes);
+                CreateCommunicationStatusTypesFields(objectFields, textCodes);
+                CreatePasswordPoliciesFields(objectFields, textCodes);
+                CreatePackageFields(objectFields, textCodes);
+                CreateTenantManagementFields(objectFields, textCodes);
+                CreateRecurringPeriodFields(objectFields, textCodes);
+                CreatePaymentChannelFields(objectFields, textCodes);
+                CreateEventTypeCategoryFields(objectFields, textCodes);
+                LoadCreateTestFields(objectFields, textCodes);
+                CreateTermsofUseSignaturesFields(objectFields, textCodes);
+                CreateAnalyzeQueueFields(objectFields, textCodes);
+                CreateCreditCardTypeFields(objectFields, textCodes);
+                CreateErrorLogFields(objectFields, textCodes);
+                CreateSharedLogisticsInvitationStatusFields(objectFields, textCodes);
+                CreateAccountingTransferHeaderFields(objectFields, textCodes);
+                CreateAccountingTransferLineFields(objectFields, textCodes);
+                CreateAccountingTransferTypeFields(objectFields, textCodes);
+                CreateMoveTypeFields(objectFields, textCodes);
+                CreateReportFields(objectFields, textCodes);
+                CreateCommodityFields(objectFields, textCodes);
+                CreateLeadSourceFields(objectFields, textCodes);
+                CreateIndustryFields(objectFields, textCodes);
+                CreateProductTypeFields(objectFields, textCodes);
+                CreateProductPeriodFields(objectFields, textCodes);
+                CreateCustomerProductFields(objectFields, textCodes);
+                CreateCustomerProductActualDataFields(objectFields, textCodes);
+                CreateCustomerProductLocationFields(objectFields, textCodes);
+                CreateCustomerProductLocationActualDataFields(objectFields, textCodes);
+                CreateCompetitorsFields(objectFields, textCodes);
+                CreateCustomerAdditionalServiceFields(objectFields, textCodes);
+                CreateContactDoneMethodFields(objectFields, textCodes);
+                CreateAdditionalServiceFields(objectFields, textCodes);
+                CreateLogitudeLeadFields(objectFields, textCodes);
+                CreateBorderTypeFields(objectFields, textCodes);
+                CreateExternalSystemsTablesCodeFields(objectFields, textCodes);
+                CreateVatUniqueTypeFields(objectFields, textCodes);
+                CreateVatMandatoryTypeFields(objectFields, textCodes);
+                CreateVatFormatTypeFields(objectFields, textCodes);
+                CreateCustomerSalesNoteFields(objectFields, textCodes);
+                CreateAccountingSystemsSettingFields(objectFields, textCodes);
+                CreateAccountingSystemsSyncStatusFields(objectFields, textCodes);
+                CreateCustomerStatusFields(objectFields, textCodes);
+                CreateBusinessUnitFields(objectFields, textCodes);
+                CreateFeatureAccessLevelFields(objectFields, textCodes);
+                CreateSpecialServicesTypeFields(objectFields, textCodes);
+                CreateRegionFields(objectFields, textCodes);
+                CreatePaymentCurrencyFields(objectFields, textCodes);
+                CreateCustomerSizeFields(objectFields, textCodes);
+                CreateDistributorFields(objectFields, textCodes);
+                CreateAccountingInformationIdentifierFields(objectFields, textCodes);
+                CreateComputingPartnerFields(objectFields, textCodes);
+                CreateComputingPartnerCodeFields(objectFields, textCodes);
+                CreateComputingPartnerTableFields(objectFields, textCodes);
+                CreateComputingPartnerTranslationFields(objectFields, textCodes);
+                CreateBluesnapContractFields(objectFields, textCodes);
+                CreateAWBMessagesCCSTypeFields(objectFields, textCodes);
+                CreateDocumentFolderFields(objectFields, textCodes);
+                CreateManifestStatusFields(objectFields, textCodes);
+                CreateCustomsTransmissionsStatusFields(objectFields, textCodes);
+                CreateInboundEmailFields(objectFields, textCodes);
+                CreateInboundEmailLineFields(objectFields, textCodes);
+                CreateDocumentTypeCategoryFields(objectFields, textCodes);
+                CreateCustomerTenantAccessFields(objectFields, textCodes);
+                CreateCustomerTenantAccessStatusType(objectFields, textCodes);
+                CreateCustomerTenantAccessCardFields(objectFields, textCodes);
+                CreateCustomerTenantAccessRequestFields(objectFields, textCodes);
+                CreateHybridPartnerFields(objectFields, textCodes);
+                CreateBusinessHourFields(objectFields, textCodes);
+                CreateBusinessHoursHolidayFields(objectFields, textCodes);
+                CreateAPILogsFields(objectFields, textCodes);
+                CreatePaymentMethodFields(objectFields, textCodes);
+                CreateAPILogsDataFields(objectFields, textCodes);
+                CreateBatchServicesLogFields(objectFields, textCodes);
+                CreateTenantTypeFields(objectFields, textCodes);
+                CreateQueueMessageMoreDetailsFields(objectFields, textCodes);
+                CreateCustomerTenantAccessCardBatchFields(objectFields, textCodes);
+                CreateParticipantFields(objectFields, textCodes);
+                CreateApiCredintials(objectFields, textCodes);
+                CreateAirlineStatisticsFields(objectFields, textCodes);
+                CreateAWBDescriptionOfGoodsFields(objectFields, textCodes);
+                CreateTransmissionLogFields(objectFields, textCodes);
+                CreateFeaturePackageTypeFields(objectFields, textCodes);
+                CreateTenantManagementLicenseFields(objectFields, textCodes);
+                CreatePackageConnectedPackageFields(objectFields, textCodes);
+                CreateUserLicenseFields(objectFields, textCodes);
+                CreateTenantAddOnFields(objectFields, textCodes);
+                CreateAirlineMessagingRuleFields(objectFields, textCodes);
+                CreateAuomationFields(objectFields, textCodes);
+                CreatePaymentTermDateTypeFields(objectFields, textCodes);
+                CreateCustomerFieldsUpdateSettingFields(objectFields, textCodes);
+                CreateTenantManagmentPrivateLabelsFields(objectFields, textCodes);
+                CreateCreditLimitSettingFields(objectFields, textCodes);
+                CreateAgentSharedManifestFields(objectFields, textCodes);
+                CreateCustomerAccountManagerByProductFields(objectFields, textCodes);
+                CreateCardExternalAccountsByProductFields(objectFields, textCodes);
+                CreateCustomsInterfaceFields(objectFields, textCodes);
+                CreateCustomsInterfaceSettingFields(objectFields, textCodes);
+                CreateFTPDetailFields(objectFields, textCodes);
+                CreateSATInterfaceFields(objectFields, textCodes);
+                CreateSATInterfaceSettingFields(objectFields, textCodes);
+                CreateFBLStockFields(objectFields, textCodes);
+                CreateSATPaymentMethodFields(objectFields, textCodes);
+                CreateCardExternalCodeByCurrencyFields(objectFields, textCodes);
+                CreateLoginPolicyFields(objectFields, textCodes);
+                CreateTenantLoginPolicy(objectFields, textCodes);
+                TwoFactorAuthenticationDeviceFields(objectFields, textCodes);
+                CreateMetodoPagoFields(objectFields, textCodes);
+                CreateBatchServicesDefinitionsFields(objectFields, textCodes);
+                CreateAgentSharedDocumentFields(objectFields, textCodes);
+                CreateChargesExternalAccountsByProductFields(objectFields, textCodes);
+                CreateRegistryDateTypeFields(objectFields, textCodes);
+                CreateUsoCFDIFields(objectFields, textCodes);
+                CreateReportsTemplateFields(objectFields, textCodes);
+                CreateReportsTemplatesVersionFields(objectFields, textCodes);
+                CreateObjectFieldFields(objectFields, textCodes);
+                CreateFilingInboxFields(objectFields, textCodes);
+                CreateFilingInboxAttachmentFields(objectFields, textCodes);
+                CreateFilingInboxAttachmentLogFields(objectFields, textCodes);
+                CreateTasksSchedulerObjectFields(objectFields, textCodes);
+                CreateINTTRASettingFields(objectFields, textCodes);
+                CreateINTTRASettingModeFields(objectFields, textCodes);
+                CreateINTTRABranchRegisteredCarrierFields(objectFields, textCodes);
+                CreateTemperatureUnitFields(objectFields, textCodes);
+                CreateINTTRADocumentTypeFields(objectFields, textCodes);
 
-            CreateDocumentFilingBackupBatchFields(objectFields, textCodes);
-            CreateDocumentFilingBackupSettingFields(objectFields, textCodes);
-            CreateDWHSettingFields(objectFields, textCodes);
+                CreateDocumentFilingBackupBatchFields(objectFields, textCodes);
+                CreateDocumentFilingBackupSettingFields(objectFields, textCodes);
+                CreateDWHSettingFields(objectFields, textCodes);
 
-            CreateDWObjectTableFields(objectFields, textCodes);
-            CreateDWObjectFieldFields(objectFields, textCodes);
+                CreateDWObjectTableFields(objectFields, textCodes);
+                CreateDWObjectFieldFields(objectFields, textCodes);
 
-            //if (!isUpdate)
-            //{
-            LoadRolesAndFeatures(0);
-            CreateMenuButtonsForTenant(0);
-            //}          
-
+                //if (!isUpdate)
+                //{
+                LoadRolesAndFeatures(0);
+                CreateMenuButtonsForTenant(0);
+                //}          
+            }
             this.ObjectContext.SaveChanges();
         }
 
@@ -17745,7 +17747,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInLookUpIndex = 1,
                 DisplayInSearchWindowFiltersIndex = 1,
                 DisplayInSearchWindowListIndex = 1,
-                FullFieldLable = "English Name",
+                FullFieldLable = "EnglishName",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -57410,6 +57412,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature aRGeneralInvoiceFeature_Approval = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "APPROVALGENERALINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aRGeneralInvoiceFeature_All = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "ALLGENERALINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aRInvoiceFeature_SATFailed = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "SATFAILEDINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            Feature aRInvoiceFeature_QBOFailedTransmission = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "QBOFailedTransmission" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
 
             Query aRInvoiceQuery_All = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.AllInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "All Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_All.Id }, QueriesRepository, tenantQueries);
@@ -57420,6 +57423,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Query aRInvoiceQuery_ErrorInTransfer = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.ErrorInTransferInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Error In Transfer Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 5, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Ascending", DefaultSortName = "InvoiceDate", FeatureId = aRInvoiceFeature_ErrorInTransfer.Id, EditWizardName = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferEditControl", EditWizardComponentPath = "./InvoiceModules/ARInvoice/Components/NewEntity/ARInvoiceTransferTemplate" }, QueriesRepository, tenantQueries);
             Query aRInvoiceQuery_OpenConstituent = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.OpenConstituentInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "OpenConstituent", QueryGroupCode = invoicesGroup.Code, IndexOrder = 6, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_OpenConstituent.Id }, QueriesRepository, tenantQueries);
             Query aRInvoiceQuery_FailedSAT = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.FailedSAT" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Invoices Failed to Open in SAT", QueryGroupCode = invoicesGroup.Code, IndexOrder = 7, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_SATFailed.Id }, QueriesRepository, tenantQueries);
+            Query aRInvoiceQuery_QBOFailedTransmission = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.QBOFailedTransmission" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "QBOFailedTransmission", QueryGroupCode = invoicesGroup.Code, IndexOrder = 8, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_QBOFailedTransmission.Id }, QueriesRepository, tenantQueries);
 
             // Genaral Invoices 
             Query aRGeneralInvoiceQuery_Draft = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.DraftGeneralInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Draft General Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRGeneralInvoiceFeature_Draft.Id }, QueriesRepository, tenantQueries);
@@ -57582,7 +57586,25 @@ namespace WebFreight.Web.MetaDataUpdate
             AdvancedQueryFilter invoiceSATFailed_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "TE", QueryId = aRInvoiceQuery_FailedSAT.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
+            #region QBO failed transmission
+            QueryColumn QBOFailedTransmitionColumn_01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 0, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_03 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 2, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 190 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_04 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 3, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 4, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 5, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 50 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn QBOFailedTransmitionColumn_07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 6, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
+            AdvancedQueryFilter QBOFailedTransmition_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "QBOFailedTransmission" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
+
+            #endregion
+
+
+
+
+
+
+
 
             #region (A/P) Invoice
             Feature aPInvoiceFeature_All = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "ALLINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
@@ -60722,8 +60744,9 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.DraftGeneralInvoices", DefaultText = "Draft Invoices", LocalDefaultText = "חשבוניות בסטטוס טיוטה", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.ApprovalGeneralInvoices", DefaultText = "Approval Invoices", LocalDefaultText = "חשבוניות מאושרות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.FailedSAT", DefaultText = "SAT Failed Invoices", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.QBOFailedTransmission", DefaultText = "QBO failed transmission", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
 
-            
+
             #endregion
 
             #region Accounts Queries
@@ -61234,7 +61257,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FilterBy", DefaultText = "Filter By", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FollowUps", DefaultText = "Follow Ups", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Notes", DefaultText = "Notes", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DeletQuery", DefaultText = "Delet Query", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DeletQuery", DefaultText = "Delete Query", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.RenameQuery", DefaultText = "Rename Query", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.SaveAsNewView", DefaultText = "Save as New View", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ViewName", LocalDefaultText = "הצג את השם", DefaultText = "View Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
@@ -66325,6 +66348,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARInvoiceFeature_Q010 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLGENERALINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.AllGeneralInvoice", NameTextCodeDefaultText = "All General Invoice", FullLocalDefaultText = "כל החשבוניות הכלליות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATFAILEDINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.SATFailedInvoices", NameTextCodeDefaultText = "Invoices Failed to Open in SAT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKSATSTATUS", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.CheckSATStatus", NameTextCodeDefaultText = "Check SAT Status", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ARInvoiceFeature_Q13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QBOFailedTransmission", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.QBOFailedTransmission", NameTextCodeDefaultText = "QBO failed transmission", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 

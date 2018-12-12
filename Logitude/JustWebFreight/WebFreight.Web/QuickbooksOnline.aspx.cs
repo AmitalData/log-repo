@@ -3,9 +3,11 @@ using DevDefined.OAuth.Framework;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.DataContracts;
 using Logitude.BL.Security;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -13,6 +15,9 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Transactions;
@@ -101,6 +106,23 @@ namespace WebFreight.Web
         }
 
 
+        public string GetConnection(int tenant)
+        {
+            GlobalDB currentDb;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+                scope.Complete();
+            }
+
+            string dbConnectionInfo = currentDb.DBConnection;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            WebFreightContext context = new WebFreightContext(connection);
+
+            return context.Database.Connection.ConnectionString;
+        }
+
+
         private void getAccessToken()
         {
             IOAuthSession clientSession = CreateSession();
@@ -114,9 +136,14 @@ namespace WebFreight.Web
                     HttpContext.Current.Session["accessTokenSecret"] = accessToken.TokenSecret;
                     AccountingSettingQuery query = new AccountingSettingQuery(int.Parse((HttpContext.Current.Session["tenant"] + "")));
                     AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse((HttpContext.Current.Session["tenant"] + "")));
+                    var TempQBORealMeId = entityPM.QBOrealMeID;
                     entityPM.QBOAccessToken = accessToken.Token;
                     entityPM.QBOAccessTokenSecret = accessToken.TokenSecret;
                     entityPM.QBOrealMeID = HttpContext.Current.Session["realm"].ToString();
+                    if (!String.IsNullOrEmpty(TempQBORealMeId) && entityPM.QBOrealMeID != TempQBORealMeId)
+                    {
+                        RunStoredProcedureClass.DeleteQBOTranslations(entityPM.Id);
+                    }
                     List<AccountingSettingPM> LoggedEntities = query.GetAccountSettingPMs().Where(r => r.QBOrealMeID == entityPM.QBOrealMeID && r.Id!=entityPM.Id).ToList();
                     ICommonDataContext MyContext = CommonDataContext.GetContext(int.Parse((HttpContext.Current.Session["tenant"] + "")));
                     AccountingSettingService service = new AccountingSettingService(MyContext, int.Parse((HttpContext.Current.Session["tenant"] + "")));

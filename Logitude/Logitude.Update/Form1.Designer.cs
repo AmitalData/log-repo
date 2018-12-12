@@ -112,7 +112,7 @@
             this.CustZibFilesLbl = new System.Windows.Forms.Label();
             this.ConvertXmalTemplateLable = new System.Windows.Forms.Label();
             this.UTZSLabel = new System.Windows.Forms.Label();
-            this.UCUSStatusLabel = new System.Windows.Forms.Label();
+            this.lblUShipment = new System.Windows.Forms.Label();
             this.UTenantsStatusLabel = new System.Windows.Forms.Label();
             this.BuildZipFilesStatusLabel = new System.Windows.Forms.Label();
             this.BuildZipFilesCustomsStatusLabel = new System.Windows.Forms.Label();
@@ -151,6 +151,13 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnUpdateTenantZeroNew = new System.Windows.Forms.Button();
+            this.lblTenantNew = new System.Windows.Forms.Label();
+            this.lblUGlobal = new System.Windows.Forms.Label();
+            this.lblUInfra = new System.Windows.Forms.Label();
+            this.lblUCommon = new System.Windows.Forms.Label();
+            this.lblUInvoice = new System.Windows.Forms.Label();
+            this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
             this.button39 = new System.Windows.Forms.Button();
@@ -923,15 +930,15 @@
             this.UTZSLabel.Text = "...";
             this.UTZSLabel.Visible = false;
             // 
-            // UCUSStatusLabel
+            // lblUShipment
             // 
-            this.UCUSStatusLabel.AutoSize = true;
-            this.UCUSStatusLabel.Location = new System.Drawing.Point(206, 303);
-            this.UCUSStatusLabel.MinimumSize = new System.Drawing.Size(100, 0);
-            this.UCUSStatusLabel.Name = "UCUSStatusLabel";
-            this.UCUSStatusLabel.Size = new System.Drawing.Size(100, 13);
-            this.UCUSStatusLabel.TabIndex = 51;
-            this.UCUSStatusLabel.Text = "...";
+            this.lblUShipment.AutoSize = true;
+            this.lblUShipment.Location = new System.Drawing.Point(206, 350);
+            this.lblUShipment.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblUShipment.Name = "lblUShipment";
+            this.lblUShipment.Size = new System.Drawing.Size(100, 13);
+            this.lblUShipment.TabIndex = 51;
+            this.lblUShipment.Text = "...";
             // 
             // UTenantsStatusLabel
             // 
@@ -1122,7 +1129,7 @@
             // 
             // btnUpdateShipment
             // 
-            this.btnUpdateShipment.Location = new System.Drawing.Point(16, 298);
+            this.btnUpdateShipment.Location = new System.Drawing.Point(16, 345);
             this.btnUpdateShipment.Name = "btnUpdateShipment";
             this.btnUpdateShipment.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateShipment.TabIndex = 68;
@@ -1133,7 +1140,7 @@
             // 
             // btnUpdateQuote
             // 
-            this.btnUpdateQuote.Location = new System.Drawing.Point(16, 326);
+            this.btnUpdateQuote.Location = new System.Drawing.Point(16, 373);
             this.btnUpdateQuote.Name = "btnUpdateQuote";
             this.btnUpdateQuote.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateQuote.TabIndex = 69;
@@ -1144,7 +1151,7 @@
             // 
             // btnUpdateInvoice
             // 
-            this.btnUpdateInvoice.Location = new System.Drawing.Point(16, 358);
+            this.btnUpdateInvoice.Location = new System.Drawing.Point(16, 405);
             this.btnUpdateInvoice.Name = "btnUpdateInvoice";
             this.btnUpdateInvoice.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateInvoice.TabIndex = 70;
@@ -1155,7 +1162,7 @@
             // 
             // btnUpdateCommon
             // 
-            this.btnUpdateCommon.Location = new System.Drawing.Point(16, 386);
+            this.btnUpdateCommon.Location = new System.Drawing.Point(16, 433);
             this.btnUpdateCommon.Name = "btnUpdateCommon";
             this.btnUpdateCommon.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateCommon.TabIndex = 71;
@@ -1166,7 +1173,7 @@
             // 
             // btnUpdateInfrastructure
             // 
-            this.btnUpdateInfrastructure.Location = new System.Drawing.Point(16, 414);
+            this.btnUpdateInfrastructure.Location = new System.Drawing.Point(16, 461);
             this.btnUpdateInfrastructure.Name = "btnUpdateInfrastructure";
             this.btnUpdateInfrastructure.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateInfrastructure.TabIndex = 72;
@@ -1177,7 +1184,7 @@
             // 
             // btnUpdateGlobal
             // 
-            this.btnUpdateGlobal.Location = new System.Drawing.Point(16, 442);
+            this.btnUpdateGlobal.Location = new System.Drawing.Point(16, 489);
             this.btnUpdateGlobal.Name = "btnUpdateGlobal";
             this.btnUpdateGlobal.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateGlobal.TabIndex = 73;
@@ -1282,7 +1289,7 @@
             this.button36.Name = "button36";
             this.button36.Size = new System.Drawing.Size(184, 22);
             this.button36.TabIndex = 82;
-            this.button36.Text = "Update Infrastructure";
+            this.button36.Text = "Update Business Infrastructure";
             this.button36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button36.UseVisualStyleBackColor = true;
             this.button36.Click += new System.EventHandler(this.button36_Click);
@@ -1312,6 +1319,13 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.btnUpdateTenantZeroNew);
+            this.tabPage1.Controls.Add(this.lblTenantNew);
+            this.tabPage1.Controls.Add(this.lblUGlobal);
+            this.tabPage1.Controls.Add(this.lblUInfra);
+            this.tabPage1.Controls.Add(this.lblUCommon);
+            this.tabPage1.Controls.Add(this.lblUInvoice);
+            this.tabPage1.Controls.Add(this.lblUQuote);
             this.tabPage1.Controls.Add(this.button39);
             this.tabPage1.Controls.Add(this.button38);
             this.tabPage1.Controls.Add(this.button37);
@@ -1340,7 +1354,7 @@
             this.tabPage1.Controls.Add(this.CustZibFilesLbl);
             this.tabPage1.Controls.Add(this.UpdateTenantslbl);
             this.tabPage1.Controls.Add(this.button28);
-            this.tabPage1.Controls.Add(this.UCUSStatusLabel);
+            this.tabPage1.Controls.Add(this.lblUShipment);
             this.tabPage1.Controls.Add(this.button26);
             this.tabPage1.Controls.Add(this.UTZSLabel);
             this.tabPage1.Controls.Add(this.label1);
@@ -1361,6 +1375,77 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // btnUpdateTenantZeroNew
+            // 
+            this.btnUpdateTenantZeroNew.Location = new System.Drawing.Point(16, 315);
+            this.btnUpdateTenantZeroNew.Name = "btnUpdateTenantZeroNew";
+            this.btnUpdateTenantZeroNew.Size = new System.Drawing.Size(184, 24);
+            this.btnUpdateTenantZeroNew.TabIndex = 91;
+            this.btnUpdateTenantZeroNew.Text = "Update Tenant 0 (Generated)";
+            this.btnUpdateTenantZeroNew.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUpdateTenantZeroNew.UseVisualStyleBackColor = true;
+            this.btnUpdateTenantZeroNew.Click += new System.EventHandler(this.btnUpdateTenantZeroNew_Click);
+            // 
+            // lblTenantNew
+            // 
+            this.lblTenantNew.AutoSize = true;
+            this.lblTenantNew.Location = new System.Drawing.Point(206, 321);
+            this.lblTenantNew.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblTenantNew.Name = "lblTenantNew";
+            this.lblTenantNew.Size = new System.Drawing.Size(100, 13);
+            this.lblTenantNew.TabIndex = 92;
+            this.lblTenantNew.Text = "...";
+            // 
+            // lblUGlobal
+            // 
+            this.lblUGlobal.AutoSize = true;
+            this.lblUGlobal.Location = new System.Drawing.Point(206, 494);
+            this.lblUGlobal.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblUGlobal.Name = "lblUGlobal";
+            this.lblUGlobal.Size = new System.Drawing.Size(100, 13);
+            this.lblUGlobal.TabIndex = 90;
+            this.lblUGlobal.Text = "...";
+            // 
+            // lblUInfra
+            // 
+            this.lblUInfra.AutoSize = true;
+            this.lblUInfra.Location = new System.Drawing.Point(206, 470);
+            this.lblUInfra.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblUInfra.Name = "lblUInfra";
+            this.lblUInfra.Size = new System.Drawing.Size(100, 13);
+            this.lblUInfra.TabIndex = 89;
+            this.lblUInfra.Text = "...";
+            // 
+            // lblUCommon
+            // 
+            this.lblUCommon.AutoSize = true;
+            this.lblUCommon.Location = new System.Drawing.Point(206, 442);
+            this.lblUCommon.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblUCommon.Name = "lblUCommon";
+            this.lblUCommon.Size = new System.Drawing.Size(100, 13);
+            this.lblUCommon.TabIndex = 88;
+            this.lblUCommon.Text = "...";
+            // 
+            // lblUInvoice
+            // 
+            this.lblUInvoice.AutoSize = true;
+            this.lblUInvoice.Location = new System.Drawing.Point(206, 410);
+            this.lblUInvoice.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblUInvoice.Name = "lblUInvoice";
+            this.lblUInvoice.Size = new System.Drawing.Size(100, 13);
+            this.lblUInvoice.TabIndex = 87;
+            this.lblUInvoice.Text = "...";
+            // 
+            // lblUQuote
+            // 
+            this.lblUQuote.AutoSize = true;
+            this.lblUQuote.Location = new System.Drawing.Point(206, 382);
+            this.lblUQuote.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblUQuote.Name = "lblUQuote";
+            this.lblUQuote.Size = new System.Drawing.Size(100, 13);
+            this.lblUQuote.TabIndex = 86;
+            this.lblUQuote.Text = "...";
             // 
             // tabPage2
             // 
@@ -1543,7 +1628,7 @@
         private System.Windows.Forms.Button button29;
         private System.Windows.Forms.Button button30;
         private System.Windows.Forms.Label UTZSLabel;
-        private System.Windows.Forms.Label UCUSStatusLabel;
+        private System.Windows.Forms.Label lblUShipment;
         private System.Windows.Forms.Label UTenantsStatusLabel;
         private System.Windows.Forms.Label BuildZipFilesStatusLabel;
         private System.Windows.Forms.Label BuildZipFilesCustomsStatusLabel;
@@ -1604,6 +1689,13 @@
         private System.Windows.Forms.Label EncryptionDocumentLabel;
         private System.Windows.Forms.Button button37;
         private System.Windows.Forms.Button button38;
+        private System.Windows.Forms.Label lblUGlobal;
+        private System.Windows.Forms.Label lblUInfra;
+        private System.Windows.Forms.Label lblUCommon;
+        private System.Windows.Forms.Label lblUInvoice;
+        private System.Windows.Forms.Label lblUQuote;
+        private System.Windows.Forms.Button btnUpdateTenantZeroNew;
+        private System.Windows.Forms.Label lblTenantNew;
         private System.Windows.Forms.Button button39;
     }
 }

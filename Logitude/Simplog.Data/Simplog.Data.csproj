@@ -165,6 +165,7 @@
     <Compile Include="Azure\IErrorLogsRepository.cs" />
     <Compile Include="Azure\Repositories\CommunicationLogsRepository.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.cs" />
+    <Content Include="InfrastructureModel\DeleteQBOTranslations.sql" />
     <Content Include="InfrastructureModel\DeleteBusinessRecords.sql" />
     <Content Include="InfrastructureModel\DeleteCRMRecords.sql" />
     <Content Include="InfrastructureModel\DeleteCustomerRecords.sql" />
@@ -186,8 +187,10 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerAdditional.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CustomerDeposition.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsInterface.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsInterfaceSetting.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CustomsShipper.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DocumentFilingBackupBatch.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DocumentFilingBackupSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DocumentsFilingsView.cs" />
@@ -372,6 +375,7 @@
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerTableMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerTranslationMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CreditLimitSettingMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\CustomerDepositionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerFieldsUpdateSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomersDataViewMap.cs">
       <SubType>Code</SubType>
@@ -380,6 +384,7 @@
     <Compile Include="CommonDataModel\Mapping\CountryCityMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerSizeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTenantAccessCardMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\CustomsShipperMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentFilingBackupBatchMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTenantAccessCardsBatchMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTenantAccessMap.cs" />
@@ -463,8 +468,10 @@
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CountryCityRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CreditLimitSettingRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\CustomerDepositionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerFieldsUpdateSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerSizeRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\CustomsShipperRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DWHSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HybridPartnersPermissionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerTenantAccessCardRepository.cs" />

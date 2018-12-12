@@ -2072,7 +2072,7 @@ User/Pass",
             try
             {
 
-                SetControlPropertyValue(UCUSStatusLabel, "Text", "Updating Customs...");
+                SetControlPropertyValue(lblUShipment, "Text", "Updating Customs...");
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
                 UpdateModule(0, "customs", UpdateCustomslbl);
@@ -2095,7 +2095,7 @@ User/Pass",
 
                 stopWatch.Stop();
                 TimeSpan ts = stopWatch.Elapsed;
-                SetControlPropertyValue(UCUSStatusLabel, "Text", "Updating Customs Is Done in: " + ts.ToString());
+                SetControlPropertyValue(lblUShipment, "Text", "Updating Customs Is Done in: " + ts.ToString());
             }
             catch (Exception ex2)
             {
@@ -3221,42 +3221,42 @@ User/Pass",
 
         private void btnUpdateShipment_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Shipment", UpdateCRMlbl));
+            Thread thread = new Thread(() => UpdateModule(0, "Shipment", lblUShipment));
             thread.IsBackground = true;
             thread.Start();
         }
 
         private void btnUpdateQuote_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Quote", UpdateCRMlbl));
+            Thread thread = new Thread(() => UpdateModule(0, "Quote", lblUQuote));
             thread.IsBackground = true;
             thread.Start();
         }
 
         private void btnUpdateInvoice_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Invoice", UpdateCRMlbl));
+            Thread thread = new Thread(() => UpdateModule(0, "Invoice", lblUInvoice));
             thread.IsBackground = true;
             thread.Start();
         }
 
         private void btnUpdateCommon_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Common", UpdateCRMlbl));
+            Thread thread = new Thread(() => UpdateModule(0, "Common", lblUCommon));
             thread.IsBackground = true;
             thread.Start();
         }
 
         private void btnUpdateInfrastructure_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Infrastructure", UpdateCRMlbl));
+            Thread thread = new Thread(() => UpdateModule(0, "Infrastructure", lblUInfra));
             thread.IsBackground = true;
             thread.Start();
         }
 
         private void btnUpdateGlobal_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(() => UpdateModule(0, "Global", UpdateCRMlbl));
+            Thread thread = new Thread(() => UpdateModule(0, "Global", lblUGlobal));
             thread.IsBackground = true;
             thread.Start();
         }
@@ -3357,6 +3357,13 @@ User/Pass",
         private void button38_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnUpdateTenantZeroNew_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "UpdateTenantZeroNew", lblTenantNew));
+            thread.IsBackground = true;
+            thread.Start();
         }
 
         private void button39_Click(object sender, EventArgs e)

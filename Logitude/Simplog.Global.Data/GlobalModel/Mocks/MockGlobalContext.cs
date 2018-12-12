@@ -275,7 +275,15 @@ namespace WebFreight.Web.GlobalModelDB
                 throw new NotImplementedException();
             }
         }
-        
+
+        public IDbSet<WebhookKeys> WebhookKeys
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
 
 
     }

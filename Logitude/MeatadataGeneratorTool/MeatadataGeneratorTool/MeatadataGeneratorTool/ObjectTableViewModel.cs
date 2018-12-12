@@ -410,10 +410,11 @@ namespace MeatadataGeneratorTool
             }
             MenuButtonsObsList.Clear();
 
-
-            foreach (var item in MenuButtons)
+            int index = 0;
+            foreach (var item in MenuButtons.OrderBy(m=>m.IndexOrder))
             {
-                MenuButtonsObsList.Insert(item.IndexOrder, item);
+                MenuButtonsObsList.Insert(index, item);
+                index++;
             }
 
 

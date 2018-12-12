@@ -929,7 +929,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralONotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Notes", DefaultText = "Notes",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralODeletQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DeletQuery", DefaultText = "Delet Query",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralODeletQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DeletQuery", DefaultText = "Delete Query",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralORenameQuery = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.RenameQuery", DefaultText = "Rename Query",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
