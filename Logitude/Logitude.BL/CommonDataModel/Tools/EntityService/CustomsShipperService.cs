@@ -70,13 +70,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void Create(CustomsShipperPM entityPM)
         {
             this.entityPM = entityPM;
-            bool exist = (from a in entityRepository.GetCustomsShippers(entityPM.Tenant)
-                          where a.CustomsShipperCode == entityPM.CustomsShipperCode && a.Tenant == entityPM.Tenant
-                          select a).Any();
-           
-
-            if (!exist)
-            {
+      
                 this.isNewEntity = true;
 
                 entityPM.Id = IdCounter.GetNumber("Card", entityPM.Tenant).ToString();
@@ -99,41 +93,22 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     Tenant = tenant,
                 };
 
-         
-                
-
                 CustomsShipperMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+
 
                 cardRepository.Add(entityCard);
                 entityRepository.Add(entityPOCO);
                 entityRepository.SubmitChanges();
-
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomsShipper");
   
-            }
-
-            else
-            {
-                string msg = TranslateTextsClass.Translate("General.M.EntityAlreadyExists", tenant);
-                msg = msg.Replace("%Entity", "CustomsShipper");
-                throw new Exception(msg);
-            }
+         
         }
 
         public void Update(CustomsShipperPM entityPM, bool mapComposition = false)
         {
             this.entityPM = entityPM;
-            //CardPM c = cardQuery.GetSinglePM(entityPM.Id, entityPM.Tenant);
             CardPM c = cardQuery.GetSingleCarrierCard(entityPM.Id, entityPM.Tenant, false);
-
-            bool exist = (from a in entityRepository.GetCustomsShippers(entityPM.Tenant)
-                          where a.CustomsShipperCode == c.Code
-                          && a.Id != entityPM.Id
-                          && a.Tenant == entityPM.Tenant
-                          select a).Any();
-           
-            if (!exist)
-            {
+            
                 this.isNewEntity = false;
 
                 this.entityPOCO = entityRepository.GetSingleCustomsShipper(entityPM.Id, tenant);
@@ -159,23 +134,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityCard.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 entityCard.UpdatedByUserId = loggedContact.Id;
 
-
                 CustomsShipperMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
 
                 cardRepository.Update(entityCard);
                 entityRepository.Update(entityPOCO);
                 entityRepository.SubmitChanges();
+                cardRepository.SubmitChanges();
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomsShipper");
 
-                TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomsShipper");
+            
 
-            }
-
-            else
-            {
-                string msg = TranslateTextsClass.Translate("General.M.EntityAlreadyExists", entityPM.Tenant);
-                msg = msg.Replace("%Entity", "CustomsShipper");
-                throw new Exception(msg);
-            }
         }
 
 

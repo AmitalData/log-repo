@@ -20,7 +20,7 @@ namespace WebFreight.Web.WcfApi
     public class ImporterDepositionWcfService : IImporterDepositionWcfService
 
     {
-        public void SendImporterDepositionToLogBox(int tenant, ref Response response)
+        public void SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM, ref Response response)
         {
             if (CacheManager.CacheWrapper == null)
             {
@@ -32,25 +32,14 @@ namespace WebFreight.Web.WcfApi
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("CustomsShippers", "UPDATE", authToken.Tenant);
-
-                ImporterDepositionPM importerDepositionPM = new ImporterDepositionPM();
-                importerDepositionPM.DepositionNumber = "54";
-                importerDepositionPM.ImporterVat = "test";
-
 
                 if (importerDepositionPM != null)
                 {
                     ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
                     importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM);
-
                 }
 
-
-
-
-
-
+           
             }
             catch (Exception ex)
             {

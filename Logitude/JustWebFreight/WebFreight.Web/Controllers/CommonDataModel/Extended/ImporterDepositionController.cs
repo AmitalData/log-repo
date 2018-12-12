@@ -22,8 +22,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("CustomsShippers", "UPDATE", authToken.Tenant);
 
+
+                ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
+                importerDepositionHelper.StartImporterDeposition(importerDepositionAM);
 
                 return null;
             }
