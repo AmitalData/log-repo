@@ -81,6 +81,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FlightNumber { get; set; }
         [Column("DepartureDate")]
 	    public DateTime? DepartureDate { get; set; }
+        [ForeignKey("FreightPaymentMethod")]
+        [Column("WeightValueCode")]
+	    public string WeightValueCode { get; set; }
+	      
+        public virtual FreightPaymentMethod FreightPaymentMethod { get; set; }
     }
 }
 	 
