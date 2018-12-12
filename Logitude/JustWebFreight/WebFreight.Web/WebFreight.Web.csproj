@@ -4109,6 +4109,7 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="WebhooksReceiver.aspx" />
     <Content Include="WebPages\APILogsDownLoadPage.aspx" />
     <Content Include="WebPages\DawnLoadExcelPage.aspx" />
     <Content Include="WebPages\CorrespondenceDisplayPage.aspx" />
@@ -5651,6 +5652,13 @@
     <Compile Include="WcfServices\IXapFilesDatabaseWcfService.cs" />
     <Compile Include="WcfServices\XapFilesDatabaseWcfService.svc.cs">
       <DependentUpon>XapFilesDatabaseWcfService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebhooksReceiver.aspx.cs">
+      <DependentUpon>WebhooksReceiver.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebhooksReceiver.aspx.designer.cs">
+      <DependentUpon>WebhooksReceiver.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebPages\APILogsDownLoadPage.aspx.cs">
       <DependentUpon>APILogsDownLoadPage.aspx</DependentUpon>
