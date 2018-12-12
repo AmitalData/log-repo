@@ -159,6 +159,7 @@
       <LastGenOutput>ShipmentClassesGeneraor.cs</LastGenOutput>
       <LastOutputs>.\ShipmentClassesGeneraor.cs</LastOutputs>
     </Content>
+    <None Include="EntityFiles\CommonDataModel\CustomerDeposition.lxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="test2\" />
@@ -183,6 +184,7 @@
     </None>
     <None Include="EntityFiles\CommonDataModel\AirlineMessagingRule.lxml" />
     <None Include="EntityFiles\CommonDataModel\AirlineStatistics.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomsShipper.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentFilingBackupBatch.lxml">
       <SubType>Designer</SubType>
     </None>

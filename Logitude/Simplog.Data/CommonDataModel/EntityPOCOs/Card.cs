@@ -129,6 +129,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual Participant Participant { get; set; }
         public bool IsInternationalPartner { get; set; }
         public bool IsAutonomy { get; set; }
+        //public virtual CustomsShipper CustomsShipper { get; set; }
+
+
 
     }
 }

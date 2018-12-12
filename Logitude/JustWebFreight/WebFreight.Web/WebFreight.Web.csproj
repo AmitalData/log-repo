@@ -989,7 +989,9 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AgentSharedDocumentViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\AirlineMessagingRuleViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ChargesExternalAccountsByProductViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerDepositionViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomerTenantAccessCardsBatchViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\CustomsShipperViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\DocumentFilingBackupBatchViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\DocumentFilingBackupSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\FilingInboxAttachmentLogViewsController.Generated.cs" />
@@ -1109,10 +1111,12 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CardExternalCodeByCurrencyController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ComputingPartnerTranslationController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CreditLimitSettingController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CustomerDepositionController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CustomerFieldsUpdateSettingController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CustomerTenantAccessCardsBatchController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CustomerTenantAccessController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CustomsInterfaceSettingController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\CustomsShipperController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\DocumentFilingBackupBatchController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\DocumentFilingBackupSettingController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\FilingInboxAttachmentLogController.Generated.cs" />
@@ -2267,6 +2271,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomAgentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerAccountManagerByProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerAdditionalServiceUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerDepositionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerFieldsUpdateSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerSalesNoteUpdateClass.cs" />
@@ -2279,6 +2284,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomsInterfaceSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomsInterfaceUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CustomsShipperUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DepartmentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DimensionsUnitUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\DistributorUpdateClass.cs" />
