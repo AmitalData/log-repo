@@ -188,7 +188,7 @@ namespace MetaDataGenerator
             return true;
         }
 
-        public bool RegenerateExisting_Old_ModelEntityLXMLs_ClosedData(List<ObjectTable> modelTables, string directoryPath, ref string errors)
+        public bool RegenerateExisting_Old_ModelEntityLXMLs_Specific(List<ObjectTable> modelTables, string directoryPath, ref string errors, string updateName)
         {
             if (string.IsNullOrEmpty(errors))
                 errors = "";
@@ -214,23 +214,29 @@ namespace MetaDataGenerator
                 XmlElement entityElement = (XmlElement)doc.GetElementsByTagName("entity")[0];
                 //this.UpdateEntityElement(entityElement, doc, table, tableTextCodes);
 
-                List<XmlNode> dataContractsNodesList = new List<XmlNode>();
-                foreach (XmlNode node in doc.GetElementsByTagName("DataContracts"))
+                //List<XmlNode> dataContractsNodesList = new List<XmlNode>();
+                //foreach (XmlNode node in doc.GetElementsByTagName("DataContracts"))
+                //{
+                //    dataContractsNodesList.Add(node);
+                //}
+
+                //this.RemoveOldNodes(doc, entityElement, "DataContracts");
+
+                 if (updateName == "closed")
                 {
-                    dataContractsNodesList.Add(node);
+                    if (table.IsClosed)
+                        GenerateTableDataRecords(doc, entityElement, table, fields);
+                }
+                if (updateName == "menus")
+                {
+                    GenerateMenuButtons(doc, entityElement, table, fields);
                 }
 
-                this.RemoveOldNodes(doc, entityElement, "DataContracts");
- 
-
-                if (table.IsClosed)
-                    GenerateTableDataRecords(doc, entityElement, table, fields);
-
-                foreach (XmlNode node in dataContractsNodesList)
-                {
-                    XmlNode newNode = doc.CreateElement("DataContracts");
-                    entityElement.AppendChild(node);
-                }
+                //foreach (XmlNode node in dataContractsNodesList)
+                //{
+                //    XmlNode newNode = doc.CreateElement("DataContracts");
+                //    entityElement.AppendChild(node);
+                //}
 
                 #region Write Xml To file
 
@@ -769,9 +775,21 @@ namespace MetaDataGenerator
         {
             EntityPropertiesInfo classPropInfo = this.GetEntityClassProperities(table);
 
-            RemoveOldNodes(doc, entityElement, "Records");
-            XmlElement recordsListXElement = doc.CreateElement("Records");
-            entityElement.AppendChild(recordsListXElement);
+
+            XmlElement recordsListXElement = (XmlElement)doc.GetElementsByTagName("Records")[0];
+            if (recordsListXElement != null)
+            {
+                RemoveOldNodes(doc, recordsListXElement, "Record");
+            }
+            else
+            {
+                recordsListXElement = doc.CreateElement("Records");
+                entityElement.AppendChild(recordsListXElement);
+            }
+
+            //RemoveOldNodes(doc, entityElement, "Records");
+            //XmlElement recordsListXElement = doc.CreateElement("Records");
+            //entityElement.AppendChild(recordsListXElement);
 
             IQueryable querableEntities = (IQueryable)TableQueryReflector.GetTableListData(table.Name);
             if (querableEntities == null)
@@ -1127,12 +1145,23 @@ namespace MetaDataGenerator
 
         private void GenerateMenuButtons(XmlDocument doc, XmlElement entityElement, ObjectTable table, List<ObjectField> tableObjectFields)
         {
-            RemoveOldNodes(doc, entityElement, "MenuButtons");
+            
+            
             List<MenuButtonGroup> menuButtonGroups = this.allMenuButtonGroup.Where(g => g.ObjectTableId == table.Id).ToList();
             foreach (MenuButtonGroup group in menuButtonGroups)
             {
-                XmlElement menuButtonsGroupXElement = doc.CreateElement("MenuButtons");
-                entityElement.AppendChild(menuButtonsGroupXElement);
+                XmlElement menuButtonsGroupXElement = (XmlElement)doc.GetElementsByTagName("MenuButtons")[0];
+                if (menuButtonsGroupXElement != null)
+                {
+                    RemoveOldNodes(doc, menuButtonsGroupXElement, "MenuButton");
+                }
+                else
+                {
+                    menuButtonsGroupXElement = doc.CreateElement("MenuButtons");
+                    entityElement.AppendChild(menuButtonsGroupXElement);
+                }
+
+                
                 SetAttribute("MenuButtonGroupType", GetStringValue(group.MenuButtonGroupType), menuButtonsGroupXElement);
                 SetAttribute("MenuButtonGroupName", GetStringValue(group.Name), menuButtonsGroupXElement);
 
@@ -1153,7 +1182,7 @@ namespace MetaDataGenerator
 
 
                     SetAttribute("MenuButtonType", GetStringValue(mb.MenuButtonType), mBXElement);
-                    SetAttribute("IndexOrder", mindex.ToString(), mBXElement);
+                    SetAttribute("IndexOrder", mb.Index.ToString(), mBXElement);
                     SetAttribute("Style", GetStringValue(mb.Style), mBXElement);
                     if (tFeature != null)
                     {
@@ -1182,7 +1211,7 @@ namespace MetaDataGenerator
                         SetAttribute("LocalDefaultText", GetStringValue(itemlblTextCode.LocalDefaultText), mBXElement);
                         SetAttribute("MenuButtonType", GetStringValue(item.MenuButtonType), MenuItemElement, null);
                         SetAttribute("Style", GetStringValue(item.Style), MenuItemElement, null);
-                        SetAttribute("IndexOrder", itemIndex.ToString(), MenuItemElement, null);
+                        SetAttribute("IndexOrder", item.Index.ToString(), MenuItemElement, null);
                         if (itemFeature != null)
                         {
                             SetAttribute("FeatureCode", GetStringValue(itemFeature.Code), MenuItemElement);

@@ -61,7 +61,7 @@
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;CustomerTenantAccessEdit&quot;" MenuButtonGroupName="&quot;CustomerTenantAccessEditButtonsGroup&quot;">
-    <MenuButton EventCode="&quot;Deny&quot;" DefaultText="&quot;Deny&quot;" MenuButtonType="&quot;button&quot;" IndexOrder="0" TextCodeCode="&quot;CustomerTenantAccess.B.Deny&quot;" />
+    <MenuButton EventCode="&quot;Deny&quot;" TextCodeCode="&quot;CustomerTenantAccess.B.Deny&quot;" DefaultText="&quot;Deny&quot;" MenuButtonType="&quot;button&quot;" IndexOrder="100" />
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes>

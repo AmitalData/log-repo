@@ -173,7 +173,28 @@ namespace WebFreight.Web.MetaDataUpdate
                             else
                             {
                                 updateClass.UpgradeClosedTablesForTenantZero();
-                                updateClass.LoadUpdateTenantZero(context);
+
+                                //ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
+                                //shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+
+                                //QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
+                                //quotemodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                //InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
+                                //invoicemodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                //CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+                                //commonmodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                //InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+                                //inframodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                //GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+                                //globalmodelUpdateClass.LoadObjectsTenantZero(context);
+
+
+                                updateClass.LoadUpdateTenantZero(context, true);
+
                                 updateClass.LoadOtherFields(context);
                                 updateClass.LoadTranslationHeaders();
                                 updateClass.LoadMeasurements();
