@@ -108,6 +108,7 @@
     <Compile Include="GlobalModel\EntityPOCOs\AWBMessagesCCSType.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BatchServicesDefinition.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\BluesnapContract.cs" />
+    <Compile Include="GlobalModel\EntityPOCOs\WebhookKeys.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\CaptchaKey.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ChangePasswordLog.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\ContactMobileDevice.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="GlobalModel\Mapping\AWBMessagesCCSTypeMap.cs" />
     <Compile Include="GlobalModel\Mapping\BatchServicesDefinitionMap.cs" />
     <Compile Include="GlobalModel\Mapping\BluesnapContractMap.cs" />
+    <Compile Include="GlobalModel\Mapping\WebhookKeysMap.cs" />
     <Compile Include="GlobalModel\Mapping\CaptchaKeyMap.cs" />
     <Compile Include="GlobalModel\Mapping\ChangePasswordLogMap.cs" />
     <Compile Include="GlobalModel\Mapping\ContactMobileDeviceMap.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="GlobalModel\Repositories\AWBMessagesCCSTypeRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BatchServicesDefinitionRepository.cs" />
     <Compile Include="GlobalModel\Repositories\BluesnapContractRepository.cs" />
+    <Compile Include="GlobalModel\Repositories\WebhookKeysRepository.cs" />
     <Compile Include="GlobalModel\Repositories\CaptchaKeyRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ChangePasswordLogRepository.cs" />
     <Compile Include="GlobalModel\Repositories\ContactMobileDeviceRepository.cs" />
@@ -265,6 +268,10 @@
     <Compile Include="Migrations\201811131835452_AbedAddCaptchaKeyToContactPassword.Designer.cs">
       <DependentUpon>201811131835452_AbedAddCaptchaKeyToContactPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812120651103_AddWebHookKeysTable_Rabaia.cs" />
+    <Compile Include="Migrations\201812120651103_AddWebHookKeysTable_Rabaia.Designer.cs">
+      <DependentUpon>201812120651103_AddWebHookKeysTable_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -319,6 +326,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811131835452_AbedAddCaptchaKeyToContactPassword.resx">
       <DependentUpon>201811131835452_AbedAddCaptchaKeyToContactPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812120651103_AddWebHookKeysTable_Rabaia.resx">
+      <DependentUpon>201812120651103_AddWebHookKeysTable_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
