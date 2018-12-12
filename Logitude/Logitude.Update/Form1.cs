@@ -3357,6 +3357,13 @@ User/Pass",
         {
             Application.Exit();
         }
+
+        private void btnUpdateTenantZeroNew_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "UpdateTenantZeroNew", lblTenantNew));
+            thread.IsBackground = true;
+            thread.Start();
+        }
     }
 
 

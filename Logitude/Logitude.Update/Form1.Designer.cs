@@ -151,6 +151,8 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnUpdateTenantZeroNew = new System.Windows.Forms.Button();
+            this.lblTenantNew = new System.Windows.Forms.Label();
             this.lblUGlobal = new System.Windows.Forms.Label();
             this.lblUInfra = new System.Windows.Forms.Label();
             this.lblUCommon = new System.Windows.Forms.Label();
@@ -930,7 +932,7 @@
             // lblUShipment
             // 
             this.lblUShipment.AutoSize = true;
-            this.lblUShipment.Location = new System.Drawing.Point(206, 323);
+            this.lblUShipment.Location = new System.Drawing.Point(206, 350);
             this.lblUShipment.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUShipment.Name = "lblUShipment";
             this.lblUShipment.Size = new System.Drawing.Size(100, 13);
@@ -1126,7 +1128,7 @@
             // 
             // btnUpdateShipment
             // 
-            this.btnUpdateShipment.Location = new System.Drawing.Point(16, 318);
+            this.btnUpdateShipment.Location = new System.Drawing.Point(16, 345);
             this.btnUpdateShipment.Name = "btnUpdateShipment";
             this.btnUpdateShipment.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateShipment.TabIndex = 68;
@@ -1137,7 +1139,7 @@
             // 
             // btnUpdateQuote
             // 
-            this.btnUpdateQuote.Location = new System.Drawing.Point(16, 346);
+            this.btnUpdateQuote.Location = new System.Drawing.Point(16, 373);
             this.btnUpdateQuote.Name = "btnUpdateQuote";
             this.btnUpdateQuote.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateQuote.TabIndex = 69;
@@ -1148,7 +1150,7 @@
             // 
             // btnUpdateInvoice
             // 
-            this.btnUpdateInvoice.Location = new System.Drawing.Point(16, 378);
+            this.btnUpdateInvoice.Location = new System.Drawing.Point(16, 405);
             this.btnUpdateInvoice.Name = "btnUpdateInvoice";
             this.btnUpdateInvoice.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateInvoice.TabIndex = 70;
@@ -1159,7 +1161,7 @@
             // 
             // btnUpdateCommon
             // 
-            this.btnUpdateCommon.Location = new System.Drawing.Point(16, 406);
+            this.btnUpdateCommon.Location = new System.Drawing.Point(16, 433);
             this.btnUpdateCommon.Name = "btnUpdateCommon";
             this.btnUpdateCommon.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateCommon.TabIndex = 71;
@@ -1170,7 +1172,7 @@
             // 
             // btnUpdateInfrastructure
             // 
-            this.btnUpdateInfrastructure.Location = new System.Drawing.Point(16, 434);
+            this.btnUpdateInfrastructure.Location = new System.Drawing.Point(16, 461);
             this.btnUpdateInfrastructure.Name = "btnUpdateInfrastructure";
             this.btnUpdateInfrastructure.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateInfrastructure.TabIndex = 72;
@@ -1181,7 +1183,7 @@
             // 
             // btnUpdateGlobal
             // 
-            this.btnUpdateGlobal.Location = new System.Drawing.Point(16, 462);
+            this.btnUpdateGlobal.Location = new System.Drawing.Point(16, 489);
             this.btnUpdateGlobal.Name = "btnUpdateGlobal";
             this.btnUpdateGlobal.Size = new System.Drawing.Size(184, 22);
             this.btnUpdateGlobal.TabIndex = 73;
@@ -1316,6 +1318,8 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.btnUpdateTenantZeroNew);
+            this.tabPage1.Controls.Add(this.lblTenantNew);
             this.tabPage1.Controls.Add(this.lblUGlobal);
             this.tabPage1.Controls.Add(this.lblUInfra);
             this.tabPage1.Controls.Add(this.lblUCommon);
@@ -1370,10 +1374,31 @@
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // btnUpdateTenantZeroNew
+            // 
+            this.btnUpdateTenantZeroNew.Location = new System.Drawing.Point(16, 315);
+            this.btnUpdateTenantZeroNew.Name = "btnUpdateTenantZeroNew";
+            this.btnUpdateTenantZeroNew.Size = new System.Drawing.Size(184, 24);
+            this.btnUpdateTenantZeroNew.TabIndex = 91;
+            this.btnUpdateTenantZeroNew.Text = "Update Tenant 0 (Generated)";
+            this.btnUpdateTenantZeroNew.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnUpdateTenantZeroNew.UseVisualStyleBackColor = true;
+            this.btnUpdateTenantZeroNew.Click += new System.EventHandler(this.btnUpdateTenantZeroNew_Click);
+            // 
+            // lblTenantNew
+            // 
+            this.lblTenantNew.AutoSize = true;
+            this.lblTenantNew.Location = new System.Drawing.Point(206, 321);
+            this.lblTenantNew.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblTenantNew.Name = "lblTenantNew";
+            this.lblTenantNew.Size = new System.Drawing.Size(100, 13);
+            this.lblTenantNew.TabIndex = 92;
+            this.lblTenantNew.Text = "...";
+            // 
             // lblUGlobal
             // 
             this.lblUGlobal.AutoSize = true;
-            this.lblUGlobal.Location = new System.Drawing.Point(206, 467);
+            this.lblUGlobal.Location = new System.Drawing.Point(206, 494);
             this.lblUGlobal.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUGlobal.Name = "lblUGlobal";
             this.lblUGlobal.Size = new System.Drawing.Size(100, 13);
@@ -1383,7 +1408,7 @@
             // lblUInfra
             // 
             this.lblUInfra.AutoSize = true;
-            this.lblUInfra.Location = new System.Drawing.Point(206, 443);
+            this.lblUInfra.Location = new System.Drawing.Point(206, 470);
             this.lblUInfra.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUInfra.Name = "lblUInfra";
             this.lblUInfra.Size = new System.Drawing.Size(100, 13);
@@ -1393,7 +1418,7 @@
             // lblUCommon
             // 
             this.lblUCommon.AutoSize = true;
-            this.lblUCommon.Location = new System.Drawing.Point(206, 415);
+            this.lblUCommon.Location = new System.Drawing.Point(206, 442);
             this.lblUCommon.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUCommon.Name = "lblUCommon";
             this.lblUCommon.Size = new System.Drawing.Size(100, 13);
@@ -1403,7 +1428,7 @@
             // lblUInvoice
             // 
             this.lblUInvoice.AutoSize = true;
-            this.lblUInvoice.Location = new System.Drawing.Point(206, 383);
+            this.lblUInvoice.Location = new System.Drawing.Point(206, 410);
             this.lblUInvoice.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUInvoice.Name = "lblUInvoice";
             this.lblUInvoice.Size = new System.Drawing.Size(100, 13);
@@ -1413,7 +1438,7 @@
             // lblUQuote
             // 
             this.lblUQuote.AutoSize = true;
-            this.lblUQuote.Location = new System.Drawing.Point(206, 355);
+            this.lblUQuote.Location = new System.Drawing.Point(206, 382);
             this.lblUQuote.MinimumSize = new System.Drawing.Size(100, 0);
             this.lblUQuote.Name = "lblUQuote";
             this.lblUQuote.Size = new System.Drawing.Size(100, 13);
@@ -1656,6 +1681,8 @@
         private System.Windows.Forms.Label lblUCommon;
         private System.Windows.Forms.Label lblUInvoice;
         private System.Windows.Forms.Label lblUQuote;
+        private System.Windows.Forms.Button btnUpdateTenantZeroNew;
+        private System.Windows.Forms.Label lblTenantNew;
     }
 }
 
