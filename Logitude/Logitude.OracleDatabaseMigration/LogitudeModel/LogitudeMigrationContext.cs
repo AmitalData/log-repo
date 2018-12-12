@@ -899,6 +899,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<ClaimsRelatedEntitiesRefund> ClaimsRelatedEntitiesRefund { get; set; }
         public IDbSet<SeizureFactorType> SeizureFactorType { get; set; }
         public IDbSet<MamanSpecialAction> MamanSpecialAction { get; set; }
+        public IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatus { get; set; }
 
         #endregion
 
@@ -3901,6 +3902,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new ClaimsRelatedEntitiesRefundMap());
             modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
             modelBuilder.Configurations.Add(new MamanSpecialActionMap());
+            modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
 
             #endregion
 

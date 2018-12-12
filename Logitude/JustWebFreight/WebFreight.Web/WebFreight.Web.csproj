@@ -1321,6 +1321,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LastReleaseFromWarehouseViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LeadDocumentExceptionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LeadDocumentTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\MamanSpecialActionStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\MamanSpecialActionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\MamanStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\MeasureQualifierViewsController.Generated.cs" />
@@ -2408,6 +2409,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\JournalReconcileUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LBPTeamMemberUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LedgerTransactionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanSpecialActionStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanSpecialActionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ManifestCargoStatusUpdateClass.cs" />

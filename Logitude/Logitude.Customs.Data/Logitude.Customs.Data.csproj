@@ -125,6 +125,7 @@
     <Compile Include="EntityKeys\DocumentTypeCustomsDataKeys.cs" />
     <Compile Include="EntityKeys\FreightPaymentMethodKeys.cs" />
     <Compile Include="EntityKeys\MamanSpecialActionKeys.cs" />
+    <Compile Include="EntityKeys\MamanSpecialActionStatusKeys.cs" />
     <Compile Include="EntityKeys\MamanStatusKeys.cs" />
     <Compile Include="EntityKeys\ManifestCargoStatusKeys.cs" />
     <Compile Include="EntityKeys\MAWBTypeKeys.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="EntityListQueryServices\Generated\DocumentTypeCustomsDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FreightPaymentMethodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ManifestCargoStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MAWBTypeListQueryService.Generated.cs" />
@@ -211,6 +213,7 @@
     <Compile Include="EntityListQueryServices\Generated\UIMessageAdditionalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\MamanSpecialActionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\MamanSpecialActionStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ManifestCargoStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MAWBTypeListQueryService.cs" />
@@ -254,6 +257,7 @@
     <Compile Include="EntityLists\Generated\DocumentTypeCustomsDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FreightPaymentMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanSpecialActionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\MamanSpecialActionStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ManifestCargoStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MAWBTypeList.Generated.cs" />
@@ -297,6 +301,7 @@
     <Compile Include="EntityMapping\DocumentTypeCustomsDataMap.cs" />
     <Compile Include="EntityMapping\FreightPaymentMethodMap.cs" />
     <Compile Include="EntityMapping\MamanSpecialActionMap.cs" />
+    <Compile Include="EntityMapping\MamanSpecialActionStatusMap.cs" />
     <Compile Include="EntityMapping\MamanStatusMap.cs" />
     <Compile Include="EntityMapping\ManifestCargoStatusMap.cs" />
     <Compile Include="EntityMapping\MAWBTypeMap.cs" />
@@ -340,6 +345,7 @@
     <Compile Include="EntityPOCOs\DocumentTypeCustomsData.cs" />
     <Compile Include="EntityPOCOs\FreightPaymentMethod.cs" />
     <Compile Include="EntityPOCOs\MamanSpecialAction.cs" />
+    <Compile Include="EntityPOCOs\MamanSpecialActionStatus.cs" />
     <Compile Include="EntityPOCOs\MamanStatus.cs" />
     <Compile Include="EntityPOCOs\ManifestCargoStatus.cs" />
     <Compile Include="EntityPOCOs\MAWBType.cs" />
@@ -413,6 +419,7 @@
     <Compile Include="Repsitories\Generated\DocumentTypeCustomsDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FreightPaymentMethodRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanSpecialActionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\MamanSpecialActionStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ManifestCargoStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MAWBTypeRepository.Generated.cs" />
@@ -426,6 +433,7 @@
     <Compile Include="Repsitories\Generated\UIMessageAdditionalRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageRepository.Generated.cs" />
     <Compile Include="Repsitories\MamanSpecialActionRepository.cs" />
+    <Compile Include="Repsitories\MamanSpecialActionStatusRepository.cs" />
     <Compile Include="Repsitories\MamanStatusRepository.cs" />
     <Compile Include="Repsitories\ManifestCargoStatusRepository.cs" />
     <Compile Include="Repsitories\MAWBTypeRepository.cs" />
