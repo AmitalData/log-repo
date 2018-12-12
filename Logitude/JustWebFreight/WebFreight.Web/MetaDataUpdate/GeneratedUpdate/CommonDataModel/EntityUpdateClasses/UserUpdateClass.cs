@@ -2622,7 +2622,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   MenuButton UserMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "ResetUserPassword",
-						Index = 0, 
+						Index = 2, 
 						IsActive = true,
 						LabelTextCodeCode = "User.B.ResetPassword",
 						LabelTextCodeDefaultText = "Reset Password",
@@ -2639,7 +2639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   MenuButton UserMenuButton01 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Anonymize",
-						Index = 1, 
+						Index = 3, 
 						IsActive = true,
 						LabelTextCodeCode = "User.B.Anonymize",
 						LabelTextCodeDefaultText = "Anonymize",

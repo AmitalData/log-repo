@@ -154,6 +154,53 @@ namespace WebFreight.Web.MetaDataUpdate
                 stopWatch.Start();
                 switch (message.ToLower())
                 {
+                      
+                      case "updatetenantzeronew":
+                        {
+                            MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                            updateClass.UpgradeClosedTablesForTenantZero();
+
+                            ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
+                            shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+
+                            QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
+                            quotemodelUpdateClass.LoadObjectsTenantZero(context);
+
+                            InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
+                            invoicemodelUpdateClass.LoadObjectsTenantZero(context);
+
+                            CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+                            commonmodelUpdateClass.LoadObjectsTenantZero(context);
+
+                            InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+                            inframodelUpdateClass.LoadObjectsTenantZero(context);
+
+                            GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+                            globalmodelUpdateClass.LoadObjectsTenantZero(context);
+
+
+                            updateClass.LoadUpdateTenantZero(context, false);
+
+                            updateClass.LoadOtherFields(context);
+                            updateClass.LoadTranslationHeaders();
+                            updateClass.LoadMeasurements();
+                            updateClass.LoadCreditCardTypes();
+                            updateClass.LoadMoveTypes();
+                            //updateClass.loadQueries();
+                            //updateClass.loadScreens();
+                            //updateClass.LoadObjectTableTabs();
+                            updateClass.LoadObjectTableHelperControls();
+                            updateClass.LoadEntityStatus();
+                            updateClass.LoadEventTypes();
+                            updateClass.LoadRanks();
+                            updateClass.LoadMenustables();
+                            updateClass.LoadDefaultReports();
+                            updateClass.LoadHelpResources();
+                            updateClass.CreateMasterCounter(0);
+                            updateClass.LoadEmailAlertSettings();
+
+                            break;
+                        }
                     case "updatetenantzero":
                         {
                             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
@@ -173,7 +220,28 @@ namespace WebFreight.Web.MetaDataUpdate
                             else
                             {
                                 updateClass.UpgradeClosedTablesForTenantZero();
-                                updateClass.LoadUpdateTenantZero(context);
+
+                                //ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
+                                //shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+
+                                //QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
+                                //quotemodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                //InvoiceModelUpdateClass invoicemodelUpdateClass = new InvoiceModelUpdateClass();
+                                //invoicemodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                //CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
+                                //commonmodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                //InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+                                //inframodelUpdateClass.LoadObjectsTenantZero(context);
+
+                                //GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
+                                //globalmodelUpdateClass.LoadObjectsTenantZero(context);
+
+
+                                updateClass.LoadUpdateTenantZero(context, true);
+
                                 updateClass.LoadOtherFields(context);
                                 updateClass.LoadTranslationHeaders();
                                 updateClass.LoadMeasurements();

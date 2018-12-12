@@ -288,6 +288,7 @@
     <Compile Include="Helpers\TotangoActivityLogger.cs" />
     <Compile Include="Helpers\TranslateTextsClass.cs" />
     <Compile Include="Interfaces\IDomainServiceUpdateClass.cs" />
+    <Compile Include="EntityValidateService.cs" />
     <Compile Include="LogitudeExceptionExt.cs" />
     <Compile Include="LogitudeXmlSerializer.cs" />
     <Compile Include="Models\AmitalRestrictOwnerModel.cs" />
