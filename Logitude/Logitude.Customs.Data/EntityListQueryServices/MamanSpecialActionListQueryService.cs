@@ -17,30 +17,27 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class MamanStatusListQueryService
+    public partial class MamanSpecialActionListQueryService
     {
-	    private IQueryable<MamanStatusList> GetIqueryableList(IQueryable<MamanStatus> iQueryable)
+	    private IQueryable<MamanSpecialActionList> GetIqueryableList(IQueryable<MamanSpecialAction> iQueryable)
         {
-		IQueryable<MamanStatusList> query = (from a in iQueryable
-                                            select new MamanStatusList()
+		IQueryable<MamanSpecialActionList> query = (from a in iQueryable
+                                            select new MamanSpecialActionList()
 											{
                      
 					                          Code = a.Code,
-					
-					                          Name = a.Name,
-					
-					                          SearchFields = a.SearchFields,
-					
+					                          EnglishName = a.EnglishName,
 					                          LocalName = a.LocalName,
-					
+					                          SearchFields = a.SearchFields,
+					                          Inactive = a.Inactive,
 		                    	            });
             return query;
 		}
 
-		private IQueryable<MamanStatus> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<MamanStatus> iQueryable)
+		private IQueryable<MamanSpecialAction> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<MamanSpecialAction> iQueryable)
         {
             return iQueryable;
-		}
+        }
 	}
 
 

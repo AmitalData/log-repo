@@ -17051,6 +17051,14 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             pendingErrorPlaceRepository.SubmitChanges();
         }
 
+        public void FillMamanSpecialActionTable()
+        {
+            //MamanSpecialActionRepository mamanSpecialActionRepository = new MamanSpecialActionRepository(0);
+            //AddClosedTables.AddPendingErrorPlace(new MamanSpecialAction() { Code = "2", EnglishName = "Receiving a delay certificate", LocalName = "קליטה תעודת עיכוב" }, mamanSpecialActionRepository);
+            //AddClosedTables.AddPendingErrorPlace(new MamanSpecialAction() { Code = "4", EnglishName = "Sticker Printing", LocalName = "הדפסת מדבקה" }, mamanSpecialActionRepository);
+            //AddClosedTables.AddPendingErrorPlace(new MamanSpecialAction() { Code = "5", EnglishName = "Printing Documents", LocalName = "הדפסת מסמכים" }, mamanSpecialActionRepository);
+            //mamanSpecialActionRepository.SubmitChanges();
+        }
 
 #if false
         public void FillCustomsRequestsSheetStatusTable()
