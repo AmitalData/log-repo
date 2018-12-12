@@ -60,6 +60,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Utils;
 
 namespace Logitude.Update
 {
@@ -3356,6 +3357,12 @@ User/Pass",
         private void button38_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void button39_Click(object sender, EventArgs e)
+        {
+            FutureOpenChequesBatch batch = new FutureOpenChequesBatch();
+            batch.SetTotalFutureOpenChequesInLocalCurrency(1);
         }
     }
 
