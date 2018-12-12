@@ -304,6 +304,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
                 this.Success = false;
                 this.Failed = true;
                 this.LabelText = TextCodeTranslator.Translate("General.O.ErrorwhileCreating");
+                this.ShowError();
                 //this.LabelText = "Error while creating!";
                 break;
             }
