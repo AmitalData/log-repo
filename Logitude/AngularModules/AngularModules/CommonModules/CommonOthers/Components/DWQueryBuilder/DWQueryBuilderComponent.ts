@@ -650,10 +650,20 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     var filter = Myfilter;
                     var OperationSimpol = "";
                     if (filter.Operation.Code == filter.equalsOp.Code) {
-                        OperationSimpol = " = '@@' ";
+                        if (filter.DataTypeCode == 'Integer' || filter.DataTypeCode == 'Double' || filter.DataTypeCode == 'Decimal') {
+                            OperationSimpol = " = @@ ";
+                        }
+                        else {
+                            OperationSimpol = " = '@@' ";
+                        }
                     }
                     else if (filter.Operation.Code == filter.notEqualsOp.Code) {
-                        OperationSimpol = " <> '@@' ";
+                        if (filter.DataTypeCode == 'Integer' || filter.DataTypeCode == 'Double' || filter.DataTypeCode == 'Decimal') {
+                            OperationSimpol = " <> @@ ";
+                        }
+                        else {
+                            OperationSimpol = " <> '@@' ";
+                        }                       
                     }
                     else if (filter.Operation.Code == filter.startsWithOp.Code) {
                         OperationSimpol = " like '@@%' ";

@@ -20,37 +20,46 @@ namespace WebFreight.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            try
             {
-                var AccessKey = Request.Headers["AccessKey"];
-                if (string.IsNullOrEmpty(AccessKey))
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    AccessKey = Request.QueryString["AccessKey"];
+                    var AccessKey = Request.Headers["AccessKey"];
                     if (string.IsNullOrEmpty(AccessKey))
+                    {
+                        AccessKey = Request.QueryString["AccessKey"];
+                        if (string.IsNullOrEmpty(AccessKey))
+                        {
+                            throw new Exception("you are not authonticated to call this page.");
+                        }
+                    }
+                    WebhookKeysRepository webhookKeysRepository = new WebhookKeysRepository();
+                    var MyWebHookKey = webhookKeysRepository.GetSingleWebhookKeyByAccessKey(AccessKey);
+                    if (MyWebHookKey == null)
                     {
                         throw new Exception("you are not authonticated to call this page.");
                     }
-                }
-                WebhookKeysRepository webhookKeysRepository = new WebhookKeysRepository();
-                var MyWebHookKey = webhookKeysRepository.GetSingleWebhookKeyByAccessKey(AccessKey);
-                if (MyWebHookKey == null)
-                {
-                    throw new Exception("you are not authonticated to call this page.");
-                }
-                string RecivedString = "";
+                    string RecivedString = "";
 
-                using (var reader = new StreamReader(Request.InputStream))
-                {
-                    RecivedString = reader.ReadToEnd();
-                }
+                    using (var reader = new StreamReader(Request.InputStream))
+                    {
+                        RecivedString = reader.ReadToEnd();
+                    }
 
-                if (!string.IsNullOrEmpty(RecivedString))
-                {
-                    this.SaveMessageToAnalyzeQueue(RecivedString, MyWebHookKey);
-                }
+                    if (!string.IsNullOrEmpty(RecivedString))
+                    {
+                        this.SaveMessageToAnalyzeQueue(RecivedString, MyWebHookKey);
+                    }
 
-                scope.Complete();
+                    scope.Complete();
+                }
             }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
 
         }
 
