@@ -2243,7 +2243,7 @@ namespace Logitude.XSD.INTTRA.BL
 
                         if (!string.IsNullOrEmpty(myAddress.ZipCode))
                         {
-                            iField += " - " + myAddress.ZipCode;
+                            iField += "," + myAddress.ZipCode;
                         }
 
                         AddressLines.Add(this.FormatString(iField, 35));
@@ -2398,13 +2398,13 @@ namespace Logitude.XSD.INTTRA.BL
 
                     case INTTRAPattern.Text:
                         {
-                            myFormat = @"[^a-zA-Z0-9\-\. ]*";
+                            myFormat = @"[^a-zA-Z0-9\-\,\. ]*";
                             break;
                         }
 
                     default:
                         {
-                            myFormat = @"[^a-zA-Z0-9\-\. ]*";
+                            myFormat = @"[^a-zA-Z0-9\-\,\. ]*";
                             break;
                         }
                 }
