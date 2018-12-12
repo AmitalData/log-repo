@@ -760,7 +760,7 @@ if(!GeneratedTabFeatures.Contains(FeatureCode))
 
 private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblName,int index)
 { 
-		 
+		var MenuButtonTypeAtt = MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value != null ?MButtonAtt.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value.Trim('"'):"";
 	   var EventCode = MButtonAtt.Attributes().Where(a => a.Name == "EventCode").FirstOrDefault().Value;
 	   var DefaultText = MButtonAtt.Attributes().Where(a => a.Name == "DefaultText").FirstOrDefault().Value.Trim('"'); 
 
@@ -790,14 +790,18 @@ private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblNam
     {
 	      Packagable =  FeatureIsPackagableAttr.Value;  
     }
+
+      
 	string feaureItemName =TblName.Trim('"')+"Feature_MB"+index.ToString();
-	if(!AddedMenuButtonsFeatures.Keys.Contains(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')))
+	if(!AddedMenuButtonsFeatures.Keys.Contains(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')) && MenuButtonTypeAtt.Trim('"') != "dropdownbutton")
 		{AddedMenuButtonsFeatures.Add(EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"') ,feaureItemName);}
+        if(MenuButtonTypeAtt.Trim('"') != "dropdownbutton"){
 #>      
     
 			   Feature <#= feaureItemName #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = <#= FeatureCode #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= TextCodeCode #>", NameTextCodeDefaultText = "<#= DefaultText #>", FeatureTypeCode = "ACT", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 <#+
+        }
 	   var MenuItems = MButtonAtt.Elements("MenuItem");
 	   if (MenuItems != null)
        {
@@ -811,7 +815,7 @@ private void WriteAddMenuButtonsFeaturesMethod(XElement MButtonAtt,string TblNam
 			 var ItemFeatureDefaultTextCodeAtt = item.Attributes().Where(a => a.Name == "FeatureDefaultText").FirstOrDefault();
 			 var MenuButtonType = item.Attributes().Where(a => a.Name == "MenuButtonType").FirstOrDefault().Value.Trim('"'); 
 
-			 if(MenuButtonType == "separator")
+			 if(MenuButtonType.Trim('"') == "separator")
 				continue;
 
 	   string ItemTextCodeCode = TblName.Trim('"') + ".Features." + ItemDefaultText.Trim('"').Replace(" ","") ;
@@ -863,7 +867,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 			LocalDefaultText = LocalDefaultTextAttr.Value;
 
 	   string IsActive = "false";
-       if (MenuButtonType == "dropdownbutton")
+       if (MenuButtonType.Trim('"') == "dropdownbutton")
        {
 		   IsActive = "false";
        }
@@ -886,7 +890,17 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 	    if(FeatureCodeAtt != null)
 			FeatureCode = FeatureCodeAtt.Value.ToString();
 
-	string featureClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')];
+	    string featureClassName = "null";
+        
+        if (MenuButtonType.Trim('"') != "dropdownbutton")
+        {
+                        featureClassName = AddedMenuButtonsFeatures[EventCode.Trim('"') +FeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id";
+                        
+
+        }
+        else
+            IndexOrder = "100";
+ 
 #>       
    
 			   MenuButton <#= TblName.Trim('"') #>MenuButton<#= index #> = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
@@ -900,7 +914,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 						MenuButtonGroupId = <#= TblName.Trim('"') #>MenuButtonGroup.Id,
 						ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id,
 						MenuButtonType = <#= MenuButtonType #>,
-						FeatureId = <#=featureClassName #>.Id,
+						FeatureId = <#=featureClassName #>,
 						Style = <#= Style #>,
 						LocalDefaultText = <#= LocalDefaultText #>,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
@@ -938,8 +952,14 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 			ItemTextCodeCode = ItemTextCodeAtt.Value.ToString().Trim('"');
 
 			string itemfeatureClassName = "";
+                var isActive = "true";
 			if(MenuButtonType.Trim('"') != "separator")
-				 itemfeatureClassName = "FeatureId=  " + AddedMenuButtonsFeatures[EventCode.Trim('"') +ItemFeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id,";
+                {itemfeatureClassName = "FeatureId=  " + AddedMenuButtonsFeatures[EventCode.Trim('"') +ItemFeatureCode.Trim('"')+ TblName.Trim('"')] + ".Id,";
+                }
+                else
+                {
+                    isActive = "false";
+                }
 				  
 			 #>
 
@@ -947,7 +967,7 @@ private void WriteAddMenuButtonsMethod(XElement MButtonAtt,string TblName,int in
 					{
 						EventCode = <#= EventCode #>,
 						Index = <#= IndexOrder #>, 
-						IsActive = true,
+						IsActive = <#= isActive #>,
 						LabelTextCodeCode = "<#= ItemTextCodeCode #>",
 						LabelTextCodeDefaultText = <#= DefaultText #>,
 						Tenant = 0,

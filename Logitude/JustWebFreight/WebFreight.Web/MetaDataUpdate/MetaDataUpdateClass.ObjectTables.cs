@@ -5739,8 +5739,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 KeyPropertyPath = "Code",
                 IsClosed = true,
+                IsMain = true,
                 IsAutoComplete = true,
-                CacheOnClient = false,
+                CacheOnClient = true,
                 ObjectTableTypeCode = "MD",
                 LookUp1 = "Name",
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);

@@ -134,7 +134,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (item.EndYearBalance != null)
                 {
-                    if (item.EndYearBalance.Value.ToString().Length > 8) item.EndYearBalance.Value.ToString().Substring(0, 8);
+                    if (item.EndYearBalance.Value.ToString().Length > 8)  item.EndYearBalance.Value.ToString().Substring(0, 7);
 
                     myStringBuilder.Append("a" + item.EndYearBalance.Value.ToString().PadLeft(8, '0'));
                 }
@@ -265,10 +265,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append('0', 9);
                 myStringBuilder.Append(' ', 9);
-                myStringBuilder.Append("a" + data.ByVendorList.Count().ToString().PadLeft(6, '0'));
-                myStringBuilder.Append("a" + data.ByVendorList.Count().ToString().PadLeft(6, '0'));
+            if (data.VendorsCount != null)
+            {
+                if (data.VendorsCount.Value.ToString().Length > 6) data.VendorsCount.Value.ToString().Substring(0, 5);
 
-                if (taxDeductionReportPM.Email != null)
+                myStringBuilder.Append("a" + data.VendorsCount.Value.ToString().PadLeft(6, '0'));
+            }
+            if (data.VendorsCount != null)
+            {
+                if (data.VendorsCount.Value.ToString().Length > 6) data.VendorsCount.Value.ToString().Substring(0, 5);
+
+                myStringBuilder.Append("a" + data.VendorsCount.Value.ToString().PadLeft(6, '0'));
+            }
+
+            if (taxDeductionReportPM.Email != null)
                 {
                     if (taxDeductionReportPM.Email.Length > 50) taxDeductionReportPM.Email = taxDeductionReportPM.Email.Substring(0, 50);
                     myStringBuilder.Append("a" + taxDeductionReportPM.Email.PadLeft(50, ' '));

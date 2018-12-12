@@ -1475,7 +1475,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   MenuButton CustomerTenantAccessMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Deny",
-						Index = 0, 
+						Index = 100, 
 						IsActive = true,
 						LabelTextCodeCode = "CustomerTenantAccess.B.Deny",
 						LabelTextCodeDefaultText = "Deny",

@@ -97,6 +97,33 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private void CreateShipmentFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Forwarder Partner Id",
+                FullFieldLable = "ForwarderPartnerId",
+                FieldName = "ForwarderPartnerId",
+                FieldsDataType = "LookUp",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                LookUpTableId = HybridPartnerObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ListFieldLable = "ForwarderPartnerIdListLable",
+                Operator = "Equals",
+                ListPropertyPath = "ForwarderPartnerId",
+                PMPropertyPath = "ForwarderPartnerId",
+                DisplayInList = true,
+                ListLableDefaultText = "Forwarder Partner Id",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Project #",
@@ -8708,7 +8735,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Follow Up Type",
-                FullFieldLable = "FUType",
+                FullFieldLable = "FollowUpType",
                 FieldName = "FollowUpType",
                 FieldsDataType = "Text",
                 MaxLength = 40,
@@ -8759,7 +8786,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Follow Up Date",
-                FullFieldLable = "FUDate",
+                FullFieldLable = "FollowUpDate",
                 FieldName = "FollowUpDate",
                 FieldsDataType = "DateTime",
                 MaxLength = 40,
@@ -8785,7 +8812,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Follow Up Notes",
-                FullFieldLable = "FUNotes",
+                FullFieldLable = "FollowUpNotes",
                 FieldName = "FollowUpNotes",
                 FieldsDataType = "Text",
                 MaxLength = 250,
@@ -11551,9 +11578,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Missing Documents ",
+                DefaultText = "Missing Documents",
                 FullFieldLable = "MissingDocuments",
-                FieldName = "MissingDocuments ",
+                FieldName = "MissingDocuments",
                 FieldsDataType = "List",
                 ObjectTableId = ShipmentObject.Id,
                 ObjectTableName = ShipmentObject.Name,
@@ -21615,7 +21642,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 40,
                 MinLength = 0,
                 ObjectTableId = ShipmentTypesObject.Id,
-                ObjectTableName = "ShipmentType",
+                ObjectTableName = ShipmentTypesObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 LookUpTableId = null,
@@ -21636,7 +21663,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1,
                 MinLength = 0,
                 ObjectTableId = ShipmentTypesObject.Id,
-                ObjectTableName = "ShipmentType",
+                ObjectTableName = ShipmentTypesObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 LookUpTableId = null,
@@ -21657,7 +21684,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1000,
                 MinLength = 0,
                 ObjectTableId = ShipmentTypesObject.Id,
-                ObjectTableName = "ShipmentType",
+                ObjectTableName = ShipmentTypesObject.Name,
                 ObjectTablePlural = "ShipmentTypes",
                 ObjectTableSingular = "ShipmentType",
                 Tenant = 0,
@@ -24757,7 +24784,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Measurement",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Measurement",
+                FullFieldLable = "MeasurementId",
                 FieldName = "MeasurementId",
                 ShortFieldLable = "MeasurementId",
                 ShortFieldLableDefaultText = "UOM",
@@ -24950,7 +24977,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Charges Type",
-                FullFieldLable = "ChargesType",
+                FullFieldLable = "ChargesTypeId",
                 FieldName = "ChargesTypeId",
                 FieldsDataType = "LookUp",
                 IsRequired = true,
@@ -25471,7 +25498,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Charges Type",
                 DisplayOnLookUp = false,
-                FullFieldLable = "ChargesType",
+                FullFieldLable = "ChargesTypeId",
                 FieldName = "ChargesTypeId",
                 FieldsDataType = "LookUp",
                 IsCustom = false,

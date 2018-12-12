@@ -26,6 +26,8 @@ namespace WebFreight.Web
         {
             try
             {
+                // https://stackoverflow.com/questions/123726/401-response-code-for-json-requests-with-asp-net-mvc
+
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     Response.Clear();
@@ -59,6 +61,8 @@ namespace WebFreight.Web
                             {
                                 this.SaveMessageToAnalyzeQueue(iString);
 
+                                Response.Clear();
+                                Response.ContentType = "text/xml";
                                 Response.Write("<status>OK</status>");
                                 Response.StatusCode = 200;
                                 Response.End();
@@ -66,8 +70,10 @@ namespace WebFreight.Web
 
                             else
                             {
+                                Response.Clear();
+                                Response.ContentType = "text/xml";
                                 Response.Write("<status>Fail</status>");
-                                Response.StatusCode = 401;
+                                Response.StatusCode = 404;
                                 Response.End();
                             }
                         }
@@ -75,8 +81,10 @@ namespace WebFreight.Web
 
                     else
                     {
+                        Response.Clear();
+                        Response.ContentType = "text/xml";
                         Response.Write("<status>Fail</status>");
-                        Response.StatusCode = 401;
+                        Response.StatusCode = 404;
                         Response.End();
                     }
 
@@ -103,11 +111,11 @@ namespace WebFreight.Web
             }
         }
 
-        //protected override void Render(HtmlTextWriter writer)
-        //{
-        //    base.Render(writer);
-        //    Response.TrySkipIisCustomErrors = true;
-        //}
+        protected override void Render(HtmlTextWriter writer)
+        {
+            base.Render(writer);
+            Response.TrySkipIisCustomErrors = true;
+        }
 
         private void SaveMessageToAnalyzeQueue(string xmlfileText)
         {

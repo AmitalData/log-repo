@@ -80,7 +80,7 @@ import {WithholdingTaxDeductionTypePMService} from './Services/StandardPMs/Withh
 import { ExternalReconciliationPMService } from './Services/StandardPMs/ExternalReconciliationPMService';
 import { GLAccountMoreDataPMService } from './Services/StandardPMs/GLAccountMoreDataPMService';
 import { TaxDeductionReportPMService } from './Services/StandardPMs/TaxDeductionReportPMService';
-
+import { OpenFormatReportPMService } from './Services/StandardPMs/OpenFormatReportPMService';
 
 //#endregion
 import {AccountingPeriodExtendedListService} from './Services/ExtendedLists/AccountingPeriodExtendedListService';
@@ -176,7 +176,7 @@ export class ModuleProviders {
                 
             case "TaxDeductionReportPMService": { myResult = new TaxDeductionReportPMService(); break; }
 
-
+            case "OpenFormatReportPMService": { myResult = new OpenFormatReportPMService(); break; }
 
 
             case "AccountingPeriodPMService": { myResult = new AccountingPeriodPMService(); break; }

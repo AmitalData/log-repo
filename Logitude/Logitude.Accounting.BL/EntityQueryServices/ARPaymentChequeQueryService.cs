@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                           BankBranch = a.BankBranch,
                                                           BankAccount = a.BankAccount,
                                                           StatusName = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.EnglishName : "",
-                                                          
+                                                          StatusCode = a.ARPaymentChequeStatus != null ? a.ARPaymentChequeStatus.Code : "",
 
                                                       }).FirstOrDefault();
             return paymentCheques;
@@ -94,7 +94,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<ARPaymentChequePM> GetOpenARPaymentCheques( int tenant)
         {
             List<ARPaymentCheque> pocos = (from a in context.ARPaymentCheques
-                                    where a.ValueDate > DateTime.Today && a.Tenant == tenant
+                                    where a.ValueDate == DateTime.Today && a.Tenant == tenant
                                     select a).ToList();
 
             return pocos.Select(r => this.GetEntityPM(r)).ToList();
