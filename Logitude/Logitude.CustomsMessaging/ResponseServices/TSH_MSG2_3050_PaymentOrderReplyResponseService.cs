@@ -311,7 +311,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     HighLowValue =  currentDeclarationCourierStatusPM.HighLowValue;
                 }
-                if (_PaymentOrderPM.PaymentProcessCode == "1" && _PaymentOrderPM.PaymentStatusCode == "3" && HighLowValue != "L")
+                if (_PaymentOrderPM.PaymentProcessCode == "1" && _PaymentOrderPM.PaymentStatusCode == "3")// && HighLowValue != "L")//Eitan H 12/12/18 task 46063 remove != "L"
                 {
                     var myInsertEventContextTagModel = _PaymentOrderPM.CurrentContextTag as EventContextTagModel;
                     myInsertEventContextTagModel.FUStatusCode = "LP2UB";
