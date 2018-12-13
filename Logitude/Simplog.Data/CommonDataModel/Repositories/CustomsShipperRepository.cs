@@ -90,6 +90,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public bool CheckIfCustomsShipperExist(string shipperCode, int tenant)
+        {
+            return (from a in context.CustomsShippers where a.CustomsShipperCode == shipperCode && a.Tenant == tenant select a).Any();
+        }
+  
     }
 }
 

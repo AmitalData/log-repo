@@ -204,31 +204,31 @@
                                             <li class="Last-Transaction-Item RecentEntityItem" *ngFor="let transaction of lastTransactionsList">
 
                                                 <!-- SourceType -->
-                                                <div style="width: 30px; padding: 10px 5px 2px 5px;">
+                                                <div style="width: 30px; padding: 10px 5px 2px 5px;    font-size: 11px;">
                                                     <span title="{{transaction['SourceType']}}"
                                                           [class]="'SourceTypeIcon color-' + transaction['SourceTypeCode']"
                                                           (click)="OpenSource(transaction['SourceId'])"
                                                           style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">{{GetIconText(transaction)}}</span>
                                                 </div>
-                                                <div style="width: 50px;padding: 9px 0;">
+                                                <div style="width: 50px;padding: 9px 0;    font-size: 11px;">
                                                     <a href="javascript:;" (click)="OpenSource(transaction, transaction['SourceId'])">
                                                         {{ transaction['SourceNumber'] }}
                                                     </a>
                                                 </div>
 
-                                                <div style="width: 100px;padding: 9px 0;">
+                                                <div style="width: 100px;padding: 9px 0;    font-size: 11px;">
                                                     {{ transaction.AccountingDate | DateTimePipe:'SD' }}
                                                 </div>
-                                                <div class="TextTrimming" style="width: 100px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;" [class.red]='GetTransAmount(transaction)>0'>
+                                                <div class="TextTrimming" style="width: 110px;    font-size: 12px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;" [class.red]='GetTransAmount(transaction)>0'>
                                                     {{ GetTransAmount(transaction) | NumbersPipe:'N2' }}
                                                 </div>
 
-                                                <div style="width: 145px;padding: 9px 5px;">
+                                                <div style="width: 150px;padding: 9px 5px;    font-size: 11px;">
                                                     {{ GetReferencesText(transaction) }}
                                                 </div>
-                                                <div style="width: 20px;padding: 5px 0;height: 100%;" title="{{GetIndicatorText(transaction)}}">
+                                                <!-- <div style="width: 20px;padding: 5px 0;height: 100%;" title="{{GetIndicatorText(transaction)}}">
                                                     <div class="circleDraw" style="height: 7px;" [class.orangeCircle]="transaction['OpenAmount'] != CalculateOriginalAmount(transaction)"></div>
-                                                </div>
+                                                </div> -->
 
                                             </li>
                                         </ul>
