@@ -90,6 +90,27 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+
+        public int? GetLastCustomerDepositionCreated(List<int> customerTenantIds)
+        {
+            int? tenant = null;
+
+            CustomerDeposition customerDeposition = (from a in context.CustomerDepositions
+                    where customerTenantIds.Contains(a.Tenant)
+                    select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
+
+            if (customerDeposition != null)
+            {
+                tenant = customerDeposition.Tenant;
+            }
+
+            return tenant;
+
+        }
+
+
+
     }
 }
 

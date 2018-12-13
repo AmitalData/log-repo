@@ -26,6 +26,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                 ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
                 importerDepositionHelper.StartImporterDeposition(importerDepositionAM);
+                importerDepositionHelper.AddAPILogs(importerDepositionAM);
+
 
                 return null;
             }
