@@ -1520,12 +1520,12 @@ namespace MeatadataGeneratorTool
                 ObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsDeleted = true;
                 TempObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsDeleted = true;
                 ObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsChecked = true;
-                //ObsList.Remove(selected);
-                //TempObsList.Remove(selected);
-                
+                ObsList.Remove(selected);
+                TempObsList.Remove(selected);
 
-                //FirePropertyChanged("ObsList");
-                //FirePropertyChanged("TempObsList");
+
+                FirePropertyChanged("ObsList");
+                FirePropertyChanged("TempObsList");
 
                 this.SetLookUpFieldsList();
 
