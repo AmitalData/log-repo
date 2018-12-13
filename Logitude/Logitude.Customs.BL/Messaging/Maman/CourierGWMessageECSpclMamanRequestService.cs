@@ -35,11 +35,19 @@ namespace Logitude.Customs.BL.Messaging.Maman
         private DeclarationPM _DeclarationPM;
         private CourierMasterPM _CourierMasterPM;
         
+
+        public static string TestSend()
+        {
+            var courierGWMessageECSpclMamanRequestService =new CourierGWMessageECSpclMamanRequestService();
+            string actionResultString =courierGWMessageECSpclMamanRequestService.BuildQueueSendWebAPI("1-222", 1, MamanActionCode.Upsert, MamanSpecialCode.DelayIt);
+            return actionResultString;
+        }
+
         public string BuildQueueSendWebAPI(
             string declarationId, int tenant,
             MamanActionCode mamanActionCode,
-            MamanSpecialCode mamanSpecialCode,
-            CourierMasterPM courierMasterPM = null)
+            MamanSpecialCode mamanSpecialCode
+            /*CourierMasterPM courierMasterPM = null*/)
         {
 
             var context = CustomContext.GetContext(tenant);
@@ -54,15 +62,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {
                 throw new Exception($"Declaration Is not CourierDeclaration  declarationId={declarationId}");
             }
-            //CourierDeclarations
-            //myCourierMasterQueryService.GetNotConnectedDeclaratins
 
-            _CourierMasterPM = courierMasterPM ?? myCourierMasterQueryService.GetByDeclarationId(declarationId, tenant);
-            if (_CourierMasterPM == null)
-            {
-                //throw new Exception("Declaration is null:" + _CustomFileCreditModel.AppicationId);
-                throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
-            }
+#if waitTillMiritWillCreateDBAndScreen
+
+            //בעת שליחת המסר תבוצע שליפה של טבלת DeclarationMamanSpecialAction לפי מפתח הצהרה + קוד פעולה מיוחדת, והנתונים יישלחו לפי קוד פעולה שהמשתמש בחר + נתונים מ DB של הצהרה + DeclarationMamanSpecialAction
+            var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(context);
+            var pmDeclarationMamanSpecialAction =declarationMamanSpecialActionQueryService.GetSingle(tenant, declarationId,  ((int)mamanSpecialCode).ToString());
+
+#endif
 
             ECSpclMamanMessage myECSpclMamanData = CreateCourierECSpclMamanMessage(mamanActionCode,mamanSpecialCode);
             string messageToMaman = "";

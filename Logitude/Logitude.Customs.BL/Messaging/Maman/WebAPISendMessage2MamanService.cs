@@ -22,7 +22,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.Messaging.Maman
 {
@@ -39,8 +40,15 @@ namespace Logitude.Customs.BL.Messaging.Maman
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
             DocumentRepository documentRepository = new DocumentRepository(commonContext);
+            var amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+            var def =myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false,true);
 
-
+            bool sendMamanWEBAPIIsOn = def.DEFDATA /*DefaultValue*/ == "Y";
+            if (!sendMamanWEBAPIIsOn)
+            {
+                throw new Exception("WebAPISendMessage2MamanService()->!sendMamanWEBAPIIsOn");
+            }
 
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
             var defDefaultJSON =customsPartnerFtpDetails.GetAllInterfaceName().First(r => r.Key == InterfaceName).Value;
@@ -74,7 +82,13 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {
                 throw new Exception($" הינו שדה חובה {defDefault.Name} -סיסמא");
             }
-
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
+            string loggedContactId = "";
+            if (loggedContact != null)
+            {
+                loggedContactId = loggedContact.Id;
+            }
 
             //.PostIt("", "F_unitedf", "Unit2019", data);
             var settings = new Courier2MamanCommSettings()
@@ -87,7 +101,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 password = dtoWebApiDefinition.Password,// "Unit2019",
 
                 Tenant = tenant,
-                DeclarationId = declarationId
+                DeclarationId = declarationId,
+                LoggedContactId = loggedContactId
             };
             var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
 
@@ -104,13 +119,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
-            string loggedContactId = "";
-            if (loggedContact != null)
-            {
-                loggedContactId = loggedContact.Id;
-            }
+
 
             CommunicationLog commLog = new CommunicationLog()
             {
@@ -197,6 +206,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         public int Tenant { get; set; }
         public string DeclarationId { get; set; }
         public string MessageCode { get; internal set; }
+        public string LoggedContactId { get; internal set; }
     }
 }
 

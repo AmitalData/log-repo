@@ -1052,7 +1052,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-        public string GetMyFUStatusXML(string event_id, string status_id, string comments, string xmlStatus, DateTime statusDateTime, bool isRaiseEvent = false) // Mirit 25/05/15 Task 13521
+        public  string GetMyFUStatusXML(string event_id, string status_id, string comments, string xmlStatus, DateTime statusDateTime, bool isRaiseEvent = false) // Mirit 25/05/15 Task 13521
         {
             string loggingUserId = this._LoggingUserId;
             if (String.IsNullOrWhiteSpace(xmlStatus))

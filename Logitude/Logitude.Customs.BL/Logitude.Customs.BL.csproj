@@ -1707,6 +1707,7 @@
     <Compile Include="EntityUpdateServices\PhysicalCheckUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsVendorUpdateService.cs" />
+    <Compile Include="TraceEvents\UnifreightFUStatusTaskService.cs" />
     <Compile Include="WCOResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1738,7 +1739,7 @@
     <Compile Include="TraceEvents\AmitalEventTracerModel.cs" />
     <Compile Include="TraceEvents\DeclarationTracing.cs" />
     <Compile Include="EntityUpdateServices\UnifreightDeclarationUpdateService.cs" />
-    <Compile Include="TraceEvents\UnifreighEventTaskService.cs" />
+    <Compile Include="TraceEvents\UnifreightEventTaskService.cs" />
     <Compile Include="Utils\CustomsSettingUtil.cs" />
     <Compile Include="Utils\DCAFilePraser.cs" />
     <Compile Include="Utils\InsuranceFreightUtil.cs" />
