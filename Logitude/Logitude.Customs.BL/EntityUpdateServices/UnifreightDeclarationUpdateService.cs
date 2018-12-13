@@ -145,7 +145,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                 }
-                if(lCUSTOMFILENO < 0)
+                if(lCUSTOMFILENO < 1)
                 {
                     if (!long.TryParse(_DirtyDeclarationPM.CustomFileNo, out lCUSTOMFILENO))
                     {
