@@ -520,7 +520,7 @@
     <None Include="EntityFiles\ShipmentsModel\AWBChargesCode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBCustomsInformation.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBInformation.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\AWBMessagingStock.lxml">
+    <None Include="EntityFiles\ShipmentsModel\MessagingStock.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ShipmentsModel\AWBOCI.lxml" />

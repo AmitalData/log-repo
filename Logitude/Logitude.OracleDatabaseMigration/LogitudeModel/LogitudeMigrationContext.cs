@@ -1559,8 +1559,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<AWBInformation> AWBInformations { get; set; }
         public IDbSet<ShipmentPackageItem> ShipmentPackageItems { get; set; }
         public IDbSet<ShipmentCommodity> ShipmentCommodities { get; set; }
-        public IDbSet<AWBMessagingStock> AWBMessagingStocks { get; set; }
-        public IDbSet<AWBStockUsageHistory> AWBStockUsageHistories { get; set; }
+        public IDbSet<MessagingStock> MessagingStocks { get; set; }
+        public IDbSet<MessagingStockUsageHistory> MessagingStockUsageHistories { get; set; }
         public IDbSet<UserPermittedProduct> UserPermittedProducts { get; set; }
         public IDbSet<AccountingInformationIdentifier> AccountingInformationIdentifiers { get; set; }
         public IDbSet<ManifestStatus> ManifestStatus { get; set; }

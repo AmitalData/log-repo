@@ -8,7 +8,7 @@ using System.Web;
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
-    public class AWBMessagingStockPM
+    public class MessagingStockPM
     {
         [Key]
         public string Id { get; set; }
@@ -59,17 +59,17 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsTotalPriceChanged { get; set; }
         public bool IsOtherFieldsChanged { get; set; }
 
-        private List<AWBStockUsageHistoryPM> stockUsageHistories;
+        private List<MessagingStockUsageHistoryPM> stockUsageHistories;
         [Include]
         [Composition]
         [Association("StockUsageHistoryPMStockPM", "Id", "StockId")]
-        public virtual List<AWBStockUsageHistoryPM> StockUsageHistories
+        public virtual List<MessagingStockUsageHistoryPM> StockUsageHistories
         {
             get
             {
                 if (stockUsageHistories == null)
                 {
-                    stockUsageHistories = new List<AWBStockUsageHistoryPM>();
+                    stockUsageHistories = new List<MessagingStockUsageHistoryPM>();
                 }
 
                 return this.stockUsageHistories;

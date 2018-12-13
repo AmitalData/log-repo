@@ -694,7 +694,7 @@
     <Compile Include="QuoteModel\Repositories\QuoteTemplateHeaderFieldRepository.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteTemplateSectionModificationRepository.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteTotalVATRepository.cs" />
-    <Compile Include="ShipmentsModel\AWBStocksDataViewContext.cs" />
+    <Compile Include="ShipmentsModel\MessagingStockDataViewContext.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\AccountingInformationIdentifier.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\AWBAdditionalHandlingInfo.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\MessagingStock.cs" />
@@ -831,7 +831,7 @@
     <Compile Include="CommonDataModel\Mapping\ShippingAgentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ShippingLineMap.cs" />
     <Compile Include="CommonDataModel\Mapping\SmallDocumentMap.cs" />
-    <Compile Include="ShipmentsModel\IAWBStocksDataViewContext.cs" />
+    <Compile Include="ShipmentsModel\IMessagingStockDataViewContext.cs" />
     <Compile Include="ShipmentsModel\Mapping\AccountingInformationIdentifierMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\AWBAdditionalHandlingInfoMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\MessagingStockMap.cs" />
@@ -964,8 +964,8 @@
     <Compile Include="CommonDataModel\Repositories\ShippingLineRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\AccountingInformationIdentifierRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\AWBAdditionalHandlingInfoRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\AWBMessagingStockRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\AWBStockUsageHistoryRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\MessagingStockRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\MessagingStockUsageHistoryRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransmissionsStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRADocumentTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRASIStatusRepository.cs" />
@@ -1551,7 +1551,7 @@
     <Content Include="InvoiceModel\AgingReportInvoiceDataViewScript.sql" />
     <Content Include="InvoiceModel\APInvoiceAgingReportScript.sql" />
     <Content Include="QuoteModel\QuotesAutomaticallyClosingDailyJob.sql" />
-    <Content Include="ShipmentsModel\AWBStocksDataView.sql" />
+    <Content Include="ShipmentsModel\MessagingStockDataView.sql" />
     <Content Include="ShipmentsModel\PickUpDeliverySql.sql" />
     <Content Include="ShipmentsModel\ShipmentCountryDashboardViewScript.sql" />
     <Content Include="ShipmentsModel\ShipmentDataViewScipt.sql" />

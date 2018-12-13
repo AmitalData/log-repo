@@ -9,7 +9,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
     public partial class ShipmentMapping
     {
-        public static void MapEntity(AWBMessagingStockPM entityPM, AWBMessagingStock entityPOCO, bool isNewEntity)
+        public static void MapEntity(MessagingStockPM entityPM, MessagingStock entityPOCO, bool isNewEntity)
         {
             if (isNewEntity)
             {
@@ -32,7 +32,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             BuildSearchFields(entityPM, entityPOCO);
         }
 
-        private static void BuildSearchFields(AWBMessagingStockPM entityPM, AWBMessagingStock entityPOCO)
+        private static void BuildSearchFields(MessagingStockPM entityPM, MessagingStock entityPOCO)
         {
             string mySearchFields = "";
 

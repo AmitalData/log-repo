@@ -10,25 +10,25 @@ using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
-    public class AWBStockUsageHistoryQuery
+    public class MessagingStockUsageHistoryQuery
     {
-        AWBStockUsageHistoryRepository repository;
+        MessagingStockUsageHistoryRepository repository;
 
-        public AWBStockUsageHistoryQuery(int tenant)
+        public MessagingStockUsageHistoryQuery(int tenant)
         {
-            repository = new AWBStockUsageHistoryRepository(tenant);
+            repository = new MessagingStockUsageHistoryRepository(tenant);
         }
 
-        public AWBStockUsageHistoryQuery(AWBStockUsageHistoryRepository repository)
+        public MessagingStockUsageHistoryQuery(MessagingStockUsageHistoryRepository repository)
         {
             this.repository = repository;
         }
 
-        public IQueryable<AWBStockUsageHistoryPM> GetStockUsageHistoriesByStockId(string stockId)
+        public IQueryable<MessagingStockUsageHistoryPM> GetStockUsageHistoriesByStockId(string stockId)
         {
-            return (from a in repository.Context.AWBStockUsageHistories
+            return (from a in repository.Context.MessagingStockUsageHistories
                     where a.StockId == stockId
-                    select new AWBStockUsageHistoryPM()
+                    select new MessagingStockUsageHistoryPM()
                     {
                         Id = a.Id,
                         Tenant = a.Tenant,
@@ -46,11 +46,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     });
         }
 
-        public IQueryable<AWBStockUsageHistoryList> GetIQueryableEntityList(IQueryable<AWBStockUsageHistory> iQueryable, int tenant)
+        public IQueryable<MessagingStockUsageHistoryList> GetIQueryableEntityList(IQueryable<MessagingStockUsageHistory> iQueryable, int tenant)
         {
-            IQueryable<AWBStockUsageHistoryList> myResult =
+            IQueryable<MessagingStockUsageHistoryList> myResult =
                 from a in iQueryable.Include("LastActionByUser").Include("LastActionByUser.Contact")
-                select new AWBStockUsageHistoryList()
+                select new MessagingStockUsageHistoryList()
                 {
                     Id = a.Id,
                     Tenant = a.Tenant,

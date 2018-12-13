@@ -75,7 +75,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel
 		AWBChargesCodeUpdateClass  AWBChargesCodeUpdateClass = new AWBChargesCodeUpdateClass();
 		AWBCustomsInformationUpdateClass  AWBCustomsInformationUpdateClass = new AWBCustomsInformationUpdateClass();
 		AWBInformationUpdateClass  AWBInformationUpdateClass = new AWBInformationUpdateClass();
-		AWBMessagingStockUpdateClass  AWBMessagingStockUpdateClass = new AWBMessagingStockUpdateClass();
+		MessagingStockUpdateClass  AWBMessagingStockUpdateClass = new MessagingStockUpdateClass();
 		AWBOCIUpdateClass  AWBOCIUpdateClass = new AWBOCIUpdateClass();
 		AWBSpecialHandlingCodeUpdateClass  AWBSpecialHandlingCodeUpdateClass = new AWBSpecialHandlingCodeUpdateClass();
 		CommodityPackageUpdateClass  CommodityPackageUpdateClass = new CommodityPackageUpdateClass();

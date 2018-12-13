@@ -33,7 +33,7 @@ namespace WebFreight.Web.MetaDataUpdate
             string APPaymentTableId = ObjectContext.ObjectTables.Where(f => f.Name == "APPayment" && f.Tenant == tenant).FirstOrDefault().Id;
             string CommLogTableId = ObjectContext.ObjectTables.Where(f => f.Name == "CommunicationLog" && f.Tenant == tenant).FirstOrDefault().Id;
             string CustomerTableId = ObjectContext.ObjectTables.Where(f => f.Name == "Customer" && f.Tenant == tenant).FirstOrDefault().Id;
-            string AWBMessagingStockTableId = ObjectContext.ObjectTables.Where(f => f.Name == "AWBMessagingStock" && f.Tenant == tenant).FirstOrDefault().Id;
+            string MessagingStockTableId = ObjectContext.ObjectTables.Where(f => f.Name == "MessagingStock" && f.Tenant == tenant).FirstOrDefault().Id;
             string TenantManagementTableId = ObjectContext.ObjectTables.Where(d => d.Name == "TenantManagement" && d.Tenant == tenant).FirstOrDefault().Id;
             string ContactTableId = ObjectContext.ObjectTables.Where(f => f.Name == "User" && f.Tenant == tenant).FirstOrDefault().Id;
             #region Features
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate
             FeaturePM CustomerFeature_Totango = features.Where(d => d.Code == "TOTANGO" && d.ObjectTableId == CustomerTableId).FirstOrDefault();
             FeaturePM CustomerFeature_SetAsPotential = features.Where(d => d.Code == "SETASPOTENTIAL" && d.ObjectTableId == CustomerTableId).FirstOrDefault();
 
-            FeaturePM AWBMessagingStockFeature_Cancel = features.Where(d => d.Code == "AWBMessagingStock.Action.Cancel" && d.ObjectTableId == AWBMessagingStockTableId).FirstOrDefault();
+            FeaturePM AWBMessagingStockFeature_Cancel = features.Where(d => d.Code == "AWBMessagingStock.Action.Cancel" && d.ObjectTableId == MessagingStockTableId).FirstOrDefault();
 
             FeaturePM TenantManagementFeature_EraseData = features.Where(d => d.Code == "TenantManagement.Action.EraseData" && d.ObjectTableId == TenantManagementTableId).FirstOrDefault();
             #endregion
@@ -2032,7 +2032,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 MenuButtonGroupType = "AWBMessagingStockEdit",
                 Name = "AWBMessagingStockEditButtonsGroup",
-                ObjectTableId = AWBMessagingStockTableId,
+                ObjectTableId = MessagingStockTableId,
                 Tenant = tenant,
             }, MenuButtonGroupRepository, TenantMenuButtonGroups);
 
@@ -2044,7 +2044,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 LabelTextCodeDefaultText = "More",
                 Tenant = tenant,
                 MenuButtonGroupId = AWBMessagingStockMenuButtonGroup.Id,
-                ObjectTableId = AWBMessagingStockTableId,
+                ObjectTableId = MessagingStockTableId,
                 MenuButtonType = "dropdownbutton",
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
 
@@ -2055,7 +2055,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 IsActive = true,
                 LabelTextCodeCode = "AWBMessagingStock.B.Cancel",
                 LabelTextCodeDefaultText = "Cancel",
-                ObjectTableId = AWBMessagingStockTableId,
+                ObjectTableId = MessagingStockTableId,
                 Tenant = tenant,
                 MenuButtonGroupId = AWBMessagingStockMenuButtonGroup.Id,
                 ParentMenuButtonId = AWBMessagingStockMoreButton.Id,

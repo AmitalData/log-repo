@@ -167,14 +167,14 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private void BuildAWBMessagingStockScreens(Dictionary<string, Screen> tenantScreens, Dictionary<string, ScreenField> tenantScreenFields)
         {
-            ObjectTable entityTable = ObjectContext.ObjectTables.Where(d => d.Name == "AWBMessagingStock" && d.Tenant == 0).FirstOrDefault();
+            ObjectTable entityTable = ObjectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault();
 
             ObjectField objectField_01 = ObjectContext.ObjectFields.Where(d => d.FieldName == "StartDate" && d.ObjectTableId == entityTable.Id && d.Tenant == 0).FirstOrDefault();
             ObjectField objectField_02 = ObjectContext.ObjectFields.Where(d => d.FieldName == "EndDate" && d.ObjectTableId == entityTable.Id && d.Tenant == 0).FirstOrDefault();
             ObjectField objectField_03 = ObjectContext.ObjectFields.Where(d => d.FieldName == "Amount" && d.ObjectTableId == entityTable.Id && d.Tenant == 0).FirstOrDefault();
             ObjectField objectField_04 = ObjectContext.ObjectFields.Where(d => d.FieldName == "Remaining" && d.ObjectTableId == entityTable.Id && d.Tenant == 0).FirstOrDefault();
 
-            Screen headerScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AWBMessagingStock.HeaderScreen", Name = "Header Screen", ObjectTableId = entityTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true, Tenant = 0 }, ScreensRepository, tenantScreens);
+            Screen headerScreen = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MessagingStock.HeaderScreen", Name = "Header Screen", ObjectTableId = entityTable.Id, NumberOfColumns = 2, NumberOfRows = 2, IsReadOnly = true, Tenant = 0 }, ScreensRepository, tenantScreens);
             ScreenField screenField_01 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = objectField_01.Id, ScreenId = headerScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
             ScreenField screenField_02 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ObjectFieldId = objectField_02.Id, ScreenId = headerScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);
             ScreenField screenField_03 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = objectField_03.Id, ScreenId = headerScreen.Id, Tenant = 0, }, ScreenFieldsRepository, tenantScreenFields);

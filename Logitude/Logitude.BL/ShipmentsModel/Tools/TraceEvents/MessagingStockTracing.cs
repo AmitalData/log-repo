@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 {
-    public class AWBMessagingStockTracing
+    public class MessagingStockTracing
     {
-        public static void Trace(AWBMessagingStockPM entityPM, AWBMessagingStock poco, string loggedContactId, bool isNewEntity)
+        public static void Trace(MessagingStockPM entityPM, MessagingStock poco, string loggedContactId, bool isNewEntity)
         {
             if (isNewEntity)
             {
@@ -25,7 +25,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     EventTypeCode = "CRMS",
                     UserId = loggedContactId,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "AWBMessagingStock",
+                    ObjectTableName = "MessagingStock",
                 });
             }
 
@@ -34,12 +34,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 string notes = "";
                 if (entityPM.IsCancelled && !poco.IsCancelled)
                 {
-                    notes = "AWB Messaging Stock Cancelled";
+                    notes = "Messaging Stock Cancelled";
                 }
 
                 else if (!entityPM.IsCancelled && poco.IsCancelled)
                 {
-                    notes = "AWB Messaging Stock Activated";
+                    notes = "Messaging Stock Activated";
                 }
 
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -48,7 +48,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     EventTypeCode = "UPMS",
                     UserId = loggedContactId,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "AWBMessagingStock",
+                    ObjectTableName = "MessagingStock",
                     Notes = notes,
                 });
             }

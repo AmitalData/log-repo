@@ -200,10 +200,10 @@ namespace Logitude.XSD
                 if (myAWBResultClass.IsAWBStockPrepaid)
                 {                    
                     DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(myAWBResultClass.Tenant).Date;
-                    AWBMessagingStockRepository stockRepository = new AWBMessagingStockRepository(myShipmentContext);
-                    AWBStockUsageHistoryRepository usageHistoryRepository = new AWBStockUsageHistoryRepository(myShipmentContext);
-                    IQueryable<AWBMessagingStock> myStocksData = stockRepository.GetAWBMessagingStocksByTenant(myAWBResultClass.Tenant);
-                    IQueryable<AWBStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantAWBStockUsageHistory(myAWBResultClass.Tenant);
+                    MessagingStockRepository stockRepository = new MessagingStockRepository(myShipmentContext);
+                    MessagingStockUsageHistoryRepository usageHistoryRepository = new MessagingStockUsageHistoryRepository(myShipmentContext);
+                    IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myAWBResultClass.Tenant);
+                    IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(myAWBResultClass.Tenant);
 
                     myStocksData = myStocksData.Where(d => d.StartDate <= todayDate && d.EndDate > todayDate && d.Remaining > 0 && !d.IsCancelled);
 

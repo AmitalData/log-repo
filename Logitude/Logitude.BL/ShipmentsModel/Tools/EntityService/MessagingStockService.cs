@@ -15,21 +15,21 @@ using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 
 namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 {
-    public class AWBMessagingStockService
+    public class MessagingStockService
     {
         private int tenant;
         private bool isNewEntity;
         private Contact loggedContact;
-        public AWBMessagingStock entityPoco { get; set; }
-        private AWBMessagingStockPM entityPM;
+        public MessagingStock entityPoco { get; set; }
+        private MessagingStockPM entityPM;
         private IShipmentsContext objectContext;
-        private AWBMessagingStockRepository entityRepository;
-        public AWBMessagingStockService(IShipmentsContext objectContext, AWBMessagingStockPM entityPM)
+        private MessagingStockRepository entityRepository;
+        public MessagingStockService(IShipmentsContext objectContext, MessagingStockPM entityPM)
         {
             this.entityPM = entityPM;
             this.tenant = entityPM.DummyTenant;
             this.objectContext = objectContext;
-            this.entityRepository = new AWBMessagingStockRepository(objectContext);
+            this.entityRepository = new MessagingStockRepository(objectContext);
             this.GetLoggedContact();
         }
 
@@ -43,8 +43,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         public void Create()
         {
             this.isNewEntity = true;
-            this.entityPM.Id = IdCounter.GetNumber("AWBMessagingStock", tenant).ToString();
-            this.entityPoco = new AWBMessagingStock()
+            this.entityPM.Id = IdCounter.GetNumber("MessagingStock", tenant).ToString();
+            this.entityPoco = new MessagingStock()
             {
                 Id = entityPM.Id,
                 TenantNumber = entityPM.TenantNumber
@@ -52,7 +52,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            AWBMessagingStockTracing.Trace(entityPM, entityPoco, loggedContact.Id, isNewEntity);
+            MessagingStockTracing.Trace(entityPM, entityPoco, loggedContact.Id, isNewEntity);
             ShipmentMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
             entityRepository.Add(entityPoco);
@@ -62,11 +62,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         public void Update()
         {
             this.isNewEntity = false;
-            this.entityPoco = entityRepository.GetSingleAWBMessagingStock(entityPM.Id);
+            this.entityPoco = entityRepository.GetSingleMessagingStock(entityPM.Id);
             
             this.InitializeComponent();
 
-            AWBMessagingStockTracing.Trace(entityPM, entityPoco, loggedContact.Id, isNewEntity);
+            MessagingStockTracing.Trace(entityPM, entityPoco, loggedContact.Id, isNewEntity);
             ShipmentMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
             entityRepository.Update(entityPoco);

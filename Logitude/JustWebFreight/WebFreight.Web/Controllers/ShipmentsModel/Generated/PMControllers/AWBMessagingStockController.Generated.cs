@@ -30,10 +30,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.AuthenticationOnTenant(0);
-                SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", 0);
+                SecurityUtility.CheckContactFeature("MessagingStock", "READ", 0);
 
-                AWBMessagingStockQuery entityQuery = new AWBMessagingStockQuery(tenant);
-                AWBMessagingStockPM myResult = entityQuery.GetSinglePM(id, tenant);
+                MessagingStockQuery entityQuery = new MessagingStockQuery(tenant);
+                MessagingStockPM myResult = entityQuery.GetSinglePM(id, tenant);
                 myResult.DummyTenant = tenant;
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -45,7 +45,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-        public HttpResponseMessage Post(AWBMessagingStockPM entityPM)
+        public HttpResponseMessage Post(MessagingStockPM entityPM)
         {
             try
             {
@@ -56,13 +56,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(0);
-                    SecurityUtility.CheckContactFeature("AWBMessagingStock", "NEW", 0);
+                    SecurityUtility.CheckContactFeature("MessagingStock", "NEW", 0);
 
                     IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.TenantNumber);
-                    AWBMessagingStockService service = new AWBMessagingStockService(objectContext, entityPM);
+                    MessagingStockService service = new MessagingStockService(objectContext, entityPM);
                     service.Create();
 
-                    TableLastUpdateClass.UpdateTableHistory(entityPM.TenantNumber, "AWBMessagingStock");
+                    TableLastUpdateClass.UpdateTableHistory(entityPM.TenantNumber, "MessagingStock");
 
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, entityPM);
@@ -75,7 +75,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-        public HttpResponseMessage Put(AWBMessagingStockPM entityPM)
+        public HttpResponseMessage Put(MessagingStockPM entityPM)
         {
             try
             {
@@ -86,13 +86,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(0);
-                    SecurityUtility.CheckContactFeature("AWBMessagingStock", "UPDATE", 0);
+                    SecurityUtility.CheckContactFeature("MessagingStock", "UPDATE", 0);
 
                     IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.TenantNumber);
-                    AWBMessagingStockService service = new AWBMessagingStockService(objectContext, entityPM);
+                    MessagingStockService service = new MessagingStockService(objectContext, entityPM);
                     service.Update();
 
-                    TableLastUpdateClass.UpdateTableHistory(entityPM.TenantNumber, "AWBMessagingStock");
+                    TableLastUpdateClass.UpdateTableHistory(entityPM.TenantNumber, "MessagingStock");
 
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, entityPM);

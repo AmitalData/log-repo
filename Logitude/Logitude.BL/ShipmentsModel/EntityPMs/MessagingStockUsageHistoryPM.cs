@@ -7,7 +7,7 @@ using System.Web;
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
-    public class AWBStockUsageHistoryPM
+    public class MessagingStockUsageHistoryPM
     {
         [Key]
         public string Id { get; set; }

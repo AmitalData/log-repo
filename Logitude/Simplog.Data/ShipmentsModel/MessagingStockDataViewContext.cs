@@ -14,24 +14,24 @@ using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.ShipmentsModel
 {
-    public class AWBStocksDataViewContext : DbContext, IAWBStocksDataViewContext
+    public class MessagingStockDataViewContext : DbContext, IMessagingStockDataViewContext
     {
-        public System.Data.Entity.IDbSet<EntityPOCOs.AWBStocksDataView> AWBStocksDataViews
+        public System.Data.Entity.IDbSet<EntityPOCOs.MessagingStockDataView> MessagingStockDataViews
         {
             get;
             set;
         }
                  
-        public AWBStocksDataViewContext()
+        public MessagingStockDataViewContext()
         {
-            Database.SetInitializer<AWBStocksDataViewContext>(null);
+            Database.SetInitializer<MessagingStockDataViewContext>(null);
             Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
 
-        public AWBStocksDataViewContext(DbConnection connection)
+        public MessagingStockDataViewContext(DbConnection connection)
             : base(connection,true)
         {
-            Database.SetInitializer<AWBStocksDataViewContext>(null);
+            Database.SetInitializer<MessagingStockDataViewContext>(null);
             Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
 
@@ -49,7 +49,7 @@ namespace Simplog.Data.ShipmentsModel
             base.OnModelCreating(modelBuilder);
         }
 
-        public static IAWBStocksDataViewContext GetContext(int tenant)
+        public static IMessagingStockDataViewContext GetContext(int tenant)
         {
        
             GlobalDB currentDb;
@@ -59,7 +59,7 @@ namespace Simplog.Data.ShipmentsModel
             }
             string dbConnectionInfo = currentDb.DBConnection;
             DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
-            AWBStocksDataViewContext context = new AWBStocksDataViewContext(connection);
+            MessagingStockDataViewContext context = new MessagingStockDataViewContext(connection);
             return context;
         }
 

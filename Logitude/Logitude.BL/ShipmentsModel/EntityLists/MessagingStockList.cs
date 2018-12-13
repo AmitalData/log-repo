@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Logitude.BL.ShipmentsModel.EntityLists
 {
-    public class AWBMessagingStockList
+    public class MessagingStockList
     {
         [Key]
         public string Id { get; set; }

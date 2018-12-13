@@ -10,27 +10,27 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
-    public class AWBMessagingStockQuery
+    public class MessagingStockQuery
     {
-        AWBMessagingStockRepository repository;
+        MessagingStockRepository repository;
 
-        public AWBMessagingStockQuery(int tenant)
+        public MessagingStockQuery(int tenant)
         {
-            repository = new AWBMessagingStockRepository(tenant);
+            repository = new MessagingStockRepository(tenant);
         }
 
-        public AWBMessagingStockQuery(AWBMessagingStockRepository repository)
+        public MessagingStockQuery(MessagingStockRepository repository)
         {
             this.repository = repository;
         }
 
-        public AWBMessagingStockPM GetSinglePM(string id, int tenant)
+        public MessagingStockPM GetSinglePM(string id, int tenant)
         {
             DateTime? nowDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-            AWBMessagingStockPM entityPM = (from a in repository.Context.AWBMessagingStocks
-                                            where a.Id == id
-                                            select new AWBMessagingStockPM()
+            MessagingStockPM entityPM = (from a in repository.Context.MessagingStocks
+                                         where a.Id == id
+                                            select new MessagingStockPM()
                                             {
                                                 Id = a.Id,
                                                 DummyTenant = tenant,
@@ -50,18 +50,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                 Status = a.IsCancelled ? "Cancelled" : (a.Remaining == 0 ? "Used" : (a.EndDate <= nowDateTime ? "Expired" : (a.Amount > a.Remaining ? "Active" : "New")))
                                             }).FirstOrDefault();
 
-            AWBStockUsageHistoryQuery myQuery = new AWBStockUsageHistoryQuery(entityPM.TenantNumber);
+            MessagingStockUsageHistoryQuery myQuery = new MessagingStockUsageHistoryQuery(entityPM.TenantNumber);
             entityPM.StockUsageHistories = myQuery.GetStockUsageHistoriesByStockId(id).ToList();
 
             return entityPM;
         }
-        public IQueryable<AWBMessagingStockList> GetIQueryableEntityList(IQueryable<AWBStocksDataView> iQueryable, int tenant = 0)
+        public IQueryable<MessagingStockList> GetIQueryableEntityList(IQueryable<MessagingStockDataView> iQueryable, int tenant = 0)
         {
             DateTime? nowDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-            IQueryable<AWBMessagingStockList> myResult =
+            IQueryable<MessagingStockList> myResult =
                                                         from a in iQueryable
-                                                        select new AWBMessagingStockList()
+                                                        select new MessagingStockList()
                                                         {
                                                             Id = a.Id,
                                                             TenantNumber = a.TenantNumber,
@@ -83,13 +83,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return myResult;
         }
 
-        public IQueryable<AWBMessagingStockList> GetIQueryableEntityList(IQueryable<AWBMessagingStock> iQueryable, int tenant = 0)
+        public IQueryable<MessagingStockList> GetIQueryableEntityList(IQueryable<MessagingStock> iQueryable, int tenant = 0)
         {
             DateTime? nowDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-            IQueryable<AWBMessagingStockList> myResult =
+            IQueryable<MessagingStockList> myResult =
                                                         from a in iQueryable
-                                                        select new AWBMessagingStockList()
+                                                        select new MessagingStockList()
                                                         {
                                                             Id = a.Id,
                                                             TenantNumber = a.TenantNumber,

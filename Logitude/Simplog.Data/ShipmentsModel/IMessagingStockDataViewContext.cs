@@ -9,9 +9,9 @@ using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.ShipmentsModel
 {
-    public interface IAWBStocksDataViewContext : IContext
+    public interface IMessagingStockDataViewContext : IContext
     {
-        IDbSet<AWBStocksDataView> AWBStocksDataViews { get; }
+        IDbSet<MessagingStockDataView> MessagingStockDataViews { get; }
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();
