@@ -113,7 +113,38 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
+        public CustomsShipperPM GetSinglePMByShipperCode(string shipperCode, int tenant)
+        {
+            CustomsShipperPM entity = (from a in repository.context.CustomsShippers
+                                       where a.Tenant == tenant
+                                       && a.CustomsShipperCode == shipperCode
+                                       select new CustomsShipperPM()
+                                       {
+                                           Tenant = a.Tenant,
+                                           Id = a.Id,
+                                           CustomsShipperCode = a.CustomsShipperCode,
+                                           ValidDepositionNumber = a.ValidDepositionNumber,
+                                           ValidityStartDate = a.ValidityStartDate,
+                                           ValidityEndDate = a.ValidityEndDate,
+                                           FutureDepositionExist = a.FutureDepositionExist,
+                                       }).FirstOrDefault();
 
+            if (entity != null)
+            {
+                CardQuery cardQuery = new CardQuery(tenant);
+                CardPM card =  cardQuery.GetSinglePMByCode(shipperCode, tenant);
+                if (card != null)
+                {
+                    entity.EnglishName = card.EnglishName;
+                    entity.ShipperVAT = card.VatNumber;
+                    entity.CountryId = card.CountryId;
+                    entity.CountryCode = card.CountryCode;
+                    entity.CountryName = card.CountryName;
+                }
+            }
+
+            return entity;
+        }
 
     }
 }

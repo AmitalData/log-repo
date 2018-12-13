@@ -79,21 +79,27 @@ export class DWQueryBuilderFiltersComponent implements OnInit{
 
         ListItems.forEach((Myfilter) => {
             if (Myfilter.FilterItems.length > 0) {// Myfilter.FilterItems.indexOf(Item) > 
-                this.DeleteField(Item, Myfilter.FilterItems);
+                Myfilter.FilterItems = this.DeleteField(Item, Myfilter.FilterItems);
+                if (Myfilter.FilterItems.length == 0) {
+                    ListItems = ListItems.filter(a => a != Myfilter);
+                }
             }
             else {
                 if (Myfilter == Item) {
                     ListItems = ListItems.filter(a => a != Item);
+                    //return temp;
                 }
             }
+            //return ListItems;
         });
-
+        return ListItems;
     }
 
     onDeleteFilterClick(item) {
-        this.DeleteField(item, item.MyParentClass.SelectedFiltersDataSource);
-        var temp = this.SelectedFiltersDataSource;
-        this.SelectedFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a != item);
+        item.MyParentClass.SelectedFiltersDataSource = this.DeleteField(item, item.MyParentClass.SelectedFiltersDataSource);
+        item.MyParentClass.SaveChanges();
+        //var temp = this.SelectedFiltersDataSource;
+        //this.SelectedFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a != item);
         //var temp = this.MyParentClass.SelectedFieldsDataSource;
     }
 
