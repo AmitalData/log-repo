@@ -198,6 +198,17 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
+        public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
+             string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType)
+        {
+            return
+            this
+                .GetByAcountIdTypeCategories(tenant, AccountId,
+            Category1, Category2, Category3, Category4, Category5, gLAccountType)
+            .Select(a => a.Id);
+
+        }
+
         public List<int> GetTenantByNextDueDate(DateTime today, List<string> accountTypeCodeList)
         {
             var q = (from a in context.GLAccounts
@@ -302,6 +313,54 @@ namespace Logitude.Accounting.Data.Repositories
             }
             return q;
         }
+
+
+        public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType,
+            string Category1, string Category2, string Category3, string Category4, string Category5)
+        {
+            IQueryable<GLAccount> q;
+            if (!string.IsNullOrWhiteSpace(AccountId))
+            {
+                q = (from a in context.GLAccounts
+                     where a.Tenant == tenant
+                     where a.Id == AccountId
+                     select a);
+            }
+            else
+            {
+                q = (from a in context.GLAccounts
+                     where a.Tenant == tenant
+                     select a);
+            }
+            if (!string.IsNullOrWhiteSpace(gLAccountType))
+            {
+                q = q.Where(a => a.AccountTypeCode == gLAccountType);
+            }
+            if (!string.IsNullOrWhiteSpace(Category1))
+            {
+                q = q.Where(a => a.Category1Id == Category1);
+            }
+            if (!string.IsNullOrWhiteSpace(Category2))
+            {
+                q = q.Where(a => a.Category2Id == Category2);
+            }
+            if (!string.IsNullOrWhiteSpace(Category3))
+            {
+                q = q.Where(a => a.Category3Id == Category3);
+            }
+            if (!string.IsNullOrWhiteSpace(Category4))
+            {
+                q = q.Where(a => a.Category4Id == Category4);
+            }
+            if (!string.IsNullOrWhiteSpace(Category5))
+            {
+                q = q.Where(a => a.Category5Id == Category5);
+            }
+            return q;
+        }
+
+
+
 
         public IQueryable<GLAccountAndMoreDTO> GetQAllByAccountTypeCode(int tenant, string AccountTypeCode)
         {
