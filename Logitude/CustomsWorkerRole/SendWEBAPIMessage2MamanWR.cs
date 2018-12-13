@@ -305,7 +305,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                         break;
                     case CustomsPartnerFtpDetails.InterfaceName_ECSPCL:
                         {
-                            analyzer = new CourierGWMessageECTHRDataMamanResponseService();
+                            analyzer = new CourierGWMessageECSpclMamanResponseService();
                         }
                         break;
                     default:

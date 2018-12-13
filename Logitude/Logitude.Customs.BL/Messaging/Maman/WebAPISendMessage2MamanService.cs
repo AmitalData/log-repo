@@ -93,7 +93,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             //.PostIt("", "F_unitedf", "Unit2019", data);
             var settings = new Courier2MamanCommSettings()
             {
-                MessageCode = CustomsPartnerFtpDetails.InterfaceName_ECSPCL,
+                MessageCode = InterfaceName,
                 URIBaldarCreateECTHRMessgae = dtoWebApiDefinition.WEBAPIURL,/// @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
                 URIToken = dtoWebApiDefinition.WEBAPIAuthenticationURL, ///@"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
 
@@ -205,8 +205,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         public int Tenant { get; set; }
         public string DeclarationId { get; set; }
-        public string MessageCode { get; internal set; }
-        public string LoggedContactId { get; internal set; }
+        public string MessageCode { get;  set; }
+        public string LoggedContactId { get;  set; }
     }
 }
 

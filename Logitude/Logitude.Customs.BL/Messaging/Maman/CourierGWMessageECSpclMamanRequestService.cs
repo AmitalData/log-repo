@@ -30,7 +30,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 
     }
-    class CourierGWMessageECSpclMamanRequestService
+    public class CourierGWMessageECSpclMamanRequestService
     {
         private DeclarationPM _DeclarationPM;
         private CourierMasterPM _CourierMasterPM;
@@ -39,7 +39,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         public static string TestSend()
         {
             var courierGWMessageECSpclMamanRequestService =new CourierGWMessageECSpclMamanRequestService();
-            string actionResultString =courierGWMessageECSpclMamanRequestService.BuildQueueSendWebAPI("1-222", 1, MamanActionCode.Upsert, MamanSpecialCode.DelayIt);
+            string actionResultString =courierGWMessageECSpclMamanRequestService.BuildQueueSendWebAPI("1-115843", 1, MamanActionCode.Upsert, MamanSpecialCode.PrintLabels);
             return actionResultString;
         }
 

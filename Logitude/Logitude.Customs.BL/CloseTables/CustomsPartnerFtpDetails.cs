@@ -43,7 +43,7 @@ namespace Logitude.Customs.BL.CloseTables
                     ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
                 }
             )));
-            all.Add(new KeyValuePair<string, string>(InterfaceName_ECTHR,
+            all.Add(new KeyValuePair<string, string>(InterfaceName_ECSPCL,
                 ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
                 {
                     Code = InterfaceName_ECSPCL,

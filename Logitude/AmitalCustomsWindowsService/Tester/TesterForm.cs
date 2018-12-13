@@ -19,6 +19,7 @@ using System.Xml.Linq;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.Messaging.Maman;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -431,6 +432,9 @@ namespace AmitalCustomsWindowsService.Tester
             Task.WaitAll(taskArray);     
         }
         LoadTesterForm _LoadTest;
+
+        
+
         private void loadTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (_LoadTest==null)
@@ -702,6 +706,7 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void mamanCreateECSpclMessgaeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
             var wr = new SendWEBAPIMessage2MamanWR();
             string data =
                 @"{
@@ -729,6 +734,13 @@ namespace AmitalCustomsWindowsService.Tester
 
             });
             var res = service.PostIt(data);
+
+            CourierGWMessageECSpclMamanRequestService.TestSend();
+
+
+
+
+
         }
     }
 }
