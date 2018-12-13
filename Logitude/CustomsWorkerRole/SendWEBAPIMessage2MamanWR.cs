@@ -33,14 +33,19 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using Logitude.Customs.BL.Messaging.Maman;
 using Microsoft.Practices.Unity;
+using Logitude.Customs.BL.CloseTables;
 
 namespace CustomsWorkerRole
 {
-    /*
-Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('SendWebAPI2MamanGWMessageECTHRDataWR','SendWebAPI2MamanGWMessageECTHRDataWR');
-Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values ('SendWebAPI2MamanGWMessageECTHRDataWR',0,1);
+    /* 
+     * ///couriernet_global _global _global
+Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('SendWEBAPIMessage2MamanWR','SendWEBAPIMessage2MamanWR');
+Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values ('SendWEBAPIMessage2MamanWR',0,1);
      */
-    public class SendWebAPI2MamanGWMessageECTHRDataWR : CustomsWorkerEntryPoint
+
+    //public class SendWebAPI2MamanGWMessageECTHRDataWR
+    public class SendWEBAPIMessage2MamanWR
+        : CustomsWorkerEntryPoint
     {
         QueueDescription _QueueDescription;
         QueueClient _QueueClient;
@@ -144,7 +149,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     _IQueueService = new DbQueueService();
-                    _IQueueService.InitializeQueue(SBQueueNames.SendGWMessageECTHRData2MamanQ.ToString(), 0);
+                    _IQueueService.InitializeQueue(SBQueueNames.SendWEBAPIMessage2MamanQ.ToString(), 0);
 
                     _ReceivedBrokeredMessage = _IQueueService.Receive();
 
@@ -273,25 +278,46 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     throw new Exception("string.IsNullOrEmpty(waitingCommLog.LogSettings)");
                 }
                 var dataJson = System.Text.Encoding.UTF8.GetString(filedata.ToArray());
-                var courierHawbMamanCommunicationLogSettings = JsonConvert.DeserializeObject<CourierHawbMamanCommunicationLogSettings>(_WaitingCommLog.LogSettings);
-                if (courierHawbMamanCommunicationLogSettings == null)
+                var courier2MamanCommSettings = JsonConvert.DeserializeObject<Courier2MamanCommSettings>(_WaitingCommLog.LogSettings);
+                if (courier2MamanCommSettings == null)
                 {
                     throw new Exception("(courierHawbMamanCommunicationLogSettings == null)");
                 }
                 LogMessagingUtil.Instance.AppendLine("courierHawbMamanCommunication DB is valid");
                 GWMessageECTHRData responeGWMessageECTHRData = null;
-                LogMessagingUtil.Instance.AppendLine($"Post {courierHawbMamanCommunicationLogSettings.URIBaldarCreateECTHRMessgae}");
+                LogMessagingUtil.Instance.AppendLine($"Post {courier2MamanCommSettings.URIBaldarCreateECTHRMessgae}");
                 string webAPIResultString = null;
-                var service = new WebAPI2MamanGWMessageECTHRData(courierHawbMamanCommunicationLogSettings);
+                var service = new WebAPI2BearerMamanMessage(courier2MamanCommSettings);
                 webAPIResultString = service.PostIt(dataJson);
+                LogMessagingUtil.Instance.AppendLine("webAPIResultString:" + webAPIResultString);
+
+
+                //                var myWebAPICourierHawbMamanService = new WebAPICourierGWMessageECTHRDataMamanService();
+                //myWebAPICourierHawbMamanService.AnalyzeResponse(courier2MamanCommSettings, responeGWMessageECTHRData);
+
+                IWebAPIMessage2MamanAnalyzer analyzer = null;
+                switch (courier2MamanCommSettings.MessageCode)
+                {
+                    case CustomsPartnerFtpDetails.InterfaceName_ECTHR:
+                        {
+                            analyzer = new CourierGWMessageECTHRDataMamanResponseService();
+                        }
+                        break;
+                    case CustomsPartnerFtpDetails.InterfaceName_ECSPCL:
+                        {
+                            analyzer = new CourierGWMessageECTHRDataMamanResponseService();
+                        }
+                        break;
+                    default:
+                        throw new Exception("Please register  ");
+                        break;
+                }
+
+
+                analyzer.AnalyzeResponse(courier2MamanCommSettings, webAPIResultString);
                 
 
-               
-                LogMessagingUtil.Instance.AppendLine("webAPIResultString:"+ webAPIResultString);
-                responeGWMessageECTHRData = JsonConvert.DeserializeObject<GWMessageECTHRData>(webAPIResultString);
-
-                var myWebAPICourierHawbMamanService = new WebAPICourierGWMessageECTHRDataMamanService();
-                myWebAPICourierHawbMamanService.AnalyzeResponse(courierHawbMamanCommunicationLogSettings, responeGWMessageECTHRData);
+                
 
 
 
@@ -321,15 +347,15 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
     }
 
-    public class WebAPI2MamanGWMessageECTHRData
+    public class WebAPI2BearerMamanMessage
     {
         const string relativeUriToken = "Token";
         const string BEARER_TOKEN = "Bearer";
         const string agent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
         //StringBuilder _StringBuilder = new StringBuilder();
-        private CourierHawbMamanCommunicationLogSettings _CourierHawbMamanCommunicationLogSettings;
+        private Courier2MamanCommSettings _CourierHawbMamanCommunicationLogSettings;
 
-        public WebAPI2MamanGWMessageECTHRData(CourierHawbMamanCommunicationLogSettings courierHawbMamanCommunicationLogSettings)
+        public WebAPI2BearerMamanMessage(Courier2MamanCommSettings courierHawbMamanCommunicationLogSettings)
         {
             this._CourierHawbMamanCommunicationLogSettings = courierHawbMamanCommunicationLogSettings;
         }
@@ -421,7 +447,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
             if (!task.IsCompleted)
             {
                 task.Dispose();
-                throw new Exception("Timeout SendWebAPI2MamanGWMessageECTHRDataWR 2Min ");
+                throw new Exception("Timeout SendWEBAPIMessage2MamanWR 2Min ");
 
             }
         }

@@ -1,14 +1,9 @@
-﻿
-    //https://maman.wsfreeze.co.il/WebAPIExt/Help/Api/POST-api-baldar-CreateECTHRMessgae
-    //https://docs.google.com/document/d/1cjjeORaFsWMS32LhIxmEqNza3q7s7ZAr_PQVQOlwupw/edit#
-    
-
-
-using Logitude.BL.Helpers;
+﻿using Logitude.BL.Helpers;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -28,14 +23,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Logitude.Customs.BL.Messaging.Maman
 {
-    public class WebAPICourierGWMessageECTHRDataMamanService///using  by SendWebAPI2MamanGWMessageECTHRDataWR
+    public   class WebAPISendMessage2MamanService
     {
-
-
-        private string communicationSubject = "שידור מסר שטר מטען בלדר  לממן";
-        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId)///using  by SendWebAPI2MamanGWMessageECTHRDataWR
+        //private string _communicationSubject = "שידור מסר  פעולות מיוחדות לממן";
+       
+        
+        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string InterfaceName)///using  by SendWEBAPIMessage2MamanWRWR
         {
             ObjectTableRepository repo = new ObjectTableRepository(tenant);
             var objectTableId = repo.GetObjectTableIdByName("Customs.Declaration"/*"Customs.CourierMaster"*/);
@@ -44,47 +40,46 @@ namespace Logitude.Customs.BL.Messaging.Maman
             CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
             DocumentRepository documentRepository = new DocumentRepository(commonContext);
 
-            string target = "Maman";
-            string xmlSubject = communicationSubject;
-            string host = "";
-            string folder = "";
-            string username = "";
-            string password = "";
 
 
-
+            var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
+            var defDefaultJSON =customsPartnerFtpDetails.GetAllInterfaceName().First(r => r.Key == InterfaceName).Value;
+            var defDefault=ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
 
             var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
-            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, CustomsPartnerFtpDetails.InterfaceName_ECTHR, CustomsPartnerFtpDetails.PartnerCode_Mamam, CustomsPartnerFtpDetails.TypeCode_Out);
+            var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, InterfaceName /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/, 
+                CustomsPartnerFtpDetails.PartnerCode_Mamam, 
+                CustomsPartnerFtpDetails.TypeCode_Out);
 
 
             if (string.IsNullOrWhiteSpace(pmCustomsPartnerFtp.CommunicationDetails))
             {
-                throw new Exception("  שטר מטען בלדר  לממן -לא נמצא הגדרת תקשורת ");
+                throw new Exception($"  מסר {defDefault.Name} -לא נמצא הגדרת תקשורת ");
             }
             var dtoWebApiDefinition = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(pmCustomsPartnerFtp.CommunicationDetails);
             if (string.IsNullOrWhiteSpace(dtoWebApiDefinition.WEBAPIAuthenticationURL))
             {
-                throw new Exception(" היינו שדה חובה שטר מטען בלדר  לממן -כתובת אימות השירות  ");
+                throw new Exception($" היינו שדה חובה מסר {defDefault.Name} -כתובת אימות השירות  ");
             }
             if (string.IsNullOrWhiteSpace(dtoWebApiDefinition.WEBAPIURL))
             {
-                throw new Exception(" הינו שדה חובה שטר מטען בלדר  לממן -כתובת  השירות  ");
+                throw new Exception($" הינו שדה חובה מסר {defDefault.Name} לממן -כתובת  השירות  ");
             }
             if (string.IsNullOrWhiteSpace(dtoWebApiDefinition.User))
             {
-                throw new Exception(" הינו שדה חובה שטר מטען בלדר  לממן -שם משתמש  ");
+                throw new Exception($" הינו שדה חובה {defDefault.Name}-שם משתמש  ");
             }
 
             if (string.IsNullOrWhiteSpace(dtoWebApiDefinition.Password))
             {
-                throw new Exception(" הינו שדה חובה שטר מטען בלדר  לממן -סיסמא");
+                throw new Exception($" הינו שדה חובה {defDefault.Name} -סיסמא");
             }
 
 
             //.PostIt("", "F_unitedf", "Unit2019", data);
-            var settings = new CourierHawbMamanCommunicationLogSettings()
+            var settings = new Courier2MamanCommSettings()
             {
+                MessageCode = CustomsPartnerFtpDetails.InterfaceName_ECSPCL,
                 URIBaldarCreateECTHRMessgae = dtoWebApiDefinition.WEBAPIURL,/// @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
                 URIToken = dtoWebApiDefinition.WEBAPIAuthenticationURL, ///@"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
 
@@ -104,7 +99,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 Tenant = Convert.ToInt32(tenant),
                 Id = IdCounter.GetNumber("Document", tenant),
                 HasFile = true,
-                Folder = target.ToLower(),
+                Folder = CustomsPartnerFtpDetails.PartnerCode_Mamam.ToLower(),
             };
 
             documentRepository.Add(document);
@@ -122,11 +117,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 LastStatusDateUTC = DateTime.UtcNow,
-                To = target,
+                To = CustomsPartnerFtpDetails.PartnerCode_Mamam,
                 InOut = "O",
                 EntityId = declarationId,
                 ObjectTableId = objectTableId,
-                Subject = xmlSubject,
+                Subject = defDefault.Name,
                 Tenant = tenant,
                 CommunicationLogTypeCode = "T",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
@@ -135,7 +130,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 CreateDateUTC = DateTime.UtcNow,
                 CreatedByUserId = loggedContactId,
                 LogSettings = settingsData,
-                QueueName = SBQueueNames.SendGWMessageECTHRData2MamanQ.ToString() ///using  by SendWebAPI2MamanGWMessageECTHRDataWR
+                QueueName = SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() ///using  by SendWEBAPIMessage2MamanWR
             };
 
             communicationLogRepository.Add(commLog);
@@ -159,7 +154,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         }
 
-        
+
 
         private void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant)
         {
@@ -176,49 +171,18 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
         }
 
-        public void AnalyzeResponse(CourierHawbMamanCommunicationLogSettings settings, GWMessageECTHRData  responeGWMessageECTHRData)
-        {
-            LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(ResponseStatusCode={responeGWMessageECTHRData.ResponseStatusCode},{responeGWMessageECTHRData.ResponseStatusMsg})");
-            var context = CustomContext.GetContext(settings.Tenant);
-            var myDeclarationQueryService = new DeclarationQueryService(context);
-            var myCourierMasterQueryService = new CourierMasterQueryService(context);
-            var declarationPM = myDeclarationQueryService.GetSingle(settings.DeclarationId, false, false);
-            declarationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
-
-
-            switch (responeGWMessageECTHRData.ResponseStatusCode)
-            {
-                case 0:
-                    {
-                        declarationPM.MamanStatusCode = "1";
-                    }
-                    break;
-                case 1:
-                    {
-                        declarationPM.MamanStatusCode = "2";
-                    }
-                    break;
-                default:
-                    declarationPM.MamanStatusCode = responeGWMessageECTHRData.ResponseStatusCode.ToString();//???        
-                    break;
-            }
-
-
-            declarationPM.MamanErrorXml = responeGWMessageECTHRData.ResponseStatusCode.ToString() + "," + responeGWMessageECTHRData.ResponseStatusMsg??"";
-
-            using (var scope = TransactionFactory.GetNewTransaction())
-            {
-                var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>() ,settings.Tenant);
-                myDeclarationUpdateService.Update(declarationPM, true);
-                scope.Complete();
-            }
-        }
 
     }
-    public class CourierHawbMamanCommunicationLogSettings
+
+    public interface IWebAPIMessage2MamanAnalyzer
     {
-        
+        void AnalyzeResponse(Courier2MamanCommSettings settings, string webAPIResultString);
+    }
+
+
+    public class Courier2MamanCommSettings
+    {
+
 
         public string URIToken { get; set; }////@"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
         public string URIBaldarCreateECTHRMessgae { get; set; }///"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";
@@ -231,7 +195,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 
         public int Tenant { get; set; }
-        public string DeclarationId { get;  set; }
+        public string DeclarationId { get; set; }
+        public string MessageCode { get; internal set; }
     }
-
 }
+

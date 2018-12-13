@@ -13,6 +13,7 @@ namespace Logitude.Customs.BL.CloseTables
     {
         public const string InterfaceName_SubManifest = "SUBMANIFEST";
         public const string InterfaceName_ECTHR = "ECTHR";
+        public const string InterfaceName_ECSPCL = "ECSPCL";
         public const string PartnerCode_Mamam = "MAMAN";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
@@ -42,7 +43,17 @@ namespace Logitude.Customs.BL.CloseTables
                     ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
                 }
             )));
-            
+            all.Add(new KeyValuePair<string, string>(InterfaceName_ECTHR,
+                ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
+                {
+                    Code = InterfaceName_ECSPCL,
+                    Name = "פעולות מיוחדות לממן",
+                    TypeCode = TypeCode_Out,
+                    Partner = PartnerCode_Mamam,
+                    ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
+                }
+            )));
+
             //all.Add(new KeyValuePair<string, string>("TST", "Test"));
             return all;
         }
