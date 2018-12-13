@@ -316,6 +316,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var myInsertEventContextTagModel = _PaymentOrderPM.CurrentContextTag as EventContextTagModel;
                     myInsertEventContextTagModel.FUStatusCode = "LP2UB";
                     _PaymentOrderPM.CurrentContextTag = myInsertEventContextTagModel;
+                    LogMessagingUtil.Instance.AppendLine("Added LP2UB " + _PaymentOrderPM.CustomFiles);
+                }
+                else
+                {
+                    LogMessagingUtil.Instance.AppendLine("NO LP2UB! " + "_PaymentOrderPM.PaymentProcessCode= "+ _PaymentOrderPM.PaymentProcessCode+ " _PaymentOrderPM.PaymentStatusCode= "+ _PaymentOrderPM.PaymentStatusCode);
                 }
             }
             _PaymentOrderPM.CustomsRequestsSheetId = requestParams.CustomsRequestsSheetId;
