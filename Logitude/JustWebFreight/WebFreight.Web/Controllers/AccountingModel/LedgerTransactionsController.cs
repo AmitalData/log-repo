@@ -244,6 +244,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     var cat3 = filters_list.Where(d => d.FieldName == "Category3Id").FirstOrDefault().FieldValue.ToString();
                     var cat4 = filters_list.Where(d => d.FieldName == "Category4Id").FirstOrDefault().FieldValue.ToString();
                     var cat5 = filters_list.Where(d => d.FieldName == "Category5Id").FirstOrDefault().FieldValue.ToString();
+                    var gLAccountType = filters_list.Where(d => d.FieldName == "AccountTypeCode").FirstOrDefault().FieldValue.ToString();
                     var from = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue;
                     var to = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault().FieldValue2;
                     var isReconciled = filters_list.Where(d => d.FieldName == "IsReconciled").FirstOrDefault().FieldValue;
@@ -272,6 +273,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     LTCIFilter.Category3Id = cat3;
                     LTCIFilter.Category4Id = cat4;
                     LTCIFilter.Category5Id = cat5;
+                    LTCIFilter.AccountTypeCode = gLAccountType;
                 }
                 var accountingContext = AccountingContext.GetContext(LTCIFilter.Tenant);
                 var ledgerTransactionCardIndexService = new LedgerTransactionCardIndexService(accountingContext, LTCIFilter);
