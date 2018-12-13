@@ -9,7 +9,7 @@ namespace WebFreight.Web.WcfApi
     public interface IImporterDepositionWcfService
     {
         [OperationContract]
-        void SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM, ref Response response);
+        Response SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM);
 
     }
 

@@ -27,7 +27,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.DepositionNumber).HasColumnName("DepositionNumber");
             this.Property(t => t.ValidityStartDate).HasColumnName("ValidityStartDate");
             this.Property(t => t.ValidityEndDate).HasColumnName("ValidityEndDate");
-
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+            
             this.HasRequired(t => t.CustomsShipper).WithMany().HasForeignKey(d => d.CustomsShipperId);
 
 
