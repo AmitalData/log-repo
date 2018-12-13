@@ -20,8 +20,10 @@ namespace WebFreight.Web.WcfApi
     public class ImporterDepositionWcfService : IImporterDepositionWcfService
 
     {
-        public void SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM, ref Response response)
+        public Response SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM )
         {
+           var response = new Response();
+            response.HasError = false;
             if (CacheManager.CacheWrapper == null)
             {
                 CacheManager.CacheWrapper = new MockCacheWrapper();
@@ -35,11 +37,12 @@ namespace WebFreight.Web.WcfApi
 
                 if (importerDepositionPM != null)
                 {
+                    importerDepositionPM.Tenant = authToken.Tenant;
                     ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
                     importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM);
                 }
 
-           
+                return response;
             }
             catch (Exception ex)
             {
@@ -53,7 +56,7 @@ namespace WebFreight.Web.WcfApi
                     response.ErrorMessage += Environment.NewLine + ex.StackTrace;
                 }
 
-               // return null;
+               return response;
 
             }
 
