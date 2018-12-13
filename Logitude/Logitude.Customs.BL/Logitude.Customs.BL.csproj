@@ -165,6 +165,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\ImporterTypeForClaimDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LeadDocumentTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\MamanSpecialActionDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\MamanSpecialActionStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\MamanStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\MeasurmentUnitDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PackingTypeDetails.Generated.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="CloseTables\EnumGenerated\ImporterDeclarationTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ImporterTypeForClaimStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\LeadDocumentTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\MamanSpecialActionStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\MamanSpecialActionStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\MamanStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\MeasurmentUnitStruct.Generated.cs" />
@@ -556,6 +558,7 @@
     <Compile Include="EntityDataMappings\Generated\LeadDocumentExceptionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LeadDocumentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MamanSpecialActionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MamanSpecialActionStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MamanStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ManifestCargoStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MAWBTypeDataMapping.Generated.cs" />
@@ -691,6 +694,7 @@
     <Compile Include="EntityDataMappings\LeadDocumentExceptionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\LeadDocumentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\MamanSpecialActionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MamanSpecialActionStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\MamanStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ManifestCargoStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\MAWBTypeDataMapping.cs" />
@@ -864,6 +868,7 @@
     <Compile Include="EntityQueryServices\Generated\FreightPaymentMethodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ImporterDeclarationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\MamanSpecialActionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\MamanSpecialActionStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\MamanStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ManifestCargoStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\MAWBTypeQueryService.Generated.cs" />
@@ -1260,6 +1265,7 @@
     <Compile Include="EntityUpdateServices\Generated\FacilitationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FreightPaymentMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ImporterDeclarationTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\MamanSpecialActionStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MamanSpecialActionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MamanStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ManifestCargoStatusUpdateService.Generated.cs" />

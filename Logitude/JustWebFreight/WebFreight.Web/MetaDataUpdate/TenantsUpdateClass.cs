@@ -246,7 +246,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             //updateClass.FillCourierManifestStatus();
                             //updateClass.FillCourierPaymentStatus();
                             updateClass.FillMamanSpecialActionTable();
-
+                            updateClass.FillMamanSpecialActionStatusTable();
 
 
 
