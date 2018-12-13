@@ -266,6 +266,8 @@
     <Compile Include="EntityPMs\Generated\LastReleaseFromWarehousePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LeadDocumentExceptionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LeadDocumentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MamanSpecialActionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MamanSpecialActionStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\MamanStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ManifestCargoStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\MAWBTypePM.Generated.cs" />

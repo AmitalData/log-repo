@@ -188,6 +188,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<LastReleaseFromWarehouse> LastReleaseFromWarehouses { get; }
 		 IDbSet<LeadDocumentExceptionType> LeadDocumentExceptionTypes { get; }
 		 IDbSet<LeadDocumentType> LeadDocumentTypes { get; }
+		 IDbSet<MamanSpecialAction> MamanSpecialActions { get; }
+		 IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatuses { get; }
 		 IDbSet<MamanStatus> MamanStatuses { get; }
 		 IDbSet<ManifestCargoStatus> ManifestCargoStatuses { get; }
 		 IDbSet<MAWBType> MAWBTypes { get; }

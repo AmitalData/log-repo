@@ -82,6 +82,7 @@
             this.UploadMultiDoit = new System.Windows.Forms.ToolStripMenuItem();
             this.checkUniqueUploadTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripMenuItemcheckUniqueUpload = new System.Windows.Forms.ToolStripMenuItem();
+            this.hAWBALDARMamanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -94,7 +95,7 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.hAWBALDARMamanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mamanCreateECSpclMessgaeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -361,7 +362,8 @@
             this.send8250ToolStripMenuItem,
             this.asDataSetToolStripMenuItem,
             this.uploadMultiToolStripMenuItem,
-            this.hAWBALDARMamanToolStripMenuItem});
+            this.hAWBALDARMamanToolStripMenuItem,
+            this.mamanCreateECSpclMessgaeToolStripMenuItem});
             this.adHockToolStripMenuItem.Name = "adHockToolStripMenuItem";
             this.adHockToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
             this.adHockToolStripMenuItem.Text = "AdHock";
@@ -369,21 +371,21 @@
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.testToolStripMenuItem.Text = "test";
             this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
             // 
             // send1966ByDCAToolStripMenuItem
             // 
             this.send1966ByDCAToolStripMenuItem.Name = "send1966ByDCAToolStripMenuItem";
-            this.send1966ByDCAToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.send1966ByDCAToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.send1966ByDCAToolStripMenuItem.Text = "Send1966ByDCA";
             this.send1966ByDCAToolStripMenuItem.Click += new System.EventHandler(this.send1966ByDCAToolStripMenuItem_Click);
             // 
             // logErrorSmtpToolStripMenuItem
             // 
             this.logErrorSmtpToolStripMenuItem.Name = "logErrorSmtpToolStripMenuItem";
-            this.logErrorSmtpToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.logErrorSmtpToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.logErrorSmtpToolStripMenuItem.Text = "LogErrorSmtp";
             this.logErrorSmtpToolStripMenuItem.Click += new System.EventHandler(this.logErrorSmtpToolStripMenuItem_Click);
             // 
@@ -393,7 +395,7 @@
             this._txCustomsRequestsSheetsId,
             this.repushQToolStripMenuItem});
             this.repushQueueToolStripMenuItem.Name = "repushQueueToolStripMenuItem";
-            this.repushQueueToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.repushQueueToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.repushQueueToolStripMenuItem.Text = "RepushQueue";
             // 
             // _txCustomsRequestsSheetsId
@@ -415,7 +417,7 @@
             this.testSpeedTestToolStripMenuItem,
             this.sendInBatchToolStripMenuItem});
             this.speedTestToolStripMenuItem.Name = "speedTestToolStripMenuItem";
-            this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.speedTestToolStripMenuItem.Text = "SpeedTest";
             this.speedTestToolStripMenuItem.Click += new System.EventHandler(this.speedTestToolStripMenuItem_Click);
             // 
@@ -442,62 +444,62 @@
             // loadTestToolStripMenuItem
             // 
             this.loadTestToolStripMenuItem.Name = "loadTestToolStripMenuItem";
-            this.loadTestToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.loadTestToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.loadTestToolStripMenuItem.Text = "LoadTest";
             this.loadTestToolStripMenuItem.Click += new System.EventHandler(this.loadTestToolStripMenuItem_Click);
             // 
             // memLeakToolStripMenuItem
             // 
             this.memLeakToolStripMenuItem.Name = "memLeakToolStripMenuItem";
-            this.memLeakToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.memLeakToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.memLeakToolStripMenuItem.Text = "MemLeak";
             this.memLeakToolStripMenuItem.Click += new System.EventHandler(this.memLeakToolStripMenuItem_Click);
             // 
             // grantCCUToToolStripMenuItem
             // 
             this.grantCCUToToolStripMenuItem.Name = "grantCCUToToolStripMenuItem";
-            this.grantCCUToToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.grantCCUToToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.grantCCUToToolStripMenuItem.Text = "Grant CCU to";
             this.grantCCUToToolStripMenuItem.Click += new System.EventHandler(this.grantCCUToToolStripMenuItem_Click);
             // 
             // buildDcaAggregrateTestToolStripMenuItem
             // 
             this.buildDcaAggregrateTestToolStripMenuItem.Name = "buildDcaAggregrateTestToolStripMenuItem";
-            this.buildDcaAggregrateTestToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.buildDcaAggregrateTestToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.buildDcaAggregrateTestToolStripMenuItem.Text = "DcaAggregrateFiles";
             this.buildDcaAggregrateTestToolStripMenuItem.Click += new System.EventHandler(this.buildDcaAggregrateTestToolStripMenuItem_Click);
             // 
             // frizGetDecXmlToolStripMenuItem
             // 
             this.frizGetDecXmlToolStripMenuItem.Name = "frizGetDecXmlToolStripMenuItem";
-            this.frizGetDecXmlToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.frizGetDecXmlToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.frizGetDecXmlToolStripMenuItem.Text = "FrizGetDecXml";
             this.frizGetDecXmlToolStripMenuItem.Click += new System.EventHandler(this.frizGetDecXmlToolStripMenuItem_Click);
             // 
             // loadTestAPIToolStripMenuItem
             // 
             this.loadTestAPIToolStripMenuItem.Name = "loadTestAPIToolStripMenuItem";
-            this.loadTestAPIToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.loadTestAPIToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.loadTestAPIToolStripMenuItem.Text = "LoadTestAPI";
             this.loadTestAPIToolStripMenuItem.Click += new System.EventHandler(this.loadTestAPIToolStripMenuItem_Click);
             // 
             // restoreDecToolStripMenuItem
             // 
             this.restoreDecToolStripMenuItem.Name = "restoreDecToolStripMenuItem";
-            this.restoreDecToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.restoreDecToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.restoreDecToolStripMenuItem.Text = "RestoreDec";
             this.restoreDecToolStripMenuItem.Click += new System.EventHandler(this.restoreDecToolStripMenuItem_Click);
             // 
             // send8250ToolStripMenuItem
             // 
             this.send8250ToolStripMenuItem.Name = "send8250ToolStripMenuItem";
-            this.send8250ToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.send8250ToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.send8250ToolStripMenuItem.Text = "Send8373";
             // 
             // asDataSetToolStripMenuItem
             // 
             this.asDataSetToolStripMenuItem.Name = "asDataSetToolStripMenuItem";
-            this.asDataSetToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.asDataSetToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.asDataSetToolStripMenuItem.Text = "AsDataSet";
             this.asDataSetToolStripMenuItem.Click += new System.EventHandler(this.asDataSetToolStripMenuItem_Click);
             // 
@@ -508,7 +510,7 @@
             this.checkUniqueUploadTextBox1,
             this.toolStripMenuItemcheckUniqueUpload});
             this.uploadMultiToolStripMenuItem.Name = "uploadMultiToolStripMenuItem";
-            this.uploadMultiToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.uploadMultiToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.uploadMultiToolStripMenuItem.Text = "UploadMulti";
             this.uploadMultiToolStripMenuItem.Click += new System.EventHandler(this.uploadMultiToolStripMenuItem_Click);
             // 
@@ -531,6 +533,13 @@
             this.toolStripMenuItemcheckUniqueUpload.Size = new System.Drawing.Size(181, 22);
             this.toolStripMenuItemcheckUniqueUpload.Text = "checkUniqueUpload";
             this.toolStripMenuItemcheckUniqueUpload.Click += new System.EventHandler(this.toolStripMenuItemcheckUniqueUpload_Click);
+            // 
+            // hAWBALDARMamanToolStripMenuItem
+            // 
+            this.hAWBALDARMamanToolStripMenuItem.Name = "hAWBALDARMamanToolStripMenuItem";
+            this.hAWBALDARMamanToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.hAWBALDARMamanToolStripMenuItem.Text = "HAWBALDARMaman";
+            this.hAWBALDARMamanToolStripMenuItem.Click += new System.EventHandler(this.hAWBALDARMamanToolStripMenuItem_Click);
             // 
             // textBoxLogger
             // 
@@ -663,12 +672,12 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
             // 
-            // hAWBALDARMamanToolStripMenuItem
+            // mamanCreateECSpclMessgaeToolStripMenuItem
             // 
-            this.hAWBALDARMamanToolStripMenuItem.Name = "hAWBALDARMamanToolStripMenuItem";
-            this.hAWBALDARMamanToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.hAWBALDARMamanToolStripMenuItem.Text = "HAWBALDARMaman";
-            this.hAWBALDARMamanToolStripMenuItem.Click += new System.EventHandler(this.hAWBALDARMamanToolStripMenuItem_Click);
+            this.mamanCreateECSpclMessgaeToolStripMenuItem.Name = "mamanCreateECSpclMessgaeToolStripMenuItem";
+            this.mamanCreateECSpclMessgaeToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.mamanCreateECSpclMessgaeToolStripMenuItem.Text = "MamanCreateECSpclMessgae";
+            this.mamanCreateECSpclMessgaeToolStripMenuItem.Click += new System.EventHandler(this.mamanCreateECSpclMessgaeToolStripMenuItem_Click);
             // 
             // TesterForm
             // 
@@ -763,5 +772,6 @@
         private System.Windows.Forms.ToolStripMenuItem fTPCommunicationWorkerRoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asDataSetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hAWBALDARMamanToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mamanCreateECSpclMessgaeToolStripMenuItem;
     }
 }

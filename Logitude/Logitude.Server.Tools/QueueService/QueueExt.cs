@@ -147,7 +147,7 @@ namespace Logitude.Server.Tools.Helpers
     public enum SBQueueNames
     {
         //CustomsMessagingOutBQ, 
-        CustomsMessagingSheetBQ, SendDataToExternalServicesBQ, updateclosedtables, SendGWMessageECTHRData2MamanQ
+        CustomsMessagingSheetBQ, SendDataToExternalServicesBQ, updateclosedtables, SendWEBAPIMessage2MamanQ
     }
     
 }

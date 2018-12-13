@@ -17,15 +17,15 @@ using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.TraceEvents
 {
-    internal class UnifreighEventTaskService
+    internal class UnifreightEventTaskService
     {
         private AmitalContext _AmitalContext;
 
-        public UnifreighEventTaskService()
+        public UnifreightEventTaskService()
         {
         }
 
-        public void UpsertEventLE2U(int tenant,string UserId, UnifreightEventParam myUnifreightEventParam)
+        public void UpsertEventLE2U(int tenant, string UserId, UnifreightEventParam myUnifreightEventParam)
         {
             //TransactionScope scope = null;
             //if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
@@ -34,9 +34,9 @@ namespace Logitude.Customs.BL.TraceEvents
             //}
 
 
-            
+
             //long customFile;
-            
+
             if (!myUnifreightEventParam.IsValid())
             {
                 return;
@@ -44,7 +44,7 @@ namespace Logitude.Customs.BL.TraceEvents
             string unifreightUserId = GetUnifreightUserId(tenant, UserId);
             try
             {
-                
+
                 using (_AmitalContext = AmitalContext.GetContext(tenant))
                 {
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
@@ -55,7 +55,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
 
                     EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightEventParam);
-                    string requestData = GetEventRequestDATA(myUnifreightEventParam, unifreightUserId,true);
+                    string requestData = GetEventRequestDATA(myUnifreightEventParam, unifreightUserId, true);
                     InsertEventTask4Entity(myUnifreightEventParam, unifreightUserId, myYCULTASKUpdateService, requestData);
 
                     InsertGGGQ4Entity(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, myGGGQUpdateService);
@@ -96,7 +96,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
         private static void InsertEventTask4Entity(UnifreightEventParam myUnifreightEventParam, string unfreightUserId, YCULTASKUpdateService myYCULTASKUpdateService, string requestData)
         {
-             
+
 
             var myYCULTASKPM_Packs = new YCULTASKPM()
             {
@@ -118,7 +118,7 @@ namespace Logitude.Customs.BL.TraceEvents
         }
 
         public static string GetEventRequestDATA(
-            UnifreightEventParam MyUnifreightEventParam, string unfreightUserId,bool asXDocument)
+            UnifreightEventParam MyUnifreightEventParam, string unfreightUserId, bool asXDocument)
         {
 
             string EventDate = "";
@@ -149,13 +149,13 @@ namespace Logitude.Customs.BL.TraceEvents
                 requestData = EventsXElement.ToString(SaveOptions.None);
             }
 
-            
+
             //return outPut;
 
-            
+
             //transmission mytransmission = GetTransmission(myCFIPACKS, "AMITAL", "Customs packs from logitude");
             //var xmltransmission = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
-            
+
             return requestData;
         }
 
@@ -182,7 +182,7 @@ namespace Logitude.Customs.BL.TraceEvents
             return EventsXElement;
         }
 
-        private static string GetUnifreightUserId(int tenant ,string UserId)
+        private static string GetUnifreightUserId(int tenant, string UserId)
         {
             string unfreightUserId = null;
 
@@ -255,7 +255,7 @@ namespace Logitude.Customs.BL.TraceEvents
             }
 
             return true;
-            
+
         }
     }
 }

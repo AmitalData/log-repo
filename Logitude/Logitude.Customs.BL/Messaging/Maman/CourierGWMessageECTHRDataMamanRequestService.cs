@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
@@ -16,7 +17,7 @@ using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.Messaging.Maman
 {
-    public class CourierGWMessageECTHRDataMamanService
+    public class CourierGWMessageECTHRDataMamanRequestService
     {
         private DeclarationPM _DeclarationPM;
         private CourierMasterPM _CourierMasterPM;
@@ -52,10 +53,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
             using (var scop = TransactionFactory.GetTransaction())
             {
                 byte[] bytearray = Encoding.UTF8.GetBytes(messageToMaman);
-                
 
-                var myWebAPICourierGWMessageECTHRDataMamanService = new WebAPICourierGWMessageECTHRDataMamanService();
-                myWebAPICourierGWMessageECTHRDataMamanService.BuildCommunicationLog(bytearray, tenant, declarationId);
+
+                //var myWebAPICourierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanResponseService();
+                //myWebAPICourierGWMessageECTHRDataMamanService.BuildCommunicationLog(bytearray, tenant, declarationId);
+
+                var webAPISendMessage2MamanService = new WebAPISendMessage2MamanService();
+                webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECTHR);
+
                 scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
             }
@@ -111,7 +116,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
                 BaldarMessageTime = DateTime.Now,
                 BaldarHp = _DeclarationPM.AgentId,
-                OpenBaldarAwbDate = GetOpenBaldarAwbDate(),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
+                OpenBaldarAwbDate = GetOpenBaldarAwbDate(this._DeclarationPM),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
 
 
 
@@ -138,7 +143,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             return (myGDFDATAPM.DEFDATA);
         }
 
-        private DateTime GetOpenBaldarAwbDate()
+        public static DateTime GetOpenBaldarAwbDate(DeclarationPM _DeclarationPM)
         {
             var myConsignmentPM=_DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First();
             if (myConsignmentPM == null)

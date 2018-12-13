@@ -103,6 +103,8 @@
     <None Include="EntityFiles\DecisionType.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\MamanSpecialAction.lxml" />
+    <None Include="EntityFiles\MamanSpecialActionStatus.lxml" />
     <None Include="EntityFiles\MamanStatus.lxml" />
     <None Include="EntityFiles\ClientDrivingLicense.lxml" />
     <None Include="EntityFiles\ClientDrivingLicenseType.lxml" />

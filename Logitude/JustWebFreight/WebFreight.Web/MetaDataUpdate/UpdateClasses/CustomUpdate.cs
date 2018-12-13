@@ -17051,6 +17051,24 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             pendingErrorPlaceRepository.SubmitChanges();
         }
 
+        public void FillMamanSpecialActionTable()
+        {
+            //MamanSpecialActionRepository mamanSpecialActionRepository = new MamanSpecialActionRepository(0);
+            //AddClosedTables.AddMamanSpecialAction(new MamanSpecialAction() { Code = "2", EnglishName = "Receiving a delay certificate", LocalName = "קליטה תעודת עיכוב" }, mamanSpecialActionRepository);
+            //AddClosedTables.AddPendingErrorPlace(new MamanSpecialAction() { Code = "4", EnglishName = "Sticker Printing", LocalName = "הדפסת מדבקה" }, mamanSpecialActionRepository);
+            //AddClosedTables.AddPendingErrorPlace(new MamanSpecialAction() { Code = "5", EnglishName = "Printing Documents", LocalName = "הדפסת מסמכים" }, mamanSpecialActionRepository);
+            //mamanSpecialActionRepository.SubmitChanges();
+        }
+
+        public void FillMamanSpecialActionStatusTable()
+        {
+            //MamanSpecialActionStatusRepository mamanSpecialActionStatusRepository = new MamanSpecialActionStatusRepository(0);
+            //AddClosedTables.AddMamanSpecialActionStatus(new MamanSpecialAction() { Code = "2", EnglishName = "Receiving a delay certificate", LocalName = "קליטה תעודת עיכוב" }, mamanSpecialActionStatusRepository);
+            //AddClosedTables.AddMamanSpecialActionStatus(new MamanSpecialAction() { Code = "4", EnglishName = "Sticker Printing", LocalName = "הדפסת מדבקה" }, mamanSpecialActionStatusRepository);
+            //AddClosedTables.AddMamanSpecialActionStatus(new MamanSpecialAction() { Code = "5", EnglishName = "Printing Documents", LocalName = "הדפסת מסמכים" }, mamanSpecialActionStatusRepository);
+            //mamanSpecialActionStatusRepository.SubmitChanges();
+        }
+
 
 #if false
         public void FillCustomsRequestsSheetStatusTable()

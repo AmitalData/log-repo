@@ -436,7 +436,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
-                var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanService();
+                var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
                 var response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }

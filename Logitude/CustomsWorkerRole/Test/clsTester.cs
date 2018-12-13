@@ -224,11 +224,12 @@ SELECT TOP 1000 [Id]
         {
             try
             {
-                Logitude.Server.Tools.EntityPM.SuppressCreateNotifyPropertyChangeValues = true;
+                
                 var DeclarationQueryService = new DeclarationQueryService(tenant);
 
 
                 var pm = DeclarationQueryService.GetSingle(DecId, true, false);
+                Logitude.Server.Tools.EntityPM.SuppressCreateNotifyPropertyChangeValues = true;
                 var xml = XmlGenericUtil<DeclarationPM>.SerializeObject(pm);
 
                 return xml;

@@ -169,7 +169,7 @@ namespace AmitalCustomsWindowsService
             var listOfWorkerEntryPoint = CustomsWorkerRole.ThreadedRoleEntryPoint.GetAllWorkerEntryPointType();
             ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
-            listOfWorkerEntryPoint.Add(new SendWebAPI2MamanGWMessageECTHRDataWR());
+            listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
 
 
 

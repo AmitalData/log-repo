@@ -147,11 +147,11 @@ namespace AmitalCustomsWindowsService
                 }
 
                 AddWorkerFromAppSetting<CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService>();
-                AddWorkerFromAppSetting<SendWebAPI2MamanGWMessageECTHRDataWR>();
+                AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();
                 bool courierFeaturePackageExist = true;
                 if (courierFeaturePackageExist)
                 {
-                    AddWorkerFromAppSetting<SendWebAPI2MamanGWMessageECTHRDataWR>();
+                    AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();
                 }
                 if (!AmitalProxy.Have_UnfConnectionString())
                 {
@@ -231,7 +231,7 @@ namespace AmitalCustomsWindowsService
             var listOfWorkerEntryPoint = CustomsWorkerRole.ThreadedRoleEntryPoint.GetAllWorkerEntryPointType();
             ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
-            listOfWorkerEntryPoint.Add(new SendWebAPI2MamanGWMessageECTHRDataWR());
+            listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             
 
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();

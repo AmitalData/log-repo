@@ -410,6 +410,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new LeadDocumentTypeMap());
 	
+            modelBuilder.Configurations.Add(new MamanSpecialActionMap());
+	
+            modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
+	
             modelBuilder.Configurations.Add(new MamanStatusMap());
 	
             modelBuilder.Configurations.Add(new ManifestCargoStatusMap());
@@ -2083,6 +2087,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<LeadDocumentType> LeadDocumentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<MamanSpecialAction> MamanSpecialActions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatuses 
 	 {
 	      get; set;
 	 
