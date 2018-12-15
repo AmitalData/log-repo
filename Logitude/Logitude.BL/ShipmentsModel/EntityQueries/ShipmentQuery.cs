@@ -5599,66 +5599,771 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return unionList;
         }
-        public List<DashBoardClass> GetShipmentsByTop10CountriesDashBoardCustom(string type, DateTime? FromDate, DateTime? ToDate, int measurment, int currentTenant, int top, bool includeOthers, string customerid, string directionId, string transportmodeId)
+        //public List<DashBoardClass> GetShipmentsByTop10CountriesDashBoardCustom(string type, DateTime? FromDate, DateTime? ToDate, int measurment, int currentTenant, int top, bool includeOthers, string customerid, string directionId, string transportmodeId)
+        //{
+        //    if (top < 0)
+        //    {
+        //        top = 0;
+        //    }
+
+
+        //    List<DashBoardClass> datalist = null;
+        //    List<IGrouping<string, ShipmentCountryDashboardView>> shipments = repository.GetShipmentDataViewsForCountriesDashboard(currentTenant, customerid, directionId, transportmodeId,FromDate,ToDate).GroupBy(p=>p.CountryForStatisticsId).OrderByDescending(p=>p.Count()).Take(top).ToList();
+
+        //    Dictionary<string, DashBoardClass> Listt = new Dictionary<string, DashBoardClass>();
+
+        //    foreach (List<IGrouping<string, ShipmentCountryDashboardView>> d in shipments)
+        //    {
+        //        string Index = "";
+        //        Index = d[0].Key;
+
+             
+
+        //        if (!Listt.ContainsKey(Index))
+        //        {
+        //            DashBoardClass Item = new DashBoardClass();
+        //            Item.countryName = d.CountryForStatisticsName;
+        //            Item.sumChargeableWeight = d.ChargeableWeightInKG;
+        //            Item.sumGrossWeight = d.GrossWeightInKG;
+        //            Item.totalProfitInLocalCurrency = d.ProfitInLocalCurrency;
+        //            Item.totalProfitInProfitCurrency = d.ProfitInProfitCurrency;
+        //            Item.ReceivablesInLocalCurrency = d.OpenReceivablesInLocalCurrency;
+        //            Item.ReceivablesInProfitCurrency = d.OpenReceivablesInProfitCurrency;
+        //            Item.directionID = d.DirectionId;
+        //            Item.transportModeID = d.TransportModeId;
+        //            Item.total = 1;
+        //            Listt.Add(Index, Item);
+        //        }
+        //        else
+        //        {
+        //            Listt[Index].countryName = d.CountryForStatisticsName;
+        //            Listt[Index].sumChargeableWeight += d.ChargeableWeightInKG != null ? d.ChargeableWeightInKG : 0;
+        //            Listt[Index].sumGrossWeight += d.GrossWeightInKG != null ? d.GrossWeightInKG : 0;
+        //            Listt[Index].totalProfitInLocalCurrency += d.ProfitInLocalCurrency != null ? d.ProfitInLocalCurrency : 0;
+        //            Listt[Index].totalProfitInProfitCurrency += d.ProfitInProfitCurrency != null ? d.ProfitInProfitCurrency : 0;
+        //            Listt[Index].ReceivablesInLocalCurrency += d.OpenReceivablesInLocalCurrency != null ? d.OpenReceivablesInLocalCurrency : 0;
+        //            Listt[Index].ReceivablesInProfitCurrency += d.OpenReceivablesInProfitCurrency != null ? d.OpenReceivablesInProfitCurrency : 0;
+        //            Listt[Index].directionID = d.DirectionId;
+        //            Listt[Index].transportModeID = d.TransportModeId;
+        //            Listt[Index].total = Listt[Index].total + 1 ;
+
+
+        //        }
+        //    }
+
+        //    datalist = new List<DashBoardClass>();
+
+        //    for (int i = 0; i < Listt.Count; i++)
+        //    {
+        //        datalist.Add(Listt.Values.ElementAt(i));
+        //    }
+        //    return datalist;
+
+        //}
+        public List<DashBoardClass> GetShipmentsByTop10CountriesDashBoardCustom2(string type, DateTime? FromDate, DateTime? ToDate, int measurment, int currentTenant, int top, bool includeOthers, string customerid, string directionId, string transportmodeId)
         {
             if (top < 0)
             {
                 top = 0;
             }
 
+             FromDate=FromDate.Value.AddDays(-1);
+            ToDate = ToDate.Value.AddDays(1);
 
-            List<DashBoardClass> datalist = null;
-            List<ShipmentCountryDashboardView> shipments = repository.GetShipmentDataViewsForCountriesDashboard(currentTenant, customerid, directionId, transportmodeId).Take(top).ToList();
 
-            Dictionary<string, DashBoardClass> Listt = new Dictionary<string, DashBoardClass>();
 
-            foreach (ShipmentCountryDashboardView d in shipments)
+            List<DashBoardClass> unionList = null;
+            IQueryable<ShipmentCountryDashboardView> shipments = repository.GetShipmentDataViewsForCountriesDashboard(currentTenant, customerid, directionId, transportmodeId);
+
+
+
+            switch (measurment)
             {
-                string Index = "";
-                Index = d.CountryForStatisticsId;
+                #region if the measurement is shipment count
+                case 0:
+                    {
 
-             
+                        List<DashBoardClass> resultList = null;
+                        List<DashBoardClass> othersResultList = null;
 
-                if (!Listt.ContainsKey(Index))
-                {
-                    DashBoardClass Item = new DashBoardClass();
-                    Item.countryName = d.CountryForStatisticsName;
-                    Item.sumChargeableWeight = d.ChargeableWeightInKG;
-                    Item.sumGrossWeight = d.GrossWeightInKG;
-                    Item.totalProfitInLocalCurrency = d.ProfitInLocalCurrency;
-                    Item.totalProfitInProfitCurrency = d.ProfitInProfitCurrency;
-                    Item.ReceivablesInLocalCurrency = d.OpenReceivablesInLocalCurrency;
-                    Item.ReceivablesInProfitCurrency = d.OpenReceivablesInProfitCurrency;
-                    Item.directionID = d.DirectionId;
-                    Item.transportModeID = d.TransportModeId;
-                    Item.total = 1;
-                    Listt.Add(Index, Item);
-                }
-                else
-                {
-                    Listt[Index].countryName = d.CountryForStatisticsName;
-                    Listt[Index].sumChargeableWeight += d.ChargeableWeightInKG != null ? d.ChargeableWeightInKG : 0;
-                    Listt[Index].sumGrossWeight += d.GrossWeightInKG != null ? d.GrossWeightInKG : 0;
-                    Listt[Index].totalProfitInLocalCurrency += d.ProfitInLocalCurrency != null ? d.ProfitInLocalCurrency : 0;
-                    Listt[Index].totalProfitInProfitCurrency += d.ProfitInProfitCurrency != null ? d.ProfitInProfitCurrency : 0;
-                    Listt[Index].ReceivablesInLocalCurrency += d.OpenReceivablesInLocalCurrency != null ? d.OpenReceivablesInLocalCurrency : 0;
-                    Listt[Index].ReceivablesInProfitCurrency += d.OpenReceivablesInProfitCurrency != null ? d.OpenReceivablesInProfitCurrency : 0;
-                    Listt[Index].directionID = d.DirectionId;
-                    Listt[Index].transportModeID = d.TransportModeId;
-                    Listt[Index].total = Listt[Index].total + 1 ;
+                        resultList = (from s in shipments
+                                      where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                     && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                      group s by new
+                                      {
+                                          s.CountryForStatisticsCode,
+                                          s.CountryForStatisticsName
+
+                                      } into m
+                                      select new DashBoardClass()
+                                      {
+                                          countryCode = m.Key.CountryForStatisticsCode,
+                                          countryName = m.Key.CountryForStatisticsName,
+                                          country = m.Key.CountryForStatisticsCode,
+                                          total = m.Count(),
+                                          sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                          sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                          totalLastMonth = 0,
+                                          sumChargeableWeightLastMonth = 0,
+                                          sumGrossWeightLastMonth = 0,
+                                      }).OrderByDescending(d => d.total).Take(top).ToList();
 
 
-                }
+                        if (includeOthers)
+                        {
+
+                            List<DashBoardClass> allCountriesResult = (from s in shipments
+                                                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                                                         && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                                                       //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                                                                       group s by new
+                                                                       {
+                                                                           s.CountryForStatisticsCode,
+                                                                           s.CountryForStatisticsName
+
+                                                                       } into m
+                                                                       select new DashBoardClass()
+                                                                       {
+                                                                           countryCode = m.Key.CountryForStatisticsCode,
+                                                                           countryName = m.Key.CountryForStatisticsName,
+                                                                           country = m.Key.CountryForStatisticsCode,
+                                                                           total = m.Count(),
+                                                                           sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                                                           sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                                                           totalLastMonth = 0,
+                                                                           sumChargeableWeightLastMonth = 0,
+                                                                           sumGrossWeightLastMonth = 0,
+                                                                       }).ToList();
+
+
+
+                            //List<DashBoardClass> allCountriesResult = (from s in shipments
+                            //                    where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                            //                      && s.CreateDateTime >= lastDate
+                            //                      //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                            //                        group s by new
+                            //                        {
+                            //                            s.CountryForStatisticsCode,
+                            //                            s.CountryForStatisticsName
+
+                            //                        } into m
+                            //                        select new DashBoardClass()
+                            //                        {
+                            //                            countryCode = "Others",
+                            //                            countryName = "Others",
+                            //                            country = "Others",
+                            //                            total = m.Count(),
+                            //                            sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                            //                            sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                            //                            totalLastMonth = 0,
+                            //                            sumChargeableWeightLastMonth = 0,
+                            //                            sumGrossWeightLastMonth = 0,
+                            //                        }).ToList();
+
+
+
+                            othersResultList = (from a in allCountriesResult
+                                                where !(from r in resultList where r.countryCode == a.countryCode select r).Any()
+                                                select a).ToList();
+                            foreach (DashBoardClass d in othersResultList)
+                            {
+                                d.countryCode = "Others";
+                                d.countryName = "Others";
+                                d.country = "Others";
+                            }
+
+                            unionList = resultList.Union(othersResultList).OrderByDescending(d => d.total).ToList();
+                        }
+
+
+                        else
+                        {
+                            unionList = resultList.ToList();//ResulList;//ResulListMonth.Union(ResulList);
+                        }
+                        break;
+                    }
+                #endregion
+
+                #region if the measurement is chargeable weight
+                case 1:
+                    {
+                        List<DashBoardClass> resultList = null;
+                        List<DashBoardClass> othersResultList = null;
+                        resultList = (from s in shipments
+                                      where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                      group s by new
+                                      {
+                                          s.CountryForStatisticsCode,
+                                          s.CountryForStatisticsName
+
+                                      } into m
+                                      select new DashBoardClass()
+                                      {
+                                          countryCode = m.Key.CountryForStatisticsCode,
+                                          countryName = m.Key.CountryForStatisticsName,
+                                          country = m.Key.CountryForStatisticsCode,
+                                          total = m.Count(),
+                                          sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                          sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                          totalLastMonth = 0,
+                                          sumChargeableWeightLastMonth = 0,
+                                          sumGrossWeightLastMonth = 0,
+                                      }).OrderByDescending(d => d.sumChargeableWeight).Take(top).ToList();
+
+
+                        if (includeOthers)
+                        {
+                            List<DashBoardClass> allCountriesResult = (from s in shipments
+                                                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                                                         && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                                                       //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                                                                       group s by new
+                                                                       {
+                                                                           s.CountryForStatisticsCode,
+                                                                           s.CountryForStatisticsName
+
+                                                                       } into m
+                                                                       select new DashBoardClass()
+                                                                       {
+                                                                           countryCode = m.Key.CountryForStatisticsCode,
+                                                                           countryName = m.Key.CountryForStatisticsName,
+                                                                           country = m.Key.CountryForStatisticsCode,
+                                                                           total = m.Count(),
+                                                                           sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                                                           sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                                                           totalLastMonth = 0,
+                                                                           sumChargeableWeightLastMonth = 0,
+                                                                           sumGrossWeightLastMonth = 0,
+                                                                       }).ToList();
+
+                            //List<DashBoardClass> allCountriesResult = (from s in shipments
+                            //                    where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                            //                      && s.CreateDateTime >= lastDate
+                            //                      //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                            //                        group s by new
+                            //                        {
+                            //                        s.CountryForStatisticsCode,
+                            //                        s.CountryForStatisticsName
+
+                            //                        } into m
+                            //                        select new DashBoardClass()
+                            //                        {
+                            //                            countryCode = "Others",
+                            //                            countryName = "Others",
+                            //                            country = "Others",
+                            //                            total = m.Count(),
+                            //                            sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                            //                            sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                            //                            totalLastMonth = 0,
+                            //                            sumChargeableWeightLastMonth = 0,
+                            //                            sumGrossWeightLastMonth = 0,
+                            //                    }).ToList();
+
+
+
+                            othersResultList = (from a in allCountriesResult
+                                                where !(from r in resultList where r.countryCode == a.countryCode select r).Any()
+                                                select a).ToList();
+                            foreach (DashBoardClass d in othersResultList)
+                            {
+                                d.countryCode = "Others";
+                                d.countryName = "Others";
+                                d.country = "Others";
+                            }
+
+                            unionList = resultList.Union(othersResultList).OrderByDescending(d => d.sumChargeableWeight).ToList();
+
+                        }
+                        else
+                        {
+                            unionList = resultList.OrderByDescending(d => d.sumChargeableWeight).ToList();
+                        }
+                        break;
+                    }
+                #endregion
+
+                #region if the measurement is gross weight
+                case 2:
+                    {
+                        List<DashBoardClass> resultList = null;
+                        List<DashBoardClass> othersResultList = null;
+                        resultList = (from s in shipments
+                                      where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                     && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                      group s by new
+                                      {
+                                          s.CountryForStatisticsCode,
+                                          s.CountryForStatisticsName
+
+                                      } into m
+                                      select new DashBoardClass()
+                                      {
+                                          countryCode = m.Key.CountryForStatisticsCode,
+                                          countryName = m.Key.CountryForStatisticsName,
+                                          country = m.Key.CountryForStatisticsCode,
+                                          total = m.Count(),
+                                          sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                          sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                          totalLastMonth = 0,
+                                          sumChargeableWeightLastMonth = 0,
+                                          sumGrossWeightLastMonth = 0,
+                                      }).OrderByDescending(d => d.sumGrossWeight).Take(top).ToList();
+
+
+                        if (includeOthers)
+                        {
+                            List<DashBoardClass> allCountriesResult = (from s in shipments
+                                                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                                                         && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                                                       //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                                                                       group s by new
+                                                                       {
+                                                                           s.CountryForStatisticsCode,
+                                                                           s.CountryForStatisticsName
+
+                                                                       } into m
+                                                                       select new DashBoardClass()
+                                                                       {
+                                                                           countryCode = m.Key.CountryForStatisticsCode,
+                                                                           countryName = m.Key.CountryForStatisticsName,
+                                                                           country = m.Key.CountryForStatisticsCode,
+                                                                           total = m.Count(),
+                                                                           sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                                                           sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                                                           totalLastMonth = 0,
+                                                                           sumChargeableWeightLastMonth = 0,
+                                                                           sumGrossWeightLastMonth = 0,
+                                                                       }).ToList();
+
+                            //List<DashBoardClass> allCountriesResult = (from s in shipments
+                            //                    where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                            //                      && s.CreateDateTime >= lastDate
+                            //                      //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                            //                        group s by new
+                            //                        {
+                            //                        s.CountryForStatisticsCode,
+                            //                        s.CountryForStatisticsName
+
+                            //                      } into m
+                            //                      select new DashBoardClass()
+                            //                      {
+                            //                          countryCode = "Others",
+                            //                          countryName = "Others",
+                            //                          country = "Others",
+                            //                          total = m.Count(),
+                            //                          sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                            //                          sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                            //                          totalLastMonth = 0,
+                            //                          sumChargeableWeightLastMonth = 0,
+                            //                          sumGrossWeightLastMonth = 0,
+                            //                    }).ToList();
+
+
+                            othersResultList = (from a in allCountriesResult
+                                                where !(from r in resultList where r.countryCode == a.countryCode select r).Any()
+                                                select a).ToList();
+                            foreach (DashBoardClass d in othersResultList)
+                            {
+                                d.countryCode = "Others";
+                                d.countryName = "Others";
+                                d.country = "Others";
+                            }
+
+                            unionList = resultList.Union(othersResultList).OrderByDescending(d => d.sumGrossWeight).ToList();
+
+                        }
+                        else
+                        {
+                            unionList = resultList.OrderByDescending(d => d.sumGrossWeight).ToList();//ResulList;//ResulListMonth.Union(ResulList);
+                        }
+                        break;
+                    }
+                #endregion
+
+                #region if the measurement is profit in local
+                case 3:
+                    {
+                        List<DashBoardClass> resultList = null;
+                        List<DashBoardClass> othersResultList = null;
+                        resultList = (from s in shipments
+                                      where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                     && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                      group s by new
+                                      {
+                                          s.CountryForStatisticsCode,
+                                          s.CountryForStatisticsName
+
+                                      } into m
+                                      select new DashBoardClass()
+                                      {
+                                          countryCode = m.Key.CountryForStatisticsCode,
+                                          countryName = m.Key.CountryForStatisticsName,
+                                          country = m.Key.CountryForStatisticsCode,
+                                          total = m.Count(),
+                                          sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                          sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                          totalLastMonth = 0,
+                                          sumChargeableWeightLastMonth = 0,
+                                          sumGrossWeightLastMonth = 0,
+                                          ReceivablesInProfitCurrency = m.Sum(d => d.OpenReceivablesInLocalCurrency),
+                                          totalProfitInLocalCurrency = m.Sum(d => d.ProfitInLocalCurrency),
+                                          totalProfitInProfitCurrency = m.Sum(d => d.ProfitInProfitCurrency),
+                                      }).OrderByDescending(d => d.totalProfitInLocalCurrency).Take(top).ToList();
+
+
+                        if (includeOthers)
+                        {
+                            List<DashBoardClass> allCountriesResult = (from s in shipments
+                                                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                                                         && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                                                       //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                                                                       group s by new
+                                                                       {
+                                                                           s.CountryForStatisticsCode,
+                                                                           s.CountryForStatisticsName
+
+                                                                       } into m
+                                                                       select new DashBoardClass()
+                                                                       {
+                                                                           countryCode = m.Key.CountryForStatisticsCode,
+                                                                           countryName = m.Key.CountryForStatisticsName,
+                                                                           country = m.Key.CountryForStatisticsCode,
+                                                                           total = m.Count(),
+                                                                           sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                                                           sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                                                           totalLastMonth = 0,
+                                                                           sumChargeableWeightLastMonth = 0,
+                                                                           sumGrossWeightLastMonth = 0,
+                                                                           ReceivablesInProfitCurrency = m.Sum(d => d.OpenReceivablesInLocalCurrency),
+                                                                           totalProfitInLocalCurrency = m.Sum(d => d.ProfitInLocalCurrency),
+                                                                           totalProfitInProfitCurrency = m.Sum(d => d.ProfitInProfitCurrency),
+                                                                       }).ToList();
+
+
+                            //List<DashBoardClass> allCountriesResult = (from s in shipments
+                            //                    where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                            //                      && s.CreateDateTime >= lastDate
+                            //                      //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                            //                        group s by new
+                            //                        {
+                            //                        s.CountryForStatisticsCode,
+                            //                        s.CountryForStatisticsName
+
+                            //                        } into m
+                            //                        select new DashBoardClass()
+                            //                        {
+                            //                            countryCode = "Others",
+                            //                            countryName = "Others",
+                            //                            country = "Others",
+                            //                            total = m.Count(),
+                            //                            sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                            //                            sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                            //                            totalLastMonth = 0,
+                            //                            sumChargeableWeightLastMonth = 0,
+                            //                            sumGrossWeightLastMonth = 0,
+                            //                        ReceivablesInProfitCurrency = m.Sum(d => d.OpenReceivablesInLocalCurrency),
+                            //                        totalProfitInLocalCurrency = m.Sum(d => d.ProfitInLocalCurrency),
+                            //                        totalProfitInProfitCurrency = m.Sum(d => d.ProfitInProfitCurrency),
+                            //                    }).ToList();
+
+
+                            othersResultList = (from a in allCountriesResult
+                                                where !(from r in resultList where r.countryCode == a.countryCode select r).Any()
+                                                select a).ToList();
+                            foreach (DashBoardClass d in othersResultList)
+                            {
+                                d.countryCode = "Others";
+                                d.countryName = "Others";
+                                d.country = "Others";
+                            }
+                            unionList = resultList.Union(othersResultList).OrderByDescending(d => d.totalProfitInLocalCurrency).ToList();
+
+                        }
+                        else
+                        {
+                            unionList = resultList.OrderByDescending(d => d.totalProfitInLocalCurrency).ToList();//ResulList;//ResulListMonth.Union(ResulList);
+                        }
+                        break;
+                    }
+                #endregion
+
+                #region if the measurement is profit in profit
+                case 4:
+                    {
+                        List<DashBoardClass> resultList = null;
+                        List<DashBoardClass> othersResultList = null;
+                        resultList = (from s in shipments
+                                      where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                     && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                      group s by new
+                                      {
+                                          s.CountryForStatisticsCode,
+                                          s.CountryForStatisticsName
+
+                                      } into m
+                                      select new DashBoardClass()
+                                      {
+                                          countryCode = m.Key.CountryForStatisticsCode,
+                                          countryName = m.Key.CountryForStatisticsName,
+                                          country = m.Key.CountryForStatisticsCode,
+                                          total = m.Count(),
+                                          sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                          sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                          totalLastMonth = 0,
+                                          sumChargeableWeightLastMonth = 0,
+                                          sumGrossWeightLastMonth = 0,
+                                          ReceivablesInProfitCurrency = m.Sum(d => d.OpenReceivablesInLocalCurrency),
+                                          totalProfitInLocalCurrency = m.Sum(d => d.ProfitInLocalCurrency),
+                                          totalProfitInProfitCurrency = m.Sum(d => d.ProfitInProfitCurrency),
+                                      }).OrderByDescending(d => d.totalProfitInProfitCurrency).Take(top).ToList();
+
+
+                        if (includeOthers)
+                        {
+                            List<DashBoardClass> allCountriesResult = (from s in shipments
+                                                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                                                         && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                                                       //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                                                                       group s by new
+                                                                       {
+                                                                           s.CountryForStatisticsCode,
+                                                                           s.CountryForStatisticsName
+
+                                                                       } into m
+                                                                       select new DashBoardClass()
+                                                                       {
+                                                                           countryCode = m.Key.CountryForStatisticsCode,
+                                                                           countryName = m.Key.CountryForStatisticsName,
+                                                                           country = m.Key.CountryForStatisticsCode,
+                                                                           total = m.Count(),
+                                                                           sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                                                           sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                                                           totalLastMonth = 0,
+                                                                           sumChargeableWeightLastMonth = 0,
+                                                                           sumGrossWeightLastMonth = 0,
+                                                                           ReceivablesInProfitCurrency = m.Sum(d => d.OpenReceivablesInLocalCurrency),
+                                                                           totalProfitInLocalCurrency = m.Sum(d => d.ProfitInLocalCurrency),
+                                                                           totalProfitInProfitCurrency = m.Sum(d => d.ProfitInProfitCurrency),
+                                                                       }).ToList();
+
+                            //List<DashBoardClass> allCountriesResult = (from s in shipments
+                            //                    where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                            //                      && s.CreateDateTime >= lastDate
+                            //                      //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                            //                        group s by new
+                            //                        {
+                            //                        s.CountryForStatisticsCode,
+                            //                        s.CountryForStatisticsName
+
+                            //                      } into m
+                            //                      select new DashBoardClass()
+                            //                      {
+                            //                          countryCode = "Others",
+                            //                          countryName = "Others",
+                            //                          country = "Others",
+                            //                          total = m.Count(),
+                            //                          sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                            //                          sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                            //                          totalLastMonth = 0,
+                            //                          sumChargeableWeightLastMonth = 0,
+                            //                          sumGrossWeightLastMonth = 0,
+                            //                        ReceivablesInProfitCurrency = m.Sum(d => d.OpenReceivablesInLocalCurrency),
+                            //                        totalProfitInLocalCurrency = m.Sum(d => d.ProfitInLocalCurrency),
+                            //                        totalProfitInProfitCurrency = m.Sum(d => d.ProfitInProfitCurrency),
+                            //                    }).ToList();
+
+
+                            othersResultList = (from a in allCountriesResult
+                                                where !(from r in resultList where r.countryCode == a.countryCode select r).Any()
+                                                select a).ToList();
+                            foreach (DashBoardClass d in othersResultList)
+                            {
+                                d.countryCode = "Others";
+                                d.countryName = "Others";
+                                d.country = "Others";
+                            }
+                            unionList = resultList.Union(othersResultList).OrderByDescending(d => d.totalProfitInProfitCurrency).ToList();
+
+                        }
+                        else
+                        {
+                            unionList = resultList.OrderByDescending(d => d.totalProfitInProfitCurrency).ToList();
+                        }
+                        break;
+                    }
+                #endregion
+
+                #region if the measurement is receivables in local
+                case 5:
+                    {
+                        List<DashBoardClass> resultList = null;
+                        List<DashBoardClass> othersResultList = null;
+                        resultList = (from s in shipments
+                                      where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                     && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                      group s by new
+                                      {
+                                          s.CountryForStatisticsCode,
+                                          s.CountryForStatisticsName
+
+                                      } into m
+                                      select new DashBoardClass()
+                                      {
+                                          countryCode = m.Key.CountryForStatisticsCode,
+                                          countryName = m.Key.CountryForStatisticsName,
+                                          country = m.Key.CountryForStatisticsCode,
+                                          total = m.Count(),
+                                          sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                          sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                          totalLastMonth = 0,
+                                          sumChargeableWeightLastMonth = 0,
+                                          sumGrossWeightLastMonth = 0,
+                                          ReceivablesInProfitCurrency = m.Sum(d => d.OpenReceivablesInProfitCurrency),
+                                          ReceivablesInLocalCurrency = m.Sum(d => d.OpenReceivablesInLocalCurrency),
+                                          totalProfitInLocalCurrency = m.Sum(d => d.ProfitInLocalCurrency),
+                                          totalProfitInProfitCurrency = m.Sum(d => d.ProfitInProfitCurrency),
+                                      }).OrderByDescending(d => d.ReceivablesInLocalCurrency).Take(top).ToList();
+
+
+                        if (includeOthers)
+                        {
+                            List<DashBoardClass> allCountriesResult = (from s in shipments
+                                                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                                                         && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                                                       //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                                                                       group s by new
+                                                                       {
+                                                                           s.CountryForStatisticsCode,
+                                                                           s.CountryForStatisticsName
+
+                                                                       } into m
+                                                                       select new DashBoardClass()
+                                                                       {
+                                                                           countryCode = m.Key.CountryForStatisticsCode,
+                                                                           countryName = m.Key.CountryForStatisticsName,
+                                                                           country = m.Key.CountryForStatisticsCode,
+                                                                           total = m.Count(),
+                                                                           sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                                                           sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                                                           totalLastMonth = 0,
+                                                                           sumChargeableWeightLastMonth = 0,
+                                                                           sumGrossWeightLastMonth = 0,
+                                                                           ReceivablesInProfitCurrency = m.Sum(d => d.OpenReceivablesInProfitCurrency),
+                                                                           ReceivablesInLocalCurrency = m.Sum(d => d.OpenReceivablesInLocalCurrency),
+                                                                           totalProfitInLocalCurrency = m.Sum(d => d.ProfitInLocalCurrency),
+                                                                           totalProfitInProfitCurrency = m.Sum(d => d.ProfitInProfitCurrency),
+                                                                       }).ToList();
+
+
+
+                            othersResultList = (from a in allCountriesResult
+                                                where !(from r in resultList where r.countryCode == a.countryCode select r).Any()
+                                                select a).ToList();
+                            foreach (DashBoardClass d in othersResultList)
+                            {
+                                d.countryCode = "Others";
+                                d.countryName = "Others";
+                                d.country = "Others";
+                            }
+                            unionList = resultList.Union(othersResultList).OrderByDescending(d => d.ReceivablesInLocalCurrency).ToList();
+
+                        }
+                        else
+                        {
+                            unionList = resultList.OrderByDescending(d => d.ReceivablesInLocalCurrency).ToList();
+                        }
+                        break;
+                    }
+                #endregion
+
+                #region if the measurement is receivables in profit
+                case 6:
+                    {
+                        List<DashBoardClass> resultList = null;
+                        List<DashBoardClass> othersResultList = null;
+                        resultList = (from s in shipments
+                                      where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                     && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                      group s by new
+                                      {
+                                          s.CountryForStatisticsCode,
+                                          s.CountryForStatisticsName
+
+                                      } into m
+                                      select new DashBoardClass()
+                                      {
+                                          countryCode = m.Key.CountryForStatisticsCode,
+                                          countryName = m.Key.CountryForStatisticsName,
+                                          country = m.Key.CountryForStatisticsCode,
+                                          total = m.Count(),
+                                          sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                          sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                          totalLastMonth = 0,
+                                          sumChargeableWeightLastMonth = 0,
+                                          sumGrossWeightLastMonth = 0,
+                                          ReceivablesInProfitCurrency = m.Sum(d => d.OpenReceivablesInProfitCurrency),
+                                          ReceivablesInLocalCurrency = m.Sum(d => d.OpenReceivablesInLocalCurrency),
+                                          totalProfitInLocalCurrency = m.Sum(d => d.ProfitInLocalCurrency),
+                                          totalProfitInProfitCurrency = m.Sum(d => d.ProfitInProfitCurrency),
+                                      }).OrderByDescending(d => d.ReceivablesInProfitCurrency).Take(top).ToList();
+
+
+                        if (includeOthers)
+                        {
+                            List<DashBoardClass> allCountriesResult = (from s in shipments
+                                                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
+                                                                         && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                                                       //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
+                                                                       group s by new
+                                                                       {
+                                                                           s.CountryForStatisticsCode,
+                                                                           s.CountryForStatisticsName
+
+                                                                       } into m
+                                                                       select new DashBoardClass()
+                                                                       {
+                                                                           countryCode = m.Key.CountryForStatisticsCode,
+                                                                           countryName = m.Key.CountryForStatisticsName,
+                                                                           country = m.Key.CountryForStatisticsCode,
+                                                                           total = m.Count(),
+                                                                           sumChargeableWeight = m.Sum(s => s.ChargeableWeightInKG),
+                                                                           sumGrossWeight = m.Sum(s => s.GrossWeightInKG),
+                                                                           totalLastMonth = 0,
+                                                                           sumChargeableWeightLastMonth = 0,
+                                                                           sumGrossWeightLastMonth = 0,
+                                                                           ReceivablesInProfitCurrency = m.Sum(d => d.OpenReceivablesInProfitCurrency),
+                                                                           ReceivablesInLocalCurrency = m.Sum(d => d.OpenReceivablesInLocalCurrency),
+                                                                           totalProfitInLocalCurrency = m.Sum(d => d.ProfitInLocalCurrency),
+                                                                           totalProfitInProfitCurrency = m.Sum(d => d.ProfitInProfitCurrency),
+                                                                       }).ToList();
+
+
+
+                            othersResultList = (from a in allCountriesResult
+                                                where !(from r in resultList where r.countryCode == a.countryCode select r).Any()
+                                                select a).ToList();
+                            foreach (DashBoardClass d in othersResultList)
+                            {
+                                d.countryCode = "Others";
+                                d.countryName = "Others";
+                                d.country = "Others";
+                            }
+                            unionList = resultList.Union(othersResultList).OrderByDescending(d => d.ReceivablesInProfitCurrency).ToList();
+
+                        }
+                        else
+                        {
+                            unionList = resultList.OrderByDescending(d => d.ReceivablesInProfitCurrency).ToList();
+                        }
+                        break;
+                    }
+                    #endregion
+
+
             }
 
-            datalist = new List<DashBoardClass>();
-
-            for (int i = 0; i < Listt.Count; i++)
-            {
-                datalist.Add(Listt.Values.ElementAt(i));
-            }
-            return datalist;
-
+            return unionList;
         }
 
         /* DashBoard Top 10 Customers */
@@ -6274,66 +6979,669 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return resulList;
         }
-
-
-        /* DashBoard Top 10 Customers */
-        public List<DashBoardClass> GetTop10DashBoardCustom(string type, DateTime? FromDate, DateTime? ToDate, int measurment, int currentTenant, int top, bool includeOthers)
+        public IQueryable<DashBoardClass> GetTop10DashBoardCustom(string type, DateTime? FromDate, DateTime? ToDate, int measurment, int currentTenant, int top, bool includeOthers, string directionId, string transportmodeId)
         {
             if (top < 0)
             {
                 top = 0;
-            }         
+            }
+            FromDate = FromDate.Value.AddMinutes(FromDate.Value.Minute*-1);
+            ToDate = ToDate.Value.AddDays(1);
 
-            List<DashBoardClass> datalist = null;
-            List<ShipmentsCustomersDashboardView> shipments = repository.GetShipmentDataViewsForCustomersDashboard(currentTenant).Take(top).ToList();
+            IQueryable<DashBoardClass> resulList = null;
 
-            Dictionary<string, DashBoardClass> Listt = new Dictionary<string, DashBoardClass>();
+            IQueryable<ShipmentsCustomersDashboardView> allShipments = repository.GetShipmentDataViewsForCustomersDashboard(currentTenant, directionId, transportmodeId);
 
-            foreach (ShipmentsCustomersDashboardView d in shipments)
+            allShipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentsCustomersDashboardView>(new QueryOperations(), allShipments, currentTenant);
+            allShipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentsCustomersDashboardView>(new QueryOperations(), allShipments, currentTenant);
+
+            switch (measurment)
             {
-                string Index = "";
-                Index = d.CustomerId;                
-                if (!Listt.ContainsKey(Index))
-                {
-                    DashBoardClass Item = new DashBoardClass();
-                    Item.countryName = d.CustomerName;
-                    Item.sumChargeableWeight = d.ChargeableWeightInKG;
-                    Item.sumGrossWeight = d.GrossWeightInKG;
-                    Item.totalProfitInLocalCurrency = d.ProfitInLocalCurrency;
-                    Item.totalProfitInProfitCurrency = d.ProfitInProfitCurrency;
-                    Item.ReceivablesInLocalCurrency = d.OpenReceivablesInLocalCurrency;
-                    Item.ReceivablesInProfitCurrency = d.OpenReceivablesInProfitCurrency;
-                    Item.directionID = d.DirectionId;
-                    Item.transportModeID = d.TransportModeId;
-                    Item.total = 1;
-                    Listt.Add(Index, Item);
-                }
-                else
-                {
-                    Listt[Index].countryName = d.CustomerName;
-                    Listt[Index].sumChargeableWeight += d.ChargeableWeightInKG != null ? d.ChargeableWeightInKG : 0;
-                    Listt[Index].sumGrossWeight += d.GrossWeightInKG != null ? d.GrossWeightInKG : 0;
-                    Listt[Index].totalProfitInLocalCurrency += d.ProfitInLocalCurrency != null ? d.ProfitInLocalCurrency : 0;
-                    Listt[Index].totalProfitInProfitCurrency += d.ProfitInProfitCurrency != null ? d.ProfitInProfitCurrency : 0;
-                    Listt[Index].ReceivablesInLocalCurrency += d.OpenReceivablesInLocalCurrency != null ? d.OpenReceivablesInLocalCurrency : 0;
-                    Listt[Index].ReceivablesInProfitCurrency += d.OpenReceivablesInProfitCurrency != null ? d.OpenReceivablesInProfitCurrency : 0;
-                    Listt[Index].directionID = d.DirectionId;
-                    Listt[Index].transportModeID = d.TransportModeId;
-                    Listt[Index].total = Listt[Index].total + 1;
+                #region measurement is shipment count
+                case 0:
+                    {
 
 
-                }
+                        var top10 = (from t in allShipments
+                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false && t.CustomerId != null
+                                     && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
+
+                                     group t by t.CustomerId into g
+                                     select new
+                                     {
+                                         id = g.Key,
+                                         c = g.Count(),
+                                     }).OrderByDescending(r => r.c);
+
+                        List<string> topCustomerIds = (from a in top10
+                                                       select a.id).Take(top).ToList();
+                        IQueryable<DashBoardClass> resultList1 = null;
+                        IQueryable<DashBoardClass> resultList2 = null;
+                        resultList1 = (from s in allShipments
+                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false && s.CustomerId != null
+                                     && (((type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)) && topCustomerIds.Contains(s.CustomerId))
+
+                                       group s by new
+                                       {
+                                           s.CustomerId,
+                                           s.CustomerName,
+                                           s.DirectionId,
+                                           s.TransportModeId,
+                                       } into c
+
+                                       select new DashBoardClass()
+                                       {
+                                           CustomerID = c.Key.CustomerId,
+                                           CustomerName = c.Key.CustomerName,
+                                           directionID = c.Key.DirectionId,
+                                           transportModeID = c.Key.TransportModeId,
+                                           total = c.Count(),
+                                           sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                           sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                       });
+                        if (includeOthers)
+                        {
+                            resultList2 = (from s in allShipments
+                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false && s.CustomerId != null
+                                           && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate) && !topCustomerIds.Contains(s.CustomerId)
+
+                                           group s by new
+                                           {
+
+                                               s.DirectionId,
+                                               s.TransportModeId,
+                                           } into c
+
+                                           select new DashBoardClass()
+                                           {
+                                               CustomerID = "Others" + c.Key.DirectionId + c.Key.TransportModeId,
+                                               CustomerName = "Others",
+                                               directionID = c.Key.DirectionId,
+                                               transportModeID = c.Key.TransportModeId,
+                                               total = c.Count(),
+                                               sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                               sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                           });
+                            resulList = resultList1.Concat(resultList2).OrderByDescending(d => d.total);
+                        }
+                        else
+                        {
+                            resulList = resultList1.OrderByDescending(d => d.total);
+                        }
+
+
+
+
+                        break;
+                    }
+                #endregion
+
+                #region measurement is chargeable weight
+                case 1:
+                    {
+
+                        var top10 = (from t in allShipments
+                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
+
+                                     group t by t.CustomerId into g
+                                     select new
+                                     {
+                                         id = g.Key,
+                                         c = g.Sum(d => d.ChargeableWeightInKG),
+                                     }).OrderByDescending(r => r.c).Take(top);
+
+                        //IQueryable<Shipment> shipments = from s in allShipments
+                        //                                 where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                        //                                 select s;
+
+                        //shipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<Shipment>(new QueryOperations(), shipments, currentTenant);
+
+
+                        IQueryable<DashBoardClass> resultList1 = null;
+                        IQueryable<DashBoardClass> resultList2 = null;
+                        resultList1 = (from s in allShipments
+                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                       && top10.Any(q => q.id == s.CustomerId)
+
+                                       group s by new
+                                       {
+                                           s.CustomerId,
+                                           s.CustomerName,
+                                           s.DirectionId,
+                                           s.TransportModeId,
+                                       } into c
+
+                                       select new DashBoardClass()
+                                       {
+                                           CustomerID = c.Key.CustomerId,
+                                           CustomerName = c.Key.CustomerName,
+                                           directionID = c.Key.DirectionId,
+                                           transportModeID = c.Key.TransportModeId,
+                                           total = c.Count(),
+                                           sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                           sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                       });
+                        if (includeOthers)
+                        {
+                            resultList2 = (from s in allShipments
+                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                           && !top10.Any(q => q.id == s.CustomerId)
+
+                                           group s by new
+                                           {
+
+                                               s.DirectionId,
+                                               s.TransportModeId,
+                                           } into c
+
+                                           select new DashBoardClass()
+                                           {
+                                               CustomerID = "Others" + c.Key.DirectionId + c.Key.TransportModeId,
+                                               CustomerName = "Others",
+                                               directionID = c.Key.DirectionId,
+                                               transportModeID = c.Key.TransportModeId,
+                                               total = c.Count(),
+                                               sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                               sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                           });
+
+                            resulList = resultList1.Concat(resultList2).OrderByDescending(d => d.sumChargeableWeight);
+                        }
+                        else
+                        {
+                            resulList = resultList1.OrderByDescending(d => d.sumChargeableWeight);
+                        }
+
+                        break;
+                    }
+                #endregion
+
+                #region measurement is Gross weight
+                case 2:
+                    {
+                        var top10 = (from t in allShipments
+                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
+
+                                     group t by t.CustomerId into g
+                                     select new
+                                     {
+                                         id = g.Key,
+                                         c = g.Sum(d => d.GrossWeightInKG),
+                                     }).OrderByDescending(r => r.c).Take(top);
+
+                        //IQueryable<Shipment> shipments = from s in allShipments
+                        //                                 where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                        //                                 select s;
+
+                        IQueryable<DashBoardClass> resultList1 = null;
+                        IQueryable<DashBoardClass> resultList2 = null;
+                        resultList1 = (from s in allShipments
+                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                       && top10.Any(q => q.id == s.CustomerId)
+
+                                       group s by new
+                                       {
+                                           s.CustomerId,
+                                           s.CustomerName,
+                                           s.DirectionId,
+                                           s.TransportModeId,
+                                       } into c
+
+                                       select new DashBoardClass()
+                                       {
+                                           CustomerID = c.Key.CustomerId,
+                                           CustomerName = c.Key.CustomerName,
+                                           directionID = c.Key.DirectionId,
+                                           transportModeID = c.Key.TransportModeId,
+                                           total = c.Count(),
+                                           sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                           sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                       });
+                        if (includeOthers)
+                        {
+                            resultList2 = (from s in allShipments
+                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                           && !top10.Any(q => q.id == s.CustomerId)
+
+                                           group s by new
+                                           {
+
+                                               s.DirectionId,
+                                               s.TransportModeId,
+                                           } into c
+
+                                           select new DashBoardClass()
+                                           {
+                                               CustomerID = "Others" + c.Key.DirectionId + c.Key.TransportModeId,
+                                               CustomerName = "Others",
+                                               directionID = c.Key.DirectionId,
+                                               transportModeID = c.Key.TransportModeId,
+                                               total = c.Count(),
+                                               sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                               sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                           });
+
+                            resulList = resultList1.Concat(resultList2).OrderByDescending(d => d.sumGrossWeight);
+                        }
+                        else
+                        {
+                            resulList = resultList1.OrderByDescending(d => d.sumGrossWeight);
+                        }
+
+
+                        break;
+                    }
+                #endregion
+
+                #region measurement is profit in local
+                case 3:
+                    {
+                        var top10 = (from t in allShipments
+                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
+
+                                     group t by t.CustomerId into g
+                                     select new
+                                     {
+                                         id = g.Key,
+                                         c = g.Sum(d => d.ProfitInLocalCurrency),
+                                     }).OrderByDescending(r => r.c).Take(top);
+
+                        //IQueryable<Shipment> shipments = from s in allShipments
+                        //                                 where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                        //                                 select s;
+
+                        IQueryable<DashBoardClass> resultList1 = null;
+                        IQueryable<DashBoardClass> resultList2 = null;
+                        resultList1 = (from s in allShipments
+                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                       && top10.Any(q => q.id == s.CustomerId)
+
+                                       group s by new
+                                       {
+                                           s.CustomerId,
+                                           s.CustomerName,
+                                           s.DirectionId,
+                                           s.TransportModeId,
+                                       } into c
+
+                                       select new DashBoardClass()
+                                       {
+                                           CustomerID = c.Key.CustomerId,
+                                           CustomerName = c.Key.CustomerName,
+                                           directionID = c.Key.DirectionId,
+                                           transportModeID = c.Key.TransportModeId,
+                                           total = c.Count(),
+                                           sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                           sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                           totalProfitInLocalCurrency = c.Sum(s => s.ProfitInLocalCurrency),
+                                           totalProfitInProfitCurrency = c.Sum(s => s.ProfitInProfitCurrency),
+                                       });
+                        if (includeOthers)
+                        {
+                            resultList2 = (from s in allShipments
+                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                           && !top10.Any(q => q.id == s.CustomerId)
+
+                                           group s by new
+                                           {
+
+                                               s.DirectionId,
+                                               s.TransportModeId,
+                                           } into c
+
+                                           select new DashBoardClass()
+                                           {
+                                               CustomerID = "Others" + c.Key.DirectionId + c.Key.TransportModeId,
+                                               CustomerName = "Others",
+                                               directionID = c.Key.DirectionId,
+                                               transportModeID = c.Key.TransportModeId,
+                                               total = c.Count(),
+                                               sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                               sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                               totalProfitInLocalCurrency = c.Sum(s => s.ProfitInLocalCurrency),
+                                               totalProfitInProfitCurrency = c.Sum(s => s.ProfitInProfitCurrency),
+                                           });
+
+                            resulList = resultList1.Concat(resultList2).OrderByDescending(d => d.totalProfitInLocalCurrency);
+                        }
+                        else
+                        {
+                            resulList = resultList1.OrderByDescending(d => d.totalProfitInLocalCurrency);
+                        }
+
+
+                        break;
+                    }
+                #endregion
+
+                #region measurement is profit in profit
+                case 4:
+                    {
+                        var top10 = (from t in allShipments
+                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
+
+                                     group t by t.CustomerId into g
+                                     select new
+                                     {
+                                         id = g.Key,
+                                         c = g.Sum(d => d.ProfitInProfitCurrency),
+                                     }).OrderByDescending(r => r.c).Take(top);
+
+
+
+                        IQueryable<DashBoardClass> resultList1 = null;
+                        IQueryable<DashBoardClass> resultList2 = null;
+                        resultList1 = (from s in allShipments
+                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                       && top10.Any(q => q.id == s.CustomerId)
+
+                                       group s by new
+                                       {
+                                           s.CustomerId,
+                                           s.CustomerName,
+                                           s.DirectionId,
+                                           s.TransportModeId,
+                                       } into c
+
+                                       select new DashBoardClass()
+                                       {
+                                           CustomerID = c.Key.CustomerId,
+                                           CustomerName = c.Key.CustomerName,
+                                           directionID = c.Key.DirectionId,
+                                           transportModeID = c.Key.TransportModeId,
+                                           total = c.Count(),
+                                           sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                           sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                           totalProfitInLocalCurrency = c.Sum(s => s.ProfitInLocalCurrency),
+                                           totalProfitInProfitCurrency = c.Sum(s => s.ProfitInProfitCurrency),
+                                       });
+                        if (includeOthers)
+                        {
+                            resultList2 = (from s in allShipments
+                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                           && !top10.Any(q => q.id == s.CustomerId)
+
+                                           group s by new
+                                           {
+
+                                               s.DirectionId,
+                                               s.TransportModeId,
+                                           } into c
+
+                                           select new DashBoardClass()
+                                           {
+                                               CustomerID = "Others" + c.Key.DirectionId + c.Key.TransportModeId,
+                                               CustomerName = "Others",
+                                               directionID = c.Key.DirectionId,
+                                               transportModeID = c.Key.TransportModeId,
+                                               total = c.Count(),
+                                               sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                               sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                               totalProfitInLocalCurrency = c.Sum(s => s.ProfitInLocalCurrency),
+                                               totalProfitInProfitCurrency = c.Sum(s => s.ProfitInProfitCurrency),
+                                           });
+
+                            resulList = resultList1.Concat(resultList2).OrderByDescending(d => d.totalProfitInProfitCurrency);
+                        }
+                        else
+                        {
+                            resulList = resultList1.OrderByDescending(d => d.totalProfitInProfitCurrency);
+                        }
+
+
+                        break;
+                    }
+                #endregion
+
+                #region measurement is receivable in local
+                case 5:
+                    {
+                        var top10 = (from t in allShipments
+                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
+
+                                     group t by t.CustomerId into g
+                                     select new
+                                     {
+                                         id = g.Key,
+                                         c = g.Sum(d => d.OpenReceivablesInLocalCurrency),
+                                     }).OrderByDescending(r => r.c).Take(top);
+
+
+
+                        IQueryable<DashBoardClass> resultList1 = null;
+                        IQueryable<DashBoardClass> resultList2 = null;
+                        resultList1 = (from s in allShipments
+                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                       && top10.Any(q => q.id == s.CustomerId)
+
+                                       group s by new
+                                       {
+                                           s.CustomerId,
+                                           s.CustomerName,
+                                           s.DirectionId,
+                                           s.TransportModeId,
+                                       } into c
+
+                                       select new DashBoardClass()
+                                       {
+                                           CustomerID = c.Key.CustomerId,
+                                           CustomerName = c.Key.CustomerName,
+                                           directionID = c.Key.DirectionId,
+                                           transportModeID = c.Key.TransportModeId,
+                                           total = c.Count(),
+                                           sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                           sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                           totalProfitInLocalCurrency = c.Sum(s => s.ProfitInLocalCurrency),
+                                           totalProfitInProfitCurrency = c.Sum(s => s.ProfitInProfitCurrency),
+                                           ReceivablesInLocalCurrency = c.Sum(s => s.OpenReceivablesInLocalCurrency),
+                                           ReceivablesInProfitCurrency = c.Sum(s => s.OpenReceivablesInProfitCurrency),
+                                       });
+                        if (includeOthers)
+                        {
+                            resultList2 = (from s in allShipments
+                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                           && !top10.Any(q => q.id == s.CustomerId)
+
+                                           group s by new
+                                           {
+
+                                               s.DirectionId,
+                                               s.TransportModeId,
+                                           } into c
+
+                                           select new DashBoardClass()
+                                           {
+                                               CustomerID = "Others" + c.Key.DirectionId + c.Key.TransportModeId,
+                                               CustomerName = "Others",
+                                               directionID = c.Key.DirectionId,
+                                               transportModeID = c.Key.TransportModeId,
+                                               total = c.Count(),
+                                               sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                               sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                               totalProfitInLocalCurrency = c.Sum(s => s.ProfitInLocalCurrency),
+                                               totalProfitInProfitCurrency = c.Sum(s => s.ProfitInProfitCurrency),
+                                               ReceivablesInLocalCurrency = c.Sum(s => s.OpenReceivablesInLocalCurrency),
+                                               ReceivablesInProfitCurrency = c.Sum(s => s.OpenReceivablesInProfitCurrency),
+                                           });
+
+                            resulList = resultList1.Concat(resultList2).OrderByDescending(d => d.ReceivablesInLocalCurrency);
+                        }
+                        else
+                        {
+                            resulList = resultList1.OrderByDescending(d => d.ReceivablesInLocalCurrency);
+                        }
+
+
+                        break;
+                    }
+                #endregion
+
+                #region measurement is receivable in profit
+                case 6:
+                    {
+                        var top10 = (from t in allShipments
+                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
+
+                                     group t by t.CustomerId into g
+                                     select new
+                                     {
+                                         id = g.Key,
+                                         c = g.Sum(d => d.OpenReceivablesInProfitCurrency),
+                                     }).OrderByDescending(r => r.c).Take(top);
+
+
+
+                        IQueryable<DashBoardClass> resultList1 = null;
+                        IQueryable<DashBoardClass> resultList2 = null;
+                        resultList1 = (from s in allShipments
+                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                       && top10.Any(q => q.id == s.CustomerId)
+
+                                       group s by new
+                                       {
+                                           s.CustomerId,
+                                           s.CustomerName,
+                                           s.DirectionId,
+                                           s.TransportModeId,
+                                       } into c
+
+                                       select new DashBoardClass()
+                                       {
+                                           CustomerID = c.Key.CustomerId,
+                                           CustomerName = c.Key.CustomerName,
+                                           directionID = c.Key.DirectionId,
+                                           transportModeID = c.Key.TransportModeId,
+                                           total = c.Count(),
+                                           sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                           sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                           totalProfitInLocalCurrency = c.Sum(s => s.ProfitInLocalCurrency),
+                                           totalProfitInProfitCurrency = c.Sum(s => s.ProfitInProfitCurrency),
+                                           ReceivablesInLocalCurrency = c.Sum(s => s.OpenReceivablesInLocalCurrency),
+                                           ReceivablesInProfitCurrency = c.Sum(s => s.OpenReceivablesInProfitCurrency),
+                                       });
+                        if (includeOthers)
+                        {
+                            resultList2 = (from s in allShipments
+                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
+                                           && !top10.Any(q => q.id == s.CustomerId)
+
+                                           group s by new
+                                           {
+
+                                               s.DirectionId,
+                                               s.TransportModeId,
+                                           } into c
+
+                                           select new DashBoardClass()
+                                           {
+                                               CustomerID = "Others" + c.Key.DirectionId + c.Key.TransportModeId,
+                                               CustomerName = "Others",
+                                               directionID = c.Key.DirectionId,
+                                               transportModeID = c.Key.TransportModeId,
+                                               total = c.Count(),
+                                               sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
+                                               sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
+                                               totalProfitInLocalCurrency = c.Sum(s => s.ProfitInLocalCurrency),
+                                               totalProfitInProfitCurrency = c.Sum(s => s.ProfitInProfitCurrency),
+                                               ReceivablesInLocalCurrency = c.Sum(s => s.OpenReceivablesInLocalCurrency),
+                                               ReceivablesInProfitCurrency = c.Sum(s => s.OpenReceivablesInProfitCurrency),
+                                           });
+
+                            resulList = resultList1.Concat(resultList2).OrderByDescending(d => d.ReceivablesInProfitCurrency);
+                        }
+                        else
+                        {
+                            resulList = resultList1.OrderByDescending(d => d.ReceivablesInProfitCurrency);
+                        }
+
+
+                        break;
+                    }
+                #endregion
+
+                default: break;
             }
 
-            datalist = new List<DashBoardClass>();
-
-            for (int i = 0; i < Listt.Count; i++)
-            {
-                datalist.Add(Listt.Values.ElementAt(i));
-            }
-            return datalist;
-
+            return resulList;
         }
+
+
+        /* DashBoard Top 10 Customers */
+        //public List<DashBoardClass> GetTop10DashBoardCustom(string type, DateTime? FromDate, DateTime? ToDate, int measurment, int currentTenant, int top, bool includeOthers)
+        //{
+        //    if (top < 0)
+        //    {
+        //        top = 0;
+        //    }         
+
+        //    List<DashBoardClass> datalist = null;
+        //    List<ShipmentsCustomersDashboardView> shipments = repository.GetShipmentDataViewsForCustomersDashboard(currentTenant).Take(top).ToList();
+
+        //    Dictionary<string, DashBoardClass> Listt = new Dictionary<string, DashBoardClass>();
+
+        //    foreach (ShipmentsCustomersDashboardView d in shipments)
+        //    {
+        //        string Index = "";
+        //        Index = d.CustomerId;                
+        //        if (!Listt.ContainsKey(Index))
+        //        {
+        //            DashBoardClass Item = new DashBoardClass();
+        //            Item.countryName = d.CustomerName;
+        //            Item.sumChargeableWeight = d.ChargeableWeightInKG;
+        //            Item.sumGrossWeight = d.GrossWeightInKG;
+        //            Item.totalProfitInLocalCurrency = d.ProfitInLocalCurrency;
+        //            Item.totalProfitInProfitCurrency = d.ProfitInProfitCurrency;
+        //            Item.ReceivablesInLocalCurrency = d.OpenReceivablesInLocalCurrency;
+        //            Item.ReceivablesInProfitCurrency = d.OpenReceivablesInProfitCurrency;
+        //            Item.directionID = d.DirectionId;
+        //            Item.transportModeID = d.TransportModeId;
+        //            Item.total = 1;
+        //            Listt.Add(Index, Item);
+        //        }
+        //        else
+        //        {
+        //            Listt[Index].countryName = d.CustomerName;
+        //            Listt[Index].sumChargeableWeight += d.ChargeableWeightInKG != null ? d.ChargeableWeightInKG : 0;
+        //            Listt[Index].sumGrossWeight += d.GrossWeightInKG != null ? d.GrossWeightInKG : 0;
+        //            Listt[Index].totalProfitInLocalCurrency += d.ProfitInLocalCurrency != null ? d.ProfitInLocalCurrency : 0;
+        //            Listt[Index].totalProfitInProfitCurrency += d.ProfitInProfitCurrency != null ? d.ProfitInProfitCurrency : 0;
+        //            Listt[Index].ReceivablesInLocalCurrency += d.OpenReceivablesInLocalCurrency != null ? d.OpenReceivablesInLocalCurrency : 0;
+        //            Listt[Index].ReceivablesInProfitCurrency += d.OpenReceivablesInProfitCurrency != null ? d.OpenReceivablesInProfitCurrency : 0;
+        //            Listt[Index].directionID = d.DirectionId;
+        //            Listt[Index].transportModeID = d.TransportModeId;
+        //            Listt[Index].total = Listt[Index].total + 1;
+
+
+        //        }
+        //    }
+
+        //    datalist = new List<DashBoardClass>();
+
+        //    for (int i = 0; i < Listt.Count; i++)
+        //    {
+        //        datalist.Add(Listt.Values.ElementAt(i));
+        //    }
+        //    return datalist;
+
+        //}
 
 
 

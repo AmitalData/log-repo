@@ -227,7 +227,7 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {                              
                 var service = new DashboardDomainService();
-                service.GetTop10DashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers).subscribe(myResult => {
+                service.GetTop10DashBoardCustom(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, parseInt(this.SelectedShowItem.Index), this.TenantPM.Id, this.TopCustomers, this.IncludeOthersCustomers, this.SelectedDirectionFilterCustomers, this.SelectedTransportFilterCustomers).subscribe(myResult => {
                     this.FinalCustomersData = myResult;
                     this.FillCustomersPie();
                 });

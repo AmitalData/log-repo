@@ -885,7 +885,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByTop10CountriesDashBoardCustom(type, FromDateOBJ, ToDateOBJ, measurment, tenant, top, includeOthers, customerid, directionId, transmodeId).AsQueryable().ToList();
+                List<DashBoardClass> myResult = shipmentQuery.GetShipmentsByTop10CountriesDashBoardCustom2(type, FromDateOBJ, ToDateOBJ, measurment, tenant, top, includeOthers, customerid, directionId, transmodeId).AsQueryable().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
             }
@@ -897,7 +897,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
-        public HttpResponseMessage GetTop10DashBoardCustom(string type, string FromDate, string ToDate, int measurment, int currentTenant, int top, bool includeOthers)
+        public HttpResponseMessage GetTop10DashBoardCustom(string type, string FromDate, string ToDate, int measurment, int currentTenant, int top, bool includeOthers, string directionId,string transportmodeid)
         {
             try
             {
@@ -926,7 +926,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(currentTenant);
-                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoardCustom(type, FromDateOBJ, ToDateOBJ, measurment, currentTenant, top, includeOthers);
+                List<DashBoardClass> myResult = shipmentQuery.GetTop10DashBoardCustom(type, FromDateOBJ, ToDateOBJ, measurment, currentTenant, top, includeOthers, directionId, transportmodeid).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
             }

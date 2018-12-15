@@ -260,14 +260,14 @@ export class DashboardDomainService {
         });
 
     }
-    GetTop10DashBoardCustom(type: string, FromDate: Date, ToDate: Date, measurment: number, currentTenant: number, top: number, includeOthers: boolean) {
+    GetTop10DashBoardCustom(type: string, FromDate: Date, ToDate: Date, measurment: number, currentTenant: number, top: number, includeOthers: boolean, directionId: string, transportmodeId: string) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ShipmentDomain'
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetTop10DashBoardCustom?type=' + type + '&FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) + '&measurment=' + measurment + '&currentTenant=' + currentTenant + '&top=' + top + '&includeOthers=' + includeOthers , {
+            return this._http.get(this._apiUrl + '/GetTop10DashBoardCustom?type=' + type + '&FromDate=' + ServiceHelper.GetDateString(FromDate) + '&ToDate=' + ServiceHelper.GetDateString(ToDate) +  '&measurment=' + measurment + '&currentTenant=' + currentTenant + '&top=' + top + '&includeOthers=' + includeOthers + '&directionid=' + directionId + '&transportmodeId=' + transportmodeId, {
                 headers: authHeader
             }).map(response => {
 
