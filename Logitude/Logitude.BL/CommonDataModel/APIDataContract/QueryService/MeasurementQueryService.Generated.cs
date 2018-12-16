@@ -58,6 +58,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public Measurement GetMeasurementByCode(string Code,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Measurement with Code " + Code + " doesn't exist");
+
+				return MeasurementDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public Measurement MeasurementDataMapping(MeasurementPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -89,6 +108,10 @@ using Simplog.Data.CommonDataModel;
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
 					
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
+					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
 						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
@@ -105,7 +128,7 @@ using Simplog.Data.CommonDataModel;
 					   					   
 					if(temp == null)
 					{
-					    throw new ApplicationException("Measurement with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("Measurement with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
