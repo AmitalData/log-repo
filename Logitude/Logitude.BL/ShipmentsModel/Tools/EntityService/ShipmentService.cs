@@ -6362,6 +6362,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 this.entityPM.FirstPickupETD = myFirstPickup.ETD;
             }
 
+            else
+            {
+                this.entityPM.FirstPickupETA = null;
+                this.entityPM.FirstPickupETD = null;
+            }
+
             if (myFirstDelivery != null)
             {
                 switch (myFirstDelivery.PickUpDeliveryToTypeCode)
