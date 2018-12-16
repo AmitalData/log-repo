@@ -8,9 +8,9 @@ input:disabled {
 }
 
 input {
-    /*height: 22px;*/
+    height: 22px;
     min-height: 22px;
-    /*max-height: 22px;*/
+    max-height: 22px;
     line-height: 21px;
     width: 100%;
     box-sizing: border-box;
