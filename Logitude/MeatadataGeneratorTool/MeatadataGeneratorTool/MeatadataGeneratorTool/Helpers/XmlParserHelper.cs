@@ -693,6 +693,10 @@ namespace MeatadataGeneratorTool.Helpers
             {
                 MenuButton.FeatureCode = GetAttributeStringValue(fieldNode.Attributes["FeatureCode"]);
             }
+            if (fieldNode.Attributes["IsPackagable"] != null)
+            {
+                MenuButton.IsPackagable = GetAttributeBoolValue(fieldNode.Attributes["IsPackagable"]);
+            }
             if (fieldNode.ChildNodes != null)
             {
                 foreach (XmlNode item in fieldNode.ChildNodes)
@@ -722,6 +726,10 @@ namespace MeatadataGeneratorTool.Helpers
                     if (item.Attributes["FeatureCode"] != null)
                     {
                         MenuItem.FeatureCode = GetAttributeStringValue(item.Attributes["FeatureCode"]);
+                    }
+                    if (fieldNode.Attributes["IsPackagable"] != null)
+                    {
+                        MenuItem.IsPackagable = GetAttributeBoolValue(item.Attributes["IsPackagable"]);
                     }
                     if (MenuButton.MenuButtonItems == null)
                     {

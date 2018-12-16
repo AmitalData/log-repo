@@ -1176,7 +1176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   MenuButton MessagingStockMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Cancel",
-						Index = 0, 
+						Index = 2, 
 						IsActive = true,
 						LabelTextCodeCode = "MessagingStock.B.Cancel",
 						LabelTextCodeDefaultText = "Cancel",
