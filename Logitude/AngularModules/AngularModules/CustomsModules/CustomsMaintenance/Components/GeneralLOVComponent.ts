@@ -112,6 +112,6 @@ export class GeneralLOVComponent
     }
         
     OkButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.Code));
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.Code);
     }
 }
