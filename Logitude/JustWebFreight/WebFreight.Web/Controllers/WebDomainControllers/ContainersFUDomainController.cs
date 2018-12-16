@@ -22,7 +22,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                var testing = 6;
+                var id = 2;
                 string token = HttpContext.Current.Request.Headers["Token"];
+                id = 123;
+                testing = 8;
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 
