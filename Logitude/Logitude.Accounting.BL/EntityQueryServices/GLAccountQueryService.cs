@@ -382,11 +382,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
         public List<GLAccountCurrencyBalance> GetCurrencyBalances(GLAccountPM gLAccountPM, DateTime revaluationDate, int tenant)
         {
-
+            DateTime revDate = revaluationDate.Date;
             List<GLAccountCurrencyBalance> rvList = new List<GLAccountCurrencyBalance>();
             if (gLAccountPM != null)
             {
-                DateTime monthLastDate = GetDate(revaluationDate);
+                DateTime monthLastDate = GetDate(revDate);
 
                 GLAccountTotalByMonthQueryService gLAccountTotalByMonthsQueryServices = new GLAccountTotalByMonthQueryService(tenant);
                 DateTime monthUpTo = gLAccountTotalByMonthsQueryServices.GLAccountMonthTotalsUpToDate(gLAccountPM.Id, monthLastDate, tenant);
@@ -397,7 +397,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 if (monthUpTo != noMonthsComputed)
                 {
                     List<CurrencySum> monthsSum = gLAccountTotalByMonthsQueryServices.GetSumByMonth(gLAccountPM.Id, monthUpTo.Year, monthUpTo.Month, tenant);
-                    if (monthLastDate == revaluationDate && (monthUpTo.Year == revaluationDate.Year && monthUpTo.Month == revaluationDate.Month)) // rev date is last day of month AND we have all the sums computed already 
+                    if (monthLastDate == revDate && (monthUpTo.Year == revDate.Year && monthUpTo.Month == revDate.Month)) // rev date is last day of month AND we have all the sums computed already 
                     {
                         allSum = monthsSum;
                     }
@@ -407,13 +407,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     {
                         DateTime fromD = new DateTime(monthUpTo.Year, monthUpTo.Month, 1);
                         fromD = fromD.AddMonths(1);
-                        List<CurrencySum> remainingSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, fromD, revaluationDate, tenant);
+                        List<CurrencySum> remainingSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, fromD, revDate, tenant);
                         allSum = MergeLists(monthsSum, remainingSum);
                     }
                 }
                 else // here we need to compute all the period up to the rev date
                 {
-                    allSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, DateTime.MinValue, revaluationDate, tenant);
+                    allSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, DateTime.MinValue, revDate, tenant);
                 }
 
                 foreach (CurrencySum item in allSum)
