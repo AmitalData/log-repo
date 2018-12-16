@@ -727,7 +727,7 @@ namespace MeatadataGeneratorTool.Helpers
                     {
                         MenuItem.FeatureCode = GetAttributeStringValue(item.Attributes["FeatureCode"]);
                     }
-                    if (fieldNode.Attributes["IsPackagable"] != null)
+                    if (item.Attributes["IsPackagable"] != null)
                     {
                         MenuItem.IsPackagable = GetAttributeBoolValue(item.Attributes["IsPackagable"]);
                     }
