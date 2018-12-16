@@ -321,7 +321,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new INTTRADocumentTypeMap());
             modelBuilder.Configurations.Add(new ShipmentPackageHarmonizeMap());
             modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
-
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
             base.OnModelCreating(modelBuilder);
         }
 

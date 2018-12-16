@@ -16,7 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string DepositionNumber { get; set; }
         public DateTime? ValidityStartDate { get; set; }
         public DateTime? ValidityEndDate { get; set; }
-
+        public DateTime CreateDate { get; set; }
     }
 
 

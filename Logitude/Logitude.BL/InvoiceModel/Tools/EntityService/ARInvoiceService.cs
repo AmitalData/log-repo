@@ -1647,27 +1647,33 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     ChargeTypeAccountingRepository chargeTypeAccountingRepository = new ChargeTypeAccountingRepository(tenant);
                     IQueryable<ChargeTypeAccounting> iQueryable_ChargeTypeAccounting = chargeTypeAccountingRepository.GetChargeTypeAccountings(tenant);
 
+                  
+
                     foreach (ARInvoiceLinePM line in lines)
                     {
                         ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(line.ChargesTypeId, tenant, true);
 
-                        if (myChargesType.AccountingVATSplit)
+                        if (line.GLAccountId == null)
                         {
-                            ChargeTypeAccounting myChargeTypeAccounting = (from d in iQueryable_ChargeTypeAccounting where d.ChargeTypeId == line.ChargesTypeId && d.VatTypeId == line.VatTypeId select d).FirstOrDefault();
-                            if (myChargeTypeAccounting != null)
+
+                            if (myChargesType.AccountingVATSplit)
                             {
-                                line.GLAccountId = myChargeTypeAccounting.ReceivableCreditGLAccountId;
+                                ChargeTypeAccounting myChargeTypeAccounting = (from d in iQueryable_ChargeTypeAccounting where d.ChargeTypeId == line.ChargesTypeId && d.VatTypeId == line.VatTypeId select d).FirstOrDefault();
+                                if (myChargeTypeAccounting != null)
+                                {
+                                    line.GLAccountId = myChargeTypeAccounting.ReceivableCreditGLAccountId;
+                                }
                             }
-                        }
 
-                        else
-                        {
-                            line.GLAccountId = myChargesType.ReceivableCreditGLAccountId;
-                        }
+                            else
+                            {
+                                line.GLAccountId = myChargesType.ReceivableCreditGLAccountId;
+                            }
 
-                        if (string.IsNullOrEmpty(line.GLAccountId))
-                        {
-                            throw new Exception("The Receivable GLAccount of the Charge Type " + myChargesType.EnglishName + " is NULL");
+                            if (string.IsNullOrEmpty(line.GLAccountId))
+                            {
+                                throw new Exception("The Receivable GLAccount of the Charge Type " + myChargesType.EnglishName + " is NULL");
+                            }
                         }
                     }
                 }

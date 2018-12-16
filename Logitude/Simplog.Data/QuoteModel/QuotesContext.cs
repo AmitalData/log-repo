@@ -308,7 +308,7 @@ namespace Simplog.Data.QuoteModel
             modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
             modelBuilder.Configurations.Add(new QuoteTotalVATMap());
             modelBuilder.Configurations.Add(new QuoteSettingMap());
-
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
             base.OnModelCreating(modelBuilder);
         }
 

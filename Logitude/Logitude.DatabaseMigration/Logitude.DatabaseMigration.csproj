@@ -390,6 +390,18 @@
     <Compile Include="Migrations\201812111246336_AbedAddNewTablesCustomerDepositionAndCustomsShipper.Designer.cs">
       <DependentUpon>201812111246336_AbedAddNewTablesCustomerDepositionAndCustomsShipper.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812130602472_AbedAddCreateDateToTableCustomerDepositions.cs" />
+    <Compile Include="Migrations\201812130602472_AbedAddCreateDateToTableCustomerDepositions.Designer.cs">
+      <DependentUpon>201812130602472_AbedAddCreateDateToTableCustomerDepositions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812131134518_AbedAddCardToCustomsShippers.cs" />
+    <Compile Include="Migrations\201812131134518_AbedAddCardToCustomsShippers.Designer.cs">
+      <DependentUpon>201812131134518_AbedAddCardToCustomsShippers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812160751200_textcodes_fixes.cs" />
+    <Compile Include="Migrations\201812160751200_textcodes_fixes.Designer.cs">
+      <DependentUpon>201812160751200_textcodes_fixes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201812121518263_RenameAWBMessagingStockTable.cs" />
     <Compile Include="Migrations\201812121518263_RenameAWBMessagingStockTable.Designer.cs">
       <DependentUpon>201812121518263_RenameAWBMessagingStockTable.cs</DependentUpon>
@@ -624,6 +636,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812111246336_AbedAddNewTablesCustomerDepositionAndCustomsShipper.resx">
       <DependentUpon>201812111246336_AbedAddNewTablesCustomerDepositionAndCustomsShipper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812130602472_AbedAddCreateDateToTableCustomerDepositions.resx">
+      <DependentUpon>201812130602472_AbedAddCreateDateToTableCustomerDepositions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812131134518_AbedAddCardToCustomsShippers.resx">
+      <DependentUpon>201812131134518_AbedAddCardToCustomsShippers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812160751200_textcodes_fixes.resx">
+      <DependentUpon>201812160751200_textcodes_fixes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812121518263_RenameAWBMessagingStockTable.resx">
       <DependentUpon>201812121518263_RenameAWBMessagingStockTable.cs</DependentUpon>

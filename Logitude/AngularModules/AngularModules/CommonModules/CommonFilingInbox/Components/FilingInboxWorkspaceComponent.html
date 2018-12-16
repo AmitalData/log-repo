@@ -875,7 +875,7 @@
                                                                                 </tr>
                                                                                 <tr style="vertical-align:top;">
                                                                                     <td>
-                                                                                        <div *ngIf="IsPDF && !IsMailBody" style="width:100%;height:100%">
+                                                                                        <div *ngIf="IsPDF && !IsMailBody" style="width:100%;height:100%;" >
                                                                                             <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe" style="width:100%;height:100%">Loading...</iframe>
                                                                                         </div>
                                                                                         <div *ngIf="!IsPDF && !IsMailBody" style="text-align:center;">
@@ -896,7 +896,7 @@
                                                                                             <table [hidden]="!IsSetHtml">
                                                                                                 <tr style="height:100%;vertical-align:top;text-align:left;">
                                                                                                     <td>
-                                                                                                        <div [attr.id]="PreviewDivId"></div>
+                                                                                                        <div class="MediaFill" style="vertical-align:top;"  [attr.id]="PreviewDivId"></div>
                                                                                                     </td>
                                                                                                 </tr>
                                                                                             </table>
