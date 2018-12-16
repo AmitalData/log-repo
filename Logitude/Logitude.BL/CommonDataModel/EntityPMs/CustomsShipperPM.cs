@@ -33,7 +33,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string UpdatedByUserId { get; set; }
         public string CityName { get; set; }
         
-
+        public bool IsChange { get; set; }
         private List<AddressPM> addresses;
 
         public virtual List<AddressPM> Addresses
