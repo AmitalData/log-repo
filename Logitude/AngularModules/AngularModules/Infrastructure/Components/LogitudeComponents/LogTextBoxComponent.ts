@@ -1049,7 +1049,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                 case 'unsdecimal':
                     {
                         var isSignOk: boolean = true;
-                        if (this.InputType == 'unsDecimal' || this.InputType == 'double') {
+                        if (this.InputType == 'unsdecimal' || this.InputType == 'double') {
                             var text = this.TextValue + "";
                             if (text.indexOf('-') > -1) {
                                 isSignOk = false;
@@ -1214,7 +1214,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                             }
                             if (!isNaN(value)) {
                                 var isok: boolean = true;
-                                if (this.InputType == 'unsDecimal' || this.InputType == 'unsinteger' || this.InputType == 'double') {
+                                if (this.InputType == 'unsdecimal' || this.InputType == 'unsinteger' || this.InputType == 'double') {
                                     if (this.TextValue.indexOf('-') > -1) {
                                         isok = false;
                                     }

@@ -77,7 +77,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTablePM CompetitorObject = ObjectTableQuery.GetObjectTableByCode("Competitor", 0);
             ObjectTablePM ProductTypeObject = ObjectTableQuery.GetObjectTableByCode("ProductType", 0);
             ObjectTablePM QuoteStageObject = ObjectTableQuery.GetObjectTableByCode("QuoteStage", 0);
-            ObjectTablePM AWBMessagingStockTable = ObjectTableQuery.GetObjectTableByCode("AWBMessagingStock", 0);
+            ObjectTablePM MessagingStockTable = ObjectTableQuery.GetObjectTableByCode("MessagingStock", 0);
             ObjectTablePM participantObject = ObjectTableQuery.GetObjectTableByCode("Participant", 0);
             ObjectTablePM automationObject = ObjectTableQuery.GetObjectTableByCode("Automation", 0);
             ObjectTablePM ARPaymentMethodObject = ObjectTableQuery.GetObjectTableByCode("ARPaymentMethod", 0);
@@ -3860,15 +3860,15 @@ namespace WebFreight.Web.MetaDataUpdate
             }, EventTypeRepository, tenantEventTypes);
             #endregion
 
-            #region AWBMessagingStock
+            #region MessagingStock
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "UPMS",
-                EnglishName = "AWB Stock Updated",
+                EnglishName = "Updated",
                 Tenant = 0,
                 AddedManually = false,
-                LocalName = "AWB Stock Updated",
-                ObjectTableId = AWBMessagingStockTable.Id,
+                LocalName = "Updated",
+                ObjectTableId = MessagingStockTable.Id,
                 ShortView = false,
             }, EventTypeRepository, tenantEventTypes);
 
@@ -3880,7 +3880,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 AddedManually = false,
                 IsManualEntry = false,
                 LocalName = "Created",
-                ObjectTableId = AWBMessagingStockTable.Id,
+                ObjectTableId = MessagingStockTable.Id,
                 ShortView = true,
             }, EventTypeRepository, tenantEventTypes);
             #endregion

@@ -70,8 +70,8 @@ namespace WebFreight.Web.WebServices
         private BookingRepository bookingRepository;
         private BookingLastRequestRepository lastRequestRepository;
         private BookingAnswerRepository bookingAnswerRepository;
-        private AWBMessagingStockRepository stockRepository;
-        private AWBStockUsageHistoryRepository usageHistoryRepository;
+        private MessagingStockRepository stockRepository;
+        private MessagingStockUsageHistoryRepository usageHistoryRepository;
         public DateTime TodayDate { get; set; }
         public DateTime TodayDateTime { get; set; }
         private int myTenant;
@@ -211,8 +211,8 @@ namespace WebFreight.Web.WebServices
 
             if (IsAWBStockPrepaid)
             {
-                this.stockRepository = new AWBMessagingStockRepository(shipmentContext);
-                this.usageHistoryRepository = new AWBStockUsageHistoryRepository(shipmentContext);
+                this.stockRepository = new MessagingStockRepository(shipmentContext);
+                this.usageHistoryRepository = new MessagingStockUsageHistoryRepository(shipmentContext);
             }
         }
         private void CheckStockValidity()
@@ -223,8 +223,8 @@ namespace WebFreight.Web.WebServices
                 {
                     if (IsAWBStockPrepaid)
                     {
-                        IQueryable<AWBMessagingStock> myStocksData = stockRepository.GetAWBMessagingStocksByTenant(myTenant);
-                        IQueryable<AWBStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantAWBStockUsageHistory(myTenant);
+                        IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myTenant);
+                        IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(myTenant);
 
                         myStocksData = myStocksData.Where(d => d.StartDate <= TodayDate && d.EndDate > TodayDate && d.Remaining > 0 && !d.IsCancelled);
 
@@ -783,12 +783,12 @@ namespace WebFreight.Web.WebServices
                 {
                     if (IsAWBStockPrepaid)
                     {
-                        IQueryable<AWBMessagingStock> myStocksData = stockRepository.GetAWBMessagingStocksByTenant(myTenant);
-                        IQueryable<AWBStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantAWBStockUsageHistory(myTenant);
+                        IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myTenant);
+                        IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(myTenant);
 
                         myStocksData = myStocksData.Where(d => d.StartDate <= TodayDate && d.EndDate > TodayDate && d.Remaining > 0 && !d.IsCancelled);
 
-                        AWBStockUsageHistory usageHistory = myUsageHistoryData.Where(d => d.EntityId == myBookingId && d.MessageType == MessageTypeCode).FirstOrDefault();
+                        MessagingStockUsageHistory usageHistory = myUsageHistoryData.Where(d => d.EntityId == myBookingId && d.MessageType == MessageTypeCode).FirstOrDefault();
 
                         if (usageHistory != null)
                         {
@@ -803,11 +803,11 @@ namespace WebFreight.Web.WebServices
                         {
                             DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(myTenant);
 
-                            AWBMessagingStock myStock = myStocksData.OrderBy(o => o.EndDate).FirstOrDefault();
+                            MessagingStock myStock = myStocksData.OrderBy(o => o.EndDate).FirstOrDefault();
 
-                            usageHistory = new AWBStockUsageHistory()
+                            usageHistory = new MessagingStockUsageHistory()
                             {
-                                Id = IdCounter.GetNumber("AWBStockUsageHistory", myTenant),
+                                Id = IdCounter.GetNumber("MessagingStockUsageHistory", myTenant),
                                 Tenant = myTenant,
                                 StockId = myStock.Id,
                                 EntityId = myBooking.Id,

@@ -356,7 +356,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                         UserId = loggedContactId,
                         EntityId = entityPM.Id,
                         ObjectTableName = "Ticket",
-                        Notes = "Shipment " + entityPM.ShipmentNumber + " Disconnected"
+                        Notes = "Shipment " + entityPOCO.ShipmentNumber + " Disconnected"
                     });
 
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -447,7 +447,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                         UserId = loggedContactId,
                         EntityId = entityPM.Id,
                         ObjectTableName = "Ticket",
-                        Notes = "Quote "+ entityPM.QuoteNumber + " Disconnected"
+                        Notes = "Quote "+ entityPOCO.QuoteNumber + " Disconnected"
                     });
 
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
