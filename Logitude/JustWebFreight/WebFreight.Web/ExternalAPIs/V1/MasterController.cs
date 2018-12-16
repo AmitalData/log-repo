@@ -214,6 +214,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (entity.IsAccountingClosed)
                         {
+                            bool hasOpenPayables = entity.Payables.Count > 0;
+                            bool hasOpenReceivables = entity.Receivables.Count > 0;
+                            if (hasOpenPayables || hasOpenReceivables)
+                            {
+                                throw new ApplicationException("can’t close for accounting if there are any open payables/receivables.");
+                            }
+
                             if (!entity.IsOperationalClosed)
                             {
                                 throw new ApplicationException("Shipment shoud be closed operationally");
