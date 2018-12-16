@@ -6303,13 +6303,7 @@ namespace WebFreight.Web.ReportsWebServices
             return myResult;
         }
         #endregion
-
-        #region Opportunities by Additional Services Report
-        #endregion
-
-        #region Approved Opportunities Report
-        #endregion
-
+        
         #region Statistics by Agent Report
         [WebMethod]
         public byte[] LoadStatisticsByAgentData(byte[] xmlFilters, int tenant)
@@ -8919,8 +8913,6 @@ namespace WebFreight.Web.ReportsWebServices
             //    iQueryable = TempList.AsQueryable();
             //}
         }
-
-
         #endregion
 
         #region CASS Report
@@ -9320,7 +9312,6 @@ namespace WebFreight.Web.ReportsWebServices
             #endregion
             return dataProvider;
         }
-
         #endregion
 
         #region Employees TimeSheet Report 
@@ -9942,7 +9933,6 @@ namespace WebFreight.Web.ReportsWebServices
         }
         #endregion
 
-
         #region Tasks Without Projects 
         [WebMethod]
         public byte[] LoadTasksWithoutProjectsData(byte[] xmlFilters, int tenant)
@@ -10393,6 +10383,7 @@ namespace WebFreight.Web.ReportsWebServices
             #region Base Data Filtered
 
             iQueryable = iQueryable.Where(d => !d.IsOperationalClosed);
+            iQueryable = iQueryable.Where(d => !d.IsCancelled);
             iQueryable = iQueryable.Where(d => d.ShipmentLevelCode != "C");
 
             if (!string.IsNullOrEmpty(customerId))
