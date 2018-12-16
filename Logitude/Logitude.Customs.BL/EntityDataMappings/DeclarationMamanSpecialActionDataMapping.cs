@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -24,7 +25,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(DeclarationMamanSpecialActionPM entityPM, DeclarationMamanSpecialAction entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPMProperties.Add(PMPropertyNames.MamanSpecialActionName);
+            CustomMappedPMProperties.Add(PMPropertyNames.MamanSpecialActionStatusName);
+
+            if (entityPOCO.MamanSpecialActionCode != null)
+            {
+                MamanSpecialActionQueryService mamanSpecialActionQueryService = new MamanSpecialActionQueryService(entityPOCO.Tenant);
+                MamanSpecialActionPM mamanSpecialActionPM = mamanSpecialActionQueryService.GetSingle(entityPOCO.MamanSpecialActionCode, false, true);
+                entityPM.MamanSpecialActionName = mamanSpecialActionPM.LocalName;
+            }
+
+            if (entityPOCO.MamanSpecialActionStatusCode != null)
+            {
+                MamanSpecialActionStatusQueryService mamanSpecialActionStatusQueryService = new MamanSpecialActionStatusQueryService(entityPOCO.Tenant);
+                MamanSpecialActionStatusPM mamanSpecialActionStatusPM = mamanSpecialActionStatusQueryService.GetSingle(entityPOCO.MamanSpecialActionStatusCode, false, true);
+                entityPM.MamanSpecialActionStatusName = mamanSpecialActionStatusPM.LocalName;
+            }
         }
    }
 

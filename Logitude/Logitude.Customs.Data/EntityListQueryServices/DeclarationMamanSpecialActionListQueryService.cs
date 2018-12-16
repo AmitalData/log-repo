@@ -24,26 +24,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<DeclarationMamanSpecialActionList> query = (from a in iQueryable
                                             select new DeclarationMamanSpecialActionList()
 											{
-                     
 					                          DeclarationId = a.DeclarationId,
-					
-					                          Tenant = a.Tenant,
-					
+					                          Tenant = a.Tenant,				
 					                          MamanSpecialActionCode = a.MamanSpecialActionCode,
-					
-					                          MamanLabelText1 = a.MamanLabelText1,
-					
+					                          MamanSpecialActionName = a.MamanSpecialAction != null ? a.MamanSpecialAction.LocalName : null,
+                                              MamanLabelText1 = a.MamanLabelText1,
 					                          MamanLabelText2 = a.MamanLabelText2,
-					
 					                          MamanLabelText3 = a.MamanLabelText3,
-					
 					                          MamanLabelText4 = a.MamanLabelText4,
-					
 					                          MamanLabelText5 = a.MamanLabelText5,
-					
 					                          MamanSpecialActionStatusCode = a.MamanSpecialActionStatusCode,
-					
-					                          MamanSpecialActionsErrorXml = a.MamanSpecialActionsErrorXml,
+                                              MamanSpecialActionStatusName = a.MamanSpecialActionStatus != null ? a.MamanSpecialActionStatus.LocalName : null,
+                                              MamanSpecialActionsErrorXml = a.MamanSpecialActionsErrorXml,
 					
 		                    	            });
             return query;
