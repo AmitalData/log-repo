@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(DeclarationMamanSpecialActionPM entityPM)
         {
-            DeclarationMamanSpecialActionKeys entityKeys = new DeclarationMamanSpecialActionKeys() { DeclarationId = entityPM.DeclarationId };
+            DeclarationMamanSpecialActionKeys entityKeys = new DeclarationMamanSpecialActionKeys() { DeclarationId = entityPM.DeclarationId, MamanSpecialActionCode = entityPM.MamanSpecialActionCode };
             return entityKeys;
         }
 

@@ -30,14 +30,14 @@ export class DeclarationMamanSpecialActionPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/declarationmamanspecialactions';      
     }
 
- get(declarationid: string) {
+ get(declarationid: string, mamanspecialactioncode: string) {
          
          
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();		
 		 return Observable.defer(() => {
-                return this._http.get(this._apiUrl+'/getsingle?'+'declarationid=' + declarationid, {
+                return this._http.get(this._apiUrl+'/getsingle?'+'declarationid=' + declarationid+'&'+'mamanspecialactioncode=' + mamanspecialactioncode, {
                     headers: authHeader
                 }).map(response => {
                     var pm = response.json();
@@ -55,7 +55,7 @@ export class DeclarationMamanSpecialActionPMService {
                 serviceResponse.Result = entity;
               
 			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DeclarationMamanSpecialAction", "GetSinglePM", 'declarationid=' + declarationid);
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "DeclarationMamanSpecialAction", "GetSinglePM", 'declarationid=' + declarationid+'&'+'mamanspecialactioncode=' + mamanspecialactioncode);
 				 
                 return serviceResponse;
 

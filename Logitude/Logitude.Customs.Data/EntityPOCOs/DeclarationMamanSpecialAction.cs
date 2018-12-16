@@ -20,14 +20,15 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [ForeignKey("Declaration")]
-        [Column("DeclarationId")]
+        [Column("DeclarationId" ,Order = 1)]
 	    public string DeclarationId { get; set; }
 	      
         public virtual Declaration Declaration { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+     [Key]
         [ForeignKey("MamanSpecialAction")]
-        [Column("MamanSpecialActionCode")]
+        [Column("MamanSpecialActionCode" ,Order = 2)]
 	    public string MamanSpecialActionCode { get; set; }
 	      
         public virtual MamanSpecialAction MamanSpecialAction { get; set; }

@@ -16,11 +16,15 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
+	  public string MamanSpecialActionCode  { get; set; }
+	  
+				 
+	    			   
 	
 	 
 	  public override string GetFullKey()
       {
-          return DeclarationId;
+          return DeclarationId+'_'+MamanSpecialActionCode;
       }
 
       public override string GetEntityPMName()
