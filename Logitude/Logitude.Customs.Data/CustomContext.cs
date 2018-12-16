@@ -326,6 +326,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationErrorMappingMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
+	
             modelBuilder.Configurations.Add(new DeclarationPaymentMap());
 	
             modelBuilder.Configurations.Add(new DeclarationPaymentMethodMap());
@@ -1835,6 +1837,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationErrorMapping> DeclarationErrorMappings 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationMamanSpecialAction> DeclarationMamanSpecialActions 
 	 {
 	      get; set;
 	 

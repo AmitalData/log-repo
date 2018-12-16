@@ -1,0 +1,53 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class DeclarationMamanSpecialAction
+    {
+	 string dbms;
+
+        [Key]
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId")]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [ForeignKey("MamanSpecialAction")]
+        [Column("MamanSpecialActionCode")]
+	    public string MamanSpecialActionCode { get; set; }
+	      
+        public virtual MamanSpecialAction MamanSpecialAction { get; set; }
+        [Column("MamanLabelText1")]
+	    public string MamanLabelText1 { get; set; }
+        [Column("MamanLabelText2")]
+	    public string MamanLabelText2 { get; set; }
+        [Column("MamanLabelText3")]
+	    public string MamanLabelText3 { get; set; }
+        [Column("MamanLabelText4")]
+	    public string MamanLabelText4 { get; set; }
+        [Column("MamanLabelText5")]
+	    public string MamanLabelText5 { get; set; }
+        [ForeignKey("MamanSpecialActionStatus")]
+        [Column("MamanSpecialActionStatusCode")]
+	    public string MamanSpecialActionStatusCode { get; set; }
+	      
+        public virtual MamanSpecialActionStatus MamanSpecialActionStatus { get; set; }
+        [Column("MamanSpecialActionsErrorXml")]
+	    public string MamanSpecialActionsErrorXml { get; set; }
+    }
+}
+	 

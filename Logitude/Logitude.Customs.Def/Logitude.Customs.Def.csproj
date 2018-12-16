@@ -223,6 +223,7 @@
     <Compile Include="EntityPMs\Generated\DeclarationConstraintPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationCourierStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationErrorMappingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationMamanSpecialActionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationPaymentMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationPaymentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationPaymentProtestPM.Generated.cs" />
