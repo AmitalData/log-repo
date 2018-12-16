@@ -614,7 +614,7 @@ namespace Logitude.Accounting.BL.CoreBL
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             TaxReportLineListQueryService trLineQS = new TaxReportLineListQueryService(MyContext);
             IQueryable<TaxReportLineList> linesIQ = trLineQS.GetReportLines(taxReport.Id, tenant);
-            List<TaxReportLineList> lines = linesIQ.Where(a => a.TransmitStatusCode == "1").ToList();
+            List<TaxReportLineList> lines = linesIQ.Where(a => a.TransmitStatusCode == "1").OrderBy(d=>d.Line).ToList();
 
             foreach (TaxReportLineList lineList in lines)
             {

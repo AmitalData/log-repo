@@ -94,6 +94,39 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+        public HttpResponseMessage GetCheckBalanceByAccountDisplayNumber(int tenant, string accountDisplayNumber, string totalDateType, DateTime theDate)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                //int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
+
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                var qs = new GLAccountQueryService(1);
+                var list=qs.GetByDisplayNumber(accountDisplayNumber, tenant);
+                var pm =list.First();
+                var ac = new Logitude.Accounting.BL.CoreBL.AccountBalanceByDateCodeService(null, tenant, pm.Id, null);
+                ac.ReSetAccountList(false, false);
+                ac.CalculateBalance(totalDateType, theDate, false, false);
+
+                ac.AccountBalance.LogMessage = null;
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, ac.AccountBalance);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetCheckBalance(int tenant, string accountId, string totalDateType, DateTime theDate)
         {
             try

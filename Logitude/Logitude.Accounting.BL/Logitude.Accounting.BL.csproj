@@ -220,6 +220,7 @@
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckTotals.cs" />
     <Compile Include="CoreBL\TaxDeductionReportService.cs" />
     <Compile Include="CoreBL\YearTransferService.cs" />
+    <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
     <Compile Include="DataContract\TaxReportLinesCounter.cs" />
     <Compile Include="EntityDataMappings\AccountingCompanyTypeDataMapping.cs" />

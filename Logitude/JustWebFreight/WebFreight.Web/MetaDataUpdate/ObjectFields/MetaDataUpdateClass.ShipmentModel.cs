@@ -24784,7 +24784,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Measurement",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Measurement",
+                FullFieldLable = "MeasurementId",
                 FieldName = "MeasurementId",
                 ShortFieldLable = "MeasurementId",
                 ShortFieldLableDefaultText = "UOM",
@@ -24977,7 +24977,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Charges Type",
-                FullFieldLable = "ChargesType",
+                FullFieldLable = "ChargesTypeId",
                 FieldName = "ChargesTypeId",
                 FieldsDataType = "LookUp",
                 IsRequired = true,
@@ -25498,7 +25498,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Charges Type",
                 DisplayOnLookUp = false,
-                FullFieldLable = "ChargesType",
+                FullFieldLable = "ChargesTypeId",
                 FieldName = "ChargesTypeId",
                 FieldsDataType = "LookUp",
                 IsCustom = false,

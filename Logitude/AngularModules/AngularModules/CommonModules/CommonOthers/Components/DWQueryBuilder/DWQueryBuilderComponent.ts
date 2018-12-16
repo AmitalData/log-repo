@@ -74,7 +74,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         this._DWQueryBuilderService = new DWQueryBuilderService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._DWObjectTableListService = new DWObjectTableListService();
-        
+
         this._DWObjectTableListService.getAll().subscribe(myResult => {
             this.AllTables = myResult.Result;
             this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
@@ -650,10 +650,20 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     var filter = Myfilter;
                     var OperationSimpol = "";
                     if (filter.Operation.Code == filter.equalsOp.Code) {
-                        OperationSimpol = " = '@@' ";
+                        if (filter.DataTypeCode == 'Integer' || filter.DataTypeCode == 'Double' || filter.DataTypeCode == 'Decimal') {
+                            OperationSimpol = " = @@ ";
+                        }
+                        else {
+                            OperationSimpol = " = '@@' ";
+                        }
                     }
                     else if (filter.Operation.Code == filter.notEqualsOp.Code) {
-                        OperationSimpol = " <> '@@' ";
+                        if (filter.DataTypeCode == 'Integer' || filter.DataTypeCode == 'Double' || filter.DataTypeCode == 'Decimal') {
+                            OperationSimpol = " <> @@ ";
+                        }
+                        else {
+                            OperationSimpol = " <> '@@' ";
+                        }                       
                     }
                     else if (filter.Operation.Code == filter.startsWithOp.Code) {
                         OperationSimpol = " like '@@%' ";
@@ -932,13 +942,21 @@ export class DWQueryBuilderComponent extends BaseComponent {
         //this.messageWindow.WindowClosed.subscribe(($event) => {
 
         //});
+        if (this.SelectedFieldsDataSource.length == 0) {
+            this.messageWindow.Width = 300;
+            this.messageWindow.Height = 150;
+            this.messageWindow.Title = "Invalid Query";
+            this.messageWindow.Message = "The query should contains at least one column.";
+            this.messageWindow.Show(this.messageWindow.Message);
+            return;
+        }
         SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ..");
-        this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => { 
+        this._DWObjectTablePMService.get("Fact_Shipments").subscribe(myResult => {
             if (!myResult.HasError) {
                 var MySubQuery = new DWSubQueryPM();
                 MySubQuery.Tenant = SessionLocator.Tenant;
                 MySubQuery.DWFactTableCode = myResult.Result.Code;
-                MySubQuery.DWQueryId = '1-1';
+                //MySubQuery.DWQueryId = '1-1';
                 MySubQuery.SQLString = this.Notes;
                 var QueryData = new DWQueryData();
                 QueryData.SubQueryData = MySubQuery;
@@ -950,7 +968,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
 
                         //}
                         this.ID = myResult.Result.Id;
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.EditButtonClicked();
+                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator(); 
                     });
                 }
                 else {
@@ -961,7 +980,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                         this.messageWindow.Title = "Query Doesn't Exist";
                         this.messageWindow.Message = "Query With the Id " + this.ID + " does not exist";
                         this.messageWindow.Show(this.messageWindow.Message);
-                        this.NotExist = true; 
+                        this.NotExist = true;
                     }
                     this._DWSubQueryPMService.UpdateDWQueryData(QueryData).subscribe(myResult => {
                         //if (!myResult.HasError) {
@@ -1112,7 +1131,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
             this.Name = DWObjectField.Name;
             this.Code = DWObjectField.Code;
-            this.DWObjectTableCode = DWObjectField.DWObjectTableCode; 
+            this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
             this.DataTypeCode = DWObjectField.DataTypeCode;
             this.DisplayName = DWObjectField.Code;
