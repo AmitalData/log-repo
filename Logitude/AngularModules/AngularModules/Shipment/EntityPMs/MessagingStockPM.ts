@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 
-import {AWBStockUsageHistoryPM} from './AWBStockUsageHistoryPM';
+import {MessagingStockUsageHistoryPM} from './MessagingStockUsageHistoryPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -17,7 +17,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
-export class AWBMessagingStockPM {
+export class MessagingStockPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -113,7 +113,7 @@ export class AWBMessagingStockPM {
        
 	 
      
-	private stockUsageHistories: AWBStockUsageHistoryPM[];
+	private stockUsageHistories: MessagingStockUsageHistoryPM[];
     get  StockUsageHistories() {
         if (this.stockUsageHistories == null) {
             this.stockUsageHistories = [];
@@ -121,12 +121,12 @@ export class AWBMessagingStockPM {
 
         return this.stockUsageHistories;
     }
-    set  StockUsageHistories(newValue: AWBStockUsageHistoryPM[]) {
+    set  StockUsageHistories(newValue: MessagingStockUsageHistoryPM[]) {
         if (this.stockUsageHistories != newValue) {
             this.stockUsageHistories = newValue;
         }
     }
-    public AddAWBStockUsageHistoryPM(item: AWBStockUsageHistoryPM) {
+    public AddMessagingStockUsageHistoryPM(item: MessagingStockUsageHistoryPM) {
         if (item != null) {
             var index = this.StockUsageHistories.indexOf(item);
             if (index == -1) {
@@ -138,7 +138,7 @@ export class AWBMessagingStockPM {
             }
         }
     }
-    public RemoveAWBStockUsageHistoryPM(item: AWBStockUsageHistoryPM) {
+    public RemoveMessagingStockUsageHistoryPM(item: MessagingStockUsageHistoryPM) {
         if (item != null) {
             var index = this.StockUsageHistories.indexOf(item);
             if (index > -1) {
@@ -147,14 +147,14 @@ export class AWBMessagingStockPM {
             }
         }
     }
-	    //public StockUsageHistories: Array<AWBStockUsageHistoryPMPM>= [];
+	    //public StockUsageHistories: Array<MessagingStockUsageHistoryPMPM>= [];
      private dummyTenant: number;
     public get DummyTenant() { return this.dummyTenant; }
     public set DummyTenant(newValue: number) { if (this.dummyTenant != newValue) { this.dummyTenant = newValue; this.MarkAsDirty("DummyTenant"); } }
        
 	 
 
-    public OldEntityPM: AWBMessagingStockPM;
+    public OldEntityPM: MessagingStockPM;
 		
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
@@ -162,11 +162,11 @@ export class AWBMessagingStockPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AWBMessagingStock");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "MessagingStock");
            
         }
     }
-    private MyClone: AWBMessagingStockPM;
+    private MyClone: MessagingStockPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

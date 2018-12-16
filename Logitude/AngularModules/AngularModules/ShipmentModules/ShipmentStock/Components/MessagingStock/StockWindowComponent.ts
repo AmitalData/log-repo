@@ -1,6 +1,6 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
-import {AWBMessagingStockList} from '../../../../Shipment/EntityLists/AWBMessagingStockList';
+import {MessagingStockList} from '../../../../Shipment/EntityLists/MessagingStockList';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {FontTool, DateTool} from '../../../../Infrastructure/Tools';
@@ -12,14 +12,14 @@ import {FontTool, DateTool} from '../../../../Infrastructure/Tools';
 })
 
 export class StockWindowComponent {
-    public ItemsSource: AWBMessagingStockListItem[];
+    public ItemsSource: MessagingStockListItem[];
     constructor() {
         this.ItemsSource = [];
         this.LoadData();
     }
 
     private myDomainService: ShipmentDomainService;
-    private DataSource: AWBMessagingStockList[];
+    private DataSource: MessagingStockList[];
     private LoadData() {
 
         this.DataSource = [];               
@@ -29,7 +29,7 @@ export class StockWindowComponent {
             this.myDomainService = new ShipmentDomainService();
         }
 
-        this.myDomainService.GetLoggedTenantAWBMessagingStockLists().subscribe((myResult:any) => {
+        this.myDomainService.GetLoggedTenantMessagingStockLists().subscribe((myResult:any) => {
             this.DataSource = myResult;
             this.BuildItemsSource();
             SessionLocator.CurrentSession.StopBusyIndicator();
@@ -49,29 +49,29 @@ export class StockWindowComponent {
 
             if (this.SelectedFilter == "ALL") {
                 this.DataSource.forEach(item => {
-                    this.ItemsSource.push(new AWBMessagingStockListItem(item));
+                    this.ItemsSource.push(new MessagingStockListItem(item));
                 });
             }
 
             else if (this.SelectedFilter == "ACT") {
                 this.DataSource.filter(f => f.Status == "New" || f.Status == "Active").forEach(item => {
-                    this.ItemsSource.push(new AWBMessagingStockListItem(item));
+                    this.ItemsSource.push(new MessagingStockListItem(item));
                 });
             }
 
             else if (this.SelectedFilter == "INA") {
                 this.DataSource.filter(f => f.Status != "New" && f.Status != "Active").forEach(item => {
-                    this.ItemsSource.push(new AWBMessagingStockListItem(item));
+                    this.ItemsSource.push(new MessagingStockListItem(item));
                 });
             }            
         }
     }
 
-    ViewHistory(item: AWBMessagingStockListItem) {
+    ViewHistory(item: MessagingStockListItem) {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Messaging Stock History";
         logWindow.WindowArgs = item.Id;
-        logWindow.Show("./ShipmentModules/ShipmentStock/Components/AWBMessagingStock/StockHistoryComponent");
+        logWindow.Show("./ShipmentModules/ShipmentStock/Components/MessagingStock/StockHistoryComponent");
     }
 
     CloseButtonClicked() {
@@ -79,8 +79,8 @@ export class StockWindowComponent {
     }
 }
 
-class AWBMessagingStockListItem {
-    constructor(public entity: AWBMessagingStockList) {
+class MessagingStockListItem {
+    constructor(public entity: MessagingStockList) {
         this.SetForegrounds();
     }
 

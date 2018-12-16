@@ -1402,7 +1402,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetAWBMessagingStockListForTenantManagmentTab(int tenantManagementId)
+        public HttpResponseMessage GetMessagingStockListForTenantManagmentTab(int tenantManagementId)
         {
             try
             {
@@ -1411,7 +1411,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 ShipmentsDomainService service = new ShipmentsDomainService();
-                IQueryable<MessagingStockList> result = service.GetAWBMessagingStockListForTenantManagmentTab(tenantManagementId);
+                IQueryable<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }

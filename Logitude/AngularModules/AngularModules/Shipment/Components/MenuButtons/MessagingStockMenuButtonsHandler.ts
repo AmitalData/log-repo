@@ -1,11 +1,11 @@
-﻿import {AWBMessagingStockPM} from '../../EntityPMs/AWBMessagingStockPM';
+import {MessagingStockPM} from '../../EntityPMs/MessagingStockPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 
-export class AWBMessagingStockMenuButtonsHandler {
-    public EntityPM: AWBMessagingStockPM;
+export class MessagingStockMenuButtonsHandler {
+    public EntityPM: MessagingStockPM;
     public entityArgs: EntityArgs
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;

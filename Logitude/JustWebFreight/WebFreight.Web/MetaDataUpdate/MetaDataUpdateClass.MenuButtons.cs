@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate
             FeaturePM CustomerFeature_Totango = features.Where(d => d.Code == "TOTANGO" && d.ObjectTableId == CustomerTableId).FirstOrDefault();
             FeaturePM CustomerFeature_SetAsPotential = features.Where(d => d.Code == "SETASPOTENTIAL" && d.ObjectTableId == CustomerTableId).FirstOrDefault();
 
-            FeaturePM AWBMessagingStockFeature_Cancel = features.Where(d => d.Code == "AWBMessagingStock.Action.Cancel" && d.ObjectTableId == MessagingStockTableId).FirstOrDefault();
+            FeaturePM MessagingStockFeature_Cancel = features.Where(d => d.Code == "MessagingStock.Action.Cancel" && d.ObjectTableId == MessagingStockTableId).FirstOrDefault();
 
             FeaturePM TenantManagementFeature_EraseData = features.Where(d => d.Code == "TenantManagement.Action.EraseData" && d.ObjectTableId == TenantManagementTableId).FirstOrDefault();
             #endregion
@@ -2026,40 +2026,40 @@ namespace WebFreight.Web.MetaDataUpdate
 
             #endregion
 
-            #region AWBMessagingStock
+            #region MessagingStock
 
-            MenuButtonGroup AWBMessagingStockMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
+            MenuButtonGroup MessagingStockMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
             {
-                MenuButtonGroupType = "AWBMessagingStockEdit",
-                Name = "AWBMessagingStockEditButtonsGroup",
+                MenuButtonGroupType = "MessagingStockEdit",
+                Name = "MessagingStockEditButtonsGroup",
                 ObjectTableId = MessagingStockTableId,
                 Tenant = tenant,
             }, MenuButtonGroupRepository, TenantMenuButtonGroups);
 
-            MenuButton AWBMessagingStockMoreButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            MenuButton MessagingStockMoreButton = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
             {
                 EventCode = "Actions",
                 Index = 100,
-                LabelTextCodeCode = "AWBMessagingStock.B.More",
+                LabelTextCodeCode = "MessagingStock.B.More",
                 LabelTextCodeDefaultText = "More",
                 Tenant = tenant,
-                MenuButtonGroupId = AWBMessagingStockMenuButtonGroup.Id,
+                MenuButtonGroupId = MessagingStockMenuButtonGroup.Id,
                 ObjectTableId = MessagingStockTableId,
                 MenuButtonType = "dropdownbutton",
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
 
-            MenuButton AWBMessagingStockMenuItem1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+            MenuButton MessagingStockMenuItem1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
             {
                 EventCode = "Cancel",
                 Index = 2,
                 IsActive = true,
-                LabelTextCodeCode = "AWBMessagingStock.B.Cancel",
+                LabelTextCodeCode = "MessagingStock.B.Cancel",
                 LabelTextCodeDefaultText = "Cancel",
                 ObjectTableId = MessagingStockTableId,
                 Tenant = tenant,
-                MenuButtonGroupId = AWBMessagingStockMenuButtonGroup.Id,
-                ParentMenuButtonId = AWBMessagingStockMoreButton.Id,
-                FeatureId = AWBMessagingStockFeature_Cancel.Id,
+                MenuButtonGroupId = MessagingStockMenuButtonGroup.Id,
+                ParentMenuButtonId = MessagingStockMoreButton.Id,
+                FeatureId = MessagingStockFeature_Cancel.Id,
                 MenuButtonType = "menuitem",
             }, MenuButtonRepository, TenantMenuButtons, TextCodeRepository, TextCodes);
 

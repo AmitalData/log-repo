@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
@@ -8,8 +8,8 @@ import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings'
 import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
 import {DateTool} from '../../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {AWBMessagingStockPM} from '../../../../Shipment/EntityPMs/AWBMessagingStockPM';
-import {AWBMessagingStockPMService} from '../../../../Shipment/Services/StandardPMs/AWBMessagingStockPMService';
+import {MessagingStockPM} from '../../../../Shipment/EntityPMs/MessagingStockPM';
+import {MessagingStockPMService} from '../../../../Shipment/Services/StandardPMs/MessagingStockPMService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
@@ -19,11 +19,11 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 })
 
 export class StockNewWizardComponent extends BaseComponent {
-    public ObjectTableName: string = "AWBMessagingStock";
+    public ObjectTableName: string = "MessagingStock";
     public DataContext: StockNewWizardComponent = this;
     public ValidationErrorsList: string[] = [];
     public TenantsList: CodeNameClass[];
-    public EntityPM: AWBMessagingStockPM;
+    public EntityPM: MessagingStockPM;
     constructor() {
         super();
         this.TenantsList = [];
@@ -33,7 +33,7 @@ export class StockNewWizardComponent extends BaseComponent {
     }
 
     private CreateEntityPM() {
-        this.EntityPM = new AWBMessagingStockPM();
+        this.EntityPM = new MessagingStockPM();
         this.EntityPM.DummyTenant = InfraSettings.TenantPM.Id;
         this.EntityPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         this.EntityPM.UpdateDate = this.EntityPM.CreateDate;
@@ -49,7 +49,7 @@ export class StockNewWizardComponent extends BaseComponent {
             this.myDomainService = new GlobalDomainService();
         }
 
-        this.myDomainService.GetAWBMessagingStockTenantsList(InfraSettings.TenantPM.Id).subscribe((myResponse: ServiceResponse) => {
+        this.myDomainService.GetMessagingStockTenantsList(InfraSettings.TenantPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 myResponse.Result.forEach(item => {
                     this.TenantsList.push(new CodeNameClass(item.Id, item.Name));
@@ -138,7 +138,7 @@ export class StockNewWizardComponent extends BaseComponent {
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         if (this.SelectedTenantItem == null) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("AWBMessagingStock.F.TenantNumber")));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("MessagingStock.F.TenantNumber")));
         }
 
         if (this.StartDate != null && this.EndDate != null) {
@@ -163,7 +163,7 @@ export class StockNewWizardComponent extends BaseComponent {
     private SubmitCreating() {
         SessionLocator.CurrentSession.StartBusyIndicatorCreating();
 
-        var myService: AWBMessagingStockPMService = new AWBMessagingStockPMService();
+        var myService: MessagingStockPMService = new MessagingStockPMService();
         myService.insert(this.EntityPM).subscribe((myResult: any) => {
 
             var mm: any = myResult;
@@ -192,25 +192,3 @@ class CodeNameClass {
         this.Name = name;
     }
 }
-
-//class AWBMessagingStockPM {
-//    public Id: string;
-//    public TenantNumber: number;
-//    public StartDate: Date;
-//    public EndDate: Date;
-//    public Amount: number;
-//    public Remaining: number;
-//    public CreateDate: Date;
-//    public UpdateDate: Date;
-//    public CreatedByUserId: string;
-//    public UpdatedByUserId: string;
-//    public IsCancelled: boolean;
-//    public Status: string;
-//    public Notes: string;
-//    public SearchFields: string;
-//    public TotalPrice: number;
-//    public IsTotalPriceChanged: boolean;
-//    public IsOtherFieldsChanged: boolean;
-//    public DummyTenant: number;
-//    public StockUsageHistories: any[] = [];
-//}

@@ -20,7 +20,11 @@ namespace Logitude.DatabaseMigration.Migrations
             Sql("update TextCodes set Code = REPLACE(Code, 'AWBStockUsageHistory', 'MessagingStockUsageHistory') where ObjectTableId in (select Id from ObjectTables where Name in ('MessagingStockUsageHistory'))");
 
             Sql("update Features set Code = REPLACE(Code, 'AWBMessagingStock', 'MessagingStock') where ObjectTableId in (select Id from ObjectTables where Name in ('MessagingStock'))");
+            Sql("update Queries set Code = REPLACE(Code, 'All AWB Messaging Stocks', 'All Messaging Stocks') where ObjectTableId in (select Id from ObjectTables where Name in ('MessagingStock'))");
+
+            Sql("update MenuButtonGroups set Name = REPLACE(Name, 'AWBMessagingStockEditButtonsGroup', 'MessagingStockEditButtonsGroup'), MenuButtonGroupType = REPLACE(MenuButtonGroupType, 'AWBMessagingStockEdit', 'MessagingStockEdit')  where ObjectTableId in (select Id from ObjectTables where Name in ('MessagingStock'))");
         }
+
 
         public override void Down()
         {

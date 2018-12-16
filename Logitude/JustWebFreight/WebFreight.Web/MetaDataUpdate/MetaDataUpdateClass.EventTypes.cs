@@ -3860,7 +3860,7 @@ namespace WebFreight.Web.MetaDataUpdate
             }, EventTypeRepository, tenantEventTypes);
             #endregion
 
-            #region AWBMessagingStock
+            #region MessagingStock
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "UPMS",

@@ -1,6 +1,7 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {ShipmentDomainService, AWBStockUsageHistoryList} from '../../../../Shipment/Services/ShipmentDomainService';
+import { ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
+import { MessagingStockUsageHistoryList } from '../../../../Shipment/EntityLists/MessagingStockUsageHistoryList';
 
 @Component({
     moduleId: module.id,
@@ -9,7 +10,7 @@ import {ShipmentDomainService, AWBStockUsageHistoryList} from '../../../../Shipm
 })
 
 export class StockHistoryComponent {
-    public ItemsSource: AWBStockUsageHistoryList[];
+    public ItemsSource: MessagingStockUsageHistoryList[];
     constructor() {
         this.ItemsSource = [];        
     }
@@ -30,7 +31,7 @@ export class StockHistoryComponent {
             this.myDomainService = new ShipmentDomainService();
         }
 
-        this.myDomainService.GetLoggedTenantAWBStockUsageHistoryLists(stockId).subscribe((myResult:any) => {
+        this.myDomainService.GetLoggedTenantMessagingStockUsageHistoryLists(stockId).subscribe((myResult:any) => {
             this.ItemsSource = myResult;
 
             SessionLocator.CurrentSession.StopBusyIndicator();

@@ -77,7 +77,7 @@ namespace WebFreight.Web.MetaDataUpdate
             BuildBusinessUnitScreens(tenantScreens, tenantScreenField);
             BuildSpecialServicesTypeScreens(tenantScreens, tenantScreenField);
             BuildRegionScreens(tenantScreens, tenantScreenField);
-            BuildAWBMessagingStockScreens(tenantScreens, tenantScreenField);
+            BuildMessagingStockScreens(tenantScreens, tenantScreenField);
             BuildCustomerSizeScreens(tenantScreens, tenantScreenField);
             BuildQuoteStageScreens(tenantScreens, tenantScreenField);
             BuildMeasurementScreens(tenantScreens, tenantScreenField);
@@ -165,7 +165,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectContext.SaveChanges();
         }
 
-        private void BuildAWBMessagingStockScreens(Dictionary<string, Screen> tenantScreens, Dictionary<string, ScreenField> tenantScreenFields)
+        private void BuildMessagingStockScreens(Dictionary<string, Screen> tenantScreens, Dictionary<string, ScreenField> tenantScreenFields)
         {
             ObjectTable entityTable = ObjectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault();
 

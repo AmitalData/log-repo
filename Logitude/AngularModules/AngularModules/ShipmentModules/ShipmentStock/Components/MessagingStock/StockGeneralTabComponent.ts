@@ -1,24 +1,24 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {AWBMessagingStockPM} from '../../../../Shipment/EntityPMs/AWBMessagingStockPM';
-import {AWBStockUsageHistoryPM} from '../../../../Shipment/EntityPMs/AWBStockUsageHistoryPM';
-import {AWBMessagingStockPMService} from '../../../../Shipment/Services/StandardPMs/AWBMessagingStockPMService';
+import { MessagingStockPM } from '../../../../Shipment/EntityPMs/MessagingStockPM';
+import { MessagingStockUsageHistoryPM } from '../../../../Shipment/EntityPMs/MessagingStockUsageHistoryPM';
+import { MessagingStockPMService } from '../../../../Shipment/Services/StandardPMs/MessagingStockPMService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    moduleId:'./ShipmentModules/ShipmentStock/Components/AWBMessagingStock/',
+    moduleId:'./ShipmentModules/ShipmentStock/Components/MessagingStock/',
     templateUrl: './StockGeneralTabComponent.html',
 })
 
 export class StockGeneralTabComponent extends BaseComponent {
-    public EntityPM: AWBMessagingStockPM;
-    public ObjectTableName: string = "AWBMessagingStock";
+    public EntityPM: MessagingStockPM;
+    public ObjectTableName: string = "MessagingStock";
     public DataContext = this;
-    public ItemsSource: AWBStockUsageHistoryPM[];
+    public ItemsSource: MessagingStockUsageHistoryPM[];
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -112,12 +112,12 @@ export class StockGeneralTabComponent extends BaseComponent {
         this.ItemsSource = this.EntityPM.StockUsageHistories.sort(function (a, b) { return a.LastActionDate.valueOf() == b.LastActionDate.valueOf() ? 0 : a.LastActionDate.valueOf() < b.LastActionDate.valueOf() ? -1 : 1; });
     }
 
-    private myService: AWBMessagingStockPMService;
+    private myService: MessagingStockPMService;
     RefreshButtonClicked() {
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myService == null) {
-            this.myService = new AWBMessagingStockPMService();
+            this.myService = new MessagingStockPMService();
         }
 
         this.myService.get(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {

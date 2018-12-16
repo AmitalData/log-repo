@@ -4709,7 +4709,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableTypeCode = "MD",
                 IsNewWizard = true,
                 NewWizardControlName = "Simplog.ShipmentLib.NewMessagingStockCommand",
-                NewWizardComponentPath = "./ShipmentModules/ShipmentStock/Components/AWBMessagingStock/StockNewWizardComponent",
+                NewWizardComponentPath = "./ShipmentModules/ShipmentStock/Components/MessagingStock/StockNewWizardComponent",
                 ClientModuleName = "Shipment",
                 HasMenuButtons = true,
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);

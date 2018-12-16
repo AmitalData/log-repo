@@ -73,7 +73,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
         }
 
-        public IQueryable<MessagingStockList> GetAWBMessagingStockListForTenantManagmentTab(int tenant)
+        public IQueryable<MessagingStockList> GetMessagingStockListForTenantManagmentTab(int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(0);
             SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", 0);

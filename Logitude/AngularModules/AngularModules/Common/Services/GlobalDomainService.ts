@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Rx';
@@ -27,11 +27,11 @@ export class GlobalDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GlobalDomain';
     }
 
-    GetAWBMessagingStockTenantsList(tenant: number) {
+    GetMessagingStockTenantsList(tenant: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetAWBMessagingStockTenantsList?tenant=' + tenant;
+        var url = this._apiUrl + '/GetMessagingStockTenantsList?tenant=' + tenant;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {

@@ -19,7 +19,7 @@ using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 {
-    public class AWBMessagingStockController : ApiController
+    public class MessagingStockController : ApiController
     {
         public HttpResponseMessage GetSingle(string id)
         {

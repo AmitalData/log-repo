@@ -13,17 +13,17 @@ import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {AWBMessagingStockPM} from '../../EntityPMs/AWBMessagingStockPM';
-import {AWBStockUsageHistoryPM} from '../../EntityPMs/AWBStockUsageHistoryPM';
+import {MessagingStockPM} from '../../EntityPMs/MessagingStockPM';
+import { MessagingStockUsageHistoryPM } from '../../EntityPMs/MessagingStockUsageHistoryPM';
 
 @Injectable()
 
-export class AWBMessagingStockPMService {
+export class MessagingStockPMService {
     private _apiUrl: string;
     private _http: Http;
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/awbmessagingstock';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/messagingstock';
     }
 
     get(id: string) {
@@ -37,7 +37,7 @@ export class AWBMessagingStockPMService {
             }).map(response => {
                 var pm = response.json();
 
-                var entity: AWBMessagingStockPM;
+                var entity: MessagingStockPM;
                 if (pm) {
                     entity = this.MapJsonToEntityPM(pm);
                 }
@@ -49,7 +49,7 @@ export class AWBMessagingStockPMService {
         });
     }
 
-    insert(entityPM: AWBMessagingStockPM) {
+    insert(entityPM: MessagingStockPM) {
 
         return Observable.defer(() => {
 
@@ -61,20 +61,20 @@ export class AWBMessagingStockPMService {
 
             validator = new ClassLevelValidator();
 
-            var errorsArray = validator.Validate("AWBMessagingStock", entityPM);
+            var errorsArray = validator.Validate("MessagingStock", entityPM);
 
 
             var response: ServiceResponse;
             response = new ServiceResponse();
             if (errorsArray.length == 0) {
-                var mappedEntity: AWBMessagingStockPM;
+                var mappedEntity: MessagingStockPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
                     { headers: authHeader }).map((res) => {
                         var pm = res.json();
                         if (pm) {
-                            var mappedResult: AWBMessagingStockPM;
+                            var mappedResult: MessagingStockPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
                             response.Result = mappedResult;
                         }
@@ -93,7 +93,7 @@ export class AWBMessagingStockPMService {
         });
     }
 
-    update(entityPM: AWBMessagingStockPM) {
+    update(entityPM: MessagingStockPM) {
         return Observable.defer(() => {
 
             var authHeader = new Headers();
@@ -108,7 +108,7 @@ export class AWBMessagingStockPMService {
             var serviceResponse: ServiceResponse = new ServiceResponse();
 
             if (errorsArray.length == 0) {
-                var mappedEntity: AWBMessagingStockPM;
+                var mappedEntity: MessagingStockPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
                 return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
@@ -117,7 +117,7 @@ export class AWBMessagingStockPMService {
 
                         var pm = response.json();
                         if (pm) {
-                            var mappedResult: AWBMessagingStockPM;
+                            var mappedResult: MessagingStockPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
                             serviceResponse.Result = mappedResult;
                         }
@@ -136,9 +136,9 @@ export class AWBMessagingStockPMService {
         });
     }
 
-    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: AWBMessagingStockPM = null) {
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: MessagingStockPM = null) {
         if (!entityPM) {
-            entityPM = new AWBMessagingStockPM();
+            entityPM = new MessagingStockPM();
         }
 
         var jsonPMKeys = Object.keys(jsonPM);
@@ -161,11 +161,11 @@ export class AWBMessagingStockPMService {
 
             entityPM.OldEntityPM.StockUsageHistories = [];
             for (var item in entityPM.StockUsageHistories) {
-                var myAWBStockUsageHistoryPM = entityPM.StockUsageHistories[item];
-                var newAWBStockUsageHistoryPM: AWBStockUsageHistoryPM = this.clone(myAWBStockUsageHistoryPM);
+                var myMessagingStockUsageHistoryPM = entityPM.StockUsageHistories[item];
+                var newMessagingStockUsageHistoryPM: MessagingStockUsageHistoryPM = this.clone(myMessagingStockUsageHistoryPM);
 
 
-                entityPM.OldEntityPM.StockUsageHistories.push(newAWBStockUsageHistoryPM);
+                entityPM.OldEntityPM.StockUsageHistories.push(newMessagingStockUsageHistoryPM);
             }
         }
 
@@ -176,26 +176,26 @@ export class AWBMessagingStockPMService {
         return entityPM;
     }
 
-    MapStockUsageHistories(entityPM: AWBMessagingStockPM, jsonPM: any, mapParent: boolean = true) {
+    MapStockUsageHistories(entityPM: MessagingStockPM, jsonPM: any, mapParent: boolean = true) {
 
-        var oldStockUsageHistories: AWBStockUsageHistoryPM[] = [];
+        var oldStockUsageHistories: MessagingStockUsageHistoryPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
             oldStockUsageHistories = entityPM.OldEntityPM.StockUsageHistories;
         }
 
-        entityPM.StockUsageHistories = new Array<AWBStockUsageHistoryPM>();
+        entityPM.StockUsageHistories = new Array<MessagingStockUsageHistoryPM>();
         for (var item in jsonPM.StockUsageHistories) {
             var jItem = jsonPM.StockUsageHistories[item];
             if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
                 continue;
             }
-            var newAWBStockUsageHistoryPM: AWBStockUsageHistoryPM;
+            var newMessagingStockUsageHistoryPM: MessagingStockUsageHistoryPM;
 
             if (mapParent) {
-                newAWBStockUsageHistoryPM = new AWBStockUsageHistoryPM(entityPM);
+                newMessagingStockUsageHistoryPM = new MessagingStockUsageHistoryPM(entityPM);
             }
             else {
-                newAWBStockUsageHistoryPM = new AWBStockUsageHistoryPM(null);
+                newMessagingStockUsageHistoryPM = new MessagingStockUsageHistoryPM(null);
             }
 
             var pmKeysArray = Object.keys(jItem);
@@ -204,34 +204,34 @@ export class AWBMessagingStockPMService {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
-                newAWBStockUsageHistoryPM[pmProperty] = jItem[pmProperty];
+                newMessagingStockUsageHistoryPM[pmProperty] = jItem[pmProperty];
             }
-            newAWBStockUsageHistoryPM.IsDirty = false;
+            newMessagingStockUsageHistoryPM.IsDirty = false;
 
             if (mapParent) {
-                newAWBStockUsageHistoryPM.UniqueKey = Guid.newGuid();
-                newAWBStockUsageHistoryPM.ChangeSetOp = "None";
+                newMessagingStockUsageHistoryPM.UniqueKey = Guid.newGuid();
+                newMessagingStockUsageHistoryPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
-                newAWBStockUsageHistoryPM.OldEntityPM = this.clone(newAWBStockUsageHistoryPM);
+                newMessagingStockUsageHistoryPM.OldEntityPM = this.clone(newMessagingStockUsageHistoryPM);
 
 
             }
             else {
-                if (newAWBStockUsageHistoryPM.UniqueKey) {
+                if (newMessagingStockUsageHistoryPM.UniqueKey) {
 
                     if (jItem.IsDirty)
-                        newAWBStockUsageHistoryPM.ChangeSetOp = "Update";
+                        newMessagingStockUsageHistoryPM.ChangeSetOp = "Update";
                 }
                 else {
-                    newAWBStockUsageHistoryPM.ChangeSetOp = "Insert";
+                    newMessagingStockUsageHistoryPM.ChangeSetOp = "Insert";
                 }
 
-                newAWBStockUsageHistoryPM.OldEntityPM = null;
-                newAWBStockUsageHistoryPM.EntityParentPM = null;
+                newMessagingStockUsageHistoryPM.OldEntityPM = null;
+                newMessagingStockUsageHistoryPM.EntityParentPM = null;
             }
 
 
-            entityPM.StockUsageHistories.push(newAWBStockUsageHistoryPM);
+            entityPM.StockUsageHistories.push(newMessagingStockUsageHistoryPM);
         }
         if (oldStockUsageHistories) {
 
@@ -240,7 +240,7 @@ export class AWBMessagingStockPMService {
 
                     if (oldStockUsageHistories[itemKey]) {
                         var oldItemJson = oldStockUsageHistories[itemKey];
-                        var deletedPM: AWBStockUsageHistoryPM = new AWBStockUsageHistoryPM(null);
+                        var deletedPM: MessagingStockUsageHistoryPM = new MessagingStockUsageHistoryPM(null);
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 

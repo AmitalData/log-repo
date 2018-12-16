@@ -6,7 +6,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class AWBMessagingStockList {
+export class MessagingStockList {
    		Id: string;
 		TenantNumber: number;
 		StartDate: Date;
