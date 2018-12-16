@@ -8594,16 +8594,13 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_BranchId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "BranchId").FirstOrDefault();
             QueryFilterItem filterItem_LocalCurrency = queryOperations.QueryFilterItems.Where(d => d.FieldName == "LocalCurrency").FirstOrDefault();
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
-
-
-
+                       
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime myStartDate = todayDate.AddMonths(-1);
 
             DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
             DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
-
-
+            
             if (filterItem_FromDate != null)
             {
                 DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
@@ -8623,7 +8620,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-
             string customerId = null;
             if (filterItem_CustomerId != null)
             {
@@ -8632,9 +8628,6 @@ namespace WebFreight.Web.ReportsWebServices
                     customerId = filterItem_CustomerId.FieldValue.ToString();
                 }
             }
-
-
-
 
             bool isLocalCurrency = true;
             if (filterItem_LocalCurrency != null)
@@ -8645,25 +8638,18 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
             #endregion
-
-            //BranchRepository branchRep = new BranchRepository(tenant);
-            //ParticipantRepository ParticipantRep = new ParticipantRepository(tenant);
-            //TenantRepository tenantRep = new TenantRepository(tenant);
-            //ARPaymentQuery PaymentRep = new ARPaymentQuery(tenant);
-
-
-            //ARPaymentQuery arPaymentQuery = new ARPaymentQuery(tenant);
-            //IQueryable<ARPaymentList> iQueryable = arPaymentQuery.GetARPaymentsList(tenant);
-
+            
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
 
             IQueryable<ARPayment> iQueryable = (from f in invoiceContext.ARPayments.Include("PaymentCurrency").Include("LocalCurrency").Include("AccountingPaymentMethod").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("BankAccountLite").Include("AccountingPaymentMethod")
                                                 where f.Tenant == tenant
                                                 select f);
+
             if (!string.IsNullOrEmpty(branchId))
             {
                 iQueryable = iQueryable.Where(d => d.BranchId == branchId);
             }
+
             if (!string.IsNullOrEmpty(customerId))
             {
                 iQueryable = iQueryable.Where(d => d.BillToId == customerId);
@@ -8675,12 +8661,6 @@ namespace WebFreight.Web.ReportsWebServices
                           ||
                           (d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) >= fromDate && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) <= toDate)
                           select d);
-
-
-
-
-
-
 
             myResult.FromDate = fromDate;
             myResult.ToDate = toDate;
@@ -8703,14 +8683,11 @@ namespace WebFreight.Web.ReportsWebServices
                                               BankAccountLocalName = d.BankAccountLite != null ? d.BankAccountLite.LocalName : null,
                                               AccountNumber = d.BankAccountLite != null ? d.BankAccountLite.AccountNumber : null,
                                               BranchNumber = d.BankAccountLite != null ? d.BankAccountLite.BranchNumber : null,
-
                                           }).OrderBy(o => o.PaymentCurrencyCode).ToList();
-
 
             foreach (ARPaymentDataProvider item in myResult.ARPaymentDataList)
             {
-                item.PaidAPInvoicesList = new List<ARPaymentDataProvider.ReportARInvoicePayments>();
-                // item.BankCode=
+                item.PaidAPInvoicesList = new List<ARPaymentDataProvider.ReportARInvoicePayments>();                
                 List<ARInvoicePayment> APinvoicePayments = (from a in invoiceContext.ARInvoicePayments where a.ARPaymentId == item.PaymentId && a.Tenant == tenant select a).ToList();
 
                 if (APinvoicePayments.Count == 0)
@@ -8722,6 +8699,7 @@ namespace WebFreight.Web.ReportsWebServices
                     reportAPIPayment.InvoiceNumber = "";
                     reportAPIPayment.AmountPaid = null;
                     reportAPIPayment.OriginalAmount = null;
+                    reportAPIPayment.InvocieDate = null;
                     item.PaidAPInvoicesList.Add(reportAPIPayment);
                 }
 
@@ -8731,14 +8709,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                     foreach (ARInvoicePayment apiInvoicePayment in APinvoicePayments)
                     {
-
                         WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments reportAPIPayment = new WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments();
 
                         ARInvoiceQuery arQuery = new ARInvoiceQuery(tenant);
                         ARPaymentQuery arPQuery = new ARPaymentQuery(tenant);
 
                         apiInvoicePayment.ARInvoice = arQuery.GetSingleARInvoice(apiInvoicePayment.ARInvoiceId, tenant);
-
                         apiInvoicePayment.ARPayment = arPQuery.GetSingleARPayment(apiInvoicePayment.ARPaymentId, tenant);
 
                         if (apiInvoicePayment.ARInvoice != null && apiInvoicePayment.ARPayment != null)
@@ -8746,22 +8722,30 @@ namespace WebFreight.Web.ReportsWebServices
                             reportAPIPayment.Reference = apiInvoicePayment.ARInvoice.CustomerRef;
                             reportAPIPayment.BillTo = apiInvoicePayment.ARInvoice.BillTo.LocalName;
                             reportAPIPayment.InvoiceNumber = apiInvoicePayment.ARInvoice.InvoiceNumber;
+                            reportAPIPayment.InvocieDate = apiInvoicePayment.ARInvoice.InvoiceDate;
+
                             if (isLocalCurrency)
+                            {
                                 reportAPIPayment.OriginalAmount = apiInvoicePayment.ARInvoice.AmountInLocalCurrency;
+                            }
                             else
+                            {
                                 reportAPIPayment.OriginalAmount = apiInvoicePayment.ARInvoice.AmountInInvoiceCurrency;
+                            }
 
                             if (isLocalCurrency)
+                            {
                                 reportAPIPayment.AmountPaid = apiInvoicePayment.LocalAmount;
-
+                            }
                             else
+                            {
                                 reportAPIPayment.AmountPaid = apiInvoicePayment.ForeignAmount;
+                            }
 
                             if (reportAPIPayment.AmountPaid != null)
+                            {
                                 amountpaidSum += (double)reportAPIPayment.AmountPaid;
-
-
-
+                            }
                         }
 
                         reportAPIPayment.ShipmentNumber = apiInvoicePayment.ARInvoice.MainEntityReference != null ? apiInvoicePayment.ARInvoice.MainEntityReference : "";
@@ -8772,146 +8756,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            //if (iQueryable.Count() > 0)
-            //{
-            //    //iQueryable = iQueryable.OrderBy(d => d.PaymentCurrencyCode);
-            //    foreach (ARPaymentList arPayment in iQueryable)
-            //    {
-
-            //        ARPaymentDataProvider ARPayment = new ARPaymentDataProvider();
-            //        //ARPayment.ARPaymentNo = arPayment.PaymentNo;
-            //        //ARPayment.PaymentRef = arPayment.PaymentNo;
-
-            //        //ARPayment.PaymentCurrencyCode = arPayment.PaymentCurrencyCode;
-            //        //ARPayment.ValueDate = arPayment.ValueDate;
-
-            //        //if (!isLocalCurrency)
-            //        //    ARPayment.PaymentCurrencyCode = arPayment.PaymentCurrencyCode;
-            //        //else
-            //        //{
-            //        //    ARPayment.PaymentCurrencyCode = arPayment.LocalCurrencyCode;
-            //        //}
-
-            //        //ARPayment.PaymentMethodName = arPayment.PaymentMethodName;
-            //        //ARPayment.IssuedByUserName = arPayment.CreatedByUserName;
-            //        //if (isLocalCurrency)
-            //        //    ARPayment.Amount = arPayment.AmountInLocalCurrency;
-
-
-            //        //else
-            //        //    ARPayment.Amount = arPayment.AmountInPaymentCurrency;
-
-
-            //        ARInvoicePaymentRepository paymentRepository = new ARInvoicePaymentRepository(tenant);
-            //        IQueryable<ARInvoicePayment> APinvoicePayments = paymentRepository.GetARInvoicePaymentByPaymentId(arPayment.Id, tenant);
-
-            //        //APInvoicePaymentRepository paymentRepository = new APInvoicePaymentRepository(tenant);
-            //        //IQueryable<APInvoicePayment> APinvoicePayments = paymentRepository.GetAPInvoicePaymentByPaymentId(arPayment.Id, tenant);
-            //        ARPayment.PaidAPInvoicesList = new List<ARPaymentDataProvider.ReportARInvoicePayments>();
-
-            //        if (APinvoicePayments.ToList().Count == 0)
-            //        {
-            //            WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments reportAPIPayment = new WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments();
-
-            //            reportAPIPayment.Reference = "";
-            //            reportAPIPayment.BillTo = "";
-            //            reportAPIPayment.InvoiceNumber = "";
-            //            reportAPIPayment.AmountPaid = null;
-            //            reportAPIPayment.OriginalAmount = null;
-            //            ARPayment.PaidAPInvoicesList.Add(reportAPIPayment);
-
-
-            //        }
-            //        double amountpaidSum = 0;
-
-            //        foreach (ARInvoicePayment apiInvoicePayment in APinvoicePayments)
-            //        {
-
-            //            WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments reportAPIPayment = new WebFreight.Web.DataProviders.ARPaymentDataProvider.ReportARInvoicePayments();
-
-            //            ARInvoiceQuery arQuery = new ARInvoiceQuery(tenant);
-            //            ARPaymentQuery arPQuery = new ARPaymentQuery(tenant);
-
-            //            apiInvoicePayment.ARInvoice = arQuery.GetSingleARInvoice(apiInvoicePayment.ARInvoiceId, tenant);
-            //            apiInvoicePayment.ARPayment = arPQuery.GetSingleARPayment(apiInvoicePayment.ARPaymentId, tenant);
-            //            if (apiInvoicePayment.ARInvoice != null && apiInvoicePayment.ARPayment != null)
-            //            {
-            //                reportAPIPayment.Reference = apiInvoicePayment.ARInvoice.CustomerRef;
-            //                reportAPIPayment.BillTo = apiInvoicePayment.ARInvoice.BillTo.LocalName;
-            //                reportAPIPayment.InvoiceNumber = apiInvoicePayment.ARInvoice.InvoiceNumber;
-            //                if (isLocalCurrency)
-            //                    reportAPIPayment.OriginalAmount = apiInvoicePayment.ARInvoice.AmountInLocalCurrency;
-            //                else
-            //                    reportAPIPayment.OriginalAmount = apiInvoicePayment.ARInvoice.AmountInInvoiceCurrency;
-
-            //                if (isLocalCurrency)
-            //                    reportAPIPayment.AmountPaid = apiInvoicePayment.LocalAmount;
-
-            //                else
-            //                    reportAPIPayment.AmountPaid = apiInvoicePayment.ForeignAmount;
-
-            //                if (reportAPIPayment.AmountPaid != null)
-            //                    amountpaidSum += (double)reportAPIPayment.AmountPaid;
-
-            //            }
-            //            ARPayment.PaidAPInvoicesList.Add(reportAPIPayment);
-
-            //        }
-            //        ARPayment.sumInvoices = amountpaidSum;
-
-
-
-
-            //        totalData.ARPaymentDataList.Add(ARPayment);
-
-
-
-
-
-            //    }
-
-            //}
-
-
-
-
-
-            return myResult;
-
-
-
-
-
-            //TenantQuery tenantQuery = new TenantQuery(tenant);
-            //TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
-
-            //if (isLocalCurrency)
-            //    totalData.Currency = tenantPM.CurrencyCode;
-
-            //if (toDate != null)
-            //{
-            //    List<ARPaymentList> TempList = new List<ARPaymentList>();
-            //    for (int i = 0; i < iQueryable.ToList().Count; i++)
-            //    {
-            //        if (iQueryable.ToList()[i].ValueDate != null)
-            //        {
-
-            //            if (iQueryable.ToList()[i].ValueDate <= toDate && iQueryable.ToList()[i].ValueDate >= fromDate)
-            //                TempList.Add(iQueryable.ToList()[i]);
-
-            //        }
-            //        else
-            //        {
-            //            if (iQueryable.ToList()[i].RegisterDate <= toDate && iQueryable.ToList()[i].ValueDate >= fromDate)
-            //                TempList.Add(iQueryable.ToList()[i]);
-
-
-            //        }
-
-            //    }
-
-            //    iQueryable = TempList.AsQueryable();
-            //}
+            return myResult;            
         }
         #endregion
 
@@ -11914,8 +11759,6 @@ namespace WebFreight.Web.ReportsWebServices
 
             return totalData;
         }
-
-
         #endregion
 
         #region Load Shipments Stocks
