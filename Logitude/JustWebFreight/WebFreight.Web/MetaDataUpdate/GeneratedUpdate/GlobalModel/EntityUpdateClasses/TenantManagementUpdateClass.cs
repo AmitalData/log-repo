@@ -7770,7 +7770,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   MenuButton TenantManagementMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "EraseData",
-						Index = 0, 
+						Index = 1, 
 						IsActive = true,
 						LabelTextCodeCode = "TenantManagement.B.EraseData",
 						LabelTextCodeDefaultText = "Erase Data",

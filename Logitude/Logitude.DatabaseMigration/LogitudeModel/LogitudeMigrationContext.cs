@@ -1589,8 +1589,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<AWBInformation> AWBInformations { get; set; }
         public IDbSet<ShipmentPackageItem> ShipmentPackageItems { get; set; }
         public IDbSet<ShipmentCommodity> ShipmentCommodities { get; set; }
-        public IDbSet<AWBMessagingStock> AWBMessagingStocks { get; set; }
-        public IDbSet<AWBStockUsageHistory> AWBStockUsageHistories { get; set; }
+        public IDbSet<MessagingStock> MessagingStocks { get; set; }
+        public IDbSet<MessagingStockUsageHistory> MessagingStockUsageHistories { get; set; }
         public IDbSet<UserPermittedProduct> UserPermittedProducts { get; set; }
         public IDbSet<AccountingInformationIdentifier> AccountingInformationIdentifiers { get; set; }
         public IDbSet<ManifestStatus> ManifestStatus { get; set; }
@@ -4591,8 +4591,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SpecialServicesTypeMap());
             modelBuilder.Configurations.Add(new EmailProviderMap());
             modelBuilder.Configurations.Add(new RegionMap());
-            modelBuilder.Configurations.Add(new AWBMessagingStockMap());
-            modelBuilder.Configurations.Add(new AWBStockUsageHistoryMap());
+            modelBuilder.Configurations.Add(new MessagingStockMap());
+            modelBuilder.Configurations.Add(new MessagingStockUsageHistoryMap());
             modelBuilder.Configurations.Add(new QuoteStageMap());
             modelBuilder.Configurations.Add(new QuoteRatingMap());
             modelBuilder.Configurations.Add(new CountryCityMap());

@@ -355,9 +355,9 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new DWSubQueryMap());
             modelBuilder.Configurations.Add(new DWQueryColumnMap());
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
 
-
-        modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
+            modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
             base.OnModelCreating(modelBuilder);
         }

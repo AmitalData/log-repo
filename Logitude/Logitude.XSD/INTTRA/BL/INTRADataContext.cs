@@ -2180,9 +2180,11 @@ namespace Logitude.XSD.INTTRA.BL
 
             if (myAddress != null)
             {
+                string iCountryName = null;
+
                 myResult = new INTTRA_Out.AddressInformation()
                 {
-                    AddressLine = this.GetStringList(myAddress.Address1, 4, 35).ToArray<string>(),
+                    //AddressLine = this.GetStringList(myAddress.Address1, 4, 35).ToArray<string>(),
                     City = this.FormatString(myAddress.City, 35),                     
                 };
 
@@ -2202,6 +2204,7 @@ namespace Logitude.XSD.INTTRA.BL
                     if (myCountry != null)
                     {
                         myResult.CountryCode = myCountry.Code;
+                        iCountryName = myCountry.EnglishName;
                     }
                 }
 
@@ -2214,59 +2217,60 @@ namespace Logitude.XSD.INTTRA.BL
                     }
                 }
 
-                //List<string> AddressLines = new List<string>();
-                //if (myResult.AddressLine != null)
-                //{
-                //    AddressLines = myResult.AddressLine.ToList();
-                //}
+                List<string> AddressLines = new List<string>();
 
-                //if (AddressLines.Count < 4)
-                //{
-                //    if (!string.IsNullOrEmpty(myResult.City))
-                //    {
-                //        AddressLines.Add(myResult.City);
-                //    }
-                //}
+                if (!string.IsNullOrEmpty(myAddress.Address1))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        AddressLines.Add(this.FormatString(myAddress.Address1, 35));
+                    }
+                }
 
-                //if (AddressLines.Count < 4)
-                //{
-                //    if (!string.IsNullOrEmpty(myResult.PostalCode))
-                //    {
-                //        AddressLines.Add(myResult.PostalCode);
-                //    }
-                //}
+                if (!string.IsNullOrEmpty(myAddress.Address2))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        AddressLines.Add(this.FormatString(myAddress.Address2, 35));
+                    }
+                }
 
-                //if (AddressLines.Count < 4)
-                //{
-                //    if (!string.IsNullOrEmpty(myResult.CountryCode))
-                //    {
-                //        AddressLines.Add(myResult.CountryCode);
-                //    }
-                //}
+                if (!string.IsNullOrEmpty(myAddress.City) || !string.IsNullOrEmpty(myAddress.ZipCode))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        string iField = myAddress.City;
 
-                //if (AddressLines.Count < 4)
-                //{
-                //    if (!string.IsNullOrEmpty(myResult.StateProvince))
-                //    {
-                //        AddressLines.Add(myResult.StateProvince);
-                //    }
-                //}
+                        if (!string.IsNullOrEmpty(myAddress.ZipCode))
+                        {
+                            iField += "," + myAddress.ZipCode;
+                        }
 
-                //if (myResult.Street != null)
-                //{
-                //    foreach(string item in myResult.Street)
-                //    {
-                //        if (AddressLines.Count < 4)
-                //        {
-                //            AddressLines.Add(item);
-                //        }
-                //    }
-                //}
+                        AddressLines.Add(this.FormatString(iField, 35));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(iCountryName))
+                {
+                    if (AddressLines.Count < 4)
+                    {
+                        AddressLines.Add(this.FormatString(iCountryName, 35));
+                    }
+                }
 
 
-                string iAddressString = this.GetAddress_OneLine(myAddress);
 
-                myResult.AddressLine = this.GetStringList(iAddressString, 4, 35).ToArray<string>();
+                myResult.AddressLine = AddressLines.ToArray<string>();
+
+
+
+
+
+
+
+                //string iAddressString = this.GetAddress_OneLine(myAddress);
+
+                //myResult.AddressLine = this.GetStringList(iAddressString, 4, 35).ToArray<string>();
             }
 
             return myResult;
@@ -2394,13 +2398,13 @@ namespace Logitude.XSD.INTTRA.BL
 
                     case INTTRAPattern.Text:
                         {
-                            myFormat = @"[^a-zA-Z0-9\-\. ]*";
+                            myFormat = @"[^a-zA-Z0-9\-\,\. ]*";
                             break;
                         }
 
                     default:
                         {
-                            myFormat = @"[^a-zA-Z0-9\-\. ]*";
+                            myFormat = @"[^a-zA-Z0-9\-\,\. ]*";
                             break;
                         }
                 }
