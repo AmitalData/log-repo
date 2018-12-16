@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityAMs;
+using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
@@ -23,13 +24,14 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-
                 ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
                 importerDepositionHelper.StartImporterDeposition(importerDepositionAM);
-                importerDepositionHelper.AddAPILogs(importerDepositionAM);
 
+                string logId = importerDepositionHelper.AddAPILogs(importerDepositionAM);
+                var msg = "Importer Deposition Send to cloud Successfully";
+                APILogsUtility.UpdateAPILogStatus(logId, importerDepositionAM.CustomerTenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
 
-                return null;
+                return Request.CreateResponse(HttpStatusCode.OK, msg);
             }
 
             catch (Exception ex)

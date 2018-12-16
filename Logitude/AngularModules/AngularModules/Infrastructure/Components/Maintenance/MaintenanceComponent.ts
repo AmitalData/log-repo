@@ -1365,6 +1365,10 @@ class MaintenanceMenuItem {
     private SetTranslatedName() {
         var myResult = "";
 
+        if (this.Code == "AWMS") {
+            var r = "";
+        }
+
         if (this.Code == "MTCL" || this.Code == "MTIS" || this.Code == "MCSG") {
             myResult = TextCodeTranslator.TranslateTable(this.item.TextCode);
         }

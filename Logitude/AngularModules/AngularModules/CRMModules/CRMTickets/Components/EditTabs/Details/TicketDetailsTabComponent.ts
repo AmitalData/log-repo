@@ -98,6 +98,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
                     this.GetEntityLinkNumberVisibility();
                     this.CreateEntities();
                     this.UpdateEntityDetails();
+                    this.SetUIProperties();
                 }
             });
         }

@@ -16,6 +16,9 @@ export class CRMComp {
         this.Activities = new ActivitiesModule();
 
     }
+
+    
+
     DoCRM(CRMcomponent: string) {
         this.CRMTab.GoToMainMenu('General.MH.CRM');
 

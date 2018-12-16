@@ -103,10 +103,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 email = "system@tenant" + entityPM.Tenant + ".com";
             }
             string myLoggedUserId = null;
+            bool showLocal = false;
+
             Contact contact = contactRep.GetSingleContactByEmail(email, entityPM.Tenant);
             if (contact != null)
             {
                 myLoggedUserId = contact.Id;
+                showLocal = !contact.DontShowLocalLabels;
             }
             entityPM.UpdatedByUserId = myLoggedUserId;
 
@@ -118,14 +121,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //entityPM.SearchFields = entityPM.CashBookName + "," + entityPM.DepositNumber + "," + entityPM.JournalNumber + "," + entityPM.DepositCurrencyCode;
             
 
-          if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert) //New Deposit
+          if (entityPM.ChangeSetOp == ChangeSetOperation.Insert) //New Deposit
             {
                 ARPaymentChequeQueryService arpChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
 
 
                 if (entityPM.ForeignAmount > cashBook.TotalAmount)
                 {
-                    throw new ApplicationException("Deposit Amount must be less than Cashbook total");
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositAmountmustbelessthanCashbook",0,showLocal));
                 }
 
                 BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(entityPM.Tenant);
@@ -368,7 +371,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     if (entityPM.ForeignAmount > cashBook.TotalAmount)
                     {
-                        throw new ApplicationException("Deposit Amount must be less than Cashbook total");
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositAmountmustbelessthanCashbook", 0, showLocal));
                     }
 
                     GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);

@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {CustomerPM} from '../../EntityPMs/CustomerPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -548,20 +548,21 @@ export class CustomerMenuButtonsHandler {
             var id: number = parseInt(this.EntityPM.ReceivablesAccountingCard);
 
             var managementService: TenantManagementPMService = new TenantManagementPMService();
-            managementService.get(id).subscribe(result => {
-
-                var ten: TenantManagementPM = result.Result;
-
-                if (ten != null) {
-                    this.StartEditing(ten.Id);
-                }
-                else {
+            managementService.get(id).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse.HasError) {
                     var window: MessageWindow = new MessageWindow();
                     window.Width = 350;
                     window.Height = 180;
-                    window.Show("Invalid Tenant !");
+                    window.Show(myResponse.ErrorsArray[0]);
                 }
 
+                else {
+                    var ten: TenantManagementPM = myResponse.Result;
+
+                    if (ten != null) {
+                        this.StartEditing(ten.Id);
+                    }
+                }
             });
 
         }
