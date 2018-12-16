@@ -1032,6 +1032,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string originalJournalId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginalJournalId  
+	   {
+	    
+	     get
+		{
+		   return originalJournalId;
+		 }
+		 set
+		 {
+		   if(originalJournalId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginalJournalId",OldValue=originalJournalId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originalJournalId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
