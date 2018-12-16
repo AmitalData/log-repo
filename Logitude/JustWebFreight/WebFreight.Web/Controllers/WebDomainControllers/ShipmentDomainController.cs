@@ -699,6 +699,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                string test = "aloha";
                 if (customerid == "null")
                     customerid = null;
 
