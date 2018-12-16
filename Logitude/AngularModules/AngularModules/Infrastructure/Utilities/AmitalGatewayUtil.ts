@@ -394,12 +394,12 @@ export class AmitalGatewayUtil {
 
         
         this._LastUnifreightMessageM.Requset.push(["ShowGeneralLOVReturnSelectedCancel", (event == "ShowGeneralLOVReturnSelectedCancel").toString()]);
-        this._LastUnifreightMessageM.Response.push(["ShowGeneralLOVReturnSelectedValue", event]);
+        this._LastUnifreightMessageM.Requset.push(["ShowGeneralLOVReturnSelectedValue", event]);
 
         this.SendRequestToUnifreightAsync(
             "UnifreightMassageHandler.ShowGeneralLOVReturnSelectedCallBack",
             "CFIHMAIN.LogitudeTask",
-            "ShowClientReturnIfExistUnifreightCallBack",
+            "ShowGeneralLOVReturnSelectedCallBack",
             this._LastUnifreightMessageM,
             "Task ???");
 
@@ -993,7 +993,7 @@ export class ShowGeneralLOVReturnSelected {
         );
 
         logWindow.WindowClosed.subscribe((event1: any) => {
-            AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+            ///AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
             if (event1 == "Cancel") {
 
             }
