@@ -210,6 +210,9 @@
         <button onclick="GetRihbitFromTransmissionsMessage()">GetRihbitFromTransmissionsMessage</button>
         <button onclick="MapDocumentTypeCustomsData()">MapDocumentTypeCustomsData</button>
         <button onclick="MapPendingReasonCodeData()">MapPendingReasonCodeData</button>
+        <button onclick="ShowGeneralLOVReturnSelected('Customs.TermsOfSaleType','CIF','תנאי מכר')">1426ShowGeneralLOVReturnSelected</button>
+        <button onclick="ShowGeneralLOVReturnSelected('Customs.FreightPaymentMethod','PU','סוג תשלום')">1345ShowGeneralLOVReturnSelected</button>
+
     </div>
 
     <!--<div  class="tabcontent">-->
@@ -364,9 +367,32 @@
 
             //entyList[] = "true";
             //entyList["Requset.LockedMessage"] = "File 172900376 is in use on another screen() - try again later !. Locked by  (Session )";
+            RaiseUnifaceRequestEvent(objParams, formtitle);
+        }
+        function ShowGeneralLOVReturnSelected(LogitudeEntity, UnifreightEntityNumber, LOVText) {
+
+            let objParams =
+            {
+                UnifreightEntity: "GDFDATA",
+                UnifreightEntityNumber: UnifreightEntityNumber,
+                LogitudeEntity: LogitudeEntity ,//"Customs.Client",
+                LogitudeEntityNumber: UnifreightEntityNumber,
+                LogitudeViewModel: "UnifreightMassageHandler",
+                LogitudeCommandId: "ShowGeneralLOVReturnSelected"
+                //Requset: [], 
+                //Response: [] 
+            };
+
+        
+            
+            objParams.LogitudeEntity = LogitudeEntity;
+            
+        objParams.Requset = new Array();
+        objParams.Response = new Array();
+            //objParams.Requset.push(["Requset.formtitle", formtitle]);
+            objParams.Requset.push(["Requset.LOVText", LOVText]);
             RaiseUnifaceRequestEvent(objParams);
         }
-
         function MapPendingReasonCodeData() {
             var json = '{ "UnifreightEntity"  :  "GTBFUSTATUS" , "UnifreightEntityNumber"  :  "FSI" , "LogitudeEntity"  :  "Customs.CourierPendingReason" , "LogitudeEntityNumber"  :  "" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "MapPendingReasonCodeData" , "formtitle"  :  "חשבונית ספק"}';
 

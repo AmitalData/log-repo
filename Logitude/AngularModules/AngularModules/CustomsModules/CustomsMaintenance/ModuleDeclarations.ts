@@ -8,6 +8,8 @@ import { AddEditInterfaceManagementComponent } from './Components/AddEditInterfa
 import { LoadTestComponent } from './Components/LoadTestComponent';
 import { SignStationsComponent } from './Components/SignStationsComponent';
 import { DocumentTypeCustomsDataComponent } from './Components/DocumentTypeCustomsDataComponent';
+import { GeneralLOVComponent } from './Components/GeneralLOVComponent';
+
 import { CustomsDocumentsDefinitionComponent } from './Components/CustomsDocumentsDefinitionComponent';
 import { AddEditCustomsAirlineComponent } from './Components/AddEditCustomsAirlineComponent';
 import { CustomsPartnerFtpListComponent } from './Components/CustomsPartnerFtpListComponent';
@@ -26,6 +28,7 @@ export const Components =
         LoadTestComponent,
         SignStationsComponent,
         DocumentTypeCustomsDataComponent,
+        GeneralLOVComponent,
         CustomsDocumentsDefinitionComponent,
         AddEditCustomsAirlineComponent,
         CustomsPartnerFtpListComponent,
@@ -48,6 +51,8 @@ export class ModuleDeclarations {
             case "LoadTestComponent": { myResult = LoadTestComponent; break; }
             case "SignStationsComponent": { myResult = SignStationsComponent; break; }
             case "DocumentTypeCustomsDataComponent": { myResult = DocumentTypeCustomsDataComponent; break; }
+            case "GeneralLOVComponent": { myResult = GeneralLOVComponent; break; }
+                
             case "CustomsDocumentsDefinitionComponent": { myResult = CustomsDocumentsDefinitionComponent; break; }
             case "AddEditCustomsAirlineComponent": { myResult = AddEditCustomsAirlineComponent; break; }
             case "CustomsPartnerFtpListComponent": { myResult = CustomsPartnerFtpListComponent; break; }

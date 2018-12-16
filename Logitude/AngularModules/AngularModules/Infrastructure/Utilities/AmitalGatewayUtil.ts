@@ -206,6 +206,15 @@ export class AmitalGatewayUtil {
                     mapDocumentTypeCustomsData .Run(myParam);
                 }
                 break;
+            case "ShowGeneralLOVReturnSelected": {
+
+                
+                this.SelectCustomsRequestMenu(MaintenanceMenu);
+
+                let mapGeneralLOV = new ShowGeneralLOVReturnSelected();
+                mapGeneralLOV.Run(myParam);
+            }
+                break;
             case "MapPendingReasonCodeData":
                 {
                     this.SelectCustomsRequestMenu(MaintenanceMenu);
@@ -381,7 +390,22 @@ export class AmitalGatewayUtil {
 
         //CloseEditWindow(false, false);
     }
-    
+    ShowGeneralLOVReturnSelectedCallBack(event: string) {
+
+        
+        this._LastUnifreightMessageM.Requset.push(["ShowGeneralLOVReturnSelectedCancel", (event == "ShowGeneralLOVReturnSelectedCancel").toString()]);
+        this._LastUnifreightMessageM.Response.push(["ShowGeneralLOVReturnSelectedValue", event]);
+
+        this.SendRequestToUnifreightAsync(
+            "UnifreightMassageHandler.ShowGeneralLOVReturnSelectedCallBack",
+            "CFIHMAIN.LogitudeTask",
+            "ShowClientReturnIfExistUnifreightCallBack",
+            this._LastUnifreightMessageM,
+            "Task ???");
+
+        //CloseEditWindow(false, false);
+    }
+
     ShowDeclarationByIdReturnCloseSaveMethod(
         myParam,
         myEditTab,
@@ -942,7 +966,46 @@ export class ClientAction {
 
    
 }
+export class ShowGeneralLOVReturnSelected {
+    public Run(unifreightMessage: UnifreightMessageM) {
+        //"UnifreightEntity=GNDCARD·;UnifreightEntityNumber=10009065·;LogitudeEntity=Customs.Client·;LogitudeEntityNumber=049028392·;LogitudeViewModel=UnifreightMassageHandler·;LogitudeCommandId=ShowClientReturnIfExist·;formtitle=Client"
+        let UnifreightEntityNumber = unifreightMessage.UnifreightEntityNumber;
+        //let ImporterVat = unifreightMessage.LogitudeEntityNumber;
+        //let formtitle: string=            = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.formtitle");
+        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        let LOVText: string
+            = UnifreightMessageM.GetStringValue(unifreightMessage, "Requset.LOVText");
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 250;
+        logWindow.Title = 'הזן ' + LOVText ;
+        logWindow.WindowArgs = {
+            "LogitudeEntityNumber": unifreightMessage.LogitudeEntityNumber,
+            "LogitudeEntity": unifreightMessage.LogitudeEntity,
+            "LOVText": LOVText,
 
+        };
+        logWindow.ShowCloseButton = true;
+        logWindow.Show(
+            //'./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent'
+            //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
+            './CustomsModules/CustomsMaintenance/Components/GeneralLOVComponent'
+        );
+
+        logWindow.WindowClosed.subscribe((event1: any) => {
+            AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
+            if (event1 == "Cancel") {
+
+            }
+            SessionLocator.CurrentSession.StopBusyIndicator();
+            AmitalGatewayUtil.Instance.ShowGeneralLOVReturnSelectedCallBack(event1);
+
+
+            //SessionLocator.CurrentSession.StopBusyIndicator();
+        });
+
+    }
+}
 
 
 export class MapDocumentTypeCustomsData {

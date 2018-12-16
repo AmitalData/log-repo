@@ -135,6 +135,7 @@
     <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsPartnerFtpListComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\CustomsSettingsComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.html" />
+    <Content Include="CustomsModules\CustomsMaintenance\Components\GeneralLOVComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\LoadTestComponent.html" />
     <Content Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\AddEditRequiredFieldsComponent.html" />
@@ -329,6 +330,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsPartnerFtpListComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\CustomsSettingsComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\DocumentTypeCustomsDataComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\GeneralLOVComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\InterfaceManagementComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\LoadTestComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsMaintenance\Components\RequiredFields\AddEditRequiredFieldsComponent.ts" />
