@@ -373,7 +373,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
                     if (this.myDomainService == null) {
                         this.myDomainService = new TimeManagementDomainService();
                     }
-                    this.myDomainService.DeleteTimeSheetItem(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, item.LocationCode, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
+                    this.myDomainService.DeleteTimeSheetItem(item.Id, item.EmployeeUserId, item.LocationCode, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
                         SessionLocator.CurrentSession.StopBusyIndicator();
                         if (!myResponse.HasError) {
                             this.OnDataLoaded(myResponse.Result);

@@ -3375,7 +3375,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   TextCode APPaymentTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.MarkedAsBlockedForTransfer", DefaultText = @"Marked as blocked for transfer",LocalDefaultText = "מסומן כחסום לצורך העברה", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature APPaymentFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MARKEDASBLOCKEDFORTRANSFER", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.MarkedAsBlockedForTransfer", NameTextCodeDefaultText = "Marked as blocked for transfer", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-	        TextCodeRepository.SubmitChanges();
+            TextCode APPaymentTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.ErrorInTransfer", DefaultText = @"Error In Transfer", LocalDefaultText = "Error In Transfer", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+            Feature APPaymentFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "APPayment.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+
+            TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
