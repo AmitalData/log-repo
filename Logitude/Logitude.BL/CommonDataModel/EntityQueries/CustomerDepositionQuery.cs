@@ -47,6 +47,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          DepositionNumber = a.DepositionNumber,
                                                          ValidityStartDate = a.ValidityStartDate,
                                                          ValidityEndDate = a.ValidityEndDate,
+                                                         CreateDate = a.CreateDate,
                                                          
 
                                                      };
@@ -69,6 +70,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             DepositionNumber = a.DepositionNumber,
                                             ValidityStartDate = a.ValidityStartDate,
                                             ValidityEndDate = a.ValidityEndDate,
+                                            CreateDate = a.CreateDate,
                                         }).FirstOrDefault();
 
 
@@ -88,6 +90,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                    DepositionNumber = a.DepositionNumber,
                                                                    ValidityStartDate = a.ValidityStartDate,
                                                                    ValidityEndDate = a.ValidityEndDate,
+                                                                   CreateDate = a.CreateDate,
                                                                };
             return CustomerDepositionPMs;
         }
@@ -104,11 +107,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                        DepositionNumber = a.DepositionNumber,
                                                                        ValidityStartDate = a.ValidityStartDate,
                                                                        ValidityEndDate = a.ValidityEndDate,
+                                                                       CreateDate = a.CreateDate,
                                                                    };
             return CustomerDepositionLists;
         }
 
-
+    
 
 
     }
