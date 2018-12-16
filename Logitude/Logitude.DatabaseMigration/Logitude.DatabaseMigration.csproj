@@ -398,6 +398,10 @@
     <Compile Include="Migrations\201812131134518_AbedAddCardToCustomsShippers.Designer.cs">
       <DependentUpon>201812131134518_AbedAddCardToCustomsShippers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812160751200_textcodes_fixes.cs" />
+    <Compile Include="Migrations\201812160751200_textcodes_fixes.Designer.cs">
+      <DependentUpon>201812160751200_textcodes_fixes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -634,6 +638,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812131134518_AbedAddCardToCustomsShippers.resx">
       <DependentUpon>201812131134518_AbedAddCardToCustomsShippers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812160751200_textcodes_fixes.resx">
+      <DependentUpon>201812160751200_textcodes_fixes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

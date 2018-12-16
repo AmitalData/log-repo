@@ -16,7 +16,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
                     <td>
                         <div style="height:30px;">
                             <button *ngIf="ShowButtons == true" class="Button" (click)="ApproveButtonClicked()" style="width:122px;;float: left;margin:4px;">Declaration Approval</button>
-                            <button class="Button" (click)="RemoveTasksButtonClicked()" style="width:85px;float: right;margin:4px;">Remove Tasks</button>
+                            <button *ngIf="ShowRemoveButton == true" class="Button" (click)="RemoveTasksButtonClicked()" style="width:85px;float: right;margin:4px;">Remove Tasks</button>
                         </div>
                     </td>
                 </tr>
@@ -37,6 +37,7 @@ export class ApprovePaymentButtonListTemplate {
     public ConnectBtn: string = "Connect";
     public Width: number = 57;
     public ShowButtons: boolean = true;
+    public ShowRemoveButton: boolean = true;
     public HasSharedDocs: boolean = true;
     public _ShipmentPMService: ShipmentPMService;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
@@ -55,6 +56,7 @@ export class ApprovePaymentButtonListTemplate {
         this.rowData = rowData; 
         if (SessionLocator.PrivateLableSettings) {
             this.ShowButtons = (this.rowData['IsImporterApprovalRequried'] == true);// && AppTool.IsNullOrEmpty(this.rowData['ApprovedByUserName'])
+            this.ShowRemoveButton = (this.rowData['IsDigitalSignRequired'] == true || this.rowData['IsRequestedDocuments'] == true);
             //if (SessionLocator.PrivateLableSettings) {
             //    this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
             //        if (res.Result == false) {
