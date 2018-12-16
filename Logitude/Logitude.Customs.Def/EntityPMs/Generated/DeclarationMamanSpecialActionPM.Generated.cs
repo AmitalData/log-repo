@@ -67,7 +67,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string mamanSpecialActionCode ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]

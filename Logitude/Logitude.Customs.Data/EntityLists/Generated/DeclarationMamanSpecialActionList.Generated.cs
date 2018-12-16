@@ -18,6 +18,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string DeclarationId  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }
+
+       [Key]
        [DataMember]
        public string MamanSpecialActionCode  { get; set; }
        [DataMember]

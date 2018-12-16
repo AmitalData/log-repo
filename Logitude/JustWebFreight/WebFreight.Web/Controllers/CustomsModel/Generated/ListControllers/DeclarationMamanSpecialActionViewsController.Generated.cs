@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string declarationid)
+        public HttpResponseMessage GetSingle(string declarationid, string mamanspecialactioncode)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 DeclarationMamanSpecialActionListQueryService declarationMamanSpecialActionQuery = new DeclarationMamanSpecialActionListQueryService(MyContext);
-                DeclarationMamanSpecialActionList declarationMamanSpecialActionList = declarationMamanSpecialActionQuery.GetSingle(declarationid);
+                DeclarationMamanSpecialActionList declarationMamanSpecialActionList = declarationMamanSpecialActionQuery.GetSingle(declarationid, mamanspecialactioncode);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  declarationMamanSpecialActionList);

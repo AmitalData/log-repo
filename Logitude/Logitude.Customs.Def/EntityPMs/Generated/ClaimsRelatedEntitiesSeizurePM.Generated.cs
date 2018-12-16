@@ -208,6 +208,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string seizureFactorName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SeizureFactorName  
+	   {
+	    
+	     get
+		{
+		   return seizureFactorName;
+		 }
+		 set
+		 {
+		   if(seizureFactorName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SeizureFactorName",OldValue=seizureFactorName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   seizureFactorName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

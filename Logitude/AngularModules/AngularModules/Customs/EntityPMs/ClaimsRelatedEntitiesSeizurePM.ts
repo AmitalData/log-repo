@@ -67,6 +67,11 @@ export class ClaimsRelatedEntitiesSeizurePM {
     public set SeizureAmount(newValue: number) { if (this.seizureAmount != newValue) { this.seizureAmount = newValue; this.MarkAsDirty("SeizureAmount"); } }
        
 	 
+    private seizureFactorName: string;
+    public get SeizureFactorName() { return this.seizureFactorName; }
+    public set SeizureFactorName(newValue: string) { if (this.seizureFactorName != newValue) { this.seizureFactorName = newValue; this.MarkAsDirty("SeizureFactorName"); } }
+       
+	 
 
     public OldEntityPM: ClaimsRelatedEntitiesSeizurePM;
 	

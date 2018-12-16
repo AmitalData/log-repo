@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public DeclarationMamanSpecialActionList GetSingle(string declarationid)
+        public DeclarationMamanSpecialActionList GetSingle(string declarationid, string mamanspecialactioncode)
         {
             IQueryable<DeclarationMamanSpecialAction> DeclarationMamanSpecialActionQuery = (from a in context.DeclarationMamanSpecialActions
-                                                       where a.DeclarationId == declarationid
+                                                       where a.DeclarationId == declarationid && a.MamanSpecialActionCode == mamanspecialactioncode
                                                        select a);
 
              

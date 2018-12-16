@@ -208,6 +208,7 @@ import { CustomsAirlineListService } from './Services/StandardLists/CustomsAirli
 import { PendingErrorPlaceListService } from './Services/StandardLists/PendingErrorPlaceListService';
 import { DecisionTypeListService } from './Services/StandardLists/DecisionTypeListService';
 import { SeizureMethodTypeListService } from './Services/StandardLists/SeizureMethodTypeListService';
+import { SeizureFactorTypeListService } from './Services/StandardLists/SeizureFactorTypeListService';
 
 //#endregion
 
@@ -541,6 +542,7 @@ export class ModuleProviders {
             case "PendingErrorPlaceListService": { myResult = new PendingErrorPlaceListService(); break; }
             case "DecisionTypeListService": { myResult = new DecisionTypeListService(); break; }
             case "SeizureMethodTypeListService": { myResult = new SeizureMethodTypeListService(); break; }
+            case "SeizureFactorTypeListService": { myResult = new SeizureFactorTypeListService(); break; }
             //#endregion                
 
             //#region StandardPMs

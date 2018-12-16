@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  DeclarationMamanSpecialAction GetSingle(string declarationid, int tenant)
+		public  DeclarationMamanSpecialAction GetSingle(string declarationid, string mamanspecialactioncode, int tenant)
         {
             return (from a in context.DeclarationMamanSpecialActions
-                    where a.DeclarationId == declarationid && a.Tenant == tenant
+                    where a.DeclarationId == declarationid && a.MamanSpecialActionCode == mamanspecialactioncode && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             DeclarationMamanSpecialActionKeys keys = entityKeys as DeclarationMamanSpecialActionKeys;
             return (from a in context.DeclarationMamanSpecialActions
-                    where a.DeclarationId == keys.DeclarationId
+                    where a.DeclarationId == keys.DeclarationId && a.MamanSpecialActionCode == keys.MamanSpecialActionCode
                     select a).FirstOrDefault();
         }
 		         

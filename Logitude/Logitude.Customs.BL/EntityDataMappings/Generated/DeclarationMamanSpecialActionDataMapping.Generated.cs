@@ -63,11 +63,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.Tenant = entityPM.Tenant;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSpecialActionCode))
-            {
-				entityPOCO.MamanSpecialActionCode = entityPM.MamanSpecialActionCode;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText1))
             {
 				entityPOCO.MamanLabelText1 = entityPM.MamanLabelText1;
@@ -166,11 +161,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanSpecialActionCode))
-            {
-                oldEntityPM.MamanSpecialActionCode = entityPM.MamanSpecialActionCode;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanLabelText1))

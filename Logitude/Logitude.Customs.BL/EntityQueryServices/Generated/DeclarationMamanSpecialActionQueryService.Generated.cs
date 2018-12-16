@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new DeclarationMamanSpecialActionDataMapping();
         }
 		 
-		public  DeclarationMamanSpecialActionPM GetSingle(string declarationid,bool getComposition, bool getFromCache)
+		public  DeclarationMamanSpecialActionPM GetSingle(string declarationid, string mamanspecialactioncode,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new DeclarationMamanSpecialActionKeys(){ DeclarationId = declarationid };
+             EntityKeys = new DeclarationMamanSpecialActionKeys(){ DeclarationId = declarationid, MamanSpecialActionCode = mamanspecialactioncode };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(DeclarationMamanSpecialAction entityPOCO)
         {
-            DeclarationMamanSpecialActionKeys entityKeys = new DeclarationMamanSpecialActionKeys() { DeclarationId = entityPOCO.DeclarationId,  };
+            DeclarationMamanSpecialActionKeys entityKeys = new DeclarationMamanSpecialActionKeys() { DeclarationId = entityPOCO.DeclarationId, MamanSpecialActionCode = entityPOCO.MamanSpecialActionCode,  };
             return entityKeys;
         }
      

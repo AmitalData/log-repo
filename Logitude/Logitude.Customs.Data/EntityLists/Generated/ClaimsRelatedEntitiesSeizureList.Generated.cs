@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string SeizureMethodName  { get; set; }
        [DataMember]
        public decimal? SeizureAmount  { get; set; }
+       [DataMember]
+       public string SeizureFactorName  { get; set; }
    }
 
 }
