@@ -6,10 +6,12 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -20,8 +22,9 @@ namespace WebFreight.Web.WcfApi
     public class ImporterDepositionWcfService : IImporterDepositionWcfService
 
     {
-        public void SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM, ref Response response)
+        public async Task<Response> SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM)
         {
+            var response = new Response();
             if (CacheManager.CacheWrapper == null)
             {
                 CacheManager.CacheWrapper = new MockCacheWrapper();
@@ -35,11 +38,12 @@ namespace WebFreight.Web.WcfApi
 
                 if (importerDepositionPM != null)
                 {
+                    importerDepositionPM.Tenant = authToken.Tenant;
                     ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
-                    importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM);
+                    response = await importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM);
                 }
 
-           
+                return response;
             }
             catch (Exception ex)
             {
@@ -53,7 +57,7 @@ namespace WebFreight.Web.WcfApi
                     response.ErrorMessage += Environment.NewLine + ex.StackTrace;
                 }
 
-               // return null;
+                return response;
 
             }
 

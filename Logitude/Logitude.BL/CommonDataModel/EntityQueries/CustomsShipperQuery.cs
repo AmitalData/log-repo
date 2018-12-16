@@ -132,7 +132,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             if (entity != null)
             {
                 CardQuery cardQuery = new CardQuery(tenant);
-                CardPM card =  cardQuery.GetSinglePMByCode(shipperCode, tenant);
+                CardPM card =  cardQuery.GetSinglePM(entity.Id, tenant);
                 if (card != null)
                 {
                     entity.EnglishName = card.EnglishName;
@@ -140,6 +140,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entity.CountryId = card.CountryId;
                     entity.CountryCode = card.CountryCode;
                     entity.CountryName = card.CountryName;
+                    entity.LocalName = card.LocalName;
+                    entity.Code = card.Code;
+                    entity.CreatedByUserId = card.CreatedByUserId;
+                    entity.UpdatedByUserId = card.UpdatedByUserId;
+                    entity.CreateDate = card.CreateDate;
+                    entity.UpdateDate = card.UpdateDate;
+                   
                 }
             }
 

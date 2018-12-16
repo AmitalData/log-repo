@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools;
 using System.ServiceModel;
-
+using System.Threading.Tasks;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -9,7 +9,7 @@ namespace WebFreight.Web.WcfApi
     public interface IImporterDepositionWcfService
     {
         [OperationContract]
-        void SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM, ref Response response);
+        Task<Response>SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM);
 
     }
 
