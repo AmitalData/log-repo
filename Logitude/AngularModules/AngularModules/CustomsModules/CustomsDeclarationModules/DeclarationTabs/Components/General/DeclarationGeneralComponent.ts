@@ -264,13 +264,19 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     checkImportersVisibility() {
         if (this.IsDisplayOnly) return;
 
-        if (!AppTool.IsNullOrEmpty(this.ImporterCode))
+
+        this.IsImporerCodeEnabled = AppTool.IsNullOrEmpty(this.EntityPM.ImporterName) && AppTool.IsNullOrEmpty(this.EntityPM.ImporterAddress);
+        if (!AppTool.IsNullOrEmpty(this.ImporterCode)) {
+            this.IsImporerCodeEnabled = true;
             if (this.ImporterCode.includes("F") || this.ImporterCode.includes("P")) {
                 this.IsImporerCodeEnabled = false;
+                //if (!AppTool.IsNullOrEmpty(this.ImporterCode))
+                //    if (this.ImporterCode.includes("F") || this.ImporterCode.includes("P")) {
+                //        this.IsImporerCodeEnabled = false;
                 this.UIProperties.SetEnabled("ImporterCode", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, true);
             }
-
+        }
         if (!AppTool.IsNullOrEmpty(this.TransferImporterCode))
             if (this.TransferImporterCode.includes("F") || this.TransferImporterCode.includes("P")) {
                 this.IsTransferImporterEnabled = false;
@@ -888,6 +894,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 this.IsEntitleImporterEnabled = true;
             }
         }
+        this.checkImportersVisibility()
     }
 
     //#endregion

@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.BL.CloseTables;
+﻿#undef waitTillMiritWillCreateDBAndScreen
+using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Def.EntityPMs;
@@ -67,7 +68,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             //בעת שליחת המסר תבוצע שליפה של טבלת DeclarationMamanSpecialAction לפי מפתח הצהרה + קוד פעולה מיוחדת, והנתונים יישלחו לפי קוד פעולה שהמשתמש בחר + נתונים מ DB של הצהרה + DeclarationMamanSpecialAction
             var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(context);
-            var pmDeclarationMamanSpecialAction =declarationMamanSpecialActionQueryService.GetSingle(tenant, declarationId,  ((int)mamanSpecialCode).ToString());
+            var pmDeclarationMamanSpecialAction =declarationMamanSpecialActionQueryService.GetSingle(declarationId,  ((int)mamanSpecialCode).ToString());
 
 #endif
 
@@ -127,7 +128,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 BaldarHp = _DeclarationPM.AgentId,
                 OpenBaldarAwbDate = CourierGWMessageECTHRDataMamanRequestService.GetOpenBaldarAwbDate(this._DeclarationPM),
                 SpSpclCode= SpecialCode,
-
+                 SpLabel1= 
 
             };
         }
