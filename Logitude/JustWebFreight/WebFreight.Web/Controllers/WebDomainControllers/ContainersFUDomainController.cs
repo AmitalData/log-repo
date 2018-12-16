@@ -22,8 +22,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                var testing = 6;
-                var id = 2;
+                // test2
                 string token = HttpContext.Current.Request.Headers["Token"];
                 id = 123;
                 testing = 8;
