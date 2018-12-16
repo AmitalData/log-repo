@@ -44,11 +44,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentQuery(int tenant)
         {
             repository = new ShipmentRepository(tenant);
-
-            string t1 = "test Commit";
-            string t2 = "asdf";
-
-
         }
 
         public ShipmentQuery(ShipmentRepository repository)
