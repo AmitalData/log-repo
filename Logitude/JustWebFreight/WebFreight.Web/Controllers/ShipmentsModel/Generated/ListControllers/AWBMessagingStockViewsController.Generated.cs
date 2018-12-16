@@ -57,21 +57,21 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("MessagingStock", "READ", authToken.Tenant);
 				
 		    	IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-				AWBMessagingStockRepository  aWBMessagingStockRepository = new AWBMessagingStockRepository(MyContext);
-				AWBMessagingStockList entityList = null;
-				AWBMessagingStock entityPoco = aWBMessagingStockRepository.GetSingleAWBMessagingStock(id );
+				MessagingStockRepository  messagingStockRepository = new MessagingStockRepository(MyContext);
+				MessagingStockList entityList = null;
+				MessagingStock entityPoco = messagingStockRepository.GetSingleMessagingStock(id );
 
 				if (entityPoco != null)
 				{
-									List<AWBMessagingStock> singleEntityList = new List<AWBMessagingStock>();
+                    List<MessagingStock> singleEntityList = new List<MessagingStock>();
 					singleEntityList.Add(entityPoco);
 
-					AWBMessagingStockQuery aWBMessagingStockQuery = new AWBMessagingStockQuery(aWBMessagingStockRepository);
-					IQueryable<AWBMessagingStock> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<AWBMessagingStockList> iQueryableEntityList = aWBMessagingStockQuery.GetIQueryableEntityList(iQueryable);
+					MessagingStockQuery messagingStockQuery = new MessagingStockQuery(messagingStockRepository);
+					IQueryable<MessagingStock> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<MessagingStockList> iQueryableEntityList = messagingStockQuery.GetIQueryableEntityList(iQueryable);
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
@@ -95,17 +95,17 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", authToken.Tenant);
+                SecurityUtility.CheckContactFeature("MessagingStock", "READ", authToken.Tenant);
 
 
 				IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
-				AWBMessagingStockRepository  aWBMessagingStockRepository = new AWBMessagingStockRepository(MyContext);
-				IQueryable<AWBMessagingStock> entityPocos = aWBMessagingStockRepository.GetAWBMessagingStocks();
+				MessagingStockRepository  messagingStockRepository = new MessagingStockRepository(MyContext);
+				IQueryable<MessagingStock> entityPocos = messagingStockRepository.GetMessagingStocks();
 
-				AWBMessagingStockQuery aWBMessagingStockQuery = new AWBMessagingStockQuery(aWBMessagingStockRepository);
-			    IQueryable<AWBMessagingStockList> entityLists = aWBMessagingStockQuery.GetIQueryableEntityList(entityPocos);
+				MessagingStockQuery messagingStockQuery = new MessagingStockQuery(messagingStockRepository);
+			    IQueryable<MessagingStockList> entityLists = messagingStockQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderBy(d => d.Id);
-				List<AWBMessagingStockList> listResult = entityLists.ToList();
+				List<MessagingStockList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -129,20 +129,20 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				if(filters.Tenant != null)
 					tenant = filters.Tenant.Value;
 				                
-				SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", authToken.Tenant);
+				SecurityUtility.CheckContactFeature("MessagingStock", "READ", authToken.Tenant);
 	
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "AWBMessagingStock",
+                    ObjectTableName = "MessagingStock",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "AWBMessagingStocks",
+                    QuerySection = "MessagingStocks",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
-				List<ObjectField> AWBMessagingStockObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("AWBMessagingStock",tenant);
+				List<ObjectField> MessagingStockObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("MessagingStock", tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -165,7 +165,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                             //}
                         //}
                         //ToDo: Get object field by name and set the remained filter properties
-						ObjectField field = AWBMessagingStockObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+						ObjectField field = MessagingStockObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
                             string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
@@ -191,7 +191,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
                     foreach (QueryFilterItem filter in filters_list)
                     {
-                        ObjectField field = AWBMessagingStockObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        ObjectField field = MessagingStockObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
                         if (field != null)
                         {
 
@@ -216,29 +216,29 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 GenericSort sortClass = new GenericSort();
 
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
-                AWBMessagingStockRepository  aWBMessagingStockRepository = new AWBMessagingStockRepository(MyContext);
-                IQueryable<AWBMessagingStock> entityPocos = aWBMessagingStockRepository.GetAWBMessagingStocks();
+                MessagingStockRepository  messagingStockRepository = new MessagingStockRepository(MyContext);
+                IQueryable<MessagingStock> entityPocos = messagingStockRepository.GetMessagingStocks();
 
-                AWBMessagingStockQuery aWBMessagingStockQuery = new AWBMessagingStockQuery(aWBMessagingStockRepository);
+                MessagingStockQuery messagingStockQuery = new MessagingStockQuery(messagingStockRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 				
-                entityPocos = genericFilter.GetFilteredQuery<AWBMessagingStock>(nonListQueryOperation, entityPocos);
+                entityPocos = genericFilter.GetFilteredQuery<MessagingStock>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
-                IQueryable<AWBMessagingStockList> entityLists = aWBMessagingStockQuery.GetIQueryableEntityList(entityPocos);
+                IQueryable<MessagingStockList> entityLists = messagingStockQuery.GetIQueryableEntityList(entityPocos);
 
-                entityLists = genericFilter.GetFilteredQuery<AWBMessagingStockList>(listQueryOperation, entityLists);
+                entityLists = genericFilter.GetFilteredQuery<MessagingStockList>(listQueryOperation, entityLists);
 
 		 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
-                   PropertyInfo propInfo = typeof(AWBMessagingStockList).GetProperty(queryOperations.SortByColumnName);
+                   PropertyInfo propInfo = typeof(MessagingStockList).GetProperty(queryOperations.SortByColumnName);
                    
 
-                   ObjectField objectField = (from a in AWBMessagingStockObjectFields
+                   ObjectField objectField = (from a in MessagingStockObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -246,7 +246,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                    {
                     if (objectField.IsCustom)
                     {
-                        entityLists = sortClass.GetSorterQuery<AWBMessagingStockList, string>(queryOperations, entityLists);
+                        entityLists = sortClass.GetSorterQuery<MessagingStockList, string>(queryOperations, entityLists);
                     }
                     else
                     {
@@ -256,36 +256,36 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                         case "text":
 						case "lookup":
                             {
-                                entityLists = sortClass.GetSorterQuery<AWBMessagingStockList, string>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<MessagingStockList, string>(queryOperations, entityLists);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                entityLists = sortClass.GetSorterQuery<AWBMessagingStockList, double>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<MessagingStockList, double>(queryOperations, entityLists);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                entityLists = sortClass.GetSorterQuery<AWBMessagingStockList, DateTime>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<MessagingStockList, DateTime>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                entityLists = sortClass.GetSorterQuery<AWBMessagingStockList, int>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<MessagingStockList, int>(queryOperations, entityLists);
                                 break;
                             }
                         case "boolean":
                             {
-                                entityLists = sortClass.GetSorterQuery<AWBMessagingStockList, bool>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<MessagingStockList, bool>(queryOperations, entityLists);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                entityLists = sortClass.GetSorterQuery<AWBMessagingStockList, decimal>(queryOperations, entityLists);
+                                entityLists = sortClass.GetSorterQuery<MessagingStockList, decimal>(queryOperations, entityLists);
                                 break;
                             }
                         default:
@@ -315,7 +315,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}
-			   List<AWBMessagingStockList> listResult = entityLists.ToList();
+			   List<MessagingStockList> listResult = entityLists.ToList();
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

@@ -244,7 +244,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                     else
                                     {
                                         ReconcileMethodRepository reconcileMethodRepository = new ReconcileMethodRepository(authToken.Tenant);
-                                        ReconcileMethod reconcileMethod = reconcileMethodRepository.GetSingle(entity.GLAccount.Currency.Code);
+                                        ReconcileMethod reconcileMethod = reconcileMethodRepository.GetSingle(entity.GLAccount.ReconcileMethod.Code);
                                         if (reconcileMethod == null)
                                         {
                                             throw new ApplicationException("reconcile Method with Code " + entity.GLAccount.ReconcileMethod.Code + " doesn't exist");

@@ -110,5 +110,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string MainCarriageCarrierNumber { get; set; }
     
     public Card MainCarriageCarrier { get; set; }
+    
+    public List<Receivable> Receivables { get; set; }
+    
+    public List<Payable> Payables { get; set; }
     }
 } 

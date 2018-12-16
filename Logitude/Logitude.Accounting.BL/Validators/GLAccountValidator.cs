@@ -383,7 +383,7 @@ namespace Logitude.Accounting.BL.Validators
             }
             else if (!string.IsNullOrWhiteSpace(parentPM.ParentAccountId))
             {
-                return "Cannot connect GL Account to parent account that has parent (multi level is not allowd)!";
+                return "Cannot connect GL Account to parent account that has parent (multi level is not allowd)!"; //לא ניתן לקשר כרטיס לכרטיס אב שיש לו כרטיס אב
             }
             return null;
         }

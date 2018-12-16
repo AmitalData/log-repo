@@ -45,8 +45,8 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentPackageItem> ShipmentPackageItems { get; }
         IDbSet<ShipmentCommodity> ShipmentCommodities { get; }
         IDbSet<SpecialServicesType> SpecialServicesTypes { get; }
-        IDbSet<AWBMessagingStock> AWBMessagingStocks { get; }
-        IDbSet<AWBStockUsageHistory> AWBStockUsageHistories { get; }
+        IDbSet<MessagingStock> MessagingStocks { get; }
+        IDbSet<MessagingStockUsageHistory> MessagingStockUsageHistories { get; }
         IDbSet<AccountingInformationIdentifier> AccountingInformationIdentifiers { get; }
         IDbSet<ManifestStatus> ManifestStatus { get; }
         IDbSet<AWBAdditionalHandlingInfo> AWBAdditionalHandlingInfos { get; }
