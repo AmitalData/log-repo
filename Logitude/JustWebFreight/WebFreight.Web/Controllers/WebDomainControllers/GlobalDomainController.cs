@@ -32,7 +32,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class GlobalDomainController : ApiController
     {
-        public HttpResponseMessage GetAWBMessagingStockTenantsList(int tenant)
+        public HttpResponseMessage GetMessagingStockTenantsList(int tenant)
         {
             try
             {
