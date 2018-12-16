@@ -1,0 +1,186 @@
+
+
+<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'MessagingStock.TH.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height: 1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 280px;">
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td style="width: 100px;">
+                                        <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'date'"></LogDatePicker>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'EndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'EndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Amount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Amount'" [Text]="Amount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Remaining'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Remaining'" [Text]="Remaining" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'TotalPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'TotalPrice'" [Text]="TotalPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+
+                        <td style="width: 50px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 350px;">
+                            <table>
+                                <tr style="height: 1px;">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 90px;">
+                                    <td>
+                                        <div class="FillParent">
+                                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 21px;">
+            <td>
+                <div style="float: right;">
+                    <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height: 5px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="SimpleGridView">
+                    <div class="SimpleGridViewHeader">
+                        <table>
+                            <tr>
+                                <td style="width: 150px; min-width: 150px;">Last Action Date</td>
+                                <td style="width: 90px; min-width: 90px;">Action</td>
+                                <td style="width: 90px; min-width: 90px;">Message Type</td>
+                                <td style="width: 100px; min-width: 100px;">MAWB</td>
+                                <td style="width: 150px; min-width: 150px;">HAWB</td>
+                                <td style="width: 80px; min-width: 80px;">Entity #</td>
+                                <td>Last Action by</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="SimpleGridViewBody">
+                        <table>
+                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource">
+
+                                <td class="GridViewCell" style="width: 150px; min-width: 150px; font-size: 11px;">
+                                    <span class="Value">{{item.LastActionDate | DateTimeToDatePipe}}</span>
+                                    <span class="Label">{{item.LastActionDate | DateTimeToTimePipe}}</span>
+                                </td>
+
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px; font-size: 11px;">
+                                    {{item.ActionType}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px;">
+                                    {{item.MessageType}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 100px; min-width: 100px; font-size: 11px;">
+                                    {{item.MAWB}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 150px; min-width: 150px; font-size: 11px;">
+                                    {{item.HAWB}}
+                                </td>
+
+                                <td class="GridViewCell ColorBlue" style="width: 80px; min-width: 80px; font-size: 11px;">
+                                    {{item.EntityNumber}}
+                                </td>
+
+                                <td class="GridViewCell" style="font-size: 11px;">
+                                    {{item.LastActionByUserName}}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="7">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
