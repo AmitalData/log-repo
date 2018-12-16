@@ -100,8 +100,9 @@
             this.button29 = new System.Windows.Forms.Button();
             this.button30 = new System.Windows.Forms.Button();
             this.button31 = new System.Windows.Forms.Button();
-            this.button37 = new System.Windows.Forms.Button();
             this.button38 = new System.Windows.Forms.Button();
+            this.button39 = new System.Windows.Forms.Button();
+            this.button37 = new System.Windows.Forms.Button();
             this.BuildZipFileslbl = new System.Windows.Forms.Label();
             this.button27 = new System.Windows.Forms.Button();
             this.ConvertXmalTemplateToHtmlButton = new System.Windows.Forms.Button();
@@ -313,7 +314,7 @@
             this.expImpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(752, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(751, 24);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -333,21 +334,21 @@
             // fillCustomsTableToolStripMenuItem
             // 
             this.fillCustomsTableToolStripMenuItem.Name = "fillCustomsTableToolStripMenuItem";
-            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.fillCustomsTableToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.fillCustomsTableToolStripMenuItem.Text = "FillCustomsTable";
             this.fillCustomsTableToolStripMenuItem.Click += new System.EventHandler(this.FillCustomsTableToolStripMenuItem_Click);
             // 
             // updateDocTypeToolStripMenuItem
             // 
             this.updateDocTypeToolStripMenuItem.Name = "updateDocTypeToolStripMenuItem";
-            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.updateDocTypeToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.updateDocTypeToolStripMenuItem.Text = "UpdateDocType";
             this.updateDocTypeToolStripMenuItem.Click += new System.EventHandler(this.updateDocTypeToolStripMenuItem_Click);
             // 
             // loadTextCodesToolStripMenuItem
             // 
             this.loadTextCodesToolStripMenuItem.Name = "loadTextCodesToolStripMenuItem";
-            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.loadTextCodesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.loadTextCodesToolStripMenuItem.Text = "LoadTextCodes";
             this.loadTextCodesToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodesToolStripMenuItem_Click);
             // 
@@ -358,7 +359,7 @@
             this.toolStripMenuItemExportTofil,
             this.loadTextCodeFromDiskToolStripMenuItem});
             this.textCodesToolStripMenuItem.Name = "textCodesToolStripMenuItem";
-            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.textCodesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.textCodesToolStripMenuItem.Text = "TextCodes";
             // 
             // toolStripTextBoxFilePath
@@ -370,28 +371,28 @@
             // toolStripMenuItemExportTofil
             // 
             this.toolStripMenuItemExportTofil.Name = "toolStripMenuItemExportTofil";
-            this.toolStripMenuItemExportTofil.Size = new System.Drawing.Size(200, 22);
+            this.toolStripMenuItemExportTofil.Size = new System.Drawing.Size(199, 22);
             this.toolStripMenuItemExportTofil.Text = "SaveTextCodeToDisk";
             this.toolStripMenuItemExportTofil.Click += new System.EventHandler(this.toolStripMenuItemExportTofil_Click);
             // 
             // loadTextCodeFromDiskToolStripMenuItem
             // 
             this.loadTextCodeFromDiskToolStripMenuItem.Name = "loadTextCodeFromDiskToolStripMenuItem";
-            this.loadTextCodeFromDiskToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.loadTextCodeFromDiskToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.loadTextCodeFromDiskToolStripMenuItem.Text = "LoadTextCodeFromDisk";
             this.loadTextCodeFromDiskToolStripMenuItem.Click += new System.EventHandler(this.loadTextCodeFromDiskToolStripMenuItem_Click);
             // 
             // internationalSiteToolStripMenuItem
             // 
             this.internationalSiteToolStripMenuItem.Name = "internationalSiteToolStripMenuItem";
-            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.internationalSiteToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.internationalSiteToolStripMenuItem.Text = "InternationalSite";
             this.internationalSiteToolStripMenuItem.Click += new System.EventHandler(this.internationalSiteToolStripMenuItem_Click);
             // 
             // createDecToolStripMenuItem
             // 
             this.createDecToolStripMenuItem.Name = "createDecToolStripMenuItem";
-            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.createDecToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.createDecToolStripMenuItem.Text = "CreateDec";
             this.createDecToolStripMenuItem.Click += new System.EventHandler(this.createDecToolStripMenuItem_Click);
             // 
@@ -484,9 +485,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 593);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 608);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(752, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(751, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -806,18 +807,6 @@
             this.button31.UseVisualStyleBackColor = true;
             this.button31.Click += new System.EventHandler(this.button31_Click);
             // 
-            // button37
-            // 
-            this.button37.Location = new System.Drawing.Point(392, 303);
-            this.button37.Name = "button37";
-            this.button37.Size = new System.Drawing.Size(184, 25);
-            this.button37.TabIndex = 84;
-            this.button37.Text = "Create Journal More Data";
-            this.toolTip1.SetToolTip(this.button37, "When finished, Click on Update Tenants, Then Build Zip files");
-            this.button37.UseVisualStyleBackColor = true;
-            this.button37.Visible = false;
-            this.button37.Click += new System.EventHandler(this.button37_Click);
-            // 
             // button38
             // 
             this.button38.Image = ((System.Drawing.Image)(resources.GetObject("button38.Image")));
@@ -828,6 +817,29 @@
             this.toolTip1.SetToolTip(this.button38, "Exit");
             this.button38.UseVisualStyleBackColor = true;
             this.button38.Click += new System.EventHandler(this.button38_Click);
+            // 
+            // button39
+            // 
+            this.button39.Location = new System.Drawing.Point(10, 429);
+            this.button39.Name = "button39";
+            this.button39.Size = new System.Drawing.Size(184, 25);
+            this.button39.TabIndex = 88;
+            this.button39.Text = "TestFutureCheques";
+            this.toolTip1.SetToolTip(this.button39, "When finished, Click on Update Tenants, Then Build Zip files");
+            this.button39.UseVisualStyleBackColor = true;
+            this.button39.Click += new System.EventHandler(this.button39_Click);
+            // 
+            // button37
+            // 
+            this.button37.Location = new System.Drawing.Point(10, 460);
+            this.button37.Name = "button37";
+            this.button37.Size = new System.Drawing.Size(184, 25);
+            this.button37.TabIndex = 87;
+            this.button37.Text = "Create Journal More Data";
+            this.toolTip1.SetToolTip(this.button37, "When finished, Click on Update Tenants, Then Build Zip files");
+            this.button37.UseVisualStyleBackColor = true;
+            this.button37.Visible = false;
+            this.button37.Click += new System.EventHandler(this.button37_Click);
             // 
             // BuildZipFileslbl
             // 
@@ -1311,7 +1323,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(752, 569);
+            this.tabControl1.Size = new System.Drawing.Size(751, 584);
             this.tabControl1.TabIndex = 84;
             // 
             // tabPage1
@@ -1326,7 +1338,6 @@
             this.tabPage1.Controls.Add(this.lblUInvoice);
             this.tabPage1.Controls.Add(this.lblUQuote);
             this.tabPage1.Controls.Add(this.button38);
-            this.tabPage1.Controls.Add(this.button37);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.UpdateINFlble);
             this.tabPage1.Controls.Add(this.UpdateTenant0lbl);
@@ -1369,7 +1380,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(744, 543);
+            this.tabPage1.Size = new System.Drawing.Size(743, 558);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
@@ -1448,6 +1459,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.button39);
+            this.tabPage2.Controls.Add(this.button37);
             this.tabPage2.Controls.Add(this.EncryptionDocumentLabel);
             this.tabPage2.Controls.Add(this.btnExecuteSqlScriptFiles);
             this.tabPage2.Controls.Add(this.groupBox1);
@@ -1493,7 +1506,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(744, 543);
+            this.tabPage2.Size = new System.Drawing.Size(743, 592);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
@@ -1511,7 +1524,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 615);
+            this.ClientSize = new System.Drawing.Size(751, 630);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -1674,7 +1687,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label EncryptionDocumentLabel;
-        private System.Windows.Forms.Button button37;
         private System.Windows.Forms.Button button38;
         private System.Windows.Forms.Label lblUGlobal;
         private System.Windows.Forms.Label lblUInfra;
@@ -1683,6 +1695,8 @@
         private System.Windows.Forms.Label lblUQuote;
         private System.Windows.Forms.Button btnUpdateTenantZeroNew;
         private System.Windows.Forms.Label lblTenantNew;
+        private System.Windows.Forms.Button button39;
+        private System.Windows.Forms.Button button37;
     }
 }
 

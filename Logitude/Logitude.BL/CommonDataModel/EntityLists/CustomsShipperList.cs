@@ -17,5 +17,15 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? ValidityStartDate { get; set; }
         public DateTime? ValidityEndDate { get; set; }
         public bool FutureDepositionExist { get; set; }
+        public string SearchFields { get; set; }
+
+
+        public string EnglishName { get; set; }
+        public string LocalName { get; set; }
+        public string CountryId { get; set; }
+        public string CountryCode { get; set; }
+        public string CountryName { get; set; }
+        public string ShipperVAT { get; set; }
+      
     }
 }
