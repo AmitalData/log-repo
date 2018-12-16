@@ -361,6 +361,7 @@
     <Compile Include="EntityDataMappings\DeclarationCourierStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationErrorMappingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeclarationMamanSpecialActionDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPaymentDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPaymentMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPaymentProtestDataMapping.cs" />
@@ -515,6 +516,7 @@
     <Compile Include="EntityDataMappings\Generated\DeclarationCourierStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationErrorMappingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeclarationMamanSpecialActionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentProtestDataMapping.Generated.cs" />
@@ -863,6 +865,7 @@
     <Compile Include="EntityQueryServices\Generated\DeclarationCargoSplitQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationConsAcceptanceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCourierStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeclarationMamanSpecialActionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DocumentTypeCustomsDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FacilitationTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\FreightPaymentMethodQueryService.Generated.cs" />
@@ -1261,6 +1264,7 @@
     <Compile Include="EntityUpdateServices\Generated\DeclarationCargoSplitUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationConsAcceptanceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationCourierStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DeclarationMamanSpecialActionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DocumentTypeCustomsDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FacilitationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FreightPaymentMethodUpdateService.Generated.cs" />

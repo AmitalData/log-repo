@@ -146,6 +146,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DeclarationConstraint> DeclarationConstraints { get; }
 		 IDbSet<DeclarationCourierStatus> DeclarationCourierStatuses { get; }
 		 IDbSet<DeclarationErrorMapping> DeclarationErrorMappings { get; }
+		 IDbSet<DeclarationMamanSpecialAction> DeclarationMamanSpecialActions { get; }
 		 IDbSet<DeclarationPayment> DeclarationPayments { get; }
 		 IDbSet<DeclarationPaymentMethod> DeclarationPaymentMethods { get; }
 		 IDbSet<DeclarationPaymentProtest> DeclarationPaymentProtests { get; }
