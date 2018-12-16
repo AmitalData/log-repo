@@ -46,11 +46,21 @@ namespace Logitude.Accounting.BL.Utils
             return _StatusCode;
         }
 
+        //private bool AnyAccountingQueued(IQueryable<string> gLAccountIDList, int tenant, IAccountingContext context)
+        //{
+        //    var myJournalQueryService = new JournalQueryService(context);
+        //    var have = myJournalQueryService.GetAnyPendingApprovedDev(gLAccountIDList, tenant);
+        //    return have;
+        //}
+
+
 
         public void RunAllOpenRevaluations(int tenant)
 
         {
             IAccountingContext context = AccountingContext.GetContext(tenant);
+
+ 
             RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(context);
             List<RevaluationList> revaluations = revaluationListQueryService.GetOpenRevaluationList(tenant);
             if (revaluations != null)
@@ -68,12 +78,12 @@ namespace Logitude.Accounting.BL.Utils
 
         public void RunOneRevaluation(string id, int tenant)
         {
-            IAccountingContext context = AccountingContext.GetContext(tenant);
             try
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
                 {
-                    if (!String.IsNullOrEmpty(id))
+                   IAccountingContext context = AccountingContext.GetContext(tenant);
+                   if (!String.IsNullOrEmpty(id))
                     {
 
                         RevaluationListQueryService revaluationListQueryService = new RevaluationListQueryService(context);
@@ -104,7 +114,8 @@ namespace Logitude.Accounting.BL.Utils
                             List<GLAccountPM> gLAccountPMList = gLAccountQueryService.GetByRevaluationEnabled_OtherParams(revaluation.RevaluationEnabled, null, revaluation.ChartOfAccountsId, null, revaluation.GLAccountId, accountingCurrencyId, tenant);
                             if (gLAccountPMList != null)
                             {
-
+                                IQueryable<string> gLAccountIDList = gLAccountPMList.Select(l => l.Id).AsQueryable();
+                                //bool have = AnyAccountingQueued(gLAccountIDList, tenant, context);
                                 foreach (GLAccountPM gLAccountPM in gLAccountPMList)
                                 {
                                     RunOneAccount(gLAccountPM, gLAccountQueryService, journalUpdateService, ratesTableQuery, revaluation.RevaluationDate,
