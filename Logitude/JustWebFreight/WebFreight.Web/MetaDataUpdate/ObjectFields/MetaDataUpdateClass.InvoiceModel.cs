@@ -2628,9 +2628,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "QBO failed transmission",
-                FullFieldLable = "QBOFailedTransmission",
-                FieldName = "QBOFailedTransmission",
+                DefaultText = "Error In Transfer",
+                FullFieldLable = "ErrorInTransfer",
+                FieldName = "ErrorInTransfer",
                 FieldsDataType = "Boolean",
                 IsCustomFilter = true,
                 MaxLength = 1,
@@ -2640,11 +2640,11 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 ValidForQuerySection1 = "ARInvoice",
-                ListPropertyPath = "QBOFailedTransmission",
-                PMPropertyPath = "QBOFailedTransmission",
-                FullLocalDefaultText = "QBO failed transmission",
-                ListLocalDefaultText = "QBO failed transmission",
-                ShortLocalDefaultText = "QBO failed transmission",
+                ListPropertyPath = "ErrorInTransfer",
+                PMPropertyPath = "ErrorInTransfer",
+                FullLocalDefaultText = "Error In Transfer",
+                ListLocalDefaultText = "Error In Transfer",
+                ShortLocalDefaultText = "Error In Transfer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -5799,6 +5799,30 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortLocalDefaultText = "סניף",
                 ListLocalDefaultText = "סניף",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Error In Transfer",
+                FullFieldLable = "ErrorInTransfer",
+                FieldName = "ErrorInTransfer",
+                FieldsDataType = "Boolean",
+                IsCustomFilter = true,
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = APInvoiceObject.Id,
+                ObjectTableName = "APInvoice",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "APInvoice",
+                ListPropertyPath = "ErrorInTransfer",
+                PMPropertyPath = "ErrorInTransfer",
+                FullLocalDefaultText = "Error In Transfer",
+                ListLocalDefaultText = "Error In Transfer",
+                ShortLocalDefaultText = "Error In Transfer",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
 
             this.ObjectContext.SaveChanges();
         }

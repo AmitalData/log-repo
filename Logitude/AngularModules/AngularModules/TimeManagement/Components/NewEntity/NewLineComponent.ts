@@ -197,7 +197,7 @@ export class NewLineComponent extends BaseComponent {
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         if (this.DateOfWorkMinutes == null || this.DateOfWorkMinutes == 0) {
-            errors.push("Please fill the total minutes");
+            errors.push("Please fill the Time");
         }
 
         if (this.DateOfWork == null) {

@@ -104,8 +104,10 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
                 if (tabCode == "TIMN") {
                     if (this.PageChild_DS != null) {
                         this.PageChild_DS.GetEntityLinkNumberVisibility();
+                        this.PageChild_DS.SetUIProperties();
                     }
                 }
+
             });
         }
     }
@@ -179,7 +181,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
             this.PageChild_DS.SetUIProperties();
         }
     }
-    SetUIRequiredProperties() {
+    public SetUIRequiredProperties() {
         this.UIProperties.SetRequired("EmployeeGroupId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.EmployeeGroupId));
         this.UIProperties.SetRequired("OwnerId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OwnerId));
         this.UIProperties.SetRequired("CompanyId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.CompanyId));

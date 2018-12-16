@@ -14,6 +14,9 @@ namespace WebFreight.Web.DataContracts
         public int ARGeneralInvoiceDraftCount { get; set; }
         public int ARPaymentsSATFailedCount { get; set; }
         public int ARInvoicesSATFailedCount { get; set; }
+        public int ARInvoicesFailedCount { get; set; }
+        public int ARPaymentFailedCount { get; set; }
+
     }
 
     public class AccountPayablesSummary
@@ -22,6 +25,8 @@ namespace WebFreight.Web.DataContracts
         public int Id { get; set; }
         public int APInvoicesDraftsCount { get; set; }
         public int APInvoicesUnpaidCount { get; set; }
+        public int APInvoicesFailedCount { get; set; }
+        public int APPaymentFailedCount { get; set; }
         public int APPaymentsDraftsCount { get; set; }
         public int APPaymentsOpenedCount { get; set; }
     }
