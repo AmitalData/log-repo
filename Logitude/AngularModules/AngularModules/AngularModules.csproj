@@ -535,6 +535,9 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportPMService.ts" />
     <TypeScriptCompile Include="Controls\Pipes\DateToMonthPipe.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\ActivitiesModule.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Activities\EditEntity\EditAppointment.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Activities\EditEntity\EditPhoneCall.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Activities\EditEntity\EditTask.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\NewEntity\NewAppointment.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\NewEntity\NewPhoneCall.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\NewEntity\NewTask.ts" />
@@ -6785,7 +6788,6 @@
     <Folder Include="Customs\CustomFilters\" />
     <Folder Include="Customs\EntityPMInitServices\" />
     <Folder Include="Dashboard\Components\Graphs\" />
-    <Folder Include="e2e\CRM\Activities\EditEntity\" />
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\CRM\Quotes\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />

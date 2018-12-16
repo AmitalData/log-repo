@@ -3,29 +3,29 @@ import { FieldsHelper } from '../../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
 export class NewTask {
   private Helper: FieldsHelper;
-  private Generator : GeneralFunctions;
+  private Generator: GeneralFunctions;
 
 
   constructor() {
     this.Helper = new FieldsHelper();
-    this.Generator=new GeneralFunctions();
+    this.Generator = new GeneralFunctions();
   }
 
 
-  public CreateNewTask() {
-   
+  public CreateNewTask(taskNo: string) {
+
     this.Helper.WaitByIdAndClick('NEWACTIVITY');
     this.Helper.WaitByIdAndClick('NEWTASK');
 
-    this.FillTaskFields();
+    this.FillTaskFields(taskNo);
     this.Helper.WaitByIdAndClick('Ok-AddActivity');
     this.Helper.WaitBusyIndicator();
+    this.Helper.WaitWindowClosed();
+
   }
 
-
-
-  FillTaskFields() {
-    this.Helper.WaitByIdAndFill('Activity_Subject', 'Task - Added from Protractor');
+  FillTaskFields(taskNo: string) {
+    this.Helper.WaitByIdAndFill('Activity_Subject', taskNo);
 
     this.Helper.WaitByIdAndFill('Activity_Description', 'Task Description - Protractor ');// test random number randomWholeNum
 
@@ -40,7 +40,7 @@ export class NewTask {
     this.Helper.WaitByIdAndFill('time_Activity_DueDate', '17');
 
   }
-
+  
 }
 
 
