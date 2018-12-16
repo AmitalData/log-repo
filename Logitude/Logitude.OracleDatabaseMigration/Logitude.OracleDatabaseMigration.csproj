@@ -164,6 +164,10 @@
     <Compile Include="Migrations\201812160741349_AddMigrationDeclarationMamanSpecialAction.Designer.cs">
       <DependentUpon>201812160741349_AddMigrationDeclarationMamanSpecialAction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812161346315_AddMigrationClaimSeizureUpdateKey.cs" />
+    <Compile Include="Migrations\201812161346315_AddMigrationClaimSeizureUpdateKey.Designer.cs">
+      <DependentUpon>201812161346315_AddMigrationClaimSeizureUpdateKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -269,6 +273,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812160741349_AddMigrationDeclarationMamanSpecialAction.resx">
       <DependentUpon>201812160741349_AddMigrationDeclarationMamanSpecialAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161346315_AddMigrationClaimSeizureUpdateKey.resx">
+      <DependentUpon>201812161346315_AddMigrationClaimSeizureUpdateKey.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
