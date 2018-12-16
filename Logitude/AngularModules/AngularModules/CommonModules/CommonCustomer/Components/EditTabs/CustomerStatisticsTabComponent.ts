@@ -360,6 +360,7 @@ export class CustomerStatisticsTabComponent extends BaseComponent {
                                     "fillColors": ["#0f7816", "#5ed967"],
                                     "gradientOrientation": "horizontal",
                                     "borderAlpha": 0,
+                                    "showHandOnHover": true,
                                 }
 
                             ];

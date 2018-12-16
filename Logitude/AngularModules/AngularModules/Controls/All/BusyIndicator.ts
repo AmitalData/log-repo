@@ -1,4 +1,4 @@
-﻿/// <reference path="../../infrastructure/utilities/amitalgatewayutil.ts" />
+/// <reference path="../../infrastructure/utilities/amitalgatewayutil.ts" />
 import {Component, ChangeDetectionStrategy} from '@angular/core';
 import {AmitalGatewayUtil} from '../../Infrastructure/Utilities/AmitalGatewayUtil';
 
@@ -12,7 +12,7 @@ import {AmitalGatewayUtil} from '../../Infrastructure/Utilities/AmitalGatewayUti
     template:
     `
     <div [hidden]="!IsBusy" class="BusyIndicatorControlLayout" tabindex="-1" contenteditable="false"></div>
-    <div [hidden]="!IsBusy" class="BusyIndicatorControl">
+    <div [hidden]="!IsBusy" class="BusyIndicatorControl" Id="BusyIndecator">
         <div class="BusyIndicatorControlOuter" [style.width.px]="Width" [style.height.px]="Height">
             <div class="BusyIndicatorControlInner" [style.width.px]="Width" [style.height.px]="Height">
                 <div style="margin: auto; margin-top: 20px;" [style.width.px]="ImageWidth" [style.height.px]="ImageHeight">

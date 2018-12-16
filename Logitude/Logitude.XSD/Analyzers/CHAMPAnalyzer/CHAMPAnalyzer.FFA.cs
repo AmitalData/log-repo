@@ -124,16 +124,16 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     entityPM.HasErrors = false;
 
                     IShipmentsContext shipmentContext = ShipmentsContext.GetContext(myTenant);
-                    AWBMessagingStockRepository stockRepository = new AWBMessagingStockRepository(shipmentContext);
-                    AWBStockUsageHistoryRepository usageHistoryRepository = new AWBStockUsageHistoryRepository(shipmentContext);
-                    IQueryable<AWBStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantAWBStockUsageHistory(myTenant);
-                    AWBStockUsageHistory usageHistory = myUsageHistoryData.Where(d => d.EntityId == entityPM.Id && d.MessageType == "FFR").FirstOrDefault();
+                    MessagingStockRepository stockRepository = new MessagingStockRepository(shipmentContext);
+                    MessagingStockUsageHistoryRepository usageHistoryRepository = new MessagingStockUsageHistoryRepository(shipmentContext);
+                    IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(myTenant);
+                    MessagingStockUsageHistory usageHistory = myUsageHistoryData.Where(d => d.EntityId == entityPM.Id && d.MessageType == "FFR").FirstOrDefault();
                     if (usageHistory != null)
                     {
                         usageHistoryRepository.Remove(usageHistory);
                         usageHistoryRepository.SubmitChanges();
 
-                        AWBMessagingStock myStock = stockRepository.GetSingleAWBMessagingStock(usageHistory.StockId);
+                        MessagingStock myStock = stockRepository.GetSingleMessagingStock(usageHistory.StockId);
                         if (myStock != null)
                         {
                             int myStockUsageCount = usageHistoryRepository.GetStockUsageCount(myStock.Id, myStock.TenantNumber);

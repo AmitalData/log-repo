@@ -111,21 +111,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.InitializeComponent();
            
-            if (CacheManager.CacheWrapper != null)
-            {
-                string entityName = "Card" + entityPM.Id + entityPM.Tenant;
-                string entityPmName = "CardPM" + entityPM.Id + entityPM.Tenant;
+            //if (CacheManager.CacheWrapper != null)
+            //{
+            //    string entityName = "Card" + entityPM.Id + entityPM.Tenant;
+            //    string entityPmName = "CardPM" + entityPM.Id + entityPM.Tenant;
 
-                if (CacheManager.CacheWrapper.Get(entityName) != null)
-                {
-                    CacheManager.CacheWrapper.Invalidate(entityName);
-                }
+            //    if (CacheManager.CacheWrapper.Get(entityName) != null)
+            //    {
+            //        CacheManager.CacheWrapper.Invalidate(entityName);
+            //    }
 
-                if (CacheManager.CacheWrapper.Get(entityPmName) != null)
-                {
-                    CacheManager.CacheWrapper.Invalidate(entityPmName);
-                }
-            }
+            //    if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+            //    {
+            //        CacheManager.CacheWrapper.Invalidate(entityPmName);
+            //    }
+            //}
 
             CustomsShipperMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
 

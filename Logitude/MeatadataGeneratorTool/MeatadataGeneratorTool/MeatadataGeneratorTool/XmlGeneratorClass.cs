@@ -1505,7 +1505,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("ControlPath", GetStringValue(f.ControlPath), TabElement, null);
                 SetAttribute("TextCode", GetStringValue(f.TextCode), TabElement, null);
                 SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), TabElement, null);
-                SetAttribute("IndexOrder", table.TabsObsList.IndexOf(f).ToString(), TabElement, null);
+                SetAttribute("IndexOrder", f.IndexOrder.ToString(), TabElement, null);
                 SetAttribute("HtmlComponentURL", GetStringValue(f.HtmlComponentURL), TabElement, null);
                 SetAttribute("HtmlComponentName", GetStringValue(f.HtmlComponentName), TabElement, null);
                 if (!string.IsNullOrEmpty(f.FeatureCode))
@@ -1620,6 +1620,7 @@ namespace MeatadataGeneratorTool
                     if (!string.IsNullOrEmpty(f.FeatureCode))
                     {
                         SetAttribute("FeatureCode", GetStringValue(f.FeatureCode), MenuButtonElement, null);
+                        SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), MenuButtonElement, null);
                     }
                     if (!string.IsNullOrEmpty(f.TextCodeCode))
                     {
@@ -1651,6 +1652,8 @@ namespace MeatadataGeneratorTool
                             if (!string.IsNullOrEmpty(item.FeatureCode))
                             {
                                 SetAttribute("FeatureCode", GetStringValue(item.FeatureCode), MenuItemElement, null);
+                                SetAttribute("IsPackagable", item.IsPackagable.ToString().ToLower(), MenuItemElement, null);
+
                             }
                             if (!string.IsNullOrEmpty(item.TextCodeCode))
                             {
