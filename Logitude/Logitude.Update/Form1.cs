@@ -3371,6 +3371,8 @@ User/Pass",
             FutureOpenChequesBatch batch = new FutureOpenChequesBatch();
             batch.SetTotalFutureOpenChequesInLocalCurrency(1);
         }
+
+
     }
 
 
