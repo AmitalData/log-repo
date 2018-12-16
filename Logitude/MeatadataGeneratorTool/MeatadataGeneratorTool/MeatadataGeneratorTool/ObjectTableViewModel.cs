@@ -384,10 +384,10 @@ namespace MeatadataGeneratorTool
             }
             TabsObsList.Clear();
 
-
-            foreach (var item in Tabs)
+            int index = 0;
+            foreach (var item in Tabs.OrderBy(t => t.IndexOrder))
             {
-                TabsObsList.Insert(item.IndexOrder, item);
+                TabsObsList.Insert(index++, item);
             }
 
 
