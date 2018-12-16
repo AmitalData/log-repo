@@ -1,12 +1,19 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -20,7 +27,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.Id = IdCounter.GetNumber("OpenFormatReport", entityPM.Tenant);
             entityPM.CreateDate = DateTime.Now;
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-       
+           
             entityPM.ReportNumber= CodeCounter.GetNumber("OpenFormatReport", entityPM.Tenant).ToString(); ;
 
             entityPM.StatusTypeCode = "1";
@@ -28,6 +35,43 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
          
           
             Validate(entityPM);
+
+            PNCFileArgs args = new PNCFileArgs() { ReportId = entityPM.Id, Tenant = entityPM.Tenant };
+            var stringwriter = new System.IO.StringWriter();
+            var serializer = new XmlSerializer(typeof(PNCFileArgs));
+            serializer.Serialize(stringwriter, args);
+            string xmlParameters = stringwriter.ToString();
+            BatchTaskExecutionPM taskExe = null;
+            taskExe = new BatchTaskExecutionPM()
+            {
+                Subject = "Create a flat file for Open Format Report",
+                Tenant = entityPM.Tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchOpenFormatReportService,Logitude.Accounting.BL",
+                CreateDate = DateTime.Now,
+                PrametersXml = xmlParameters,
+                StatusCode = "C",
+
+            };
+
+
+
+            IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
+            BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+            bteUpdateService.Update(taskExe, true);
+
+            // 2- Send to queue
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+            entityPM.StatusTypeCode = "2";
+            queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant", entityPM.Tenant.ToString() }
+                });
+        
         }
+
     }
 }
+

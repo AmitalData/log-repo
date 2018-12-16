@@ -271,12 +271,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append("a" + data.VendorsCount.Value.ToString().PadLeft(6, '0'));
             }
-            if (data.VendorsCount != null)
-            {
-                if (data.VendorsCount.Value.ToString().Length > 6) data.VendorsCount.Value.ToString().Substring(0, 5);
+           
+                if (data.ByVendorList.Count.ToString().Length > 6) data.ByVendorList.Count.ToString().Substring(0, 5);
 
-                myStringBuilder.Append("a" + data.VendorsCount.Value.ToString().PadLeft(6, '0'));
-            }
+                myStringBuilder.Append("a" + data.ByVendorList.Count.ToString().PadLeft(6, '0'));
+            
 
             if (taxDeductionReportPM.Email != null)
                 {
