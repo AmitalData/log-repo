@@ -109,6 +109,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.ChangeHeaderColor = entityPM.ChangeHeaderColor;
             entityPOCO.StockTypeCode = entityPM.StockTypeCode;
             entityPOCO.PackageCodeSearchField = entityPM.PackageCodeSearchField;
+            entityPOCO.IsINTTRAStockPrepaid = entityPM.IsINTTRAStockPrepaid;
 
             if (entityPM.IsMultiPackage)
             {

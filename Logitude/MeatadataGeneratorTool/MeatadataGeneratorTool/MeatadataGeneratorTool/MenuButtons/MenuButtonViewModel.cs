@@ -279,6 +279,7 @@ namespace MeatadataGeneratorTool.MenuButtons
         public string FeatureTextCodeCode { get; internal set; }
         public string FeatureDefaultText { get; internal set; }
         public string FeatureCode { get; internal set; }
+        public bool IsPackagable { get; set; }
     }
 
     public class Type : PropertyChangedImplementation

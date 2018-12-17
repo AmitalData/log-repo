@@ -204,6 +204,16 @@ namespace Logitude.Accounting.BL.Validators
                 
 
             }
+
+            //
+            //Check parent
+            if (!string.IsNullOrWhiteSpace(myGLAccountPM.ParentAccountId))
+            {
+                string errorMessage = CheckParent(myGLAccountPM.Id, myGLAccountPM.ParentAccountId, myGLAccountPM.Tenant);
+                if (!string.IsNullOrEmpty(errorMessage))
+                    return new ValidationResult(errorMessage);
+            }
+
             return null;
         }
 
@@ -336,6 +346,46 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return null;
             }
+        }
+
+        public static string CheckParent(string glaccountId, string parentId, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            GLAccountQueryService query = new GLAccountQueryService(accountingContext);
+            GLAccountPM glaccountPM = query.GetSingle(glaccountId, false, true);
+            GLAccountPM parentPM = query.GetSingle(parentId, false, true);
+
+            if (parentPM == null || glaccountPM == null)
+            {
+                return "Account not found!";
+            }
+            else if (parentPM.Id == glaccountPM.Id)
+            {
+                return "Parent cannot be the account itself!";
+            }
+            else if (parentPM.ChartOfAccountsTypeCode != glaccountPM.ChartOfAccountsTypeCode)
+            {
+                return TextCodesTranslator.TranslateText("GLAccounts.O.GLAParentValidation1",0);
+                //return "GLAccount and its parent must be same chart of account type!";
+            }
+            else if (parentPM.ChartOfAccountsId != glaccountPM.ChartOfAccountsId)
+            {
+                return TextCodesTranslator.TranslateText("GLAccounts.O.GLAParentValidation2",0);
+                //return "GLAccount and its parent must be same chart of account!";
+            }
+            else if (parentPM.AccountTypeCode != glaccountPM.AccountTypeCode)
+            {
+                return "GLAccount and its parent must be same account type!";
+            }
+            else if (parentPM.AccountTypeCode != glaccountPM.AccountTypeCode)
+            {
+                return "GLAccount and its parent must be same account type!";
+            }
+            else if (!string.IsNullOrWhiteSpace(parentPM.ParentAccountId))
+            {
+                return "Cannot connect GL Account to parent account that has parent (multi level is not allowd)!"; //לא ניתן לקשר כרטיס לכרטיס אב שיש לו כרטיס אב
+            }
+            return null;
         }
     }
 }

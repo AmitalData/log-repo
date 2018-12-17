@@ -67,7 +67,7 @@ namespace Logitude.Accounting.BL.Validators
             LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(myReconciliationPM.Tenant);
             List<string> transactionsId = myReconciliationPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(a => a.TransactionId).ToList();
             List<LedgerTransactionPM> transactionsPMList = transQuery.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
-            paymentsCount = transactionsPMList.Count(d => d.SourceTypeCode == "3" || d.SourceTypeCode == "5"); // 3- ARPayment , 5- APPayment
+            paymentsCount = transactionsPMList.Count(d => (d.SourceTypeCode == "3" || d.SourceTypeCode == "5") && d.OriginalJournalId != null); // 3- ARPayment , or 5- APPayment , and not storno
             if (paymentsCount > 1)
             {
                 //Can’t include more than one payment in the same reconciliation” לא ניתן לכלול יותר מקבלה אחת באותה התאמה

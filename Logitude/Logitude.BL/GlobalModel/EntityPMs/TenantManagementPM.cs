@@ -222,6 +222,8 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public bool ChangeHeaderColor { get; set; }
         public bool DocumentShareAsDefault { get; set; }
         public string StockTypeCode { get; set; }
+        public bool IsINTTRAStockPrepaid { get; set; }
+
         
 
         public string PackageCodeSearchField { get; set; }

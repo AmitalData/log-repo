@@ -26,83 +26,83 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 {
     public partial class ShipmentsDomainService
     {
-        private AWBMessagingStockQuery aWBMessagingStockQuery;
-        private AWBMessagingStockRepository aWBMessagingStockRepository;
+        private MessagingStockQuery messagingStockQuery;
+        private MessagingStockRepository messagingStockRepository;
 
-        private AWBStockUsageHistoryQuery aWBStockUsageHistoryQuery;
-        private AWBStockUsageHistoryRepository aWBStockUsageHistoryRepository;
+        private MessagingStockUsageHistoryQuery messagingStockUsageHistoryQuery;
+        private MessagingStockUsageHistoryRepository messagingStockUsageHistoryRepository;
 
-        public AWBMessagingStockPM GetSingleAWBMessagingStockPM(string entityId, int tenant)
+        public MessagingStockPM GetSingleAWBMessagingStockPM(string entityId, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(0);
-            SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", 0);
+            SecurityUtility.CheckContactFeature("MessagingStock", "READ", 0);
 
-            aWBMessagingStockQuery = new AWBMessagingStockQuery(tenant);
-            AWBMessagingStockPM myResult = aWBMessagingStockQuery.GetSinglePM(entityId, tenant);
+            messagingStockQuery = new MessagingStockQuery(tenant);
+            MessagingStockPM myResult = messagingStockQuery.GetSinglePM(entityId, tenant);
             myResult.DummyTenant = tenant;
 
             return myResult;
         }
 
-        public AWBMessagingStockList GetSingleAWBMessagingStockList(string id, int tenant)
+        public MessagingStockList GetSingleAWBMessagingStockList(string id, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(0);
-            SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", 0);
+            SecurityUtility.CheckContactFeature("MessagingStock", "READ", 0);
 
-            aWBMessagingStockRepository = new AWBMessagingStockRepository(tenant);
-            aWBMessagingStockQuery = new AWBMessagingStockQuery(aWBMessagingStockRepository);
+            messagingStockRepository = new MessagingStockRepository(tenant);
+            messagingStockQuery = new MessagingStockQuery(messagingStockRepository);
 
-            AWBMessagingStockList entityList = null;
-            AWBStocksDataView entityPOCO = aWBMessagingStockRepository.GetSingleAWBStocksDataView(id);
+            MessagingStockList entityList = null;
+            MessagingStockDataView entityPOCO = messagingStockRepository.GetSingleMessagingStockDataView(id);
 
             if (entityPOCO != null)
             {
-                List<AWBStocksDataView> singleEntityList = new List<AWBStocksDataView>();
+                List<MessagingStockDataView> singleEntityList = new List<MessagingStockDataView>();
                 singleEntityList.Add(entityPOCO);
 
-                IQueryable<AWBStocksDataView> iQueryable = singleEntityList.AsQueryable();
-                IQueryable<AWBMessagingStockList> iQueryableEntityList = aWBMessagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
+                IQueryable<MessagingStockDataView> iQueryable = singleEntityList.AsQueryable();
+                IQueryable<MessagingStockList> iQueryableEntityList = messagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
                 entityList = iQueryableEntityList.FirstOrDefault();
             }
 
             return entityList;
         }
 
-        public void UpdateAWBMessagingStock(AWBMessagingStockList entityList)
+        public void UpdateAWBMessagingStock(MessagingStockList entityList)
         {
 
         }
 
-        public IQueryable<AWBMessagingStockList> GetAWBMessagingStockListForTenantManagmentTab(int tenant)
+        public IQueryable<MessagingStockList> GetMessagingStockListForTenantManagmentTab(int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(0);
             SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", 0);
 
-            aWBMessagingStockRepository = new AWBMessagingStockRepository(tenant);
-            aWBMessagingStockQuery = new AWBMessagingStockQuery(aWBMessagingStockRepository);
+            messagingStockRepository = new MessagingStockRepository(tenant);
+            messagingStockQuery = new MessagingStockQuery(messagingStockRepository);
 
-            IQueryable<AWBStocksDataView> iQueryable = aWBMessagingStockRepository.GetAWBStocksDataViewsByTenant(tenant);
-            IQueryable<AWBMessagingStockList> query2 = aWBMessagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
+            IQueryable<MessagingStockDataView> iQueryable = messagingStockRepository.GetMessagingStockDataViewsByTenant(tenant);
+            IQueryable<MessagingStockList> query2 = messagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
 
             return query2;
         }
 
-        public IQueryable<AWBMessagingStockList> GetAWBMessagingStockLists(int tenant)
+        public IQueryable<MessagingStockList> GetAWBMessagingStockLists(int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(0);
             SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", 0);
 
-            aWBMessagingStockRepository = new AWBMessagingStockRepository(tenant);
-            aWBMessagingStockQuery = new AWBMessagingStockQuery(aWBMessagingStockRepository);
+            messagingStockRepository = new MessagingStockRepository(tenant);
+            messagingStockQuery = new MessagingStockQuery(messagingStockRepository);
 
-            IQueryable<AWBStocksDataView> iQueryable = aWBMessagingStockRepository.GetAWBStocksDataViews();
-            IQueryable<AWBMessagingStockList> query2 = aWBMessagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
+            IQueryable<MessagingStockDataView> iQueryable = messagingStockRepository.GetMessagingStockDataViews();
+            IQueryable<MessagingStockList> query2 = messagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
 
             return query2;
         }
 
         [Query(HasSideEffects = true)]
-        public IQueryable<AWBMessagingStockList> GetAWBMessagingStockFilters(byte[] xmlFilters, int tenant)
+        public IQueryable<MessagingStockList> GetAWBMessagingStockFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(0);
             SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", 0);
@@ -113,10 +113,10 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            aWBMessagingStockRepository = new AWBMessagingStockRepository(0);
-            aWBMessagingStockQuery = new AWBMessagingStockQuery(aWBMessagingStockRepository);
+            messagingStockRepository = new MessagingStockRepository(0);
+            messagingStockQuery = new MessagingStockQuery(messagingStockRepository);
 
-            IQueryable<AWBStocksDataView> iQueryable = aWBMessagingStockRepository.GetAWBStocksDataViews();
+            IQueryable<MessagingStockDataView> iQueryable = messagingStockRepository.GetMessagingStockDataViews();
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
@@ -124,17 +124,17 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            iQueryable = filter.GetFilteredQuery<AWBStocksDataView>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<MessagingStockDataView>(nonListQueryOperation, iQueryable);
             int skippedEntities = queryOperations.PageIndex;
 
-            IQueryable<AWBMessagingStockList> query2 = aWBMessagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
+            IQueryable<MessagingStockList> query2 = messagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
 
-            query2 = filter.GetFilteredQuery<AWBMessagingStockList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<MessagingStockList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(AWBMessagingStockList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> objectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("AWBMessagingStock", tenant).ToList();
+                PropertyInfo propInfo = typeof(MessagingStockList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> objectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("MessagingStock", tenant).ToList();
 
                 ObjectField objectField = (from a in objectFields
                                            where a.FieldName == queryOperations.SortByColumnName
@@ -147,27 +147,27 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                         case "text":
                         case "ntext":
                             {
-                                query2 = sortClass.GetSorterQuery<AWBMessagingStockList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<MessagingStockList, string>(queryOperations, query2);
                                 break;
                             }
                         case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<AWBMessagingStockList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<MessagingStockList, double>(queryOperations, query2);
                                 break;
                             }
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<AWBMessagingStockList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<MessagingStockList, DateTime>(queryOperations, query2);
                                 break;
                             }
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<AWBMessagingStockList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<MessagingStockList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<AWBMessagingStockList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<MessagingStockList, bool>(queryOperations, query2);
                                 break;
                             }
                         default:
@@ -192,7 +192,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public int GetAWBMessagingStockFiltersCount(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(0);
-            SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", 0);
+            SecurityUtility.CheckContactFeature("MessagingStock", "READ", 0);
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -200,52 +200,52 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            aWBMessagingStockRepository = new AWBMessagingStockRepository(0);
-            aWBMessagingStockQuery = new AWBMessagingStockQuery(aWBMessagingStockRepository);
-            IQueryable<AWBStocksDataView> iQueryable = aWBMessagingStockRepository.GetAWBStocksDataViews();
+            messagingStockRepository = new MessagingStockRepository(0);
+            messagingStockQuery = new MessagingStockQuery(messagingStockRepository);
+            IQueryable<MessagingStockDataView> iQueryable = messagingStockRepository.GetMessagingStockDataViews();
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
 
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-            iQueryable = filter.GetFilteredQuery<AWBStocksDataView>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<MessagingStockDataView>(nonListQueryOperation, iQueryable);
 
-            IQueryable<AWBMessagingStockList> query2 = aWBMessagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
+            IQueryable<MessagingStockList> query2 = messagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
 
-            query2 = filter.GetFilteredQuery<AWBMessagingStockList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<MessagingStockList>(listQueryOperation, query2);
             int count = query2.Count();
 
             return count;
         }
 
-        public void InsertAWBMessagingStock(AWBMessagingStockPM entityPM)
+        public void InsertAWBMessagingStock(MessagingStockPM entityPM)
         {
             SecurityUtility.AuthenticationOnTenant(0);
-            SecurityUtility.CheckContactFeature("AWBMessagingStock", "NEW", 0);
+            SecurityUtility.CheckContactFeature("MessagingStock", "NEW", 0);
 
             if (objectContext == null)
             {
                 objectContext = ShipmentsContext.GetContext(entityPM.TenantNumber);
             }
 
-            AWBMessagingStockService service = new AWBMessagingStockService(objectContext, entityPM);
+            MessagingStockService service = new MessagingStockService(objectContext, entityPM);
             service.Create();
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.TenantNumber, "AWBMessagingStock");
+            TableLastUpdateClass.UpdateTableHistory(entityPM.TenantNumber, "MessagingStock");
         }
 
-        public void UpdateAWBMessagingStock(AWBMessagingStockPM entityPM)
+        public void UpdateAWBMessagingStock(MessagingStockPM entityPM)
         {
             SecurityUtility.AuthenticationOnTenant(0);
-            SecurityUtility.CheckContactFeature("AWBMessagingStock", "UPDATE", 0);
+            SecurityUtility.CheckContactFeature("MessagingStock", "UPDATE", 0);
 
             if (objectContext == null)
             {
                 objectContext = ShipmentsContext.GetContext(entityPM.TenantNumber);
             }
 
-            AWBMessagingStockService service = new AWBMessagingStockService(objectContext, entityPM);
+            MessagingStockService service = new MessagingStockService(objectContext, entityPM);
             service.Update();
 
             if (this.ChangeSet != null)
@@ -253,10 +253,10 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 this.ChangeSet.Associate(entityPM, service.entityPoco, MapStockPMToStock);
             }
 
-            TableLastUpdateClass.UpdateTableHistory(entityPM.TenantNumber, "AWBMessagingStock");
+            TableLastUpdateClass.UpdateTableHistory(entityPM.TenantNumber, "MessagingStock");
         }
 
-        private void MapStockPMToStock(AWBMessagingStockPM entityPM, AWBMessagingStock entityPOCO)
+        private void MapStockPMToStock(MessagingStockPM entityPM, MessagingStock entityPOCO)
         {
             string myStatus = "New";
             DateTime? nowDateTime = TenantServerConfigration.GetCurrentDateTime(entityPOCO.TenantNumber);
@@ -284,36 +284,36 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             entityPM.Status = myStatus;
         }
 
-        public void DeleteAWBMessagingStock(AWBMessagingStockPM entityPM)
+        public void DeleteAWBMessagingStock(MessagingStockPM entityPM)
         {
 
         }
 
         // For Logged Tenant View Only
-        public IQueryable<AWBMessagingStockList> GetLoggedTenantAWBMessagingStockLists(int tenant)
+        public IQueryable<MessagingStockList> GetLoggedTenantAWBMessagingStockLists(int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", tenant);
+            SecurityUtility.CheckContactFeature("MessagingStock", "READ", tenant);
 
-            aWBMessagingStockRepository = new AWBMessagingStockRepository(tenant);
-            aWBMessagingStockQuery = new AWBMessagingStockQuery(aWBMessagingStockRepository);
+            messagingStockRepository = new MessagingStockRepository(tenant);
+            messagingStockQuery = new MessagingStockQuery(messagingStockRepository);
 
-            IQueryable<AWBStocksDataView> iQueryable = aWBMessagingStockRepository.GetAWBStocksDataViewsByTenant(tenant);
-            IQueryable<AWBMessagingStockList> query2 = aWBMessagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
+            IQueryable<MessagingStockDataView> iQueryable = messagingStockRepository.GetMessagingStockDataViewsByTenant(tenant);
+            IQueryable<MessagingStockList> query2 = messagingStockQuery.GetIQueryableEntityList(iQueryable, tenant);
 
             return query2;
         }
 
-        public IQueryable<AWBStockUsageHistoryList> GetLoggedTenantAWBStockUsageHistoryLists(string stockId, int tenant)
+        public IQueryable<MessagingStockUsageHistoryList> GetLoggedTenantMessagingStockUsageHistoryLists(string stockId, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("AWBMessagingStock", "READ", tenant);
+            SecurityUtility.CheckContactFeature("MessagingStock", "READ", tenant);
 
-            aWBStockUsageHistoryRepository = new AWBStockUsageHistoryRepository(tenant);
-            aWBStockUsageHistoryQuery = new AWBStockUsageHistoryQuery(aWBStockUsageHistoryRepository);
+            messagingStockUsageHistoryRepository = new MessagingStockUsageHistoryRepository(tenant);
+            messagingStockUsageHistoryQuery = new MessagingStockUsageHistoryQuery(messagingStockUsageHistoryRepository);
 
-            IQueryable<AWBStockUsageHistory> iQueryable = aWBStockUsageHistoryRepository.GetAWBStockUsageHistories(stockId, tenant);
-            IQueryable<AWBStockUsageHistoryList> query2 = aWBStockUsageHistoryQuery.GetIQueryableEntityList(iQueryable, tenant);
+            IQueryable<MessagingStockUsageHistory> iQueryable = messagingStockUsageHistoryRepository.GetMessagingStockUsageHistories(stockId, tenant);
+            IQueryable<MessagingStockUsageHistoryList> query2 = messagingStockUsageHistoryQuery.GetIQueryableEntityList(iQueryable, tenant);
 
             return query2;
         }

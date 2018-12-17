@@ -28,6 +28,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.DepositionNumber = entityPM.DepositionNumber;
             entityPOCO.ValidityStartDate = entityPM.ValidityStartDate;
             entityPOCO.ValidityEndDate = entityPM.ValidityEndDate;
+            entityPOCO.CreateDate = entityPM.CreateDate;
+            
 
         }
 

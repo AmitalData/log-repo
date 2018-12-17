@@ -19,21 +19,22 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
         {
             if (isNewState)
             {
+                entityCard.Code = entityPM.Code;
                 entityCard.Id = entityPOCO.Id = entityPM.Id;
                 entityCard.Tenant = entityPOCO.Tenant = entityPM.Tenant;
-
-                entityCard.Code = entityPM.CustomsShipperCode;
+                entityCard.CreateDate = entityPM.CreateDate;
+                entityCard.CreatedByUserId = entityPM.CreatedByUserId;
             }
+            
 
             // Map To Card
-            entityCard.Code = entityPM.CustomsShipperCode;
+            entityCard.UpdateDate = entityPM.UpdateDate;
+            entityCard.UpdatedByUserId = entityPM.UpdatedByUserId;
             entityCard.EnglishName = entityPM.EnglishName;
+            entityCard.LocalName = entityPM.LocalName;
             entityCard.VatNumber = entityPM.ShipperVAT;
-            entityCard.CountryId = entityPM.CountryId;
-            entityCard.CountryCode = entityPM.CountryCode;
-            entityCard.CountryName = entityPM.CountryName;
-
-
+            
+            
             // Map To CustomsShipperPM
             entityPOCO.ValidDepositionNumber = entityPM.ValidDepositionNumber;
             entityPOCO.CustomsShipperCode = entityPM.CustomsShipperCode;
@@ -41,9 +42,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.ValidityStartDate = entityPM.ValidityStartDate;
             entityPOCO.ValidityEndDate = entityPM.ValidityEndDate;
 
-
-
-
+            
             BuildSearchFields(entityPM, entityCard);
         }
 

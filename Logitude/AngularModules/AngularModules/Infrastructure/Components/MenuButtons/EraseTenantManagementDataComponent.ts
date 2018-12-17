@@ -1,4 +1,4 @@
-import {Component}  from '@angular/core';
+import { Component, OnDestroy}  from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {InfrastructureDomainService, BusinessRecordsSummary} from '../../Services/InfrastructureDomainService';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
@@ -12,7 +12,7 @@ import { BatchTaskExecutionList } from '../../EntityLists/BatchTaskExecutionList
     templateUrl: './EraseTenantManagementDataComponent.html',
 })
 
-export class EraseTenantManagementDataComponent {
+export class EraseTenantManagementDataComponent implements OnDestroy {
     private myService: InfrastructureDomainService;
     private entityId: number;
     public Message: string;
@@ -90,11 +90,14 @@ export class EraseTenantManagementDataComponent {
     }
 
     public IsResponseProgressVisible: boolean = false;
-    public TimerStoppedByUser: boolean = false;
     CloseResponseProgressClicked() {
+        this.IsResponseProgressVisible = false;       
+
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+
         this.IsResponseProgressVisible = false;
-        this.TimerStoppedByUser = true;        
-        this.StopTimer();        
     }
 
     private batchEntity: BatchTaskExecutionPM;
@@ -107,67 +110,27 @@ export class EraseTenantManagementDataComponent {
                 this.batchEntity = mm.Result;
 
                 if (this.batchEntity != null) {
-                    this.StartTimer();
+                    this.IsResponseProgressVisible = true;
+                    this.timer = setInterval(() => {
+                        this.GetBTE();
+                    }, this.timerInterval);
                 }
             }            
         });
     }
 
     // Timer
-    private Retries: number = 0;
-    private timerToken: any;
-    private timerSeconds: number = 1;
-    private IsLoading: boolean = false;
-    public StopTimer() {
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
+    timerInterval: number = 1000;
+    timer: any;
+
+    ngOnDestroy() {
+        if (this.timer) {
+            clearInterval(this.timer);
         }
-        
+
         this.IsResponseProgressVisible = false;
     }
-    public StartTimer() {
-        this.Retries = 0;
-        this.timerToken = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
-        this.IsResponseProgressVisible = true;
-    }
-    private IncreaseTimer() {
-        clearTimeout(this.timerToken);
-        this.timerToken = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
-    }
-    private AdjustTimerSpeed() {
-        if (this.Retries <= 60) {
-            if (this.timerSeconds != 1) {
-                this.timerSeconds = 1;
-                this.IncreaseTimer();
-            }
-        }
-
-        else if (this.Retries <= 120) {
-            if (this.timerSeconds != 5) {
-                this.timerSeconds = 5;
-                this.IncreaseTimer();
-            }
-        }
-
-        else if (this.Retries <= 180) {
-            if (this.timerSeconds != 60) {
-                this.timerSeconds = 60;
-                this.IncreaseTimer();
-            }
-        }
-
-        else {
-            this.StopTimer();
-        }
-    }
-    private RunTimerFunction() {
-        if (!this.IsLoading) {
-            this.Retries++;
-            this.GetBTE();
-            this.AdjustTimerSpeed();
-        }
-    }
-
+    
     private bteList: BatchTaskExecutionList;
     GetBTE() {
         var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
@@ -202,12 +165,21 @@ export class EraseTenantManagementDataComponent {
                             break;
                         }
                     }
-                    this.StopTimer();
+
+                    if (this.timer) {
+                        clearInterval(this.timer);
+                    }
+
+                    this.IsResponseProgressVisible = false;
                 }
 
                 else if (this.bteList.StatusCode == "F") // F- Failed
                 {
-                    this.StopTimer();
+                    if (this.timer) {
+                        clearInterval(this.timer);
+                    }
+
+                    this.IsResponseProgressVisible = false;
                 }
             }
         });

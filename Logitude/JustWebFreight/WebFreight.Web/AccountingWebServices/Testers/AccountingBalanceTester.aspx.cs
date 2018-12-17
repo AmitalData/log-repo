@@ -908,6 +908,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 Category3Id = "",
                 Category4Id = "",
                 Category5Id = "",
+                AccountTypeCode = "2",
                 SearchFields = "",
                 IncludeChildAccounts = true,
                 IsReconciled = false,

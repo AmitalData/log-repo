@@ -153,6 +153,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      AgentSharedLogisticsStatisticsLastMonth = a.AgentSharedLogisticsStatisticsLastMonth,
                                                      ChangeHeaderColor = a.ChangeHeaderColor,
                                                      StockTypeCode = a.StockTypeCode,
+                                                     IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                                      PackageCodeSearchField = a.PackageCodeSearchField,
                                                  }).FirstOrDefault();
                     if (tenant != null)
@@ -307,6 +308,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   ChangeHeaderColor = a.ChangeHeaderColor,
                                                   StockTypeCode = a.StockTypeCode,
                                                   PackageCodeSearchField = a.PackageCodeSearchField,
+                                                  IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -459,6 +461,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         PackageCodeSearchField = a.PackageCodeSearchField,
                         ChangeHeaderColor = a.ChangeHeaderColor,
                         StockTypeCode = a.StockTypeCode,
+                        IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -570,6 +573,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     AgentSharedLogisticsStatisticsLastWeek = entity.AgentSharedLogisticsStatisticsLastWeek,
                     AgentSharedLogisticsStatisticsLastMonth = entity.AgentSharedLogisticsStatisticsLastMonth,
                     ChangeHeaderColor = entity.ChangeHeaderColor,
+                    IsINTTRAStockPrepaid = entity.IsINTTRAStockPrepaid,
                     PackageCodeSearchField = entity.PackageCodeSearchField,
                 };
             }
@@ -681,6 +685,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        AgentSharedLogisticsStatisticsLastWeek = a.AgentSharedLogisticsStatisticsLastWeek,
                        AgentSharedLogisticsStatisticsLastMonth = a.AgentSharedLogisticsStatisticsLastMonth,
                        ChangeHeaderColor = a.ChangeHeaderColor,
+                       IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                        PackageCodeSearchField = a.PackageCodeSearchField,
                    };
         }
@@ -883,6 +888,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              AgentSharedLogisticsStatisticsLastWeek = a.AgentSharedLogisticsStatisticsLastWeek,
                                              AgentSharedLogisticsStatisticsLastMonth = a.AgentSharedLogisticsStatisticsLastMonth,
                                              ChangeHeaderColor = a.ChangeHeaderColor,
+                                             IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                              PackageCodeSearchField = a.PackageCodeSearchField,
                                          }).FirstOrDefault();
 

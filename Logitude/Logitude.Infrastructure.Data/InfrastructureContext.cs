@@ -326,8 +326,8 @@ namespace Logitude.Infrastructure.Data
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
-
-			#endregion
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
+            #endregion
 
             base.OnModelCreating(modelBuilder);
         }

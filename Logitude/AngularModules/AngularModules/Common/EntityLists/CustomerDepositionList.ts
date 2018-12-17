@@ -13,5 +13,6 @@ export class CustomerDepositionList {
 		DepositionNumber: string;
 		ValidityStartDate: Date;
 		ValidityEndDate: Date;
+		CreateDate: Date;
 	
 }

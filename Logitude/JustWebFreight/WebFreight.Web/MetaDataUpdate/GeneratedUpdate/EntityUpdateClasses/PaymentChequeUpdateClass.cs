@@ -2865,10 +2865,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
     
 			   Feature PaymentChequeFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPROVEE", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCApprove", NameTextCodeDefaultText = "Approve", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-      
-    
-			   Feature PaymentChequeFeature_MB2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREE", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCMore", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
 			   Feature PaymentChequeFeature_MB20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTCHEQUEE", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCPrint", NameTextCodeDefaultText = "Print", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature PaymentChequeFeature_MB21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CANCELCHEQUEE", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCCancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
@@ -2920,15 +2916,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton PaymentChequeMenuButton2 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 2, 
-						IsActive = true,
+						Index = 100, 
+						IsActive = false,
 						LabelTextCodeCode = "PaymentCheque.B.More",
 						LabelTextCodeDefaultText = "More",
 						Tenant = 0,
 						MenuButtonGroupId = PaymentChequeMenuButtonGroup.Id,
 						ObjectTableId = PaymentChequeObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = PaymentChequeFeature_MB2.Id,
+						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "נוספים",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

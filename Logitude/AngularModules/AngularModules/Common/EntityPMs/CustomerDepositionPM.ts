@@ -55,6 +55,11 @@ export class CustomerDepositionPM {
     public set ValidityEndDate(newValue: Date) { if (this.validityEndDate != newValue) { this.validityEndDate = newValue; this.MarkAsDirty("ValidityEndDate"); } }
        
 	 
+    private createDate: Date;
+    public get CreateDate() { return this.createDate; }
+    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
+       
+	 
 
     public OldEntityPM: CustomerDepositionPM;
 		

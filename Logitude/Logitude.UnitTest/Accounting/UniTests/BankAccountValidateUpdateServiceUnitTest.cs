@@ -8,8 +8,8 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.UnitTest.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Framework;
 
+using System.Linq;
 namespace Logitude.UnitTest.Accounting.UniTests
 {
     [TestClass]
@@ -20,6 +20,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
         {
             ContactPM loggedcontact = GetLoggedContactInstance();
             string expectedLoggedUserId = loggedcontact.Id;
+            string expectedErrorMessage = "Bank account exist";
+            string actualErrorMessage = "";
             BankAccountPM entityPM = new BankAccountPM()
             {
                 Id = "1",
@@ -50,11 +52,18 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant)).Returns(list);
 
+            bankAccountValidateService.CheckBankAccountExists(entityPM);
             
-            TestsUtil.AssertThrows<Exception>(() =>
+            if (bankAccountValidateService.ErrorsList.Count > 0)
             {
-                bankAccountValidateService.CheckBankAccountExists(entityPM);
-            }, "Bank account exist");
+                actualErrorMessage = bankAccountValidateService.ErrorsList.FirstOrDefault();
+            }
+
+            Assert.AreEqual(expectedErrorMessage, actualErrorMessage);
+            //TestsUtil.AssertThrows<Exception>(() =>
+            //{
+            //    bankAccountValidateService.CheckBankAccountExists(entityPM);
+            //}, "Bank account exist");
             
         }
        
@@ -63,6 +72,9 @@ namespace Logitude.UnitTest.Accounting.UniTests
         {
             ContactPM loggedcontact = GetLoggedContactInstance();
             string expectedLoggedUserId = loggedcontact.Id;
+            int actualErrorsCount = 0;
+            int expectedErrorsCount = 0;
+            
             BankAccountPM entityPM = new BankAccountPM()
             {
                 Id = "1",
@@ -80,8 +92,12 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var bankAccountValidateService = A.Fake<BankAccountValidateService>(option => option.CallsBaseMethods());
             A.CallTo(() => bankAccountValidateService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountValidateService.GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant)).Returns(null);
-            bool ok = true;
-            NUnit.Framework.Assert.DoesNotThrow(() => bankAccountValidateService.CheckBankAccountExists(entityPM));
+            bankAccountValidateService.CheckBankAccountExists(entityPM);
+            actualErrorsCount = bankAccountValidateService.ErrorsList.Count;
+            Assert.AreEqual(expectedErrorsCount, actualErrorsCount);
+            // bool ok = true;
+
+            //            NUnit.Framework.Assert.DoesNotThrow(() => bankAccountValidateService.CheckBankAccountExists(entityPM));
             //Exception ex =  NUnit.Framework.Assert.Throws<Exception>(() => bankAccountValidateService.CheckBankAccountExists(entityPM));
             //NUnit.Framework.Assert.That(ex.Message, Is.EqualTo("bar"));
 
@@ -89,12 +105,13 @@ namespace Logitude.UnitTest.Accounting.UniTests
             //{
             //    bankAccountValidateService.CheckBankAccountExists(entityPM);
             //}
-            //catch (Exception ex){
+            //catch (Exception ex)
+            //{
             //    ok = false;
             //}
             //finally
             //{
-            //    NUnit.Framework.Assert.AreEqual(ok, true);
+            //    Assert.AreEqual(true, ok);
             //}
         }
 

@@ -128,6 +128,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsParentTenant).HasColumnName("IsParentTenant");
             this.Property(t => t.ParentTenantId).HasColumnName("ParentTenantId");
             this.Property(t => t.StockTypeCode).HasColumnName("StockTypeCode");
+            this.Property(t => t.IsINTTRAStockPrepaid).HasColumnName("IsINTTRAStockPrepaid");
             this.Property(t => t.PackageCodeSearchField).HasColumnName("PackageCodeSearchField");
 
 

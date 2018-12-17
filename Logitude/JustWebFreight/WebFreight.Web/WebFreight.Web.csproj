@@ -965,6 +965,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\WithholdingTaxDeductionTypeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountCurrencyController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountingWithholdingTaxController.cs" />
+    <Compile Include="Controllers\AccountingModel\OpenFormatReportFileController.cs" />
     <Compile Include="Controllers\AccountingModel\PaymentChequeViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\ARPaymentChequeOpController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconcileExternalPageController.cs" />
@@ -1673,6 +1674,7 @@
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentTestDataController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerFollowUpViewsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\INTTRADocumentTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\MessagingStockViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\OBLTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\PickUpDeliveryTransportModeViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentCustomsMessageTypeViewsController.Generated.cs" />
@@ -1689,7 +1691,7 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentPayableStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentReceivableStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentTypeViewsController.Generated.cs" />
-    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBMessagingStockController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\MessagingStockController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentController.cs" />
     <Compile Include="Controllers\ShipmentsModel\ForwarderShipmentsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\SplitShipmentController.cs" />
@@ -2185,6 +2187,7 @@
     <Compile Include="Helpers\TFSAnalyzer.cs" />
     <Compile Include="Helpers\TFSParseWebhook.cs" />
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
+    <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.BankAccountLite.cs" />
     <Compile Include="LinksGateway.aspx.cs">
@@ -2583,7 +2586,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBChargesCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBCustomsInformationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBInformationUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBMessagingStockUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\MessagingStockUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBOCIUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\AWBSpecialHandlingCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\CommodityPackageUpdateClass.cs" />
@@ -2592,6 +2595,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\InsideShipmentPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\INTTRADocumentTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ManifestStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\MessagingStockUsageHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\OBLTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\OtherParticipantIdUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\PickUpDeliveryTransportModeUpdateClass.cs" />
@@ -2635,7 +2639,6 @@
     <Content Include="Monitoring\ContactUnseenMobile.aspx" />
     <Content Include="Monitoring\CustomerActualData.aspx" />
     <Content Include="Monitoring\EmailWaiting.aspx" />
-    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBMessagingStockViewsController.Generated.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceLineAction.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.SATPaymentMethod.cs" />
     <Compile Include="CommonDataModel\DomainServices\PartnersDomainService.WarehouseType.cs" />

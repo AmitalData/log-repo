@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
@@ -15,15 +14,13 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.BookingLib.Data.Repositories;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Logitude.BookingLib.Data.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using System.Transactions;
-using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.Server.Tools.Counters;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Transactions;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
@@ -32,16 +29,17 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
     {
         bool isNewEntity;
         private int tenant;
-        private CustomsShipperPM entityPM;
         public CustomsShipper entityPOCO { get; set; }
         private Card entityCard;
+        private CustomsShipperPM entityPM;
         private Contact loggedContact;
-        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
-        private ICommonDataContext objectContext;
-        private CustomsShipperRepository entityRepository;
         private CardRepository cardRepository;
-        private CardQuery cardQuery;
+        private CustomsShipperRepository entityRepository;
+        private AddressRepository addressRepository;
         private ContactRepository contactRepository;
+        private CardContactRepository cardContactRepository;
+        private ICommonDataContext objectContext;
+        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
         public CustomsShipperService(ICommonDataContext objectContext, int tenant)
         {
 
@@ -49,8 +47,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.objectContext = objectContext;
             this.entityRepository = new CustomsShipperRepository(objectContext);
             this.cardRepository = new CardRepository(objectContext);
+            this.addressRepository = new AddressRepository(objectContext);
             this.contactRepository = new ContactRepository(objectContext);
-            this.cardQuery = new CardQuery(cardRepository);
+            this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
             this.GetLoggedContact();
         }
@@ -70,85 +69,166 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void Create(CustomsShipperPM entityPM)
         {
             this.entityPM = entityPM;
-      
-                this.isNewEntity = true;
+            this.isNewEntity = true;
+            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
 
-                entityPM.Id = IdCounter.GetNumber("Card", entityPM.Tenant).ToString();
-                entityPM.Tenant = tenant;
+            this.entityCard = new Card()
+            {
+                Id = entityPM.Id,
+                Tenant = tenant,
+                PartnerTypeId = "SG",
+            };
 
-                this.entityCard = new Card()
-                {
-                    Id = entityPM.Id,
-                    Tenant = tenant,
-                    PartnerTypeId = "CH",
-                    CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                    UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                    CreatedByUserId = loggedContact.Id,
-                    UpdatedByUserId = loggedContact.Id,
-                };
+            this.entityPOCO = new CustomsShipper()
+            {
+                Id = entityPM.Id,
+                Tenant = tenant,
+            };
 
-                this.entityPOCO = new CustomsShipper()
-                {
-                    Id = entityPM.Id,
-                    Tenant = tenant,
-                };
+            this.InitializeComponent();
+            
+            foreach (AddressPM itemPM in entityPM.Addresses)
+            {
+                this.CreateAddress(itemPM);
+            }
+            
+            CustomsShipperMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
 
-                CustomsShipperMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+            cardRepository.Add(entityCard);
+            entityRepository.Add(entityPOCO);
+            entityRepository.SubmitChanges();
 
-
-                cardRepository.Add(entityCard);
-                entityRepository.Add(entityPOCO);
-                entityRepository.SubmitChanges();
-                TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomsShipper");
-  
-         
+   
         }
 
         public void Update(CustomsShipperPM entityPM, bool mapComposition = false)
         {
             this.entityPM = entityPM;
-            CardPM c = cardQuery.GetSingleCarrierCard(entityPM.Id, entityPM.Tenant, false);
-            
-                this.isNewEntity = false;
+            this.isNewEntity = false;
 
-                this.entityPOCO = entityRepository.GetSingleCustomsShipper(entityPM.Id, tenant);
-                this.entityCard = cardRepository.GetSingleCard(entityPM.Id, entityPM.Tenant);
+            this.entityPOCO = entityRepository.GetSingleCustomsShipper(entityPM.Id, tenant);
+            this.entityCard = cardRepository.GetSingleCard(entityPM.Id, entityPM.Tenant);
 
-                if (CacheManager.CacheWrapper != null)
+            this.InitializeComponent();
+           
+            //if (CacheManager.CacheWrapper != null)
+            //{
+            //    string entityName = "Card" + entityPM.Id + entityPM.Tenant;
+            //    string entityPmName = "CardPM" + entityPM.Id + entityPM.Tenant;
+
+            //    if (CacheManager.CacheWrapper.Get(entityName) != null)
+            //    {
+            //        CacheManager.CacheWrapper.Invalidate(entityName);
+            //    }
+
+            //    if (CacheManager.CacheWrapper.Get(entityPmName) != null)
+            //    {
+            //        CacheManager.CacheWrapper.Invalidate(entityPmName);
+            //    }
+            //}
+
+            CustomsShipperMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+
+            cardRepository.Update(entityCard);
+            entityRepository.Update(entityPOCO);
+            entityRepository.SubmitChanges();
+
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomsShipper");
+            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
+        }
+
+        private void InitializeComponent()
+        {
+            if (isNewEntity)
+            {
+                entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.UpdateDate = entityPM.CreateDate;
+                entityPM.CreatedByUserId = loggedContact.Id;
+                entityPM.UpdatedByUserId = loggedContact.Id;
+                entityPM.Code = CodeCounter.GetNumber("CustomsShipper", tenant).ToString();
+                
+            }
+
+            else
+            {
+                entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                entityPM.UpdatedByUserId = loggedContact.Id;
+            }
+
+            this.InitializeCardFields();
+        }
+
+        private void InitializeCardFields()
+        {
+            if (isNewEntity)
+            {
+                // On update, will be updated from Address Service
+
+                if (entityPM.Addresses != null)
                 {
-                    string entityName = "Card" + entityPM.Id + entityPM.Tenant;
-                    string entityPmName = "CardPM" + entityPM.Id + entityPM.Tenant;
+                    AddressPM myAddress = entityPM.Addresses.Where(a => a.AddressTypeId == "M").FirstOrDefault();
 
-                    if (CacheManager.CacheWrapper.Get(entityName) != null)
+                    if (myAddress != null)
                     {
-                        CacheManager.CacheWrapper.Invalidate(entityName);
-                    }
+                        entityPM.CityName = myAddress.City;
+                        entityPM.CountryId = myAddress.CountryId;
 
-                    if (CacheManager.CacheWrapper.Get(entityPmName) != null)
-                    {
-                        CacheManager.CacheWrapper.Invalidate(entityPmName);
+                        if (!string.IsNullOrEmpty(myAddress.CountryId))
+                        {
+                            Country country = CountryRepository.GetSingleCountry(myAddress.CountryId, entityPM.Tenant, true);
+                            if (country != null)
+                            {
+                                entityPM.CountryCode = country.Code;
+                                entityPM.CountryName = country.EnglishName;
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(myAddress.StateId))
+                        {
+                            StateRepository stateRepository = new StateRepository(objectContext);
+                            State state = stateRepository.GetSingleState(myAddress.StateId, entityPM.Tenant);
+                            if (state != null)
+                            {
+                                entityCard.StateName = state.EnglishName;
+                            }
+                        }
                     }
                 }
 
+                entityCard.CityName = entityPM.CityName;
+                entityCard.CountryId = entityPM.CountryId;
+                entityCard.CountryCode = entityPM.CountryCode;
+                entityCard.CountryName = entityPM.CountryName;
+            }
 
-                entityCard.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                entityCard.UpdatedByUserId = loggedContact.Id;
+            else
+            {
+                entityPM.CityName = entityCard.CityName;
+                entityPM.CountryId = entityCard.CountryId;
+                entityPM.CountryCode = entityCard.CountryCode;
+                entityPM.CountryName = entityCard.CountryName;
+            }
+        }
 
-                CustomsShipperMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+        
+        private void CreateAddress(AddressPM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("Address", tenant).ToString();
+            itemPM.CardId = this.entityPOCO.Id;
 
-                cardRepository.Update(entityCard);
-                entityRepository.Update(entityPOCO);
-                entityRepository.SubmitChanges();
-                cardRepository.SubmitChanges();
-            TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomsShipper");
+            Address newAddress = new Address()
+            {
+                Id = itemPM.Id,
+                CardId = itemPM.CardId,
+                Tenant = tenant
+            };
 
-            
-
+            AddressMapping.MapEntity(itemPM, newAddress, isNewEntity);
+            addressRepository.Add(newAddress);
         }
 
 
-    
 
-     
+      
     }
 }

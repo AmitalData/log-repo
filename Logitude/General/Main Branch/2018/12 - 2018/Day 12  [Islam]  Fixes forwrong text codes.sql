@@ -7,4 +7,14 @@ update textcodes set code = 'ShipmentReceivable.F.MeasurementId' where code = 'S
 
 update textcodes set code = 'Card.F.EnglishName' where code = 'Card.f.English Name' and objecttableid in (select id from objecttables where name = 'Card')
 
- 
+ update objecttables set cacheonclient = 0 where name in ('ARInvoicePayment','SATInterfaceSetting','TenantManagmentPrivateLabels','DocumentFilingBackupSetting','BankAccountLite')
+
+
+ delete from textcodes where code = 'arinvoice.issuedbyuseridhelptext' and objecttableid in (select id from objecttables where name = 'arinvoice')
+delete from textcodes where code = 'arinvoice.issuedbyusernamehelptext' and objecttableid in (select id from objecttables where name = 'arinvoice')
+delete from textcodes where code = 'ARInvoice.CH.IssuedByUserNameListLable' and objecttableid in (select id from objecttables where name = 'arinvoice')
+
+delete from textcodes where code = 'shipment.payablesinlocalcurrencyhelptext' and objecttableid in (select id from objecttables where name = 'shipment')
+delete from textcodes where code = 'shipment.CH.payablesinlocalcurrencyListLable' and objecttableid in (select id from objecttables where name = 'shipment')
+delete from textcodes where code = 'currency.remarkhelptext' and objecttableid in (select id from objecttables where name = 'currency')
+

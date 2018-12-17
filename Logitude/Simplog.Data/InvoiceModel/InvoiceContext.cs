@@ -332,6 +332,8 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new BankAccountLiteMap());
             modelBuilder.Configurations.Add(new SATTransferStatusMap());
             modelBuilder.Configurations.Add(new SATInvoiceStatusMap());
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
+
 
             base.OnModelCreating(modelBuilder);
         }

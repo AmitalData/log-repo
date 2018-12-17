@@ -177,6 +177,25 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 var catAccounts = repository.GetQAccIdByAcountIdCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5)
                     .ToList();
+             }
+            if (IncludeChildAccounts)
+            {
+                var ChildAccounts = repository.GetChildAccounts(GLAccountId, tenant)
+                .Select(ca => ca.Id).ToList();
+                allIdAccounts.AddRange(ChildAccounts);
+            }
+
+            return new HashSet<string>(allIdAccounts);
+        }
+
+        public HashSet<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType,
+    bool IncludeChildAccounts)
+        {
+            var allIdAccounts = new List<string>() { GLAccountId };
+            if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4) || !String.IsNullOrWhiteSpace(cat5) || !String.IsNullOrWhiteSpace(gLAccountType))
+            {
+                var catAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType)
+                    .ToList();
             }
             if (IncludeChildAccounts)
             {
@@ -187,6 +206,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return new HashSet<string>(allIdAccounts);
         }
+
 
         public List<GLAccountAndMoreDTO> GetCurrentBalanceByType(int tenant)
         {
@@ -362,11 +382,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
         public List<GLAccountCurrencyBalance> GetCurrencyBalances(GLAccountPM gLAccountPM, DateTime revaluationDate, int tenant)
         {
-
+            DateTime revDate = revaluationDate.Date;
             List<GLAccountCurrencyBalance> rvList = new List<GLAccountCurrencyBalance>();
             if (gLAccountPM != null)
             {
-                DateTime monthLastDate = GetDate(revaluationDate);
+                DateTime monthLastDate = GetDate(revDate);
 
                 GLAccountTotalByMonthQueryService gLAccountTotalByMonthsQueryServices = new GLAccountTotalByMonthQueryService(tenant);
                 DateTime monthUpTo = gLAccountTotalByMonthsQueryServices.GLAccountMonthTotalsUpToDate(gLAccountPM.Id, monthLastDate, tenant);
@@ -377,7 +397,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 if (monthUpTo != noMonthsComputed)
                 {
                     List<CurrencySum> monthsSum = gLAccountTotalByMonthsQueryServices.GetSumByMonth(gLAccountPM.Id, monthUpTo.Year, monthUpTo.Month, tenant);
-                    if (monthLastDate == revaluationDate && (monthUpTo.Year == revaluationDate.Year && monthUpTo.Month == revaluationDate.Month)) // rev date is last day of month AND we have all the sums computed already 
+                    if (monthLastDate == revDate && (monthUpTo.Year == revDate.Year && monthUpTo.Month == revDate.Month)) // rev date is last day of month AND we have all the sums computed already 
                     {
                         allSum = monthsSum;
                     }
@@ -387,13 +407,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     {
                         DateTime fromD = new DateTime(monthUpTo.Year, monthUpTo.Month, 1);
                         fromD = fromD.AddMonths(1);
-                        List<CurrencySum> remainingSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, fromD, revaluationDate, tenant);
+                        List<CurrencySum> remainingSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, fromD, revDate, tenant);
                         allSum = MergeLists(monthsSum, remainingSum);
                     }
                 }
                 else // here we need to compute all the period up to the rev date
                 {
-                    allSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, DateTime.MinValue, revaluationDate, tenant);
+                    allSum = ledgerTransactionQueryService.GetLedgerTransactionTotalLocalAmountFromTo(gLAccountPM.Id, DateTime.MinValue, revDate, tenant);
                 }
 
                 foreach (CurrencySum item in allSum)
@@ -829,7 +849,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             };
             taxDeduction.TotalForCompany = new List<TotalForCompany>();
             taxDeduction.TotalForCompany.Add(companyTotal);
-            taxDeduction.VendorsCount = DBVendorsList.Count();
+            taxDeduction.VendorsCount = DBVendorsList.GroupBy(d=> d.VendorId).Count();
             taxDeduction.TotalAmountInLocalCurrency = DBVendorsList.Sum(d => d.AmountInLocalCurrency);
             taxDeduction.TotalDeductionInLocalCurrency = DBVendorsList.Sum(d => d.TaxDeductionLocalAmount);
             taxDeduction.TotalAmountInLocalCurrency08 = DBVendorsList.Where(d => d.DeductionFileTypeCode == "08").Sum(d => d.AmountInLocalCurrency);
