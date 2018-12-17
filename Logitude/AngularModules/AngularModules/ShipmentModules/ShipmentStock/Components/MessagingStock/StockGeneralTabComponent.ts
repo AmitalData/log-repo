@@ -34,7 +34,7 @@ export class StockGeneralTabComponent extends BaseComponent {
         this.Listen();
     }
 
-    private SelectedStockTypeItem: CodeNameClass = null;
+    public SelectedStockTypeItem: CodeNameClass = null;
     SelectedStockTypeChanged(item: CodeNameClass) {
         if (this.SelectedStockTypeItem != item) {
             this.SelectedStockTypeItem = item;

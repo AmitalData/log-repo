@@ -443,7 +443,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //}
 
 
+
             OnUpdatingCheckBalance(entityPM, entityPOCO);
+            OnUpdatingCheckReconcileMethod(entityPM, entityPOCO);
 
             ValidateCurrency(entityPM, entityPOCO);
         }
@@ -473,6 +475,30 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new Exception(messnoprivtochangeBalanceInLocalCurrency);
             }
 #endif
+        }
+
+        protected virtual void OnUpdatingCheckReconcileMethod(GLAccountPM entityPM, GLAccount entityPOCO)
+        {
+            // Task 45932: GLAccounts: new validation for the field reconcile method
+
+            // GET logged contact, RTL
+            IAccountingContext accountingContext = AccountingContext.GetContext(entityPOCO.Tenant);
+            ContactPM contact = GetLoggedContact(entityPOCO.Tenant);
+            bool showLocals = !contact.DontShowLocal;
+
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                if (entityPM.ReconcileMethodCode != entityPOCO.ReconcileMethodCode && entityPM.IsMultiCurrency == false)
+                {
+                    //check glaccount transactions
+                    LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(accountingContext);
+                    LedgerTransactionPM trans = transQuery.GetFirstLedgerTransaction(entityPM.Id, entityPM.Tenant);
+                    if(trans != null)
+                        throw new Exception(TextCodesTranslator.TranslateText("GLAccounts.O.ReconcileMethodcantUpdated",0,showLocals));
+                }
+            }
+            
         }
 
         protected override void OnUpdating(GLAccountPM entityPM)

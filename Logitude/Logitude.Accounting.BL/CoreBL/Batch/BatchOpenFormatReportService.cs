@@ -29,6 +29,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
             XmlSerializer serializer = new XmlSerializer(typeof(PNCFileArgs));
             PNCFileArgs parameterArgs = serializer.Deserialize(stringReader) as PNCFileArgs;
+            IContext MainContext = AccountingContext.GetContext(parameterArgs.Tenant);
+            OpenFormatReportUpdateService openFormatReportUpdateService = new OpenFormatReportUpdateService(MainContext, new Dictionary<string, IContext>(), parameterArgs.Tenant);
 
             // Call the service
             OpenFormatReportQueryService openFormatReportQueryService = new OpenFormatReportQueryService(parameterArgs.Tenant);
@@ -37,14 +39,16 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             try
             {
                 DocumentsFilingPM docFilingPM = OpenFormatReportService.CreateBKMVDATAFile(parameterArgs.ReportId, parameterArgs.Tenant);
+                openFormatReportPM.StatusTypeCode = "3";
+                openFormatReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                openFormatReportUpdateService.Update(openFormatReportPM, true);
             }
 
             catch (Exception ex)
             {
 
-                IContext MainContext = AccountingContext.GetContext(parameterArgs.Tenant);
 
-                OpenFormatReportUpdateService openFormatReportUpdateService = new OpenFormatReportUpdateService(MainContext, new Dictionary<string, IContext>(), parameterArgs.Tenant);
+                openFormatReportPM.StatusTypeCode = "4";
                 openFormatReportPM.ErrorMessage = ex.Message;
                 openFormatReportPM.ChangeSetOp = ChangeSetOperation.Update;
                 openFormatReportUpdateService.Update(openFormatReportPM, true);
