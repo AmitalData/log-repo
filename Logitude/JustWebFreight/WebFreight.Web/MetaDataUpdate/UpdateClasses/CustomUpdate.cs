@@ -17063,9 +17063,9 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         public void FillMamanSpecialActionStatusTable()
         {
             MamanSpecialActionStatusRepository mamanSpecialActionStatusRepository = new MamanSpecialActionStatusRepository(0);
-            AddClosedTables.AddMamanSpecialActionStatus(new MamanSpecialActionStatus() { Code = "2", EnglishName = "Receiving a delay certificate", LocalName = "קליטה תעודת עיכוב" }, mamanSpecialActionStatusRepository);
-            AddClosedTables.AddMamanSpecialActionStatus(new MamanSpecialActionStatus() { Code = "4", EnglishName = "Sticker Printing", LocalName = "הדפסת מדבקה" }, mamanSpecialActionStatusRepository);
-            AddClosedTables.AddMamanSpecialActionStatus(new MamanSpecialActionStatus() { Code = "5", EnglishName = "Printing Documents", LocalName = "הדפסת מסמכים" }, mamanSpecialActionStatusRepository);
+            AddClosedTables.AddMamanSpecialActionStatus(new MamanSpecialActionStatus() { Code = "1", EnglishName = "Correct", LocalName = "תקין" }, mamanSpecialActionStatusRepository);
+            AddClosedTables.AddMamanSpecialActionStatus(new MamanSpecialActionStatus() { Code = "2", EnglishName = "Incorrect", LocalName = "שגוי" }, mamanSpecialActionStatusRepository);
+            AddClosedTables.AddMamanSpecialActionStatus(new MamanSpecialActionStatus() { Code = "I", EnglishName = "Sent", LocalName = "בתהליך שליחה" }, mamanSpecialActionStatusRepository);
             mamanSpecialActionStatusRepository.SubmitChanges();
         }
 
