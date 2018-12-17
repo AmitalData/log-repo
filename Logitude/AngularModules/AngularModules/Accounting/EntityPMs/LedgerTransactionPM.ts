@@ -244,6 +244,11 @@ export class LedgerTransactionPM {
     public set ReconcileRemarks(newValue: string) { if (this.reconcileRemarks != newValue) { this.reconcileRemarks = newValue; this.MarkAsDirty("ReconcileRemarks"); } }
        
 	 
+    private originalJournalId: string;
+    public get OriginalJournalId() { return this.originalJournalId; }
+    public set OriginalJournalId(newValue: string) { if (this.originalJournalId != newValue) { this.originalJournalId = newValue; this.MarkAsDirty("OriginalJournalId"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		

@@ -965,6 +965,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\WithholdingTaxDeductionTypeController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountCurrencyController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountingWithholdingTaxController.cs" />
+    <Compile Include="Controllers\AccountingModel\OpenFormatReportFileController.cs" />
     <Compile Include="Controllers\AccountingModel\PaymentChequeViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\ARPaymentChequeOpController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconcileExternalPageController.cs" />

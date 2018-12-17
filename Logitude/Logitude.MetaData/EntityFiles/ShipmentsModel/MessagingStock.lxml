@@ -50,8 +50,8 @@
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;MessagingStockEdit&quot;" MenuButtonGroupName="&quot;MessagingStockEditButtonsGroup&quot;">
-    <MenuButton EventCode="&quot;Actions&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" TextCodeCode="&quot;MessagingStock.B.More&quot;">
-      <MenuItem EventCode="&quot;Cancel&quot;" DefaultText="&quot;Cancel&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" FeatureCode="&quot;MessagingStock.Action.Cancel&quot;" TextCodeCode="&quot;MessagingStock.B.Cancel&quot;" FeatureTextCodeCode="&quot;MessagingStock.Features.Cancel&quot;" FeatureDefaultText="&quot;Cancel&quot;" />
+    <MenuButton EventCode="&quot;Actions&quot;" TextCodeCode="&quot;MessagingStock.B.More&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="100">
+      <MenuItem EventCode="&quot;Cancel&quot;" TextCodeCode="&quot;MessagingStock.B.Cancel&quot;" DefaultText="&quot;Cancel&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="2" FeatureCode="&quot;MessagingStock.Action.Cancel&quot;" IsPackagable="true" FeatureTextCodeCode="&quot;MessagingStock.Features.Cancel&quot;" FeatureDefaultText="&quot;Cancel&quot;" />
     </MenuButton>
   </MenuButtons>
   <DataContracts />
