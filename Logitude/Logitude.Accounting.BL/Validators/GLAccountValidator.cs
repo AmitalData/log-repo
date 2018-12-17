@@ -209,7 +209,7 @@ namespace Logitude.Accounting.BL.Validators
             //Check parent
             if (!string.IsNullOrWhiteSpace(myGLAccountPM.ParentAccountId))
             {
-                string errorMessage = CheckParent(myGLAccountPM.Id, myGLAccountPM.ParentAccountId, myGLAccountPM.Tenant);
+                string errorMessage = CheckParent(myGLAccountPM, myGLAccountPM.ParentAccountId, myGLAccountPM.Tenant);
                 if (!string.IsNullOrEmpty(errorMessage))
                     return new ValidationResult(errorMessage);
             }
@@ -348,11 +348,10 @@ namespace Logitude.Accounting.BL.Validators
             }
         }
 
-        public static string CheckParent(string glaccountId, string parentId, int tenant)
+        public static string CheckParent(GLAccountPM glaccountPM, string parentId, int tenant)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
             GLAccountQueryService query = new GLAccountQueryService(accountingContext);
-            GLAccountPM glaccountPM = query.GetSingle(glaccountId, false, true);
             GLAccountPM parentPM = query.GetSingle(parentId, false, true);
 
             if (parentPM == null || glaccountPM == null)
