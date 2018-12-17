@@ -128,7 +128,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 BaldarHp = _DeclarationPM.AgentId,
                 OpenBaldarAwbDate = CourierGWMessageECTHRDataMamanRequestService.GetOpenBaldarAwbDate(this._DeclarationPM),
                 SpSpclCode= SpecialCode,
-                 SpLabel1= 
+                /// SpLabel1= 
 
             };
         }
