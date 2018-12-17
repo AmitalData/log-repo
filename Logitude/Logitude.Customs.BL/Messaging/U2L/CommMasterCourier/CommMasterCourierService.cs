@@ -160,7 +160,24 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 {
                     _CourierMasterPM.PackageQuantity = packageQuantity;
                 }
-                _CourierMasterPM.EstimatedArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.EstimatedArrivalDate, "LogitudeMasterCourier.EstimatedArrivalDate");
+                DateTime temp;
+                if (DateTime.TryParse(_LogitudeMasterCourier.EstimatedArrivalDate, out temp))
+                {
+                    _CourierMasterPM.EstimatedArrivalDate = temp;
+                }
+                else
+                {
+                    _CourierMasterPM.EstimatedArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.EstimatedArrivalDate, "LogitudeMasterCourier.EstimatedArrivalDate");
+                }
+                if (DateTime.TryParse(_LogitudeMasterCourier.DepartureDate, out temp))
+                {
+                    _CourierMasterPM.DepartureDate = temp;
+                }
+                else
+                {
+                    _CourierMasterPM.DepartureDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.DepartureDate, "LogitudeMasterCourier.DepartureDate");
+                }
+
                 _CourierMasterPM.GatewayPortCode = TranslateInternationalSite(_LogitudeMasterCourier.GatewayPortCode);
                 _CourierMasterPM.OriginPortCode = TranslateInternationalSite(_LogitudeMasterCourier.OriginPortCode);
                 _CourierMasterPM.Tenant = ResolvedTenant();

@@ -20,19 +20,23 @@ using System.Xml.Serialization;
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/LOGIMASTERCOUR")]
-[System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/LOGIMASTERCOUR", IsNullable=false)]
-public partial class LOGIMASTERCOUR {
-    
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGIMASTERCOUR")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGIMASTERCOUR", IsNullable = false)]
+public partial class LOGIMASTERCOUR
+{
+
     private LogitudeMasterCourier[] logitudeMasterCourierField;
-    
+
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("LogitudeMasterCourier")]
-    public LogitudeMasterCourier[] LogitudeMasterCourier {
-        get {
+    public LogitudeMasterCourier[] LogitudeMasterCourier
+    {
+        get
+        {
             return this.logitudeMasterCourierField;
         }
-        set {
+        set
+        {
             this.logitudeMasterCourierField = value;
         }
     }
@@ -43,114 +47,157 @@ public partial class LOGIMASTERCOUR {
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/LOGIMASTERCOUR")]
-[System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/LOGIMASTERCOUR", IsNullable=false)]
-public partial class LogitudeMasterCourier {
-    
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGIMASTERCOUR")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGIMASTERCOUR", IsNullable = false)]
+public partial class LogitudeMasterCourier
+{
+
     private string airlineIdField;
-    
+
     private string mAWBField;
-    
+
     private string hAWBField;
-    
+
     private string estimatedArrivalDateField;
-    
+
+    private string departureDateField;
+
     private string gatewayPortCodeField;
-    
+
     private string originPortCodeField;
-    
+
     private string packageQuantityTyField;
-    
+
     private string grossMassMeasureField;
-    
+
     private string tenantField;
-    
+
     /// <remarks/>
-    public string AirlineId {
-        get {
+    public string AirlineId
+    {
+        get
+        {
             return this.airlineIdField;
         }
-        set {
+        set
+        {
             this.airlineIdField = value;
         }
     }
-    
+
     /// <remarks/>
-    public string MAWB {
-        get {
+    public string MAWB
+    {
+        get
+        {
             return this.mAWBField;
         }
-        set {
+        set
+        {
             this.mAWBField = value;
         }
     }
-    
+
     /// <remarks/>
-    public string HAWB {
-        get {
+    public string HAWB
+    {
+        get
+        {
             return this.hAWBField;
         }
-        set {
+        set
+        {
             this.hAWBField = value;
         }
     }
-    
+
     /// <remarks/>
-    public string EstimatedArrivalDate {
-        get {
+    public string EstimatedArrivalDate
+    {
+        get
+        {
             return this.estimatedArrivalDateField;
         }
-        set {
+        set
+        {
             this.estimatedArrivalDateField = value;
         }
     }
-    
+
     /// <remarks/>
-    public string GatewayPortCode {
-        get {
+    public string DepartureDate
+    {
+        get
+        {
+            return this.departureDateField;
+        }
+        set
+        {
+            this.departureDateField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string GatewayPortCode
+    {
+        get
+        {
             return this.gatewayPortCodeField;
         }
-        set {
+        set
+        {
             this.gatewayPortCodeField = value;
         }
     }
-    
+
     /// <remarks/>
-    public string OriginPortCode {
-        get {
+    public string OriginPortCode
+    {
+        get
+        {
             return this.originPortCodeField;
         }
-        set {
+        set
+        {
             this.originPortCodeField = value;
         }
     }
-    
+
     /// <remarks/>
-    public string PackageQuantityTy {
-        get {
+    public string PackageQuantityTy
+    {
+        get
+        {
             return this.packageQuantityTyField;
         }
-        set {
+        set
+        {
             this.packageQuantityTyField = value;
         }
     }
-    
+
     /// <remarks/>
-    public string GrossMassMeasure {
-        get {
+    public string GrossMassMeasure
+    {
+        get
+        {
             return this.grossMassMeasureField;
         }
-        set {
+        set
+        {
             this.grossMassMeasureField = value;
         }
     }
-    
+
     /// <remarks/>
-    public string Tenant {
-        get {
+    public string Tenant
+    {
+        get
+        {
             return this.tenantField;
         }
-        set {
+        set
+        {
             this.tenantField = value;
         }
     }
