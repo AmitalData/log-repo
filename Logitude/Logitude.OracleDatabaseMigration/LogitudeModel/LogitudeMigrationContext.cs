@@ -900,6 +900,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<SeizureFactorType> SeizureFactorType { get; set; }
         public IDbSet<MamanSpecialAction> MamanSpecialAction { get; set; }
         public IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatus { get; set; }
+        public IDbSet<DeclarationMamanSpecialAction> PendingDeclarationMamanSpecialActionErrorPlace { get; set; }
 
         #endregion
 
@@ -3903,6 +3904,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SeizureFactorTypeMap());
             modelBuilder.Configurations.Add(new MamanSpecialActionMap());
             modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
+            modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
 
             #endregion
 

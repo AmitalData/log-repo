@@ -33,8 +33,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
      [Key]
         [Column("SeizureLinoNo" ,Order = 3)]
 	    public int SeizureLinoNo { get; set; }
+        [ForeignKey("SeizureFactorType")]
         [Column("SeizureFactorCode")]
 	    public string SeizureFactorCode { get; set; }
+	      
+        public virtual SeizureFactorType SeizureFactorType { get; set; }
         [ForeignKey("SeizureMethodType")]
         [Column("SeizureMethodCode")]
 	    public string SeizureMethodCode { get; set; }

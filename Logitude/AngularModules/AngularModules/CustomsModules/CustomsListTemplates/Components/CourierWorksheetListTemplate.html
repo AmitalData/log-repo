@@ -75,6 +75,38 @@
         cursor: pointer;
     }
 
+    .A-button-drop-menu {
+        background: #343434;
+        color: #eee;
+        height: 35px;
+        border-bottom: 4px solid #eeeded
+    }
+
+    A-button-drop-menu li {
+        float: left;
+        display: inline;
+        position: relative;
+        font: bold 12px Arial;
+        text-shadow: 0 -1px 0 #000;
+        border-right: 1px solid #444;
+        border-left: 1px solid #111;
+        text-transform: uppercase
+    }
+
+    .A-button-drop-menu li span:hover {
+        background: #D3D3D3;
+        cursor: pointer;
+    }
+
+    .A-button-drop-menu ul.A-button-drop-menu .submenu {
+        display: none;
+        position: absolute;
+        left: 180px;
+        background: #111;
+        top: 0;
+        width: 180px;
+    }
+
      .LogitudeCheckBox input:focus  {
         border: 1px solid #3BB3E2;
     }
@@ -167,9 +199,7 @@
                 </div>
 
                 <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();">
-                    <!--<div style="width:30px;height:30px">
-                    <div>-->
-                    <ul class="P-button-drop-menu" style="width:100px; ">
+                    <ul class="P-button-drop-menu" style="width:110px; ">
                         <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
                             <span>הזנת Pending</span>
                         </li>
@@ -179,9 +209,24 @@
                         <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
                             <span>מחיקת Pending</span>
                         </li>
+
+                        <li class='has-submenu'>
+                            <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose();">
+                                <ul class="P-button-drop-menu" style="width:110px; ">
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                        <span>הפקת תעודת עיכוב</span>
+                                    </li>
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                        <span>מדבקה</span>
+                                    </li>
+                                    <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                                        <span>הדפסת מסמכים</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
-                    <!--</div>
-                    </div>-->
+
                 </div>
             </courier-filter-button>
         </div>

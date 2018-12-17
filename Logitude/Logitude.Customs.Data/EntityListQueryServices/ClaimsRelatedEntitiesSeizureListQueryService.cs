@@ -30,8 +30,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          SeizureLinoNo = a.SeizureLinoNo,
                                               SeizureAmount = a.SeizureAmount,
                                               SeizureFactorCode = a.SeizureFactorCode,
+                                              SeizureFactorName = a.SeizureFactorType != null ? a.SeizureFactorType.LocalName : null,
                                               SeizureMethodCode = a.SeizureMethodCode,
-		                    	            });
+                                              SeizureMethodName = a.SeizureMethodType != null ? a.SeizureMethodType.LocalName : null,
+                                            });
             return query;
 		}
 

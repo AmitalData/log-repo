@@ -42,7 +42,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SeizureFactorCode, 
 	         SeizureMethodCode, 
 	         SeizureMethodName, 
-	         SeizureAmount,
+	         SeizureAmount, 
+	         SeizureFactorName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -264,13 +264,27 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     checkImportersVisibility() {
         if (this.IsDisplayOnly) return;
 
-        if (!AppTool.IsNullOrEmpty(this.ImporterCode))
-            if (this.ImporterCode.includes("F") || this.ImporterCode.includes("P")) {
-                this.IsImporerCodeEnabled = false;
-                this.UIProperties.SetEnabled("ImporterCode", this.ObjectTableName, true);
-                this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, true);
+        if (this.EntityPM.IsCourierDeclaration) {
+            this.IsImporerCodeEnabled = true;
+            //if (!AppTool.IsNullOrEmpty(this.ImporterCode))
+            //    if (this.ImporterCode.includes("F") || this.ImporterCode.includes("P")) {
+            //        this.IsImporerCodeEnabled = false;
+            this.UIProperties.SetEnabled("ImporterCode", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, true);
+        } else {
+            this.IsImporerCodeEnabled = AppTool.IsNullOrEmpty(this.EntityPM.ImporterName) && AppTool.IsNullOrEmpty(this.EntityPM.ImporterAddress);
+            if (!AppTool.IsNullOrEmpty(this.ImporterCode)) {
+                this.IsImporerCodeEnabled = true;
+                if (this.ImporterCode.includes("F") || this.ImporterCode.includes("P")) {
+                    this.IsImporerCodeEnabled = false;
+                    //if (!AppTool.IsNullOrEmpty(this.ImporterCode))
+                    //    if (this.ImporterCode.includes("F") || this.ImporterCode.includes("P")) {
+                    //        this.IsImporerCodeEnabled = false;
+                    this.UIProperties.SetEnabled("ImporterCode", this.ObjectTableName, true);
+                    this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, true);
+                }
             }
-
+        }
         if (!AppTool.IsNullOrEmpty(this.TransferImporterCode))
             if (this.TransferImporterCode.includes("F") || this.TransferImporterCode.includes("P")) {
                 this.IsTransferImporterEnabled = false;
@@ -404,21 +418,25 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             this.EntityPM.ImporterPassportNumber = null;
            // this.EntityPM.ImporterName = null;
             this.EntityPM.ImporterPassCountryCode = null;
+            if (!this.EntityPM.IsCourierDeclaration) {
+                this.EntityPM.ImporterName = "";//
 
-            this.EntityPM.ImporterName = "";//
-
-            this.EntityPM.CasualImporterAddress1 = "";
-            this.EntityPM.CasualImporterAddress2 = "";
-            this.EntityPM.CasualImporterCity = "";
-            this.EntityPM.CasualImporterZipCode = "";
-            this.EntityPM.CasualImporterFax = "";
-            this.EntityPM.CasualImporterEmail = "";
-            this.EntityPM.CasualImporterTel = "";
-            this.EntityPM.CasualImporterContact = "";
+                this.EntityPM.CasualImporterAddress1 = "";
+                this.EntityPM.CasualImporterAddress2 = "";
+                this.EntityPM.CasualImporterCity = "";
+                this.EntityPM.CasualImporterZipCode = "";
+                this.EntityPM.CasualImporterFax = "";
+                this.EntityPM.CasualImporterEmail = "";
+                this.EntityPM.CasualImporterTel = "";
+                this.EntityPM.CasualImporterContact = "";
+            }
 
         }
 
-
+        if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode) && !AppTool.IsNullOrEmpty(this.EntityPM.ImporterName)) {
+            this.CalculatedImporterName = this.EntityPM.ImporterName;
+        }
+        
     }
 
     public get CalculatedImporterName() {
@@ -428,7 +446,9 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         return this.EntityPM.CalculatedImporterName;
 
     }
-    public set CalculatedImporterName(newValue: string) { this.EntityPM.CalculatedImporterName = newValue; }
+    public set CalculatedImporterName(newValue: string) {
+        this.EntityPM.CalculatedImporterName = newValue;
+    }
 
     public get TransferImporterCode() {
         return this.EntityPM.TransferImporterCode;
@@ -517,7 +537,13 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 case 'Importer': {
                     this.ImporterCode = client.Code;
                     this.EntityPM.ImporterId = client.Id;
-                    this.CalculatedImporterName = AppTool.IsNullOrEmpty(client) ? "" : client.FullName;
+                    //this.CalculatedImporterName = AppTool.IsNullOrEmpty(client) ? "" : client.FullName;
+                    if (AppTool.IsNullOrEmpty(client)) {
+                        this.CalculatedImporterName = this.EntityPM.ImporterName;
+                    } else {
+                        this.CalculatedImporterName = client.FullName;
+                    }
+                    
                     break;
                 }
                 case 'Transfer': {
@@ -559,7 +585,10 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             switch (type) {
                 case 'Importer': {
                     this.EntityPM.ImporterId = "";
-                    this.CalculatedImporterName = "";
+                    //this.CalculatedImporterName = "";
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)) {
+                        this.CalculatedImporterName = this.EntityPM.ImporterName;
+                    }
                     break;
                 }
                 case 'Transfer': {
@@ -888,6 +917,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                 this.IsEntitleImporterEnabled = true;
             }
         }
+        this.checkImportersVisibility()
     }
 
     //#endregion

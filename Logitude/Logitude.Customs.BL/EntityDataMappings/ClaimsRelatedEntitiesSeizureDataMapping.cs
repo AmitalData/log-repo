@@ -25,13 +25,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(ClaimsRelatedEntitiesSeizurePM entityPM, ClaimsRelatedEntitiesSeizure entityPOCO)
         {
-            CustomMappedPMProperties.Add(PMPropertyNames.SeizureMethodCode);
+            CustomMappedPMProperties.Add(PMPropertyNames.SeizureMethodName);
+            CustomMappedPMProperties.Add(PMPropertyNames.SeizureFactorName);
 
             if (entityPOCO.SeizureMethodCode != null)
             {
                 SeizureMethodTypeQueryService seizureMethodTypeQueryService = new SeizureMethodTypeQueryService(entityPOCO.Tenant);
                 SeizureMethodTypePM seizureMethodTypePM = seizureMethodTypeQueryService.GetSingle(entityPOCO.SeizureMethodCode, false, true);
                 entityPM.SeizureMethodName = seizureMethodTypePM.LocalName;
+            }
+
+            if (entityPOCO.SeizureFactorCode != null)
+            {
+                SeizureFactorTypeQueryService seizureFactorTypeQueryService = new SeizureFactorTypeQueryService(entityPOCO.Tenant);
+                SeizureFactorTypePM seizureFactorTypePM = seizureFactorTypeQueryService.GetSingle(entityPOCO.SeizureFactorCode, false, true);
+                entityPM.SeizureFactorName = seizureFactorTypePM.LocalName;
             }
         }
    }
