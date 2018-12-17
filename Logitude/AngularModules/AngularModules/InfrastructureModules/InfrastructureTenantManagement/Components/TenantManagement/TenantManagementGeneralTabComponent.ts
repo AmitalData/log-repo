@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, OnDestroy}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -100,6 +100,7 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
             this.UIProperties.SetEnabled("PackageCode", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("TTY", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsAWBStockPrepaid", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("IsINTTRAStockPrepaid", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsActive", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsSystemSupportEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsDistributorSupportEnabled", this.ObjectTableName, false);
@@ -413,6 +414,13 @@ export class TenantManagementGeneralTabComponent extends BaseComponent implement
     set IsAWBStockPrepaid(newValue: boolean) {
         if (this.EntityPM.IsAWBStockPrepaid != newValue) {
             this.EntityPM.IsAWBStockPrepaid = newValue;
+        }
+    }
+
+    get IsINTTRAStockPrepaid() { return this.EntityPM.IsINTTRAStockPrepaid; }
+    set IsINTTRAStockPrepaid(newValue: boolean) {
+        if (this.EntityPM.IsINTTRAStockPrepaid != newValue) {
+            this.EntityPM.IsINTTRAStockPrepaid = newValue;
         }
     }
 

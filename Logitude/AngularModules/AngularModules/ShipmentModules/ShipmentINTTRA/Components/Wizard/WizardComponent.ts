@@ -320,15 +320,13 @@ export class WizardComponent extends BaseComponent {
 
         this.myService.Validate(this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
 
-            var myResult: INTRAResult = myResponse.Result;
-
             if (myResponse.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                
+                SessionLocator.CurrentSession.StopBusyIndicator();                
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
             else {
+                var myResult: INTRAResult = myResponse.Result;
 
                 if (!this.IsDevelopment) {
                     this.IsLimited = myResult.IsLimited;
@@ -374,6 +372,13 @@ export class WizardComponent extends BaseComponent {
                                 if (myResult.Errors.length > 0) {
                                     this.ValidationErrorsList = myResult.Errors;
                                     SessionLocator.CurrentSession.StopBusyIndicator();
+                                }
+
+                                else if (myResult.HasStockError == true) {
+                                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                                    var messageWindow: MessageWindow = new MessageWindow();
+                                    messageWindow.Show("No Stock");
                                 }
 
                                 else {

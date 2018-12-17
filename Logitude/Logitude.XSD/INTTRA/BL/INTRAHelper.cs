@@ -83,25 +83,28 @@ namespace Logitude.XSD.INTTRA.BL
                 {
                     this.CheckStockValidity();
 
-                    this.DataContext.Build();
-
-                    INTTRADataBuilder dataBuilder = new INTTRADataBuilder(this.DataContext);
-
-                    INTTRA_Out.Message message = new INTTRA_Out.Message()
+                    if (!this.Result.HasStockError)
                     {
-                        Header = dataBuilder.GetHeader(),
+                        this.DataContext.Build();
 
-                        MessageBody = new INTTRA_Out.MessageBody()
+                        INTTRADataBuilder dataBuilder = new INTTRADataBuilder(this.DataContext);
+
+                        INTTRA_Out.Message message = new INTTRA_Out.Message()
                         {
-                            MessageDetails = dataBuilder.GetMessageDetails(),
+                            Header = dataBuilder.GetHeader(),
 
-                            MessageProperties = dataBuilder.GetMessageProperties(),
-                        }
-                    };
+                            MessageBody = new INTTRA_Out.MessageBody()
+                            {
+                                MessageDetails = dataBuilder.GetMessageDetails(),
 
-                    this.SendXMLFile(message);
-                    this.UpdateStock();
-                    this.SaveChanges();
+                                MessageProperties = dataBuilder.GetMessageProperties(),
+                            }
+                        };
+
+                        this.SendXMLFile(message);
+                        this.UpdateStock();
+                        this.SaveChanges();
+                    }
                 }
             }
         }
