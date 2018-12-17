@@ -1,4 +1,4 @@
-﻿
+﻿#define  waitTillMiritWillCreateDBAndScreen
 //https://maman.wsfreeze.co.il/WebAPIExt/Help/Api/POST-api-baldar-CreateECSpclMessgae
 //https://docs.google.com/document/d/11_pcjrqx4f8pQBUnz2JMZDhxl4b23dRBRYdl4XKLd-I/edit
 
@@ -46,17 +46,19 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 
 
-#if waitTillMiritWillCreateDBAndScreen
-
-            //בעת שליחת המסר תבוצע שליפה של טבלת DeclarationMamanSpecialAction לפי מפתח הצהרה + קוד פעולה מיוחדת, והנתונים יישלחו לפי קוד פעולה שהמשתמש בחר + נתונים מ DB של הצהרה + DeclarationMamanSpecialAction
-            var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(context);
-            var pmDeclarationMamanSpecialAction =declarationMamanSpecialActionQueryService.GetSingle(settings.Tenant, settings.DeclarationId,  responeECSpclMamanData.SpSpclCode);
-
-#endif
 
 
             LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(ResponseStatusCode={responeECSpclMamanData.ResponseStatusCode},{responeECSpclMamanData.ResponseStatusMsg})");
             var context = CustomContext.GetContext(settings.Tenant);
+#if waitTillMiritWillCreateDBAndScreen
+
+            //בעת שליחת המסר תבוצע שליפה של טבלת DeclarationMamanSpecialAction לפי מפתח הצהרה + קוד פעולה מיוחדת, והנתונים יישלחו לפי קוד פעולה שהמשתמש בחר + נתונים מ DB של הצהרה + DeclarationMamanSpecialAction
+            var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(settings.Tenant);
+            var pmDeclarationMamanSpecialAction = declarationMamanSpecialActionQueryService.GetSingle(settings.DeclarationId, responeECSpclMamanData.SpSpclCode, false, false);
+
+#endif
+
+
             var myDeclarationQueryService = new DeclarationQueryService(context);
             var myCourierMasterQueryService = new CourierMasterQueryService(context);
             var declarationPM = myDeclarationQueryService.GetSingle(settings.DeclarationId, false, false);
@@ -105,38 +107,48 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {
 #if waitTillMiritWillCreateDBAndScreen
 
-            pmDeclarationMamanSpecialAction.MamanSpecialActionsErrorXml =  MamanSpecialActionsErrorXml
+                pmDeclarationMamanSpecialAction.MamanSpecialActionsErrorXml = MamanSpecialActionsErrorXml;
 
-                var myDeclarationMamanSpecialAction = new DeclarationMamanSpecialActionService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
-                myDeclarationMamanSpecialAction.Update(declarationPM, true);
+                var myDeclarationMamanSpecialAction = new DeclarationMamanSpecialActionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
+                pmDeclarationMamanSpecialAction.MamanSpecialActionsErrorXml = MamanSpecialActionsErrorXml;
 #endif
                 if (!mamanResponseSuccesed)
                 {
                     //update Failed Status  + message !!!
+                    pmDeclarationMamanSpecialAction.MamanSpecialActionStatusCode = "2";//2   Error   2,error
+
+
+                    pmDeclarationMamanSpecialAction.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 }
                 else
                 {
                     if (toCancel)
                     {
                         // delete record myDeclarationMamanSpecialAction
+                        pmDeclarationMamanSpecialAction.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
                         // Create FUStatus Delete 
                     }
                     else
                     {
                         // update record myDeclarationMamanSpecialAction = for status
+                        //update Failed Status  + message !!!
+                        pmDeclarationMamanSpecialAction.MamanSpecialActionStatusCode = "1";//1   Valid   1,valid
+                        pmDeclarationMamanSpecialAction.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         // Create FUStatus 
-                        var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
-                        unifreightFUStatusTaskService.UpsertFUStatusLE2U(settings.Tenant, settings.LoggedContactId, new UnifreightFUStatusParam()
-                        {
-                            Entname = "CFIFILEM",
-                            PrimaryNum = declarationPM.CustomFileNo,
-                            Mode = unifreightEventMode,
-                            StatusCode = cfifilmFUStatus,
-                            StatusRemarks = MamanSpecialActionsErrorXml,
-
-                        });
                     }
+                    var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
+                    unifreightFUStatusTaskService.UpsertFUStatusLE2U(settings.Tenant, settings.LoggedContactId, new UnifreightFUStatusParam()
+                    {
+                        Entname = "CFIFILEM",
+                        PrimaryNum = declarationPM.CustomFileNo,
+                        Mode = unifreightEventMode,
+                        StatusCode = cfifilmFUStatus,
+                        StatusRemarks = MamanSpecialActionsErrorXml,
+
+                    });
+
                 }
+                myDeclarationMamanSpecialAction.Update(pmDeclarationMamanSpecialAction, true);
 
                 scope.Complete();
             }

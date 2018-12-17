@@ -1,4 +1,4 @@
-﻿#undef waitTillMiritWillCreateDBAndScreen
+﻿#define waitTillMiritWillCreateDBAndScreen
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Logitude.Customs.BL.Messaging.Maman
 {
     
-    public enum MamanActionCode
+    public enum MamanActionCodeUpdateOrCancel
     {
         Upsert,
         Cancel
@@ -24,13 +24,15 @@ namespace Logitude.Customs.BL.Messaging.Maman
         /// <summary>
         /// קליטת עיכוב (ללא ששודרה קודם השהיה)
         /// </summary>
-        DelayIt = 2,
-        PrintLabels=4,
-        PrintDocuments=5
-
-
-
+        ReceivingDelayCertificate_DelayIt = 2,
+        StickerPrinting =4,
+        PrintDocuments= 5
+//2	קליטה תעודת עיכוב	2, קליטה תעודת עיכוב Receiving a delay certificate	0
+//4	הדפסת מדבקה	4, הדפסת מדבקה   Sticker Printing	0
+//5	הדפסת מסמכים	5, הדפסת מסמכים  Printing Documents	0
     }
+
+
     public class CourierGWMessageECSpclMamanRequestService
     {
         private DeclarationPM _DeclarationPM;
@@ -40,13 +42,13 @@ namespace Logitude.Customs.BL.Messaging.Maman
         public static string TestSend()
         {
             var courierGWMessageECSpclMamanRequestService =new CourierGWMessageECSpclMamanRequestService();
-            string actionResultString =courierGWMessageECSpclMamanRequestService.BuildQueueSendWebAPI("1-115843", 1, MamanActionCode.Upsert, MamanSpecialCode.PrintLabels);
+            string actionResultString =courierGWMessageECSpclMamanRequestService.BuildQueueSendWebAPI("1-115843", 1, MamanActionCodeUpdateOrCancel.Upsert, MamanSpecialCode.StickerPrinting );
             return actionResultString;
         }
 
         public string BuildQueueSendWebAPI(
             string declarationId, int tenant,
-            MamanActionCode mamanActionCode,
+            MamanActionCodeUpdateOrCancel mamanActionCode,
             MamanSpecialCode mamanSpecialCode
             /*CourierMasterPM courierMasterPM = null*/)
         {
@@ -68,11 +70,11 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             //בעת שליחת המסר תבוצע שליפה של טבלת DeclarationMamanSpecialAction לפי מפתח הצהרה + קוד פעולה מיוחדת, והנתונים יישלחו לפי קוד פעולה שהמשתמש בחר + נתונים מ DB של הצהרה + DeclarationMamanSpecialAction
             var declarationMamanSpecialActionQueryService = new DeclarationMamanSpecialActionQueryService(context);
-            var pmDeclarationMamanSpecialAction =declarationMamanSpecialActionQueryService.GetSingle(declarationId,  ((int)mamanSpecialCode).ToString());
+            var pmDeclarationMamanSpecialAction =declarationMamanSpecialActionQueryService.GetSingle(declarationId,  ((int)mamanSpecialCode).ToString(),false,false);
 
 #endif
 
-            ECSpclMamanMessage myECSpclMamanData = CreateCourierECSpclMamanMessage(mamanActionCode,mamanSpecialCode);
+            ECSpclMamanMessage myECSpclMamanData = CreateCourierECSpclMamanMessage(pmDeclarationMamanSpecialAction, mamanActionCode, mamanSpecialCode);
             string messageToMaman = "";
             messageToMaman = ProxyUtil.JsonConvertSerialize(myECSpclMamanData);
             using (var scop = TransactionFactory.GetTransaction())
@@ -93,42 +95,48 @@ namespace Logitude.Customs.BL.Messaging.Maman
         }
 
         private ECSpclMamanMessage CreateCourierECSpclMamanMessage(
-            MamanActionCode mamanActionCode,
+            DeclarationMamanSpecialActionPM pmDeclarationMamanSpecialAction,
+            MamanActionCodeUpdateOrCancel mamanActionCode,
             MamanSpecialCode mamanSpecialCode)
         {
-            string actionCode = "";
+            string mamanActionCodeUpdateOrCancel = "";
             switch (mamanActionCode)
             {
-                case MamanActionCode.Upsert:
-                    actionCode = "C";
+                case MamanActionCodeUpdateOrCancel.Upsert:
+                    mamanActionCodeUpdateOrCancel = "U";
                     break;
-                case MamanActionCode.Cancel:
-                    actionCode = "U";
+                case MamanActionCodeUpdateOrCancel.Cancel:
+                    mamanActionCodeUpdateOrCancel = "C";
                     break;
                 
             }
-            string SpecialCode = "";
+            string mamanSpecialActionCode = "";
             switch (mamanSpecialCode)
             {
-                case MamanSpecialCode.DelayIt:
-                    SpecialCode = "2";
+                case MamanSpecialCode.ReceivingDelayCertificate_DelayIt:
+                    mamanSpecialActionCode = "2";
                     break;
-                case MamanSpecialCode.PrintLabels:
-                    SpecialCode = "4";
+                case MamanSpecialCode.StickerPrinting :
+                    mamanSpecialActionCode = "4";
                     break;
                 case MamanSpecialCode.PrintDocuments:
-                    SpecialCode = "5";
+                    mamanSpecialActionCode = "5";
                     break;
              
             }
             return new ECSpclMamanMessage()
             {
-                ActionCode = actionCode,
+                ActionCode = mamanActionCodeUpdateOrCancel,
                 BaldarAwb = _DeclarationPM.CourierHAWB,
                 BaldarHp = _DeclarationPM.AgentId,
                 OpenBaldarAwbDate = CourierGWMessageECTHRDataMamanRequestService.GetOpenBaldarAwbDate(this._DeclarationPM),
-                SpSpclCode= SpecialCode,
-                /// SpLabel1= 
+                SpSpclCode = mamanSpecialActionCode,
+                SpLabel1 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText1 : null,
+                SpLabel2 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText2 : null,
+                SpLabel3 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText3 : null,
+                SpLabel4 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText4 : null,
+                SpLabel5 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText5 : null,
+
 
             };
         }
