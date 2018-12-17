@@ -21,6 +21,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomerTenantAccessRepository repository;
 
+    
+
         public CustomerTenantAccessQuery()
         {
             repository = new CustomerTenantAccessRepository();
@@ -326,8 +328,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
+      
+        public IQueryable<CustomerTenantAccessList> GetCustomerTenantAccessesByImporterVat(string ImporterVat)
+        {
 
+            IQueryable<CustomerTenantAccessList> results = (from a in repository.context.CustomerTenantAccesses
+                                                            where a.CompanyVat == ImporterVat
+                                                            select new CustomerTenantAccessList()
+                                                            {
+                                                                Id = a.Id,
+                                                                CustomerTenant = a.CustomerTenant,
 
+                                                            });
+            return results;
+        }
 
 
     }

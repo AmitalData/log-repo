@@ -384,10 +384,10 @@ namespace MeatadataGeneratorTool
             }
             TabsObsList.Clear();
 
-
-            foreach (var item in Tabs)
+            int index = 0;
+            foreach (var item in Tabs.OrderBy(t => t.IndexOrder))
             {
-                TabsObsList.Insert(item.IndexOrder, item);
+                TabsObsList.Insert(index++, item);
             }
 
 
@@ -410,10 +410,11 @@ namespace MeatadataGeneratorTool
             }
             MenuButtonsObsList.Clear();
 
-
-            foreach (var item in MenuButtons)
+            int index = 0;
+            foreach (var item in MenuButtons.OrderBy(m=>m.IndexOrder))
             {
-                MenuButtonsObsList.Insert(item.IndexOrder, item);
+                MenuButtonsObsList.Insert(index, item);
+                index++;
             }
 
 
@@ -1519,12 +1520,12 @@ namespace MeatadataGeneratorTool
                 ObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsDeleted = true;
                 TempObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsDeleted = true;
                 ObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsChecked = true;
-                //ObsList.Remove(selected);
-                //TempObsList.Remove(selected);
-                
+                ObsList.Remove(selected);
+                TempObsList.Remove(selected);
 
-                //FirePropertyChanged("ObsList");
-                //FirePropertyChanged("TempObsList");
+
+                FirePropertyChanged("ObsList");
+                FirePropertyChanged("TempObsList");
 
                 this.SetLookUpFieldsList();
 

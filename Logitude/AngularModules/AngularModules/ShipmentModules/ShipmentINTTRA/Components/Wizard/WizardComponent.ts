@@ -319,8 +319,9 @@ export class WizardComponent extends BaseComponent {
         SessionLocator.CurrentSession.StartBusyIndicator("Sending...");
 
         this.myService.Validate(this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
+
             if (myResponse.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();                
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
@@ -371,6 +372,13 @@ export class WizardComponent extends BaseComponent {
                                 if (myResult.Errors.length > 0) {
                                     this.ValidationErrorsList = myResult.Errors;
                                     SessionLocator.CurrentSession.StopBusyIndicator();
+                                }
+
+                                else if (myResult.HasStockError == true) {
+                                    SessionLocator.CurrentSession.StopBusyIndicator();
+
+                                    var messageWindow: MessageWindow = new MessageWindow();
+                                    messageWindow.Show("No Stock");
                                 }
 
                                 else {

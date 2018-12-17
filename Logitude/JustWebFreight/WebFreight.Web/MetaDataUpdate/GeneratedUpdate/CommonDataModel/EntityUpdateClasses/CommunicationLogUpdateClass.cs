@@ -2453,7 +2453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   MenuButton CommunicationLogMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "Resend",
-						Index = 0, 
+						Index = 2, 
 						IsActive = true,
 						LabelTextCodeCode = "CommunicationLog.B.Resend",
 						LabelTextCodeDefaultText = "Resend",
@@ -2486,7 +2486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   MenuButton CommunicationLogMenuButton10 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "ViewMessage",
-						Index = 0, 
+						Index = 3, 
 						IsActive = true,
 						LabelTextCodeCode = "CommunicationLog.B.Message",
 						LabelTextCodeDefaultText = "View Message",

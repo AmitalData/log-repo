@@ -31,7 +31,7 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
 
     constructor(private cd: ChangeDetectorRef) {
         super();
-        this.IsCustomerCare = true; //SessionLocator.LoggedUserPM.IsCustomerCare;
+        this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
 
     }
 

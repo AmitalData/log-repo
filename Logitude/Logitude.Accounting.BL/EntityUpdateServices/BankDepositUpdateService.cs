@@ -103,10 +103,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 email = "system@tenant" + entityPM.Tenant + ".com";
             }
             string myLoggedUserId = null;
+            bool showLocal = false;
+
             Contact contact = contactRep.GetSingleContactByEmail(email, entityPM.Tenant);
             if (contact != null)
             {
                 myLoggedUserId = contact.Id;
+                showLocal = !contact.DontShowLocalLabels;
             }
             entityPM.UpdatedByUserId = myLoggedUserId;
 
@@ -118,14 +121,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //entityPM.SearchFields = entityPM.CashBookName + "," + entityPM.DepositNumber + "," + entityPM.JournalNumber + "," + entityPM.DepositCurrencyCode;
             
 
-          if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert) //New Deposit
+          if (entityPM.ChangeSetOp == ChangeSetOperation.Insert) //New Deposit
             {
                 ARPaymentChequeQueryService arpChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
 
 
                 if (entityPM.ForeignAmount > cashBook.TotalAmount)
                 {
-                    throw new ApplicationException("Deposit Amount must be less than Cashbook total");
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositAmountmustbelessthanCashbook",0,showLocal));
                 }
 
                 BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(entityPM.Tenant);
@@ -368,7 +371,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     if (entityPM.ForeignAmount > cashBook.TotalAmount)
                     {
-                        throw new ApplicationException("Deposit Amount must be less than Cashbook total");
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositAmountmustbelessthanCashbook", 0, showLocal));
                     }
 
                     GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
@@ -629,6 +632,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
+            // GET logged contact, RTL
+            ContactPM contact = GetLoggedContact(tenant);
+            bool showLocals = !contact.DontShowLocal;
+
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 //
@@ -730,7 +737,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                         if (chequePM != null)
                         {
-                            chequePM.StatusCode = "1"; // 1- In Cashbook
+                            //Task 44665: Cancel Deposits : check Cheque Status before canceling the deposit
+                            if (chequePM.StatusCode == "6") // 6- Redeemed
+                            {
+                                throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositCancelChequeMSG", tenant, showLocals));
+                            }
+                            else
+                            {
+                                chequePM.StatusCode = "1"; // 1- In Cashbook
+                            }
                         }
                         else
                         {
@@ -754,6 +769,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return bankDeposit;
 
         }
+
+        private ContactPM GetLoggedContact(int tenant)
+        {
+            //email
+            string email = "";
+            if (HttpContext.Current != null)
+                email = HttpContext.Current.User.Identity.Name;
+            else
+                email = "system@tenant" + tenant.ToString() + ".com";
+
+            //contact
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            ContactPM contactPM = contactQuery.GetContactByEmailOnly(email, tenant);
+            return contactPM;
+        }
+
 
     }
 }

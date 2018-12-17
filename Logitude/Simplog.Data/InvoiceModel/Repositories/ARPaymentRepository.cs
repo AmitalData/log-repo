@@ -49,6 +49,19 @@ namespace Simplog.Data.InvoiceModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public List<string> GetCardIdsFromPayments(List<string> ids, int tenant)
+        {
+            List<string> list = new List<string>();
+
+            if (ids.Count > 0)
+            {
+                list = (from a in context.ARPayments
+                        where a.Tenant == tenant && ids.Contains(a.Id) && a.StatusCode != "VD"
+                        select a.BillToId).ToList();
+            }
+
+            return list;
+        }
 
         public IQueryable<ARPayment> GetDraftsARPayments(int tenant)
         {

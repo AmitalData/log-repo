@@ -103,7 +103,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         //{
                         //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
-                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "BankAccountLite");
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -164,7 +163,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
-                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "BankAccountLite");
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);

@@ -704,7 +704,7 @@ export class ShipmentsComponent {
         logWindow.Width = 800;
         logWindow.Height = 550;
         logWindow.Title = "Messaging Stock";
-        logWindow.Show('./ShipmentModules/ShipmentStock/Components/AWBMessagingStock/StockWindowComponent');
+        logWindow.Show('./ShipmentModules/ShipmentStock/Components/MessagingStock/StockWindowComponent');
     }
     SendShipmentFSRClicked() {
         this._entityResourceService.getEntityResourceByTableName("Master").subscribe(response=> {

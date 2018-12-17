@@ -122,13 +122,13 @@ namespace Logitude.XSD
 
             else
             {
-                AWBStockUsageHistoryRepository usageHistoryRepository = new AWBStockUsageHistoryRepository(shipmentsContext);
-                IQueryable<AWBStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantAWBStockUsageHistory(myResult.Tenant);
+                MessagingStockUsageHistoryRepository usageHistoryRepository = new MessagingStockUsageHistoryRepository(shipmentsContext);
+                IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(myResult.Tenant);
 
                 int sendingCount = 0;
                 if (myShipment.ShipmentLevelCode == "H")
                 {
-                    AWBStockUsageHistory usageHistory = myUsageHistoryData.Where(d => d.EntityId == myResult.ShipmentId && d.MessageType == myResult.StockFHLCode).FirstOrDefault();
+                    MessagingStockUsageHistory usageHistory = myUsageHistoryData.Where(d => d.EntityId == myResult.ShipmentId && d.MessageType == myResult.StockFHLCode).FirstOrDefault();
                     if (usageHistory != null)
                     {
                         myResult.IsPrintingAllowed = true;
@@ -148,7 +148,7 @@ namespace Logitude.XSD
 
                 else
                 {
-                    AWBStockUsageHistory usageHistory = myUsageHistoryData.Where(d => d.EntityId == myResult.ShipmentId && d.MessageType == myResult.StockFWBCode).FirstOrDefault();
+                    MessagingStockUsageHistory usageHistory = myUsageHistoryData.Where(d => d.EntityId == myResult.ShipmentId && d.MessageType == myResult.StockFWBCode).FirstOrDefault();
                     if (usageHistory != null)
                     {
                         myResult.IsPrintingAllowed = true;
@@ -172,8 +172,8 @@ namespace Logitude.XSD
                     {
                         DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(myResult.Tenant);
                         DateTime todayDate = todayDateTime.Date;
-                        AWBMessagingStockRepository stockRepository = new AWBMessagingStockRepository(shipmentsContext);
-                        IQueryable<AWBMessagingStock> myStocksData = stockRepository.GetAWBMessagingStocksByTenant(myResult.Tenant);
+                        MessagingStockRepository stockRepository = new MessagingStockRepository(shipmentsContext);
+                        IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myResult.Tenant, "Champ");
 
                         myStocksData = myStocksData.Where(d => d.StartDate <= todayDate && d.EndDate > todayDate && d.Remaining > 0 && !d.IsCancelled);
                         if (myStocksData.Count() > 0)
@@ -200,11 +200,11 @@ namespace Logitude.XSD
                                     myMessageType = myResult.StockFHLCode;
                                 }
 
-                                AWBMessagingStock myStock = myStocksData.OrderBy(o => o.EndDate).FirstOrDefault();
+                                MessagingStock myStock = myStocksData.OrderBy(o => o.EndDate).FirstOrDefault();
 
-                                AWBStockUsageHistory usageHistory = new AWBStockUsageHistory()
+                                MessagingStockUsageHistory usageHistory = new MessagingStockUsageHistory()
                                 {
-                                    Id = IdCounter.GetNumber("AWBStockUsageHistory", myResult.Tenant),
+                                    Id = IdCounter.GetNumber("MessagingStockUsageHistory", myResult.Tenant),
                                     Tenant = myResult.Tenant,
                                     StockId = myStock.Id,
                                     EntityId = myShipment.Id,

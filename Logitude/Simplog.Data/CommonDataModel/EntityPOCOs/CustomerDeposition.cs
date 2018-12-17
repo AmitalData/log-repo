@@ -18,7 +18,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string DepositionNumber { get; set; }
         public DateTime? ValidityStartDate { get; set; }
         public DateTime? ValidityEndDate { get; set; }
-
+        public DateTime CreateDate { get; set; }
 
         [ForeignKey("CustomsShipperId")]
         public virtual CustomsShipper CustomsShipper { get; set; }

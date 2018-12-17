@@ -126,7 +126,8 @@
                 this.Category2Id ="";
                 this.Category3Id ="";
                 this.Category4Id ="";
-                this.Category5Id ="";
+                this.Category5Id = "";
+                this.AccountTypeCode = "2";
                 this.From =  lastMonth;
                 this.To = today;
                 this.IncludeChildAccounts = true;

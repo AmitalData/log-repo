@@ -60,7 +60,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleDWSubQuery(theEntityPm.Id, theEntityPm.Tenant);
-
+            this.entityPM.DWQueryId = this.Poco.DWQueryId;
 
             DWSubQueryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);

@@ -2661,7 +2661,7 @@ namespace WebFreight.Web.WebServices
                             packageline.PackageDescriptionOfGoods += Environment.NewLine;
                         }
 
-                        packageline.PackageDescriptionOfGoods += packageline.HSCode;
+                        packageline.PackageDescriptionOfGoods += "HS Code:" + packageline.HSCode;
                     }
 
                     if (string.IsNullOrEmpty(myDataProvider.GeneralPackageslinesDescriptionOfGoods))

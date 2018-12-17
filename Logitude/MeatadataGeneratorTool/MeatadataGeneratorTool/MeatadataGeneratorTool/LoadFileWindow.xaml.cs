@@ -34,8 +34,8 @@ namespace MeatadataGeneratorTool
             DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
             string solutionDirectory = solutionDir.FullName;
 
-            string dir = solutionDirectory.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
-
+            string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
+           
             // Create OpenFileDialog 
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 

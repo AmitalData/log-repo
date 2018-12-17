@@ -37,6 +37,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedIdCounter);
             bankAccountOnCreatingService.OnCreating(entityPM);
+
             Assert.AreEqual(expectedIdCounter, entityPM.Id);
 
         }
@@ -100,6 +101,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
         }
 
         [TestMethod]
+       
         public void OnCreating_SearchFieldsMatchesExpected_Success()
         {
             ContactPM loggedcontact = GetLoggedContactInstance();

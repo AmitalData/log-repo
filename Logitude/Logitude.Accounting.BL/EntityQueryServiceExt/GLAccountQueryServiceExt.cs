@@ -39,6 +39,19 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
            
         }
 
+        public GLAccountPM GetGLAccountByInternalNumber(string number, int tenant)
+        {
+            EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
+
+
+            GLAccountPM gLAccount = query.GetSinglePMByInternalNumber(number, tenant);
+
+            return gLAccount;
+
+
+
+        }
+
         public APIDataContract.ApiV1.GLAccount GLAccountDataMappingAndValidatin(GLAccountPM MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             APIDataContract.ApiV1.GLAccountQueryService query = new APIDataContract.ApiV1.GLAccountQueryService(Tenant);

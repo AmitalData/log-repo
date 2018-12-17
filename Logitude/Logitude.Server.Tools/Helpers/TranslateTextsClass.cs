@@ -230,8 +230,6 @@ namespace Logitude.Server.Tools.Helpers
 
             //return "! " + Result;
         }
-        //Yuval Chalup 14.04.2015 --->
-
 
         // moran 7.4.16 - AMI-55700 -->
         public static string GetRequiredFieldForTableMessageTranslation(string requiredTextCodeCode, string fieldName, string tableName, string entityReference, int tenant)

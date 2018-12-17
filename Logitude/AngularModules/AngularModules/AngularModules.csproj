@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -298,6 +298,7 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
+    <TypeScriptCompile Include="Accounting\Components\MenuButtons\OpenFormatReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
@@ -325,6 +326,14 @@
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\CustomerDepositionList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\CustomsShipperList.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\CustomerDepositionListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
+    <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\EditTabs\Audit\TicketAuditTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\EditTabs\Details\TicketDetailsTabComponent.ts" />
@@ -527,6 +536,9 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\TaxReportPMService.ts" />
     <TypeScriptCompile Include="Controls\Pipes\DateToMonthPipe.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\ActivitiesModule.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Activities\EditEntity\EditAppointment.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Activities\EditEntity\EditPhoneCall.ts" />
+    <TypeScriptCompile Include="e2e\CRM\Activities\EditEntity\EditTask.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\NewEntity\NewAppointment.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\NewEntity\NewPhoneCall.ts" />
     <TypeScriptCompile Include="e2e\CRM\Activities\NewEntity\NewTask.ts" />
@@ -1632,10 +1644,10 @@
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\PickupTabs\PickupPackagesChooseComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\PickupTabs\PickupPackagesTabComponent.html" />
     <Content Include="ShipmentModules\ShipmentRouting\Components\Routings\RoutingsTabComponent.html" />
-    <Content Include="ShipmentModules\ShipmentStock\Components\AWBMessagingStock\StockGeneralTabComponent.html" />
-    <Content Include="ShipmentModules\ShipmentStock\Components\AWBMessagingStock\StockHistoryComponent.html" />
-    <Content Include="ShipmentModules\ShipmentStock\Components\AWBMessagingStock\StockNewWizardComponent.html" />
-    <Content Include="ShipmentModules\ShipmentStock\Components\AWBMessagingStock\StockWindowComponent.html" />
+    <Content Include="ShipmentModules\ShipmentStock\Components\MessagingStock\StockGeneralTabComponent.html" />
+    <Content Include="ShipmentModules\ShipmentStock\Components\MessagingStock\StockHistoryComponent.html" />
+    <Content Include="ShipmentModules\ShipmentStock\Components\MessagingStock\StockNewWizardComponent.html" />
+    <Content Include="ShipmentModules\ShipmentStock\Components\MessagingStock\StockWindowComponent.html" />
     <Content Include="ShipmentModules\ShipmentStock\Components\FBLStock\FBLStackSelectionComponent.html" />
     <Content Include="ShipmentModules\ShipmentStock\Components\FBLStock\FBLStockFieldComponent.html" />
     <Content Include="ShipmentModules\ShipmentStock\Components\FBLStock\FBLStockMainComponent.html" />
@@ -5869,10 +5881,10 @@
     <TypeScriptCompile Include="ShipmentModules\ShipmentRouting\ModuleShipmentRouting.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentSharedManifest\ModuleShipmentSharedManifest.ts" />
-    <TypeScriptCompile Include="ShipmentModules\ShipmentStock\Components\AWBMessagingStock\StockGeneralTabComponent.ts" />
-    <TypeScriptCompile Include="ShipmentModules\ShipmentStock\Components\AWBMessagingStock\StockHistoryComponent.ts" />
-    <TypeScriptCompile Include="ShipmentModules\ShipmentStock\Components\AWBMessagingStock\StockNewWizardComponent.ts" />
-    <TypeScriptCompile Include="ShipmentModules\ShipmentStock\Components\AWBMessagingStock\StockWindowComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentStock\Components\MessagingStock\StockGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentStock\Components\MessagingStock\StockHistoryComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentStock\Components\MessagingStock\StockNewWizardComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentStock\Components\MessagingStock\StockWindowComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentStock\Components\FBLStock\FBLStackSelectionComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentStock\Components\FBLStock\FBLStockFieldComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentStock\Components\FBLStock\FBLStockMainComponent.ts" />
@@ -5931,12 +5943,17 @@
     <TypeScriptCompile Include="Shipment\EntityLists\CustomsTransmissionsStatusList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\FBLStockList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\INTTRADocumentTypeList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\MessagingStockList.ts" />
+    <TypeScriptCompile Include="Shipment\EntityLists\MessagingStockUsageHistoryList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\OBLTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\PickUpDeliveryTransportModeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsMessageTypeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ShipmentCustomsTransmissionList.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ContainerFollowUpPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\FBLStockPM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\MessagingStockPM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\MessagingStockUsageHistoryPM.ts" />
+    <TypeScriptCompile Include="Shipment\EntityPMs\PickUpDeliveryPackageHarmonizePM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentAssemblyPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentCustomsTransmissionPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentPackageHarmonizePM.ts" />
@@ -5952,6 +5969,7 @@
     <TypeScriptCompile Include="Shipment\Services\SplitShipmentService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ContainerFollowUpListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\INTTRADocumentTypeListService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardLists\MessagingStockListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\OBLTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\PickUpDeliveryTransportModeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentCustomsMessageTypeListService.ts" />
@@ -6693,7 +6711,6 @@
     <TypeScriptCompile Include="Shipment\EntityLists\AWBChargesCodeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\AWBCustomsInformationList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\AWBInformationList.ts" />
-    <TypeScriptCompile Include="Shipment\EntityLists\AWBMessagingStockList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\AWBOCIList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\AWBSpecialHandlingCodeList.ts" />
     <TypeScriptCompile Include="Shipment\EntityLists\ManifestStatusList.ts" />
@@ -6713,10 +6730,8 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\AWBChargesCodePM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\AWBCustomsInformationPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\AWBInformationPM.ts" />
-    <TypeScriptCompile Include="Shipment\EntityPMs\AWBMessagingStockPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\AWBOCIPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\AWBSpecialHandlingCodePM.ts" />
-    <TypeScriptCompile Include="Shipment\EntityPMs\AWBStockUsageHistoryPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\CommodityPackagePM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ConsoleShipmentPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\DocumentTypePM.ts" />
@@ -6734,7 +6749,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentReceivablePM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\SpecialServicesTypePM.ts" />
-    <TypeScriptCompile Include="Shipment\Components\MenuButtons\AWBMessagingStockMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Shipment\Components\MenuButtons\MessagingStockMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Shipment\Components\MenuButtons\ShipmentMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Shipment\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="Shipment\ModuleProviders.ts" />
@@ -6743,7 +6758,6 @@
     <TypeScriptCompile Include="Shipment\Services\StandardLists\AWBChargesCodeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\AWBCustomsInformationListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\AWBInformationListService.ts" />
-    <TypeScriptCompile Include="Shipment\Services\StandardLists\AWBMessagingStockListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\AWBSpecialHandlingCodeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ManifestStatusListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\OtherParticipantIdListService.ts" />
@@ -6755,7 +6769,7 @@
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentReceivableStatusListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\ShipmentTypeListService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardLists\SpecialServicesTypeListService.ts" />
-    <TypeScriptCompile Include="Shipment\Services\StandardPMs\AWBMessagingStockPMService.ts" />
+    <TypeScriptCompile Include="Shipment\Services\StandardPMs\MessagingStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\ShipmentPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\SpecialServicesTypePMService.ts" />
     <TypeScriptCompile Include="Shipment\Module_SHIP.ts" />
@@ -6775,7 +6789,6 @@
     <Folder Include="Customs\CustomFilters\" />
     <Folder Include="Customs\EntityPMInitServices\" />
     <Folder Include="Dashboard\Components\Graphs\" />
-    <Folder Include="e2e\CRM\Activities\EditEntity\" />
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\CRM\Quotes\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />

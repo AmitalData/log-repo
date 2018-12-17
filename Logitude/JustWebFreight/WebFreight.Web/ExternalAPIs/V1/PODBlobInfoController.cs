@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.DataContracts;
@@ -84,6 +85,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         if (blobInfo.BlobSize == blobInfo.TotalSentChunksSize)
                         {
+
+                            if (HttpContext.Current != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                            {
+                                HttpContext.Current.User = Thread.CurrentPrincipal =new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(""), new string[0]);
+                            }
+
+
                             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(blobInfo.Tenant);
                             ContactRepository contactRepository = new ContactRepository(blobInfo.Tenant);
                             DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(blobInfo.Tenant);

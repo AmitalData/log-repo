@@ -159,6 +159,7 @@
       <LastGenOutput>ShipmentClassesGeneraor.cs</LastGenOutput>
       <LastOutputs>.\ShipmentClassesGeneraor.cs</LastOutputs>
     </Content>
+    <None Include="EntityFiles\CommonDataModel\CustomerDeposition.lxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="test2\" />
@@ -183,6 +184,7 @@
     </None>
     <None Include="EntityFiles\CommonDataModel\AirlineMessagingRule.lxml" />
     <None Include="EntityFiles\CommonDataModel\AirlineStatistics.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomsShipper.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentFilingBackupBatch.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -520,7 +522,7 @@
     <None Include="EntityFiles\ShipmentsModel\AWBChargesCode.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBCustomsInformation.lxml" />
     <None Include="EntityFiles\ShipmentsModel\AWBInformation.lxml" />
-    <None Include="EntityFiles\ShipmentsModel\AWBMessagingStock.lxml">
+    <None Include="EntityFiles\ShipmentsModel\MessagingStock.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ShipmentsModel\AWBOCI.lxml" />
@@ -532,6 +534,7 @@
     <None Include="EntityFiles\ShipmentsModel\CustomsTransmissionsStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\InsideShipmentPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ManifestStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\MessagingStockUsageHistory.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OtherParticipantId.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Shipment.lxml">
       <SubType>Designer</SubType>
