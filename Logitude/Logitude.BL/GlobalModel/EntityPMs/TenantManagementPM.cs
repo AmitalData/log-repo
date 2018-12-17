@@ -224,6 +224,9 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string StockTypeCode { get; set; }
         public bool IsINTTRAStockPrepaid { get; set; }
 
+        
+
+        public string PackageCodeSearchField { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
