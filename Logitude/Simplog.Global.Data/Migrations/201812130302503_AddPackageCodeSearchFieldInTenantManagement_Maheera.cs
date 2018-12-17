@@ -9,14 +9,14 @@ namespace Simplog.Global.Data.Migrations
         {
             AddColumn("dbo.TenantManagements", "PackageCodeSearchField", c => c.String(maxLength: 250));
 
-            Sql(
-                @"
-                delete from AdvancedQueryFilters 
-                where
-                IsPredefined = 0 
-                and QueryId in (select Id from Queries where ObjectTableId = (select Id from ObjectTables where Name = 'TenantManagement') )
-                and ObjectFieldId = (select Id from ObjectFields where ObjectTableId = (select Id from ObjectTables where Name = 'TenantManagement') and FieldName = 'PackageCode')
-                ");
+            //Sql(
+            //    @"
+            //    delete from AdvancedQueryFilters 
+            //    where
+            //    IsPredefined = 0 
+            //    and QueryId in (select Id from Queries where ObjectTableId = (select Id from ObjectTables where Name = 'TenantManagement') )
+            //    and ObjectFieldId = (select Id from ObjectFields where ObjectTableId = (select Id from ObjectTables where Name = 'TenantManagement') and FieldName = 'PackageCode')
+            //    ");
         }
         
         public override void Down()

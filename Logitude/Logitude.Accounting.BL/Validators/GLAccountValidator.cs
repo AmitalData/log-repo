@@ -206,13 +206,15 @@ namespace Logitude.Accounting.BL.Validators
             }
 
             //
-            //Check parent
+            // Check parent
             if (!string.IsNullOrWhiteSpace(myGLAccountPM.ParentAccountId))
             {
                 string errorMessage = CheckParent(myGLAccountPM, myGLAccountPM.ParentAccountId, myGLAccountPM.Tenant);
                 if (!string.IsNullOrEmpty(errorMessage))
                     return new ValidationResult(errorMessage);
             }
+
+            
 
             return null;
         }
