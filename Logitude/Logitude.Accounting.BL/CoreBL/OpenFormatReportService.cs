@@ -67,7 +67,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             myStringBuilder.Append("&OF1.31&");
             myStringBuilder.Append(' ', 50);
-
+            myStringBuilder.Append('\n');
             //B100
             int counter = 2;
             foreach(B100Data item in b100Data)
@@ -196,8 +196,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (partnerCode.Length > 3) { partnerCode.Substring(0, 3); }
                     myStringBuilder.Append(partnerCode.PadLeft(3, '0'));
                 }
-                
 
+                myStringBuilder.Append('\n');
             }
 
           
@@ -273,7 +273,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             // user
             User loggedUser = GetLoggedUser(tenant);
-            DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMVDATA", tenant);
+            DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMV", tenant);
 
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
            // string name = "A856." + tenantPM.VatNumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
