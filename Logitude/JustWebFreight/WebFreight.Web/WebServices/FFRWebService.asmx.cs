@@ -223,7 +223,7 @@ namespace WebFreight.Web.WebServices
                 {
                     if (IsAWBStockPrepaid)
                     {
-                        IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myTenant);
+                        IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myTenant, "Champ");
                         IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(myTenant);
 
                         myStocksData = myStocksData.Where(d => d.StartDate <= TodayDate && d.EndDate > TodayDate && d.Remaining > 0 && !d.IsCancelled);
@@ -783,7 +783,7 @@ namespace WebFreight.Web.WebServices
                 {
                     if (IsAWBStockPrepaid)
                     {
-                        IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myTenant);
+                        IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myTenant, "Champ");
                         IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(myTenant);
 
                         myStocksData = myStocksData.Where(d => d.StartDate <= TodayDate && d.EndDate > TodayDate && d.Remaining > 0 && !d.IsCancelled);

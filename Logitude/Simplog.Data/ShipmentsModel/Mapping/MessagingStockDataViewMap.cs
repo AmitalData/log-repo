@@ -17,7 +17,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.TenantNumber).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-         
+            this.Property(t => t.StockType).HasMaxLength(10).IsUnicode(false);
+
             this.ToTable("MessagingStockDataView");
 
             this.Property(t => t.Id).HasColumnName("Id");
@@ -35,6 +36,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
             this.Property(t => t.TenantName).HasColumnName("TenantName");
             this.Property(t => t.TotalPrice).HasColumnName("TotalPrice");
+            this.Property(t => t.StockType).HasColumnName("StockType");
+
         }
     }
 }

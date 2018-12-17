@@ -26,6 +26,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? UpdateDate { get; set; }
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }
+        public string StockType { get; set; }
 
         [ForeignKey("CreatedByUserId")]
         public User CreatedByUser { get; set; }

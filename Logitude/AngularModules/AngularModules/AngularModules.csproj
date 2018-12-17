@@ -6745,7 +6745,7 @@
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentPM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\ShipmentReceivablePM.ts" />
     <TypeScriptCompile Include="Shipment\EntityPMs\SpecialServicesTypePM.ts" />
-    <TypeScriptCompile Include="Shipment\Components\MenuButtons\AWBMessagingStockMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Shipment\Components\MenuButtons\MessagingStockMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Shipment\Components\MenuButtons\ShipmentMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Shipment\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="Shipment\ModuleProviders.ts" />

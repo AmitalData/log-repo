@@ -55,6 +55,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? TotalPrice { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string StockType { get; set; }
+
         // Ayman: Dummy fields
         public bool IsTotalPriceChanged { get; set; }
         public bool IsOtherFieldsChanged { get; set; }

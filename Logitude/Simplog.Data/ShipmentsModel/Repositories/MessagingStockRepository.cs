@@ -27,7 +27,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             myContext = ShipmentsContext.GetContext(tenant);
             dataViewContext = MessagingStockDataViewContext.GetContext(tenant);
         }
-
         public MessagingStockRepository(IShipmentsContext context)
         {
             myContext = context;
@@ -53,7 +52,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from a in DataViewContext.MessagingStockDataViews select a);
         }
 
-        public IQueryable<MessagingStock> GetMessagingStocksByTenant(int tenant)
+        public IQueryable<MessagingStock> GetMessagingStocksByTenant(int tenant, string type)
         {
             return (from a in Context.MessagingStocks where a.TenantNumber == tenant select a);
         }

@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -14,12 +14,44 @@
                         <table>
                             <tr class="FormFieldRow">
                                 <td style="width: 110px;">
+                                    <LogLabel [ObjectFieldName]="'StockType'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <div class="MediaFill">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <ComboBox [ItemsSource]="StockTypesList" [Binding]="'Name'" (SelectedItemChanged)="SelectedStockTypeChanged($event)"></ComboBox>
+                                                </td>
+
+                                                <td style="width: 36px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width: 110px;">
                                     <LogLabel [ObjectFieldName]="'TenantNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
                                 <td>
-                                    <div style="width: calc(100% - 36px); float: left;">
-                                        <ComboBox [ItemsSource]="TenantsList" [Binding]="'Name'" (SelectedItemChanged)="SelectedItemChanged($event)"></ComboBox>
+                                    <div class="MediaFill">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <ComboBox [ItemsSource]="TenantsList" [Binding]="'Name'" (SelectedItemChanged)="SelectedItemChanged($event)"></ComboBox>
+                                                </td>
+
+                                                <td style="width: 36px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </td>
                             </tr>

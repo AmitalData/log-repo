@@ -28,6 +28,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPOCO.IsCancelled = entityPM.IsCancelled;
             entityPOCO.Notes = entityPM.Notes;
             entityPOCO.TotalPrice = entityPM.TotalPrice;
+            entityPOCO.StockType = entityPM.StockType;
 
             BuildSearchFields(entityPM, entityPOCO);
         }

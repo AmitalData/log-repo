@@ -25,5 +25,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string SearchFields { get; set; }
         public string TenantName { get; set; }
         public double? TotalPrice { get; set; }
+        public string StockType { get; set; }
     }
 }

@@ -173,7 +173,7 @@ namespace Logitude.XSD
                         DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(myResult.Tenant);
                         DateTime todayDate = todayDateTime.Date;
                         MessagingStockRepository stockRepository = new MessagingStockRepository(shipmentsContext);
-                        IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myResult.Tenant);
+                        IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myResult.Tenant, "Champ");
 
                         myStocksData = myStocksData.Where(d => d.StartDate <= todayDate && d.EndDate > todayDate && d.Remaining > 0 && !d.IsCancelled);
                         if (myStocksData.Count() > 0)

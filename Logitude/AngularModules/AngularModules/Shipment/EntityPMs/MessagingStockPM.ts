@@ -102,6 +102,11 @@ export class MessagingStockPM {
     public set TotalPrice(newValue: number) { if (this.totalPrice != newValue) { this.totalPrice = newValue; this.MarkAsDirty("TotalPrice"); } }
        
 	 
+    private stockType: string;
+    public get StockType() { return this.stockType; }
+    public set StockType(newValue: string) { if (this.stockType != newValue) { this.stockType = newValue; this.MarkAsDirty("StockType"); } }
+       
+	 
     private isTotalPriceChanged: boolean;
     public get IsTotalPriceChanged() { return this.isTotalPriceChanged; }
     public set IsTotalPriceChanged(newValue: boolean) { if (this.isTotalPriceChanged != newValue) { this.isTotalPriceChanged = newValue; this.MarkAsDirty("IsTotalPriceChanged"); } }

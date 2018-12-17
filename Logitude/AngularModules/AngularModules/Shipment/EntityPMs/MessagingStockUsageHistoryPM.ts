@@ -126,4 +126,4 @@ export class MessagingStockUsageHistoryPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

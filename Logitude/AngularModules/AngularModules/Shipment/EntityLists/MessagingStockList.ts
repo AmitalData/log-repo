@@ -23,5 +23,6 @@ export class MessagingStockList {
 		SearchFields: string;
 		TenantName: string;
 		TotalPrice: number;
+		StockType: string;
 	
 }

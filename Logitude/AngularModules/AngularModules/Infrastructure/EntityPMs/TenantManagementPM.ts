@@ -614,6 +614,11 @@ export class TenantManagementPM {
     public set StockTypeCode(newValue: string) { if (this.stockTypeCode != newValue) { this.stockTypeCode = newValue; this.MarkAsDirty("StockTypeCode"); } }
        
 	 
+    private isINTTRAStockPrepaid: boolean;
+    public get IsINTTRAStockPrepaid() { return this.isINTTRAStockPrepaid; }
+    public set IsINTTRAStockPrepaid(newValue: boolean) { if (this.isINTTRAStockPrepaid != newValue) { this.isINTTRAStockPrepaid = newValue; this.MarkAsDirty("IsINTTRAStockPrepaid"); } }
+       
+	 
     private privateLabelId: string;
     public get PrivateLabelId() { return this.privateLabelId; }
     public set PrivateLabelId(newValue: string) { if (this.privateLabelId != newValue) { this.privateLabelId = newValue; this.MarkAsDirty("PrivateLabelId"); } }
@@ -723,4 +728,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

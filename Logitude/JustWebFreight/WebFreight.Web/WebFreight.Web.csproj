@@ -2638,7 +2638,6 @@
     <Content Include="Monitoring\ContactUnseenMobile.aspx" />
     <Content Include="Monitoring\CustomerActualData.aspx" />
     <Content Include="Monitoring\EmailWaiting.aspx" />
-    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBMessagingStockViewsController.Generated.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceLineAction.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.SATPaymentMethod.cs" />
     <Compile Include="CommonDataModel\DomainServices\PartnersDomainService.WarehouseType.cs" />

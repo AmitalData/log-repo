@@ -272,6 +272,10 @@
     <Compile Include="Migrations\201812120651103_AddWebHookKeysTable_Rabaia.Designer.cs">
       <DependentUpon>201812120651103_AddWebHookKeysTable_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812161311487_AddIsINTTRAStockPrepaid.cs" />
+    <Compile Include="Migrations\201812161311487_AddIsINTTRAStockPrepaid.Designer.cs">
+      <DependentUpon>201812161311487_AddIsINTTRAStockPrepaid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -329,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812120651103_AddWebHookKeysTable_Rabaia.resx">
       <DependentUpon>201812120651103_AddWebHookKeysTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812161311487_AddIsINTTRAStockPrepaid.resx">
+      <DependentUpon>201812161311487_AddIsINTTRAStockPrepaid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

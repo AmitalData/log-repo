@@ -319,13 +319,16 @@ export class WizardComponent extends BaseComponent {
         SessionLocator.CurrentSession.StartBusyIndicator("Sending...");
 
         this.myService.Validate(this.ShipmentId).subscribe((myResponse: ServiceResponse) => {
+
+            var myResult: INTRAResult = myResponse.Result;
+
             if (myResponse.HasError) {
                 SessionLocator.CurrentSession.StopBusyIndicator();
+                
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
             else {
-                var myResult: INTRAResult = myResponse.Result;
 
                 if (!this.IsDevelopment) {
                     this.IsLimited = myResult.IsLimited;

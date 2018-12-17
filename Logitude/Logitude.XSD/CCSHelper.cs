@@ -230,7 +230,7 @@ namespace Logitude.XSD
             {
                 if (IsAWBStockPrepaid)
                 {
-                    IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(Tenant);
+                    IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(Tenant, "Champ");
                     IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(Tenant);
 
                     myStocksData = myStocksData.Where(d => d.StartDate <= TodayDate && d.EndDate > TodayDate && d.Remaining > 0 && !d.IsCancelled);
@@ -908,7 +908,7 @@ namespace Logitude.XSD
                 {
                     int? myStocksRemaining = 0;
 
-                    IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(Tenant);
+                    IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(Tenant, "Champ");
                     IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(Tenant);
 
                     myStocksData = myStocksData.Where(d => d.StartDate <= TodayDate && d.EndDate > TodayDate && d.Remaining > 0 && !d.IsCancelled);

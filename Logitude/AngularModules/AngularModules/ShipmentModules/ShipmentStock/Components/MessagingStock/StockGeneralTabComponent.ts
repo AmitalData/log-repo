@@ -1,13 +1,12 @@
 import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { MessagingStockPM } from '../../../../Shipment/EntityPMs/MessagingStockPM';
 import { MessagingStockUsageHistoryPM } from '../../../../Shipment/EntityPMs/MessagingStockUsageHistoryPM';
 import { MessagingStockPMService } from '../../../../Shipment/Services/StandardPMs/MessagingStockPMService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     moduleId:'./ShipmentModules/ShipmentStock/Components/MessagingStock/',
@@ -19,13 +18,35 @@ export class StockGeneralTabComponent extends BaseComponent {
     public ObjectTableName: string = "MessagingStock";
     public DataContext = this;
     public ItemsSource: MessagingStockUsageHistoryPM[];
+    public StockTypesList: CodeNameClass[];
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = [];
+
+        this.StockTypesList = [];
+        this.StockTypesList.push(new CodeNameClass("1", 'Champ'));
+        this.StockTypesList.push(new CodeNameClass("2", 'INTTRA'));
+        this.SelectedStockTypeItem = this.StockTypesList.filter(f => f.Name == this.EntityPM.StockType)[0];
+
         this.SetUIProperties();
         this.BuildItemsSource();
         this.Listen();
+    }
+
+    private SelectedStockTypeItem: CodeNameClass = null;
+    SelectedStockTypeChanged(item: CodeNameClass) {
+        if (this.SelectedStockTypeItem != item) {
+            this.SelectedStockTypeItem = item;
+
+            var myResult: string = null;
+
+            if (item != null) {
+                myResult = item.Name;
+            }
+
+            this.StockType = myResult;
+        }
     }
 
     private Listen() {
@@ -38,6 +59,7 @@ export class StockGeneralTabComponent extends BaseComponent {
         }
     }
 
+    public IsEditingEnabled: boolean = false;
     private SetUIProperties() {
         this.UIProperties.SetEnabled("Remaining", this.ObjectTableName, false);
 
@@ -51,6 +73,8 @@ export class StockGeneralTabComponent extends BaseComponent {
             isFieldEnabled = false;
         }
 
+        this.IsEditingEnabled = isFieldEnabled;
+        this.UIProperties.SetEnabled("StockType", this.ObjectTableName, isFieldEnabled);
         this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, isFieldEnabled);
         this.UIProperties.SetEnabled("EndDate", this.ObjectTableName, isFieldEnabled);
         this.UIProperties.SetEnabled("Amount", this.ObjectTableName, isFieldEnabled);
@@ -58,11 +82,17 @@ export class StockGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("TotalPrice", this.ObjectTableName, isFieldEnabled);
     }
 
+    get StockType() { return this.EntityPM.StockType; }
+    set StockType(newValue: string) {
+        if (this.EntityPM.StockType != newValue) {
+            this.EntityPM.StockType = newValue;            
+        }
+    }
+
     get TenantNumber() { return this.EntityPM.TenantNumber; }
     set TenantNumber(newValue: number) {
         if (this.EntityPM.TenantNumber != newValue) {
             this.EntityPM.TenantNumber = newValue;
-            this.SetUIProperties();
         }
     }
 

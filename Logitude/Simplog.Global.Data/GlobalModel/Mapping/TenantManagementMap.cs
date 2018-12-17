@@ -127,9 +127,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsParentTenant).HasColumnName("IsParentTenant");
             this.Property(t => t.ParentTenantId).HasColumnName("ParentTenantId");
             this.Property(t => t.StockTypeCode).HasColumnName("StockTypeCode");
-
-
-
+            this.Property(t => t.IsINTTRAStockPrepaid).HasColumnName("IsINTTRAStockPrepaid");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

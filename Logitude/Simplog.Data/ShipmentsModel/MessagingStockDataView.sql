@@ -31,6 +31,7 @@ SELECT
 			 dbo.MessagingStocks.UpdatedByUserId,
 			 dbo.MessagingStocks.SearchFields,
 			 dbo.MessagingStocks.TotalPrice,
+			 dbo.MessagingStocks.StockType,
 			 dbo.Tenants.Company as TenantName
 
 FROM         dbo.MessagingStocks Inner join

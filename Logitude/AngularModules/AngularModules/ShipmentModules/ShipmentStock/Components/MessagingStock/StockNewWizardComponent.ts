@@ -14,7 +14,6 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 
 @Component({
     moduleId: module.id,
-
     templateUrl: './StockNewWizardComponent.html',
 })
 
@@ -23,10 +22,14 @@ export class StockNewWizardComponent extends BaseComponent {
     public DataContext: StockNewWizardComponent = this;
     public ValidationErrorsList: string[] = [];
     public TenantsList: CodeNameClass[];
+    public StockTypesList: CodeNameClass[];
     public EntityPM: MessagingStockPM;
     constructor() {
         super();
         this.TenantsList = [];
+        this.StockTypesList = [];
+        this.StockTypesList.push(new CodeNameClass(1, 'Champ'));
+        this.StockTypesList.push(new CodeNameClass(2, 'INTTRA'));
         this.CreateEntityPM();
         this.LoadAWBTenants();
         this.SetUIProperties();
@@ -59,10 +62,12 @@ export class StockNewWizardComponent extends BaseComponent {
     }
 
     private SetUIProperties() {
+        this.UIProperties.SetRequired("StockType", this.ObjectTableName, this.SelectedStockTypeItem == null ? true : false);
         this.UIProperties.SetRequired("TenantNumber", this.ObjectTableName, this.SelectedTenantItem == null ? true : false);
     }
 
     private SelectedTenantItem: CodeNameClass = null;
+    private SelectedStockTypeItem: CodeNameClass = null;
     SelectedItemChanged(item: CodeNameClass) {
         if (this.SelectedTenantItem != item) {
             this.SelectedTenantItem = item;
@@ -74,6 +79,27 @@ export class StockNewWizardComponent extends BaseComponent {
             }
 
             this.TenantNumber = myResult;
+        }
+    }
+    SelectedStockTypeChanged(item: CodeNameClass) {
+        if (this.SelectedStockTypeItem != item) {
+            this.SelectedStockTypeItem = item;
+
+            var myResult: string = null;
+
+            if (item != null) {
+                myResult = item.Name;
+            }
+
+            this.StockType = myResult;
+        }
+    }
+
+    get StockType() { return this.EntityPM.StockType; }
+    set StockType(newValue: string) {
+        if (this.EntityPM.StockType != newValue) {
+            this.EntityPM.StockType = newValue;
+            this.SetUIProperties();
         }
     }
 

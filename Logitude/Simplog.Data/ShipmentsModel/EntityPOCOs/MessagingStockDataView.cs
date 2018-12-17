@@ -25,5 +25,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }
         public string TenantName { get; set; }
+        public string StockType { get; set; }
     }
 }

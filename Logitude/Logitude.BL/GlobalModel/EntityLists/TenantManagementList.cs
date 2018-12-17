@@ -119,6 +119,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int AgentSharedLogisticsStatisticsLastWeek { get; set; }
         public int AgentSharedLogisticsStatisticsLastMonth { get; set; }
         public bool ChangeHeaderColor { get; set; }
+        public bool IsINTTRAStockPrepaid { get; set; }
 
 
     }

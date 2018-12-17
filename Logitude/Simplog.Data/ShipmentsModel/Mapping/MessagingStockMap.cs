@@ -19,6 +19,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);           
             this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.StockType).HasMaxLength(10).IsUnicode(false);
 
             this.ToTable("MessagingStocks");
 
@@ -36,6 +37,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Notes).HasColumnName("Notes");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.TotalPrice).HasColumnName("TotalPrice");
+            this.Property(t => t.StockType).HasColumnName("StockType");
 
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedByUserId);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);

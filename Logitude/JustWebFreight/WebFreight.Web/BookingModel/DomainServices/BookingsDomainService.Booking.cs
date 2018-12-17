@@ -487,7 +487,7 @@ namespace WebFreight.Web.BookingModel.DomainServices
                     DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(myResultClass.Tenant).Date;
                     MessagingStockRepository stockRepository = new MessagingStockRepository(myShipmentContext);
                     MessagingStockUsageHistoryRepository usageHistoryRepository = new MessagingStockUsageHistoryRepository(myShipmentContext);
-                    IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myResultClass.Tenant);
+                    IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(myResultClass.Tenant, "Champ");
                     IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(myResultClass.Tenant);
 
                     myStocksData = myStocksData.Where(d => d.StartDate <= todayDate && d.EndDate > todayDate && d.Remaining > 0 && !d.IsCancelled);

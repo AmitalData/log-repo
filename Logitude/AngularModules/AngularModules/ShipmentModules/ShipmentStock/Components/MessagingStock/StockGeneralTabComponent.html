@@ -93,7 +93,21 @@
 
                                 <tr>
                                     <td>
-                                        <div></div>
+                                        <table>
+                                            <tr>
+                                                <td style="width: 100px;">
+                                                    <LogLabel [ObjectFieldName]="'StockType'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td style="width: 180px;">
+                                                    <ComboBox [IsDisabled]="!IsEditingEnabled" [SelectedItem] ="SelectedStockTypeItem" [ItemsSource]="StockTypesList" [Binding]="'Name'" (SelectedItemChanged)="SelectedStockTypeChanged($event)"></ComboBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
                             </table>

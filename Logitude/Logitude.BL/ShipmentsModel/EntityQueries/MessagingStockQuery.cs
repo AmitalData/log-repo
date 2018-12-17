@@ -30,25 +30,26 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             MessagingStockPM entityPM = (from a in repository.Context.MessagingStocks
                                          where a.Id == id
-                                            select new MessagingStockPM()
-                                            {
-                                                Id = a.Id,
-                                                DummyTenant = tenant,
-                                                TenantNumber = a.TenantNumber,
-                                                Amount = a.Amount,
-                                                CreateDate = a.CreateDate,
-                                                CreatedByUserId = a.CreatedByUserId,
-                                                EndDate = a.EndDate,
-                                                IsCancelled = a.IsCancelled,
-                                                Notes = a.Notes,
-                                                Remaining = a.Remaining,
-                                                StartDate = a.StartDate,
-                                                UpdateDate = a.UpdateDate,
-                                                UpdatedByUserId = a.UpdatedByUserId,
-                                                SearchFields = a.SearchFields,
-                                                TotalPrice = a.TotalPrice,
-                                                Status = a.IsCancelled ? "Cancelled" : (a.Remaining == 0 ? "Used" : (a.EndDate <= nowDateTime ? "Expired" : (a.Amount > a.Remaining ? "Active" : "New")))
-                                            }).FirstOrDefault();
+                                         select new MessagingStockPM()
+                                         {
+                                             Id = a.Id,
+                                             DummyTenant = tenant,
+                                             TenantNumber = a.TenantNumber,
+                                             Amount = a.Amount,
+                                             CreateDate = a.CreateDate,
+                                             CreatedByUserId = a.CreatedByUserId,
+                                             EndDate = a.EndDate,
+                                             IsCancelled = a.IsCancelled,
+                                             Notes = a.Notes,
+                                             Remaining = a.Remaining,
+                                             StartDate = a.StartDate,
+                                             UpdateDate = a.UpdateDate,
+                                             UpdatedByUserId = a.UpdatedByUserId,
+                                             SearchFields = a.SearchFields,
+                                             TotalPrice = a.TotalPrice,
+                                             Status = a.IsCancelled ? "Cancelled" : (a.Remaining == 0 ? "Used" : (a.EndDate <= nowDateTime ? "Expired" : (a.Amount > a.Remaining ? "Active" : "New"))),
+                                             StockType = a.StockType,
+                                         }).FirstOrDefault();
 
             MessagingStockUsageHistoryQuery myQuery = new MessagingStockUsageHistoryQuery(entityPM.TenantNumber);
             entityPM.StockUsageHistories = myQuery.GetStockUsageHistoriesByStockId(id).ToList();
@@ -76,9 +77,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                             UpdateDate = a.UpdateDate,
                                                             UpdatedByUserId = a.UpdatedByUserId,
                                                             SearchFields = a.SearchFields,
-
                                                             TotalPrice = a.TotalPrice,
-                                                            Status = a.IsCancelled ? "Cancelled" : (a.Remaining == 0 ? "Used" : (a.EndDate <= nowDateTime ? "Expired" : (a.Amount > a.Remaining ? "Active" : "New")))
+                                                            Status = a.IsCancelled ? "Cancelled" : (a.Remaining == 0 ? "Used" : (a.EndDate <= nowDateTime ? "Expired" : (a.Amount > a.Remaining ? "Active" : "New"))),
+                                                            StockType = a.StockType,
                                                         };
             return myResult;
         }
@@ -103,10 +104,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                             StartDate = a.StartDate,
                                                             UpdateDate = a.UpdateDate,
                                                             UpdatedByUserId = a.UpdatedByUserId,
-                                                            SearchFields = a.SearchFields,
-                                                             
+                                                            SearchFields = a.SearchFields,                                                             
                                                             TotalPrice = a.TotalPrice,
-                                                            Status = a.IsCancelled ? "Cancelled" : (a.Remaining == 0 ? "Used" : (a.EndDate <= nowDateTime ? "Expired" : (a.Amount > a.Remaining ? "Active" : "New")))
+                                                            Status = a.IsCancelled ? "Cancelled" : (a.Remaining == 0 ? "Used" : (a.EndDate <= nowDateTime ? "Expired" : (a.Amount > a.Remaining ? "Active" : "New"))),
+                                                            StockType = a.StockType,
                                                         };
             return myResult;
         }
