@@ -1884,6 +1884,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", DefaultText = "The chart of account can’t be changed, the GL account have transactions", LocalDefaultText = "לא ניתן לעדכן קבוצת מאזן, ישנם תנועות על הכרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAParentValidation1", DefaultText = "GLAccount and its parent must be same chart of account type", LocalDefaultText = "סוג קבוצת מאזן עבור הכרטיס וכרטיס האב שמקושר אליו חייב להיות זהה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAParentValidation2", DefaultText = "GLAccount and its parent must be same chart of account", LocalDefaultText = "קבוצת מאזן עבור הכרטיס ווכרטיס האב שמקושר אליו חייבת להיות זהה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileMethodcantUpdated", DefaultText = "The reconcile method can’t be updated, the GLAcocunt have transaction", LocalDefaultText = "לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.xxxx", DefaultText = "xxxxx", LocalDefaultText = "yyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
@@ -2264,6 +2265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.chequeDeposit", DefaultText = "Cheque Deposit", LocalDefaultText = "הפקדות המחאות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.DepositAmountmustbelessthanCashbook", DefaultText = "Deposit amount should be less than or equal cashbook total", LocalDefaultText = "סכום ההפקדה צריך להיות קטן או שווה לסכום בקופה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.O.DepositCancelChequeMSG", DefaultText = "The deposit can’t be cancelled, at least one one cheques have been redeemed, you should cancel the external reconciliation in order to return the cheque to the cashbook", LocalDefaultText = "לא ניתן לבטל את ההפקדה, משום שהיא מכילה לפחות המחאה אחת שנפרעה, יש לבטל את ההתאמה החיצונית ע”מ להחזיר את ההמחאה לקופה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
 

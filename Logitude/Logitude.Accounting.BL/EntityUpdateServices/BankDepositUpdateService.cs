@@ -632,6 +632,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
+            // GET logged contact, RTL
+            ContactPM contact = GetLoggedContact(tenant);
+            bool showLocals = !contact.DontShowLocal;
+
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 //
@@ -733,7 +737,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                         if (chequePM != null)
                         {
-                            chequePM.StatusCode = "1"; // 1- In Cashbook
+                            //Task 44665: Cancel Deposits : check Cheque Status before canceling the deposit
+                            if (chequePM.StatusCode == "6") // 6- Redeemed
+                            {
+                                throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositCancelChequeMSG", tenant, showLocals));
+                            }
+                            else
+                            {
+                                chequePM.StatusCode = "1"; // 1- In Cashbook
+                            }
                         }
                         else
                         {
@@ -757,6 +769,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return bankDeposit;
 
         }
+
+        private ContactPM GetLoggedContact(int tenant)
+        {
+            //email
+            string email = "";
+            if (HttpContext.Current != null)
+                email = HttpContext.Current.User.Identity.Name;
+            else
+                email = "system@tenant" + tenant.ToString() + ".com";
+
+            //contact
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            ContactPM contactPM = contactQuery.GetContactByEmailOnly(email, tenant);
+            return contactPM;
+        }
+
 
     }
 }
