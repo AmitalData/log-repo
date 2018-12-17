@@ -3178,5 +3178,55 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 pendingErrorPlaceRepository.Add(newPendingErrorPlace);
             }
         }
+
+        public static void AddMamanSpecialAction(MamanSpecialAction mamanSpecialActionDetails, MamanSpecialActionRepository mamanSpecialActionRepository)
+        {
+            Dictionary<string, MamanSpecialAction> tenant = mamanSpecialActionRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(mamanSpecialActionDetails.Code))
+            {
+                MamanSpecialAction mamanSpecialAction = mamanSpecialActionRepository.GetSingle(mamanSpecialActionDetails.Code);
+                mamanSpecialAction.LocalName = mamanSpecialActionDetails.LocalName;
+                mamanSpecialAction.EnglishName = mamanSpecialActionDetails.EnglishName;
+                mamanSpecialAction.SearchFields = (mamanSpecialActionDetails.Code + "," + mamanSpecialActionDetails.LocalName).ToLower();
+                mamanSpecialActionRepository.Update(mamanSpecialAction);
+            }
+            else
+            {
+                MamanSpecialAction newMamanSpecialAction = new MamanSpecialAction()
+                {
+                    Code = mamanSpecialActionDetails.Code,
+                    LocalName = mamanSpecialActionDetails.LocalName,
+                    EnglishName = mamanSpecialActionDetails.EnglishName,
+                    SearchFields = (mamanSpecialActionDetails.Code + "," + mamanSpecialActionDetails.LocalName).ToLower()
+                };
+                mamanSpecialActionRepository.Add(newMamanSpecialAction);
+            }
+        }
+
+        public static void AddMamanSpecialActionStatus(MamanSpecialActionStatus mamanSpecialActionStatusDetails, MamanSpecialActionStatusRepository mamanSpecialActionStatusRepository)
+        {
+            Dictionary<string, MamanSpecialActionStatus> tenant = mamanSpecialActionStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenant.Keys.Contains(mamanSpecialActionStatusDetails.Code))
+            {
+                MamanSpecialActionStatus mamanSpecialActionStatus = mamanSpecialActionStatusRepository.GetSingle(mamanSpecialActionStatusDetails.Code);
+                mamanSpecialActionStatus.LocalName = mamanSpecialActionStatusDetails.LocalName;
+                mamanSpecialActionStatus.EnglishName = mamanSpecialActionStatusDetails.EnglishName;
+                mamanSpecialActionStatus.SearchFields = (mamanSpecialActionStatusDetails.Code + "," + mamanSpecialActionStatusDetails.LocalName).ToLower();
+                mamanSpecialActionStatusRepository.Update(mamanSpecialActionStatus);
+            }
+            else
+            {
+                MamanSpecialActionStatus newMamanSpecialActionStatus = new MamanSpecialActionStatus()
+                {
+                    Code = mamanSpecialActionStatusDetails.Code,
+                    LocalName = mamanSpecialActionStatusDetails.LocalName,
+                    EnglishName = mamanSpecialActionStatusDetails.EnglishName,
+                    SearchFields = (mamanSpecialActionStatusDetails.Code + "," + mamanSpecialActionStatusDetails.LocalName).ToLower()
+                };
+                mamanSpecialActionStatusRepository.Add(newMamanSpecialActionStatus);
+            }
+        }
     }
 }
