@@ -2198,10 +2198,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ConsigneeNotImporterReference = shipment.ConsigneeNotImporterReference;
             shipmentPM.ProjectNumber = shipment.ProjectNumber;
 
-           
+
             bool iDangerousShipmentPackages = true;
             if (shipment.IsDangerous)
-            {   
+            {
                 foreach (ShipmentPackagePM item in shipmentPM.ShipmentPackages)
                 {
                     if (!item.IsDangerous) iDangerousShipmentPackages = false;
@@ -2209,7 +2209,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
 
             if (shipment.IsDangerous && iDangerousShipmentPackages) shipmentPM.ShipmentContanisDangerousGoods = true;
-       
+
             ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
 
@@ -2563,17 +2563,17 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
             #region Partners
- 
+
             shipmentPM.CustomerId = shipment.CustomerId;
 
-           
+
 
             #region FreightForwarder
             shipmentPM.FreightForwarderId = shipment.FreightForwarderId;
             shipmentPM.FreightForwarderAddressId = shipment.FreightForwarderAddressId;
             shipmentPM.FreightForwarderContactId = shipment.FreightForwarderContactId;
             shipmentPM.FreightForwarderReference = shipment.FreightForwarderReference;
- 
+
             #endregion
 
 
@@ -2587,7 +2587,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
 
-        
+
             #region Consignee
             shipmentPM.ConsigneeId = shipment.ConsigneeId;
             shipmentPM.ConsigneeName = shipment.ConsigneeName;
@@ -2595,7 +2595,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ConsigneeContactId = shipment.ConsigneeContactId;
             shipmentPM.ConsigneeReference1 = shipment.ConsigneeReference1;
             shipmentPM.ConsigneeReference2 = shipment.ConsigneeReference2;
-       
+
             #endregion
 
             #region Agent
@@ -2634,21 +2634,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.Notify1Id = shipment.Notify1Id;
             shipmentPM.Notify1AddressId = shipment.Notify1AddressId;
             shipmentPM.Notify1ContactId = shipment.Notify1ContactId;
-         
+
             #endregion
 
             #region Notify2
             shipmentPM.Notify2Id = shipment.Notify2Id;
             shipmentPM.Notify2AddressId = shipment.Notify2AddressId;
             shipmentPM.Notify2ContactId = shipment.Notify2ContactId;
-      
+
             #endregion
 
             #region ShipperNotExporter
             shipmentPM.ShipperNotExporterId = shipment.ShipperNotExporterId;
             shipmentPM.ShipperNotExporterAddressId = shipment.ShipperNotExporterAddressId;
             shipmentPM.ShipperNotExporterContactId = shipment.ShipperNotExporterContactId;
- 
+
             #endregion
 
             #region ConsigneeNotImporter
@@ -2679,7 +2679,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.FreelancerAddressId = shipment.FreelancerAddressId;
             shipmentPM.FreelancerContactId = shipment.FreelancerContactId;
 
-    
+
             #endregion
 
             #region Consolidator
@@ -2687,7 +2687,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ConsolidatorAddressId = shipment.ConsolidatorAddressId;
             shipmentPM.ConsolidatorContactId = shipment.ConsolidatorContactId;
             shipmentPM.ConsolidatorReference = shipment.ConsolidatorReference;
-       
+
             #endregion
 
             #region ReleasingAgent
@@ -2698,7 +2698,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.ReleasingAgentReference2 = shipment.ReleasingAgentReference2;
 
             #endregion
-#endregion
+            #endregion
 
             #region Properties
 
@@ -3047,7 +3047,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.IsAccountingClosed = shipment.IsAccountingClosed;
             shipmentPM.OriginShipmentId = shipment.OriginShipmentId;
             shipmentPM.TransportModeId = shipment.TransportModeId;
-            shipmentPM.IncotermId = shipment.IncotermId;            
+            shipmentPM.IncotermId = shipment.IncotermId;
 
             if (masterData != null)
             {
@@ -3104,8 +3104,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
             return null;
-        } 
-        
+        }
+
         private string GetNewStatusId(string currentStatusId, string newStatusId, int tenant, ref string statusName)
         {
             EntityStatus currentStatus = EntityStatusRepository.GetSingleEntityStatus(currentStatusId, tenant, true);
@@ -3343,26 +3343,26 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        public ShipmentPM GetSingleShipmentPMByForwarderNumber(string FWshipmentNumber, int tenant,int PartnerTenant)
+        public ShipmentPM GetSingleShipmentPMByForwarderNumber(string FWshipmentNumber, int tenant, int PartnerTenant)
         {
             if (!string.IsNullOrEmpty(FWshipmentNumber))
             {
                 HybridPartnerRepository myRepo = new HybridPartnerRepository(tenant);
                 var Partner = myRepo.GetHybridPartnersByPartnerTenant(PartnerTenant).FirstOrDefault();
-                Shipment shipment = null; 
+                Shipment shipment = null;
                 if (Partner != null)
                 {
                     shipment = (from a in repository.context.Shipments.Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("ShipmentMasterData")
-                                         where a.ForwarderShipmentNumber == FWshipmentNumber && a.Tenant == tenant && !a.IsCancelled && a.ForwarderPartnerId == Partner.Id
-                                         select a).FirstOrDefault();
+                                where a.ForwarderShipmentNumber == FWshipmentNumber && a.Tenant == tenant && !a.IsCancelled && a.ForwarderPartnerId == Partner.Id
+                                select a).FirstOrDefault();
                 }
                 else
                 {
                     shipment = (from a in repository.context.Shipments.Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("ShipmentMasterData")
-                                         where a.ForwarderShipmentNumber == FWshipmentNumber && a.Tenant == tenant && !a.IsCancelled
-                                         select a).FirstOrDefault();
+                                where a.ForwarderShipmentNumber == FWshipmentNumber && a.Tenant == tenant && !a.IsCancelled
+                                select a).FirstOrDefault();
                 }
-               
+
 
                 if (shipment != null)
                 {
@@ -3394,7 +3394,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return null;
         }
-        
+
 
         public ShipmentPM GetSinglePMWithoutComposition(string id, int tenant)
         {
@@ -3729,7 +3729,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         SCI = s.SCI,
                                                         ShipmentCustomerTypeCode = s.ShipmentCustomerTypeCode,
                                                         ShipmentDeliveryIndex = s.ShipmentDeliveryIndex,
-                                                        ShipmentContainerReturnIndex=s.ShipmentContainerReturnIndex,
+                                                        ShipmentContainerReturnIndex = s.ShipmentContainerReturnIndex,
                                                         MasterShipmentDataId = s.MasterShipmentDataId,
                                                         ShipmentPayableStatusCode = s.ShipmentPayableStatusCode,
                                                         ShipmentPayableStatusName = s.ShipmentPayableStatus != null ? s.ShipmentPayableStatus.Name : null,
@@ -3826,7 +3826,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ReleasingAgentNote = s.ReleasingAgentCard != null ? s.ReleasingAgentCard.Notes : null,
                                                         ValueOfGoods = s.ValueOfGoods,
                                                         ManifestLastSharingDate = s.ManifestLastSharingDate,
-        };
+                                                    };
 
             List<ShipmentPM> securedShipmentPMs = new List<ShipmentPM>();
             foreach (ShipmentPM shipmentPM in shipmentPMList)
@@ -3890,7 +3890,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return securedShipmentPMs;
             #endregion
         }
-        
+
         public List<ShipmentPM> GetShipmentPMsByMasterIdAndTenantForAutomation(string masterId, int tenant)
         {
             #region shipmentpm temp code
@@ -3928,7 +3928,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         MainCarriageATA = m.MainCarriageATA,
                                                         MainCarriageCarrierId = m.MainCarriageCarrierId,
                                                         FinalDistenationPortId = m.Transshipment3ToPortId != null ? m.Transshipment3ToPortId : m.Transshipment2ToPortId != null ? m.Transshipment2ToPortId : m.Transshipment1ToPortId != null ? m.Transshipment1ToPortId : m.MainCarriageToPortId,
-                                                  
+
 
                                                     };
 
@@ -4006,7 +4006,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     select new ShipmentPM()
                                                     {
                                                         MoveTypeCode = s.MoveType != null ? s.MoveType.Code : null,
-                                                        MoveTypeName = s.MoveType != null ? s.MoveType.MoveTypeEnglishName:null,
+                                                        MoveTypeName = s.MoveType != null ? s.MoveType.MoveTypeEnglishName : null,
 
 
                                                         AgentAddressId = s.AgentAddressId,
@@ -4032,7 +4032,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ConsigneeReference2 = s.ConsigneeReference2,
                                                         CreateDateTime = s.CreateDateTime,
 
-                                                    
+
                                                         CustomerAddressId = s.CustomerAddressId,
                                                         CustomerContactId = s.CustomerContactId,
                                                         CustomerId = s.CustomerId,
@@ -4211,7 +4211,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         ShipperReference1 = s.ShipperReference1,
                                                         ShipperReference2 = s.ShipperReference2,
                                                         UpdatedByUserId = s.UpdatedByUserId,
-                                       
+
                                                         VolumeInCBM = s.VolumeInCBM,
                                                         Volume = s.Volume,
                                                         VolumetricWeight = s.VolumetricWeight,
@@ -4380,7 +4380,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
         /* DashBoard By Months */
-        public List<DashBoardClass> GetShipmentsByMonthDashBoard(string type ,int lastMonths, int lastDays, int currentTenant, string customerId)
+        public List<DashBoardClass> GetShipmentsByMonthDashBoard(string type, int lastMonths, int lastDays, int currentTenant, string customerId)
         {
             IQueryable<Shipment> shipments = repository.GetShipments(currentTenant);
             if (string.IsNullOrEmpty(customerId))
@@ -4472,7 +4472,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             else
             {
                 resulList = (from s in shipments
-                             where s.OperationalDate >= lastDate && s.OperationalDate <=DateTime.Now
+                             where s.OperationalDate >= lastDate && s.OperationalDate <= DateTime.Now
 
                              group s by new
                              {
@@ -4501,7 +4501,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                              }).ToList();
 
             }
-           
+
             foreach (DashBoardClass d in resulList)
             {
                 d.Date = new DateTime(d.year, d.month, d.day);
@@ -4520,34 +4520,34 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     d.DateRange = startOfWeek.Day + "/" + startOfWeek.Month;
 
-                  //  d.DateRange=d.Date.Day+"/"+d.Date.Month+" - "+
+                    //  d.DateRange=d.Date.Day+"/"+d.Date.Month+" - "+
                 }
             }
 
             return resulList;
         }
 
-        public List<DashBoardClass> GetShipmentsByCreateOperationalDate(string type, DateTime? FromDate,DateTime? ToDate, int currentTenant, string customerId)
+        public List<DashBoardClass> GetShipmentsByCreateOperationalDate(string type, DateTime? FromDate, DateTime? ToDate, int currentTenant, string customerId)
         {
             bool AddYearFlag = false;
             if (FromDate.Value.Year != ToDate.Value.Year)
                 AddYearFlag = true;
             IQueryable<Shipment> shipments = repository.GetShipments(currentTenant);
-           
-                if (string.IsNullOrEmpty(customerId))
-                {
-                    shipments = from s in shipments
-                                where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
-                                select s;
-                }
-                else
-                {
-                    shipments = from s in shipments
-                                where s.CustomerId == customerId && s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
-                                select s;
-                }
-            
-           
+
+            if (string.IsNullOrEmpty(customerId))
+            {
+                shipments = from s in shipments
+                            where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                            select s;
+            }
+            else
+            {
+                shipments = from s in shipments
+                            where s.CustomerId == customerId && s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                            select s;
+            }
+
+
 
             shipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<Shipment>(new QueryOperations(), shipments, currentTenant);
             shipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<Shipment>(new QueryOperations(), shipments, currentTenant);
@@ -4558,7 +4558,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             DateTime QueryFromDate = FromDate.Value.AddDays(-1);
             DateTime QueryToDate = ToDate.Value.AddDays(1);
             lastDays = lastDays *= -1;
-            int Perdio =lastDays<=6?1: lastDays / 5;
+            int Perdio = lastDays <= 6 ? 1 : lastDays / 5;
 
             var dates = new List<DateTime?>();
             Dictionary<string, DashBoardClass> Listt = new Dictionary<string, DashBoardClass>();
@@ -4569,24 +4569,24 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             for (DateTime? dt = FromDate; dt < ToDate; dt = dt.Value.AddDays(Perdio))
             {
                 dates.Add(dt);
-                 DatePeriod = dt.Value.Day + "/" + dt.Value.Month+ (AddYearFlag == true ?"/"+ dt.Value.Year+"":"");
-                 Entity = new DashBoardClass();
+                DatePeriod = dt.Value.Day + "/" + dt.Value.Month + (AddYearFlag == true ? "/" + dt.Value.Year + "" : "");
+                Entity = new DashBoardClass();
                 Entity.total = 0;
                 Entity.sumChargeableWeight = 0;
                 Entity.sumGrossWeight = 0;
                 Entity.totalProfitInLocalCurrency = 0;
                 Entity.totalProfitInProfitCurrency = 0;
                 Entity.ReceivablesInLocalCurrency = 0;
-                Entity.ReceivablesInProfitCurrency = 0;               
-                 dateString = dt.Value.Day + "/" + dt.Value.Month + (AddYearFlag == true ? "/" + dt.Value.Year + "" : ""); ; 
-                    Listt.Add(dateString, Entity);
-                
-                                  }
+                Entity.ReceivablesInProfitCurrency = 0;
+                dateString = dt.Value.Day + "/" + dt.Value.Month + (AddYearFlag == true ? "/" + dt.Value.Year + "" : ""); ;
+                Listt.Add(dateString, Entity);
+
+            }
 
 
             dates.Add(ToDate.Value);
-             DatePeriod = ToDate.Value.Day + "/" + ToDate.Value.Month + (AddYearFlag == true ? "/" + ToDate.Value.Year + "" : "");
-             Entity = new DashBoardClass();
+            DatePeriod = ToDate.Value.Day + "/" + ToDate.Value.Month + (AddYearFlag == true ? "/" + ToDate.Value.Year + "" : "");
+            Entity = new DashBoardClass();
             Entity.total = 0;
             Entity.sumChargeableWeight = 0;
             Entity.sumGrossWeight = 0;
@@ -4594,16 +4594,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             Entity.totalProfitInProfitCurrency = 0;
             Entity.ReceivablesInLocalCurrency = 0;
             Entity.ReceivablesInProfitCurrency = 0;
-             dateString = ToDate.Value.Day + "/" + ToDate.Value.Month + (AddYearFlag == true ? "/" + ToDate.Value.Year + "" : ""); ;
+            dateString = ToDate.Value.Day + "/" + ToDate.Value.Month + (AddYearFlag == true ? "/" + ToDate.Value.Year + "" : ""); ;
             Listt.Add(dateString, Entity);
 
             dates.Sort();
 
 
             days = lastDays + 1;
-            
 
-  if (type == "CreateDate" || type == null)
+
+            if (type == "CreateDate" || type == null)
             {
                 resulList = (from s in shipments
                              where (s.CreateDateTime > QueryFromDate) && (s.CreateDateTime < QueryToDate)
@@ -4674,11 +4674,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             foreach (DashBoardClass d in resulList)
             {
-                 DatePeriod = "";
+                DatePeriod = "";
                 var dt = d.FullDate.Value.Date;
                 int count = dates.Count;
 
-                if (count>=1?dt<=dates[0]:false)
+                if (count >= 1 ? dt <= dates[0] : false)
                 {
                     DatePeriod = dates[0].Value.Day + "/" + dates[0].Value.Month + (AddYearFlag == true ? "/" + dates[0].Value.Year + "" : "");
                     if (!Listt.ContainsKey(DatePeriod))
@@ -4707,7 +4707,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     else
                     {
                         Listt[DatePeriod].total += d.total;
-                        Listt[DatePeriod].sumChargeableWeight += d.sumChargeableWeight!=null?d.sumChargeableWeight:0;
+                        Listt[DatePeriod].sumChargeableWeight += d.sumChargeableWeight != null ? d.sumChargeableWeight : 0;
                         Listt[DatePeriod].sumGrossWeight += d.sumGrossWeight != null ? d.sumGrossWeight : 0;
                         Listt[DatePeriod].totalProfitInLocalCurrency += d.totalProfitInLocalCurrency != null ? d.totalProfitInLocalCurrency : 0;
                         Listt[DatePeriod].totalProfitInProfitCurrency += d.totalProfitInProfitCurrency != null ? d.totalProfitInProfitCurrency : 0;
@@ -4880,7 +4880,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
         /* DashBoard By Top 10 Countries */
-        public List<DashBoardClass> GetShipmentsByTop10CountriesDashBoard(string type,int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers, string customerid, string directionId, string transportmodeId)
+        public List<DashBoardClass> GetShipmentsByTop10CountriesDashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers, string customerid, string directionId, string transportmodeId)
         {
             if (top < 0)
             {
@@ -4948,7 +4948,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                             List<DashBoardClass> allCountriesResult = (from s in shipments
                                                                        where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
-                                                                         && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) :(s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
+                                                                         && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                                                        //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
                                                                        group s by new
                                                                        {
@@ -5124,7 +5124,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         List<DashBoardClass> othersResultList = null;
                         resultList = (from s in shipments
                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
-                                     && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) :(s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
+                                     && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                       group s by new
                                       {
                                           s.CountryForStatisticsCode,
@@ -5149,7 +5149,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         {
                             List<DashBoardClass> allCountriesResult = (from s in shipments
                                                                        where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
-                                                                         && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) :(s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
+                                                                         && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                                                        //&& !(from r in resultList where r.countryCode == s.CountryForStatisticsCode select r).Any()
                                                                        group s by new
                                                                        {
@@ -5222,7 +5222,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         List<DashBoardClass> othersResultList = null;
                         resultList = (from s in shipments
                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && !(s.DirectionId == "D" && s.TransportModeId == "I")
-                                     && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) :(s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
+                                     && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                       group s by new
                                       {
                                           s.CountryForStatisticsCode,
@@ -5617,7 +5617,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         //        string Index = "";
         //        Index = d[0].Key;
 
-             
+
 
         //        if (!Listt.ContainsKey(Index))
         //        {
@@ -5667,7 +5667,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 top = 0;
             }
 
-             FromDate=FromDate.Value.AddDays(-1);
+            FromDate = FromDate.Value.AddDays(-1);
             ToDate = ToDate.Value.AddDays(1);
 
 
@@ -6367,7 +6367,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
         /* DashBoard Top 10 Customers */
-        public IQueryable<DashBoardClass> GetTop10DashBoard(string type,int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers,string directionId,string transportmodeId)
+        public IQueryable<DashBoardClass> GetTop10DashBoard(string type, int lastMonths, int lastDays, int measurment, int currentTenant, int top, bool includeOthers, string directionId, string transportmodeId)
         {
             if (top < 0)
             {
@@ -6376,7 +6376,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             int days = 0;
             int months = 0;
-            days = lastDays ;
+            days = lastDays;
             DateTime lastDate = DateTime.Today.Date.AddDays(days);
 
             if (lastMonths != 0)
@@ -6388,7 +6388,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             IQueryable<DashBoardClass> resulList = null;
 
             IQueryable<ShipmentsCustomersDashboardView> allShipments = repository.GetShipmentDataViewsForCustomersDashboard(currentTenant, directionId, transportmodeId);
-            
+
             allShipments = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentsCustomersDashboardView>(new QueryOperations(), allShipments, currentTenant);
             allShipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentsCustomersDashboardView>(new QueryOperations(), allShipments, currentTenant);
 
@@ -6400,7 +6400,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false && t.CustomerId != null
+                                     where t.Tenant == currentTenant && t.IsCancelled == false && t.CustomerId != null
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > lastDate) : t.OperationalDate >= lastDate
 
                                      group t by t.CustomerId into g
@@ -6415,8 +6415,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false && s.CustomerId != null
-                                     && (((type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : ((s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)))&& topCustomerIds.Contains(s.CustomerId))
+                                       where s.Tenant == currentTenant && s.IsCancelled == false && s.CustomerId != null
+                                     && (((type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : ((s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now))) && topCustomerIds.Contains(s.CustomerId))
 
                                        group s by new
                                        {
@@ -6435,11 +6435,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                            total = c.Count(),
                                            sumChargeableWeight = c.Sum(s => s.ChargeableWeightInKG),
                                            sumGrossWeight = c.Sum(s => s.GrossWeightInKG),
-                                       }) ;
+                                       });
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false && s.CustomerId != null
+                                           where s.Tenant == currentTenant && s.IsCancelled == false && s.CustomerId != null
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now) && !topCustomerIds.Contains(s.CustomerId)
 
                                            group s by new
@@ -6478,7 +6478,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     {
 
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > lastDate) : t.OperationalDate >= lastDate
 
                                      group t by t.CustomerId into g
@@ -6498,7 +6498,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       where s.Tenant == currentTenant && s.IsCancelled == false
                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                        && top10.Any(q => q.id == s.CustomerId)
 
@@ -6523,7 +6523,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -6560,7 +6560,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 case 2:
                     {
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > lastDate) : t.OperationalDate > lastDate
 
                                      group t by t.CustomerId into g
@@ -6577,7 +6577,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       where s.Tenant == currentTenant && s.IsCancelled == false
                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                        && top10.Any(q => q.id == s.CustomerId)
 
@@ -6602,7 +6602,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -6640,7 +6640,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 case 3:
                     {
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > lastDate) : t.OperationalDate >= lastDate
 
                                      group t by t.CustomerId into g
@@ -6657,7 +6657,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       where s.Tenant == currentTenant && s.IsCancelled == false
                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                        && top10.Any(q => q.id == s.CustomerId)
 
@@ -6684,7 +6684,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -6724,7 +6724,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 case 4:
                     {
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > lastDate) : t.OperationalDate > lastDate
 
                                      group t by t.CustomerId into g
@@ -6766,7 +6766,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -6806,7 +6806,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 case 5:
                     {
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > lastDate) : t.OperationalDate > lastDate
 
                                      group t by t.CustomerId into g
@@ -6821,7 +6821,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       where s.Tenant == currentTenant && s.IsCancelled == false
                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                        && top10.Any(q => q.id == s.CustomerId)
 
@@ -6850,7 +6850,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -6892,7 +6892,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 case 6:
                     {
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > lastDate) : t.OperationalDate > lastDate
 
                                      group t by t.CustomerId into g
@@ -6907,7 +6907,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       where s.Tenant == currentTenant && s.IsCancelled == false
                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                        && top10.Any(q => q.id == s.CustomerId)
 
@@ -6936,7 +6936,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > lastDate) : (s.OperationalDate > lastDate && s.OperationalDate <= DateTime.Now)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -6985,7 +6985,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 top = 0;
             }
-            FromDate = FromDate.Value.AddMinutes(FromDate.Value.Minute*-1);
+            FromDate = FromDate.Value.AddMinutes(FromDate.Value.Minute * -1);
             ToDate = ToDate.Value.AddDays(1);
 
             IQueryable<DashBoardClass> resulList = null;
@@ -7003,7 +7003,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
 
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false && t.CustomerId != null
+                                     where t.Tenant == currentTenant && t.IsCancelled == false && t.CustomerId != null
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
 
                                      group t by t.CustomerId into g
@@ -7018,7 +7018,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false && s.CustomerId != null
+                                       where s.Tenant == currentTenant && s.IsCancelled == false && s.CustomerId != null
                                      && (((type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)) && topCustomerIds.Contains(s.CustomerId))
 
                                        group s by new
@@ -7042,7 +7042,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false && s.CustomerId != null
+                                           where s.Tenant == currentTenant && s.IsCancelled == false && s.CustomerId != null
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate) && !topCustomerIds.Contains(s.CustomerId)
 
                                            group s by new
@@ -7081,7 +7081,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     {
 
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
 
                                      group t by t.CustomerId into g
@@ -7101,7 +7101,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       where s.Tenant == currentTenant && s.IsCancelled == false
                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                        && top10.Any(q => q.id == s.CustomerId)
 
@@ -7126,7 +7126,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -7163,7 +7163,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 case 2:
                     {
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
 
                                      group t by t.CustomerId into g
@@ -7180,7 +7180,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       where s.Tenant == currentTenant && s.IsCancelled == false
                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                        && top10.Any(q => q.id == s.CustomerId)
 
@@ -7205,7 +7205,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -7243,7 +7243,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 case 3:
                     {
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
 
                                      group t by t.CustomerId into g
@@ -7260,7 +7260,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       where s.Tenant == currentTenant && s.IsCancelled == false
                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                        && top10.Any(q => q.id == s.CustomerId)
 
@@ -7287,7 +7287,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -7327,7 +7327,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 case 4:
                     {
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
 
                                      group t by t.CustomerId into g
@@ -7342,7 +7342,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       where s.Tenant == currentTenant && s.IsCancelled == false
                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                        && top10.Any(q => q.id == s.CustomerId)
 
@@ -7369,7 +7369,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -7409,7 +7409,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 case 5:
                     {
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
 
                                      group t by t.CustomerId into g
@@ -7424,7 +7424,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       where s.Tenant == currentTenant && s.IsCancelled == false
                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                        && top10.Any(q => q.id == s.CustomerId)
 
@@ -7453,7 +7453,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -7495,7 +7495,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 case 6:
                     {
                         var top10 = (from t in allShipments
-                                     where t.Tenant == currentTenant && t.ShipmentLevelCode != "C" && t.IsCancelled == false
+                                     where t.Tenant == currentTenant && t.IsCancelled == false
                                      && (type == "CreateDate" || type == null) ? (t.CreateDateTime > FromDate && t.CreateDateTime < ToDate) : (t.OperationalDate > FromDate && t.OperationalDate < ToDate)
 
                                      group t by t.CustomerId into g
@@ -7510,7 +7510,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         IQueryable<DashBoardClass> resultList1 = null;
                         IQueryable<DashBoardClass> resultList2 = null;
                         resultList1 = (from s in allShipments
-                                       where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                       where s.Tenant == currentTenant && s.IsCancelled == false
                                        && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                        && top10.Any(q => q.id == s.CustomerId)
 
@@ -7539,7 +7539,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         if (includeOthers)
                         {
                             resultList2 = (from s in allShipments
-                                           where s.Tenant == currentTenant && s.ShipmentLevelCode != "C" && s.IsCancelled == false
+                                           where s.Tenant == currentTenant && s.IsCancelled == false
                                            && (type == "CreateDate" || type == null) ? (s.CreateDateTime > FromDate && s.CreateDateTime < ToDate) : (s.OperationalDate > FromDate && s.OperationalDate < ToDate)
                                            && !top10.Any(q => q.id == s.CustomerId)
 
@@ -7690,7 +7690,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
         /*DashBoard By direction and transportmode*/
-        public IQueryable<DashBoardClass> GetShipmentsByDirectionAndTransMode(string type,int lastMonths, int lastDays, int tenant, string customerid)
+        public IQueryable<DashBoardClass> GetShipmentsByDirectionAndTransMode(string type, int lastMonths, int lastDays, int tenant, string customerid)
         {
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             DateTime lastDate = todayDate.Date.AddDays(lastDays);
@@ -7710,39 +7710,39 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             if (type == "CreateDate" || type == null)
             {
-               datalist = from a in allShipments
-                                                      where a.Tenant == tenant && a.IsCancelled == false
-                                                        && (a.CreateDateTime < FromDateQuery) 
-                                                        && (a.CreateDateTime > lastDate) 
-                          group a by
-                                                      new
-                                                      {
-                                                          a.TransportModeId,
-                                                          transmodeName = a.TransportModeName,
-                                                          a.DirectionId,
-                                                          directionName = a.DirectionName,
-                                                          a.CreateDateTime.Day,
-                                                          a.CreateDateTime.Month,
-                                                          a.CreateDateTime.Year
-                                                      }
-                                                      into g
-                                                      select new DashBoardClass()
-                                                      {
-                                                          day = g.Key.Day,
-                                                          year = g.Key.Year,
-                                                          month = g.Key.Month,
-                                                          directionID = g.Key.DirectionId,
-                                                          transportModeID = g.Key.TransportModeId,
-                                                          TransportModeName = g.Key.transmodeName,
-                                                          DirectionName = g.Key.directionName,
-                                                          total = g.Count(),
-                                                          sumGrossWeight = g.Sum(d => d.GrossWeightInKG),
-                                                          sumChargeableWeight = g.Sum(d => d.ChargeableWeightInKG),
-                                                          totalProfitInLocalCurrency = g.Sum(d => d.ProfitInLocalCurrency),
-                                                          totalProfitInProfitCurrency = g.Sum(d => d.ProfitInProfitCurrency),
-                                                          ReceivablesInLocalCurrency = (g.Sum(d => d.OpenReceivablesInLocalCurrency) + g.Sum(d => d.AccountedReceivablesInLocalCurrency)),
-                                                          ReceivablesInProfitCurrency = (g.Sum(d => d.OpenReceivablesInProfitCurrency) + g.Sum(d => d.AccountedReceivablesInProfitCurrency)),
-                                                      };
+                datalist = from a in allShipments
+                           where a.Tenant == tenant && a.IsCancelled == false
+                             && (a.CreateDateTime < FromDateQuery)
+                             && (a.CreateDateTime > lastDate)
+                           group a by
+                                                       new
+                                                       {
+                                                           a.TransportModeId,
+                                                           transmodeName = a.TransportModeName,
+                                                           a.DirectionId,
+                                                           directionName = a.DirectionName,
+                                                           a.CreateDateTime.Day,
+                                                           a.CreateDateTime.Month,
+                                                           a.CreateDateTime.Year
+                                                       }
+                                                       into g
+                           select new DashBoardClass()
+                           {
+                               day = g.Key.Day,
+                               year = g.Key.Year,
+                               month = g.Key.Month,
+                               directionID = g.Key.DirectionId,
+                               transportModeID = g.Key.TransportModeId,
+                               TransportModeName = g.Key.transmodeName,
+                               DirectionName = g.Key.directionName,
+                               total = g.Count(),
+                               sumGrossWeight = g.Sum(d => d.GrossWeightInKG),
+                               sumChargeableWeight = g.Sum(d => d.ChargeableWeightInKG),
+                               totalProfitInLocalCurrency = g.Sum(d => d.ProfitInLocalCurrency),
+                               totalProfitInProfitCurrency = g.Sum(d => d.ProfitInProfitCurrency),
+                               ReceivablesInLocalCurrency = (g.Sum(d => d.OpenReceivablesInLocalCurrency) + g.Sum(d => d.AccountedReceivablesInLocalCurrency)),
+                               ReceivablesInProfitCurrency = (g.Sum(d => d.OpenReceivablesInProfitCurrency) + g.Sum(d => d.AccountedReceivablesInProfitCurrency)),
+                           };
             }
             else
             {
@@ -7784,7 +7784,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return datalist;
         }
 
-        public List<DashBoardClass> GetShipmentsByDirectionAndTransModeCustom(string type, DateTime? FromDate, DateTime? ToDate,int tenant, string customerid)
+        public List<DashBoardClass> GetShipmentsByDirectionAndTransModeCustom(string type, DateTime? FromDate, DateTime? ToDate, int tenant, string customerid)
         {
             bool AddYearFlag = false;
             if (FromDate.Value.Year != ToDate.Value.Year)
@@ -7806,9 +7806,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             if (type == "CreateDate" || type == null)
             {
                 datalist = (from a in allShipments
-                           where a.Tenant == tenant && a.IsCancelled == false
-                             && (a.CreateDateTime < ToDateQuery) 
-                             && (a.CreateDateTime > FromDateQuery) 
+                            where a.Tenant == tenant && a.IsCancelled == false
+                              && (a.CreateDateTime < ToDateQuery)
+                              && (a.CreateDateTime > FromDateQuery)
                             orderby a.CreateDateTime
 
                             group a by
@@ -7823,30 +7823,30 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                            a.CreateDateTime.Year,
                                                        }
                                                        into g
-                           select new DashBoardClass()
-                           {
-                               day = g.Key.Day,
-                               year = g.Key.Year,
-                               month = g.Key.Month,
-                               directionID = g.Key.DirectionId,
-                               transportModeID = g.Key.TransportModeId,
-                               TransportModeName = g.Key.transmodeName,
-                               DirectionName = g.Key.directionName,
-                               total = g.Count(),
-                               sumGrossWeight = g.Sum(d => d.GrossWeightInKG),
-                               sumChargeableWeight = g.Sum(d => d.ChargeableWeightInKG),
-                               totalProfitInLocalCurrency = g.Sum(d => d.ProfitInLocalCurrency),
-                               totalProfitInProfitCurrency = g.Sum(d => d.ProfitInProfitCurrency),
-                               ReceivablesInLocalCurrency = (g.Sum(d => d.OpenReceivablesInLocalCurrency) + g.Sum(d => d.AccountedReceivablesInLocalCurrency)),
-                               ReceivablesInProfitCurrency = (g.Sum(d => d.OpenReceivablesInProfitCurrency) + g.Sum(d => d.AccountedReceivablesInProfitCurrency)),
-                           }).ToList();
+                            select new DashBoardClass()
+                            {
+                                day = g.Key.Day,
+                                year = g.Key.Year,
+                                month = g.Key.Month,
+                                directionID = g.Key.DirectionId,
+                                transportModeID = g.Key.TransportModeId,
+                                TransportModeName = g.Key.transmodeName,
+                                DirectionName = g.Key.directionName,
+                                total = g.Count(),
+                                sumGrossWeight = g.Sum(d => d.GrossWeightInKG),
+                                sumChargeableWeight = g.Sum(d => d.ChargeableWeightInKG),
+                                totalProfitInLocalCurrency = g.Sum(d => d.ProfitInLocalCurrency),
+                                totalProfitInProfitCurrency = g.Sum(d => d.ProfitInProfitCurrency),
+                                ReceivablesInLocalCurrency = (g.Sum(d => d.OpenReceivablesInLocalCurrency) + g.Sum(d => d.AccountedReceivablesInLocalCurrency)),
+                                ReceivablesInProfitCurrency = (g.Sum(d => d.OpenReceivablesInProfitCurrency) + g.Sum(d => d.AccountedReceivablesInProfitCurrency)),
+                            }).ToList();
             }
             else
             {
                 datalist = (from a in allShipments
-                           where a.Tenant == tenant && a.IsCancelled == false
-                             && a.OperationalDate < ToDateQuery
-                             && a.OperationalDate > FromDateQuery
+                            where a.Tenant == tenant && a.IsCancelled == false
+                              && a.OperationalDate < ToDateQuery
+                              && a.OperationalDate > FromDateQuery
                             orderby a.OperationalDate
 
                             group a by
@@ -7861,23 +7861,23 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                a.OperationalDate.Year,
                            }
                                                      into g
-                           select new DashBoardClass()
-                           {
-                               day = g.Key.Day,
-                               year = g.Key.Year,
-                               month = g.Key.Month,
-                               directionID = g.Key.DirectionId,
-                               transportModeID = g.Key.TransportModeId,
-                               TransportModeName = g.Key.transmodeName,
-                               DirectionName = g.Key.directionName,
-                               total = g.Count(),
-                               sumGrossWeight = g.Sum(d => d.GrossWeightInKG),
-                               sumChargeableWeight = g.Sum(d => d.ChargeableWeightInKG),
-                               totalProfitInLocalCurrency = g.Sum(d => d.ProfitInLocalCurrency),
-                               totalProfitInProfitCurrency = g.Sum(d => d.ProfitInProfitCurrency),
-                               ReceivablesInLocalCurrency = (g.Sum(d => d.OpenReceivablesInLocalCurrency) + g.Sum(d => d.AccountedReceivablesInLocalCurrency)),
-                               ReceivablesInProfitCurrency = (g.Sum(d => d.OpenReceivablesInProfitCurrency) + g.Sum(d => d.AccountedReceivablesInProfitCurrency)),
-                           }).ToList();
+                            select new DashBoardClass()
+                            {
+                                day = g.Key.Day,
+                                year = g.Key.Year,
+                                month = g.Key.Month,
+                                directionID = g.Key.DirectionId,
+                                transportModeID = g.Key.TransportModeId,
+                                TransportModeName = g.Key.transmodeName,
+                                DirectionName = g.Key.directionName,
+                                total = g.Count(),
+                                sumGrossWeight = g.Sum(d => d.GrossWeightInKG),
+                                sumChargeableWeight = g.Sum(d => d.ChargeableWeightInKG),
+                                totalProfitInLocalCurrency = g.Sum(d => d.ProfitInLocalCurrency),
+                                totalProfitInProfitCurrency = g.Sum(d => d.ProfitInProfitCurrency),
+                                ReceivablesInLocalCurrency = (g.Sum(d => d.OpenReceivablesInLocalCurrency) + g.Sum(d => d.AccountedReceivablesInLocalCurrency)),
+                                ReceivablesInProfitCurrency = (g.Sum(d => d.OpenReceivablesInProfitCurrency) + g.Sum(d => d.AccountedReceivablesInProfitCurrency)),
+                            }).ToList();
 
             }
 
@@ -7885,25 +7885,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             foreach (DashBoardClass d in datalist)
             {
-                string Index = "";          
-                    Index =d.transportModeID+"|"+d.directionID;
-                    if (!Listt.ContainsKey(Index))
-                    {
-                        Listt.Add(Index, d);
-                    }
-                    else
-                    {
-                        Listt[Index].total += d.total;
-                        Listt[Index].sumChargeableWeight += d.sumChargeableWeight != null ? d.sumChargeableWeight : 0;
-                        Listt[Index].sumGrossWeight += d.sumGrossWeight != null ? d.sumGrossWeight : 0;
-                        Listt[Index].totalProfitInLocalCurrency += d.totalProfitInLocalCurrency != null ? d.totalProfitInLocalCurrency : 0;
-                        Listt[Index].totalProfitInProfitCurrency += d.totalProfitInProfitCurrency != null ? d.totalProfitInProfitCurrency : 0;
-                        Listt[Index].ReceivablesInLocalCurrency += d.ReceivablesInLocalCurrency != null ? d.ReceivablesInLocalCurrency : 0;
-                        Listt[Index].ReceivablesInProfitCurrency += d.ReceivablesInProfitCurrency != null ? d.ReceivablesInProfitCurrency : 0;
-                        Listt[Index].DirectionName = d.DirectionName;
-                        Listt[Index].TransportModeName = d.TransportModeName;
+                string Index = "";
+                Index = d.transportModeID + "|" + d.directionID;
+                if (!Listt.ContainsKey(Index))
+                {
+                    Listt.Add(Index, d);
+                }
+                else
+                {
+                    Listt[Index].total += d.total;
+                    Listt[Index].sumChargeableWeight += d.sumChargeableWeight != null ? d.sumChargeableWeight : 0;
+                    Listt[Index].sumGrossWeight += d.sumGrossWeight != null ? d.sumGrossWeight : 0;
+                    Listt[Index].totalProfitInLocalCurrency += d.totalProfitInLocalCurrency != null ? d.totalProfitInLocalCurrency : 0;
+                    Listt[Index].totalProfitInProfitCurrency += d.totalProfitInProfitCurrency != null ? d.totalProfitInProfitCurrency : 0;
+                    Listt[Index].ReceivablesInLocalCurrency += d.ReceivablesInLocalCurrency != null ? d.ReceivablesInLocalCurrency : 0;
+                    Listt[Index].ReceivablesInProfitCurrency += d.ReceivablesInProfitCurrency != null ? d.ReceivablesInProfitCurrency : 0;
+                    Listt[Index].DirectionName = d.DirectionName;
+                    Listt[Index].TransportModeName = d.TransportModeName;
 
-                    }                
+                }
             }
 
             datalist = new List<DashBoardClass>();
@@ -8092,7 +8092,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                   && myShipment.ShipmentLevelCode != "H"
                                                                   && myShipment.DirectionId == "E"
                                                                   && myShipment.TransportModeId == "O"
-                                                                  && myShipment.INTTRASIStatusCode == "NSEN"                                                                                                                                   
+                                                                  && myShipment.INTTRASIStatusCode == "NSEN"
                                                                   && (myShipment.ShipmentTypeId == "FCLD" || myShipment.ShipmentTypeId == "MYGO")
                                                                   && myMasterData.Tenant == tenant
                                                                   && myMasterData.MainCarriageATD == null
@@ -8466,7 +8466,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         DeclarationNumber = view.DeclarationNumber,
                         CustomsClearanceDate = view.CustomsClearanceDate,
                         IncludesCustoms = view.IncludesCustoms,
-                        DeclarationDate = view.DeclarationDate,                        
+                        DeclarationDate = view.DeclarationDate,
                     };
 
                     list.LongMaster = EntityFieldsHelper.GetLongMasterField(view);
@@ -8646,7 +8646,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             DateTime? currentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime? firstDateTime = currentDateTime.Value.AddDays(-7).Date;
             DateTime? lastDateTime = currentDateTime.Value.AddDays(7).Date;
-            
+
             iQuery = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ShipmentList>(new QueryOperations(), iQuery, tenant);
             iQuery = ProductPermitionsFilter.AddUserProductRestrictionFilters<ShipmentList>(new QueryOperations(), iQuery, tenant);
 
@@ -9038,7 +9038,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          LastFinalDestination = s.LastFinalDestination,
                                                          FirstPickupETA = s.FirstPickupETA,
                                                          FirstPickupETD = s.FirstPickupETD,
-        };
+                                                     };
 
             return shipmentsList;
         }
@@ -9079,10 +9079,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public bool CheckPODSecurityKeyValidation(string shipmentNumber, string securityKey, int tenant)
         {
             return (from a in repository.context.Shipments
-                               where a.ShipmentNumber == shipmentNumber && a.Tenant == tenant && a.SecurityKey == securityKey
-                               select a.Id).Any();
+                    where a.ShipmentNumber == shipmentNumber && a.Tenant == tenant && a.SecurityKey == securityKey
+                    select a.Id).Any();
 
-           
+
 
         }
 
@@ -9206,15 +9206,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, false);
 
-           
+
             return shipmentPM;
         }
 
         public ShipmentPM GetByCustomerReference1(string CustomerReference1, int tenant, bool IsForwarderShipment)
         {
             var shipments = (from a in repository.context.Shipments.Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("MoveType").Include("SalesmanUser").Include("SalesmanUser.Contact")
-                                 where a.CustomerReference1 == CustomerReference1 && (IsForwarderShipment ? a.ForwarderShipmentNumber != null : true) && a.Tenant == tenant
-                                 select a);
+                             where a.CustomerReference1 == CustomerReference1 && (IsForwarderShipment ? a.ForwarderShipmentNumber != null : true) && a.Tenant == tenant
+                             select a);
             if (shipments == null || shipments.Count() < 1)
             {
                 return null;
@@ -9232,7 +9232,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentPM;
         }
 
-        public ShipmentPM GetByCustomerReference1ForUpdate(string CustomerReference1,string ShipmentId, int tenant, bool IsForwarderShipment)
+        public ShipmentPM GetByCustomerReference1ForUpdate(string CustomerReference1, string ShipmentId, int tenant, bool IsForwarderShipment)
         {
             var shipments = (from a in repository.context.Shipments.Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentPayableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("MoveType").Include("SalesmanUser").Include("SalesmanUser.Contact")
                              where a.CustomerReference1 == CustomerReference1 && a.Id != ShipmentId && (IsForwarderShipment ? a.ForwarderShipmentNumber != null : true) && a.Tenant == tenant
@@ -9610,7 +9610,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CreateDateTime = f.CreateDateTime,
                     ShipmentNumber = f.ShipmentNumber,
                     ShipmentType = f.ShipmentType,
-                    ShipmentTypeId=f.ShipmentTypeId,
+                    ShipmentTypeId = f.ShipmentTypeId,
                     TransportModeId = f.TransportModeId,
                     Field1 = f.Field1,
                     Field2 = f.Field2,
@@ -9935,7 +9935,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CreateDateTime = f.CreateDateTime,
                     ShipmentNumber = f.ShipmentNumber,
                     ShipmentType = !string.IsNullOrEmpty(f.ShipmentTypeName) ? f.ShipmentTypeName + " " + f.ShipmentLevelName : f.ShipmentLevelName,
-                    ShipmentTypeId=f.ShipmentTypeId,
+                    ShipmentTypeId = f.ShipmentTypeId,
                     TransportModeId = f.TransportModeId,
                     Field1 = f.Field1,
                     Field2 = f.Field2,
@@ -10010,7 +10010,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     FromPortCountry = f.MainCarriageFromPortCountryName,
 
                     //ToPort = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortCode) ? f.MainCarriageFinalDestinationPortCode : f.ToPortCode,
-                    
+
                     // Column: To
                     ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPort,
                     MainCarriageToState = f.MainCarriageToState,
@@ -10185,16 +10185,16 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             List<ShipmentList> shipmentLists = (from s in repository.context.Shipments
                                                 where s.Tenant == tenant && s.MasterShipmentDataId == masterId && s.Id != masterId && ((s.ShipmentLevelCode == "H") || (s.ShipmentLevelCode == "D") || s.ShipmentLevelCode == "A")
                                                 select new ShipmentList()
-                                                  {
-                                                      Id =s.Id,
-                                                      ShipmentNumber = s.ShipmentNumber,
-                                                      ShipmentLevelCode =s.ShipmentLevelCode,
-                                                      AgentId = s.AgentId,
+                                                {
+                                                    Id = s.Id,
+                                                    ShipmentNumber = s.ShipmentNumber,
+                                                    ShipmentLevelCode = s.ShipmentLevelCode,
+                                                    AgentId = s.AgentId,
 
-                                                  }).ToList();
-         
+                                                }).ToList();
+
             return shipmentLists;
-         
+
         }
 
         public bool CheckIfShipmentExistByAgentSharedManifestRef(string agentSharedManifestRef, int tenant)
@@ -10204,7 +10204,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                  where a.Tenant == tenant && a.AgentSharedManifestRef == agentSharedManifestRef
                                  select a.Id).FirstOrDefault();
 
-            return !string.IsNullOrEmpty(shipmentId) ? true: false;
+            return !string.IsNullOrEmpty(shipmentId) ? true : false;
 
         }
 
@@ -10233,8 +10233,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
 
             string shipmentNumber = (from a in repository.context.Shipments
-                                 where a.Tenant == tenant && a.Id == shipmentId
-                                 select a.ShipmentNumber).FirstOrDefault();
+                                     where a.Tenant == tenant && a.Id == shipmentId
+                                     select a.ShipmentNumber).FirstOrDefault();
 
             return shipmentNumber;
 
@@ -10250,7 +10250,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                 TransportModeId = a.TransportModeId,
                                                 ShipperName = a.ShipperCard != null ? a.ShipperCard.EnglishName : null,
                                                 DirectionId = a.DirectionId,
-                                                ConsigneeName=a.ConsigneeCard != null ? a.ConsigneeCard.EnglishName : null,
+                                                ConsigneeName = a.ConsigneeCard != null ? a.ConsigneeCard.EnglishName : null,
                                                 ShipmentLevelCode = a.ShipmentLevelCode,
                                                 ShipmentNumber = a.ShipmentNumber,
                                             }).ToList();
@@ -10298,7 +10298,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         }
 
-        public ShipmentPM GetSingleShipmentPMBySecurityKeyTenant(string key,int tenant)
+        public ShipmentPM GetSingleShipmentPMBySecurityKeyTenant(string key, int tenant)
         {
             if (!string.IsNullOrEmpty(key))
             {
@@ -10341,7 +10341,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return null;
         }
 
-        public IQueryable<ShipmentList> GetShipmentListsByCustomerIdsAndDates(List<string>customerIds, DateTime? fromDate, DateTime? toDate, int tenant)
+        public IQueryable<ShipmentList> GetShipmentListsByCustomerIdsAndDates(List<string> customerIds, DateTime? fromDate, DateTime? toDate, int tenant)
         {
 
             IQueryable<ShipmentList> result = Enumerable.Empty<ShipmentList>().AsQueryable();
@@ -10364,7 +10364,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 List<int?> customerTenantNumbers = shipmentLists.GroupBy(d => d.CustomerTenantNumber).Select(d => d.FirstOrDefault().CustomerTenantNumber).ToList();
                 if (customerTenantNumbers.Count > 0)
                 {
-                    List<int> customerTenants = customerTenantAccessQuery.GetCustomerTenantAccessListsByCustomer(customerTenantNumbers,"A").ToList();
+                    List<int> customerTenants = customerTenantAccessQuery.GetCustomerTenantAccessListsByCustomer(customerTenantNumbers, "A").ToList();
                     result = shipmentLists.Where(d => customerTenants.Contains((int)d.CustomerTenantNumber));
                 }
             }
