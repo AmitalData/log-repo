@@ -1,9 +1,9 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {DateTool} from '../../../../Infrastructure/Tools';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
-import {AWBMessagingStockPM} from '../../../../Shipment/EntityPMs/AWBMessagingStockPM';
-import {AWBMessagingStockPMService} from '../../../../Shipment/Services/StandardPMs/AWBMessagingStockPMService';
+import {MessagingStockPM} from '../../../../Shipment/EntityPMs/MessagingStockPM';
+import {MessagingStockPMService} from '../../../../Shipment/Services/StandardPMs/MessagingStockPMService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -16,9 +16,9 @@ import {TenantManagementAWBStockTabComponent, StockArgs} from './TenantManagemen
 })
 
 export class AddEditAWBStockComponent extends BaseComponent {
-    public EntityPM: AWBMessagingStockPM;
+    public EntityPM: MessagingStockPM;
     public DataContext: AddEditAWBStockComponent = this;
-    public ObjectTableName: string = "AWBMessagingStock";
+    public ObjectTableName: string = "MessagingStock";
     public ValidationErrorsList: string[] = [];
     constructor() {
         super();
@@ -31,7 +31,7 @@ export class AddEditAWBStockComponent extends BaseComponent {
         this.FatherComponent = windowArgs.FatherComponent;
 
         if (windowArgs.IsNewEntity) {
-            this.EntityPM = new AWBMessagingStockPM();
+            this.EntityPM = new MessagingStockPM();
             this.EntityPM.TenantNumber = windowArgs.FatherComponent.EntityPM.Id;
             this.EntityPM.DummyTenant = SessionLocator.Tenant;
         }
@@ -70,7 +70,7 @@ export class AddEditAWBStockComponent extends BaseComponent {
     }
 
     private LoadEntityPM(id: string) {
-        var myService: AWBMessagingStockPMService = new AWBMessagingStockPMService();
+        var myService: MessagingStockPMService = new MessagingStockPMService();
 
         myService.get(id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -193,7 +193,7 @@ export class AddEditAWBStockComponent extends BaseComponent {
 
     private Submit() {
         if (this.DataContext.EntityPM.IsDirty) {
-            var myService: AWBMessagingStockPMService = new AWBMessagingStockPMService();
+            var myService: MessagingStockPMService = new MessagingStockPMService();
 
             if (this.DataContext.EntityPM.Id == null) {
                 myService.insert(this.DataContext.EntityPM).subscribe(myResult => {

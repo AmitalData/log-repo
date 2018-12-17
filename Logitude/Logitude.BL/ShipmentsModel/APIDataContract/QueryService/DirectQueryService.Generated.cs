@@ -268,7 +268,21 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.MainCarriageCarrier = CardService18.GetCardById(MyEntityPM.MainCarriageCarrierId,Tenant); 
 			       
 					   				   }
-				   					
+				   
+				if(MyEntityPM.ShipmentReceivables != null && MyEntityPM.ShipmentReceivables.Count > 0)
+				{
+					 ReceivableQueryService ReceivableService19 = new ReceivableQueryService(Tenant);
+					 temp.Receivables = ReceivableService19.ReceivableDataMapping(MyEntityPM.ShipmentReceivables,Tenant);
+				}
+
+							 
+				if(MyEntityPM.ShipmentPayables != null && MyEntityPM.ShipmentPayables.Count > 0)
+				{
+					 PayableQueryService PayableService19 = new PayableQueryService(Tenant);
+					 temp.Payables = PayableService19.PayableDataMapping(MyEntityPM.ShipmentPayables,Tenant);
+				}
+
+							 					
 				   return temp;
 			}
             catch (Exception ex)
@@ -559,7 +573,21 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										   
+					
+					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
+					{
+						ReceivableQueryService ReceivableService19 = new ReceivableQueryService(Tenant);
+						temp.ShipmentReceivables = ReceivableService19.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
+					}
+
+								 
+					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
+					{
+						PayableQueryService PayableService19 = new PayableQueryService(Tenant);
+						temp.ShipmentPayables = PayableService19.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName);
+					}
+
+								 					   
 					   return temp;
 		    }
             catch (Exception ex)

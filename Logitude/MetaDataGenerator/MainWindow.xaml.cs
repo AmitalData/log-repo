@@ -239,48 +239,23 @@ namespace MetaDataGenerator
 
         private void BtnUpdate_Old_ModelLXMLs_ClosedOnly_Click(object sender, RoutedEventArgs e)
         {
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-                DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
-                string solutionDirectory = solutionDir.FullName;
-
-                string dir = solutionDirectory + @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
-                dialog.SelectedPath = dir;
-
-                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-
-                if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
-                {
-                    List<ObjectTable> tables = new List<ObjectTable>();
-                    ObjectFieldRepository rep = new ObjectFieldRepository(0);
-
-                    DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
-                    string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-
-                    tables = (from a in rep.context.ObjectTables
-                              where allFiles.Contains(a.Name) && a.IsClosed == true
-                              select a).OrderBy(t => t.Name).ToList();
-
-                    string errors = "";
-                    DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
-                    dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs_Specific(tables, dialog.SelectedPath, ref errors,"close");
-
-                    if (string.IsNullOrEmpty(errors))
-                        MessageBox.Show("Export completed successfully");
-                    else
-                    {
-                        MessageBox.Show(errors);
-                    }
-
-
-
-                }
-            }
+            GenerateLXMLItems("closedtables");
         }
 
         private void BtnUpdate_Old_ModelLXMLs_MenuButtons_Click(object sender, RoutedEventArgs e)
         {
+            GenerateLXMLItems("menus");
+        }
+
+       
+        private void BtnUpdate_Old_ModelLXMLs_Tabs_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateLXMLItems("tabs");
+        }
+
+        private static void GenerateLXMLItems(string tagName)
+        {
+
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
             {
                 string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
@@ -301,12 +276,12 @@ namespace MetaDataGenerator
                     string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
 
                     tables = (from a in rep.context.ObjectTables
-                              where allFiles.Contains(a.Name) 
+                              where allFiles.Contains(a.Name)
                               select a).OrderBy(t => t.Name).ToList();
 
                     string errors = "";
                     DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
-                    dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs_Specific(tables, dialog.SelectedPath, ref errors,"menus");
+                    dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs_Specific(tables, dialog.SelectedPath, ref errors, tagName);
 
                     if (string.IsNullOrEmpty(errors))
                         MessageBox.Show("Export completed successfully");
@@ -314,12 +289,12 @@ namespace MetaDataGenerator
                     {
                         MessageBox.Show(errors);
                     }
-
-
-
                 }
             }
+
+
         }
+
     }
 }
 /*

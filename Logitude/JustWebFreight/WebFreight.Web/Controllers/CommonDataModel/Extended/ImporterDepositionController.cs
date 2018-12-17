@@ -26,9 +26,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                 ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
                 importerDepositionHelper.StartImporterDeposition(importerDepositionAM);
-                importerDepositionHelper.AddAPILogs(importerDepositionAM);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "Importer Deposition Send to cloud Successfully");
+                string logId = importerDepositionHelper.AddAPILogs(importerDepositionAM);
+                var msg = "Importer Deposition Send to cloud Successfully";
+                APILogsUtility.UpdateAPILogStatus(logId, importerDepositionAM.CustomerTenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
+
+                return Request.CreateResponse(HttpStatusCode.OK, msg);
             }
 
             catch (Exception ex)

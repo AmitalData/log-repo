@@ -34,6 +34,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal"  Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 5 0 0">
             <Button  Margin="5 0 0 0" Content="Update Model Old LXMLS Menus only" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Top" Width="250" Height="39" x:Name="btnUpdate_Old_ModelLXMLs_MenuButtons" Click="BtnUpdate_Old_ModelLXMLs_MenuButtons_Click"/>
+            <Button  Margin="5 0 0 0" Content="Update Model Old LXMLS Tabs only" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Top" Width="250" Height="39" x:Name="btnUpdate_Old_ModelLXMLs_Tabs" Click="BtnUpdate_Old_ModelLXMLs_Tabs_Click"/>
         </StackPanel>
 
     </Grid>

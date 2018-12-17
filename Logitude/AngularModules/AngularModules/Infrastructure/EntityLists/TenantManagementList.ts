@@ -115,5 +115,6 @@ export class TenantManagementList {
 		AgentSharedLogisticsStatisticsLastWeek: number;
 		AgentSharedLogisticsStatisticsLastMonth: number;
 		ChangeHeaderColor: boolean;
+		IsINTTRAStockPrepaid: boolean;
 	
 }

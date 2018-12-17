@@ -12,27 +12,28 @@ export class NewPhoneCall {
   }
 
 
-  public CreateNewPhoneCall() {
+  public CreateNewPhoneCall(phoneCallNo: string) {
    
     this.Helper.WaitByIdAndClick('NEWACTIVITY');
     this.Helper.WaitByIdAndClick('NEWPHONECALL');
 
-    this.FillPhoneCallFields();
+    this.FillPhoneCallFields(phoneCallNo);
     this.Helper.WaitByIdAndClick('Ok-AddActivity');
     this.Helper.WaitBusyIndicator();
+    this.Helper.WaitWindowClosed();
 
   }
 
 
 
-  FillPhoneCallFields() {
+  FillPhoneCallFields(phoneCallNo:string) {
     this.Helper.WaitByIdAndFill('Activity_CustomerId', 'razan co');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 1);
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('Activity_CallWithId', 'm');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 1);
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    this.Helper.WaitByIdAndFill('Activity_Subject', 'Phone Call - Added from Protractor');
+    this.Helper.WaitByIdAndFill('Activity_Subject', phoneCallNo);
 
     this.Helper.WaitByIdAndFill('Activity_Description', 'Phone Call Description - Protractor ');// test random number randomWholeNum
 

@@ -412,9 +412,9 @@ namespace Logitude.CRM.Data
 			modelBuilder.Configurations.Add(new ParticipantMap());
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
-			//modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
-
-			#endregion
+            //modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
+            #endregion
 
             base.OnModelCreating(modelBuilder);
         }
@@ -721,4 +721,4 @@ namespace Logitude.CRM.Data
  }
 
 
-}
+}

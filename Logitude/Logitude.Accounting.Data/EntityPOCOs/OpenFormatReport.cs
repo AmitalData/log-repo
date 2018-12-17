@@ -37,9 +37,9 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("ReportNumber")]
 	    public string ReportNumber { get; set; }
         [Column("FromDate")]
-	    public DateTime? FromDate { get; set; }
+	    public DateTime FromDate { get; set; }
         [Column("ToDate")]
-	    public DateTime? ToDate { get; set; }
+	    public DateTime ToDate { get; set; }
         [ForeignKey("OpenFormatDateType")]
         [Column("DateTypeCode")]
 	    public string DateTypeCode { get; set; }
