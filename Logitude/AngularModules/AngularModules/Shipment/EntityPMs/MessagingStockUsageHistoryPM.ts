@@ -92,7 +92,10 @@ export class MessagingStockUsageHistoryPM {
     public get LastActionByUserId() { return this.lastActionByUserId; }
     public set LastActionByUserId(newValue: string) { if (this.lastActionByUserId != newValue) { this.lastActionByUserId = newValue; this.MarkAsDirty("LastActionByUserId"); } }
        
-	 
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+
 
     public OldEntityPM: MessagingStockUsageHistoryPM;
 	    
