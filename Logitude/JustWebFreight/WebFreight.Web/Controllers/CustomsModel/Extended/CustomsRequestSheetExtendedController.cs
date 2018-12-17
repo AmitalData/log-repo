@@ -211,13 +211,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                                 {
                                     if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(currententityPm.InterfaceTypeCode))
                                     {
-                                        
-                                        string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSKey(currententityPm.Id);
-                                        using (var scope1 = TransactionFactory.GetNewTransaction())
+                                        if (DateTime.Now.Subtract(currententityPm.RequestCreateDate.GetValueOrDefault()) < TimeSpan.FromMinutes(10)) //CALL#321639         
                                         {
-                                            var concurrentKiller = new ConcurrentKiller();
-                                            concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, currententityPm.Tenant);
-                                            scope1.Complete();
+                                            string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSKey(currententityPm.Id);
+                                            using (var scope1 = TransactionFactory.GetNewTransaction())
+                                            {
+                                                var concurrentKiller = new ConcurrentKiller();
+                                                concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, currententityPm.Tenant);
+                                                scope1.Complete();
+                                            }
                                         }
                                     }
                                 }
