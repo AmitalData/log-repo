@@ -147,5 +147,6 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
         public string StockTypeCode { get; set; } //A - Agent Stock, C - Customer Stock
 
+        public string PackageCodeSearchField { get; set; }
     }
 }

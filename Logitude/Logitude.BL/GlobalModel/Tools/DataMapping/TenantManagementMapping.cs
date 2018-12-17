@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -90,7 +91,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.MobileTotalLastMonth = entityPM.MobileTotalLastMonth;
             entityPOCO.ShardLogisticLastDate = entityPM.ShardLogisticLastDate;
             entityPOCO.ShardLogisticTotalLastWeek = entityPM.ShardLogisticTotalLastWeek;
-            entityPOCO.ShardLogisticTotalLastMonth = entityPM.ShardLogisticTotalLastMonth;            
+            entityPOCO.ShardLogisticTotalLastMonth = entityPM.ShardLogisticTotalLastMonth;
             entityPOCO.RequestedAirlines = entityPM.RequestedAirlines;
             entityPOCO.RegisteredAirlines = entityPM.RegisteredAirlines;
             entityPOCO.PendingAirlines = entityPM.PendingAirlines;
@@ -107,6 +108,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.AgentSharedLogisticsStatisticsLastMonth = entityPM.AgentSharedLogisticsStatisticsLastMonth;
             entityPOCO.ChangeHeaderColor = entityPM.ChangeHeaderColor;
             entityPOCO.StockTypeCode = entityPM.StockTypeCode;
+            entityPOCO.PackageCodeSearchField = entityPM.PackageCodeSearchField;
 
             if (entityPM.IsMultiPackage)
             {
@@ -127,7 +129,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                     if (!entityPM.ManagesRegisteredAgent)
                     {
                         tenant.RegulatedAgentRegimeActivated = false;
-                        
+
                     }
 
                     tenantRepository.Update(tenant);
@@ -136,6 +138,39 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
 
                 scope.Complete();
             }
+
+
+            BuildPackageCodeSearchFields(entityPM, entityPOCO);
+        }
+
+        private static void BuildPackageCodeSearchFields(TenantManagementPM entityPM, TenantManagement entityPOCO)
+        {
+            string myPackageCodeSearchField = "";
+
+            var AddOnsCodes = entityPM.AddOns.Where(p => p.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).Select(p => p.PackageCode);
+            foreach (string item in AddOnsCodes)
+            {
+                MethodHelper.AddToSearchFields(ref myPackageCodeSearchField, item);
+            }
+
+            var LicensesCodes = entityPM.TenantManagementLicenses.Where(p => p.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).Select(p => p.PackageCode);
+            foreach (string item in LicensesCodes)
+            {
+                MethodHelper.AddToSearchFields(ref myPackageCodeSearchField, item);
+            }
+
+            MethodHelper.AddToSearchFields(ref myPackageCodeSearchField, entityPM.PackageCode);
+
+
+            if (myPackageCodeSearchField.Length > 250)
+            {
+                myPackageCodeSearchField = myPackageCodeSearchField.Substring(0, 1000);
+            }
+
+
+            entityPOCO.PackageCodeSearchField = myPackageCodeSearchField;
+            entityPM.PackageCodeSearchField = myPackageCodeSearchField;
+
         }
     }
 }

@@ -614,6 +614,11 @@ export class TenantManagementPM {
     public set StockTypeCode(newValue: string) { if (this.stockTypeCode != newValue) { this.stockTypeCode = newValue; this.MarkAsDirty("StockTypeCode"); } }
        
 	 
+    private packageCodeSearchField: string;
+    public get PackageCodeSearchField() { return this.packageCodeSearchField; }
+    public set PackageCodeSearchField(newValue: string) { if (this.packageCodeSearchField != newValue) { this.packageCodeSearchField = newValue; this.MarkAsDirty("PackageCodeSearchField"); } }
+       
+	 
     private privateLabelId: string;
     public get PrivateLabelId() { return this.privateLabelId; }
     public set PrivateLabelId(newValue: string) { if (this.privateLabelId != newValue) { this.privateLabelId = newValue; this.MarkAsDirty("PrivateLabelId"); } }
