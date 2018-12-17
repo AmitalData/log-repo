@@ -285,7 +285,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
 
             this.EntityPM.ImporterCode = newValue;
             this.EntityPM.ImporterTypeCode = "1";
-            this.EntityPM.ImporterTypeName = "IL";
+            //this.EntityPM.ImporterTypeName = "IL";
 
             this.EntityPM.MainImporterEntitlemntTypeCode = null;
             this.EntityPM.ImporterAddress = null;
@@ -293,17 +293,20 @@ export class DeclarationClassificationComponent extends BaseComponent implements
             // this.EntityPM.ImporterName = null;
             this.EntityPM.ImporterPassCountryCode = null;
 
-            this.EntityPM.ImporterName = "";//
 
-            this.EntityPM.CasualImporterAddress1 = "";
-            this.EntityPM.CasualImporterAddress2 = "";
-            this.EntityPM.CasualImporterCity = "";
-            this.EntityPM.CasualImporterZipCode = "";
-            this.EntityPM.CasualImporterFax = "";
-            this.EntityPM.CasualImporterEmail = "";
-            this.EntityPM.CasualImporterTel = "";
-            this.EntityPM.CasualImporterContact = "";
+            let needTodELETE: boolean = false;
+            if (!this.EntityPM.IsCourierDeclaration) {//due courier
+                this.EntityPM.ImporterName = "";//
 
+                this.EntityPM.CasualImporterAddress1 = "";
+                this.EntityPM.CasualImporterAddress2 = "";
+                this.EntityPM.CasualImporterCity = "";
+                this.EntityPM.CasualImporterZipCode = "";
+                this.EntityPM.CasualImporterFax = "";
+                this.EntityPM.CasualImporterEmail = "";
+                this.EntityPM.CasualImporterTel = "";
+                this.EntityPM.CasualImporterContact = "";
+            }
         }
 
 
