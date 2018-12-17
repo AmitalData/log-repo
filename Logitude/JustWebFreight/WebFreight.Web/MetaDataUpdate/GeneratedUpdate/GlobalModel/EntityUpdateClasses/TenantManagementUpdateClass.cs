@@ -84,7 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			      				    OldDBTableName =  "TenantManagements",
 			      				    ObjectTableSingular =  "Tenant Management",
 			      				    ObjectTablePlural =  "Tenant Managements",
-			      				    HasCustomFilter =  false,
+			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
@@ -7229,6 +7229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 			   {
 					 
 					 						FieldName =  "IsINTTRAStockPrepaid",
+					  						OldFieldName =  "IsINTTRAStockPrepaid",
 					  						ObjectTableName =  "TenantManagement",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7247,6 +7248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsINTTRAStockPrepaid",
 					  						ListPropertyPath =  "IsINTTRAStockPrepaid",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
