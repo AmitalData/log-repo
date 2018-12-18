@@ -199,7 +199,12 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             switch (responeGWMessageECTHRData.ResponseStatusCode)
             {
-                case 0:
+                case 1://45997
+                    {
+                        declarationPM.MamanStatusCode = "1";
+                    }
+                    break;
+/*                case 0:
                     {
                         declarationPM.MamanStatusCode = "1";
                     }
@@ -209,8 +214,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         declarationPM.MamanStatusCode = "2";
                     }
                     break;
+                    */
                 default:
-                    declarationPM.MamanStatusCode = responeGWMessageECTHRData.ResponseStatusCode.ToString();//???        
+                    declarationPM.MamanStatusCode = "2";//45997
+                    //declarationPM.MamanStatusCode = responeGWMessageECTHRData.ResponseStatusCode.ToString();//???        //45997
                     break;
             }
 
