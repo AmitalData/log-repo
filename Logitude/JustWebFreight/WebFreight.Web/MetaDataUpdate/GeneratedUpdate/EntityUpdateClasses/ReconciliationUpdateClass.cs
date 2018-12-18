@@ -809,12 +809,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ReconciliationEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Reconciliation.Tab.Events", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReconciliationFeatures.REEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RCDT",HtmlComponentName = "ReconciliationDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Reconciliation/ReconciliationDetailsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "Reconciliation.Tab.Details" && d.ObjectTableId == ReconciliationObjectTable.Id).FirstOrDefault().Id, ControlPath = "ReconciliationDetailsTabComponent", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Reconciliation.TH.Details" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RCDT",HtmlComponentName = "ReconciliationDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/Reconciliation/ReconciliationDetailsTabComponent", FeatureId = ReconciliationDetailsFeature_TH0.Id, ControlPath = "ReconciliationDetailsTabComponent", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = ReconciliationDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "REEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Reconciliation.Tab.Events" && d.ObjectTableId == ReconciliationObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Reconciliation.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "REEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReconciliationEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReconciliationObjectTable.Id, TabNameTextCodeId = ReconciliationEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -892,7 +892,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable ReconciliationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Reconciliation" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature ReconciliationFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReconciliationCancelMenuButton", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Reconciliation.Features.CancelReconcileMenuButton", NameTextCodeDefaultText = "Cancel Reconciltiation", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

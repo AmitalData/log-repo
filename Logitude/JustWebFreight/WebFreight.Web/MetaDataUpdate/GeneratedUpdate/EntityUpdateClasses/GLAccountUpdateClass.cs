@@ -5561,7 +5561,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup GLAccountQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "GLAC", Name = "GLAccount" }, queryGroupRepository);
 						QueryGroup GLAccountQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "VNAC", Name = "VendorGLAccount" }, queryGroupRepository);
@@ -6118,22 +6118,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature GLAccountEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAOV",HtmlComponentName = "GLAccountOverviewComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountOverviewComponent", FeatureId = tenantFeatures.Where(d => d.Code == "GLAccount.Tab.Overview" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "GLAccount.TH.Overview" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAOV",HtmlComponentName = "GLAccountOverviewComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountOverviewComponent", FeatureId = GLAccountOverviewFeature_TH0.Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountOverviewTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GATR",HtmlComponentName = "GLAccountTransactionsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "TRANSACTIONS" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountTransactionsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "GLAccount.TH.Transactions" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GATR",HtmlComponentName = "GLAccountTransactionsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent", FeatureId = GLAccountTransactionsFeature_TH1.Id, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountTransactionsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTransactionsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAGC",HtmlComponentName = "GLAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountGeneralTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "GLAccount.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAGC",HtmlComponentName = "GLAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountGeneralTabComponent", FeatureId = GLAccountGeneralFeature_TH2.Id, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountGeneralTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountGeneralTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAMR",HtmlComponentName = "ManageReconciliationsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/ManageReconciliationsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "MANAGERECONCILIATIONS" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.Accounting.Views.Tabs.RECO.GLAccountManageReconciliationsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "GLAccount.TH.ManageReconciliations" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAMR",HtmlComponentName = "ManageReconciliationsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/ManageReconciliationsTabComponent", FeatureId = GLAccountManageReconcFeature_TH3.Id, ControlPath = "Logitude.Accounting.Views.Tabs.RECO.GLAccountManageReconciliationsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageReconcTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLTX",HtmlComponentName = "GLAccountTaxWithholdingTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "TAX" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "GLAccount.TH.Tax" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLTX",HtmlComponentName = "GLAccountTaxWithholdingTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent", FeatureId = GLAccountTaxwithholdingFeature_TH4.Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTaxwithholdingTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAAD",HtmlComponentName = "GLAccountAdditionalDataTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountAdditionalDataTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ADDITIONAL" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "GLAccount.TH.Additional" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAAD",HtmlComponentName = "GLAccountAdditionalDataTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountAdditionalDataTabComponent", FeatureId = GLAccountAdditionalDataFeature_TH5.Id, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountAdditionalDataTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "GLAccount.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = GLAccountEventsFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountEventsTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -6516,14 +6516,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable GLAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GLAccount" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature GLAccountFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECOCILE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reconcile", NameTextCodeDefaultText = "Reconcile", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
-      
-    
-			   Feature GLAccountFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREGLACCOUNT", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.More", NameTextCodeDefaultText = "More Buttons", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 			   Feature GLAccountFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature GLAccountFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTCARDINDEX", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.PrintCardIndex", NameTextCodeDefaultText = "Print Card Index", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -6559,15 +6555,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton GLAccountMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 1, 
-						IsActive = true,
+						Index = 100, 
+						IsActive = false,
 						LabelTextCodeCode = "GLAccount.B.More",
 						LabelTextCodeDefaultText = "More",
 						Tenant = 0,
 						MenuButtonGroupId = GLAccountMenuButtonGroup.Id,
 						ObjectTableId = GLAccountObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = GLAccountFeature_MB1.Id,
+						FeatureId = null,
 						Style = null,
 						LocalDefaultText = null,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

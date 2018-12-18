@@ -670,7 +670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ChartOfAccountQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CHAC", Name = "ChartOfAccount" }, queryGroupRepository);
 						QueryGroup ChartOfAccountQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d7a5", Name = " Query Group" }, queryGroupRepository);
@@ -749,12 +749,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ChartOfAccountEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ChartOfAccount.Tab.Events", ObjectTableId = ChartOfAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChartOfAccount.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COAG",HtmlComponentName = "ChartOfAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ChartOfAccount.Tab.General" && d.ObjectTableId == ChartOfAccountObjectTable.Id).FirstOrDefault().Id, ControlPath = "./Accounting/Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent", ObjectTableId = ChartOfAccountObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ChartOfAccount.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COAG",HtmlComponentName = "ChartOfAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent", FeatureId = ChartOfAccountGeneralFeature_TH0.Id, ControlPath = "./Accounting/Components/EditTabs/ChartOfAccount/ChartOfAccountGeneralTabComponent", ObjectTableId = ChartOfAccountObjectTable.Id, TabNameTextCodeId = ChartOfAccountGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COAE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "ChartOfAccount.Tab.Events" && d.ObjectTableId == ChartOfAccountObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ChartOfAccountObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ChartOfAccount.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COAE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ChartOfAccountEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ChartOfAccountObjectTable.Id, TabNameTextCodeId = ChartOfAccountEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

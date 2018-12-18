@@ -1492,7 +1492,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CashBookQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "e691", Name = "CashBook Query Group" }, queryGroupRepository);
 						QueryGroup CashBookQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "165d", Name = " Query Group" }, queryGroupRepository);
@@ -1633,16 +1633,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature CashBookEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Tab.Events", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSHG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "CashBook.Tab.General" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CashBook.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSHG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CashBookGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = CashBookGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CBDT",HtmlComponentName = "CashBookDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/CashBook/CashBookDetailsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "DETAILS" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.Accounting.Views.Tabs.CSHB.CashBookDetailsTabComponent", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CashBook.TH.Details" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CBDT",HtmlComponentName = "CashBookDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/CashBook/CashBookDetailsTabComponent", FeatureId = CashBookDetailsFeature_TH1.Id, ControlPath = "Logitude.Accounting.Views.Tabs.CSHB.CashBookDetailsTabComponent", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = CashBookDetailsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CBMD",HtmlComponentName = "CashBookManageDepoTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/CashBook/CashBookManageDepoTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "MNGDEPO" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.Accounting.Views.Tabs.CSHB.CashBookManageDepoTabComponent", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CashBook.TH.ManageDepo" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CBMD",HtmlComponentName = "CashBookManageDepoTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/CashBook/CashBookManageDepoTabComponent", FeatureId = CashBookManageDepoFeature_TH2.Id, ControlPath = "Logitude.Accounting.Views.Tabs.CSHB.CashBookManageDepoTabComponent", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = CashBookManageDepoTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSHE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "CashBook.Tab.Events" && d.ObjectTableId == CashBookObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CashBook.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSHE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CashBookEventsFeature_TH3.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = CashBookEventsTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1778,14 +1778,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable CashBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CashBook" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature CashBookFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DPSTCASHBOOK", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Deposite", NameTextCodeDefaultText = "Deposite", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
-      
-    
-			   Feature CashBookFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MORECASHBOOK", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.More", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 			   Feature CashBookFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
@@ -1820,15 +1816,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   MenuButton CashBookMenuButton1 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
 						EventCode = "More",
-						Index = 1, 
-						IsActive = true,
+						Index = 100, 
+						IsActive = false,
 						LabelTextCodeCode = "CashBook.B.More",
 						LabelTextCodeDefaultText = "More",
 						Tenant = 0,
 						MenuButtonGroupId = CashBookMenuButtonGroup.Id,
 						ObjectTableId = CashBookObjectTable.Id,
 						MenuButtonType = "dropdownbutton",
-						FeatureId = CashBookFeature_MB1.Id,
+						FeatureId = null,
 						Style = null,
 						LocalDefaultText = "חסימה",
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);

@@ -251,7 +251,7 @@ namespace <#= UpdateClassnamespacestring #>
 		#>
 
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup <#= ObjectTbl.Trim('"') #>QueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = <#= QGCode.Value #>, Name = <#= QGName.Value #> }, queryGroupRepository);
 			<#+
@@ -338,16 +338,20 @@ namespace <#= UpdateClassnamespacestring #>
 			  #>
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			  <#+
 			}
 	    
 			#>  <#+
 			if (Tabs != null)
 			{ 
-				foreach(XElement tab in entity.Elements("Tab"))  //get all classes
-				WriteAddTabMethod(entity,tab,ObjectTbl);
+			    int y = 0;
+				foreach(XElement tab in entity.Elements("Tab"))
+				{   //get all classes
+					WriteAddTabMethod(entity,tab,ObjectTbl,y);
+					y++;
+				}
 			}
 		#>
 
@@ -435,7 +439,7 @@ foreach(XElement featureElement in AdditionalFeatures.Elements("Feature")){
 			#>
 
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable <#= ObjectTbl.Trim('"') #>ObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == <#= TableNameFull #> && d.Tenant == 0).FirstOrDefault(); <#+
 			 foreach(XElement item in MenuButtons.Elements("MenuButton"))
 			 {  
@@ -1141,7 +1145,7 @@ private void WriteAddScreenFieldMethod(XElement entity,XElement ScreenField,int 
          <#+
 }
 
-private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName)
+private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName,int index)
 { 
 	 var Code = Tab.Attributes().Where(a => a.Name == "Code").FirstOrDefault().Value;
 	   var Name = Tab.Attributes().Where(a => a.Name == "TabName").FirstOrDefault().Value;
@@ -1177,7 +1181,7 @@ private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName)
 	  
 #>
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = tenantFeatures.Where(d => d.Code == "<#= FeatureCode #>" && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "<#= TextCodeCode #>" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>Feature_TH<#= index #>.Id, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>TextCode_TH<#= index #>.Id, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
    <#+
 }
 
