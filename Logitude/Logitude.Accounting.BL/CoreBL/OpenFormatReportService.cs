@@ -67,9 +67,9 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             myStringBuilder.Append("&OF1.31&");
             myStringBuilder.Append(' ', 50);
-
+            myStringBuilder.Append('\n');
             //B100
-            int counter = 2;
+            int counter = 1;
             foreach(B100Data item in b100Data)
             {
                 counter++;
@@ -109,6 +109,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(item.AccountingEntityReference.PadLeft(20, '0'));
                 }
 
+                ComputingPartnerTranslationHelper computingPartnerTranslationHelper = new ComputingPartnerTranslationHelper(tenant);
+                var entityPartnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(item.AccountingEntityCode, "ACC", "AccountingEntity");
+
+                if (entityPartnerCode != null)
+                {
+                    if (entityPartnerCode.Length > 3) { entityPartnerCode.Substring(0, 3); }
+                    myStringBuilder.Append(entityPartnerCode.PadLeft(3, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("000");
+
+                }
+
+
                 if (item.Reference2 != null)
                 {
                     if (item.Reference2.Length > 20) { item.Reference2.Substring(0, 20); }
@@ -122,9 +137,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(item.Notes.PadLeft(50, '0'));
                 }
 
-                var DocumentDate = String.Format("{0:dd MM yyyy}", item.DocumentDate);
-                var AccountingDate = String.Format("{0:dd MM yyyy}", item.AccountingDate);
-                var CreateDate = String.Format("{0:dd MM yyyy}", item.CreateDate);
+                var DocumentDate = String.Format("{0:ddMMyyyy}", item.DocumentDate);
+                var AccountingDate = String.Format("{0:ddMMyyyy}", item.AccountingDate);
+                var CreateDate = String.Format("{0:ddMMyyyy}", item.CreateDate);
 
                 if (AccountingDate.Length > 8) { AccountingDate.Substring(0, 8); }
                 myStringBuilder.Append(AccountingDate.PadLeft(8, '0'));
@@ -188,7 +203,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 CurrencyPM currency = currencyQuery.GetSinglePM(item.CurrencyId, tenant);
 
 
-               ComputingPartnerTranslationHelper computingPartnerTranslationHelper = new ComputingPartnerTranslationHelper(tenant);
+            
                var partnerCode=   computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(currency.Code, "CUR", "Currency");
 
                 if(partnerCode != null)
@@ -196,8 +211,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (partnerCode.Length > 3) { partnerCode.Substring(0, 3); }
                     myStringBuilder.Append(partnerCode.PadLeft(3, '0'));
                 }
-                
 
+                myStringBuilder.Append('\n');
             }
 
           
@@ -273,7 +288,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             // user
             User loggedUser = GetLoggedUser(tenant);
-            DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMVDATA", tenant);
+            DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMV", tenant);
 
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
            // string name = "A856." + tenantPM.VatNumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
