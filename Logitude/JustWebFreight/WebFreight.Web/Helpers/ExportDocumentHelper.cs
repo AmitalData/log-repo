@@ -1025,8 +1025,8 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
                 case "CDE":
+                case "WHL":
                     {
-                      
                         theT1 = System.DateTime.Now.Ticks;
                         CrossDockEntryDataProviderHelper crossDockEntryDataProviderHelper = new CrossDockEntryDataProviderHelper();
                         byte[] byteArray = crossDockEntryDataProviderHelper.LoadDataToCrossDockEntryDataProvider(entityId, tenant);
@@ -1040,8 +1040,6 @@ namespace WebFreight.Web.Helpers
                         report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
                         break;
                     }
-
-
 
                 case "CDR":
                     {
