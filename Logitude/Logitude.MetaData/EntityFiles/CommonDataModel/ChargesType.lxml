@@ -86,10 +86,29 @@
   <DataContracts>
     <DataContract Name="&quot;ChargesType&quot;" Version="&quot;ApiV1&quot;">
       <DCField DCFieldName="&quot;Id&quot;" DCVersion="&quot;&quot;" FieldName="&quot;Id&quot;" IsKey="true" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" />
-      <DCField DCFieldName="&quot;Code&quot;" DCVersion="&quot;&quot;" FieldName="&quot;Code&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" />
+      <DCField DCFieldName="&quot;Code&quot;" DCVersion="&quot;&quot;" FieldName="&quot;Code&quot;" IsKey="true" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" />
       <DCField DCFieldName="&quot;EnglishName&quot;" DCVersion="&quot;&quot;" FieldName="&quot;EnglishName&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" />
       <DCField DCFieldName="&quot;LocalName&quot;" DCVersion="&quot;&quot;" FieldName="&quot;LocalName&quot;" IsKey="false" IsManualMapping="true" IsMulti="false" FieldsDataType="&quot;nText&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" />
       <DCField DCFieldName="&quot;PartnerCode&quot;" FieldName="&quot;Code&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="true" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" />
     </DataContract>
   </DataContracts>
+  <AdditionalTextCodes>
+    <TextCode Code="&quot;ChargesType.M.LocalLanguageInvoice&quot;" DefaultText="&quot;Used for local language invoice&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.M.ConcentratingIntoGroups&quot;" DefaultText="&quot;Used for concentrating the receivables and payables into groups&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.M.ChargesCalculation&quot;" DefaultText="&quot;Used for the charges calculation&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.M.OoceanInlandShipments&quot;" DefaultText="&quot;Used for ocean FCL/ Inland FTL shipments&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.M.BelongToFreight&quot;" DefaultText="&quot;Note that charges that belong to the ( Freight ) group will not be printed on the AWB !!&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.M.RegionIsLocked&quot;" DefaultText="&quot;This region is Locked, since this Charge Type wil not be used in Air Transport !!&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.M.AWBDefaults&quot;" DefaultText="&quot;This section defines the AWB defaults for this charge type&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.M.DueCarrierAgent&quot;" DefaultText="&quot;defines if this charge is due carrier or due agent&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.M.BillingProperties&quot;" DefaultText="&quot;This section defines the charge type billing properties&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.M.RankingInReceivables&quot;" DefaultText="&quot;Used for ranking the charge in the receivables&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.O.Transport&quot;" DefaultText="&quot;Transport&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.O.UsedIn&quot;" DefaultText="&quot;This charge type is used in&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.O.AutoDisplay&quot;" DefaultText="&quot;Auto Display&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.M.AppearsIn&quot;" DefaultText="&quot;This charge type appears automatically in&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.O.AWBSettings&quot;" DefaultText="&quot;AWB settings&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.O.Billing&quot;" DefaultText="&quot;Billing&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;ChargesType.O.UsedInRP&quot;" DefaultText="&quot;Used In&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+  </AdditionalTextCodes>
 </entity>

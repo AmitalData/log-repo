@@ -13,7 +13,6 @@
     <Record Code="&quot;T&quot;" SearchFields="&quot;T,Transmission,&quot;" Name="&quot;Transmission&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CommunicationLogType&quot;" DefaultText="&quot;Communication Log Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

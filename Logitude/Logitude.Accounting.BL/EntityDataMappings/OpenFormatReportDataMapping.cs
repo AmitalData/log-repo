@@ -16,6 +16,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using System.Web;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -40,7 +41,17 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CustomMappedPOCOProperties.Add(POCOPropertyNames.CreatedByUserId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.DateTypeCode);
 
+            ContactQuery query = new ContactQuery(entityPOCO.Tenant);
+            ContactPM loggedContact = null;
+            if (HttpContext.Current != null)
+            {
+                loggedContact = query.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+            }
+            else
+            {
 
+                loggedContact = query.GetSingleContactPM(entityPM.CreatedByUserId);
+            }
 
             if (entityPOCO.StatusTypeCode != null)
             {
@@ -48,7 +59,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 OpenFormatReportStatusPM status = statusQueryService.GetSingle(entityPOCO.StatusTypeCode, false, false);
                 if (status != null)
                 {
-                    ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                   // ContactPM loggedContact = null;
+
+                    //if (HttpContext.Current != null)
+                    //{
+                    //    loggedContact = query.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                    //}
+                    //else
+                    //{
+
+                    //    loggedContact = query.GetSingleContactPM(entityPM.CreatedByUserId);
+                    //}
+                  //  ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
                     if (loggedContact.DontShowLocal)
                     {
 
@@ -63,11 +85,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
             if (entityPOCO.CreatedByUserId != null)
             {
-                ContactQuery query = new ContactQuery(entityPOCO.Tenant);
+               
                 ContactPM contact = query.GetSinglePM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
+              
+                   
+
+                //  ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
                 if (contact != null)
                 {
-                    ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
                     if (loggedContact.DontShowLocal)
                     {
 
@@ -87,7 +112,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 OpenFormatDateTypePM dateType = typeQueryService.GetSingle(entityPOCO.DateTypeCode, false, false);
                 if (dateType != null)
                 {
-                    ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                   // loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
                     if (loggedContact.DontShowLocal)
                     {
 

@@ -95,7 +95,6 @@
     <EventType Code="&quot;UPAQ&quot;" ObjectTableName="&quot;AnalyzeQueue&quot;" ShortView="false" IsManualEntry="false" LocalName="&quot;Analyze Queue Updated&quot;" EnglishName="&quot;Analyze Queue Updated&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AnalyzeQueue&quot;" DefaultText="&quot;Analyze Queue&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;ANALYZEQUEUEERRORS&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;AnalyzeQueueObjectTable.Features.AnalyzeQueueErrors&quot;" FeatureDefaultText="&quot;Error&quot;" />

@@ -329,15 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable RecurringPeriodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "RecurringPeriod" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode RecurringPeriodTextCode_RecurringPeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RecurringPeriod", DefaultText = "Recurring Period",LocalDefaultText = null, ObjectTableId = RecurringPeriodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

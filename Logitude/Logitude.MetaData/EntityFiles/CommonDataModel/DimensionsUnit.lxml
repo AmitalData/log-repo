@@ -10,7 +10,6 @@
     <Record SearchFields="&quot;inc,inch&quot;" Code="&quot;Inc&quot;" Name="&quot;Inch&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;DimensionsUnit&quot;" DefaultText="&quot;Dimensions Unit&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

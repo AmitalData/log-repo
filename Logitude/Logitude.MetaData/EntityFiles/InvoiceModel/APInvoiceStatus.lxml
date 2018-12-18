@@ -13,7 +13,6 @@
     <Record Code="&quot;WA&quot;" SearchFields="&quot;wa,waiting for approval&quot;" Name="&quot;Waiting For Approval&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;APInvoiceStatus&quot;" DefaultText="&quot;A/P Invoice Status&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

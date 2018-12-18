@@ -2608,6 +2608,7 @@ namespace WebFreight.Web.WebServices
                     packageline.FlashPoint = package.FlashPoint;
                     packageline.NetWeight = package.Weight - package.Tare;
                     packageline.Description = package.Description;
+                    packageline.Notes = package.Notes;
                     packageline.PackageTare = package.Tare != null ? String.Format("{0:0,0.00}", package.Tare.Value) : null;
 
                     #region Harmonize
@@ -2661,7 +2662,7 @@ namespace WebFreight.Web.WebServices
                             packageline.PackageDescriptionOfGoods += Environment.NewLine;
                         }
 
-                        packageline.PackageDescriptionOfGoods += packageline.HSCode;
+                        packageline.PackageDescriptionOfGoods += "HS Code:" + packageline.HSCode;
                     }
 
                     if (string.IsNullOrEmpty(myDataProvider.GeneralPackageslinesDescriptionOfGoods))

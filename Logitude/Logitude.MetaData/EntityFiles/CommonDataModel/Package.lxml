@@ -9,7 +9,6 @@
   <field Id="&quot;309236e3-5360-44b1-8d26-237a0d159c7f&quot;" FieldsDataType="&quot;List&quot;" FieldName="&quot;ConnectedPackages&quot;" PMPropertyPath="&quot;ConnectedPackages&quot;" ListPropertyPath="&quot;ConnectedPackages&quot;" FullFieldLable="&quot;ConnectedPackages&quot;" DefaultText="&quot;ConnectedPackages&quot;" FullLocalDefaultText="&quot;ConnectedPackages&quot;" ListFieldLable="&quot;ConnectedPackagesListLable&quot;" ListLableDefaultText="&quot;ConnectedPackages&quot;" ListLocalDefaultText="&quot;ConnectedPackages&quot;" ObjectTableName="&quot;Package&quot;" ValidForQuerySection1="&quot;Package&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" IsMulti="true" MultiTableName="&quot;PackageConnectedPackage&quot;" AssociationName="PackageConnectedPackagePMPackagePM" ThisKey="Code" OtherKey="PackageCode" IsComposition="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Package&quot;" DefaultText="&quot;Package&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

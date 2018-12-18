@@ -10,7 +10,6 @@
     <Record Code="&quot;YE&quot;" SearchFields="&quot;YE,Yearly&quot;" Name="&quot;Yearly&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ProductPeriod&quot;" DefaultText="&quot;Product Period&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

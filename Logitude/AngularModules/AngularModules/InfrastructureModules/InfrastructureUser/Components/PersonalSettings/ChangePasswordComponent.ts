@@ -375,7 +375,7 @@ export class ChangePasswordComponent implements OnInit {
         if (result) errorList.push("Password should not contain more than 3 following characters");
 
         result = this.IsSeries(passwordNumnberList, "Same");
-        if (result) errorList.push("Password should not contain more then 3 consecutive repeating characters");
+        if (result) errorList.push("Password should not contain more than 3 consecutive repeating characters");
 
         return errorList;
     }

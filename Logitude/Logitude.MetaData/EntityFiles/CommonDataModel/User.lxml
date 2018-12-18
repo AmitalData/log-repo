@@ -148,8 +148,6 @@
     <EventType Code="&quot;RCUS&quot;" ObjectTableName="&quot;User&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Role Changed&quot;" EnglishName="&quot;Role Changed&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;User.RemarkHelpText&quot;" DefaultText="&quot;&quot;" TextCodeTypeCode="&quot;H&quot;" IsSpellChecked="true" />
-    <TextCode Code="&quot;User.CH.RemarkListLable&quot;" DefaultText="&quot; &quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;User.M.YouMustChangeCurrentPassword&quot;" DefaultText="&quot;You must change the current password!&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;User.M.PasswordMustntContainUserName&quot;" DefaultText="&quot;Password mustn't contain user name!&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;User.M.PasswordsMinimumLengthIs8Characters&quot;" DefaultText="&quot;Passwords must have a minimum length of 8 characters!&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
@@ -173,7 +171,6 @@
     <TextCode Code="&quot;User.O.VeryStrong&quot;" DefaultText="&quot;Very Strong&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;User.O.ResetUserPassword&quot;" DefaultText="&quot;Reset User password&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;User.O.ReTypePassword&quot;" DefaultText="&quot;Re-type Password&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;User&quot;" DefaultText="&quot;User&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;User.M.Anonymize&quot;" DefaultText="&quot;Anonymizing this user will result in erasing all personal data including the user's mail. in addition to erasing his info from operational data&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

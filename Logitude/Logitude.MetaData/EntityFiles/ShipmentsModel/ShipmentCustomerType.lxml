@@ -24,7 +24,6 @@
     <Record SearchFields="&quot;sne,shipper not exporter&quot;" Code="&quot;SNE&quot;" Name="&quot;Shipper Not Exporter&quot;" ShowInLOV="true" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ShipmentCustomerType&quot;" DefaultText="&quot;Shipment Customer Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

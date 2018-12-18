@@ -34,7 +34,6 @@
     <EventType Code="&quot;CRQS&quot;" ObjectTableName="&quot;QuoteStage&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;QuoteStage&quot;" DefaultText="&quot;Quote Stage&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;QuoteStage.M.QuoteStages&quot;" FeatureTypeCode="&quot;MENU&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;QuoteStage.Features.QuoteStages&quot;" FeatureDefaultText="&quot;Quote Stages&quot;" />

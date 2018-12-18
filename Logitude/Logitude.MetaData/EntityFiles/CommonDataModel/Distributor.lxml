@@ -24,7 +24,6 @@
   <Tab Code="&quot;DSEV&quot;" ObjectTableName="&quot;Distributor&quot;" IndexOrder="2" TextCode="&quot;Distributor.TH.Events&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TabName="&quot;Events&quot;" IsSpellChecked="false" IsPackagable="True" FeatureCode="&quot;Distributor.Tab.Events&quot;" FeatureTextCodeCode="&quot;Distributor.Features.Events&quot;" FeatureDefaultText="&quot;Events&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Distributor&quot;" DefaultText="&quot;Distributor&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;Distributor.M.Distributors&quot;" FeatureTypeCode="&quot;MENU&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Distributor.Features.Distributors&quot;" FeatureDefaultText="&quot;Distributors&quot;" />

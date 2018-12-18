@@ -18,7 +18,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;MAWBStack&quot;" DefaultText="&quot;MAWB Stack&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;MAWBStack.B.RemoveSeries&quot;" DefaultText="&quot;Remove Series&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;MAWBStack.M.DeleteStackNumber&quot;" DefaultText="&quot;Are you sure you want to delete the stack number&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;MAWBStack.M.DeleteStackSeries&quot;" DefaultText="&quot;Are you sure you want to delete the series inserted on&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />

@@ -15,7 +15,6 @@
   <field Id="&quot;ca9ebfc3-89d9-4aea-a725-5ce9c7db9937&quot;" FieldsDataType="&quot;Boolean&quot;" FieldName="&quot;PostToFollowers&quot;" PMPropertyPath="&quot;PostToFollowers&quot;" ListPropertyPath="&quot;PostToFollowers&quot;" FullFieldLable="&quot;PostToFollowers&quot;" DefaultText="&quot;PostToFollowers&quot;" FullLocalDefaultText="&quot;PostToFollowers&quot;" ListFieldLable="&quot;PostToFollowersListLable&quot;" ListLableDefaultText="&quot;PostToFollowers&quot;" ListLocalDefaultText="&quot;PostToFollowers&quot;" ObjectTableName="&quot;CustomerSalesNote&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CustomerSalesNote&quot;" DefaultText="&quot;Customer Sales Note&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

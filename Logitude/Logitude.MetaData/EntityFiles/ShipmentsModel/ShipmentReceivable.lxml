@@ -71,4 +71,7 @@
       <DCField DCFieldName="&quot;PrepaidCollect&quot;" DCVersion="&quot;ApiV1&quot;" FieldName="&quot;PrepaidCollectId&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;PrepaidCollect&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="true" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" />
     </DataContract>
   </DataContracts>
+  <AdditionalTextCodes>
+    <TextCode Code="&quot;ShipmentReceivable.M.ExchangeRateIsRequired&quot;" DefaultText="&quot;The exchange rate is required&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
+  </AdditionalTextCodes>
 </entity>

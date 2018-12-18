@@ -1550,7 +1550,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ShipmentReceivableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentReceivable" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ShipmentReceivableTextCode_ShipmentReceivableMExchangeRateIsRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentReceivable.M.ExchangeRateIsRequired", DefaultText = "The exchange rate is required",LocalDefaultText = null, ObjectTableId = ShipmentReceivableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

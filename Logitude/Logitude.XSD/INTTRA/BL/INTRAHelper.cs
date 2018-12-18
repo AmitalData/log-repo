@@ -17,6 +17,8 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -39,15 +41,22 @@ namespace Logitude.XSD.INTTRA.BL
         public int Tenant { get; set; }
         public string ShipmentId { get; set; }
         public string LoggedContactId { get; set; }
+        public System.DateTime TodayDate { get; set; }
+        public System.DateTime TodayDateTime { get; set; }
         public Simplog.Data.CommonDataModel.EntityPOCOs.Contact LoggedContact { get; set; }
         public INTTRAResult Result { get; set; }
         public INTTRADataContext DataContext { get; set; }
         private ICommonDataContext CommonContext;
+        private MessagingStockRepository stockRepository;
+        private MessagingStockUsageHistoryRepository usageHistoryRepository;
+        private string MessageTypeCode = "SI";
         public INTTRAHelper(string myShipmentId, int myTenant)
         {
             this.Tenant = myTenant;
             this.ShipmentId = myShipmentId;
             this.CommonContext = CommonDataContext.GetContext(Tenant);
+            this.TodayDate = TenantServerConfigration.GetCurrentDateTime(myTenant).Date;
+            this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(myTenant);
 
             ContactRepository contactRepository = new ContactRepository(this.CommonContext);
             this.LoggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), Tenant);
@@ -72,24 +81,162 @@ namespace Logitude.XSD.INTTRA.BL
             {
                 if (!this.DataContext.IsLimited)
                 {
-                    this.DataContext.Build();
+                    this.CheckStockValidity();
 
-                    INTTRADataBuilder dataBuilder = new INTTRADataBuilder(this.DataContext);
-
-                    INTTRA_Out.Message message = new INTTRA_Out.Message()
+                    if (!this.Result.HasStockError)
                     {
-                        Header = dataBuilder.GetHeader(),
+                        this.DataContext.Build();
 
-                        MessageBody = new INTTRA_Out.MessageBody()
+                        INTTRADataBuilder dataBuilder = new INTTRADataBuilder(this.DataContext);
+
+                        INTTRA_Out.Message message = new INTTRA_Out.Message()
                         {
-                            MessageDetails = dataBuilder.GetMessageDetails(),
+                            Header = dataBuilder.GetHeader(),
 
-                            MessageProperties = dataBuilder.GetMessageProperties(),
+                            MessageBody = new INTTRA_Out.MessageBody()
+                            {
+                                MessageDetails = dataBuilder.GetMessageDetails(),
+
+                                MessageProperties = dataBuilder.GetMessageProperties(),
+                            }
+                        };
+
+                        this.SendXMLFile(message);
+                        this.UpdateStock();
+                        this.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        private void GetGlobalVariables()
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                if (this.Result.IsValid)
+                {
+                    TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
+                    TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(Tenant);
+                    if (tenantManagement != null)
+                    {
+                        this.Result.IsStockPrepaid = tenantManagement.IsINTTRAStockPrepaid;
+                    }
+
+                    if (Tenant == 65)
+                    {
+                        this.Result.IsDemoTenant = true;
+                    }
+                }
+
+                scope.Complete();
+            }
+        }
+
+        private void CheckStockValidity()
+        {
+            this.GetGlobalVariables();
+
+            if (!this.Result.IsDemoTenant)
+            {
+                if (this.Result.IsStockPrepaid)
+                {
+                    this.stockRepository = new MessagingStockRepository(this.DataContext.shipmentContext);
+                    this.usageHistoryRepository = new MessagingStockUsageHistoryRepository(this.DataContext.shipmentContext);
+
+                    IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(this.Tenant, "INTTRA");
+                    IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(this.Tenant);
+
+                    myStocksData = myStocksData.Where(d => d.StartDate <= TodayDate && d.EndDate > TodayDate && d.Remaining > 0 && !d.IsCancelled);
+
+                    int sendingCount = 0;
+                    int? myStocksRemaining = 0;
+                    if (myStocksData.Count() > 0)
+                    {
+                        myStocksRemaining = myStocksData.Sum(s => s.Remaining);
+                    }
+
+                    if (!myUsageHistoryData.Where(d => d.EntityId == this.ShipmentId && d.MessageType == this.MessageTypeCode).Any())
+                    {
+                        sendingCount = 1;
+                    }
+
+                    if (sendingCount > 0)
+                    {
+                        if (myStocksRemaining < sendingCount)
+                        {
+                            this.Result.IsValid = false;
+                            this.Result.HasStockError = true;
                         }
-                    };
+                    }
+                }
+            }
 
-                    this.SendXMLFile(message);
-                    this.SaveChanges();
+        }
+        private void UpdateStock()
+        {
+            if (!this.Result.IsDemoTenant)
+            {
+                if (this.Result.IsStockPrepaid)
+                {
+                    IQueryable<MessagingStock> myStocksData = stockRepository.GetMessagingStocksByTenant(this.Tenant, "INTTRA");
+                    IQueryable<MessagingStockUsageHistory> myUsageHistoryData = usageHistoryRepository.GetTenantMessagingStockUsageHistory(this.Tenant);
+
+                    myStocksData = myStocksData.Where(d => d.StartDate <= TodayDate && d.EndDate > TodayDate && d.Remaining > 0 && !d.IsCancelled);
+
+                    MessagingStockUsageHistory usageHistory = myUsageHistoryData.Where(d => d.EntityId == this.ShipmentId && d.MessageType == this.MessageTypeCode).FirstOrDefault();
+
+                    if (usageHistory != null)
+                    {
+                        usageHistory.ActionType = "Transmission";
+                        usageHistory.LastActionDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
+                        usageHistory.LastActionByUserId = this.LoggedContactId;
+                        usageHistoryRepository.Update(usageHistory);
+                        usageHistoryRepository.SubmitChanges();
+                    }
+
+                    else
+                    {
+                        System.DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
+
+                        MessagingStock myStock = myStocksData.OrderBy(o => o.EndDate).FirstOrDefault();
+
+                        usageHistory = new MessagingStockUsageHistory()
+                        {
+                            Id = IdCounter.GetNumber("MessagingStockUsageHistory",this.Tenant),
+                            Tenant = this.Tenant,
+                            StockId = myStock.Id,
+                            EntityId = this.ShipmentId,
+                            EntityNumber =this.DataContext.Shipment.ShipmentNumber,
+                            MessageType = this.MessageTypeCode,
+                            ActionType = "Transmission",
+                            FirstActionByUserId = this.LoggedContactId,
+                            FirstActionDate = todayDateTime,
+                            LastActionByUserId = this.LoggedContactId,
+                            LastActionDate = todayDateTime,
+
+                        };
+
+                        //if (!string.IsNullOrEmpty(myBooking.MainCarriageCarrierId))
+                        //{
+                        //    AirlineRepository airlineRepository = new AirlineRepository(this.CommonContext);
+                        //    Airline airline = airlineRepository.GetSingleAirline(myBooking.MainCarriageCarrierId, myTenant);
+                        //    if (airline != null)
+                        //    {
+                        //        if (!string.IsNullOrEmpty(airline.Prefix) && !string.IsNullOrEmpty(myBooking.Master))
+                        //        {
+                        //            usageHistory.MAWB = airline.Prefix + "-" + myBooking.Master;
+                        //        }
+                        //    }
+                        //}
+
+                        usageHistoryRepository.Add(usageHistory);
+                        usageHistoryRepository.SubmitChanges();
+
+                        int myStockUsageCount = usageHistoryRepository.GetStockUsageCount(myStock.Id, myStock.TenantNumber);
+                        myStock.Remaining = myStock.Amount - myStockUsageCount;
+                        stockRepository.Update(myStock);
+                        stockRepository.SubmitChanges();
+                    }
                 }
             }
         }
@@ -146,21 +293,6 @@ namespace Logitude.XSD.INTTRA.BL
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(commLog.QueueName, 0);
                 queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } });
-
-                //using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
-                //{
-                //    BrokeredMessage message = new BrokeredMessage();
-                //    message.ScheduledEnqueueTimeUtc = System.DateTime.UtcNow.Add(new TimeSpan(0, 0, 10));
-
-                //    message.Properties["CommunicationLogId"] = myCommunicationLogId;
-                //    message.Properties["Tenant"] = Tenant;
-
-                //    string emailqueueName = WebFreightEntryPoint.GetQueueByEnviroment("sendtointraqueue");
-                //    QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
-                //    client.Send(message);
-
-                //    scope.Complete();
-                //}
             }
 
             catch (Exception ex)
@@ -301,6 +433,9 @@ namespace Logitude.XSD.INTTRA.BL
         public List<string> Errors { get; set; }
         public bool IsCarrierRegisteredToINTTRA { get; set; }
         public bool IsCarrierRegisteredToBranch { get; set; }
+        public bool IsDemoTenant { get; set; }
+        public bool HasStockError { get; set; }
+        public bool IsStockPrepaid { get; set; }
         public INTTRAResult()
         {
             this.IsValid = true;

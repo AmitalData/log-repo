@@ -13,7 +13,6 @@
   <field Id="&quot;664c4460-b54c-441a-b12f-6c986c3712c1&quot;" FieldsDataType="&quot;Text&quot;" FieldName="&quot;InvoiceCurrencyCode&quot;" PMPropertyPath="&quot;InvoiceCurrencyCode&quot;" ListPropertyPath="&quot;InvoiceCurrencyCode&quot;" FullFieldLable="&quot;InvoiceCurrencyCode&quot;" DefaultText="&quot;InvoiceCurrencyCode&quot;" FullLocalDefaultText="&quot;InvoiceCurrencyCode&quot;" ListFieldLable="&quot;InvoiceCurrencyCodeListLable&quot;" ListLableDefaultText="&quot;InvoiceCurrencyCode&quot;" ListLocalDefaultText="&quot;InvoiceCurrencyCode&quot;" ObjectTableName="&quot;AccountingTransferLine&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AccountingTransferLine&quot;" DefaultText="&quot;Accounting Transfer Line&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -2009,18 +2009,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     entityReference = myEntity.ShipmentNumber;
                     entityObjectTableId = myEntity.ShipmentLevelCode == "C" ? masterObjectTableId : shipmentObjectTableId;
                 }
-
-                ARInvoiceEntity invoiceEntity = new ARInvoiceEntity()
+                if (entityId != null)
                 {
-                    Id = IdCounter.GetNumber("ARInvoiceEntity", entityPM.Tenant).ToString(),
-                    Tenant = tenant,
-                    ARInvoiceId = entityPM.Id,
-                    EntityId = entityId,
-                    EntityReference = entityReference,
-                    ObjectTableId = entityObjectTableId,
-                };
 
-                invoiceEntityRepository.Add(invoiceEntity);
+                    ARInvoiceEntity invoiceEntity = new ARInvoiceEntity()
+                    {
+                        Id = IdCounter.GetNumber("ARInvoiceEntity", entityPM.Tenant).ToString(),
+                        Tenant = tenant,
+                        ARInvoiceId = entityPM.Id,
+                        EntityId = entityId,
+                        EntityReference = entityReference,
+                        ObjectTableId = entityObjectTableId,
+                    };
+                    invoiceEntityRepository.Add(invoiceEntity);
+                }
+
+                
             }
         }
         #endregion

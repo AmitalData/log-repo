@@ -513,15 +513,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable EntityStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "EntityStatus" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode EntityStatusTextCode_EntityStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "EntityStatus", DefaultText = "Entity Status",LocalDefaultText = null, ObjectTableId = EntityStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

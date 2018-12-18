@@ -38,10 +38,11 @@
   <DataContracts>
     <DataContract Name="&quot;Measurement&quot;" Version="&quot;ApiV1&quot;">
       <DCField DCFieldName="&quot;Id&quot;" DCVersion="&quot;&quot;" FieldName="&quot;Id&quot;" IsKey="true" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" />
-      <DCField DCFieldName="&quot;Code&quot;" DCVersion="&quot;&quot;" FieldName="&quot;Code&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" />
+      <DCField DCFieldName="&quot;Code&quot;" DCVersion="&quot;&quot;" FieldName="&quot;Code&quot;" IsKey="true" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" />
       <DCField DCFieldName="&quot;Name&quot;" DCVersion="&quot;&quot;" FieldName="&quot;Name&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" />
       <DCField DCFieldName="&quot;ShortName&quot;" DCVersion="&quot;&quot;" FieldName="&quot;ShortName&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" />
       <DCField DCFieldName="&quot;PartnerCode&quot;" FieldName="&quot;Code&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="true" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" />
     </DataContract>
   </DataContracts>
+  <AdditionalTextCodes />
 </entity>

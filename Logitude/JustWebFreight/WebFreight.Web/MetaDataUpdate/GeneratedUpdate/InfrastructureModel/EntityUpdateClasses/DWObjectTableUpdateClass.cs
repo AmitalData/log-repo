@@ -345,15 +345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable DWObjectTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DWObjectTable" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode DWObjectTableTextCode_DWObjectTable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DWObjectTable", DefaultText = "DW Object Table",LocalDefaultText = null, ObjectTableId = DWObjectTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

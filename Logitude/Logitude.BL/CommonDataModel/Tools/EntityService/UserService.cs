@@ -524,7 +524,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             contact.Notes = user.Notes;
             contact.Tenant = user.Tenant;
 
-            contact.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true;
+            //contact.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true; // bug 44449
 
             string mySearchFields = "";
 

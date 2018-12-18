@@ -13,7 +13,6 @@
     <Record SearchFields="&quot;tr,transferred&quot;" Code="&quot;TR&quot;" Name="&quot;Transferred&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;APInvoiceTransferStatus&quot;" DefaultText="&quot;A/P Invoice Transfer Status&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

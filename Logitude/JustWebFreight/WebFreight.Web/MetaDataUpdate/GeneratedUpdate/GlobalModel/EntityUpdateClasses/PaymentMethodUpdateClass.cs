@@ -329,15 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable PaymentMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentMethod" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode PaymentMethodTextCode_PaymentMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentMethod", DefaultText = "Payment Method",LocalDefaultText = null, ObjectTableId = PaymentMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

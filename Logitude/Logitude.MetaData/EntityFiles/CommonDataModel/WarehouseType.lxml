@@ -9,7 +9,6 @@
     <Record Code="&quot;TM&quot;" SearchFields="&quot;TM,Terminal&quot;" Name="&quot;Terminal&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;WarehouseType&quot;" DefaultText="&quot;Warehouse Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

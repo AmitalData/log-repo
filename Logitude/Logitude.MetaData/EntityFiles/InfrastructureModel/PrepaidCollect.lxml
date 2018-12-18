@@ -19,4 +19,5 @@
       <DCField DCFieldName="&quot;Name&quot;" FieldName="&quot;Name&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" />
     </DataContract>
   </DataContracts>
+  <AdditionalTextCodes />
 </entity>
