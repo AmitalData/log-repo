@@ -19923,7 +19923,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "State",
-                FullFieldLable = "State_Potential",
+                FullFieldLable = "StateId_Potential",
                 FieldName = "StateId_Potential",
                 FieldsDataType = "LookUp",
                 IsCustom = false,
@@ -20460,7 +20460,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 2,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 0,
-                FullFieldLable = "Name",
+                FullFieldLable = "EnglishName",
                 FullLocalDefaultText = "שם אנגלית",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
@@ -20762,7 +20762,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Payment Term Name",
                 DisplayOnLookUp = false,
-                FullFieldLable = "PaymentTermName",
+                FullFieldLable = "PaymentTermEnglishName",
                 FieldName = "PaymentTermEnglishName",
                 FieldsDataType = "Text",
                 IsCustom = false,

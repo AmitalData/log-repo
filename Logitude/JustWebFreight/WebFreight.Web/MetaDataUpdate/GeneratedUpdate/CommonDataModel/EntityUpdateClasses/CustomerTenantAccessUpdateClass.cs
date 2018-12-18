@@ -1299,7 +1299,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CustomerTenantAccessQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CTAG", Name = "CustomerTenantAccesses" }, queryGroupRepository);
 						QueryGroup CustomerTenantAccessQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "a5dd", Name = " Query Group" }, queryGroupRepository);
@@ -1315,7 +1315,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CustomerTenantAccessesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTenantAccessTextCode_0.Id, Code = "CustomerTenantAccesses",  QueryGroupCode = "CTAG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerTenantAccessObjectTable.Id, QuerySection = "CustomerTenantAccess", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerTenantAccessFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query CustomerTenantAccessesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerTenantAccessTextCode_0.Id, Code = "CustomerTenantAccesses",  QueryGroupCode = "CTAG", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomerTenantAccessObjectTable.Id, QuerySection = "CustomerTenantAccess", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerTenantAccessFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn CustomerTenantAccessesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomerTenantAccessesQuery.Id, IndexOrder = 0, ObjectFieldId = CustomerTenantAccessObjectFields.Where(d => d.FieldName == "CompanyName" && d.ObjectTableId == CustomerTenantAccessObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1388,10 +1388,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature CustomerTenantAccessRelatedCustomerFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RELATEDCUSTOMER", ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccess.Features.RelatedCustomers", NameTextCodeDefaultText = "Related Customer", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CARC",HtmlComponentName = "",HtmlComponentUrl = "./SharedLogistics/Components/RelatedCustomerComponent", FeatureId = tenantFeatures.Where(d => d.Code == "RELATEDCUSTOMER" && d.ObjectTableId == CustomerTenantAccessObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.CustomerTenantAccessCard.RelatedCustomerControl", ObjectTableId = CustomerTenantAccessObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CustomerTenantAccess.TH.RelatedCustomer" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CARC",HtmlComponentName = "",HtmlComponentUrl = "./SharedLogistics/Components/RelatedCustomerComponent", FeatureId = CustomerTenantAccessRelatedCustomerFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.CustomerTenantAccessCard.RelatedCustomerControl", ObjectTableId = CustomerTenantAccessObjectTable.Id, TabNameTextCodeId = CustomerTenantAccessRelatedCustomerTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1455,7 +1455,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable CustomerTenantAccessObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerTenantAccess" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature CustomerTenantAccessFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Deny", ObjectTableId = CustomerTenantAccessObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerTenantAccess.Features.Deny", NameTextCodeDefaultText = "Deny", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

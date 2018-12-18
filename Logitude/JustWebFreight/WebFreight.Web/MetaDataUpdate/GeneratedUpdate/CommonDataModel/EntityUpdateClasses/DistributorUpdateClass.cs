@@ -357,7 +357,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup DistributorQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DIST", Name = "Distributor" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -372,7 +372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllDistributorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DistributorTextCode_0.Id, Code = "All Distributors",  QueryGroupCode = "DIST", IndexOrder = 0, Tenant = 0, ObjectTableId = DistributorObjectTable.Id, QuerySection = "Distributor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DistributorFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllDistributorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DistributorTextCode_0.Id, Code = "All Distributors",  QueryGroupCode = "DIST", IndexOrder = 0, Tenant = 0, ObjectTableId = DistributorObjectTable.Id, QuerySection = "Distributor", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DistributorFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllDistributorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDistributorsQuery.Id, IndexOrder = 0, ObjectFieldId = DistributorObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -417,14 +417,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature DistributorEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Distributor.Tab.Events", ObjectTableId = DistributorObjectTable.Id, Tenant = 0, NameTextCodeCode = "Distributor.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DSGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Distributor.Tab.General" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = DistributorObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Distributor.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DSGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DistributorGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = DistributorObjectTable.Id, TabNameTextCodeId = DistributorGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DSTN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Distributor.Tab.Tenants" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.FreightLib.Views.Distributor.DistributorTenantsControl", ObjectTableId = DistributorObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Distributor.TH.Tenants" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DSTN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DistributorTenantsFeature_TH1.Id, ControlPath = "Simplog.FreightLib.Views.Distributor.DistributorTenantsControl", ObjectTableId = DistributorObjectTable.Id, TabNameTextCodeId = DistributorTenantsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "Distributor.Tab.Events" && d.ObjectTableId == DistributorObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DistributorObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Distributor.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DistributorEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = DistributorObjectTable.Id, TabNameTextCodeId = DistributorEventsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

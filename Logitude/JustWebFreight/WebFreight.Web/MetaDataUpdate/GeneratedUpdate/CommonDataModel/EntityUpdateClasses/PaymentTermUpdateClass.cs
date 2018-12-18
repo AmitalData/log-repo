@@ -1040,7 +1040,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup PaymentTermQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "PMTR", Name = "PaymentTerms" }, queryGroupRepository);
 						QueryGroup PaymentTermQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c57a", Name = " Query Group" }, queryGroupRepository);
@@ -1056,7 +1056,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query PaymenttermsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentTermTextCode_0.Id, Code = "Payment terms",  QueryGroupCode = "PMTR", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentTermObjectTable.Id, QuerySection = "PaymentTerm", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentTermFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query PaymenttermsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PaymentTermTextCode_0.Id, Code = "Payment terms",  QueryGroupCode = "PMTR", IndexOrder = 0, Tenant = 0, ObjectTableId = PaymentTermObjectTable.Id, QuerySection = "PaymentTerm", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PaymentTermFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn PaymenttermsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymenttermsQuery.Id, IndexOrder = 0, ObjectFieldId = PaymentTermObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PaymentTermObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1125,14 +1125,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature PaymentTermEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = PaymentTermObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentTerm.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PTGC",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == PaymentTermObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = PaymentTermObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "PaymentTerm.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PTGC",HtmlComponentName = "GeneralTabComponent",HtmlComponentUrl = "./Infrastructure/GenericComponents/GeneralTabComponent", FeatureId = PaymentTermGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = PaymentTermObjectTable.Id, TabNameTextCodeId = PaymentTermGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PTAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ACCOUNTING" && d.ObjectTableId == PaymentTermObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.PaymentTermAccountingTabControl", ObjectTableId = PaymentTermObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "PaymentTerm.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PTAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = PaymentTermAccountingFeature_TH1.Id, ControlPath = "Simplog.FreightLib.Views.PartnersTabs.PartnersAccountingTab.PaymentTermAccountingTabControl", ObjectTableId = PaymentTermObjectTable.Id, TabNameTextCodeId = PaymentTermAccountingTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == PaymentTermObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PaymentTermObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "PaymentTerm.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PaymentTermEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PaymentTermObjectTable.Id, TabNameTextCodeId = PaymentTermEventsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

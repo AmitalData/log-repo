@@ -1024,7 +1024,8 @@ private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblNam
        var DefaultSortName = QueryAtt.Attributes().Where(a => a.Name == "DefaultSortName").FirstOrDefault() != null? QueryAtt.Attributes().Where(a => a.Name == "DefaultSortName").FirstOrDefault().Value:"null";
 	   var DefaultSortDirection = QueryAtt.Attributes().Where(a => a.Name == "DefaultSortDirection").FirstOrDefault() != null? QueryAtt.Attributes().Where(a => a.Name == "DefaultSortDirection").FirstOrDefault().Value:"null";
 	   var QGCode = QueryAtt.Attributes().Where(a => a.Name == "QueryGroupCode").FirstOrDefault().Value;
-	 
+	   var Perspective = QueryAtt.Attributes().Where(a => a.Name == "Perspective").FirstOrDefault() != null? QueryAtt.Attributes().Where(a => a.Name == "Perspective").FirstOrDefault().Value:"null";
+
            #> 
 
 			  Query <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = <#= TblName.Trim('"') #>TextCode_<#= index #>.Id, Code = <#= Code #>, <#+
@@ -1037,7 +1038,7 @@ private void WriteAddQueryMethod(XElement entity,XElement QueryAtt,string TblNam
 			  <#+ } if (!string.IsNullOrEmpty(EditWizardComponentPath) && EditWizardComponentPath != "&quot;&quot;")
     {
 			  #> EditWizardComponentPath = <#= EditWizardComponentPath #>,
-			  <#+ }  #> QueryGroupCode = <#= QGCode #>, IndexOrder = <#= IndexOrder #>, Tenant = 0, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, QuerySection = <#= QuerySection #>, SystemLevel = <#= SystemLevel #>, IsAddNewEntityEnabled = <#= IsAddNewEntity #>, FeatureId = <#= TblName.Trim('"') #>Feature_<#= index #>.Id, DefaultSortName = <#= DefaultSortName #>, DefaultSortDirection = <#= DefaultSortDirection #> }, queriesRepository, tenantQueries);
+			  <#+ }  #> QueryGroupCode = <#= QGCode #>, IndexOrder = <#= IndexOrder #>, Tenant = 0, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, QuerySection = <#= QuerySection #>, SystemLevel = <#= SystemLevel #>, IsAddNewEntityEnabled = <#= IsAddNewEntity #>, FeatureId = <#= TblName.Trim('"') #>Feature_<#= index #>.Id, DefaultSortName = <#= DefaultSortName #>, DefaultSortDirection = <#= DefaultSortDirection #>, Perspective = <#= Perspective #> }, queriesRepository, tenantQueries);
 	<#+
 	    int i = 0;
 	    foreach(XElement Column in QueryAtt.Elements("QueryColumns").FirstOrDefault().Elements("QueryColumn"))

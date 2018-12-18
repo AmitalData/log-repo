@@ -311,7 +311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CustomerFieldsUpdateSettingQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CPQU", Name = "CustomerFieldsUpdateSettings" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -327,7 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	      
 
 			  Query AllCustomerFieldsUpdateQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomerFieldsUpdateSettingTextCode_0.Id, Code = "All Customer Fields Update",  EditWizardComponentPath = "./Common/Components/Maintenance/CustomerFieldsUpdateSetting/AddEditCustomerFieldsUpdateSettingComponent",
-			   QueryGroupCode = "CPQU", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, QuerySection = "CustomerFieldsUpdateSetting", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFieldsUpdateSettingFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "CPQU", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, QuerySection = "CustomerFieldsUpdateSetting", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CustomerFieldsUpdateSettingFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCustomerFieldsUpdateQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomerFieldsUpdateQuery.Id, IndexOrder = 1, ObjectFieldId = CustomerFieldsUpdateSettingObjectFields.Where(d => d.FieldName == "ObjectFieldName" && d.ObjectTableId == CustomerFieldsUpdateSettingObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -362,10 +362,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature CustomerFieldsUpdateSettingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CFUG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == CustomerFieldsUpdateSettingObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.CustomerFieldsUpdateSetting.EditCustomerFieldsUpdateSettingControl", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CustomerFieldsUpdateSetting.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CFUG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CustomerFieldsUpdateSettingGeneralFeature_TH0.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.CustomerFieldsUpdateSetting.EditCustomerFieldsUpdateSettingControl", ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, TabNameTextCodeId = CustomerFieldsUpdateSettingGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
