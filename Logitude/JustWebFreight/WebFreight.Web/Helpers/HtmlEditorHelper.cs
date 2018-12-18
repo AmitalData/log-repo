@@ -4169,6 +4169,13 @@ namespace WebFreight.Web.Helpers
                     resultValue = (value != null ? value.ToString() : " ");
 
                     ObjectField field = theEntityObjectFields.Where(f => f.FieldName == propertyName).FirstOrDefault();
+
+                    if(field!=null && field.IsCustom)
+                    {
+                        field  = theEntityObjectFields.Where(f => f.FieldName == propertyName && f.Tenant == tenant).FirstOrDefault();
+                    }
+
+
                     if (field != null)
                     {
                         if (field.IsCustom)
@@ -4354,6 +4361,13 @@ namespace WebFreight.Web.Helpers
 
                         ObjectField insideObjectField = insideEntityObjectFields.Where(f => f.FieldName == fields[i + 1]).FirstOrDefault();
 
+                        if(insideObjectField!=null && insideObjectField.IsCustom)
+                        {
+                             insideObjectField = insideEntityObjectFields.Where(f => f.FieldName == fields[i + 1] && f.Tenant == tenant).FirstOrDefault();
+                        }
+
+
+
                         Assembly blAssembly = Assembly.Load("Logitude.BL");
 
                         string insideTypePath = "Logitude.BL.ShipmentsModel.EntityQueries." + insideEntityName + "Query";
@@ -4488,14 +4502,24 @@ namespace WebFreight.Web.Helpers
                                             object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
                                             if (insideValue != null)
                                             {
-                                                if (insideValue is DateTime)
+                                                if (insideValue.GetType() == typeof(CustomFieldClass))
+                                                {
+                                                    if (insideObjectField.IsCustom)
+                                                    {
+                                                        CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                                                        object newValue = customFieldResolver.GetFieldValue(insideEntity, insideObjectField, tenant);
+                                                        resultValue = (newValue != null ? newValue.ToString() : " ");
+                                                    }
+
+                                                }
+                                               else if (insideValue is DateTime)
                                                 {
                                                     DateTime date = (DateTime)insideValue;
                                                     insideValue = date.ToShortDateString();
+                                                    resultValue = (insideValue != null ? insideValue.ToString() : " ");
                                                 }
+                                              
                                             }
-
-                                            resultValue = (insideValue != null ? insideValue.ToString() : " ");
 
                                         }
                                         else
@@ -5118,6 +5142,7 @@ namespace WebFreight.Web.Helpers
                             if (theEntityObjectFields != null)
                             {
                                 objectField = theEntityObjectFields.Where(f => f.FieldName == propertyName).FirstOrDefault();
+
                             }
                             if (objectField != null)
                             {
