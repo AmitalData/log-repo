@@ -51,7 +51,7 @@
    declare @Transshipment2ToPortId  as int
    declare @Transshipment1ToPortId  as int
    declare @MainCarriageToPortId  as int
-   declare @DirectionId as varchar(15)
+   declare @DirectionId as varchar(1)
    declare @TransportModeId as varchar(1)
    declare @ToPortId as int
  
@@ -121,10 +121,12 @@
 	inner JOIN NewDIM_Tenants SourceTenant ON dw_Shipments.Tenant = SourceTenant.[Tenant Number]
 	inner JOIN dw_DWHSettings ON dw_Shipments.Tenant = dw_DWHSettings.Tenant
 	inner JOIN NewDIM_Tenants ParentTenant ON dw_DWHSettings.ParentTenant = ParentTenant.[Tenant Number]
+
    	inner JOIN dw_Directions ON dw_Shipments.DirectionId = dw_Directions.Id
 	inner JOIN dw_TransportModes ON dw_Shipments.TransportModeId = dw_TransportModes.Id
 	inner JOIN dw_Levels ON dw_Shipments.ShipmentLevelCode = dw_Levels.Code
 	inner JOIN dw_Types ON dw_Shipments.ShipmentTypeId = dw_Types.Id
+
 	inner JOIN NewDIM_Departments ON dw_Shipments.DepartmentId = NewDIM_Departments.Id
 	inner JOIN NewDIM_Branches ON dw_Shipments.BranchId =NewDIM_Branches.Id
     inner JOIN dw_ShipmentMasterDatas ON dw_Shipments.MasterShipmentDataId = dw_ShipmentMasterDatas.Id

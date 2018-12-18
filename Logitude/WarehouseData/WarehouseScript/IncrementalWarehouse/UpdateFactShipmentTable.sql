@@ -61,7 +61,7 @@
    declare @Transshipment2ToPortId  as int
    declare @Transshipment1ToPortId  as int
    declare @MainCarriageToPortId  as int
-   declare @DirectionId as varchar(15)
+   declare @DirectionId as varchar(1)
    declare @TransportModeId as varchar(1)
    declare @ToPortId as int
  
