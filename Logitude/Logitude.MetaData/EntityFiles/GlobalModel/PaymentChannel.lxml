@@ -9,7 +9,6 @@
     <Record Code="&quot;DI&quot;" SearchFields="&quot;DI,Direct&quot;" Name="&quot;Direct&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;PaymentChannel&quot;" DefaultText="&quot;Payment Channel&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -12,7 +12,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;DocumentFilingBackupSetting&quot;" DefaultText="&quot;Document Filing Backup Setting&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;DOCUMENTFILINGBACKUPSETTING&quot;" FeatureTypeCode="&quot;MODL&quot;" FeatureTextCodeCode="&quot;DocumentFilingBackupSetting.Features.DocumentFilingBackupSetting&quot;" FeatureDefaultText="&quot;DocumentFilingBackupSetting&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />

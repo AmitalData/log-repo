@@ -13,7 +13,6 @@
     <Record Code="&quot;TFAUTH&quot;" SearchFields="&quot;TFAUTH,Two Factor Authentication&quot;" Name="&quot;Two Factor Authentication&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;LoginPolicy&quot;" DefaultText="&quot;Login Policy&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

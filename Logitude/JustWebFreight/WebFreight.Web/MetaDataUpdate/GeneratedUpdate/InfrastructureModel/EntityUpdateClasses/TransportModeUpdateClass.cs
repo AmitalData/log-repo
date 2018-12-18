@@ -269,15 +269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable TransportModeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TransportMode" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode TransportModeTextCode_TransportMode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TransportMode", DefaultText = "Transport Mode",LocalDefaultText = null, ObjectTableId = TransportModeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

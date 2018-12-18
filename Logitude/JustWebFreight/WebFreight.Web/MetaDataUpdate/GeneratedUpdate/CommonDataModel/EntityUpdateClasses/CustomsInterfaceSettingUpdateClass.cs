@@ -1022,15 +1022,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable CustomsInterfaceSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsInterfaceSetting" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode CustomsInterfaceSettingTextCode_CustomsInterfaceSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomsInterfaceSetting", DefaultText = "Customs Interface Setting",LocalDefaultText = null, ObjectTableId = CustomsInterfaceSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

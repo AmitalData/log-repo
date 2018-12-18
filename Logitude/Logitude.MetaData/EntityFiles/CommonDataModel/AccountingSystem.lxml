@@ -58,7 +58,6 @@
     <Record Code="&quot;RH&quot;" SearchFields="&quot;RH,Rivheet&quot;" IsExternalCodesFromTable="false" IsExternalCodesSyncEnabled="false" IsSingleTaxPerInvoice="false" IsSingleCurrencyAccount="false" AllowManuallyDueDate="true" IsJournalMode="true" IsTaxItemManaged="false" AllowMinusInvoiceLines="true" ShowDownloadScreen="true" AllowARInvoicesTransfer="true" AllowAPInvoicesTransfer="true" AllowPositiveAmountsInTheCreditNote="false" InActive="false" AllowAPPaymentsTransfer="false" IsExternalCodesFromAPI="false" AllowARPaymentsTransfer="false" CanTransferToDropbox="false" Name="&quot;Rivheet&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AccountingSystem&quot;" DefaultText="&quot;Accounting System&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts />

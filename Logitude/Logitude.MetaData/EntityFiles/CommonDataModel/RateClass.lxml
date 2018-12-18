@@ -20,7 +20,6 @@
     <Record SearchFields="&quot;y,uld discount&quot;" Code="&quot;Y&quot;" Name="&quot;ULD Discount&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;RateClass&quot;" DefaultText="&quot;Rate Class&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

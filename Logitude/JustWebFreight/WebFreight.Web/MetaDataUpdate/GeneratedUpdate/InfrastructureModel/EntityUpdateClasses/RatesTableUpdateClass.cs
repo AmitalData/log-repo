@@ -577,8 +577,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   ObjectTable RatesTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "RatesTable" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode RatesTableTextCode_RatesTable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable", DefaultText = "Rates Table",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode RatesTableTextCode_RatesTableOEditCurrencyRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.EditCurrencyRate", DefaultText = "Edit Currency Rate",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode RatesTableTextCode_RatesTableOCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RatesTable.O.Code", DefaultText = "Code",LocalDefaultText = null, ObjectTableId = RatesTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);

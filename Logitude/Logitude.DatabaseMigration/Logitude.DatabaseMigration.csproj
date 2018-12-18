@@ -414,6 +414,10 @@
     <Compile Include="Migrations\201812130259504_AddPackageCodeSearchFieldInTenantManagement_Maheera.Designer.cs">
       <DependentUpon>201812130259504_AddPackageCodeSearchFieldInTenantManagement_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812180645307_textcode_fixes.cs" />
+    <Compile Include="Migrations\201812180645307_textcode_fixes.Designer.cs">
+      <DependentUpon>201812180645307_textcode_fixes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -662,6 +666,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812130259504_AddPackageCodeSearchFieldInTenantManagement_Maheera.resx">
       <DependentUpon>201812130259504_AddPackageCodeSearchFieldInTenantManagement_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812180645307_textcode_fixes.resx">
+      <DependentUpon>201812180645307_textcode_fixes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

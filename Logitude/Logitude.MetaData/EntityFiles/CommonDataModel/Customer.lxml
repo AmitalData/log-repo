@@ -470,21 +470,17 @@
     <EventType Code="&quot;CRDL&quot;" ObjectTableName="&quot;Customer&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Credit limit details updated&quot;" EnglishName="&quot;Credit limit details updated&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
+    <TextCode Code="&quot;Customer.O.CompanyLocalName&quot;" DefaultText="&quot;Local Name&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Customer.O.GeneralData&quot;" DefaultText="&quot;General Data&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Customer.O.Query.CRMCustomers&quot;" DefaultText="&quot;Customers&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Customer.CH.CityNameListLable&quot;" DefaultText="&quot;City&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Customer.S.Overview.CustomerDetails&quot;" DefaultText="&quot;Customer Details&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Customer.S.Overview.Contacts&quot;" DefaultText="&quot;Contacts&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Customer.S.Overview.BusinessRecords&quot;" DefaultText="&quot;Business Records&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Customer.S.Overview.Quotes&quot;" DefaultText="&quot;Quotes&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Customer.S.Overview.Shipments&quot;" DefaultText="&quot;Shipments&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Customer.S.Overview.MoneyInformation&quot;" DefaultText="&quot;Money Information&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Customer.Q.CustomersByLastActivity&quot;" DefaultText="&quot;Customers By Last Activity&quot;" TextCodeTypeCode="&quot;Q&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Customer&quot;" DefaultText="&quot;Customer&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;Customer.O.AddContact&quot;" DefaultText="&quot;Add Contact&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Customer.O.CompanyName&quot;" DefaultText="&quot;Company Name&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Customer.CH.CountryNameListLabel&quot;" DefaultText="&quot;Country&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Customer.O.CompanyLocalName&quot;" DefaultText="&quot;Local Name&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;SHAREDLOGISTIC&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Customer.Features.SharedLogistic&quot;" FeatureDefaultText="&quot;Shared Logistic&quot;" />

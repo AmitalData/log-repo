@@ -13,7 +13,6 @@
     <Record Code="&quot;SHI&quot;" Name="&quot;Shipper&quot;" SearchFields="&quot;shi,shipper&quot;" ShowInLOV="true" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;QuoteCustomerType&quot;" DefaultText="&quot;Quote Customer Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

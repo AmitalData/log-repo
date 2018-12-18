@@ -1439,15 +1439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable TasksSchedulerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TasksScheduler" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode TasksSchedulerTextCode_TasksScheduler = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TasksScheduler", DefaultText = "Tasks Scheduler",LocalDefaultText = null, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

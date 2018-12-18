@@ -11,8 +11,6 @@
     <Record Code="&quot;W&quot;" SearchFields="&quot;W,Waiting,&quot;" Name="&quot;Waiting&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CommunicationStatusTypes&quot;" DefaultText="&quot;Communication Status Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;CommunicationStatusType&quot;" DefaultText="&quot;Communication Status Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

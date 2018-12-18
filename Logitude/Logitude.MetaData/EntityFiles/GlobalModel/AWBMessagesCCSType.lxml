@@ -9,7 +9,6 @@
     <Record Code="&quot;GLSHK&quot;" SearchFields="&quot;GLSHK,GLSHK&quot;" Name="&quot;GLSHK&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AWBMessagesCCSType&quot;" DefaultText="&quot;AWB Messages CCS Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

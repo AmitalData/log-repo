@@ -19,7 +19,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CustomerTenantAccessCardsBatch&quot;" DefaultText="&quot;Customer Tenant Access Cards Batch&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;CUSTOMERTENANTACCESSESCARDBATCH&quot;" FeatureTypeCode="&quot;MODL&quot;" FeatureTextCodeCode="&quot;CustomerTenantAccessCardsBatch.Features.CustomerTenantAccessCardsBatch&quot;" FeatureDefaultText="&quot;CustomerTenantAccessCardsBatch&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />

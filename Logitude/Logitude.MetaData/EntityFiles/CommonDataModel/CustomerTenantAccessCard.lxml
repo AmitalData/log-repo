@@ -17,7 +17,6 @@
   <field Id="&quot;e147e887-a0a0-4f3d-8e3a-10e3e7dfae9b&quot;" FieldsDataType="&quot;Boolean&quot;" FieldName="&quot;BuildBatch&quot;" PMPropertyPath="&quot;BuildBatch&quot;" ListPropertyPath="&quot;BuildBatch&quot;" FullFieldLable="&quot;BuildBatch&quot;" DefaultText="&quot;BuildBatch&quot;" FullLocalDefaultText="&quot;BuildBatch&quot;" ListFieldLable="&quot;BuildBatchListLable&quot;" ListLableDefaultText="&quot;BuildBatch&quot;" ListLocalDefaultText="&quot;BuildBatch&quot;" ObjectTableName="&quot;CustomerTenantAccessCard&quot;" ValidForQuerySection1="&quot;CustomerTenantAccessCard&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CustomerTenantAccessCard&quot;" DefaultText="&quot;Customer Tenant Access Card&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;CustomerTenantAccessCard.Tip.NewCardTip&quot;" DefaultText="&quot; Press &quot;+&quot; button to connect a customer to that request.&quot;" TextCodeTypeCode="&quot;TIP&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />

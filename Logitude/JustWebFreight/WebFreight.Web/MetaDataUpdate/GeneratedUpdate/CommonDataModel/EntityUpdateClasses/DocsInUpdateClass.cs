@@ -152,8 +152,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable DocsInObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocsIn" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode DocsInTextCode_DocsIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocsIn", DefaultText = "Docs In",LocalDefaultText = null, ObjectTableId = DocsInObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode DocsInTextCode_DocsInBDeleteAttachment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocsIn.B.DeleteAttachment", DefaultText = "Delete Attachment",LocalDefaultText = null, ObjectTableId = DocsInObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DocsInTextCode_DocsInBSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocsIn.B.Search", DefaultText = "Search",LocalDefaultText = null, ObjectTableId = DocsInObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);

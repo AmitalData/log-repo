@@ -13,7 +13,6 @@
     <Record Code="&quot;TG&quot;" SearchFields="&quot;TG,Transferring&quot;" Name="&quot;Transferring&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;SATTransferStatus&quot;" DefaultText="&quot;SAT Transfer Status&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts />

@@ -883,19 +883,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable StateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "State" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode StateTextCode_State = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State", DefaultText = "State",LocalDefaultText = null, ObjectTableId = StateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode StateTextCode_StateRemarkHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.RemarkHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = StateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode StateTextCode_StateCHRemarkListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "State.CH.RemarkListLable", DefaultText = "Remarks",LocalDefaultText = null, ObjectTableId = StateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

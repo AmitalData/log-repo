@@ -121,7 +121,6 @@
   </EventTypes>
   <AdditionalTextCodes>
     <TextCode Code="&quot;Trucker.O.CompanyName&quot;" DefaultText="&quot;Company Name&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Trucker&quot;" DefaultText="&quot;Trucker&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;Trucker.O.CompanyLocalName&quot;" DefaultText="&quot;Local Name&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />

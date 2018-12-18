@@ -938,8 +938,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable CustomerTenantAccessCardObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerTenantAccessCard" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode CustomerTenantAccessCardTextCode_CustomerTenantAccessCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessCard", DefaultText = "Customer Tenant Access Card",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessCardObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode CustomerTenantAccessCardTextCode_CustomerTenantAccessCardTipNewCardTip = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerTenantAccessCard.Tip.NewCardTip", DefaultText = " Press ''+'' button to connect a customer to that request.",LocalDefaultText = null, ObjectTableId = CustomerTenantAccessCardObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    

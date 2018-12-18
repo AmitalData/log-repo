@@ -322,15 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable PasswordPolicyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PasswordPolicy" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode PasswordPolicyTextCode_PasswordPolicy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PasswordPolicy", DefaultText = "Passwoed Policy",LocalDefaultText = null, ObjectTableId = PasswordPolicyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

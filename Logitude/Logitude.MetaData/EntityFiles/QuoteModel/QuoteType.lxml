@@ -9,7 +9,6 @@
     <Record SearchFields="&quot;A,Spot Rate&quot;" Code="&quot;A&quot;" Name="&quot;Spot Rate&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;QuoteType&quot;" DefaultText="&quot;Quote Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

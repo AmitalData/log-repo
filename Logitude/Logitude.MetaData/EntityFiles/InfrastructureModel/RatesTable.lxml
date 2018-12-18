@@ -22,7 +22,6 @@
   <Tab Code="&quot;RTEV&quot;" ObjectTableName="&quot;RatesTable&quot;" IndexOrder="1" TextCode="&quot;RatesTable.TH.Events&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TabName="&quot;Events&quot;" IsSpellChecked="false" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;RatesTable&quot;" DefaultText="&quot;Rates Table&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;RatesTable.O.EditCurrencyRate&quot;" DefaultText="&quot;Edit Currency Rate&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;RatesTable.O.Code&quot;" DefaultText="&quot;Code&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;RatesTable.O.Name&quot;" DefaultText="&quot;Name&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
