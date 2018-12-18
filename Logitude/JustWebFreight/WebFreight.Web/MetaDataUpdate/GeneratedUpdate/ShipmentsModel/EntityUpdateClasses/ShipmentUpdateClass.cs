@@ -4516,7 +4516,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						FullFieldLable =  "CreateDateTime",
 					  						DefaultText =  @"Create Date",
 					  						ListFieldLable =  "CreateDateTimeListLable",
-					  						ListLableDefaultText =  @"Create Date",
+					  						ListLableDefaultText =  @"Open Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
