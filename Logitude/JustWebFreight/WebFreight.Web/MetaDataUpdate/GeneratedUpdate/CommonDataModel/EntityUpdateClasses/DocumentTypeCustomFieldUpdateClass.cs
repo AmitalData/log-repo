@@ -613,8 +613,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable DocumentTypeCustomFieldObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentTypeCustomField" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField", DefaultText = "Document Type Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOUnknownControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.UnknownControl", DefaultText = "Unknown Control",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);

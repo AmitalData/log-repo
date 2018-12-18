@@ -41,7 +41,6 @@
   <Tab Code="&quot;PMEV&quot;" ObjectTableName="&quot;AccountingPaymentMethod&quot;" IndexOrder="2" TextCode="&quot;AccountingPaymentMethod.TH.Events&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TabName="&quot;Events&quot;" IsSpellChecked="false" IsPackagable="False" FeatureCode="&quot;AccountingPaymentMethod.Tab.Events&quot;" FeatureTextCodeCode="&quot;AccountingPaymentMethod.Features.Events&quot;" FeatureDefaultText="&quot;Events&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AccountingPaymentMethod&quot;" DefaultText="&quot;Accounting Payment Method&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts />

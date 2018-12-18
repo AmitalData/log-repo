@@ -16,7 +16,6 @@
   <field Id="&quot;57f57bbb-8b07-421d-8ee8-065dc7028175&quot;" FieldName="&quot;NotesRightToLeft&quot;" ObjectTableName="&quot;CustomerAdditionalService&quot;" FieldsDataType="&quot;Boolean&quot;" PMPropertyPath="&quot;NotesRightToLeft&quot;" ListPropertyPath="&quot;NotesRightToLeft&quot;" FullFieldLable="&quot;NotesRightToLeft&quot;" DefaultText="&quot;NotesRightToLeft&quot;" FullLocalDefaultText="&quot;NotesRightToLeft&quot;" ListFieldLable="&quot;NotesRightToLeftListLable&quot;" ListLableDefaultText="&quot;NotesRightToLeft&quot;" ListLocalDefaultText="&quot;NotesRightToLeft&quot;" ValidForQuerySection1="&quot;CustomerAdditionalService&quot;" IsRequired="false" HasDataBaseField="true" DisplayInList="true" NoMetaDataField="true" HasPMField="true" GenerateInList="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CustomerAdditionalService&quot;" DefaultText="&quot;Customer Additional Service&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

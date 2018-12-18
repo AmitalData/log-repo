@@ -16,7 +16,6 @@
   <field Id="&quot;ec55427e-7cb4-411c-b408-62203b3a4948&quot;" FieldsDataType="&quot;Text&quot;" FieldName="&quot;BusinessHour&quot;" PMPropertyPath="&quot;BusinessHour&quot;" ListPropertyPath="&quot;BusinessHour&quot;" FullFieldLable="&quot;BusinessHour&quot;" DefaultText="&quot;BusinessHour&quot;" FullLocalDefaultText="&quot;BusinessHour&quot;" ListFieldLable="&quot;BusinessHourListLable&quot;" ListLableDefaultText="&quot;BusinessHour&quot;" ListLocalDefaultText="&quot;BusinessHour&quot;" ObjectTableName="&quot;BusinessHoursHoliday&quot;" ValidForQuerySection1="&quot;BusinessHoursHoliday&quot;" HasPMField="true" NoMetaDataField="true" HasDataBaseField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;BusinessHoursHoliday&quot;" DefaultText="&quot;Business Hours Holiday&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

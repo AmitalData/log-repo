@@ -31,7 +31,6 @@
   <Tab Code="&quot;CHGG&quot;" ObjectTableName="&quot;ChargesGroup&quot;" IndexOrder="0" TextCode="&quot;ChargesGroup.TH.General&quot;" ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;" TabName="&quot;General&quot;" IsSpellChecked="false" IsPackagable="True" FeatureCode="&quot;GENERAL&quot;" FeatureTextCodeCode="&quot;ChargesGroup.Features.General&quot;" FeatureDefaultText="&quot;General&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ChargesGroup&quot;" DefaultText="&quot;Charge Group&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

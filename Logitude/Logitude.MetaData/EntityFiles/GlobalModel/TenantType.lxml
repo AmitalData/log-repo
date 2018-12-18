@@ -12,7 +12,6 @@
     <Record Code="&quot;SHC&quot;" SearchFields="&quot;SHC,Shipper/Consignee&quot;" Name="&quot;Shipper/Consignee&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;TenantType&quot;" DefaultText="&quot;Tenant Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

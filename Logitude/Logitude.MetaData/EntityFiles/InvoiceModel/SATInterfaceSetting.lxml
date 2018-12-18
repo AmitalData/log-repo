@@ -17,7 +17,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;SATInterfaceSetting&quot;" DefaultText="&quot;SAT Interface Setting&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

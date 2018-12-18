@@ -56,6 +56,7 @@ namespace CommunicationWorkerRole.Tasks
             }
             finally
             {
+                AccountingLogger.LogMe(_SB.ToString(),failed);
                 if (failed)
                 {
                     throw new Exception(_SB.ToString());

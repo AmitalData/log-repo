@@ -9,7 +9,6 @@
   <Records />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;DWObjectTable&quot;" DefaultText="&quot;DW Object Table&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts />

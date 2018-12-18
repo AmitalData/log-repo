@@ -18,7 +18,6 @@
   <field Id="&quot;5c77e380-0dde-4cf9-af68-760b16b6e8dc&quot;" FieldName="&quot;VatTypeCell&quot;" FieldsDataType="&quot;Text&quot;" PMPropertyPath="&quot;VatTypeCell&quot;" ListPropertyPath="&quot;VatTypeCell&quot;" FullFieldLable="&quot;VatTypeCell&quot;" DefaultText="&quot;VatTypeCell&quot;" FullLocalDefaultText="&quot;VatTypeCell&quot;" ListFieldLable="&quot;VatTypeCellListLable&quot;" ListLableDefaultText="&quot;VatTypeCell&quot;" ListLocalDefaultText="&quot;VatTypeCell&quot;" ObjectTableName="&quot;APInvoiceTotalVAT&quot;" ValidForQuerySection1="&quot;APInvoiceTotalVAT&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;APInvoiceTotalVAT&quot;" DefaultText="&quot;A/P Invoice Total VAT&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

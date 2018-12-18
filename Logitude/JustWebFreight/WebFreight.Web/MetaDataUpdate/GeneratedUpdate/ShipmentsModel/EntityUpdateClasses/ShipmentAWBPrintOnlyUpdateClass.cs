@@ -730,15 +730,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ShipmentAWBPrintOnlyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentAWBPrintOnly" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ShipmentAWBPrintOnlyTextCode_ShipmentAWBPrintOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentAWBPrintOnly", DefaultText = "Shipment AWB Print Only",LocalDefaultText = null, ObjectTableId = ShipmentAWBPrintOnlyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

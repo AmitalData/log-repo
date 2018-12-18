@@ -1148,19 +1148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable CountryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Country" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode CountryTextCode_CountryRemarkHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.RemarkHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = CountryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode CountryTextCode_CountryCHRemarkListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country.CH.RemarkListLable", DefaultText = " ",LocalDefaultText = null, ObjectTableId = CountryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode CountryTextCode_Country = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Country", DefaultText = "Country",LocalDefaultText = null, ObjectTableId = CountryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

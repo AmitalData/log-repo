@@ -23,7 +23,6 @@
   <field Id="&quot;82600ad5-fec2-4467-a119-0a0d1ee8385b&quot;" FieldName="&quot;UpdateByUserName&quot;" FieldsDataType="&quot;Text&quot;" PMPropertyPath="&quot;UpdateByUserName&quot;" ListPropertyPath="&quot;UpdateByUserName&quot;" FullFieldLable="&quot;UpdateByUserName&quot;" DefaultText="&quot;UpdateByUserName&quot;" FullLocalDefaultText="&quot;UpdateByUserName&quot;" ListFieldLable="&quot;UpdateByUserNameListLable&quot;" ListLableDefaultText="&quot;UpdateByUserName&quot;" ListLocalDefaultText="&quot;UpdateByUserName&quot;" ObjectTableName="&quot;ReportsTemplate&quot;" ValidForQuerySection1="&quot;ReportsTemplate&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" GenerateInList="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ReportsTemplate&quot;" DefaultText="&quot;Reports Template&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;SYSTEMTEMPLATEEDIT&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;ReportsTemplate.Features.SystemTemplateEdit&quot;" FeatureDefaultText="&quot;System Template Edit&quot;" />

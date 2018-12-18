@@ -264,8 +264,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable VatTypePercentageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "VatTypePercentage" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode VatTypePercentageTextCode_VatTypePercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatTypePercentage", DefaultText = "VAT Type Percentage",LocalDefaultText = null, ObjectTableId = VatTypePercentageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode VatTypePercentageTextCode_VatTypePercentageBAddPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatTypePercentage.B.AddPercentage", DefaultText = "Add Percentage",LocalDefaultText = null, ObjectTableId = VatTypePercentageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode VatTypePercentageTextCode_VatTypePercentageBDeletePercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatTypePercentage.B.DeletePercentage", DefaultText = "Delete Percentage",LocalDefaultText = null, ObjectTableId = VatTypePercentageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);

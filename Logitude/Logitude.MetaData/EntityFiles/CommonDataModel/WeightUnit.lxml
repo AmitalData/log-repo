@@ -10,7 +10,6 @@
     <Record SearchFields="&quot;lb,pound&quot;" Code="&quot;LB&quot;" Name="&quot;Pound&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;WeightUnit&quot;" DefaultText="&quot;Weight Unit&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

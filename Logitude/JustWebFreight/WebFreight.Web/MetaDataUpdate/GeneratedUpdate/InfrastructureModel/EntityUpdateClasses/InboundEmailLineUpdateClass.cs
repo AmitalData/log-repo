@@ -630,15 +630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable InboundEmailLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InboundEmailLine" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode InboundEmailLineTextCode_InboundEmailLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InboundEmailLine", DefaultText = "Inbound Email Line",LocalDefaultText = null, ObjectTableId = InboundEmailLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

@@ -30,7 +30,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;TenantManagmentPrivateLabels&quot;" DefaultText="&quot;Tenant Managment Private Labels&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

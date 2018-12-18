@@ -326,15 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable QuoteClosingReasonObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteClosingReason" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode QuoteClosingReasonTextCode_QuoteClosingReason = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteClosingReason", DefaultText = "Quote Closing Reason",LocalDefaultText = null, ObjectTableId = QuoteClosingReasonObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

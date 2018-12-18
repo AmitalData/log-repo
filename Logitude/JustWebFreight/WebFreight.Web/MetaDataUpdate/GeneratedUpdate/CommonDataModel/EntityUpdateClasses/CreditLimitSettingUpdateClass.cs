@@ -393,15 +393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable CreditLimitSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CreditLimitSetting" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode CreditLimitSettingTextCode_CreditLimitSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CreditLimitSetting", DefaultText = "Credit Limit Setting",LocalDefaultText = null, ObjectTableId = CreditLimitSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

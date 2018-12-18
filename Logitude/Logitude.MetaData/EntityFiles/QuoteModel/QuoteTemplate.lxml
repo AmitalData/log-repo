@@ -36,9 +36,6 @@
   <Tab Code="&quot;QEEV&quot;" ObjectTableName="&quot;QuoteTemplate&quot;" IndexOrder="2" TextCode="&quot;QuoteTemplate.TH.Events&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TabName="&quot;Events&quot;" IsSpellChecked="false" IsPackagable="False" FeatureCode="&quot;EVENTS&quot;" FeatureTextCodeCode="&quot;QuoteTemplate.Features.Events&quot;" FeatureDefaultText="&quot;Events&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;QuoteTemplate.CH.CodeListLable&quot;" DefaultText="&quot;HeaderDocId&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;QuoteTemplate&quot;" DefaultText="&quot;Quote Template&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;QuoteTemplate.CH.NameIdListLable&quot;" DefaultText="&quot;Name&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;COPYATSIGNUP&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;QuoteTemplate.Features.CopyAtSignup&quot;" FeatureDefaultText="&quot;Copy At Signup&quot;" />

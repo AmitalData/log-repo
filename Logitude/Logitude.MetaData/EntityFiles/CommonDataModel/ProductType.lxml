@@ -37,7 +37,6 @@
     <EventType Code="&quot;UPPR&quot;" ObjectTableName="&quot;ProductType&quot;" ShortView="false" IsManualEntry="false" LocalName="&quot;Product Type Updated&quot;" EnglishName="&quot;Product Type Updated&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ProductType&quot;" DefaultText="&quot;Product Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts />

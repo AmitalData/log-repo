@@ -2536,17 +2536,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AccountingSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingSetting" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AccountingSettingTextCode_AccountingSettingRequestedPaymentMethodIsMandatoryHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSetting.RequestedPaymentMethodIsMandatoryHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = AccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode AccountingSettingTextCode_AccountingSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingSetting", DefaultText = "Accounting Setting",LocalDefaultText = null, ObjectTableId = AccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

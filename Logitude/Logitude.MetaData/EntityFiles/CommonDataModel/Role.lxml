@@ -17,7 +17,6 @@
   <field Id="&quot;0fa5f843-e662-4b16-a352-ca8519637cbe&quot;" FieldsDataType="&quot;Integer&quot;" FieldName="&quot;CurrentTenant&quot;" PMPropertyPath="&quot;CurrentTenant&quot;" ListPropertyPath="&quot;CurrentTenant&quot;" FullFieldLable="&quot;CurrentTenant&quot;" DefaultText="&quot;CurrentTenant&quot;" FullLocalDefaultText="&quot;CurrentTenant&quot;" ListFieldLable="&quot;CurrentTenantListLable&quot;" ListLableDefaultText="&quot;CurrentTenant&quot;" ListLocalDefaultText="&quot;CurrentTenant&quot;" ObjectTableName="&quot;Role&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Role&quot;" DefaultText="&quot;Role&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;Role.B.EditRole&quot;" DefaultText="&quot;Edit Role&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Role.O.Roles&quot;" DefaultText="&quot;Roles&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Role.O.SelectedRoles&quot;" DefaultText="&quot;Selected Roles&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />

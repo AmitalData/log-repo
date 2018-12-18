@@ -10,7 +10,6 @@
     <Record SearchFields="&quot;o,ocean&quot;" Name="&quot;Ocean&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;TransportMode&quot;" DefaultText="&quot;Transport Mode&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

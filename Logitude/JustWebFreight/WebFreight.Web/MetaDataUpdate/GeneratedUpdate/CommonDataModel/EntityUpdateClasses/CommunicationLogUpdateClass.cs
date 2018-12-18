@@ -2509,13 +2509,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable CommunicationLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CommunicationLog" && d.Tenant == 0).FirstOrDefault(); 
 
+ 		   TextCode CommunicationLogTextCode_CommunicationLogBDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.B.Details", DefaultText = "Details",LocalDefaultText = @"פרטים", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode CommunicationLogTextCode_CommunicationLogOLogs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Logs", DefaultText = "Logs",LocalDefaultText = @"לוג", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CommunicationLogTextCode_CommunicationLogOCorrelationID = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.CorrelationID", DefaultText = "Correlation ID",LocalDefaultText = @"מתאם", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CommunicationLogTextCode_CommunicationLogOMoreDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.MoreDetails", DefaultText = "More Details",LocalDefaultText = @"פרטים נוספים", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CommunicationLogTextCode_CommunicationLog = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog", DefaultText = "Communication Log",LocalDefaultText = null, ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CommunicationLogTextCode_CommunicationLogBView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.B.View", DefaultText = "View",LocalDefaultText = @"לצפות", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2526,8 +2526,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  		   TextCode CommunicationLogTextCode_CommunicationLogOUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.User", DefaultText = "User",LocalDefaultText = @"משתמש", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CommunicationLogTextCode_CommunicationLogOError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Error", DefaultText = "Error",LocalDefaultText = @"שגיאה", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CommunicationLogTextCode_CommunicationLogBDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.B.Details", DefaultText = "Details",LocalDefaultText = @"פרטים", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

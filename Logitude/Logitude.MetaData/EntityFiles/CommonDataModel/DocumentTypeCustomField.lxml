@@ -14,7 +14,6 @@
   <field Id="&quot;8cfd4c04-9915-4291-b6d9-469efb3c2fe8&quot;" FieldName="&quot;FieldValue&quot;" FieldsDataType="&quot;Text&quot;" PMPropertyPath="&quot;FieldValue&quot;" ListPropertyPath="&quot;FieldValue&quot;" FullFieldLable="&quot;FieldValue&quot;" DefaultText="&quot;FieldValue&quot;" FullLocalDefaultText="&quot;FieldValue&quot;" ListFieldLable="&quot;FieldValueListLable&quot;" ListLableDefaultText="&quot;FieldValue&quot;" ListLocalDefaultText="&quot;FieldValue&quot;" ObjectTableName="&quot;DocumentTypeCustomField&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;DocumentTypeCustomField&quot;" DefaultText="&quot;Document Type Custom Field&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;DocumentTypeCustomField.O.AdditionalFields&quot;" DefaultText="&quot;Additional Fields&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;DocumentTypeCustomField.O.UnknownControl&quot;" DefaultText="&quot;Unknown Control&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;DocumentTypeCustomField.B.AddCustomField&quot;" DefaultText="&quot;Add Custom Field&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />

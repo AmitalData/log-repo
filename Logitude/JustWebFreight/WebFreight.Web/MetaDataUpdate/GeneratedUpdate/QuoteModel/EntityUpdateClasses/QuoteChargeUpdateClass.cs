@@ -3030,8 +3030,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
  		   ObjectTable QuoteChargeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteCharge" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode QuoteChargeTextCode_QuoteCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteCharge", DefaultText = "Quote Charge",LocalDefaultText = null, ObjectTableId = QuoteChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode QuoteChargeTextCode_QuoteChargeMExchangeRateIsRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteCharge.M.ExchangeRateIsRequired", DefaultText = "The exchange rate is required",LocalDefaultText = null, ObjectTableId = QuoteChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    

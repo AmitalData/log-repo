@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoGenerators\All Models Metadata Only Generator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>All Models Metadata Only Generator.tt</DependentUpon>
+    </Compile>
     <Compile Include="AutoGenerators\CommonClassesGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -104,6 +109,11 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AutoGenerators\All Models Metadata Only Generator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>All Models Metadata Only Generator.cs</LastGenOutput>
+      <LastOutputs>.\All Models Metadata Only Generator.cs</LastOutputs>
+    </Content>
     <Content Include="AutoGenerators\CommonClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CommonClassesGenerator.cs</LastGenOutput>

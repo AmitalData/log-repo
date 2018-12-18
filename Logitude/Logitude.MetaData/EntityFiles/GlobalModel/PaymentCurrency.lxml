@@ -10,7 +10,6 @@
     <Record Code="&quot;USD&quot;" SearchFields="&quot;USD,United States Of America Dollar&quot;" Name="&quot;United States Of America Dollar&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;PaymentCurrency&quot;" DefaultText="&quot;Payment Currency&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

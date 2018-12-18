@@ -33,7 +33,6 @@
     <Record Code="&quot;PZ&quot;" SearchFields="&quot;PZ,All Charges Prepaid by Credit Card&quot;" Name="&quot;All Charges Prepaid by Credit Card&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AWBChargesCode&quot;" DefaultText="&quot;AWB Charges Code&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

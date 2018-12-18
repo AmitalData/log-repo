@@ -233,7 +233,7 @@ namespace CommunicationWorkerRole
             var tst = false;
             if (tst)
             {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "RevaluationWorkerRole").ToList();
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "SchedularWorkerRole").ToList();
             }
             foreach (var Service in BatchServicesDefinitions)
             {

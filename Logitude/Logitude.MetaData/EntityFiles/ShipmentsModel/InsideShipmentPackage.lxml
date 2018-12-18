@@ -43,7 +43,6 @@
     <TextCode Code="&quot;InsideShipmentPackage.O.Volume&quot;" DefaultText="&quot;Volume (%UnitCode)&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;InsideShipmentPackage.O.VolWeight&quot;" DefaultText="&quot;Volumetric Weight (%UnitCode)&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;InsideShipmentPackage.O.GrossWeight&quot;" DefaultText="&quot;Gross Weight (%UnitCode)&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;InsideShipmentPackage&quot;" DefaultText="&quot;Inside Shipment Package&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

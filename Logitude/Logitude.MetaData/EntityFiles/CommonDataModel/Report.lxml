@@ -52,7 +52,6 @@
     <EventType Code="&quot;TEPU&quot;" ObjectTableName="&quot;Report&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;New Template Uploaded&quot;" EnglishName="&quot;New Template Uploaded&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Report&quot;" DefaultText="&quot;Report&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;STATISTICSBYAIRLINE&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;ReportObjectTable.Features.StatisticsbyAirline&quot;" FeatureDefaultText="&quot;Statistics by Airline&quot;" />

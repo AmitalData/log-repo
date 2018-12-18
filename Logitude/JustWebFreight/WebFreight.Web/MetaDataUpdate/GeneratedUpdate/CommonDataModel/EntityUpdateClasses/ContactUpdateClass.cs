@@ -2459,16 +2459,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable ContactObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Contact" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ContactTextCode_ContactMAnonymize = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.M.Anonymize", DefaultText = "Anonymizing this contact will result in erasing all personal data including the user's mail. in addition to erasing his info from operational data",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ContactTextCode_ContactIsInlandExportHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.IsInlandExportHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ContactTextCode_ContactCHIsInlandExportListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.CH.IsInlandExportListLable", DefaultText = "Is Inland Export",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ContactTextCode_ContactIsInlandImportHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.IsInlandImportHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ContactTextCode_ContactCHIsInlandImportListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.CH.IsInlandImportListLable", DefaultText = "Is Inland Import",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode ContactTextCode_ContactOMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Month", DefaultText = "Month",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ContactTextCode_ContactOYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Year", DefaultText = "Year",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -2489,9 +2479,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode ContactTextCode_ContactOTel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Tel", DefaultText = "Tel",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ContactTextCode_Contact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact", DefaultText = "Contact",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode ContactTextCode_ContactOPartners = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.O.Partners", DefaultText = "Partners",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ContactTextCode_ContactMAnonymize = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Contact.M.Anonymize", DefaultText = "Anonymizing this contact will result in erasing all personal data including the user's mail. in addition to erasing his info from operational data",LocalDefaultText = null, ObjectTableId = ContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
