@@ -502,8 +502,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable MAWBStackObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MAWBStack" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode MAWBStackTextCode_MAWBStack = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack", DefaultText = "MAWB Stack",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode MAWBStackTextCode_MAWBStackBRemoveSeries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.B.RemoveSeries", DefaultText = "Remove Series",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode MAWBStackTextCode_MAWBStackMDeleteStackNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MAWBStack.M.DeleteStackNumber", DefaultText = "Are you sure you want to delete the stack number",LocalDefaultText = null, ObjectTableId = MAWBStackObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);

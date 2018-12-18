@@ -17,7 +17,6 @@
   <field Id="&quot;54d9b93e-4a85-4668-aa3e-1bd4c36a425c&quot;" FieldsDataType="&quot;Text&quot;" FieldName="&quot;changeOp&quot;" PMPropertyPath="&quot;changeOp&quot;" ListPropertyPath="&quot;changeOp&quot;" FullFieldLable="&quot;changeOp&quot;" DefaultText="&quot;changeOp&quot;" FullLocalDefaultText="&quot;changeOp&quot;" ListFieldLable="&quot;changeOpListLable&quot;" ListLableDefaultText="&quot;changeOp&quot;" ListLocalDefaultText="&quot;changeOp&quot;" ObjectTableName="&quot;TarrifCharge&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;TarrifCharge&quot;" DefaultText="&quot;Tariff Charge&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;TarrifCharge.B.AddTarrifCharge&quot;" DefaultText="&quot;Add Tariff Charge&quot;" LocalDefaultText="&quot;הוסף תעריף חיוב&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;TarrifCharge.B.DeleteTarrifCharge&quot;" DefaultText="&quot;Delete Tariff Charge&quot;" LocalDefaultText="&quot;מחק תעריף חיוב&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;TarrifCharge.M.CantAddFreightToSurcharge&quot;" DefaultText="&quot;Cant add Freight Charge to Surcharge Tariff&quot;" LocalDefaultText="&quot;לא ניתן להוסיף סעיף הובלה למחירון חיובים נוספים&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />

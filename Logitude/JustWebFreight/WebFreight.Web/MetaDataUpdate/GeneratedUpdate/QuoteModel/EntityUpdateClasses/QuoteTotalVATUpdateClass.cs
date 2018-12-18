@@ -733,15 +733,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable QuoteTotalVATObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteTotalVAT" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode QuoteTotalVATTextCode_QuoteTotalVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTotalVAT", DefaultText = "Quote Total VAT",LocalDefaultText = null, ObjectTableId = QuoteTotalVATObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

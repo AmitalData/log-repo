@@ -511,15 +511,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable HybridTenantThresholdObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HybridTenantThreshold" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode HybridTenantThresholdTextCode_HybridTenantThreshold = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "HybridTenantThreshold", DefaultText = "Hybrid Tenant Threshold",LocalDefaultText = null, ObjectTableId = HybridTenantThresholdObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

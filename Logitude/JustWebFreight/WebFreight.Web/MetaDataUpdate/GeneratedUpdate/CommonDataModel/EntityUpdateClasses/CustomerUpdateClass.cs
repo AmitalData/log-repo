@@ -9815,11 +9815,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable CustomerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customer" && d.Tenant == 0).FirstOrDefault(); 
 
+ 		   TextCode CustomerTextCode_CustomerOCompanyLocalName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.CompanyLocalName", DefaultText = "Local Name",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode CustomerTextCode_CustomerOGeneralData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.GeneralData", DefaultText = "General Data",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomerTextCode_CustomerOQueryCRMCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.Query.CRMCustomers", DefaultText = "Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CustomerTextCode_CustomerCHCityNameListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.CH.CityNameListLable", DefaultText = "City",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomerTextCode_CustomerSOverviewCustomerDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.S.Overview.CustomerDetails", DefaultText = "Customer Details",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -9833,17 +9833,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode CustomerTextCode_CustomerSOverviewMoneyInformation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.S.Overview.MoneyInformation", DefaultText = "Money Information",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomerTextCode_CustomerQCustomersByLastActivity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.CustomersByLastActivity", DefaultText = "Customers By Last Activity",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CustomerTextCode_Customer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer", DefaultText = "Customer",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode CustomerTextCode_CustomerOAddContact = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.AddContact", DefaultText = "Add Contact",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomerTextCode_CustomerOCompanyName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.CompanyName", DefaultText = "Company Name",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CustomerTextCode_CustomerCHCountryNameListLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.CH.CountryNameListLabel", DefaultText = "Country",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CustomerTextCode_CustomerOCompanyLocalName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.O.CompanyLocalName", DefaultText = "Local Name",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

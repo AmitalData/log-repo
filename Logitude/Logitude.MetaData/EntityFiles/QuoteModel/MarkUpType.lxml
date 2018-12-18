@@ -9,7 +9,6 @@
     <Record SearchFields="&quot;P,Percentage&quot;" Code="&quot;P&quot;" Name="&quot;Percentage&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;MarkUpType&quot;" DefaultText="&quot;Mark Up Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

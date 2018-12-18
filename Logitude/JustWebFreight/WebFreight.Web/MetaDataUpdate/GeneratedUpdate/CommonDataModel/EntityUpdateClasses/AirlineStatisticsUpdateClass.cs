@@ -2574,15 +2574,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AirlineStatisticsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AirlineStatistics" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AirlineStatisticsTextCode_AirlineStatistics = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics", DefaultText = "Airline Statistics",LocalDefaultText = null, ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

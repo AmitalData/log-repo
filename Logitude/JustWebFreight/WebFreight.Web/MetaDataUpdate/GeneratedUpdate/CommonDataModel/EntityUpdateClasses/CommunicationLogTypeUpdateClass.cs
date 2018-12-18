@@ -324,15 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable CommunicationLogTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CommunicationLogType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode CommunicationLogTypeTextCode_CommunicationLogType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLogType", DefaultText = "Communication Log Type",LocalDefaultText = null, ObjectTableId = CommunicationLogTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

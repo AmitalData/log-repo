@@ -7,7 +7,6 @@
   <field Id="&quot;0c265952-407c-46cd-9f3d-15e9fe9995e8&quot;" FieldName="&quot;RecipientValue&quot;" ObjectTableName="&quot;AutomationResultEmailRecipient&quot;" FieldsDataType="&quot;Text&quot;" PMPropertyPath="&quot;RecipientValue&quot;" ListPropertyPath="&quot;RecipientValue&quot;" FullFieldLable="&quot;RecipientValue&quot;" DefaultText="&quot;RecipientValue&quot;" FullLocalDefaultText="&quot;RecipientValue&quot;" ListFieldLable="&quot;RecipientValueListLable&quot;" ListLableDefaultText="&quot;RecipientValue&quot;" ListLocalDefaultText="&quot;RecipientValue&quot;" IsRequired="false" HasDataBaseField="true" DisplayInList="true" NoMetaDataField="true" HasPMField="true" GenerateInList="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AutomationResultEmailRecipient&quot;" DefaultText="&quot;Automation Result Email Recipient&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

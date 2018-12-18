@@ -392,15 +392,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable QuoteRatingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteRating" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode QuoteRatingTextCode_QuoteRating = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteRating", DefaultText = "Quote Rating",LocalDefaultText = null, ObjectTableId = QuoteRatingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

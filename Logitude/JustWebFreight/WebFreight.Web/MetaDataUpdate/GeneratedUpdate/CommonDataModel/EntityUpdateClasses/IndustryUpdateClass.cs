@@ -500,15 +500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable IndustryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Industry" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode IndustryTextCode_Industry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry", DefaultText = "Industry",LocalDefaultText = null, ObjectTableId = IndustryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

@@ -2,7 +2,6 @@
 <entity Id="&quot;416a2bf5-8c91-4541-833c-81016724c5aa&quot;" ObjectTableName="&quot;DocsIn&quot;" DBTableName="&quot;DocumentIns&quot;" ObjectTableSingular="&quot;Docs In&quot;" ObjectTablePlural="&quot;Docs Ins&quot;" DefaultText="&quot;Docs In&quot;" Name="&quot;DocsIn&quot;" IsNewWizard="false" HasCustomValidator="false" KeyPropertyPath="&quot;Id&quot;" AutoCompleteSearchWindow="false" IsClosed="false" CacheOnClient="false" EditableFromAutoCompleteWindow="false" HasCounter="false" EnableEditFromLOV="false" EnableAddFromLOV="false" IsRestrictable="false" IsMain="true" IsAutoComplete="false" CustomFieldsCount="0" HasCustomFields="false" InActive="false" SearchFields="&quot;DocsIn,DocumentIns,,Id,&quot;" IsSaveButtonVisible="true" EnableSecurity="true" ObjectTableTypeCode="&quot;MD&quot;" IsComposition="true" MaxNumberOfCustomFields="0" AllowCustomFields="false" HasDynamicHeader="false" HasDocuments="false" IsLookUp="false" IsEditable="true">
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;DocsIn&quot;" DefaultText="&quot;Docs In&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;DocsIn.B.DeleteAttachment&quot;" DefaultText="&quot;Delete Attachment&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;DocsIn.B.Search&quot;" DefaultText="&quot;Search&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;DocsIn.O.Attach&quot;" DefaultText="&quot;Attach&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />

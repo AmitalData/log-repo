@@ -49,9 +49,6 @@
   <field Id="&quot;2b9fbf47-7c3f-4ec6-b658-2aabe3e6c7b1&quot;" FieldName="&quot;IsCustomsCharge&quot;" FieldsDataType="&quot;Boolean&quot;" PMPropertyPath="&quot;IsCustomsCharge&quot;" ListPropertyPath="&quot;IsCustomsCharge&quot;" FullFieldLable="&quot;IsCustomsCharge&quot;" DefaultText="&quot;IsCustomsCharge&quot;" FullLocalDefaultText="&quot;IsCustomsCharge&quot;" ListFieldLable="&quot;IsCustomsChargeListLable&quot;" ListLableDefaultText="&quot;IsCustomsCharge&quot;" ListLocalDefaultText="&quot;IsCustomsCharge&quot;" ObjectTableName="&quot;ARInvoiceLine&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ARInvoiceLine&quot;" DefaultText="&quot;A/R Invoice Line&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
-    <TextCode Code="&quot;ARInvoiceLine.CH.Reference&quot;" DefaultText="&quot;Reference&quot;" LocalDefaultText="&quot;אסמכתא&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;ARInvoiceLine.CH.AmountInvoice&quot;" DefaultText="&quot;Amount (%InvoiceCurrencyCode)&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;ARInvoiceLine.O.FillExchangeRate&quot;" DefaultText="&quot;Fill Exchange Rate&quot;" LocalDefaultText="&quot;מילוי שער חליפין&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;ARInvoiceLine.O.EditInvoiceLine&quot;" DefaultText="&quot;Edit Invoice Line&quot;" LocalDefaultText="&quot;ערוך שורת חשבונית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -2831,8 +2831,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable ShippingLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShippingLine" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ShippingLineTextCode_ShippingLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine", DefaultText = "Shipping Line",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode ShippingLineTextCode_ShippingLineTipGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShippingLine.Tip.General", DefaultText = " - Shipping lines are listed  in this pane(%L) - To add a new shipping line to your company press the 'new' button(%L)- To import a shipping line to your company press the 'add' button(%L)  ",LocalDefaultText = null, ObjectTableId = ShippingLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TIP", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    

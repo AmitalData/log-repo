@@ -19,7 +19,6 @@
   <Records />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ShipmentCommodity&quot;" DefaultText="&quot;Shipment Commodity&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

@@ -4474,8 +4474,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentPackageTextCode_ShipmentPackageMValueEditedByUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.M.ValueEditedByUser", DefaultText = "Value Edited by User, Double Click to Reset Calculated value",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ShipmentPackageTextCode_ShipmentPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage", DefaultText = "Shipment Package",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode ShipmentPackageTextCode_ShipmentPackageMPackageTypeIsRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.M.PackageTypeIsRequired", DefaultText = "Package Type is Required",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentPackageTextCode_ShipmentPackageMWeightIsRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPackage.M.WeightIsRequired", DefaultText = "Weight is Required",LocalDefaultText = null, ObjectTableId = ShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);

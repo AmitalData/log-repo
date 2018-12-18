@@ -1641,12 +1641,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   ObjectTable ARInvoiceLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARInvoiceLine" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ARInvoiceLineTextCode_ARInvoiceLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoiceLine", DefaultText = "A/R Invoice Line",LocalDefaultText = null, ObjectTableId = ARInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode ARInvoiceLineTextCode_ARInvoiceLineCHReference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoiceLine.CH.Reference", DefaultText = "Reference",LocalDefaultText = @"אסמכתא", ObjectTableId = ARInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ARInvoiceLineTextCode_ARInvoiceLineCHAmountInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoiceLine.CH.AmountInvoice", DefaultText = "Amount (%InvoiceCurrencyCode)",LocalDefaultText = null, ObjectTableId = ARInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode ARInvoiceLineTextCode_ARInvoiceLineOFillExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoiceLine.O.FillExchangeRate", DefaultText = "Fill Exchange Rate",LocalDefaultText = @"מילוי שער חליפין", ObjectTableId = ARInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceLineTextCode_ARInvoiceLineOEditInvoiceLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoiceLine.O.EditInvoiceLine", DefaultText = "Edit Invoice Line",LocalDefaultText = @"ערוך שורת חשבונית", ObjectTableId = ARInvoiceLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);

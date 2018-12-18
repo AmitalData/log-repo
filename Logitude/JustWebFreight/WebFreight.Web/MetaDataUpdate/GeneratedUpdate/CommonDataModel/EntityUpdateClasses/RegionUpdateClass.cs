@@ -491,17 +491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable RegionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Region" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode RegionTextCode_Region = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region", DefaultText = "Region",LocalDefaultText = null, ObjectTableId = RegionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode RegionTextCode_RegionQAllRegions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.Q.AllRegions", DefaultText = "All Regions",LocalDefaultText = null, ObjectTableId = RegionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

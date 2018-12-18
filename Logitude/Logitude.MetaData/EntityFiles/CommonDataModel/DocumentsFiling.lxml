@@ -154,8 +154,6 @@
   <Tab Code="&quot;DFEV&quot;" ObjectTableName="&quot;DocumentsFiling&quot;" IndexOrder="1" TextCode="&quot;DocumentsFiling.TH.Events&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TabName="&quot;Events&quot;" IsSpellChecked="false" IsPackagable="False" FeatureCode="&quot;EVENTS&quot;" FeatureTextCodeCode="&quot;DocumentsFiling.Features.Events&quot;" FeatureDefaultText="&quot;Events&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;DocumentsFiling.Q.DocumentsFilings&quot;" DefaultText="&quot;Documents Filings&quot;" TextCodeTypeCode="&quot;Q&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;DocumentsFiling&quot;" DefaultText="&quot;Document Filing&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;DOCUMENTSFILING&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;DocumentsFiling.Features.DocumentsFilings&quot;" FeatureDefaultText="&quot;Document Filing&quot;" />

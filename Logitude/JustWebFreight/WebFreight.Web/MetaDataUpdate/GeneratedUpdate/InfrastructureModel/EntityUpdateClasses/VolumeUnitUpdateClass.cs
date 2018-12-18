@@ -335,15 +335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable VolumeUnitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "VolumeUnit" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode VolumeUnitTextCode_VolumeUnit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VolumeUnit", DefaultText = "Volume Unit",LocalDefaultText = null, ObjectTableId = VolumeUnitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

@@ -9,7 +9,6 @@
   <field Id="&quot;41591a49-6364-47dd-b64b-4f491849c428&quot;" FieldName="&quot;IsError&quot;" ObjectTableName="&quot;TaskSchedulerHistory&quot;" FieldsDataType="&quot;Boolean&quot;" PMPropertyPath="&quot;IsError&quot;" ListPropertyPath="&quot;IsError&quot;" FullFieldLable="&quot;IsError&quot;" DefaultText="&quot;IsError&quot;" FullLocalDefaultText="&quot;IsError&quot;" ListFieldLable="&quot;IsErrorListLable&quot;" ListLableDefaultText="&quot;IsError&quot;" ListLocalDefaultText="&quot;IsError&quot;" IsRequired="false" HasDataBaseField="true" DisplayInList="true" NoMetaDataField="true" HasPMField="true" GenerateInList="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;TaskSchedulerHistory&quot;" DefaultText="&quot;Task Scheduler History&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

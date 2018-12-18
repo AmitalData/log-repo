@@ -19,7 +19,6 @@
   <field Id="&quot;a3cadab8-bfd0-4708-b480-0c2fd7ac0ee4&quot;" FieldsDataType="&quot;Text&quot;" FieldName="&quot;ChangeSetOp&quot;" PMPropertyPath="&quot;ChangeSetOp&quot;" ListPropertyPath="&quot;ChangeSetOp&quot;" FullFieldLable="&quot;ChangeSetOp&quot;" DefaultText="&quot;ChangeSetOp&quot;" FullLocalDefaultText="&quot;ChangeSetOp&quot;" ListFieldLable="&quot;ChangeOpListLable&quot;" ListLableDefaultText="&quot;ChangeSetOp&quot;" ListLocalDefaultText="&quot;ChangeSetOp&quot;" ObjectTableName="&quot;ComputingPartnerTable&quot;" ValidForQuerySection1="&quot;ComputingPartnerTable&quot;" HasDataBaseField="false" NoMetaDataField="true" HasPMField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ComputingPartnerTable&quot;" DefaultText="&quot;Computing Partner Table&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

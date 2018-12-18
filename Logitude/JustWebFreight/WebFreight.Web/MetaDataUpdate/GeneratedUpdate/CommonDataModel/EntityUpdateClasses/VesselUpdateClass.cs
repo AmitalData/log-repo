@@ -992,15 +992,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable VesselObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Vessel" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode VesselTextCode_Vessel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Vessel", DefaultText = "Vessel",LocalDefaultText = null, ObjectTableId = VesselObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

@@ -15,7 +15,6 @@
     <TextCode Code="&quot;Restriction.O.Table&quot;" DefaultText="&quot;Table&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Restriction.O.ByField&quot;" DefaultText="&quot;By Field&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Restriction.O.AllowedValues&quot;" DefaultText="&quot;Allowed Values&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Restriction&quot;" DefaultText="&quot;Restriction&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

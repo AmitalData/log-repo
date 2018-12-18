@@ -9,7 +9,6 @@
     <Record Code="&quot;SHI&quot;" SearchFields="&quot;SHI, Shipment Date&quot;" Name="&quot;Shipment Date&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;PaymentTermDateType&quot;" DefaultText="&quot;Payment Term Date Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -284,8 +284,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode RestrictionTextCode_RestrictionOAllowedValues = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction.O.AllowedValues", DefaultText = "Allowed Values",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode RestrictionTextCode_Restriction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Restriction", DefaultText = "Restriction",LocalDefaultText = null, ObjectTableId = RestrictionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
    
 	    
 }

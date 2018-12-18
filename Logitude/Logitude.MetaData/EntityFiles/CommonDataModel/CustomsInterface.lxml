@@ -14,7 +14,6 @@
     <Record Code="&quot;NO&quot;" SearchFields="&quot;NO,None&quot;" InterfaceType="&quot;NO&quot;" Name="&quot;None&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CustomsInterface&quot;" DefaultText="&quot;Customs Interface&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

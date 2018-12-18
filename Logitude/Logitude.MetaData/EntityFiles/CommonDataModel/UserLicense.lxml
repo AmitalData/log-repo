@@ -12,7 +12,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;UserLicense&quot;" DefaultText="&quot;User License&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

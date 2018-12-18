@@ -72,7 +72,6 @@
     <EventType Code="&quot;CRPK&quot;" ObjectTableName="&quot;PackageType&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;PackageType&quot;" DefaultText="&quot;Package Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;PackageType.M.ChoosePackageTypeTransportation&quot;" DefaultText="&quot;Please choose the transportation method of the Package Type&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />

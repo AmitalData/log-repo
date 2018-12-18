@@ -151,8 +151,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable DocumentTypeCopyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentTypeCopy" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode DocumentTypeCopyTextCode_DocumentTypeCopy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCopy", DefaultText = "Document Type Copy",LocalDefaultText = null, ObjectTableId = DocumentTypeCopyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode DocumentTypeCopyTextCode_DocumentTypeCopyOCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCopy.O.Code", DefaultText = "Code",LocalDefaultText = null, ObjectTableId = DocumentTypeCopyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DocumentTypeCopyTextCode_DocumentTypeCopyOName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCopy.O.Name", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = DocumentTypeCopyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);

@@ -9,7 +9,6 @@
     <Record Code="&quot;IN&quot;" SearchFields="&quot;in,invoice&quot;" Name="&quot;Invoice&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;APInvoiceType&quot;" DefaultText="&quot;A/P Invoice Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
