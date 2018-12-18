@@ -1520,8 +1520,18 @@ namespace MeatadataGeneratorTool
                 ObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsDeleted = true;
                 TempObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsDeleted = true;
                 ObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsChecked = true;
+
+                int selectedIndex = ObsList.IndexOf(selected);
+                if(selectedIndex != 0)
+                {
+                    selectedIndex -= 1;
+                }
+
                 ObsList.Remove(selected);
                 TempObsList.Remove(selected);
+
+                if (ObsList.Count > 0)
+                    this.SelectedObjectField = ObsList[selectedIndex];
 
 
                 FirePropertyChanged("ObsList");
@@ -1530,6 +1540,8 @@ namespace MeatadataGeneratorTool
                 this.SetLookUpFieldsList();
 
                 FieldsEditControlVisibility = (ObsList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+
+                 
 
                 //this.SelectedObjectField = ObsList.FirstOrDefault();
                 //this.SelectedDBField = DBFieldsObsList.FirstOrDefault();
@@ -1702,7 +1714,17 @@ namespace MeatadataGeneratorTool
 
         private void RemoveTabMethod(TabsViewModel DelTab)
         {
+            int selectedIndex = TabsObsList.IndexOf(DelTab);
+            if (selectedIndex != 0)
+            {
+                selectedIndex -= 1;
+            }
+
             TabsObsList.Remove(DelTab);
+
+            if (TabsObsList.Count > 0)
+                this.SelectedTab = TabsObsList[selectedIndex];
+
             FirePropertyChanged("TabsObsList");
         }
 

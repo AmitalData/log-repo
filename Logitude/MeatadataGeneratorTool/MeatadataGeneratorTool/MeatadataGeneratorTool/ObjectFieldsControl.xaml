@@ -53,7 +53,7 @@
                         BorderBrush="#FFDA6F6F"
                         BorderThickness="1"
                         CornerRadius="8"
-                        Visibility="{Binding ErrorsVisibility}">
+                        Visibility="{Binding ErrorsVisibility, TargetNullValue=Collapsed, FallbackValue=Collapsed}">
                     <TextBlock Margin="10"
                                FontSize="12"
                                Foreground="#FFB02020"
