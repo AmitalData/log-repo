@@ -49,7 +49,6 @@
   <field Id="&quot;d74c3ac8-3220-4b8f-90cf-4d73fa42dec2&quot;" FieldName="&quot;SundayToHourDate&quot;" FieldsDataType="&quot;DateTime&quot;" PMPropertyPath="&quot;SundayToHourDate&quot;" ListPropertyPath="&quot;SundayToHourDate&quot;" FullFieldLable="&quot;SundayToHourDate&quot;" DefaultText="&quot;SundayToHourDate&quot;" FullLocalDefaultText="&quot;SundayToHourDate&quot;" ListFieldLable="&quot;SundayToHourDateListLable&quot;" ListLableDefaultText="&quot;SundayToHourDate&quot;" ListLocalDefaultText="&quot;SundayToHourDate&quot;" ObjectTableName="&quot;BusinessHour&quot;" ValidForQuerySection1="&quot;BusinessHour&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;BusinessHour&quot;" DefaultText="&quot;Business Hour&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

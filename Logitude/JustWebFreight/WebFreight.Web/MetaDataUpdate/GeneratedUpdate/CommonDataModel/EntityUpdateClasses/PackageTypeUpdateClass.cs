@@ -1450,8 +1450,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable PackageTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PackageType" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode PackageTypeTextCode_PackageType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType", DefaultText = "Package Type",LocalDefaultText = null, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode PackageTypeTextCode_PackageTypeMChoosePackageTypeTransportation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageType.M.ChoosePackageTypeTransportation", DefaultText = "Please choose the transportation method of the Package Type",LocalDefaultText = null, ObjectTableId = PackageTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    

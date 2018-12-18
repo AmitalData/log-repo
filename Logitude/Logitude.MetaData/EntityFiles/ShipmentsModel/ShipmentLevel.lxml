@@ -10,7 +10,6 @@
     <Record Code="&quot;H&quot;" SearchFields="&quot;h,house&quot;" Name="&quot;House&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ShipmentLevel&quot;" DefaultText="&quot;Shipment Level&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

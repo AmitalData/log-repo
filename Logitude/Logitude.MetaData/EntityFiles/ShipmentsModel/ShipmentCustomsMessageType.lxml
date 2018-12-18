@@ -10,7 +10,6 @@
     <Record Code="&quot;CBAS&quot;" SearchFields="&quot;CBAS,CBP AES&quot;" Name="&quot;CBP AES&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ShipmentCustomsMessageType&quot;" DefaultText="&quot;Shipment Customs Message Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

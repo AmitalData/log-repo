@@ -9,7 +9,6 @@
     <Record Code="&quot;PUE&quot;" SearchFields="&quot;PUE,Pago en una sola exhibición&quot;" Name="&quot;Pago en una sola exhibición&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;MetodoPago&quot;" DefaultText="&quot;Metodo Pago&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

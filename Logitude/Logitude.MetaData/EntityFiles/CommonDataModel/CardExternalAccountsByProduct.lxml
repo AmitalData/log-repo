@@ -12,7 +12,6 @@
   <field Id="&quot;d7669526-8d03-47e0-94ee-1dd96f4054f5&quot;" FieldName="&quot;UpdatedByUserName&quot;" FieldsDataType="&quot;Text&quot;" PMPropertyPath="&quot;UpdatedByUserName&quot;" ListPropertyPath="&quot;UpdatedByUserName&quot;" FullFieldLable="&quot;UpdatedByUserName&quot;" DefaultText="&quot;UpdatedByUserName&quot;" FullLocalDefaultText="&quot;UpdatedByUserName&quot;" ListFieldLable="&quot;UpdatedByUserNameListLable&quot;" ListLableDefaultText="&quot;UpdatedByUserName&quot;" ListLocalDefaultText="&quot;UpdatedByUserName&quot;" ObjectTableName="&quot;CardExternalAccountsByProduct&quot;" ValidForQuerySection1="&quot;CardExternalAccountsByProduct&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CardExternalAccountsByProduct&quot;" DefaultText="&quot;Card External Accounts By Product&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -2517,8 +2517,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode TruckerTextCode_TruckerOCompanyName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.O.CompanyName", DefaultText = "Company Name",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TruckerTextCode_Trucker = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker", DefaultText = "Trucker",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode TruckerTextCode_TruckerOCompanyLocalName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Trucker.O.CompanyLocalName", DefaultText = "Local Name",LocalDefaultText = null, ObjectTableId = TruckerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    

@@ -7,7 +7,6 @@
   <field Id="&quot;fabb0bcd-9366-4118-9e71-675d06b2ac2c&quot;" FieldsDataType="&quot;Text&quot;" FieldName="&quot;ChangeSetOp&quot;" PMPropertyPath="&quot;ChangeSetOp&quot;" ListPropertyPath="&quot;ChangeSetOp&quot;" FullFieldLable="&quot;ChangeSetOp&quot;" DefaultText="&quot;ChangeSetOp&quot;" FullLocalDefaultText="&quot;ChangeSetOp&quot;" ListFieldLable="&quot;ChangeOpListLable&quot;" ListLableDefaultText="&quot;ChangeSetOp&quot;" ListLocalDefaultText="&quot;ChangeSetOp&quot;" ObjectTableName="&quot;PackageConnectedPackage&quot;" ValidForQuerySection1="&quot;PackageConnectedPackage&quot;" HasDataBaseField="false" NoMetaDataField="true" HasPMField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;PackageConnectedPackage&quot;" DefaultText="&quot;Package Connected Package&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

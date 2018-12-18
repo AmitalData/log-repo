@@ -709,15 +709,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable TwoFactorAuthenticationDeviceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TwoFactorAuthenticationDevice" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode TwoFactorAuthenticationDeviceTextCode_TwoFactorAuthenticationDevice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TwoFactorAuthenticationDevice", DefaultText = "Two Factor Authentication Device",LocalDefaultText = null, ObjectTableId = TwoFactorAuthenticationDeviceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

@@ -340,15 +340,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable SATInvoiceStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SATInvoiceStatus" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode SATInvoiceStatusTextCode_SATInvoiceStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SATInvoiceStatus", DefaultText = "SAT Invoice Status",LocalDefaultText = null, ObjectTableId = SATInvoiceStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

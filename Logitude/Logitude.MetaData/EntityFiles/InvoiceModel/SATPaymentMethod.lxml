@@ -30,7 +30,6 @@
     <Record Code="&quot;08&quot;" SearchFields="&quot;08,food coupon&quot;" LocalName="&quot;Vales de despensa&quot;" Name="&quot;Food Coupon&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;SATPaymentMethod&quot;" DefaultText="&quot;SAT Payment Method&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

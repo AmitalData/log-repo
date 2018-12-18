@@ -11,7 +11,6 @@
   <field Id="&quot;78e41580-c366-40a8-8306-ea51cfe443d0&quot;" FieldsDataType="&quot;Text&quot;" FieldName="&quot;ChangeSetOp&quot;" PMPropertyPath="&quot;ChangeSetOp&quot;" ListPropertyPath="&quot;ChangeSetOp&quot;" FullFieldLable="&quot;ChangeSetOp&quot;" DefaultText="&quot;ChangeSetOp&quot;" FullLocalDefaultText="&quot;ChangeSetOp&quot;" ListFieldLable="&quot;ChangeOpListLable&quot;" ListLableDefaultText="&quot;ChangeSetOp&quot;" ListLocalDefaultText="&quot;ChangeSetOp&quot;" ObjectTableName="&quot;AWBOCI&quot;" HasDataBaseField="false" NoMetaDataField="true" HasPMField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AWBOCI&quot;" DefaultText="&quot;AWB OCI&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

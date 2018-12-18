@@ -182,9 +182,7 @@
     <EventType Code="&quot;AWBF&quot;" ObjectTableName="&quot;Airline&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;AWB Stack Returned By Shipment&quot;" EnglishName="&quot;AWB Stack Returned By Shipment&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Airline&quot;" DefaultText="&quot;Airline&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;Airline.Tip.General&quot;" DefaultText="&quot; - Airlines are listed  in this pane(%L) - To add a new Airline to your company press the 'new' button(%L)- To import an Airline to your company press the 'add' button(%L)&quot;" TextCodeTypeCode="&quot;TIP&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Airline.HasCheckDigitHelpText&quot;" DefaultText="&quot;&quot;" TextCodeTypeCode="&quot;H&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;CHAMP&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="true" IsCoreFeature="false" FeatureTextCodeCode="&quot;Airline.Features.Champ&quot;" FeatureDefaultText="&quot;Champ&quot;" />

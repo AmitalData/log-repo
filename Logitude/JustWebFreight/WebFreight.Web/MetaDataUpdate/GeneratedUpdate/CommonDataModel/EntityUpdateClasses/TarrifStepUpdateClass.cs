@@ -437,15 +437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable TarrifStepObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TarrifStep" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode TarrifStepTextCode_TarrifStep = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifStep", DefaultText = "Tariff Step",LocalDefaultText = null, ObjectTableId = TarrifStepObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

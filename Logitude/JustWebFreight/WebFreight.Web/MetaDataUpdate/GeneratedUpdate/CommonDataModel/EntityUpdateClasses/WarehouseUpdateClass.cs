@@ -2679,8 +2679,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable WarehouseObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Warehouse" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode WarehouseTextCode_Warehouse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse", DefaultText = "Warehouse",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode WarehouseTextCode_WarehouseOCompanyLocalName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.CompanyLocalName", DefaultText = "Local Name",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode WarehouseTextCode_WarehouseOGeneralData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Warehouse.O.GeneralData", DefaultText = "General Data",LocalDefaultText = null, ObjectTableId = WarehouseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);

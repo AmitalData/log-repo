@@ -12,7 +12,6 @@
     <Record SearchFields="&quot;TES,TES&quot;" Code="&quot;TES&quot;" Name="&quot;TES&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;VolumeUnit&quot;" DefaultText="&quot;Volume Unit&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

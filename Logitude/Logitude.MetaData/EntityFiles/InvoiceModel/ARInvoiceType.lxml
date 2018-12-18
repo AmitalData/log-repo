@@ -14,7 +14,6 @@
     <Record SearchFields="&quot;TX,Tax Invoice&quot;" Code="&quot;TX&quot;" Name="&quot;Tax Invoice&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ARInvoiceType&quot;" DefaultText="&quot;A/R Invoice Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

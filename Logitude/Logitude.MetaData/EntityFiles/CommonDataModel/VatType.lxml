@@ -61,7 +61,6 @@
     <EventType Code="&quot;VTPD&quot;" ObjectTableName="&quot;VatType&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;VAT Percentage edited&quot;" EnglishName="&quot;VAT Percentage edited&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;VatType&quot;" DefaultText="&quot;VAT Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

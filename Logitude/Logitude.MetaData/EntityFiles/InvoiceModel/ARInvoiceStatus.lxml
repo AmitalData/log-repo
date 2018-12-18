@@ -17,7 +17,6 @@
     <Record SearchFields="&quot;VD,Void&quot;" Code="&quot;VD&quot;" Name="&quot;Void&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ARInvoiceStatus&quot;" DefaultText="&quot;A/R Invoice Status&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

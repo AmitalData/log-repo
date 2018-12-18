@@ -325,15 +325,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable TemplateFormatObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TemplateFormat" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode TemplateFormatTextCode_TemplateFormat = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TemplateFormat", DefaultText = "Template Format",LocalDefaultText = null, ObjectTableId = TemplateFormatObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

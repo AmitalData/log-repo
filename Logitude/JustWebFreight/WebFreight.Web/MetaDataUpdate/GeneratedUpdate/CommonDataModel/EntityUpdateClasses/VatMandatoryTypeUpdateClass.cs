@@ -323,15 +323,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable VatMandatoryTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "VatMandatoryType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode VatMandatoryTypeTextCode_VatMandatoryType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "VatMandatoryType", DefaultText = "VAT Mandatory Type",LocalDefaultText = null, ObjectTableId = VatMandatoryTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

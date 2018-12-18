@@ -272,15 +272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable DirectionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Direction" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode DirectionTextCode_Direction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Direction", DefaultText = "Direction",LocalDefaultText = null, ObjectTableId = DirectionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

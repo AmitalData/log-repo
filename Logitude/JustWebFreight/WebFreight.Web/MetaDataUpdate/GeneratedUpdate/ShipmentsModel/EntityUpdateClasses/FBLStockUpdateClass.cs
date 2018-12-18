@@ -361,8 +361,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode FBLStockTextCode_FBLStockORemovingStock = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock.O.RemovingStock", DefaultText = "Removing Stock",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode FBLStockTextCode_FBLStock = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FBLStock", DefaultText = "FBL Stock",LocalDefaultText = null, ObjectTableId = FBLStockObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
    
 	    
 }

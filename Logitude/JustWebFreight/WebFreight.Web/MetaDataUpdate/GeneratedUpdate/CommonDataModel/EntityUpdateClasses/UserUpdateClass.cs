@@ -2662,10 +2662,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable UserObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "User" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode UserTextCode_UserRemarkHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.RemarkHelpText", DefaultText = "",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode UserTextCode_UserCHRemarkListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.CH.RemarkListLable", DefaultText = " ",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode UserTextCode_UserMYouMustChangeCurrentPassword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.M.YouMustChangeCurrentPassword", DefaultText = "You must change the current password!",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode UserTextCode_UserMPasswordMustntContainUserName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.M.PasswordMustntContainUserName", DefaultText = "Password mustn't contain user name!",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -2711,8 +2707,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  		   TextCode UserTextCode_UserOResetUserPassword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.O.ResetUserPassword", DefaultText = "Reset User password",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode UserTextCode_UserOReTypePassword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.O.ReTypePassword", DefaultText = "Re-type Password",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode UserTextCode_User = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User", DefaultText = "User",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
  		   TextCode UserTextCode_UserMAnonymize = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "User.M.Anonymize", DefaultText = "Anonymizing this user will result in erasing all personal data including the user's mail. in addition to erasing his info from operational data",LocalDefaultText = null, ObjectTableId = UserObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

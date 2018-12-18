@@ -8,7 +8,6 @@
     <Record Code="&quot;F&quot;" Name="&quot;From&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;TarrifFromToType&quot;" DefaultText="&quot;Tariff From To Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

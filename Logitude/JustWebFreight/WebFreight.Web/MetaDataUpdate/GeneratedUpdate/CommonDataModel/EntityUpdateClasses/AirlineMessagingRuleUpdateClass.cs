@@ -574,15 +574,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AirlineMessagingRuleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AirlineMessagingRule" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AirlineMessagingRuleTextCode_AirlineMessagingRule = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineMessagingRule", DefaultText = "Airline Messaging Rule",LocalDefaultText = null, ObjectTableId = AirlineMessagingRuleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

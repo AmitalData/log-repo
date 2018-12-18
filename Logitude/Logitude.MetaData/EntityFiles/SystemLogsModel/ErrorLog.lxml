@@ -57,8 +57,6 @@
   <Tab Code="&quot;ELEV&quot;" ObjectTableName="&quot;ErrorLog&quot;" IndexOrder="2" TextCode="&quot;ErrorLog.TH.Events&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.Events.EventsControl&quot;" TabName="&quot;Events&quot;" IsSpellChecked="false" IsPackagable="False" FeatureCode="&quot;EVENTS&quot;" FeatureTextCodeCode="&quot;ErrorLogObjectTable.Features.Events&quot;" FeatureDefaultText="&quot;Events&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ErrorLog&quot;" DefaultText="&quot;Error Log&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;ErrorLog.CH.LogDateTimeListLable&quot;" DefaultText="&quot;Log DateTime&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;ALLERRORLOGS&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="true" IsCoreFeature="false" FeatureTextCodeCode="&quot;ErrorLogObjectTable.Features.AllErrorLog&quot;" FeatureDefaultText="&quot;All Error Log&quot;" />

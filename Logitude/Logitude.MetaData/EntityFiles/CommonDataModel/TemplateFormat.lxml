@@ -9,7 +9,6 @@
     <Record SearchFields="&quot;p,print&quot;" Code="&quot;P&quot;" Name="&quot;Print&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;TemplateFormat&quot;" DefaultText="&quot;Template Format&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
