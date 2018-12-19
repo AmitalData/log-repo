@@ -376,3 +376,5 @@ __pycache__/
 *.7z
 /Logitude/JustWebFreight/WebFreight.Web/582_JustWebFreightappSettings.config
 /Logitude/JustWebFreight/WebFreight.Web/582_JustWebFreightConnectionStrings.config
+/Logitude/JustWebFreight/WebFreight.Web/_JustWebFreightappSettings.config
+/Logitude/JustWebFreight/WebFreight.Web/_JustWebFreightConnectionStrings.config

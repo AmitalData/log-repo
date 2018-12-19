@@ -85,7 +85,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 if (string.IsNullOrWhiteSpace(declarationCargoSplitID))
                 {
-                    if (customResponse != null && customResponse.CargoSplitRequestResponse != null && customResponse.CargoSplitRequestResponse.CargoIdentifier.Count() > 0)
+                    if (customResponse != null && customResponse.CargoSplitRequestResponse != null && customResponse.CargoSplitRequestResponse.CargoIdentifier != null && customResponse.CargoSplitRequestResponse.CargoIdentifier.Count() > 0)
                     {
                         declarationCargoSplitID = myDeclarationCargoSplitQueryService.GetIdByCargoIdentifiers(customResponse.CargoSplitRequestResponse.CargoIdentifier[0].cargoIdentifierKey1, customResponse.CargoSplitRequestResponse.CargoIdentifier[0].cargoIdentifierKey2, customResponse.CargoSplitRequestResponse.CargoIdentifier[0].cargoIdentifierKey3, customResponse.CargoSplitRequestResponse.CargoIdentifier[0].cargoIdentifierType, requestParams.Tenant);
                     }
