@@ -64281,6 +64281,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.NoVendorTaxWithholdingPercentage", DefaultText = "There is no tax withholding definitions for this vendor, the default tax withholding percentage will be taken from system defaults", LocalDefaultText = "לא מוגדר ללקוח אחוז ניכוי מס במקור, אחוז ניכוי ברירת מחדל ילקח מהגדרות מערכת", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.FullAccountingCashBookCheck", DefaultText = "Cashbook amount is lower than payment amount", LocalDefaultText = "היתרה בקופה הינה קטנה מסכום הוראת התשלום", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.ValueDateCantBeFutureDate", LocalDefaultText = "תאריך ערך לא יכול להיות תאריך עתידי", DefaultText = "Value date can't be future date", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CheckPaymentChequesBeforeCancel", LocalDefaultText = "לא ניתן לבטל את התשלום לספק, משום שהתשלום בוצע ע”י המחאה שנפרעה כבר, יש לבטל את ההתאמה החיצונית ע”מ לעדכן את הסטטוס של ההמחאה", DefaultText = "The payment cheque that connected to the APPayment is redeemed, you should cancel the external reconciliation in order to update the status of the payment cheque", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region 
