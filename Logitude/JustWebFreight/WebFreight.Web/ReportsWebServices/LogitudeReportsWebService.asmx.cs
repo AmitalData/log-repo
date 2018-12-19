@@ -12045,11 +12045,11 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.CreateDate = Item.CreateDateTime;
                     shipment.PickupFromDate = myLastPickup != null ? myLastPickup.ATD : null;
                     shipment.GroupageDate = Item.CutoffDate;
-                    shipment.DateonboardOrigin = Item.MainCarriageATD != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageATD) : (Item.MainCarriageETD != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageETD) + " (estimated)" : "");
-                    shipment.Dateofarrivaltoport = Item.MainCarriageATA != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageATA) : (Item.MainCarriageETA != null ? String.Format("{0:dd.MMM.yy}", Item.MainCarriageETA) + " (estimated)" : "");
+                    shipment.DateonboardOrigin = Item.MainCarriageATD != null ? Item.MainCarriageATD :  Item.MainCarriageETD;
+                    shipment.Dateofarrivaltoport = Item.MainCarriageATA != null ? Item.MainCarriageATA : Item.MainCarriageETA;
                     shipment.ImportDeclarationDate = Item.DeclarationDate;
                     shipment.CustomsClearanceDate = Item.CustomsClearanceDate;
-                    shipment.DeliveryDate = myLastDelivery != null ? (myLastDelivery.ATA != null ? String.Format("{0:dd.MMM.yy}", myLastDelivery.ATA) : (myLastDelivery.ETA != null ? String.Format("{0:dd.MMM.yy}", myLastDelivery.ETA) + " (Estimated)" : "")) : "";
+                    shipment.DeliveryDate = myLastDelivery != null ? (myLastDelivery.ATA != null ? myLastDelivery.ATA : myLastDelivery.ETA):null;
                     shipment.ClosedDate = Item.OperationalCloseDate;
                     shipment.IncludeCustoms = Item.IncludesCustoms;
                     shipment.ImportDeclarationNumber = Item.DeclarationNumber;
