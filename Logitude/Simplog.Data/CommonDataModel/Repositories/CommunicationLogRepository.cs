@@ -29,6 +29,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public CommunicationLog GetSingleCommunicationLog(string id,int tenant)
         {
+            var q = (from a in context.CommunicationLogs.Include("CommunicationLogType").Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("ObjectTable").Include("InternalDocument").Include("ExternalDocument").Include("Document").Include("CurrentTenant")
+                     where a.Id == id
+                     select a);
+            var log= q.FirstOrDefault();
+            return log;
+
             return (from a in context.CommunicationLogs.Include("CommunicationLogType").Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("ObjectTable").Include("InternalDocument").Include("ExternalDocument").Include("Document").Include("CurrentTenant")
                     where a.Id == id
                     select a).FirstOrDefault();
