@@ -51,9 +51,6 @@
     <EventType Code="&quot;CRST&quot;" ObjectTableName="&quot;State&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;State&quot;" DefaultText="&quot;State&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
-    <TextCode Code="&quot;State.RemarkHelpText&quot;" DefaultText="&quot;&quot;" TextCodeTypeCode="&quot;H&quot;" IsSpellChecked="true" />
-    <TextCode Code="&quot;State.CH.RemarkListLable&quot;" DefaultText="&quot;Remarks&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

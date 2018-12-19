@@ -11,7 +11,6 @@
     <Record Code="&quot;UFA&quot;" Name="&quot;Unique for all countries&quot;" SearchFields="&quot;UFA,Unique for all countries&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;VatUniqueType&quot;" DefaultText="&quot;VAT Unique Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

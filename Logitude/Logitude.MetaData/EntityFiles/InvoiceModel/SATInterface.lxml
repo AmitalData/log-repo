@@ -11,7 +11,6 @@
     <Record Code="&quot;PROF33&quot;" SearchFields="&quot;prof33,profact 3.3&quot;" Name="&quot;Profact 3.3&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;SATInterface&quot;" DefaultText="&quot;SAT Interface&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

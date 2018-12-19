@@ -464,6 +464,13 @@ namespace MeatadataGeneratorTool.Helpers
                 Query.IsSpellChecked = GetAttributeBoolValue(fieldNode.Attributes["IsSpellChecked"]);
             }
 
+            if (fieldNode.Attributes["Perspective"] != null)
+            {
+                Query.Perspective = GetAttributeStringValue(fieldNode.Attributes["Perspective"]);
+            }
+
+           
+
             foreach (XmlNode fNode in fieldNode.ChildNodes)
             {
                 if (fNode.Name == "QueryColumns")

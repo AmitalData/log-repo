@@ -33,8 +33,6 @@
     <EventType Code="&quot;CRRG&quot;" ObjectTableName="&quot;Region&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Region&quot;" DefaultText="&quot;Region&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Region.Q.AllRegions&quot;" DefaultText="&quot;All Regions&quot;" TextCodeTypeCode="&quot;Q&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -159,7 +159,7 @@ namespace Logitude.Update
             generalLabel = null;
             timer1.Start();
 
-            if (name == "accounting")
+            if (name == "accounting" || name == "UpdateTenantZeroNew")
                 UpdateZipFiles();
 
             stopWatch.Stop();

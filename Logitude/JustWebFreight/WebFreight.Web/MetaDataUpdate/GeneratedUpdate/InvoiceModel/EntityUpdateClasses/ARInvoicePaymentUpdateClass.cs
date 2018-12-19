@@ -641,17 +641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ARInvoicePaymentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARInvoicePayment" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ARInvoicePaymentTextCode_ARInvoicePaymentCHARInvoiceId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoicePayment.CH.ARInvoiceId", DefaultText = "AR Invoice Id",LocalDefaultText = null, ObjectTableId = ARInvoicePaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ARInvoicePaymentTextCode_ARInvoicePayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoicePayment", DefaultText = "Invoice Payment",LocalDefaultText = null, ObjectTableId = ARInvoicePaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

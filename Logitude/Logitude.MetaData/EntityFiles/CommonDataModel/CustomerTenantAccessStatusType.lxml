@@ -13,7 +13,6 @@
     <Record Code="&quot;W&quot;" SearchFields="&quot;W,Waiting For Approval,Waiting For Approval&quot;" EnglishName="&quot;Waiting For Approval&quot;" LocalName="&quot;Waiting For Approval&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CustomerTenantAccessStatusType&quot;" DefaultText="&quot;Customer Tenant Access Status Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

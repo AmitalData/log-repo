@@ -325,15 +325,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable APInvoiceTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APInvoiceType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode APInvoiceTypeTextCode_APInvoiceType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoiceType", DefaultText = "A/P Invoice Type",LocalDefaultText = null, ObjectTableId = APInvoiceTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

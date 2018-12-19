@@ -60,6 +60,10 @@ namespace Logitude.Infrastructure.Data.EntityMapping
             this.Property(t => t.IsConsolidatorShared).HasColumnName("IsConsolidatorShared");
 
             this.Property(t => t.IsReleasingAgentShared).HasColumnName("IsReleasingAgentShared");
+
+            this.Property(t => t.IsShipperShared).HasColumnName("IsShipperShared");
+
+            this.Property(t => t.IsConsigneeShared).HasColumnName("IsConsigneeShared");
         }
     }
 }

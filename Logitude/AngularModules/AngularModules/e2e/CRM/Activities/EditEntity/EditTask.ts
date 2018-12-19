@@ -15,6 +15,13 @@ export class EditTasks {
 
         this.EditTaskGeneralTab(taskNo);
         this.Helper.WaitByIdAndClick('Activity-SaveClose');
+        this.Helper.WaitBusyIndicator();
+
+
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.invisibilityOf(element(by.id('Activity.B.MarkAsComplete'))), 100000).then(a => {
+        });
+
 
     }
 

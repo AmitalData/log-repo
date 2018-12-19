@@ -457,6 +457,52 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isShipperShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsShipperShared  
+	   {
+	    
+	     get
+		{
+		   return isShipperShared;
+		 }
+		 set
+		 {
+		   if(isShipperShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsShipperShared",OldValue=isShipperShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isShipperShared=value;
+		   }
+			
+		 }
+	   }
+	  private bool isConsigneeShared ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsConsigneeShared  
+	   {
+	    
+	     get
+		{
+		   return isConsigneeShared;
+		 }
+		 set
+		 {
+		   if(isConsigneeShared != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsConsigneeShared",OldValue=isConsigneeShared,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isConsigneeShared=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -12,7 +12,6 @@
     <Record Code="&quot;W&quot;" IndexOrder="3" SearchFields="&quot;W,Warm&quot;" Name="&quot;Warm&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;QuoteRating&quot;" DefaultText="&quot;Quote Rating&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

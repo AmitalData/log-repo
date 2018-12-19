@@ -13,12 +13,18 @@ export class EditPhoneCalls {
 
         this.EditPhoneCallGeneralTab(phoneCallNo);
         this.Helper.WaitByIdAndClick('Activity-SaveClose');
+        this.Helper.WaitBusyIndicator();
+
+
+        var EC = protractor.ExpectedConditions;
+        browser.wait(EC.invisibilityOf(element(by.id('Activity.B.MarkAsComplete'))), 100000).then(a => {
+        });
 
     }
 
 
     EditPhoneCallGeneralTab(phoneCallDesc: string) {
-        this.Helper.WaitByIdAndFill('Activity_CustomerId', 'Edit Ta');
+        this.Helper.WaitByIdAndFill('Activity_CustomerId', 'razan j');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndFill('Activity_CallWithId', 'razan');
@@ -29,8 +35,8 @@ export class EditPhoneCalls {
         this.Helper.WaitByIdAndFill('Activity_Description', 'Edit Description for ' + phoneCallDesc);// test random number randomWholeNum
 
 
-        this.Helper.WaitByIdAndFill('Activity_OwnerId', 'ra');
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
+        // this.Helper.WaitByIdAndFill('Activity_OwnerId', 'ra');
+        // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
 
 
     }

@@ -143,8 +143,6 @@
     <EventType Code="&quot;CRAG&quot;" ObjectTableName="&quot;Agent&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AgentDescription&quot;" DefaultText="&quot;this is the description for Agent.&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Agent&quot;" DefaultText="&quot;Agent&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;NEWAGENT&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Agent.Features.NewAgent&quot;" FeatureDefaultText="&quot;New Agent&quot;" />

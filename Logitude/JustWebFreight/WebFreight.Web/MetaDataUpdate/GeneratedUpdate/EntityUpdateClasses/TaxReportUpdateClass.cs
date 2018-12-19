@@ -1945,7 +1945,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup TaxReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "97c2", Name = " Query Group" }, queryGroupRepository);
 						QueryGroup TaxReportQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3b44", Name = " Query Group" }, queryGroupRepository);
@@ -2000,10 +2000,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature TaxReportDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxReport.Tab.Details", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReportFeatures.TRDT", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRDT",HtmlComponentName = "TaxReportDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "TaxReport.Tab.Details" && d.ObjectTableId == TaxReportObjectTable.Id).FirstOrDefault().Id, ControlPath = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", ObjectTableId = TaxReportObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TaxReport.TH.Details" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TRDT",HtmlComponentName = "TaxReportDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", FeatureId = TaxReportDetailsFeature_TH0.Id, ControlPath = "./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent", ObjectTableId = TaxReportObjectTable.Id, TabNameTextCodeId = TaxReportDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2097,7 +2097,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable TaxReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxReport" && d.Tenant == 0).FirstOrDefault(); 			   Feature TaxReportFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRDL", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Download", NameTextCodeDefaultText = "Download", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
              			   Feature TaxReportFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRCN", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReport.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               

@@ -11,7 +11,6 @@
     <Record Code="&quot;PP&quot;" SearchFields="&quot;PP,Pay Pal&quot;" Name="&quot;Pay Pal&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;PaymentMethod&quot;" DefaultText="&quot;Payment Method&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -7,6 +7,8 @@ import { NewPhoneCall } from './NewEntity/NewPhoneCall';
 import { EditPhoneCalls } from './EditEntity/EditPhoneCall';
 
 import { NewAppointment } from './NewEntity/NewAppointment';
+import { EditAppointments } from './EditEntity/EditAppointment';
+
 import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
 export class ActivitiesModule {
@@ -20,6 +22,7 @@ export class ActivitiesModule {
     private editPhoneCall: EditPhoneCalls;
 
     private addAppointment: NewAppointment;
+    private editAppointment: EditAppointments;
 
     constructor() {
         this.Helper = new FieldsHelper();
@@ -31,25 +34,25 @@ export class ActivitiesModule {
         this.editPhoneCall = new EditPhoneCalls();
 
         this.addAppointment = new NewAppointment();
+        this.editAppointment = new EditAppointments();
 
     }
 
     public CreateActivity() {
         var activityNo = this.Generator.RandomNum();
 
-        // this.addTask.CreateNewTask('Task # ' + activityNo);
-        // this.QuickSearchBox('Activity_Search', 'Task # ' + activityNo);
-        // this.editTask.EditTask('Task # ' + activityNo);
+        this.addTask.CreateNewTask('Task # ' + activityNo);
+        this.QuickSearchBox('Activity_Search', 'Task # ' + activityNo);
+        this.editTask.EditTask('Task # ' + activityNo);
 
-        // this.addPhoneCall.CreateNewPhoneCall('Phone Call # ' + activityNo);
-        // this.QuickSearchBox('Activity_Search', 'Phone Call # ' + activityNo);
-        // this.editPhoneCall.EditPhoneCall('Phone Call # ' + activityNo);
+        this.addPhoneCall.CreateNewPhoneCall('Phone Call # ' + activityNo);
+        this.QuickSearchBox('Activity_Search', 'Phone Call # ' + activityNo);
+        this.editPhoneCall.EditPhoneCall('Phone Call # ' + activityNo);
 
-
-        // browser.driver.sleep(6000);
         this.addAppointment.CreateNewAppointment('Appointment # ' + activityNo);
         this.QuickSearchBox('Activity_Search', 'Appointment # ' + activityNo);
-        
+        this.editAppointment.EditAppointment('Appointment # ' + activityNo);
+        // browser.driver.sleep(6000);
 
     }
     QuickSearchBox(searchFeildId: string, searchByRef: string) {

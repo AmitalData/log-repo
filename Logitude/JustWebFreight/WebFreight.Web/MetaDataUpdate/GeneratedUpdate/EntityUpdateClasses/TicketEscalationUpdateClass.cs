@@ -150,9 +150,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
+					  						DefaultText =  @"Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  @"Create Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -198,7 +198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TicketId",
-					  						DefaultText =  "TicketId",
+					  						DefaultText =  @"TicketId",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -243,7 +243,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LineNumber",
-					  						DefaultText =  "Line Number",
+					  						DefaultText =  @"Line Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -288,9 +288,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EscalationFor",
-					  						DefaultText =  "For",
+					  						DefaultText =  @"For",
 					  						ListFieldLable =  "EscalationForListLable",
-					  						ListLableDefaultText =  "For",
+					  						ListLableDefaultText =  @"For",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -335,9 +335,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Recepients",
-					  						DefaultText =  "Recepients",
+					  						DefaultText =  @"Recepients",
 					  						ListFieldLable =  "RecepientsListLable",
-					  						ListLableDefaultText =  "Recepients",
+					  						ListLableDefaultText =  @"Recepients",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -382,7 +382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClose",
-					  						DefaultText =  "Close",
+					  						DefaultText =  @"Close",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -427,9 +427,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsSLAViolated",
-					  						DefaultText =  "SLA Vilolated",
+					  						DefaultText =  @"SLA Vilolated",
 					  						ListFieldLable =  "IsSLAViolatedListLable",
-					  						ListLableDefaultText =  "Violated",
+					  						ListLableDefaultText =  @"Violated",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -474,9 +474,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DueDate",
-					  						DefaultText =  "Due Date",
+					  						DefaultText =  @"Due Date",
 					  						ListFieldLable =  "DueDateListLable",
-					  						ListLableDefaultText =  "Due Date",
+					  						ListLableDefaultText =  @"Due Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -521,9 +521,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CloseDate",
-					  						DefaultText =  "Close Date",
+					  						DefaultText =  @"Close Date",
 					  						ListFieldLable =  "CloseDateListLable",
-					  						ListLableDefaultText =  "Close Date",
+					  						ListLableDefaultText =  @"Close Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -568,9 +568,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  "Update Date",
+					  						DefaultText =  @"Update Date",
 					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  "Update Date",
+					  						ListLableDefaultText =  @"Update Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -615,9 +615,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EscalationForName",
-					  						DefaultText =  "Escalation",
+					  						DefaultText =  @"Escalation",
 					  						ListFieldLable =  "EscalationForNameListLable",
-					  						ListLableDefaultText =  "Escalation",
+					  						ListLableDefaultText =  @"Escalation",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -633,7 +633,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup TicketEscalationQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "TEQG", Name = "TicketEscalation" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -734,7 +734,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

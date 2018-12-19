@@ -84,7 +84,14 @@ using Simplog.Data.CommonDataModel;
 					   				   }
 				   
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  					
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  			  
+				   if(MyEntityPM.GLAccountId != null)
+				   {
+					   GLAccountQueryService GLAccountService2 = new GLAccountQueryService(Tenant);
+					   					   temp.GLAccount = GLAccountService2.GLAccountCustomDataMapping(MyEntityPM.GLAccountId,Tenant); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -155,7 +162,18 @@ using Simplog.Data.CommonDataModel;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 						temp.Code = MyEntity.PartnerCode;
-					}					   
+					}					GLAccountQueryService GLAccountGLAccountService = new GLAccountQueryService(Tenant);
+					if(MyEntity.GLAccount != null)
+					{
+						var myGLAccountPM = GLAccountGLAccountService.GLAccountCustomDataMappingAndValidatin(MyEntity.GLAccount,Tenant);
+												if(myGLAccountPM != null)
+						{
+							temp.GLAccountId = myGLAccountPM.Id;
+						}
+						 
+					}
+			
+										   
 					   return temp;
 		    }
             catch (Exception ex)

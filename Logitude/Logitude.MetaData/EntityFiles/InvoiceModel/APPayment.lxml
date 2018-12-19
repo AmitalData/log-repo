@@ -197,9 +197,6 @@
     <TextCode Code="&quot;APPayment.M.FullAccountingCashBookCheck&quot;" DefaultText="&quot;Cashbook amount is lower than payment amount&quot;" LocalDefaultText="&quot;היתרה בקופה הינה קטנה מסכום הוראת התשלום&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APPayment.M.NoVendorTaxWithholdingPercentage&quot;" DefaultText="&quot;There is no tax withholding definitions for this vendor, the default tax withholding percentage will be taken from system defaults&quot;" LocalDefaultText="&quot;לא מוגדר ללקוח אחוז ניכוי מס במקור, אחוז ניכוי ברירת מחדל ילקח מהגדרות מערכת&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APPayment.M.SearchByMsg&quot;" DefaultText="&quot;Search by Invoice #/ Vendor&quot;" LocalDefaultText="&quot;חפש לפי חשבונית\ספק&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;APPayment.CH.OtherPayments&quot;" DefaultText="&quot;Other Payments&quot;" LocalDefaultText="&quot;קבלות אחרות&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;APPayment.CH.AmountToPay&quot;" DefaultText="&quot;Amount To Pay&quot;" LocalDefaultText="&quot;סכום שהותאם&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;APPayment.CH.ShipmentNo&quot;" DefaultText="&quot;Shipment #&quot;" LocalDefaultText="&quot;משלוח&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APPayment.M.ValueDateCantBeFutureDate&quot;" DefaultText="&quot;Value date can't be future date&quot;" LocalDefaultText="&quot;תאריך ערך לא יכול להיות תאריך עתידי&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APPayment.M.PaymentInvoicesHaveErrors&quot;" DefaultText="&quot;Payment Invoices have errors&quot;" LocalDefaultText="&quot;חשבוניות ספק עם שגיאות&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APPayment.S.Details.CreditCard&quot;" DefaultText="&quot;Credit Card&quot;" LocalDefaultText="&quot;כרטיס אשראי&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
@@ -228,7 +225,6 @@
     <TextCode Code="&quot;APPayment.M.AmountPaidNotLess&quot;" DefaultText="&quot;Amount Paid can't be less than&quot;" LocalDefaultText="&quot;סכום לתשלום לא יכול להיות קטן מ-&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APPayment.M.CantPayMinusValue&quot;" DefaultText="&quot;Can't pay minus value&quot;" LocalDefaultText="&quot;לא ניתן לשלם סכום במינוס&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APPayment.M.AmountPaidLessOrEqual&quot;" DefaultText="&quot;Amount Paid must be less than or equals to&quot;" LocalDefaultText="&quot;סכום לתשלום חייב להיות שווה או פחות מ-&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;APPayment&quot;" DefaultText="&quot;A/P Payment&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;DOCSOUT&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;APPayment.Features.DocsOut&quot;" FeatureDefaultText="&quot;Docs Out&quot;" />

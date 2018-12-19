@@ -689,15 +689,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ComputingPartnerCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ComputingPartnerCode" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ComputingPartnerCodeTextCode_ComputingPartnerCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartnerCode", DefaultText = "Computing Partner Code",LocalDefaultText = null, ObjectTableId = ComputingPartnerCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

@@ -324,15 +324,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ManifestStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ManifestStatus" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ManifestStatusTextCode_ManifestStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ManifestStatus", DefaultText = "Manifest Status",LocalDefaultText = null, ObjectTableId = ManifestStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

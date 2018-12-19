@@ -376,15 +376,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ChargeTypeAccountingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChargeTypeAccounting" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ChargeTypeAccountingTextCode_ChargeTypeAccounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargeTypeAccounting", DefaultText = "Charge Type Accounting",LocalDefaultText = null, ObjectTableId = ChargeTypeAccountingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

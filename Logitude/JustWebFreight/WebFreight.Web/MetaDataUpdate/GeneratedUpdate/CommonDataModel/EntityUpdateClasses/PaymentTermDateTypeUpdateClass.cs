@@ -332,15 +332,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable PaymentTermDateTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentTermDateType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode PaymentTermDateTypeTextCode_PaymentTermDateType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PaymentTermDateType", DefaultText = "Payment Term Date Type",LocalDefaultText = null, ObjectTableId = PaymentTermDateTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

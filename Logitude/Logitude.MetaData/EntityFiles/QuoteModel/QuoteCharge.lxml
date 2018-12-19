@@ -93,7 +93,6 @@
   <field Id="&quot;5a4bc9b1-0036-4962-be8f-508a546f724d&quot;" FieldName="&quot;IsBackToBack&quot;" FieldsDataType="&quot;Boolean&quot;" PMPropertyPath="&quot;IsBackToBack&quot;" ListPropertyPath="&quot;IsBackToBack&quot;" FullFieldLable="&quot;IsBackToBack&quot;" DefaultText="&quot;IsBackToBack&quot;" FullLocalDefaultText="&quot;IsBackToBack&quot;" ListFieldLable="&quot;IsBackToBackListLable&quot;" ListLableDefaultText="&quot;IsBackToBack&quot;" ListLocalDefaultText="&quot;IsBackToBack&quot;" ObjectTableName="&quot;QuoteCharge&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;QuoteCharge&quot;" DefaultText="&quot;Quote Charge&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;QuoteCharge.M.ExchangeRateIsRequired&quot;" DefaultText="&quot;The exchange rate is required&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />

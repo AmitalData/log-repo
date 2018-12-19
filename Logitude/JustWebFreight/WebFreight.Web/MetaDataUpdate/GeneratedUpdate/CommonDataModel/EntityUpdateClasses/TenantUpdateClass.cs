@@ -6117,12 +6117,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature TenantEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = TenantObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tenant.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TNGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == TenantObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TenantObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Tenant.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TNGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TenantObjectTable.Id, TabNameTextCodeId = TenantGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TNEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == TenantObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.EventsControl", ObjectTableId = TenantObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Tenant.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TNEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TenantEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.EventsControl", ObjectTableId = TenantObjectTable.Id, TabNameTextCodeId = TenantEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -6152,23 +6152,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable TenantObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Tenant" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode TenantTextCode_TenantPrepaidCollectHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.PrepaidCollectHelpText", DefaultText = "Default payment method for freight and other charges, in direct and consolidation (Master) shipments, for export and import.\nP-Prepaid: by sender at origin.\nC-Collect: by receiver at destination.",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode TenantTextCode_TenantDefaultUnitsHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.DefaultUnitsHelpText", DefaultText = "The default unit of measurement for the weight, volume and dimension entries.",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode TenantTextCode_TenantLogoHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.LogoHelpText", DefaultText = "Your company logo will appear in all outgoing documents and messages.\nTo upload it: Click the Upload button.",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode TenantTextCode_TenantOPrepaidCollect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.O.PrepaidCollect", DefaultText = "Prepaid | Collect",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TenantTextCode_TenantODefaultUnits = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.O.DefaultUnits", DefaultText = "Default Units",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TenantTextCode_TenantOOthers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.O.Others", DefaultText = "Others",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode TenantTextCode_Tenant = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant", DefaultText = "Tenant",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode TenantTextCode_TenantQAllTenants = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.Q.AllTenants", DefaultText = "All Tenants",LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode TenantTextCode_TenantMustHavePrimaryContactHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tenant.Must Have Primary ContactHelpText", DefaultText = null,LocalDefaultText = null, ObjectTableId = TenantObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

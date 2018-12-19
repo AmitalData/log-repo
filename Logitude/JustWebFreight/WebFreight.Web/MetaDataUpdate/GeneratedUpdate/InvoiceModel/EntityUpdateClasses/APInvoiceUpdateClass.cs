@@ -4417,12 +4417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   TextCode APInvoiceTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.ErrorInTransferInvoices", DefaultText = @"Error In Transfer Invoices",LocalDefaultText = "שגיאה בהעברת חשבוניות", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature APInvoiceFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ERRORINTRANSFERINVOICES", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "APInvoice.Features.ErrorInTransferInvoices", NameTextCodeDefaultText = "Error In Transfer Invoices", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-            TextCode APInvoiceTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.ErrorInTransfer", DefaultText = @"Error In Transfer", LocalDefaultText = null, ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-            Feature APInvoiceFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "APInvoice.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
-
-
-            TextCodeRepository.SubmitChanges();
+	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
@@ -5110,14 +5105,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		   		   //--------------> Additional TextCodes <--------------\\
 
  		   ObjectTable APInvoiceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APInvoice" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode APInvoiceTextCode_APInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice", DefaultText = "A/P Invoice",LocalDefaultText = null, ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode APInvoiceTextCode_APInvoiceCHAPInvoiceTypeNameListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.CH.APInvoiceTypeNameListLable", DefaultText = "Type",LocalDefaultText = null, ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode APInvoiceTextCode_APInvoiceCHOtherPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.CH.OtherPayments", DefaultText = "Other Payments",LocalDefaultText = @"קבלות אחרות", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode APInvoiceTextCode_APInvoiceCHAmountToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.CH.AmountToPay", DefaultText = "Amount To Pay",LocalDefaultText = @"סכום לתשלום", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APInvoiceTextCode_APInvoiceSDetailsDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.S.Details.Details", DefaultText = "Details",LocalDefaultText = @"פרטים", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

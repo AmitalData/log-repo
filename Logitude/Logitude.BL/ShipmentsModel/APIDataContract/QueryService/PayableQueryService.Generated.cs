@@ -61,8 +61,7 @@ using Simplog.Data.ShipmentsModel;
 					   				   }
 				   
 				   temp.Quantity = item.Quantity;
-				   temp.UnitPrice = item.UnitPrice;
-				   temp.OpenAmount = item.OpenAmount;			  
+				   temp.UnitPrice = item.UnitPrice;			  
 				   if(item.CurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService2 = new CurrencyQueryService(Tenant);
@@ -77,7 +76,8 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.PrepaidCollect = PrepaidCollectService3.GetPrepaidCollectById(item.PrepaidCollectId,Tenant); 
 			       
 					   				   }
-				   					
+				   
+				   temp.Amount = item.ExpectedAmount;					
 					MyList.Add(temp);
 				}
 					
@@ -135,8 +135,7 @@ using Simplog.Data.ShipmentsModel;
 			
 					
 					temp.Quantity = item.Quantity;
-					temp.UnitPrice = item.UnitPrice;
-					temp.OpenAmount = item.OpenAmount;					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
+					temp.UnitPrice = item.UnitPrice;					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.Currency != null)
 					{
 						var myCurrencyPM = CurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.Currency,Tenant,ComputingPartnerName);
@@ -159,7 +158,8 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										   
+					
+					temp.ExpectedAmount = item.Amount;					   
 						MyList.Add(temp);
 					}
 						

@@ -12,7 +12,6 @@
     <Record SearchFields="&quot;i,import&quot;" Name="&quot;Import&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Direction&quot;" DefaultText="&quot;Direction&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

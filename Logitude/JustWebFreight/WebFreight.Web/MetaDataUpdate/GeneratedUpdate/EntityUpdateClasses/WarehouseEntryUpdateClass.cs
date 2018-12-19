@@ -65,6 +65,9 @@ using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class WarehouseEntryUpdateClass
@@ -155,9 +158,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  "Create Date",
+					  						DefaultText =  @"Create Date",
 					  						ListFieldLable =  "CreateDateListLable",
-					  						ListLableDefaultText =  "Create Date",
+					  						ListLableDefaultText =  @"Create Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -204,7 +207,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
-					  						DefaultText =  "Opened By",
+					  						DefaultText =  @"Opened By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -251,9 +254,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  "Update Date",
+					  						DefaultText =  @"Update Date",
 					  						ListFieldLable =  "UpdateDateListLable",
-					  						ListLableDefaultText =  "Update Date",
+					  						ListLableDefaultText =  @"Update Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -300,7 +303,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
-					  						DefaultText =  "Updated By",
+					  						DefaultText =  @"Updated By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
@@ -348,9 +351,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntryNumber",
-					  						DefaultText =  "Entry Number",
+					  						DefaultText =  @"Entry Number",
 					  						ListFieldLable =  "EntryNumberListLable",
-					  						ListLableDefaultText =  "Entry Number",
+					  						ListLableDefaultText =  @"Entry Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -399,7 +402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerId",
-					  						DefaultText =  "Customer",
+					  						DefaultText =  @"Customer",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -445,7 +448,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentId",
-					  						DefaultText =  "Shipment",
+					  						DefaultText =  @"Shipment",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -492,9 +495,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentNumber",
-					  						DefaultText =  "Shipment #",
+					  						DefaultText =  @"Shipment #",
 					  						ListFieldLable =  "ShipmentNumberListLable",
-					  						ListLableDefaultText =  "Shipment Number",
+					  						ListLableDefaultText =  @"Shipment Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -543,7 +546,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "WarehouseId",
-					  						DefaultText =  "Warehouse",
+					  						DefaultText =  @"Warehouse",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -590,9 +593,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExpectedEntryDate",
-					  						DefaultText =  "Expected Entry Date",
+					  						DefaultText =  @"Expected Entry Date",
 					  						ListFieldLable =  "ExpectedEntryDateListLable",
-					  						ListLableDefaultText =  "Expected Entry Date",
+					  						ListLableDefaultText =  @"Expected Entry Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -640,9 +643,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActualEntryDate",
-					  						DefaultText =  "Entry Date",
+					  						DefaultText =  @"Entry Date",
 					  						ListFieldLable =  "ActualEntryDateListLable",
-					  						ListLableDefaultText =  "Entry Date",
+					  						ListLableDefaultText =  @"Entry Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -690,9 +693,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReceivedBy",
-					  						DefaultText =  "Received By",
+					  						DefaultText =  @"Received By",
 					  						ListFieldLable =  "ReceivedByListLable",
-					  						ListLableDefaultText =  "Received By",
+					  						ListLableDefaultText =  @"Received By",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -740,9 +743,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SpecialInstruction",
-					  						DefaultText =  "Special Instruction",
+					  						DefaultText =  @"Special Instruction",
 					  						ListFieldLable =  "SpecialInstructionListLable",
-					  						ListLableDefaultText =  "Special Instruction",
+					  						ListLableDefaultText =  @"Special Instruction",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -791,7 +794,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusCode",
-					  						DefaultText =  "Status Code",
+					  						DefaultText =  @"Status Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -838,9 +841,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalPieces",
-					  						DefaultText =  "Total Pieces",
+					  						DefaultText =  @"Total Pieces",
 					  						ListFieldLable =  "TotalPiecesListLable",
-					  						ListLableDefaultText =  "Total Pieces",
+					  						ListLableDefaultText =  @"Total Pieces",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -889,9 +892,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalGrossWeight",
-					  						DefaultText =  "Total Gross Weight",
+					  						DefaultText =  @"Total Gross Weight",
 					  						ListFieldLable =  "TotalGrossWeightListLable",
-					  						ListLableDefaultText =  "Total Gross Weight",
+					  						ListLableDefaultText =  @"Total Gross Weight",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -938,9 +941,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GrossWeightUnitCode",
-					  						DefaultText =  "Gross Weight Unit Code",
+					  						DefaultText =  @"Gross Weight Unit Code",
 					  						ListFieldLable =  "GrossWeightUnitCodeListLable",
-					  						ListLableDefaultText =  "Gross Weight Unit Code",
+					  						ListLableDefaultText =  @"Gross Weight Unit Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -989,9 +992,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalVolume",
-					  						DefaultText =  "Total Volume",
+					  						DefaultText =  @"Total Volume",
 					  						ListFieldLable =  "TotalVolumeListLable",
-					  						ListLableDefaultText =  "Total Volume",
+					  						ListLableDefaultText =  @"Total Volume",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1038,9 +1041,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VolumeUnitCode",
-					  						DefaultText =  "Volume Unit Code",
+					  						DefaultText =  @"Volume Unit Code",
 					  						ListFieldLable =  "VolumeUnitCodeListLable",
-					  						ListLableDefaultText =  "Volume Unit Code",
+					  						ListLableDefaultText =  @"Volume Unit Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1088,9 +1091,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Notes",
-					  						DefaultText =  "Internal Notes",
+					  						DefaultText =  @"Internal Notes",
 					  						ListFieldLable =  "NotesListLable",
-					  						ListLableDefaultText =  "Internal Notes",
+					  						ListLableDefaultText =  @"Internal Notes",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1136,7 +1139,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerRef1",
-					  						DefaultText =  "Customer Ref1",
+					  						DefaultText =  @"Customer Ref1",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1182,7 +1185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerRef2",
-					  						DefaultText =  "Customer Ref2",
+					  						DefaultText =  @"Customer Ref2",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1230,9 +1233,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HouseNumber",
-					  						DefaultText =  "House",
+					  						DefaultText =  @"House",
 					  						ListFieldLable =  "HouseNumberListLable",
-					  						ListLableDefaultText =  "House",
+					  						ListLableDefaultText =  @"House",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1280,9 +1283,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MasterNumber",
-					  						DefaultText =  "Master",
+					  						DefaultText =  @"Master",
 					  						ListFieldLable =  "MasterNumberListLable",
-					  						ListLableDefaultText =  "Master",
+					  						ListLableDefaultText =  @"Master",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1329,7 +1332,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "WarehouseEntryPackages",
-					  						DefaultText =  "Warehouse Entry Packages",
+					  						DefaultText =  @"Warehouse Entry Packages",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1377,9 +1380,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "WarehouseName",
-					  						DefaultText =  "Warehouse",
+					  						DefaultText =  @"Warehouse",
 					  						ListFieldLable =  "WarehouseNameListLable",
-					  						ListLableDefaultText =  "Warehouse",
+					  						ListLableDefaultText =  @"Warehouse",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1427,9 +1430,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerName",
-					  						DefaultText =  "Customer",
+					  						DefaultText =  @"Customer",
 					  						ListFieldLable =  "CustomerNameListLable",
-					  						ListLableDefaultText =  "Customer",
+					  						ListLableDefaultText =  @"Customer",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1475,7 +1478,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "References",
-					  						DefaultText =  "References",
+					  						DefaultText =  @"References",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1523,9 +1526,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusName",
-					  						DefaultText =  "Status",
+					  						DefaultText =  @"Status",
 					  						ListFieldLable =  "StatusNameListLable",
-					  						ListLableDefaultText =  "Status",
+					  						ListLableDefaultText =  @"Status",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1571,7 +1574,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DimensionsUnitCode",
-					  						DefaultText =  "Dimensions Unit Code",
+					  						DefaultText =  @"Dimensions Unit Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1617,7 +1620,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentNumberWithType",
-					  						DefaultText =  "Shipment #",
+					  						DefaultText =  @"Shipment #",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1664,7 +1667,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentLevelCode",
-					  						DefaultText =  "Shipment Level",
+					  						DefaultText =  @"Shipment Level",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1714,9 +1717,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ColumnHeaderTemplateName =  "TransportModeHeaderTemplate",
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeId",
-					  						DefaultText =  "Transport Mode",
+					  						DefaultText =  @"Transport Mode",
 					  						ListFieldLable =  "TransportModeIdListLable",
-					  						ListLableDefaultText =  "Transport Mode",
+					  						ListLableDefaultText =  @"Transport Mode",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1765,7 +1768,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FromPortId",
-					  						DefaultText =  "Origin ",
+					  						DefaultText =  @"Origin ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1814,7 +1817,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ToPortId",
-					  						DefaultText =  "Destination ",
+					  						DefaultText =  @"Destination ",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1861,7 +1864,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TruckerId",
-					  						DefaultText =  "Trucker",
+					  						DefaultText =  @"Trucker",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1907,7 +1910,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TruckerReference",
-					  						DefaultText =  "Trucker Reference",
+					  						DefaultText =  @"Trucker Reference",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -1954,7 +1957,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipperId",
-					  						DefaultText =  "Shipper",
+					  						DefaultText =  @"Shipper",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2004,9 +2007,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ColumnHeaderTemplateName =  "DirectionHeaderTemplate",
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DirectionId",
-					  						DefaultText =  "Direction",
+					  						DefaultText =  @"Direction",
 					  						ListFieldLable =  "DirectionIdListLable",
-					  						ListLableDefaultText =  "Direction",
+					  						ListLableDefaultText =  @"Direction",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2053,7 +2056,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipmentTypeId",
-					  						DefaultText =  "Shipment Type",
+					  						DefaultText =  @"Shipment Type",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2101,9 +2104,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntryReference",
-					  						DefaultText =  "Entry Reference",
+					  						DefaultText =  @"Entry Reference",
 					  						ListFieldLable =  "EntryReferenceListLable",
-					  						ListLableDefaultText =  "Entry Reference",
+					  						ListLableDefaultText =  @"Entry Reference",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2150,9 +2153,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search warehouse / ref.# / customer",
+					  						DefaultText =  @"Search warehouse / ref.# / customer",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search...",
+					  						ListLableDefaultText =  @"Search...",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2200,9 +2203,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Origin",
-					  						DefaultText =  "Origin",
+					  						DefaultText =  @"Origin",
 					  						ListFieldLable =  "OriginListLable",
-					  						ListLableDefaultText =  "Origin",
+					  						ListLableDefaultText =  @"Origin",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2250,9 +2253,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Destination",
-					  						DefaultText =  "Destination",
+					  						DefaultText =  @"Destination",
 					  						ListFieldLable =  "DestinationListLable",
-					  						ListLableDefaultText =  "Destination",
+					  						ListLableDefaultText =  @"Destination",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2298,7 +2301,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MainCarriageCarrierName",
-					  						DefaultText =  "Main Carriage Carrier Name",
+					  						DefaultText =  @"Main Carriage Carrier Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2344,7 +2347,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Routing",
-					  						DefaultText =  "Routing",
+					  						DefaultText =  @"Routing",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2390,7 +2393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActivityDate",
-					  						DefaultText =  "Activity Date",
+					  						DefaultText =  @"Activity Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2436,7 +2439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActivityTypeName",
-					  						DefaultText =  "Activity Type Name",
+					  						DefaultText =  @"Activity Type Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2482,7 +2485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActivityByUserName",
-					  						DefaultText =  "Activity By User Name",
+					  						DefaultText =  @"Activity By User Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2528,7 +2531,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DirectionName",
-					  						DefaultText =  "Direction Name",
+					  						DefaultText =  @"Direction Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2574,7 +2577,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeName",
-					  						DefaultText =  "TransportModeName",
+					  						DefaultText =  @"TransportModeName",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2620,7 +2623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConnectedToShipment",
-					  						DefaultText =  "Connected To Shipment",
+					  						DefaultText =  @"Connected To Shipment",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2666,7 +2669,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FromAddressId",
-					  						DefaultText =  "From Address Id",
+					  						DefaultText =  @"From Address Id",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2712,7 +2715,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ToAddressId",
-					  						DefaultText =  "To Address Id",
+					  						DefaultText =  @"To Address Id",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2759,7 +2762,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConsigneeId",
-					  						DefaultText =  "Consignee",
+					  						DefaultText =  @"Consignee",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2805,7 +2808,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipperReference1",
-					  						DefaultText =  "Shipper Ref1",
+					  						DefaultText =  @"Shipper Ref1",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2851,7 +2854,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConsigneeReference1",
-					  						DefaultText =  "Consignee Ref1",
+					  						DefaultText =  @"Consignee Ref1",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2897,7 +2900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConsigneeReference2",
-					  						DefaultText =  "Consignee Ref2",
+					  						DefaultText =  @"Consignee Ref2",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2943,7 +2946,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipperReference2",
-					  						DefaultText =  "Shipper Ref2",
+					  						DefaultText =  @"Shipper Ref2",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2989,9 +2992,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipperName",
-					  						DefaultText =  "Shipper Name",
+					  						DefaultText =  @"Shipper Name",
 					  						ListFieldLable =  "ShipperNameListLable",
-					  						ListLableDefaultText =  "Shipper Name",
+					  						ListLableDefaultText =  @"Shipper Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3037,9 +3040,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConsigneeName",
-					  						DefaultText =  "Consignee Name",
+					  						DefaultText =  @"Consignee Name",
 					  						ListFieldLable =  "ConsigneeNameListLable",
-					  						ListLableDefaultText =  "Consignee Name",
+					  						ListLableDefaultText =  @"Consignee Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3085,7 +3088,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedEntries",
-					  						DefaultText =  "Created Entries",
+					  						DefaultText =  @"Created Entries",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3131,7 +3134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnterredEntries",
-					  						DefaultText =  "Entered Entries",
+					  						DefaultText =  @"Entered Entries",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3177,10 +3180,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Manufacturer",
-					  						DefaultText =  "Manufacturer",
+					  						DefaultText =  @"Manufacturer",
 					  						HelpTextCode =  "Manufacturer",
-					  						HelpTextDefaultText =  "fill this field when the manufacturer is different from the shipper and the consignee partners",
-					  						HelpLocalDefaultText =  "fill this field when the manufacturer is different from the shipper and the consignee partners",
+					  						HelpTextDefaultText =  @"fill this field when the manufacturer is different from the shipper and the consignee partners",
+					  						HelpLocalDefaultText =  @"fill this field when the manufacturer is different from the shipper and the consignee partners",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3226,7 +3229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FromPartnerId",
-					  						DefaultText =  "From Partner Id",
+					  						DefaultText =  @"From Partner Id",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3272,7 +3275,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ToPartnerId",
-					  						DefaultText =  "To Partner Id",
+					  						DefaultText =  @"To Partner Id",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -3290,7 +3293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup WarehouseEntryQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "b972", Name = "WarehouseEntry Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -3351,7 +3354,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn CreatedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CreatedEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter CreatedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "CreatedEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = CreatedEntriesQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter CreatedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "CreatedEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = CreatedEntriesQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -3386,7 +3389,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn EnteredEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EnteredEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "SpecialInstruction" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter EnteredEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EnterredEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = EnteredEntriesQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter EnteredEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "EnterredEntries" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = EnteredEntriesQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -3455,7 +3458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ConnectedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConnectedEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter ConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = ConnectedEntriesQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter ConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "true",PredefinedValue2 = null, QueryId = ConnectedEntriesQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
@@ -3490,7 +3493,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn NotConnectedEntriesQueryQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotConnectedEntriesQueryQuery.Id, IndexOrder = 13, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 190 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter NotConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = NotConnectedEntriesQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter NotConnectedEntriesQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = WarehouseEntryObjectFields.Where(d => d.FieldName == "ConnectedToShipment" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "false",PredefinedValue2 = null, QueryId = NotConnectedEntriesQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -3564,24 +3567,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature WarehouseEntryEventsFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WarehouseEntry.Tab.Events", ObjectTableId = WarehouseEntryObjectTable.Id, Tenant = 0, NameTextCodeCode = "WarehouseEntry.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GWEN",HtmlComponentName = "EditWarehouseEntryComponent",HtmlComponentUrl = " ./Warehouse/Components/EditWarehouseEntryComponent", FeatureId = tenantFeatures.Where(d => d.Code == "WarehouseEntry.Tab.General" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ControlPath = " ./Warehouse/Components/EditWarehouseEntryComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "WarehouseEntry.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GWEN",HtmlComponentName = "EditWarehouseEntryComponent",HtmlComponentUrl = " ./Warehouse/Components/EditWarehouseEntryComponent", FeatureId = WarehouseEntryGeneralFeature_TH0.Id, ControlPath = " ./Warehouse/Components/EditWarehouseEntryComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PAEY",HtmlComponentName = "WarehouseEntryPartnersTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "WarehouseEntry.Tab.Partners" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ControlPath = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "WarehouseEntry.TH.Partners" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PAEY",HtmlComponentName = "WarehouseEntryPartnersTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", FeatureId = WarehouseEntryPartnersFeature_TH1.Id, ControlPath = " ./Warehouse/Components/EditTabs/PartnersTab/WarehouseEntryPartnersTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryPartnersTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PACE",HtmlComponentName = "WarehouseEntryPackagesTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "WarehouseEntry.Tab.Packages" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ControlPath = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "WarehouseEntry.TH.Packages" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PACE",HtmlComponentName = "WarehouseEntryPackagesTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", FeatureId = WarehouseEntryPackagesFeature_TH2.Id, ControlPath = " ./Warehouse/Components/EditTabs/PackagesTab/WarehouseEntryPackagesTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryPackagesTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ROEY",HtmlComponentName = "WarehouseEntryRoutingsTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "WarehouseEntry.Tab.Routings" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ControlPath = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "WarehouseEntry.TH.Routings" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ROEY",HtmlComponentName = "WarehouseEntryRoutingsTabComponent",HtmlComponentUrl = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", FeatureId = WarehouseEntryRoutingsFeature_TH3.Id, ControlPath = " ./Warehouse/Components/EditTabs/RoutingsTab/WarehouseEntryRoutingsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryRoutingsTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DOWE",HtmlComponentName = "WarehouseDocsOutTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "WarehouseEntry.Tab.DocsOut" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ControlPath = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "WarehouseEntry.TH.DocsOut" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DOWE",HtmlComponentName = "WarehouseDocsOutTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", FeatureId = WarehouseEntryDocsOutFeature_TH4.Id, ControlPath = "./Warehouse/Components/EditTabs/DocsOut/WarehouseDocsOutTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryDocsOutTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DIWE",HtmlComponentName = "WarehouseDocsInTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "WarehouseEntry.Tab.DocsIn" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ControlPath = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "WarehouseEntry.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DIWE",HtmlComponentName = "WarehouseDocsInTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", FeatureId = WarehouseEntryDocsInFeature_TH5.Id, ControlPath = "./Warehouse/Components/EditTabs/DocsIn/WarehouseDocsInTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryDocsInTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COWE",HtmlComponentName = "WarehouseConnectionsTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "WarehouseEntry.Tab.ConnectedEntities" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ControlPath = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "WarehouseEntry.TH.ConnectedEntities" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COWE",HtmlComponentName = "WarehouseConnectionsTabComponent",HtmlComponentUrl = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", FeatureId = WarehouseEntryConnectedEntitiesFeature_TH6.Id, ControlPath = "./Warehouse/Components/EditTabs/ConnectionsTab/WarehouseConnectionsTabComponent", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryConnectedEntitiesTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVWE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "WarehouseEntry.Tab.Events" && d.ObjectTableId == WarehouseEntryObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "WarehouseEntry.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVWE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = WarehouseEntryEventsFeature_TH7.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = WarehouseEntryObjectTable.Id, TabNameTextCodeId = WarehouseEntryEventsTextCode_TH7.Id, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -3678,7 +3681,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    }     
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+    
 
    }
     

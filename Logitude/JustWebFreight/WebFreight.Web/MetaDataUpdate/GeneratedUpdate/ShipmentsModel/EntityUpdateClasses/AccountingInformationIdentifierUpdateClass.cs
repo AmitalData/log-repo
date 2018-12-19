@@ -326,15 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AccountingInformationIdentifierObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingInformationIdentifier" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AccountingInformationIdentifierTextCode_AccountingInformationIdentifier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingInformationIdentifier", DefaultText = "Accounting Information Identifier",LocalDefaultText = null, ObjectTableId = AccountingInformationIdentifierObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

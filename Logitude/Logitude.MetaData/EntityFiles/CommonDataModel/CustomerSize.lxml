@@ -35,7 +35,6 @@
     <EventType Code="&quot;CRCZ&quot;" ObjectTableName="&quot;CustomerSize&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CustomerSize&quot;" DefaultText="&quot;Customer Size&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

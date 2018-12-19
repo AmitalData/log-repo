@@ -19,7 +19,6 @@
   <field Id="&quot;367705db-4ada-417a-a803-8020b0b684cb&quot;" FieldsDataType="&quot;Text&quot;" FieldName="&quot;InboundEmail&quot;" PMPropertyPath="&quot;InboundEmail&quot;" ListPropertyPath="&quot;InboundEmail&quot;" FullFieldLable="&quot;InboundEmail&quot;" DefaultText="&quot;InboundEmail&quot;" FullLocalDefaultText="&quot;InboundEmail&quot;" ListFieldLable="&quot;InboundEmailListLable&quot;" ListLableDefaultText="&quot;InboundEmail&quot;" ListLocalDefaultText="&quot;InboundEmail&quot;" ObjectTableName="&quot;InboundEmailLine&quot;" ValidForQuerySection1="&quot;InboundEmailLine&quot;" HasPMField="true" NoMetaDataField="true" HasDataBaseField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;InboundEmailLine&quot;" DefaultText="&quot;Inbound Email Line&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

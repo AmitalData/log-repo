@@ -8,7 +8,6 @@
   <field Id="&quot;7527fc94-6dd8-4ead-abd4-86efe1944b4f&quot;" FieldsDataType="&quot;Text&quot;" FieldName="&quot;ChangeSetOp&quot;" PMPropertyPath="&quot;ChangeSetOp&quot;" ListPropertyPath="&quot;ChangeSetOp&quot;" FullFieldLable="&quot;ChangeSetOp&quot;" DefaultText="&quot;ChangeSetOp&quot;" FullLocalDefaultText="&quot;ChangeSetOp&quot;" ListFieldLable="&quot;ChangeOpListLable&quot;" ListLableDefaultText="&quot;ChangeSetOp&quot;" ListLocalDefaultText="&quot;ChangeSetOp&quot;" ObjectTableName="&quot;VatTypePercentage&quot;" HasDataBaseField="false" NoMetaDataField="true" HasPMField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;VatTypePercentage&quot;" DefaultText="&quot;VAT Type Percentage&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;VatTypePercentage.B.AddPercentage&quot;" DefaultText="&quot;Add Percentage&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;VatTypePercentage.B.DeletePercentage&quot;" DefaultText="&quot;Delete Percentage&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;VatTypePercentage.M.DeletePercentage&quot;" DefaultText="&quot;Delete this Percentage?&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />

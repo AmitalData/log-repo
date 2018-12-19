@@ -12,7 +12,6 @@
     <Record Code="&quot;BU&quot;" Name="&quot;Business Unit&quot;" SearchFields="&quot;BU,Business Unit&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;FeatureAccessLevel&quot;" DefaultText="&quot;Feature Access Level&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

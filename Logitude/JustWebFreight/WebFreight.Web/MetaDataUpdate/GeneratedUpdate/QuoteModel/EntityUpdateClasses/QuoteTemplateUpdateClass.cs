@@ -1276,19 +1276,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable QuoteTemplateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteTemplate" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode QuoteTemplateTextCode_QuoteTemplateCHCodeListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.CH.CodeListLable", DefaultText = "HeaderDocId",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode QuoteTemplateTextCode_QuoteTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate", DefaultText = "Quote Template",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode QuoteTemplateTextCode_QuoteTemplateCHNameIdListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.CH.NameIdListLable", DefaultText = "Name",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

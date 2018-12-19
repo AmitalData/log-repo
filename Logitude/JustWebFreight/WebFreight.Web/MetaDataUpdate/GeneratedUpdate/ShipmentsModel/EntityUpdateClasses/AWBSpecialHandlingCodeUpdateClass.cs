@@ -512,15 +512,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AWBSpecialHandlingCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AWBSpecialHandlingCode" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AWBSpecialHandlingCodeTextCode_AWBSpecialHandlingCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBSpecialHandlingCode", DefaultText = "AWB Special Handling Code",LocalDefaultText = null, ObjectTableId = AWBSpecialHandlingCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

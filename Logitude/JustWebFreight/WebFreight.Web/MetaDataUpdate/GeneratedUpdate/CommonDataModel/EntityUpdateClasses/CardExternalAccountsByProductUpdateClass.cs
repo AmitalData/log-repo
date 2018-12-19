@@ -508,15 +508,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable CardExternalAccountsByProductObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CardExternalAccountsByProduct" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode CardExternalAccountsByProductTextCode_CardExternalAccountsByProduct = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CardExternalAccountsByProduct", DefaultText = "Card External Accounts By Product",LocalDefaultText = null, ObjectTableId = CardExternalAccountsByProductObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

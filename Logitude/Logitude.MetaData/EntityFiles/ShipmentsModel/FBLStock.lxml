@@ -21,7 +21,6 @@
     <TextCode Code="&quot;FBLStock.O.ByAmount&quot;" DefaultText="&quot;By Amount&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;FBLStock.O.Amount&quot;" DefaultText="&quot;Amount&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;FBLStock.O.RemovingStock&quot;" DefaultText="&quot;Removing Stock&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;FBLStock&quot;" DefaultText="&quot;FBL Stock&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

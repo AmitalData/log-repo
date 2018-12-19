@@ -251,6 +251,11 @@ namespace MetaDataGenerator
                             GenerateTabs(doc, entityElement, table, fields);
                             break;
                         }
+                    case "textcodes":
+                        {
+                            GenerateAdditionalTextCodes(doc, entityElement, table, fields);
+                            break;
+                        }
                 }
 
                 //foreach (XmlNode node in dataContractsNodesList)
@@ -578,10 +583,17 @@ namespace MetaDataGenerator
             //and(ObjectFields.FullNameTextCodeId = textcodes.Id or  textcodes.id = ObjectFields.ListTextCodeId  or textcodes.id = ObjectFields.HelpTextCodeId)) = 0
             //and Id not in (select NameTextCodeId from features where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
             //and Id not in (select NameTextCodeId from Queries where Tenant = 0 and objecttableid in (select id from objecttables where name = 'shipment') and NameTextCodeId is not null)
+            XmlElement additionalTextCodesListXElement = (XmlElement)doc.GetElementsByTagName("AdditionalTextCodes")[0];
+            if (additionalTextCodesListXElement == null)
+            {
+                additionalTextCodesListXElement = doc.CreateElement("AdditionalTextCodes");
+                entityElement.AppendChild(additionalTextCodesListXElement);
 
-            RemoveOldNodes(doc, entityElement, "AdditionalTextCodes");
-            XmlElement additionalTextCodesListXElement = doc.CreateElement("AdditionalTextCodes");
-            entityElement.AppendChild(additionalTextCodesListXElement);
+            }
+
+
+            RemoveOldNodes(doc, additionalTextCodesListXElement, "TextCode");
+           // XmlElement 
 
             List<TextCode> additionalTextCodes = (from a in allTextCodes
                                                   where a.ObjectTableId == table.Id && a.Tenant == 0
@@ -589,6 +601,9 @@ namespace MetaDataGenerator
                                                   && a.Id != table.NewButtonTextCodeId
                                                   && a.TextCodeTypeCode.ToLower() != "f" && a.TextCodeTypeCode.ToLower() != "th"
                                                   && a.TextCodeTypeCode.ToLower() != "h"
+                                                  && a.TextCodeTypeCode.ToLower() != "t"
+                                                  && a.TextCodeTypeCode.ToLower() != "ch"
+                                                  && a.TextCodeTypeCode.ToLower() != "q"
                                                   && !a.Code.Contains(".MenuButtons.")
                                                   && !a.Code.Contains(".Features.")
                                                   && !allFeatures.Any(f => f.NameTextCodeId == a.Id)
@@ -599,7 +614,7 @@ namespace MetaDataGenerator
 
             foreach (TextCode tcode in additionalTextCodes)
             {
-                XmlElement codeXElement = doc.CreateElement("TextCode");
+                XmlElement codeXElement = GetElementNodeByTagAndAttributeName(doc, additionalTextCodesListXElement, "TextCode", "Code", tcode.Code, true);//doc.CreateElement("TextCode");
                 additionalTextCodesListXElement.AppendChild(codeXElement);
 
                 SetAttribute("Code", GetStringValue(tcode.Code), codeXElement);
@@ -2017,6 +2032,19 @@ namespace MetaDataGenerator
                 }
             }
         }
+
+        //private void RemoveOldNodeChildren(XmlDocument doc, XmlElement entityElement, string nodeName,string childNodes)
+        //{
+
+        //    XmlNodeList querieLists = doc.GetElementsByTagName(nodeName);
+        //    if (querieLists != null)
+        //    {
+        //        while (querieLists.Count > 0)
+        //        {
+        //            entityElement.RemoveChild(querieLists[0]);
+        //        }
+        //    }
+        //}
 
 
 

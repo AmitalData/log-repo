@@ -6896,14 +6896,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   TextCode ARInvoiceTextCode_11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.FailedSAT", DefaultText = @"SAT Failed Invoices",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature ARInvoiceFeature_11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATFAILEDINVOICES", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.SATFailedInvoices", NameTextCodeDefaultText = "Invoices Failed to Open in SAT", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
-
-
-            TextCode ARInvoiceTextCode_12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.ErrorInTransfer", DefaultText = @"Error In Transfer", LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
-            Feature ARInvoiceFeature_12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
-
-
-
-            TextCodeRepository.SubmitChanges();
+	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
 	      
 
@@ -8107,25 +8100,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceMConnectCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.ConnectCredit", DefaultText = "Connecting Credit invoice is only allowed from Payments screen",LocalDefaultText = @"ניתן לקשר חשבונית זיכוי ממסך התשלומים בלבד", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceCHOtherPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.CH.OtherPayments", DefaultText = "Other Payments",LocalDefaultText = @"תשלומים אחרים", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ARInvoiceTextCode_ARInvoiceCHAmountToPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.CH.AmountToPay", DefaultText = "Amount To Pay",LocalDefaultText = @"סכום לתשלום", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ARInvoiceTextCode_ARInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice", DefaultText = "Invoice",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode ARInvoiceTextCode_ARInvoiceBTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.B.Transfer", DefaultText = "Transfer",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceMUpdateInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.UpdateInvoiceDate", DefaultText = "Please note that the current invoice date is %Date, adjust to Today's date ?",LocalDefaultText = @"שים לב, תאריך החשבונית הוא DATE, האם להתאים לתאריך של היום?", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode ARInvoiceTextCode_ARInvoiceMNoGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NoGLAccount", DefaultText = "The chosen charge type doesn't have GLAccount connected to it",LocalDefaultText = @"סעיף החיוב הנבחר לא מקושר לכרטיס הנה''ח", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode ARInvoiceTextCode_ARInvoiceBOk = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.B.Ok", DefaultText = "OK",LocalDefaultText = @"אישור", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceBCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.B.Cancel", DefaultText = "Cancel",LocalDefaultText = @"ביטול", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ARInvoiceTextCode_ARInvoiceBEdit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.B.Edit", DefaultText = "Edit",LocalDefaultText = @"עריכה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ARInvoiceTextCode_ARInvoiceMYouShouldHaveOneLineAtLease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.YouShouldHaveOneLineAtLease", DefaultText = "You should have at least 1 invoice line.",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode ARInvoiceTextCode_ARInvoiceMYouShouldSetInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.YouShouldSetInvoiceNumber", DefaultText = "You Should Set Invoice Number",LocalDefaultText = @"עליך לקבוע מספר חשבונית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceMVatTypePercentageEmpty = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.VatTypePercentageEmpty", DefaultText = "Some of invoice lines Vat Type Percentage is empty",LocalDefaultText = @"בחלק מהשורות לא הוגדר אחוז מע''מ", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -8133,7 +8116,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceONewCreditNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.NewCreditNote", DefaultText = "Create New Credit Note",LocalDefaultText = @"צור זיכוי חדש", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceMNoGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NoGLAccount", DefaultText = "The chosen charge type doesn't have GLAccount connected to it",LocalDefaultText = @"סעיף החיוב הנבחר לא מקושר לכרטיס הנה''ח", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARInvoiceTextCode_ARInvoiceBEdit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.B.Edit", DefaultText = "Edit",LocalDefaultText = @"עריכה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceMYouShouldHaveOneLineAtLease = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.YouShouldHaveOneLineAtLease", DefaultText = "You should have at least 1 invoice line.",LocalDefaultText = null, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceMYouShouldSetInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.YouShouldSetInvoiceNumber", DefaultText = "You Should Set Invoice Number",LocalDefaultText = @"עליך לקבוע מספר חשבונית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceMBillToGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.BillToGLAccount", DefaultText = "The bill to does not have GLAccount",LocalDefaultText = @"ללקוח אין כרטיס הנה''ח", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -8166,8 +8153,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARInvoiceTextCode_ARInvoiceMNewConsolidationInvoiceErrorMsg5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewConsolidationInvoiceErrorMsg5", DefaultText = "The remaining credit limit for this customer is",LocalDefaultText = @"יתרת האשראי שנותרה עבור לקוח זה היא", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceMNewConsolidationInvoiceErrorMsg6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewConsolidationInvoiceErrorMsg6", DefaultText = "Credit limit setting is blocking invoice for bill to",LocalDefaultText = @"הגדרת מסגרת האשראי חוסמת את הפקת החשבונית ללקוח זה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode ARInvoiceTextCode_ARInvoiceCHVATListLable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.CH.VATListLable", DefaultText = "VAT",LocalDefaultText = @"ח.פ", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceSSetInvoiceAsSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.S.SetInvoiceAsSent", DefaultText = "Set Invoice as Sent",LocalDefaultText = @"סמן חשבונית כנשלחה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

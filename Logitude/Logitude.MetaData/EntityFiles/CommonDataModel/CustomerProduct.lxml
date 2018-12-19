@@ -21,7 +21,6 @@
   <field Id="&quot;ebf7cc17-2c6d-4c9e-9f6c-b0bb4fbdd3ef&quot;" FieldsDataType="&quot;List&quot;" FieldName="&quot;ProductLocations&quot;" PMPropertyPath="&quot;ProductLocations&quot;" ListPropertyPath="&quot;ProductLocations&quot;" FullFieldLable="&quot;ProductLocations&quot;" DefaultText="&quot;ProductLocations&quot;" FullLocalDefaultText="&quot;ProductLocations&quot;" ListFieldLable="&quot;ProductLocationsListLable&quot;" ListLableDefaultText="&quot;ProductLocations&quot;" ListLocalDefaultText="&quot;ProductLocations&quot;" ObjectTableName="&quot;CustomerProduct&quot;" ValidForQuerySection1="&quot;CustomerProduct&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" IsMulti="true" MultiTableName="&quot;CustomerProductLocation&quot;" AssociationName="CustomerProductCustomerProductLocation" ThisKey="CustomerId,ProductTypeCode" OtherKey="CustomerId,ProductTypeCode" IsComposition="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CustomerProduct&quot;" DefaultText="&quot;Customer Product&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
