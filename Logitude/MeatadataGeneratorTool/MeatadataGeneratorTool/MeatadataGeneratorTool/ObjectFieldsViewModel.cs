@@ -1198,6 +1198,7 @@ namespace MeatadataGeneratorTool
 
         private void OkBtnMethod()
         {
+            ErrorsVisibility = Visibility.Collapsed;
             ErrorMessages = string.Empty;
             if (FieldName.Length > 30)
             {
@@ -1365,6 +1366,10 @@ namespace MeatadataGeneratorTool
             if (ErrorMessages != "")
             {
                 ErrorsVisibility = Visibility.Visible;
+            }
+            else
+            {
+                ErrorsVisibility = Visibility.Collapsed;
             }
 
             FirePropertyChanged("ErrorMessages");

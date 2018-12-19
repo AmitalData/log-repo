@@ -12,7 +12,6 @@
     <Record Code="&quot;SM&quot;" SearchFields="&quot;SM,Sms&quot;" Name="&quot;Sms&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ContactDoneMethod&quot;" DefaultText="&quot;Contact Done Method&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

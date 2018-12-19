@@ -44,4 +44,5 @@
       <DCField DCFieldName="&quot;PartnerCode&quot;" FieldName="&quot;Code&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="false" IsSpecialField="true" IsCustomType="false" IsAttribute="true" IgnoreCustomTypeCheck="false" IsCloseField="false" />
     </DataContract>
   </DataContracts>
+  <AdditionalTextCodes />
 </entity>

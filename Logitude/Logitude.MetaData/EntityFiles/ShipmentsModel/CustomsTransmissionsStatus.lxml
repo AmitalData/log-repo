@@ -11,7 +11,6 @@
     <Record Code="&quot;SENT&quot;" SearchFields="&quot;SENT,Sent&quot;" Name="&quot;Sent&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CustomsTransmissionsStatus&quot;" DefaultText="&quot;Customs Transmissions Status&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

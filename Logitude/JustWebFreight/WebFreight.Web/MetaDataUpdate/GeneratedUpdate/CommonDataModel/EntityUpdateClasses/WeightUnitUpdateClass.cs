@@ -335,15 +335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable WeightUnitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "WeightUnit" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode WeightUnitTextCode_WeightUnit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "WeightUnit", DefaultText = "Weight Unit",LocalDefaultText = null, ObjectTableId = WeightUnitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

@@ -91,6 +91,7 @@ namespace MeatadataGeneratorTool
                 ObjectTableViewModel viewModel = this.DataContext as ObjectTableViewModel;
                 if (viewModel != null && selected != null)
                 {
+                    selected.ErrorsVisibility = Visibility.Collapsed;
                     viewModel.RemoveFromListMethod(selected);
                 }
             }

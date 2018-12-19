@@ -29,7 +29,6 @@
   <Tab Code="&quot;HPPE&quot;" ObjectTableName="&quot;HybridPartner&quot;" IndexOrder="0" TextCode="&quot;HybridPartner.TH.Permissions&quot;" HtmlComponentName="&quot;PermissionsHybridPartnerTabComponent&quot;" HtmlComponentURL="&quot;./InfrastructureModules/InfrastructureHybrid/Components/HypridPartner/PermissionsHybridPartnerTabComponent&quot;" ControlPath="&quot;Simplog.Infrastructure.Views.HybridPartner.PermissionsHybridPartnerTabControl&quot;" TabName="&quot;Permissions&quot;" IsSpellChecked="false" IsPackagable="False" FeatureCode="&quot;PERMISSIONS&quot;" FeatureTextCodeCode="&quot;HybridPartner.Features.Permissions&quot;" FeatureDefaultText="&quot;Permissions&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;HybridPartner&quot;" DefaultText="&quot;Hybrid Partner&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

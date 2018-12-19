@@ -484,7 +484,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup DocumentFolderQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DOFL", Name = "Document Folders" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -499,7 +499,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query DocumentFoldersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentFolderTextCode_0.Id, Code = "Document Folders",  QueryGroupCode = "DOFL", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentFolderObjectTable.Id, QuerySection = "DocumentFolder", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DocumentFolderFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query DocumentFoldersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DocumentFolderTextCode_0.Id, Code = "Document Folders",  QueryGroupCode = "DOFL", IndexOrder = 0, Tenant = 0, ObjectTableId = DocumentFolderObjectTable.Id, QuerySection = "DocumentFolder", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DocumentFolderFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DocumentFoldersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DocumentFoldersQuery.Id, IndexOrder = 0, ObjectFieldId = DocumentFolderObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == DocumentFolderObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -578,15 +578,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable DocumentFolderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentFolder" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode DocumentFolderTextCode_DocumentFolder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentFolder", DefaultText = "Document Folder",LocalDefaultText = null, ObjectTableId = DocumentFolderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

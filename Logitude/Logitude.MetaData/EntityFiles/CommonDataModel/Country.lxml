@@ -56,9 +56,6 @@
     <EventType Code="&quot;CRCN&quot;" ObjectTableName="&quot;Country&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Country.RemarkHelpText&quot;" DefaultText="&quot;&quot;" TextCodeTypeCode="&quot;H&quot;" IsSpellChecked="true" />
-    <TextCode Code="&quot;Country.CH.RemarkListLable&quot;" DefaultText="&quot; &quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="true" />
-    <TextCode Code="&quot;Country&quot;" DefaultText="&quot;Country&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

@@ -28,7 +28,6 @@
   </Query>
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ApiCredintials&quot;" DefaultText="&quot;API Credentials&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

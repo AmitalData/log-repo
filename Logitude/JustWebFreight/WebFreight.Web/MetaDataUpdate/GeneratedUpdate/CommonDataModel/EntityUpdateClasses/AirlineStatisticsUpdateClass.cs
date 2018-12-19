@@ -2451,7 +2451,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup AirlineStatisticsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ALST", Name = "Airline Statistics" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -2466,7 +2466,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllAirlineStatisticsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineStatisticsTextCode_0.Id, Code = "All Airline Statistics",  QueryGroupCode = "ALST", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineStatisticsObjectTable.Id, QuerySection = "AirlineStatistics", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AirlineStatisticsFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllAirlineStatisticsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = AirlineStatisticsTextCode_0.Id, Code = "All Airline Statistics",  QueryGroupCode = "ALST", IndexOrder = 0, Tenant = 0, ObjectTableId = AirlineStatisticsObjectTable.Id, QuerySection = "AirlineStatistics", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = AirlineStatisticsFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllAirlineStatisticsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAirlineStatisticsQuery.Id, IndexOrder = 1, ObjectFieldId = AirlineStatisticsObjectFields.Where(d => d.FieldName == "SourceTenant" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -2547,10 +2547,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature AirlineStatisticsGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineStatistics.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ASGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == AirlineStatisticsObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AirlineStatisticsObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "AirlineStatistics.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ASGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AirlineStatisticsGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AirlineStatisticsObjectTable.Id, TabNameTextCodeId = AirlineStatisticsGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2574,15 +2574,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AirlineStatisticsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AirlineStatistics" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AirlineStatisticsTextCode_AirlineStatistics = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AirlineStatistics", DefaultText = "Airline Statistics",LocalDefaultText = null, ObjectTableId = AirlineStatisticsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

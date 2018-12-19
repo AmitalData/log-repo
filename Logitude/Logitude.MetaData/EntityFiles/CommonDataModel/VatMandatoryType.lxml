@@ -11,7 +11,6 @@
     <Record Code="&quot;MNT&quot;" Name="&quot;Not Mandatory&quot;" SearchFields="&quot;MNT,Not Mandatory&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;VatMandatoryType&quot;" DefaultText="&quot;VAT Mandatory Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -39,7 +39,6 @@
     <EventType Code="&quot;CRDP&quot;" ObjectTableName="&quot;Department&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Department&quot;" DefaultText="&quot;Department&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;EVENTS&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="false" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Department.Features.Events&quot;" FeatureDefaultText="&quot;Events&quot;" />

@@ -128,16 +128,15 @@
     <EventType Code="&quot;RSLG&quot;" ObjectTableName="&quot;CommunicationLog&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Resend&quot;" EnglishName="&quot;Resend&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
+    <TextCode Code="&quot;CommunicationLog.B.Details&quot;" DefaultText="&quot;Details&quot;" LocalDefaultText="&quot;פרטים&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;CommunicationLog.O.Logs&quot;" DefaultText="&quot;Logs&quot;" LocalDefaultText="&quot;לוג&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;CommunicationLog.O.CorrelationID&quot;" DefaultText="&quot;Correlation ID&quot;" LocalDefaultText="&quot;מתאם&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;CommunicationLog.O.MoreDetails&quot;" DefaultText="&quot;More Details&quot;" LocalDefaultText="&quot;פרטים נוספים&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;CommunicationLog&quot;" DefaultText="&quot;Communication Log&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;CommunicationLog.B.View&quot;" DefaultText="&quot;View&quot;" LocalDefaultText="&quot;לצפות&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;CommunicationLog.O.Status&quot;" DefaultText="&quot;Status&quot;" LocalDefaultText="&quot;סטטוס&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;CommunicationLog.O.From/To&quot;" DefaultText="&quot;From/To&quot;" LocalDefaultText="&quot;מ / אל&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;CommunicationLog.O.User&quot;" DefaultText="&quot;User&quot;" LocalDefaultText="&quot;משתמש&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;CommunicationLog.O.Error&quot;" DefaultText="&quot;Error&quot;" LocalDefaultText="&quot;שגיאה&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;CommunicationLog.B.Details&quot;" DefaultText="&quot;Details&quot;" LocalDefaultText="&quot;פרטים&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts />

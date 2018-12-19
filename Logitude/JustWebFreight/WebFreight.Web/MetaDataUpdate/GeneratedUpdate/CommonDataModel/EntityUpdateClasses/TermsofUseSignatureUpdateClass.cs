@@ -331,15 +331,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable TermsofUseSignatureObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TermsofUseSignature" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode TermsofUseSignatureTextCode_TermsofUseSignature = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TermsofUseSignature", DefaultText = "TermsofUseSignature",LocalDefaultText = null, ObjectTableId = TermsofUseSignatureObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

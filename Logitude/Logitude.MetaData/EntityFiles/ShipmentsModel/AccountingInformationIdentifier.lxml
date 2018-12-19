@@ -16,7 +16,6 @@
     <Record Code="&quot;STL&quot;" SearchFields="&quot;STL,Mode of Settlement&quot;" Name="&quot;Mode of Settlement&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AccountingInformationIdentifier&quot;" DefaultText="&quot;Accounting Information Identifier&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

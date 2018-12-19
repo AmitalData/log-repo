@@ -4,6 +4,10 @@ import { OpenFormatReportPM } from '../../../EntityPMs/OpenFormatReportPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+declare var window: any;
+import { DocumentsFilingViewsExtService } from '../../../../Common/Services/ExtendedLists/DocumentsFilingViewsExtService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 
 
 
@@ -21,6 +25,9 @@ export class OpenFormatReportLogTabComponent extends BaseComponent{
     entityPM: OpenFormatReportPM;
     isRTL: boolean = false;
     showLocals: boolean = false;
+    _DocumentsFilingViewsExtService: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
+    docFilingPM: any;
+
     constructor(private entityArgs: EntityArgs) {
         super();
         this.entityPM = entityArgs.EntityPM;
@@ -30,5 +37,28 @@ export class OpenFormatReportLogTabComponent extends BaseComponent{
     }
 
     get ErrorMessage() { return this.entityPM.ErrorMessage; }
-    
+
+    DownloadButtonClicked() {
+        this.GetDocument();
+    }
+
+
+    GetDocument() {
+
+        var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+
+
+
+        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.entityPM.Id, objectTable.Id).subscribe(myResult => {
+            console.log("[GetLastDocumentsFilingPM]", myResult);
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.docFilingPM = mm.Result;
+
+                DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
+            }
+        });
+
+
+    }
 }

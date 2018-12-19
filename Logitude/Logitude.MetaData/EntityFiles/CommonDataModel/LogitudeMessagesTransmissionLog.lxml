@@ -82,7 +82,6 @@
   <Tab Code="&quot;MTAD&quot;" ObjectTableName="&quot;LogitudeMessagesTransmissionLog&quot;" IndexOrder="1" TextCode="&quot;LogitudeMessagesTransmissionLog.TH.Audit&quot;" ControlPath="&quot;Simplog.InfrastructureExt.Views.Maintenance.TransmissionLog.TransmissionLogAuditTabControl&quot;" TabName="&quot;Audit&quot;" IsSpellChecked="false" IsPackagable="False" FeatureCode="&quot;AUDIT&quot;" FeatureTextCodeCode="&quot;LogitudeMessagesTransmissionLog.Features.Audit&quot;" FeatureDefaultText="&quot;Audit&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;LogitudeMessagesTransmissionLog&quot;" DefaultText="&quot;Logitude Messages Transmission Log&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;AUTOMATION&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;LogitudeMessagesTransmissionLog.Features.Automation&quot;" FeatureDefaultText="&quot;Automation&quot;" />

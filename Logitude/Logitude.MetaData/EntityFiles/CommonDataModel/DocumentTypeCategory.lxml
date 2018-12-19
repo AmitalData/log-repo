@@ -10,7 +10,6 @@
     <Record Code="&quot;P&quot;" SearchFields="&quot;P,Operational Documents&quot;" Name="&quot;Operational Documents&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;DocumentTypeCategory&quot;" DefaultText="&quot;Document Type Category&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

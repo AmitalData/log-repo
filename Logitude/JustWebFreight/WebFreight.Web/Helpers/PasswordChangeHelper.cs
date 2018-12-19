@@ -95,7 +95,7 @@ namespace WebFreight.Web.Helpers
 
             if (string.IsNullOrEmpty(newPassword)) throw new Exception("New Password can't be empty!");
             if (newPassword.Length < 8) throw new Exception(TextCodesTranslator.TranslateText("User.M.PasswordsMinimumLengthIs8Characters", 0));
-            if (newPassword.Length > 16) throw new Exception(TextCodesTranslator.TranslateText("User.M.PasswordsMaximumLlengthIs16Characters", 0));
+            //if (newPassword.Length > 16) throw new Exception(TextCodesTranslator.TranslateText("User.M.PasswordsMaximumLlengthIs16Characters", 0));
 
             if (string.IsNullOrEmpty(currentPassword))
             {
@@ -153,7 +153,7 @@ namespace WebFreight.Web.Helpers
             if (!result)
             {
                 result = IsSeries(passwordNumnberList, "Same");
-                if (result) throw new Exception("Password should not contain more then 3 consecutive repeating characters");
+                if (result) throw new Exception("Password should not contain more than 3 consecutive repeating characters");
             }
 
         }

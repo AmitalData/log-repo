@@ -1775,8 +1775,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable AddressObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Address" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode AddressTextCode_Address = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address", DefaultText = "Address",LocalDefaultText = null, ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode AddressTextCode_AddressBNewAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.B.NewAddress", DefaultText = "New Address",LocalDefaultText = @"כתובת חדשה", ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode AddressTextCode_AddressOMainAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Address.O.MainAddress", DefaultText = "Main Address",LocalDefaultText = null, ObjectTableId = AddressObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);

@@ -20,8 +20,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ARInvoicePayment.CH.ARInvoiceId&quot;" DefaultText="&quot;AR Invoice Id&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;ARInvoicePayment&quot;" DefaultText="&quot;Invoice Payment&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

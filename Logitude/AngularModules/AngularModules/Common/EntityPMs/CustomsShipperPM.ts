@@ -7,6 +7,8 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+
+import {AddressPM} from './AddressPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -95,7 +97,57 @@ export class CustomsShipperPM {
     public set ShipperVAT(newValue: string) { if (this.shipperVAT != newValue) { this.shipperVAT = newValue; this.MarkAsDirty("ShipperVAT"); } }
        
 	 
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+       
+	 
+    private createDate: Date;
+    public get CreateDate() { return this.createDate; }
+    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
+       
+	 
+    private updateDate: Date;
+    public get UpdateDate() { return this.updateDate; }
+    public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
+       
+	 
+    private createdByUserId: string;
+    public get CreatedByUserId() { return this.createdByUserId; }
+    public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
+       
+	 
+    private updatedByUserId: string;
+    public get UpdatedByUserId() { return this.updatedByUserId; }
+    public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
+       
+	 
+    private cityName: string;
+    public get CityName() { return this.cityName; }
+    public set CityName(newValue: string) { if (this.cityName != newValue) { this.cityName = newValue; this.MarkAsDirty("CityName"); } }
+       
+	 
+    private isChange: boolean;
+    public get IsChange() { return this.isChange; }
+    public set IsChange(newValue: boolean) { if (this.isChange != newValue) { this.isChange = newValue; this.MarkAsDirty("IsChange"); } }
+       
+	 
+     
+	private addresses: AddressPM[];
+    get  Addresses() {
+        if (this.addresses == null) {
+            this.addresses = [];
+        }
 
+        return this.addresses;
+    }
+    set  Addresses(newValue: AddressPM[]) {
+        if (this.addresses != newValue) {
+            this.addresses = newValue;
+        }
+    }
+    //public Addresses: Array<AddressPMPM>= [];
+ 
     public OldEntityPM: CustomsShipperPM;
 		
     public IsDirty: boolean;

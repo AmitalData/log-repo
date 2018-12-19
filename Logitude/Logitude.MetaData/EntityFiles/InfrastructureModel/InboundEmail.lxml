@@ -24,7 +24,6 @@
   <Tab Code="&quot;IEFG&quot;" ObjectTableName="&quot;InboundEmail&quot;" IndexOrder="0" TextCode="&quot;InboundEmail.TH.General&quot;" HtmlComponentURL="&quot;./CRMModules/CRMTickets/Components/EditTabs/InboundEmailGeneralTabComponent&quot;" ControlPath="&quot;Logitude.CRM.Views.Tabs.InboundEmail.InboundEmailInfoTab&quot;" TabName="&quot;General&quot;" IsSpellChecked="false" IsPackagable="True" FeatureCode="&quot;InboundEmail.Tab.General&quot;" FeatureTextCodeCode="&quot;InboundEmail.Features.General&quot;" FeatureDefaultText="&quot;General&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;InboundEmail&quot;" DefaultText="&quot;Inbound Email&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -326,15 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AWBChargesCodeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AWBChargesCode" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AWBChargesCodeTextCode_AWBChargesCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBChargesCode", DefaultText = "AWB Charges Code",LocalDefaultText = null, ObjectTableId = AWBChargesCodeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

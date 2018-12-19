@@ -12,7 +12,6 @@
     <Record Code="&quot;LC&quot;" Name="&quot;Lost to Competitor&quot;" SearchFields="&quot;LC,Lost to Competitor&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;QuoteClosingReason&quot;" DefaultText="&quot;Quote Closing Reason&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

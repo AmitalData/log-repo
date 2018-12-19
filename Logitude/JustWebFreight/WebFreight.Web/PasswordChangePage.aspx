@@ -295,6 +295,7 @@
 
                                                                        
 
+
                                                                                  <tr style="height:20px">
                                                                                  <td class="column1">Confirm password:
                                                                                   <input class="auto-style1" style="height:20px" id="ConfirmPassword" type="password" runat="server" required data-email-msg="password is required!" onkeypress="capLock(event)" onchange="onConfirmPasswordChanged()" />
@@ -313,7 +314,7 @@
                                                                                 </td>
                                                                             </tr>
                                                                         
-                                                                            <tr style="height:80px;">
+                                                                            <tr style="height:60px;">
                                                                                 <td style="vertical-align:top;">
                                                                                 
                                                                                 <div id="PasswordMustHaveArea" style="vertical-align:top;text-align:left;margin-top:-15px">
@@ -331,7 +332,7 @@
                                                                                          <table>
                                                                                              <tr>
                                                                                               <td style="width:16px;">  <img id="PasswordContainsCharactersImg" width="16" src="images/verified.png" alt='loading' /></td>
-                                                                                                 <td><div id="PasswordContainsCharactersDiv" style="font-size:13px;color:gray;margin-left:5px;margin-top:-5px;vertical-align:central;font-family:'Arial'">Upper or lowercase letters</div></td>
+                                                                                                 <td><div id="PasswordContainsCharactersDiv" style="font-size:13px;color:gray;margin-left:5px;margin-top:-5px;vertical-align:central;font-family:'Arial'">Upper & lowercase letters</div></td>
                                                                                              </tr>
                                                                                          </table>
                                                                                      </div>
@@ -346,15 +347,6 @@
                                                                                          </table>
                                                                                      </div>
 
-                                                                                      <div style="height:20px">
-                                                                                         <table>
-                                                                                             <tr>
-                                                                                 <td style="width:16px;">  <img id="PasswordContainsSymbolImg" width="16" src="images/verified.png" alt='loading' /></td>
-                                                                                                 <td><div id="PasswordContainsSymbolDiv" style="font-size:13px;color:gray;margin-left:5px;margin-top:-5px;vertical-align:central;font-family:'Arial'">At least one symbol</div></td>
-                                                                                             </tr>
-                                                                                         </table>
-                                                                                     </div>
-                                                                     
                                                                                </div>
 
                                                                                
@@ -396,9 +388,9 @@
                                                                 </td>
 
                                                                 <td style="width: 2px; text-align: right; border: 0;">
-                                                                    <img src="images/LoginScreen/line.png" style="width: 2px; height: 260px; margin-right: -3px; border: thick" /></td>
+                                                                    <img src="images/LoginScreen/line.png" style="width: 2px; height: 240px; margin-right: -3px; border: thick" /></td>
                                                                 <td style="width: 639px;">
-                                                                    <img id="LoginScreen" style="height: 260px; width: 650px; min-width: 650px; border: 0" src="images/LoginScreen/Layer.png" /></td>
+                                                                    <img id="LoginScreen" style="height: 240px; width: 650px; min-width: 650px; border: 0" src="images/LoginScreen/Layer.png" /></td>
                                                                 <td style="width: 85px;"></td>
                                                             </tr>
 
@@ -586,12 +578,11 @@
             document.getElementById("PasswordLenghtDiv").style.color = "gray";
             document.getElementById("PasswordContainsCharactersDiv").style.color = "gray";
             document.getElementById("PasswordContainsNumberDiv").style.color = "gray";
-            document.getElementById("PasswordContainsSymbolDiv").style.color = "gray";
 
             document.getElementById("PasswordLenghtImg").src = "images/verified.png";
             document.getElementById("PasswordContainsCharactersImg").src = "images/verified.png";
             document.getElementById("PasswordContainsNumberImg").src = "images/verified.png";
-            document.getElementById("PasswordContainsSymbolImg").src = "images/verified.png";
+
 
 
             if (passtring) {
@@ -611,10 +602,7 @@
                     document.getElementById("PasswordContainsNumberImg").src = "images/verifiedGreen.png";
                 }
 
-                if (IsContainsSymbol(passtring)) {
-                    document.getElementById("PasswordContainsSymbolDiv").style.color = "green";
-                    document.getElementById("PasswordContainsSymbolImg").src = "images/verifiedGreen.png";
-                }
+         
 
                 var errorMessage = PasswordValidation(passtring, UserEmailText);
 
@@ -655,24 +643,21 @@
                         errorMessage = PasswordValidation(newPassword, userEmail);
                         if (errorMessage) valid = false;
                         else if (!IsContainsLowerUpperCase(newPassword)) {
-                            errorMessage = "Your password must include an uppercase letter or lowercase letter.";
+                            errorMessage = "Your password must include an uppercase and lowercase letter.";
                             valid = false;
                         } else if (!IsContainsNumber(newPassword)) {
                             errorMessage = "Your password must include a number.";
                             valid = false;
                         }
-                        else if (!IsContainsSymbol(newPassword)) {
-                            errorMessage = "Your password must include a symbol.";
-                            valid = false;
-                        }
+                     
                         else if (newPassword.length < 8) {
                             errorMessage = "Your password must be at least 8 characters.";
                             valid = false;
                         }
-                        else if (newPassword.length > 16) {
-                            errorMessage = "Passwords maximum length is 16 characters!";
-                            valid = false;
-                        }
+                        //else if (newPassword.length > 16) {
+                        //    errorMessage = "Passwords maximum length is 16 characters!";
+                        //    valid = false;
+                        //}
                     }
                     else {
 
@@ -711,7 +696,7 @@
 
 
         function IsContainsLowerUpperCase(str) {
-            return str.match(/[a-z]/) || str.match(/[A-Z]/);
+            return str.match(/[a-z]/) && str.match(/[A-Z]/);
         }
 
         function IsContainsSymbol(str) {
@@ -815,7 +800,7 @@
 
            if (!result) {
                result = IsSeries(passwordNumnberList, "Same");
-               if (result) error = "Password should not contain more then 3 consecutive repeating characters";
+               if (result) error = "Password should not contain more than 3 consecutive repeating characters";
            }
 
       
@@ -1000,15 +985,13 @@
                 }
             }
 
-
             if (!isResetRequest) {
                 document.getElementById("CurrentPassword").style.height = "14px";
                 document.getElementById("Password").style.height = "14px";
                 document.getElementById("ConfirmPassword").style.height = "14px";
-                document.getElementById("LoginScreen").style.height = "300px";
+                document.getElementById("LoginScreen").style.height = "280px";
                 document.getElementById("LoginScreen").style.width = "690px";
                 document.getElementById("LoginScreen").style.minWidth = "690px";
-                
 
             } else {
                 document.getElementById("CurrentPasswordArea").style.display = "none";

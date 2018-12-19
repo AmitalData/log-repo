@@ -56,7 +56,6 @@
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;MessagingStock&quot;" DefaultText="&quot;Messaging Stock&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;MessagingStock.M.MessagingStocks&quot;" FeatureTypeCode="&quot;MENU&quot;" FeatureTextCodeCode="&quot;MessagingStock.Features.MessagingStocks&quot;" FeatureDefaultText="&quot;Messaging Stocks&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />

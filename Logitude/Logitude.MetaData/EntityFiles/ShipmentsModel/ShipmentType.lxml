@@ -19,7 +19,6 @@
     <Record SearchFields="&quot;mygo,my groupage ocean&quot;" TransportModeId="&quot;O&quot;" Name="&quot;My Groupage Ocean&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ShipmentType&quot;" DefaultText="&quot;Shipment Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts>

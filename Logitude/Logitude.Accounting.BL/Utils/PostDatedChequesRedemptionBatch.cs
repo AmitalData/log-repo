@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.Utils
         public void RunAllPayablePostDatedARPaymentCheques(int tenant)
         {
             List<ARPaymentChequeList> aRPaymentCheques = null;
-            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
+            using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(3)))
             {
                 IAccountingContext context = AccountingContext.GetContext(tenant);
                 ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
@@ -74,7 +74,7 @@ namespace Logitude.Accounting.BL.Utils
             IAccountingContext context = AccountingContext.GetContext(tenant);
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(3)))
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(3)))
                 {
                     if (!String.IsNullOrEmpty(id))
                     {

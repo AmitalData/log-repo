@@ -31,7 +31,6 @@
     <EventType Code="&quot;AURE&quot;" ObjectTableName="&quot;Automation&quot;" ShortView="true" IsManualEntry="true" LocalName="&quot;Automation Reactivated&quot;" EnglishName="&quot;Automation Reactivated&quot;" EventTypeCategoryCode="&quot;LOG&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Automation&quot;" DefaultText="&quot;Automation&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

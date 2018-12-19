@@ -1520,8 +1520,18 @@ namespace MeatadataGeneratorTool
                 ObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsDeleted = true;
                 TempObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsDeleted = true;
                 ObsList.Where(a => a.FieldName == selected.FieldName).FirstOrDefault().IsChecked = true;
+
+                int selectedIndex = ObsList.IndexOf(selected);
+                if(selectedIndex != 0)
+                {
+                    selectedIndex -= 1;
+                }
+
                 ObsList.Remove(selected);
                 TempObsList.Remove(selected);
+
+                if (ObsList.Count > 0)
+                    this.SelectedObjectField = ObsList[selectedIndex];
 
 
                 FirePropertyChanged("ObsList");
@@ -1530,6 +1540,8 @@ namespace MeatadataGeneratorTool
                 this.SetLookUpFieldsList();
 
                 FieldsEditControlVisibility = (ObsList.Count == 0) ? Visibility.Collapsed : Visibility.Visible;
+
+                 
 
                 //this.SelectedObjectField = ObsList.FirstOrDefault();
                 //this.SelectedDBField = DBFieldsObsList.FirstOrDefault();
@@ -1702,7 +1714,17 @@ namespace MeatadataGeneratorTool
 
         private void RemoveTabMethod(TabsViewModel DelTab)
         {
+            int selectedIndex = TabsObsList.IndexOf(DelTab);
+            if (selectedIndex != 0)
+            {
+                selectedIndex -= 1;
+            }
+
             TabsObsList.Remove(DelTab);
+
+            if (TabsObsList.Count > 0)
+                this.SelectedTab = TabsObsList[selectedIndex];
+
             FirePropertyChanged("TabsObsList");
         }
 
@@ -3181,10 +3203,19 @@ namespace MeatadataGeneratorTool
         private void MoveTabUpMethod(TabsViewModel Tmodel)
         {
             int index = TabsObsList.IndexOf(Tmodel);
+
             if (index > 0)
             {
+                int selectedIndexOrder = Tmodel.IndexOrder;
+                int prevIndexOrder = TabsObsList[index - 1].IndexOrder;
+
+
                 TabsObsList.Remove(Tmodel);
                 TabsObsList.Insert(index - 1, Tmodel);
+
+                Tmodel.IndexOrder = prevIndexOrder;
+                TabsObsList[index].IndexOrder = selectedIndexOrder;
+
                 SelectedTab = Tmodel;
             }
         }
@@ -3199,8 +3230,16 @@ namespace MeatadataGeneratorTool
             int index = TabsObsList.IndexOf(Tmodel);
             if (index < TabsObsList.Count - 1)
             {
+                int selectedIndexOrder = Tmodel.IndexOrder;
+                int nextIndexOrder = TabsObsList[index + 1].IndexOrder;
+
+
                 TabsObsList.Remove(Tmodel);
                 TabsObsList.Insert(index + 1, Tmodel);
+
+                Tmodel.IndexOrder = nextIndexOrder;
+                TabsObsList[index].IndexOrder = selectedIndexOrder;
+
                 SelectedTab = Tmodel;
             }
         }
@@ -3511,8 +3550,15 @@ namespace MeatadataGeneratorTool
                 int index = SelectedMenuButton.MenuButtonItems.IndexOf(Qmodel);
                 if (index > 0)
                 {
+                    int selectedIndexOrder = Qmodel.IndexOrder;
+                    int prevIndexOrder = SelectedMenuButton.MenuButtonItems[index - 1].IndexOrder;
+
                     SelectedMenuButton.MenuButtonItems.Remove(Qmodel);
                     SelectedMenuButton.MenuButtonItems.Insert(index - 1, Qmodel);
+
+                    Qmodel.IndexOrder = prevIndexOrder;
+                    SelectedMenuButton.MenuButtonItems[index].IndexOrder = selectedIndexOrder;
+
                     SelectedMenuItem = Qmodel;
                     //FirePropertyChanged("MenuButtonsObsList");
                     //FirePropertyChanged("SubMenuButtonsObsList");
@@ -3537,8 +3583,15 @@ namespace MeatadataGeneratorTool
                 int index = SelectedMenuButton.MenuButtonItems.IndexOf(Qmodel);
                 if (index < SelectedMenuButton.MenuButtonItems.Count - 1)
                 {
+                    int selectedIndexOrder = Qmodel.IndexOrder;
+                    int nextIndexOrder = SelectedMenuButton.MenuButtonItems[index + 1].IndexOrder;
+
                     SelectedMenuButton.MenuButtonItems.Remove(Qmodel);
                     SelectedMenuButton.MenuButtonItems.Insert(index + 1, Qmodel);
+
+                    Qmodel.IndexOrder = nextIndexOrder;
+                    SelectedMenuButton.MenuButtonItems[index].IndexOrder = selectedIndexOrder;
+
                     SelectedMenuItem = Qmodel;
                     //FirePropertyChanged("MenuButtonsObsList");
                     //FirePropertyChanged("SubMenuButtonsObsList");

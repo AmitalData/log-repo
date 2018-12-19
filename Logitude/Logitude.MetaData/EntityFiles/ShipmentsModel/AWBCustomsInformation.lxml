@@ -31,7 +31,6 @@
     <Record Code="&quot;V&quot;" SearchFields="&quot;V,Invoice Number&quot;" Name="&quot;Invoice Number&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AWBCustomsInformation&quot;" DefaultText="&quot;AWB Customs Information&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

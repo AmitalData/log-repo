@@ -7,7 +7,6 @@
   <field Id="&quot;68441fa0-4a76-44cb-96b8-b1154046d4c1&quot;" FieldName="&quot;SingleVATTypePercentage&quot;" FieldsDataType="&quot;Double&quot;" PMPropertyPath="&quot;SingleVATTypePercentage&quot;" ListPropertyPath="&quot;SingleVATTypePercentage&quot;" FullFieldLable="&quot;SingleVATTypePercentage&quot;" DefaultText="&quot;SingleVATTypePercentage&quot;" FullLocalDefaultText="&quot;SingleVATTypePercentage&quot;" ListFieldLable="&quot;SingleVATTypePercentageListLable&quot;" ListLableDefaultText="&quot;SingleVATTypePercentage&quot;" ListLocalDefaultText="&quot;SingleVATTypePercentage&quot;" ObjectTableName="&quot;VATTypesGroup&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;VATTypesGroup&quot;" DefaultText="&quot;VAT Types Group&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

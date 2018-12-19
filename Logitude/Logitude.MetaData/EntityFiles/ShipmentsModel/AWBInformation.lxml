@@ -188,7 +188,6 @@
     <Record Code="&quot;WBL&quot;" SearchFields="&quot;WBL,Waybill Details&quot;" Name="&quot;Waybill Details&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AWBInformation&quot;" DefaultText="&quot;AWB Information&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

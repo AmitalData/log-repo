@@ -298,6 +298,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 case "CRCCM":
                 case "CRCCB":
                 case "OMBC":
+                case "WHL":
                     return true;
 
                 default:
