@@ -992,8 +992,9 @@ namespace Logitude.Customs.BL.Validators
             bool IsImporterCodeNull = false;
             foreach (PropertyInfo info in properties)
             {
-                if(info.Name == "AgentId" || info.Name == "WeightValue")
-                {
+                //if(info.Name == "AgentId" || info.Name == "WeightValue")
+                if (info.Name == "AgentId")//task 46459
+                { 
                     if (info.GetValue(declaration) == null )
                     {
                         requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.Declaration" });
@@ -1105,6 +1106,15 @@ namespace Logitude.Customs.BL.Validators
                     }
 
                     if (info.Name == "AirlineId")
+                    {
+                        if (info.GetValue(courierMaster) == null)
+                        {
+
+                            requiredErrors.RequiredFields.Add(new CustomsRequiredFieldsErrorItem() { FieldName = info.Name, TableName = "Customs.CourierMaster" });
+
+                        }
+                    }
+                    if (info.Name == "WeightValueCode")//task 46459
                     {
                         if (info.GetValue(courierMaster) == null)
                         {
@@ -1225,7 +1235,8 @@ namespace Logitude.Customs.BL.Validators
             {
                 foreach (PropertyInfo info in ConsignmentProperties)
                 {
-                    if(info.Name == "StorageSiteCode" || info.Name == "LoadingPortCode" || info.Name == "ThirdCargoID"|| info.Name == "ManifestNumber" || info.Name== "UnloadDate" || info.Name== "CargoDescription" || info.Name == "DeliveryPlaceName")
+                    //if(info.Name == "StorageSiteCode" || info.Name == "LoadingPortCode" || info.Name == "ThirdCargoID"|| info.Name == "ManifestNumber" || info.Name== "UnloadDate" || info.Name== "CargoDescription" || info.Name == "DeliveryPlaceName")
+                    if (info.Name == "StorageSiteCode" || info.Name == "LoadingPortCode" || info.Name == "ThirdCargoID" || info.Name == "ManifestNumber" || info.Name == "UnloadDate" || info.Name == "CargoDescription")//task 46459
                     {
                         if (info.GetValue(Consignment) == null)
                         {
