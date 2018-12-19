@@ -549,8 +549,8 @@ module.exports = {
           ],
           "perChunkOutput": false,
           //"outputTemplate": "C:\\source\\log-repo\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
-          "outputTemplate": "D:\\Customs\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
-            //"outputTemplate": "c:\\log\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
+          //"outputTemplate": "D:\\Customs\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
+          "outputTemplate": "c:\\log\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
           
           "outputFilename": "3rdpartylicenses.txt",
           "suppressErrors": true,
