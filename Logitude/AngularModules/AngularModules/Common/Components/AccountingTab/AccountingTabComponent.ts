@@ -33,7 +33,7 @@ export class AccountingTabComponent implements OnInit {
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.TabTitleTextCode = this.ObjectTableName + ".TH.Accounting";
-        this.InitializeComponent();        
+        this.InitializeComponent();
     }
 
     ngOnInit() {
@@ -99,7 +99,7 @@ export class AccountingTabComponent implements OnInit {
                 }
         }
 
-        if (this.IsAccountingActivated && this.isPartnerEntity) {
+        if (this.IsAccountingActivated) {
             this.isFullAccounting = true;
         }
 
