@@ -71,7 +71,6 @@
     <EventType Code="&quot;CAAH&quot;" ObjectTableName="&quot;AccountingTransferHeader&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AccountingTransferHeader&quot;" DefaultText="&quot;Accounting Transfer&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;REBUILD&quot;" FeatureTypeCode="&quot;ACT&quot;" IsPackagable="false" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;AccountingTransferHeader.Features.Rebuild&quot;" FeatureDefaultText="&quot;Rebuild&quot;" />

@@ -518,7 +518,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     }
                 }
 
-                item.TotalAmount = ComputeHelper.Round(iAmount.Value, 2);
+                if (iAmount != null)
+                {
+                    item.TotalAmount = ComputeHelper.Round(iAmount.Value, 2);
+                }
 
                 if (item.TotalAmount != null && item.Rate != null)
                 {

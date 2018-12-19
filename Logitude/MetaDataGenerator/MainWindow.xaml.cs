@@ -231,31 +231,36 @@ namespace MetaDataGenerator
                         MessageBox.Show(errors);
                     }
 
-                    
+
 
                 }
             }
         }
 
-        private void BtnUpdate_Old_ModelLXMLs_ClosedOnly_Click(object sender, RoutedEventArgs e)
-        {
-            GenerateLXMLItems("closedtables");
-        }
 
-        private void BtnUpdate_Old_ModelLXMLs_MenuButtons_Click(object sender, RoutedEventArgs e)
-        {
-            GenerateLXMLItems("menus");
-        }
 
-       
-        private void BtnUpdate_Old_ModelLXMLs_Tabs_Click(object sender, RoutedEventArgs e)
+
+
+
+
+        private void BtnRegenerateTag_Click(object sender, RoutedEventArgs e)
         {
-            GenerateLXMLItems("tabs");
+            if (cmbMetaTagName.SelectionBoxItem != null)
+            {
+                string tagName = cmbMetaTagName.SelectionBoxItem.ToString().ToLower();
+                GenerateLXMLItems(tagName);
+            }
+            else
+            {
+                MessageBox.Show("Select a tag to regenerate!");
+            }
         }
 
         private static void GenerateLXMLItems(string tagName)
         {
-
+            //GenerateLXMLItems("closedtables");
+            // GenerateLXMLItems("menus");
+            //  GenerateLXMLItems("tabs");
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
             {
                 string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
@@ -269,20 +274,43 @@ namespace MetaDataGenerator
 
                 if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
                 {
+                    DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
                     List<ObjectTable> tables = new List<ObjectTable>();
                     ObjectFieldRepository rep = new ObjectFieldRepository(0);
-
-                    DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
-                    string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-
-                    tables = (from a in rep.context.ObjectTables
-                              where allFiles.Contains(a.Name)
-                              select a).OrderBy(t => t.Name).ToList();
-
                     string errors = "";
-                    DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
-                    dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs_Specific(tables, dialog.SelectedPath, ref errors, tagName);
+                    var directories = Directory.GetDirectories(dialog.SelectedPath);
+                    if (directories.Length == 0)
+                    {
+                        DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
+                        string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
 
+
+
+                        tables = (from a in rep.context.ObjectTables
+                                  where allFiles.Contains(a.Name)
+                                  select a).OrderBy(t => t.Name).ToList();
+
+
+                        dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs_Specific(tables, dialog.SelectedPath, ref errors, tagName);
+                    }
+                    else
+                    {
+                        foreach (string dirPath in directories)
+                        {
+                            DirectoryInfo dirInfo = new DirectoryInfo(dirPath);
+                            string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
+
+
+
+                            tables = (from a in rep.context.ObjectTables
+                                      where allFiles.Contains(a.Name)
+                                      select a).OrderBy(t => t.Name).ToList();
+
+
+
+                            dbToXmlGeneratorFrom.RegenerateExisting_Old_ModelEntityLXMLs_Specific(tables, dirPath, ref errors, tagName);
+                        }
+                    }
                     if (string.IsNullOrEmpty(errors))
                         MessageBox.Show("Export completed successfully");
                     else

@@ -729,15 +729,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ShipmentAssemblyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentAssembly" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ShipmentAssemblyTextCode_ShipmentAssembly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentAssembly", DefaultText = "Shipment Assembly",LocalDefaultText = null, ObjectTableId = ShipmentAssemblyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

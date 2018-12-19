@@ -326,15 +326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable MarkUpTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MarkUpType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode MarkUpTypeTextCode_MarkUpType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MarkUpType", DefaultText = "Mark Up Type",LocalDefaultText = null, ObjectTableId = MarkUpTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

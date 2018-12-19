@@ -12,7 +12,6 @@
   <field Id="&quot;7dfedcf6-544f-4804-b973-61ecdae312c7&quot;" FieldsDataType="&quot;Text&quot;" FieldName="&quot;ChangeSetOp&quot;" PMPropertyPath="&quot;ChangeSetOp&quot;" ListPropertyPath="&quot;ChangeSetOp&quot;" FullFieldLable="&quot;ChangeSetOp&quot;" DefaultText="&quot;ChangeSetOp&quot;" FullLocalDefaultText="&quot;ChangeSetOp&quot;" ListFieldLable="&quot;ChangeOpListLable&quot;" ListLableDefaultText="&quot;ChangeSetOp&quot;" ListLocalDefaultText="&quot;ChangeSetOp&quot;" ObjectTableName="&quot;DocumentTypeCopy&quot;" HasDataBaseField="false" NoMetaDataField="true" HasPMField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;DocumentTypeCopy&quot;" DefaultText="&quot;Document Type Copy&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;DocumentTypeCopy.O.Code&quot;" DefaultText="&quot;Code&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;DocumentTypeCopy.O.Name&quot;" DefaultText="&quot;Name&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;DocumentTypeCopy.O.IsSelectedByDefault&quot;" DefaultText="&quot;Is Selected By Default&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />

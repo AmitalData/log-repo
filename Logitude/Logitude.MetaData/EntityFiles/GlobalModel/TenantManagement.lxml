@@ -257,8 +257,6 @@
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;TenantManagement&quot;" DefaultText="&quot;Tenant Management&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;TenantManagement.Q.TrailTenantManagements&quot;" DefaultText="&quot;Trail Tenant Managements&quot;" TextCodeTypeCode="&quot;Q&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;SYSDISENABLED&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;TenantManagement.Features.SysDisEnabled&quot;" FeatureDefaultText="&quot;System &amp; Distributor Support&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />

@@ -26,4 +26,5 @@
     <Record SearchFields="&quot;ch,customs shipper&quot;" Id="&quot;CH&quot;" Name="&quot;Customs Shipper&quot;" />
   </Records>
   <DataContracts />
+  <AdditionalTextCodes />
 </entity>

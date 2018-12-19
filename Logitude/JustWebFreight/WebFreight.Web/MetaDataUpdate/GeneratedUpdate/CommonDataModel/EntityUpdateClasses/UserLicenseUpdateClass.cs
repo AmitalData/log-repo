@@ -322,15 +322,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable UserLicenseObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "UserLicense" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode UserLicenseTextCode_UserLicense = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "UserLicense", DefaultText = "User License",LocalDefaultText = null, ObjectTableId = UserLicenseObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

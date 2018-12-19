@@ -13,7 +13,6 @@
   <field Id="&quot;d9081262-8a28-484f-8973-3ecad6cab0fe&quot;" FieldName="&quot;ReceivableCreditGLAccountId&quot;" ObjectTableName="&quot;ChargeTypeAccounting&quot;" FieldsDataType="&quot;Text&quot;" PMPropertyPath="&quot;ReceivableCreditGLAccountId&quot;" ListPropertyPath="&quot;ReceivableCreditGLAccountId&quot;" FullFieldLable="&quot;ReceivableCreditGLAccountId&quot;" DefaultText="&quot;ReceivableCreditGLAccountId&quot;" FullLocalDefaultText="&quot;ReceivableCreditGLAccountId&quot;" ListFieldLable="&quot;ReceivableCreditGLAccountIdListLable&quot;" ListLableDefaultText="&quot;ReceivableCreditGLAccountId&quot;" ListLocalDefaultText="&quot;ReceivableCreditGLAccountId&quot;" ValidForQuerySection1="&quot;ChargeTypeAccounting&quot;" IsRequired="false" HasDataBaseField="true" DisplayInList="true" NoMetaDataField="true" HasPMField="true" GenerateInList="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ChargeTypeAccounting&quot;" DefaultText="&quot;Charge Type Accounting&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

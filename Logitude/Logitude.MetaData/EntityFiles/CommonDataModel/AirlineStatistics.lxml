@@ -90,7 +90,6 @@
   <Tab Code="&quot;ASGC&quot;" ObjectTableName="&quot;AirlineStatistics&quot;" IndexOrder="0" TextCode="&quot;AirlineStatistics.TH.General&quot;" ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;" TabName="&quot;General&quot;" IsSpellChecked="false" IsPackagable="False" FeatureCode="&quot;GENERAL&quot;" FeatureTextCodeCode="&quot;AirlineStatistics.Features.General&quot;" FeatureDefaultText="&quot;General&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AirlineStatistics&quot;" DefaultText="&quot;Airline Statistics&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

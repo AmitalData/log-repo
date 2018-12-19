@@ -53,42 +53,52 @@ export class FieldsHelper {
 
   WaitByIdAndClick(Id: string) {
     var EC = protractor.ExpectedConditions;
-    browser.wait(EC.elementToBeClickable(element(by.id(Id))),20000).then(a=>{
-     element(by.id(Id)).click();
+    browser.wait(EC.elementToBeClickable(element(by.id(Id))), 20000).then(a => {
+      element(by.id(Id)).click();
 
     });
 
   }
-  
-// WaitBusyIndicator(){
 
-//   var EC = protractor.ExpectedConditions;
+  // WaitBusyIndicator(){
 
-//     browser.wait(EC.invisibilityOf(element(by.css(".BusyIndicatorControl"))), 100000).then(a=>{
-//     });
-// }
-WaitBusyIndicator(){
+  //   var EC = protractor.ExpectedConditions;
 
-  var EC = protractor.ExpectedConditions;
+  //     browser.wait(EC.invisibilityOf(element(by.css(".BusyIndicatorControl"))), 100000).then(a=>{
+  //     });
+  // }
+  WaitBusyIndicator() {
 
-    browser.wait(EC.invisibilityOf(element(by.id("BusyIndecator"))), 100000).then(a=>{
+    var EC = protractor.ExpectedConditions;
+    browser.wait(EC.invisibilityOf(element(by.id("BusyIndecator"))), 100000).then(a => {
     });
-}
+  }
 
 
-WaitWindowClosed(){
+  WaitWindowClosed() {
 
-  var EC = protractor.ExpectedConditions;
-
-    browser.wait(EC.invisibilityOf(element(by.css(".LogitudeWindow"))), 100000).then(a=>{
+    var EC = protractor.ExpectedConditions;
+    browser.wait(EC.invisibilityOf(element(by.css(".LogitudeWindow"))), 100000).then(a => {
     });
-}
+  }
 
+  // WaitByIdAndFill(Id: string, Value: string) {
+  //   var EC = protractor.ExpectedConditions;
+  //   browser.wait(EC.elementToBeClickable(element(by.id(Id))), 10000000).then(a => {
+  //     var input = element(by.id(Id));
+  //     input.clear();
+  //     input.sendKeys(Value);
+
+  //   });
+
+  // }
   WaitByIdAndFill(Id: string, Value: string) {
     var EC = protractor.ExpectedConditions;
     browser.wait(EC.elementToBeClickable(element(by.id(Id))), 10000000).then(a => {
       var input = element(by.id(Id));
       input.clear();
+      browser.wait(EC.textToBePresentInElementValue(element(by.id(Id)), ''), 10000000).then(a => { });
+     input.clear();
       input.sendKeys(Value);
 
     });
@@ -103,7 +113,7 @@ WaitWindowClosed(){
       console.log('Razan');
     });
   }
-  WaitByCssAndClick_FromTagInsideList(className: string,index:number) {// the item exists in a tag inside li
+  WaitByCssAndClick_FromTagInsideList(className: string, index: number) {// the item exists in a tag inside li
     var EC = protractor.ExpectedConditions;
 
     browser.wait(EC.elementToBeClickable(element(by.css(className))), 20000).then(a => {
@@ -138,6 +148,6 @@ WaitWindowClosed(){
   public ButtonClickByCss(className: string, Text: string) {
     return this.GetObjectByCssString(className, Text).click();
   }
-     
+
 }
 

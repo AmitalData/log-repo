@@ -329,15 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable AWBMessagesCCSTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AWBMessagesCCSType" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode AWBMessagesCCSTypeTextCode_AWBMessagesCCSType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBMessagesCCSType", DefaultText = "AWB Messages CCS Type",LocalDefaultText = null, ObjectTableId = AWBMessagesCCSTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

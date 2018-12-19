@@ -93,7 +93,6 @@
   </MenuButtons>
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;APILogs&quot;" DefaultText="&quot;API Logs&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;APILogs&quot;" FeatureTypeCode="&quot;MENU&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;General.Features.APILogs&quot;" FeatureDefaultText="&quot;API Logs&quot;" />

@@ -442,15 +442,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable CustomerAdditionalServiceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerAdditionalService" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode CustomerAdditionalServiceTextCode_CustomerAdditionalService = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerAdditionalService", DefaultText = "Customer Additional Service",LocalDefaultText = null, ObjectTableId = CustomerAdditionalServiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

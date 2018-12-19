@@ -17,7 +17,6 @@
   <field Id="&quot;a7b658e5-9894-40c6-82ac-8000b06aa253&quot;" FieldName="&quot;SearchFields&quot;" ObjectTableName="&quot;ComputingPartnerTranslation&quot;" FieldsDataType="&quot;Text&quot;" PMPropertyPath="&quot;SearchFields&quot;" ListPropertyPath="&quot;SearchFields&quot;" FullFieldLable="&quot;SearchFields&quot;" DefaultText="&quot;SearchFields&quot;" FullLocalDefaultText="&quot;SearchFields&quot;" ListFieldLable="&quot;SearchFieldsListLable&quot;" ListLableDefaultText="&quot;SearchFields&quot;" ListLocalDefaultText="&quot;SearchFields&quot;" ValidForQuerySection1="&quot;ComputingPartnerTranslation&quot;" IsRequired="false" HasDataBaseField="true" DisplayInList="true" NoMetaDataField="true" HasPMField="true" GenerateInList="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ComputingPartnerTranslation&quot;" DefaultText="&quot;Computing Partner Translation&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

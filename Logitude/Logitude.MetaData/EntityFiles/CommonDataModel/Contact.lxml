@@ -134,11 +134,6 @@
     <EventType Code="&quot;HPCO&quot;" ObjectTableName="&quot;Contact&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Contact Felicitated&quot;" EnglishName="&quot;Contact Felicitated&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Contact.M.Anonymize&quot;" DefaultText="&quot;Anonymizing this contact will result in erasing all personal data including the user's mail. in addition to erasing his info from operational data&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Contact.IsInlandExportHelpText&quot;" DefaultText="&quot;&quot;" TextCodeTypeCode="&quot;H&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Contact.CH.IsInlandExportListLable&quot;" DefaultText="&quot;Is Inland Export&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Contact.IsInlandImportHelpText&quot;" DefaultText="&quot;&quot;" TextCodeTypeCode="&quot;H&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Contact.CH.IsInlandImportListLable&quot;" DefaultText="&quot;Is Inland Import&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Contact.O.Month&quot;" DefaultText="&quot;Month&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Contact.O.Year&quot;" DefaultText="&quot;Year&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Contact.B.NewContact&quot;" DefaultText="&quot;New Contact&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
@@ -149,8 +144,8 @@
     <TextCode Code="&quot;Contact.M.ContactAddedForYou&quot;" DefaultText="&quot;This Contact is Already added for you&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Contact.O.Contacts&quot;" DefaultText="&quot;Contacts&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Contact.O.Tel&quot;" DefaultText="&quot;Tel&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Contact&quot;" DefaultText="&quot;Contact&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;Contact.O.Partners&quot;" DefaultText="&quot;Partners&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Contact.M.Anonymize&quot;" DefaultText="&quot;Anonymizing this contact will result in erasing all personal data including the user's mail. in addition to erasing his info from operational data&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;ACTIVEPRODUCTTYPES&quot;" FeatureTypeCode="&quot;QUER&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Contact.Features.ActiveProductTypes&quot;" FeatureDefaultText="&quot;Active Product Types&quot;" />

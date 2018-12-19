@@ -746,15 +746,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable BusinessHoursHolidayObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BusinessHoursHoliday" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode BusinessHoursHolidayTextCode_BusinessHoursHoliday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessHoursHoliday", DefaultText = "Business Hours Holiday",LocalDefaultText = null, ObjectTableId = BusinessHoursHolidayObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

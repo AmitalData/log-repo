@@ -294,10 +294,6 @@
     <EventType Code="&quot;APID&quot;" ObjectTableName="&quot;APInvoice&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Payment Disconnected&quot;" EnglishName="&quot;Payment Disconnected&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;APInvoice&quot;" DefaultText="&quot;A/P Invoice&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;APInvoice.CH.APInvoiceTypeNameListLable&quot;" DefaultText="&quot;Type&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;APInvoice.CH.OtherPayments&quot;" DefaultText="&quot;Other Payments&quot;" LocalDefaultText="&quot;קבלות אחרות&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;APInvoice.CH.AmountToPay&quot;" DefaultText="&quot;Amount To Pay&quot;" LocalDefaultText="&quot;סכום לתשלום&quot;" TextCodeTypeCode="&quot;CH&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APInvoice.S.Details.Details&quot;" DefaultText="&quot;Details&quot;" LocalDefaultText="&quot;פרטים&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APInvoice.S.Details.Rate&quot;" DefaultText="&quot;Rate&quot;" LocalDefaultText="&quot;שער&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APInvoice.S.Details.CurrencyDetails&quot;" DefaultText="&quot;Currency Details&quot;" LocalDefaultText="&quot;נתוני מטבע&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />

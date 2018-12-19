@@ -20,7 +20,6 @@
   <field Id="&quot;e607a75c-cd91-4513-a5e2-7adb7c82219a&quot;" FieldsDataType="&quot;List&quot;" FieldName="&quot;TarrifFromToes&quot;" PMPropertyPath="&quot;TarrifFromToes&quot;" ListPropertyPath="&quot;TarrifFromToes&quot;" FullFieldLable="&quot;TarrifFromToes&quot;" DefaultText="&quot;TarrifFromToes&quot;" FullLocalDefaultText="&quot;TarrifFromToes&quot;" ListFieldLable="&quot;TarrifFromToesListLable&quot;" ListLableDefaultText="&quot;TarrifFromToes&quot;" ListLocalDefaultText="&quot;TarrifFromToes&quot;" ObjectTableName="&quot;TarrifHeader&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" IsMulti="true" MultiTableName="&quot;TarrifFromTo&quot;" AssociationName="TarrifHeaderPMTarrifFromToPM" ThisKey="Id" OtherKey="TarrifHeaderId" IsComposition="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;TarrifHeader&quot;" DefaultText="&quot;Tariff Header&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;TarrifHeader.O.Carrier&quot;" DefaultText="&quot;Carrier&quot;" LocalDefaultText="&quot;מוביל&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;TarrifHeader.B.AddSurchargeTarrif&quot;" DefaultText="&quot;Add Surcharge Tariff&quot;" LocalDefaultText="&quot;הוסף תעריף חיוב נוסף&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;TarrifHeader.O.Notes&quot;" DefaultText="&quot;Notes&quot;" LocalDefaultText="&quot;הערות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />

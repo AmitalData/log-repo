@@ -17,7 +17,6 @@
   <field Id="&quot;2e4ea9eb-a72f-47ce-a5d0-1e179b201df0&quot;" FieldName="&quot;VatTypeCell&quot;" FieldsDataType="&quot;Text&quot;" PMPropertyPath="&quot;VatTypeCell&quot;" ListPropertyPath="&quot;VatTypeCell&quot;" FullFieldLable="&quot;VatTypeCell&quot;" DefaultText="&quot;VatTypeCell&quot;" FullLocalDefaultText="&quot;VatTypeCell&quot;" ListFieldLable="&quot;VatTypeCellListLable&quot;" ListLableDefaultText="&quot;VatTypeCell&quot;" ListLocalDefaultText="&quot;VatTypeCell&quot;" ObjectTableName="&quot;QuoteTotalVAT&quot;" ValidForQuerySection1="&quot;QuoteTotalVAT&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;QuoteTotalVAT&quot;" DefaultText="&quot;Quote Total VAT&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

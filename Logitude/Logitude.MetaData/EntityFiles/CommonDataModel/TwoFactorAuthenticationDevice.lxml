@@ -16,7 +16,6 @@
   <field Id="&quot;87810d91-8e14-4284-a287-5accdfa23f2b&quot;" FieldName="&quot;IsVerified&quot;" ObjectTableName="&quot;TwoFactorAuthenticationDevice&quot;" FieldsDataType="&quot;Boolean&quot;" PMPropertyPath="&quot;IsVerified&quot;" ListPropertyPath="&quot;IsVerified&quot;" FullFieldLable="&quot;IsVerified&quot;" DefaultText="&quot;IsVerified&quot;" FullLocalDefaultText="&quot;IsVerified&quot;" ListFieldLable="&quot;IsVerifiedListLable&quot;" ListLableDefaultText="&quot;IsVerified&quot;" ListLocalDefaultText="&quot;IsVerified&quot;" ValidForQuerySection1="&quot;TwoFactorAuthenticationDevice&quot;" IsRequired="false" HasDataBaseField="true" HasPMField="false" DisplayInList="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;TwoFactorAuthenticationDevice&quot;" DefaultText="&quot;Two Factor Authentication Device&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

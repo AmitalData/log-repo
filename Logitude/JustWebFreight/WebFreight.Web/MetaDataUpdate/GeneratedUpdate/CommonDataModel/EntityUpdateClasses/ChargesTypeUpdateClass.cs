@@ -2570,7 +2570,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ChargesTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CHTP", Name = "Chanrge Types" }, queryGroupRepository);
 						QueryGroup ChargesTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "febc", Name = " Query Group" }, queryGroupRepository);
@@ -2586,7 +2586,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ChargestypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ChargesTypeTextCode_0.Id, Code = "Charges types",  QueryGroupCode = "CHTP", IndexOrder = 0, Tenant = 0, ObjectTableId = ChargesTypeObjectTable.Id, QuerySection = "ChargesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ChargesTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query ChargestypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ChargesTypeTextCode_0.Id, Code = "Charges types",  QueryGroupCode = "CHTP", IndexOrder = 0, Tenant = 0, ObjectTableId = ChargesTypeObjectTable.Id, QuerySection = "ChargesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ChargesTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ChargestypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ChargestypesQuery.Id, IndexOrder = 0, ObjectFieldId = ChargesTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -2641,14 +2641,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature ChargesTypeEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ChargesType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHGC",HtmlComponentName = "ChargesTypeGeneralTabComponent",HtmlComponentUrl = "./Common/Components/Maintenance/ChargesType/ChargesTypeGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.FreightLib.Views.ChargesTypes.EditChargesTypeControl", ObjectTableId = ChargesTypeObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ChargesType.TH.EditChargesType" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHGC",HtmlComponentName = "ChargesTypeGeneralTabComponent",HtmlComponentUrl = "./Common/Components/Maintenance/ChargesType/ChargesTypeGeneralTabComponent", FeatureId = ChargesTypeGeneralFeature_TH0.Id, ControlPath = "Simplog.FreightLib.Views.ChargesTypes.EditChargesTypeControl", ObjectTableId = ChargesTypeObjectTable.Id, TabNameTextCodeId = ChargesTypeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ACCOUNTINGTRANSFER" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.FreightLib.Views.ChargesTypes.AccountingTabControl", ObjectTableId = ChargesTypeObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ChargesType.TH.Accounting" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHAC",HtmlComponentName = "",HtmlComponentUrl = "./Common/Components/AccountingTab/AccountingTabComponent", FeatureId = ChargesTypeAccountingFeature_TH1.Id, ControlPath = "Simplog.FreightLib.Views.ChargesTypes.AccountingTabControl", ObjectTableId = ChargesTypeObjectTable.Id, TabNameTextCodeId = ChargesTypeAccountingTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == ChargesTypeObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ChargesTypeObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ChargesType.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CHEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ChargesTypeEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ChargesTypeObjectTable.Id, TabNameTextCodeId = ChargesTypeEventsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2710,7 +2710,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ChargesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChargesType" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMLocalLanguageInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.LocalLanguageInvoice", DefaultText = "Used for local language invoice",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMConcentratingIntoGroups = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.ConcentratingIntoGroups", DefaultText = "Used for concentrating the receivables and payables into groups",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMChargesCalculation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.ChargesCalculation", DefaultText = "Used for the charges calculation",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMOoceanInlandShipments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.OoceanInlandShipments", DefaultText = "Used for ocean FCL/ Inland FTL shipments",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMBelongToFreight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.BelongToFreight", DefaultText = "Note that charges that belong to the ( Freight ) group will not be printed on the AWB !!",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMRegionIsLocked = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.RegionIsLocked", DefaultText = "This region is Locked, since this Charge Type wil not be used in Air Transport !!",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMAWBDefaults = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.AWBDefaults", DefaultText = "This section defines the AWB defaults for this charge type",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMDueCarrierAgent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.DueCarrierAgent", DefaultText = "defines if this charge is due carrier or due agent",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMBillingProperties = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.BillingProperties", DefaultText = "This section defines the charge type billing properties",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMRankingInReceivables = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.RankingInReceivables", DefaultText = "Used for ranking the charge in the receivables",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOTransport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.Transport", DefaultText = "Transport",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOUsedIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.UsedIn", DefaultText = "This charge type is used in",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOAutoDisplay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.AutoDisplay", DefaultText = "Auto Display",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeMAppearsIn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.M.AppearsIn", DefaultText = "This charge type appears automatically in",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOAWBSettings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.AWBSettings", DefaultText = "AWB settings",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOBilling = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.Billing", DefaultText = "Billing",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChargesTypeTextCode_ChargesTypeOUsedInRP = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChargesType.O.UsedInRP", DefaultText = "Used In",LocalDefaultText = null, ObjectTableId = ChargesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

@@ -1839,7 +1839,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup LogitudeMessagesTransmissionLogQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LMTL", Name = "Transmission Logs" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -1854,7 +1854,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllLogitudeTransmissionLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeMessagesTransmissionLogTextCode_0.Id, Code = "All Logitude Transmission Logs",  QueryGroupCode = "LMTL", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, QuerySection = "LogitudeMessagesTransmissionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeMessagesTransmissionLogFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllLogitudeTransmissionLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LogitudeMessagesTransmissionLogTextCode_0.Id, Code = "All Logitude Transmission Logs",  QueryGroupCode = "LMTL", IndexOrder = 0, Tenant = 0, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, QuerySection = "LogitudeMessagesTransmissionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LogitudeMessagesTransmissionLogFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllLogitudeTransmissionLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeTransmissionLogsQuery.Id, IndexOrder = 1, ObjectFieldId = LogitudeMessagesTransmissionLogObjectFields.Where(d => d.FieldName == "CCS" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1953,12 +1953,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature LogitudeMessagesTransmissionLogAuditFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUDIT", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "LogitudeMessagesTransmissionLog.Features.Audit", NameTextCodeDefaultText = "Audit", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "LogitudeMessagesTransmissionLog.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LogitudeMessagesTransmissionLogGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, TabNameTextCodeId = LogitudeMessagesTransmissionLogGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "AUDIT" && d.ObjectTableId == LogitudeMessagesTransmissionLogObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TransmissionLog.TransmissionLogAuditTabControl", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "LogitudeMessagesTransmissionLog.TH.Audit" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTAD",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = LogitudeMessagesTransmissionLogAuditFeature_TH1.Id, ControlPath = "Simplog.InfrastructureExt.Views.Maintenance.TransmissionLog.TransmissionLogAuditTabControl", ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, TabNameTextCodeId = LogitudeMessagesTransmissionLogAuditTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1988,15 +1988,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable LogitudeMessagesTransmissionLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeMessagesTransmissionLog" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode LogitudeMessagesTransmissionLogTextCode_LogitudeMessagesTransmissionLog = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeMessagesTransmissionLog", DefaultText = "Logitude Messages Transmission Log",LocalDefaultText = null, ObjectTableId = LogitudeMessagesTransmissionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

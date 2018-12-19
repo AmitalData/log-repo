@@ -18,7 +18,6 @@
   <Records />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ReportsTemplatesVersion&quot;" DefaultText="&quot;Reports Templates Version&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts />

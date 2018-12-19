@@ -36,40 +36,54 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
           
             Validate(entityPM);
 
-            PNCFileArgs args = new PNCFileArgs() { ReportId = entityPM.Id, Tenant = entityPM.Tenant };
-            var stringwriter = new System.IO.StringWriter();
-            var serializer = new XmlSerializer(typeof(PNCFileArgs));
-            serializer.Serialize(stringwriter, args);
-            string xmlParameters = stringwriter.ToString();
-            BatchTaskExecutionPM taskExe = null;
-            taskExe = new BatchTaskExecutionPM()
+         
+        }
+
+
+
+        protected override void AfterUpdating(OpenFormatReportPM entityPM, EntityPM entityParentPM)
+        {
+            base.AfterUpdating(entityPM, entityParentPM);
+           
+        
+
+            if(entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                Subject = "Create a flat file for Open Format Report",
-                Tenant = entityPM.Tenant,
-                ChangeSetOp = ChangeSetOperation.Insert,
-                ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchOpenFormatReportService,Logitude.Accounting.BL",
-                CreateDate = DateTime.Now,
-                PrametersXml = xmlParameters,
-                StatusCode = "C",
+                PNCFileArgs args = new PNCFileArgs() { ReportId = entityPM.Id, Tenant = entityPM.Tenant };
+                var stringwriter = new System.IO.StringWriter();
+                var serializer = new XmlSerializer(typeof(PNCFileArgs));
+                serializer.Serialize(stringwriter, args);
+                string xmlParameters = stringwriter.ToString();
+                BatchTaskExecutionPM taskExe = null;
+                taskExe = new BatchTaskExecutionPM()
+                {
+                    Subject = "Create a flat file for Open Format Report",
+                    Tenant = entityPM.Tenant,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchOpenFormatReportService,Logitude.Accounting.BL",
+                    CreateDate = DateTime.Now,
+                    PrametersXml = xmlParameters,
+                    StatusCode = "C",
 
-            };
+                };
 
 
 
-            IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
-            BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            bteUpdateService.Update(taskExe, true);
+                IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
+                BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                bteUpdateService.Update(taskExe, true);
 
-            // 2- Send to queue
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
-            entityPM.StatusTypeCode = "2";
-            queueservice.Send(new Dictionary<string, string>()
+                // 2- Send to queue
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+                entityPM.StatusTypeCode = "2";
+                queueservice.Send(new Dictionary<string, string>()
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", entityPM.Tenant.ToString() }
                 });
-        
+
+            }
         }
 
     }

@@ -6,7 +6,6 @@
   <EventTypes />
   <Records />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;AccountingTransferType&quot;" DefaultText="&quot;Accounting Transfer Type&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

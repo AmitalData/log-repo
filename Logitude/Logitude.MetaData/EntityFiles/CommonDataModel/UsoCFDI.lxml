@@ -11,7 +11,6 @@
     <Record Code="&quot;P01&quot;" SearchFields="&quot;P01,Por definir&quot;" Name="&quot;Por definir&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;UsoCFDI&quot;" DefaultText="&quot;Uso CFDI&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

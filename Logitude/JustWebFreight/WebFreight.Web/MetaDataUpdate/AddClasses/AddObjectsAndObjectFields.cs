@@ -218,7 +218,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 if (tenantZeroTextCodes.Keys.Contains(objectTablesDetails.ObjectTableName + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id))
                 {
                     TextCode updatedTextCode = tenantZeroTextCodes[objectTablesDetails.ObjectTableName + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id];
-                    if (!updatedTextCode.IsSpellChecked)
+                    if (!updatedTextCode.IsSpellChecked || (string.IsNullOrEmpty(updatedTextCode.DefaultText) || string.IsNullOrEmpty(updatedTextCode.DefaultTextPlural)))
                     {
                         updatedTextCode.DefaultText = objectTablesDetails.DefaultText;
                         updatedTextCode.DefaultTextPlural = objectTablesDetails.ObjectTablePlural;
@@ -246,7 +246,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     if (tenantZeroTextCodes.Keys.Contains(objectTablesDetails.ObjectTableName + "Description" + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id))
                     {
                         descriptionTextCode = tenantZeroTextCodes[objectTablesDetails.ObjectTableName + "Description" + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id];
-                        if (!descriptionTextCode.IsSpellChecked)
+                        if (!descriptionTextCode.IsSpellChecked || string.IsNullOrEmpty(descriptionTextCode.DefaultText) || string.IsNullOrEmpty(descriptionTextCode.DefaultTextPlural))
                         {
                             descriptionTextCode.DefaultText = objectTablesDetails.DescriptionDefaultText;
                             descriptionTextCode.DefaultTextPlural = objectTablesDetails.ObjectTablePlural;
@@ -278,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     if (tenantZeroTextCodes.Keys.Contains(objectTablesDetails.ObjectTableName + ".NewButton" + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id))
                     {
                         newButtonTextCode = tenantZeroTextCodes[objectTablesDetails.ObjectTableName + ".NewButton" + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id];
-                        if (!newButtonTextCode.IsSpellChecked)
+                        if (!newButtonTextCode.IsSpellChecked || string.IsNullOrEmpty(newButtonTextCode.DefaultText))
                         {
                             newButtonTextCode.DefaultText = objectTablesDetails.NewButtonDefaultText;
                             newButtonTextCode.DefaultText = objectTablesDetails.NewButtonLocalDefaultText;

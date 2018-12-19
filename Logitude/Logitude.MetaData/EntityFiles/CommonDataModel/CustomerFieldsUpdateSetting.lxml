@@ -21,8 +21,6 @@
   <Tab Code="&quot;CFUG&quot;" ObjectTableName="&quot;CustomerFieldsUpdateSetting&quot;" IndexOrder="0" TextCode="&quot;CustomerFieldsUpdateSetting.TH.General&quot;" ControlPath="&quot;Simplog.InfrastructureExt.Views.Maintenance.CustomerFieldsUpdateSetting.EditCustomerFieldsUpdateSettingControl&quot;" TabName="&quot;General&quot;" IsSpellChecked="false" IsPackagable="True" FeatureCode="&quot;GENERAL&quot;" FeatureTextCodeCode="&quot;CustomerFieldsUpdateSetting.Features.General&quot;" FeatureDefaultText="&quot;General&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CustomerFieldsUpdateSetting&quot;" DefaultText="&quot;Customer Fields Update Setting&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;CustomerFieldsUpdateSettingQueue.Q.AllCustomerFieldsUpdateSettingQueues&quot;" DefaultText="&quot;All Customer Fields Update Setting Queues&quot;" TextCodeTypeCode="&quot;Q&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

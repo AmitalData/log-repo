@@ -14,7 +14,6 @@
   <field Id="&quot;ff342f11-b33b-4e99-ba43-8115294eb7f8&quot;" FieldName="&quot;ByUserName&quot;" FieldsDataType="&quot;Text&quot;" PMPropertyPath="&quot;ByUserName&quot;" ListPropertyPath="&quot;ByUserName&quot;" FullFieldLable="&quot;ByUserName&quot;" DefaultText="&quot;ByUserName&quot;" FullLocalDefaultText="&quot;ByUserName&quot;" ListFieldLable="&quot;ByUserNameListLable&quot;" ListLableDefaultText="&quot;ByUserName&quot;" ListLocalDefaultText="&quot;ByUserName&quot;" ObjectTableName="&quot;ShipmentCustomsTransmission&quot;" ValidForQuerySection1="&quot;ShipmentCustomsTransmission&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ShipmentCustomsTransmission&quot;" DefaultText="&quot;Shipment Customs Transmission&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts />

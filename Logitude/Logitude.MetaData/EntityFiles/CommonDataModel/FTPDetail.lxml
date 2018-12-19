@@ -15,7 +15,6 @@
   <Records />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;FTPDetail&quot;" DefaultText="&quot;FTP Detail&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts />
