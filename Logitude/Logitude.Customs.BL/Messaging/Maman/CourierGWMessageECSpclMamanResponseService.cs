@@ -70,14 +70,14 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {
                 case 1:
                     {
-                        declarationPM.MamanStatusCode = "1";
+                        //declarationPM.MamanStatusCode = "1";
                         mamanResponseSuccesed = true;
                     }
                     break;
                 
                     
                 default:
-                    declarationPM.MamanStatusCode = "2";
+                    //declarationPM.MamanStatusCode = "2";
                     break;
             }
             string MamanSpecialActionsErrorXml = responeECSpclMamanData.ResponseStatusCode.ToString() + "," + responeECSpclMamanData.ResponseStatusMsg ?? "";
