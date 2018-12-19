@@ -39,8 +39,9 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("CustomsCommandDownloadDcaReceiveCorrelationWR");
             _CBWorkerRole.Items.Add("CustomsCommandAnalyzeResponseWR");
             _CBWorkerRole.Items.Add("SendWEBAPIMessage2MamanWR");
-            
 
+            Debug.WriteLine("Env:");
+            Debug.WriteLine(LogitudeSettings.LogitudeURL);
             ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
         }
 
@@ -740,6 +741,11 @@ namespace AmitalCustomsWindowsService.Tester
 
 
 
+
+        }
+
+        private void TesterForm_Load(object sender, EventArgs e)
+        {
 
         }
     }

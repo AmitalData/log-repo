@@ -83,6 +83,7 @@
             this.checkUniqueUploadTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripMenuItemcheckUniqueUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.hAWBALDARMamanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mamanCreateECSpclMessgaeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -95,7 +96,6 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.mamanCreateECSpclMessgaeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -541,6 +541,13 @@
             this.hAWBALDARMamanToolStripMenuItem.Text = "HAWBALDARMaman";
             this.hAWBALDARMamanToolStripMenuItem.Click += new System.EventHandler(this.hAWBALDARMamanToolStripMenuItem_Click);
             // 
+            // mamanCreateECSpclMessgaeToolStripMenuItem
+            // 
+            this.mamanCreateECSpclMessgaeToolStripMenuItem.Name = "mamanCreateECSpclMessgaeToolStripMenuItem";
+            this.mamanCreateECSpclMessgaeToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.mamanCreateECSpclMessgaeToolStripMenuItem.Text = "MamanCreateECSpclMessgae";
+            this.mamanCreateECSpclMessgaeToolStripMenuItem.Click += new System.EventHandler(this.mamanCreateECSpclMessgaeToolStripMenuItem_Click);
+            // 
             // textBoxLogger
             // 
             this.textBoxLogger.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -672,13 +679,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
             // 
-            // mamanCreateECSpclMessgaeToolStripMenuItem
-            // 
-            this.mamanCreateECSpclMessgaeToolStripMenuItem.Name = "mamanCreateECSpclMessgaeToolStripMenuItem";
-            this.mamanCreateECSpclMessgaeToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.mamanCreateECSpclMessgaeToolStripMenuItem.Text = "MamanCreateECSpclMessgae";
-            this.mamanCreateECSpclMessgaeToolStripMenuItem.Click += new System.EventHandler(this.mamanCreateECSpclMessgaeToolStripMenuItem_Click);
-            // 
             // TesterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -689,6 +689,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "TesterForm";
             this.Text = "TesterForm";
+            this.Load += new System.EventHandler(this.TesterForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
