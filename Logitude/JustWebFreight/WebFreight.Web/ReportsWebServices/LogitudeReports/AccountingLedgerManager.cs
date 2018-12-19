@@ -751,6 +751,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         currencyRecord.ShipperReference1 = ledger.ShipperReference1;
                         currencyRecord.ShipperReference2 = ledger.ShipperReference2;
                         currencyRecord.ShipmentNumber = ledger.ShipmentNumber;
+                        currencyRecord.Notes = ledger.Notes;
 
                         customerRecord.AccountingLedgerList.Add(currencyRecord);
                     }                    
