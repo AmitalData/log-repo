@@ -30,12 +30,12 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public double? UnitPrice { get; set; }
     
-    public double? OpenAmount { get; set; }
-    
     public Currency Currency { get; set; }
     
     public double? Rate { get; set; }
     
     public PrepaidCollect PrepaidCollect { get; set; }
+    
+    public double? Amount { get; set; }
     }
 } 
