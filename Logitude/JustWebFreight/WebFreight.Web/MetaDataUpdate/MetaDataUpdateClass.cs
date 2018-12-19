@@ -33462,7 +33462,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
-                LookUpTableId = UsersObject.Id,
+                LookUpTableId = null,
                 CanFilter = true,
                 DisplayInList = true,
                 ListFieldLable = "TechnologyListLable",
