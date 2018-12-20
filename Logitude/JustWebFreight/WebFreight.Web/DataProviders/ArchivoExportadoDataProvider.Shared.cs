@@ -49,6 +49,10 @@ namespace WebFreight.Web.DataProviders
         public double? OpenPayables { get; set; }
         public double? OpenReceivables { get; set; }
         public double? AccountedPayables { get; set; }
+        public string AccountedPayablesCurrencyCode { get; set; }
+        public double? AccountedPayablesCurrencyRate { get; set; }
         public double? AccountedReceivables { get; set; }
+        public string AccountedReceivablesCurrencyCode { get; set; }
+        public double? AccountedReceivablesCurrencyRate { get; set; }
     }
 }

@@ -671,8 +671,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                                 if (myCurrency != null)
                                 {
-                                    myRecord.InvoiceCurrencyCode = myCurrency.Code;
+                                    myRecord.InvoiceCurrencyCode = myCurrency.Code;                                    
                                 }
+
+                                myRecord.AccountedPayables = myRecord.Payables;
+                                myRecord.AccountedPayablesCurrencyCode = myRecord.InvoiceCurrencyCode;
+                                myRecord.AccountedPayablesCurrencyRate = myRecord.InvoiceCurrencyRate;                               
 
                                 if (myCard != null)
                                 {
@@ -737,12 +741,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
                                 myRecord.InvoiceDate = invoice.InvoiceDate;
                                 myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
-                                myRecord.AccountedReceivables = myRecord.Receivables;
 
                                 if (myCurrency != null)
                                 {
                                     myRecord.InvoiceCurrencyCode = myCurrency.Code;
                                 }
+
+                                myRecord.AccountedReceivables = myRecord.Receivables;
+                                myRecord.AccountedReceivablesCurrencyCode = myRecord.InvoiceCurrencyCode;
+                                myRecord.AccountedReceivablesCurrencyRate = myRecord.InvoiceCurrencyRate;
 
                                 if (myCard != null)
                                 {
