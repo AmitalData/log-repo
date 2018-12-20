@@ -304,8 +304,8 @@ namespace Logitude.Accounting.Data.Repositories
         public decimal ForeignAmountCredit { get; set; }
 
         public string CHANGE_TYPE { get; set; }
-        
-   }
+        public string DateTypeValue { get; set; }
+    }
 
 
     public class GLAccountTotalByMonthsDTOAging///: GLAccountTotalByMonthsDTO

@@ -323,6 +323,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     Simplog.Data.CommonDataModel.EntityPOCOs.ChargesType chargesType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant);
                     if (chargesType != null)
                     {
+                        this.ValidateChargesType(chargesType, temp, "R");
+
                         item.DueTypeCode = chargesType.DueTypeCode;
                         item.VatTypeId = chargesType.VatTypeId;
                         item.IATACodeId = chargesType.IATACodeId;
@@ -380,7 +382,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     else
                     {
                         if (!string.IsNullOrEmpty(MyTenantPM.CurrencyId) && !string.IsNullOrEmpty(item.CurrencyId))
-                        {                            
+                        {
                             LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, item.CurrencyId, MyTenantPM.CurrencyId, TenantServerConfigration.GetCurrentDateTime(tenant).Date);
 
                             if (lastRate != null && lastRate.Rate != 0)
@@ -441,62 +443,86 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
                     }
                 }
-
-                if (item.Quantity != null && item.UnitPrice != null)
-                {
-                    if (item.ShipmentReceivableLineStatusCode != "OAMT")
+                                
+                    if (item.Quantity != null && item.UnitPrice != null)
                     {
-                        item.ShipmentReceivableLineStatusCode = "OAMT";
+                        if (item.ShipmentReceivableLineStatusCode != "OAMT")
+                        {
+                            item.ShipmentReceivableLineStatusCode = "OAMT";
+                        }
+                    }
+
+                    else
+                    {
+                        if (item.ShipmentReceivableLineStatusCode != "EMPT")
+                        {
+                            item.ShipmentReceivableLineStatusCode = "EMPT";
+                        }
+                    }
+
+                if (item.TotalAmount == null)
+                {
+                    double? iAmount = null;
+                    if (item.Quantity != null && item.UnitPrice != null)
+                    {
+                        if (measurementCode == "PRVL" || measurementCode == "PRFR")
+                        {
+                            double? price = item.UnitPrice / 100;
+                            iAmount = item.Quantity * price;
+                        }
+
+                        else
+                        {
+                            iAmount = item.Quantity * item.UnitPrice;
+                        }
+                    }
+
+                    /* MinMax */
+                    if (iAmount != null)
+                    {
+                        if (item.QuoteSaleMinAmount != null)
+                        {
+                            if (iAmount < item.QuoteSaleMinAmount)
+                            {
+                                iAmount = item.QuoteSaleMinAmount;
+                            }
+                        }
+
+                        if (item.QuoteSaleMaxAmount != null)
+                        {
+                            if (iAmount > item.QuoteSaleMaxAmount)
+                            {
+                                iAmount = item.QuoteSaleMaxAmount;
+                            }
+                        }
+                    }
+
+                    if (iAmount != null)
+                    {
+                        item.TotalAmount = ComputeHelper.Round(iAmount.Value, 2);
                     }
                 }
 
                 else
                 {
-                    if (item.ShipmentReceivableLineStatusCode != "EMPT")
+                    double? price = null;
+                    if (item.Quantity != null)
                     {
-                        item.ShipmentReceivableLineStatusCode = "EMPT";
-                    }
-                }
-
-                double? iAmount = null;
-
-                if (item.Quantity != null && item.UnitPrice != null)
-                {
-                    if (measurementCode == "PRVL" || measurementCode == "PRFR")
-                    {
-                        double? price = item.UnitPrice / 100;
-                        iAmount = item.Quantity * price;
-                    }
-
-                    else
-                    {
-                        iAmount = item.Quantity * item.UnitPrice;
-                    }
-                }
-
-                /* MinMax */
-                if (iAmount != null)
-                {
-                    if (item.QuoteSaleMinAmount != null)
-                    {
-                        if (iAmount < item.QuoteSaleMinAmount)
+                        if (item.Quantity == 0)
                         {
-                            iAmount = item.QuoteSaleMinAmount;
+                            price = 0;
+                        }
+
+                        else
+                        {
+                            price = item.TotalAmount / item.Quantity;
                         }
                     }
 
-                    if (item.QuoteSaleMaxAmount != null)
+                    if (price != null)
                     {
-                        if (iAmount > item.QuoteSaleMaxAmount)
-                        {
-                            iAmount = item.QuoteSaleMaxAmount;
-                        }
+                        item.UnitPrice = ComputeHelper.Round(price.Value, 3);
                     }
-                }
-
-                if (iAmount != null)
-                {
-                    item.TotalAmount = ComputeHelper.Round(iAmount.Value, 2);
                 }
 
                 if (item.TotalAmount != null && item.Rate != null)
@@ -530,6 +556,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     Simplog.Data.CommonDataModel.EntityPOCOs.ChargesType chargesType = chargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant);
                     if (chargesType != null)
                     {
+                        this.ValidateChargesType(chargesType, temp, "P");
+
                         item.DueTypeCode = chargesType.DueTypeCode;
                         item.VatTypeId = chargesType.VatTypeId;
                         item.IATACodeId = chargesType.IATACodeId;
@@ -697,22 +725,50 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                 item.ShipmentPayableLineStatusCode = StatusCode;
 
-                double? iAmount = null;
-                if (item.Quantity != null && item.UnitPrice != null)
+                if (item.ExpectedAmount == null)
                 {
-                    if (measurementCode == "PRVL" || measurementCode == "PRFR")
+                    double? iAmount = null;
+                    if (item.Quantity != null && item.UnitPrice != null)
                     {
-                        double? price = item.UnitPrice / 100;
-                        iAmount = item.Quantity * price;
+                        if (measurementCode == "PRVL" || measurementCode == "PRFR")
+                        {
+                            double? price = item.UnitPrice / 100;
+                            iAmount = item.Quantity * price;
+                        }
+
+                        else
+                        {
+                            iAmount = item.Quantity * item.UnitPrice;
+                        }
                     }
 
-                    else
+                    if (iAmount != null)
                     {
-                        iAmount = item.Quantity * item.UnitPrice;
+                        item.ExpectedAmount = ComputeHelper.Round(iAmount.Value, 2);
                     }
                 }
-                
-                item.ExpectedAmount = ComputeHelper.Round(iAmount.Value, 2);
+
+                else
+                {
+                    double? price = null;
+                    if (item.Quantity != null)
+                    {                       
+                        if (item.Quantity == 0)
+                        {
+                            price = 0;
+                        }
+
+                        else
+                        {
+                            price = item.ExpectedAmount / item.Quantity;
+                        }
+                    }
+
+                    if (price != null)
+                    {
+                        item.UnitPrice = ComputeHelper.Round(price.Value, 3);
+                    }
+                }
 
                 if (item.ExpectedAmount != null && item.Rate != null)
                 {
@@ -737,7 +793,61 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 }
             }
             #endregion
-        }       
+        }
+
+        private void ValidateChargesType(ChargesType chargesType, ShipmentPM temp, string type)
+        {
+            switch(type)
+            {
+                case "R":
+                    {
+                        if(!chargesType.IsReceivable)
+                        {
+                            throw new ApplicationException("Charge type " + chargesType.Code + " used in receivables should be marked as Receivable");
+                        }
+                        break;
+                    }
+
+                case "P":
+                    {
+                        if (!chargesType.IsPayable)
+                        {
+                            throw new ApplicationException("Charge type " + chargesType.Code + " used in payables should be marked as Payable");
+                        }
+                        break;
+                    }
+            }
+
+            switch(temp.TransportModeId)
+            {
+                case "A":
+                    {
+                        if (!chargesType.IsAir)
+                        {
+                            throw new ApplicationException("Charge type " + chargesType.Code + " used in Air shipments should be marked as Air");
+                        }
+                        break;
+                    }
+
+                case "I":
+                    {
+                        if (!chargesType.IsInland)
+                        {
+                            throw new ApplicationException("Charge type " + chargesType.Code + " used in Inland shipments should be marked as Inland");
+                        }
+                        break;
+                    }
+
+                case "O":
+                    {
+                        if (!chargesType.IsOcean)
+                        {
+                            throw new ApplicationException("Charge type " + chargesType.Code + " used in Ocean shipments should be marked as Ocean");
+                        }
+                        break;
+                    }
+            }
+        }
 
         public HttpResponseMessage Put(House entity)
         {
