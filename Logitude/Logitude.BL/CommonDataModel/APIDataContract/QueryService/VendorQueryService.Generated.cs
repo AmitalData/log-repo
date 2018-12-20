@@ -82,16 +82,15 @@ using Simplog.Data.CommonDataModel;
 					   					   temp.MainAddress = AddressService1.GetAddressById(MyEntityPM.MainAddressId,Tenant); 
 			       
 					   				   }
-				   
-				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  			  
+				   			  
 				   if(MyEntityPM.GLAccountId != null)
 				   {
 					   GLAccountQueryService GLAccountService2 = new GLAccountQueryService(Tenant);
 					   					   temp.GLAccount = GLAccountService2.GLAccountCustomDataMapping(MyEntityPM.GLAccountId,Tenant); 
 			       
 					   				   }
-				   					
+				   
+				   temp.Code = MyEntityPM.Code;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -110,21 +109,7 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-					
-					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
-					{
-						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"Card");
-					    if(string.IsNullOrEmpty(MyCode))
-						{
-						  throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
-						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant);
-						
-						
-					}
-					
-					   					   
+										   
 					if(temp == null)
 					{
 					    throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
@@ -158,11 +143,7 @@ using Simplog.Data.CommonDataModel;
 						 
 					}
 			
-					
-					if(string.IsNullOrEmpty(temp.Code))
-					{
-						temp.Code = MyEntity.PartnerCode;
-					}					GLAccountQueryService GLAccountGLAccountService = new GLAccountQueryService(Tenant);
+										GLAccountQueryService GLAccountGLAccountService = new GLAccountQueryService(Tenant);
 					if(MyEntity.GLAccount != null)
 					{
 						var myGLAccountPM = GLAccountGLAccountService.GLAccountCustomDataMappingAndValidatin(MyEntity.GLAccount,Tenant);
@@ -173,7 +154,11 @@ using Simplog.Data.CommonDataModel;
 						 
 					}
 			
-										   
+					
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+						temp.Code = MyEntity.Code;
+					}					   
 					   return temp;
 		    }
             catch (Exception ex)

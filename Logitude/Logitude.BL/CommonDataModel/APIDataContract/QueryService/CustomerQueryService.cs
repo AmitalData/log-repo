@@ -55,20 +55,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 {
                     temp = myQuery.GetSinglePM(MyEntity.Id, Tenant);
                 }
-
-                //if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
-                //{
-                //    ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-                //    var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode, ComputingPartnerName, "Card");
-
-                //    if (string.IsNullOrEmpty(MyCode))
-                //    {
-                //        throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
-                //    }
-
-                //    temp = myQuery.GetSingleCustomerPMByCode(MyCode, Tenant);
-                //}
-
+                
                 if (temp == null)
                 {
                     throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
@@ -82,6 +69,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 temp.EnglishName = MyEntity.EnglishName;
                 temp.LocalName = MyEntity.LocalName;
                 temp.VatNumber = MyEntity.VatNumber;
+                temp.Code = MyEntity.Code;
 
                 PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
                 if (MyEntity.PaymentTerm != null)
@@ -142,17 +130,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     address.Tenant = Tenant;
                     temp.Addresses.Add(address);
                 }
-
-                //IGLAccountQueryServiceExt GLAccountGLAccountService = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-                //if (MyEntity.GLAccount != null)
-                //{
-                //    var myGLAccountPM = GLAccountGLAccountService.GLAccountDataMappingAndValidatin(MyEntity.GLAccount, Tenant, ComputingPartnerName);
-                //    if (myGLAccountPM != null)
-                //    {
-                //        temp.GLAccountId = myGLAccountPM.Id;                        
-                //    }
-                //}
-
+                
                 return temp;
             }
 
