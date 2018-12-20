@@ -490,7 +490,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup DepartmentQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "DEPT", Name = "Departments" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -505,7 +505,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query DepartmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DepartmentTextCode_0.Id, Code = "Departments",  QueryGroupCode = "DEPT", IndexOrder = 0, Tenant = 0, ObjectTableId = DepartmentObjectTable.Id, QuerySection = "Department", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DepartmentFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query DepartmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DepartmentTextCode_0.Id, Code = "Departments",  QueryGroupCode = "DEPT", IndexOrder = 0, Tenant = 0, ObjectTableId = DepartmentObjectTable.Id, QuerySection = "Department", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DepartmentFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DepartmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DepartmentsQuery.Id, IndexOrder = 0, ObjectFieldId = DepartmentObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == DepartmentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -552,10 +552,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature DepartmentGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = DepartmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Department.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == DepartmentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = DepartmentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Department.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DPGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = DepartmentGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = DepartmentObjectTable.Id, TabNameTextCodeId = DepartmentGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -623,15 +623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable DepartmentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Department" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode DepartmentTextCode_Department = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Department", DefaultText = "Department",LocalDefaultText = null, ObjectTableId = DepartmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

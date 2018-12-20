@@ -119,7 +119,6 @@
     <EventType Code="&quot;CRPC&quot;" ObjectTableName="&quot;Participant&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Participant&quot;" DefaultText="&quot;Participant&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;EVENTS&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="false" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;Participant.Features.Events&quot;" FeatureDefaultText="&quot;Events&quot;" />

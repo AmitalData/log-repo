@@ -112,7 +112,6 @@
     <EventType Code="&quot;CRWH&quot;" ObjectTableName="&quot;Warehouse&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Warehouse&quot;" DefaultText="&quot;Warehouse&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;Warehouse.O.CompanyLocalName&quot;" DefaultText="&quot;Local Name&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Warehouse.O.GeneralData&quot;" DefaultText="&quot;General Data&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Warehouse.O.Address&quot;" DefaultText="&quot;Addresses&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />

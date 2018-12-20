@@ -16,7 +16,6 @@
   <field Id="&quot;26ffa521-86e6-49d6-950a-590566ef89a4&quot;" FieldName="&quot;FilingInboxAttachments&quot;" FieldsDataType="&quot;List&quot;" PMPropertyPath="&quot;FilingInboxAttachments&quot;" ListPropertyPath="&quot;FilingInboxAttachments&quot;" FullFieldLable="&quot;FilingInboxAttachments&quot;" DefaultText="&quot;FilingInboxAttachments&quot;" FullLocalDefaultText="&quot;FilingInboxAttachments&quot;" ListFieldLable="&quot;FilingInboxAttachmentsListLable&quot;" ListLableDefaultText="&quot;FilingInboxAttachments&quot;" ListLocalDefaultText="&quot;FilingInboxAttachments&quot;" ObjectTableName="&quot;FilingInbox&quot;" ValidForQuerySection1="&quot;FilingInbox&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" MultiTableName="&quot;&quot;FilingInboxAttachment&quot;&quot;" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;FilingInbox&quot;" DefaultText="&quot;Filing Inbox&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;FilingInbox&quot;" FeatureTypeCode="&quot;MENU&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;FilingInboxObjectTable.Features.FilingInboxObjectTable&quot;" FeatureDefaultText="&quot;Filing Inbox&quot;" />

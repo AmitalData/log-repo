@@ -615,8 +615,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable TarrifHeaderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TarrifHeader" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode TarrifHeaderTextCode_TarrifHeader = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader", DefaultText = "Tariff Header",LocalDefaultText = null, ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode TarrifHeaderTextCode_TarrifHeaderOCarrier = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.O.Carrier", DefaultText = "Carrier",LocalDefaultText = @"מוביל", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TarrifHeaderTextCode_TarrifHeaderBAddSurchargeTarrif = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifHeader.B.AddSurchargeTarrif", DefaultText = "Add Surcharge Tariff",LocalDefaultText = @"הוסף תעריף חיוב נוסף", ObjectTableId = TarrifHeaderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);

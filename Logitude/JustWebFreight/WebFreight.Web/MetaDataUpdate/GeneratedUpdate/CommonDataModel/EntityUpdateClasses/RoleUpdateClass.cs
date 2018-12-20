@@ -620,8 +620,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable RoleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Role" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode RoleTextCode_Role = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role", DefaultText = "Role",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode RoleTextCode_RoleBEditRole = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.B.EditRole", DefaultText = "Edit Role",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode RoleTextCode_RoleORoles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Role.O.Roles", DefaultText = "Roles",LocalDefaultText = null, ObjectTableId = RoleObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);

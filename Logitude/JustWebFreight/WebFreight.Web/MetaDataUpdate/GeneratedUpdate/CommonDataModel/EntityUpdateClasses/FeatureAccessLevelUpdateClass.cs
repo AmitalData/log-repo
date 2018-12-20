@@ -316,15 +316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable FeatureAccessLevelObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "FeatureAccessLevel" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode FeatureAccessLevelTextCode_FeatureAccessLevel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FeatureAccessLevel", DefaultText = "Feature Access Level",LocalDefaultText = null, ObjectTableId = FeatureAccessLevelObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

@@ -35,7 +35,6 @@
   </Screen>
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;DocumentFolder&quot;" DefaultText="&quot;Document Folder&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;GENERAL&quot;" FeatureTypeCode="&quot;AREA&quot;" IsPackagable="true" IsBusinessUnitEnabled="false" IsOld="false" IsCoreFeature="false" FeatureTextCodeCode="&quot;DocumentFolder.Features.General&quot;" FeatureDefaultText="&quot;General&quot;" />

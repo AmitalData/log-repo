@@ -150,5 +150,6 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public bool IsINTTRAStockPrepaid { get; set; }
 
 
+        public string PackageCodeSearchField { get; set; }
     }
 }

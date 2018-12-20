@@ -109,7 +109,6 @@
   <field Id="&quot;52e03daf-e43e-4362-857b-3b223a75875a&quot;" FieldName="&quot;CopyToDW&quot;" ObjectTableName="&quot;ObjectField&quot;" FieldsDataType="&quot;Boolean&quot;" PMPropertyPath="&quot;CopyToDW&quot;" ListPropertyPath="&quot;CopyToDW&quot;" FullFieldLable="&quot;CopyToDW&quot;" DefaultText="&quot;CopyToDW&quot;" FullLocalDefaultText="&quot;CopyToDW&quot;" ListFieldLable="&quot;CopyToDWListLable&quot;" ListLableDefaultText="&quot;CopyToDW&quot;" ListLocalDefaultText="&quot;CopyToDW&quot;" ValidForQuerySection1="&quot;ObjectField&quot;" IsRequired="false" HasDataBaseField="true" DisplayInList="true" NoMetaDataField="true" HasPMField="true" GenerateInList="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ObjectField&quot;" DefaultText="&quot;Object Field&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
   <DataContracts />

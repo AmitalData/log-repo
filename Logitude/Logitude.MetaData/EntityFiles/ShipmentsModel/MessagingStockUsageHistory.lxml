@@ -23,7 +23,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;MessagingStockUsageHistory&quot;" DefaultText="&quot;Messaging Stock Usage History&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

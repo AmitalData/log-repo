@@ -170,6 +170,20 @@ namespace MeatadataGeneratorTool.QueryModule
                 FirePropertyChanged("QuerySection");
             }
         }
+
+        private string perspective; // Object Table Name
+        public string Perspective
+        {
+            get
+            {
+                return perspective;
+            }
+            set
+            {
+                perspective = value;
+                FirePropertyChanged("Perspective");
+            }
+        }
         private bool systemLevel;
         public bool SystemLevel
         {

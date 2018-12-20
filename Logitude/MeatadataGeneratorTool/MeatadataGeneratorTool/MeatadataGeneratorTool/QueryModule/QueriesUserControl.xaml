@@ -89,7 +89,20 @@
                                    VerticalAlignment="Center"
                                    FontWeight="Bold"
                                    Text="Edit Wizard Name:" />
-                        
+                      
+
+                        <TextBlock Height="25"
+                                   Margin="5"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Text="Query Section :"
+                                   Visibility="Visible" />
+                        <TextBlock Height="25"
+                                   Margin="5"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Text="Perspective:" />
+
                         <TextBlock Height="25"
                                    Margin="5"
                                    VerticalAlignment="Center"
@@ -103,12 +116,7 @@
                                    FontWeight="Bold"
                                    Text="Object Table Name :"
                                    Visibility="Hidden" />
-                        <TextBlock Height="25"
-                                   Margin="5"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   Text="Query Section :"
-                                   Visibility="Hidden" />
+                       
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Vertical">
                         <TextBox Height="25"
@@ -165,6 +173,22 @@
                                  Text="{Binding EditWizardName,
                                                 Mode=TwoWay}" />
 
+                     
+
+
+                        <TextBox Height="25"
+                                 Margin="5"
+                                 VerticalAlignment="Center"
+                                 Text="{Binding QuerySection,
+                                                Mode=TwoWay}"
+                                 Visibility="Visible" />
+
+                        <TextBox Height="25"
+                                 Margin="5"
+                                 VerticalAlignment="Center"
+                                 Text="{Binding Perspective,
+                                                Mode=TwoWay}" />
+
                         <TextBox Height="25"
                                  Margin="5"
                                  VerticalAlignment="Center"
@@ -178,12 +202,7 @@
                                  Text="{Binding ObjectTableName,
                                                 Mode=TwoWay}"
                                  Visibility="Hidden" />
-                        <TextBox Height="25"
-                                 Margin="5"
-                                 VerticalAlignment="Center"
-                                 Text="{Binding QuerySection,
-                                                Mode=TwoWay}"
-                                 Visibility="Hidden" />
+                       
 
                     </StackPanel>
                 </Grid>

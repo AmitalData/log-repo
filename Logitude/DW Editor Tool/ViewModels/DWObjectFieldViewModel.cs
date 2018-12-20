@@ -33,11 +33,32 @@ namespace DW_Editor_Tool.ViewModels
                 dataTypeCode = value; FirePropertyChanged("DataTypeCode");
                 TextTypeVisibility = ((value == "Text" || value == "nText" || value == "Dimension") ? Visibility.Visible : Visibility.Collapsed);
                 DimensionTabeVisisbilty = ((value == "Dimension") ? Visibility.Visible : Visibility.Collapsed);
+
+                if(dataTypeCode!= "Dimension")
+                {
+                    DimensionTableCode = null;
+                }
+
             }
         }
 
         private string dimensionTableCode;
-        public string DimensionTableCode { get { return dimensionTableCode; } set { dimensionTableCode = value; FirePropertyChanged("DimensionTableCode"); } }
+        public string DimensionTableCode
+        {
+            get {
+
+                return dimensionTableCode;
+
+            }
+
+            set
+            {
+                dimensionTableCode = value;
+
+                FirePropertyChanged("DimensionTableCode");
+            }
+
+        }
 
         private int minLength;
         public int MinLength { get { return minLength; } set { minLength = value; FirePropertyChanged("MinLength"); } }

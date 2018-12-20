@@ -11,7 +11,6 @@
     <Record SearchFields="&quot;PRIN,Partially Invoiced&quot;" Code="&quot;PRIN&quot;" Name="&quot;Partially Invoiced&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ShipmentReceivableStatus&quot;" DefaultText="&quot;Shipment Receivable Status&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

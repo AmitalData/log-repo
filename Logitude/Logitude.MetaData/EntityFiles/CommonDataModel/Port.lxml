@@ -84,7 +84,6 @@
     <EventType Code="&quot;CRPO&quot;" ObjectTableName="&quot;Port&quot;" ShortView="true" IsManualEntry="false" LocalName="&quot;Created&quot;" EnglishName="&quot;Created&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Port&quot;" DefaultText="&quot;Port&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;Port.M.ChoosePortTransportation&quot;" DefaultText="&quot;Please choose the transportation method of the Port&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Port.M.TheCodeAlreadyExists&quot;" DefaultText="&quot;The Code already exists&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Port.Tip.General&quot;" DefaultText="&quot; - Ports are listed  in this pane(%L) - To add a Port to your company press the 'add' button(%L)&quot;" TextCodeTypeCode="&quot;TIP&quot;" IsSpellChecked="false" />

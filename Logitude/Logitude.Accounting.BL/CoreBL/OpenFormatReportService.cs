@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.DataContract;
+﻿using Logitude.Accounting.BL.CoreBL.Reports;
+using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -42,11 +43,13 @@ namespace Logitude.Accounting.BL.CoreBL
             List<B100Data> b100Data = ledgerTransactionQueryService.GetTransactionsByDate(openFormatReportPM.DateTypeCode, openFormatReportPM.FromDate, openFormatReportPM.ToDate, tenant);
             UserQuery userQuery = new UserQuery(tenant);
             CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
-
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+            List<B110Data> b110Data = gLAccountQueryService.GetB110sForGLAccounts(tenant);
+            ComputingPartnerTranslationHelper computingPartnerTranslationHelper = new ComputingPartnerTranslationHelper(tenant);
 
             List<string> linesArray = new List<string>();
 
-          
+
 
             StringBuilder myStringBuilder = new StringBuilder();
 
@@ -54,9 +57,9 @@ namespace Logitude.Accounting.BL.CoreBL
             myStringBuilder.Append("A100");
             myStringBuilder.Append("000000001");
             myStringBuilder.Append(tenantPM.VatNumber);
-            if(tenantPM.VatNumber != null)
+            if (tenantPM.VatNumber != null)
             {
-                if(tenantPM.VatNumber.Length >9) { tenantPM.VatNumber.Substring(0, 9); }
+                if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber.Substring(0, 9); }
                 myStringBuilder.Append(tenantPM.VatNumber.PadLeft(9, '0'));
             }
 
@@ -67,21 +70,21 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             myStringBuilder.Append("&OF1.31&");
             myStringBuilder.Append(' ', 50);
-
+            myStringBuilder.Append('\n');
             //B100
-            int counter = 2;
-            foreach(B100Data item in b100Data)
+            int counter = 1;
+            foreach (B100Data item in b100Data)
             {
                 counter++;
                 myStringBuilder.Append("B100");
-                if(counter.ToString().Length > 9)
+                if (counter.ToString().Length > 9)
                 {
-                   counter.ToString().Substring(0, 9); 
+                    counter.ToString().Substring(0, 9);
                     myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
                 }
                 else
                 {
-                    myStringBuilder.Append(counter.ToString().PadLeft(9,'0'));
+                    myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
                 }
 
                 if (tenantPM.VatNumber != null)
@@ -92,13 +95,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (item.JournalNumber != null)
                 {
-                    if (item.JournalNumber.Length >10) { item.JournalNumber.Substring(0, 10); }
+                    if (item.JournalNumber.Length > 10) { item.JournalNumber.Substring(0, 10); }
                     myStringBuilder.Append(item.JournalNumber.PadLeft(10, '0'));
                 }
 
-                
+
                 if (item.JournalLineNumber.ToString().Length > 9) { item.JournalLineNumber.ToString().Substring(0, 9); }
-                 myStringBuilder.Append(item.JournalLineNumber.ToString().PadLeft(9, '0'));
+                myStringBuilder.Append(item.JournalLineNumber.ToString().PadLeft(9, '0'));
 
                 myStringBuilder.Append(' ', 8);
                 myStringBuilder.Append(' ', 15);
@@ -109,6 +112,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(item.AccountingEntityReference.PadLeft(20, '0'));
                 }
 
+             
+                var entityPartnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(item.AccountingEntityCode, "ACC", "AccountingEntity");
+
+                if (entityPartnerCode != null)
+                {
+                    if (entityPartnerCode.Length > 3) { entityPartnerCode.Substring(0, 3); }
+                    myStringBuilder.Append(entityPartnerCode.PadLeft(3, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append("000");
+
+                }
+
+
                 if (item.Reference2 != null)
                 {
                     if (item.Reference2.Length > 20) { item.Reference2.Substring(0, 20); }
@@ -118,13 +136,13 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append("000");
                 if (item.Notes != null)
                 {
-                    if (item.Notes.Length >50) { item.Notes.Substring(0, 50); }
+                    if (item.Notes.Length > 50) { item.Notes.Substring(0, 50); }
                     myStringBuilder.Append(item.Notes.PadLeft(50, '0'));
                 }
 
-                var DocumentDate = String.Format("{0:dd MM yyyy}", item.DocumentDate);
-                var AccountingDate = String.Format("{0:dd MM yyyy}", item.AccountingDate);
-                var CreateDate = String.Format("{0:dd MM yyyy}", item.CreateDate);
+                var DocumentDate = String.Format("{0:ddMMyyyy}", item.DocumentDate);
+                var AccountingDate = String.Format("{0:ddMMyyyy}", item.AccountingDate);
+                var CreateDate = String.Format("{0:ddMMyyyy}", item.CreateDate);
 
                 if (AccountingDate.Length > 8) { AccountingDate.Substring(0, 8); }
                 myStringBuilder.Append(AccountingDate.PadLeft(8, '0'));
@@ -134,11 +152,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (item.GLAccountDisplayNumber != null)
                 {
-                    if (item.GLAccountDisplayNumber.Length >15) { item.GLAccountDisplayNumber.Substring(0, 15); }
-                    myStringBuilder.Append(item.GLAccountDisplayNumber.PadLeft(15 ,'0'));
+                    if (item.GLAccountDisplayNumber.Length > 15) { item.GLAccountDisplayNumber.Substring(0, 15); }
+                    myStringBuilder.Append(item.GLAccountDisplayNumber.PadLeft(15, '0'));
                 }
 
-                if(item.LocalAmountDebit != null)
+                if (item.LocalAmountDebit != null)
                 {
                     var LocalAmountDebit = "+" + item.LocalAmountDebit;
 
@@ -177,7 +195,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(CreateDate.PadLeft(8, '0'));
 
                 UserPM user = userQuery.GetSinglePM(item.CreatedByUser, tenant);
-                if(user!= null)
+                if (user != null)
                 {
                     if (user.LocalName.Length > 8) { user.LocalName.Substring(0, 9); }
                     myStringBuilder.Append(user.LocalName.PadLeft(9, '0'));
@@ -188,19 +206,211 @@ namespace Logitude.Accounting.BL.CoreBL
                 CurrencyPM currency = currencyQuery.GetSinglePM(item.CurrencyId, tenant);
 
 
-               ComputingPartnerTranslationHelper computingPartnerTranslationHelper = new ComputingPartnerTranslationHelper(tenant);
-               var partnerCode=   computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(currency.Code, "CUR", "Currency");
 
-                if(partnerCode != null)
+                var partnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(currency.Code, "Cust", "Currency");
+
+                if (partnerCode != null)
                 {
                     if (partnerCode.Length > 3) { partnerCode.Substring(0, 3); }
                     myStringBuilder.Append(partnerCode.PadLeft(3, '0'));
                 }
-                
 
+                myStringBuilder.Append('\n');
             }
 
-          
+            //B110
+
+            var trailReportParam = new TrailReportParam()
+            {
+                Tenant = tenant,
+                //    MyRevenueExpenseReportLevel = ReportLevel.,
+                ToDate = (DateTime)openFormatReportPM.ToDate,
+                FromDate = (DateTime)openFormatReportPM.FromDate,
+                CurrenciesDetailed = false,
+                DetailedControlVendors = true,
+                DetailedControlClients = true,
+                Category1 = null,
+                Category5 = null,
+                Suppress_DoNotShowCardWithoutActivity = false,
+                IsRevenueExpenseReport = false,
+                MyTrailReportLevel = ReportLevel.GLAccount,
+
+            };
+
+
+            var typeservice = TrailReportFactory.CreateNew(trailReportParam);
+            var res1 = typeservice.Execute();
+            typeservice.Dispose();
+            var result = res1.Where(d=> d.GLAccountId !=null).ToDictionary(x => x.GLAccountId, x => x);
+
+            foreach (B110Data item in b110Data)
+            {
+                counter++;
+
+                myStringBuilder.Append("B110");
+
+                if (counter.ToString().Length > 9)
+                {
+                    counter.ToString().Substring(0, 9);
+                    myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+                }
+                else
+                {
+                    myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+                }
+                if (tenantPM.VatNumber != null)
+                {
+                    if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber.Substring(0, 9); }
+                    myStringBuilder.Append(tenantPM.VatNumber.PadLeft(9, '0'));
+                }
+
+                if (item.DisplayNumber != null)
+                {
+                    if (item.DisplayNumber.Length > 15) { item.DisplayNumber.Substring(0, 15); }
+                    myStringBuilder.Append(item.DisplayNumber.PadLeft(15, '0'));
+                }
+
+                if (item.LocalName != null)
+                {
+                    if (item.DisplayNumber.Length > 50) { item.LocalName.Substring(0, 50); }
+                    myStringBuilder.Append(item.LocalName.PadLeft(50, '0'));
+                }
+                else
+                {
+                    if (item.EnglishName.Length > 50) { item.EnglishName.Substring(0, 50); }
+                    myStringBuilder.Append(item.EnglishName.PadLeft(50, '0'));
+                }
+                if (item.ChartOfAccountsCode != null)
+                {
+                    if (item.ChartOfAccountsCode.Length > 15) { item.ChartOfAccountsCode.Substring(0, 15); }
+                    myStringBuilder.Append(item.ChartOfAccountsCode.PadLeft(15, '0'));
+                }
+
+                if (item.ChartOfAccountsName != null)
+                {
+                    if (item.ChartOfAccountsName.Length > 30) { item.ChartOfAccountsName.Substring(0, 30); }
+                    myStringBuilder.Append(item.ChartOfAccountsName.PadLeft(30, '0'));
+                }
+
+                if (item.AccountTypeCode == "2" || item.AccountTypeCode == "3")
+                {
+                    string address = null;
+                    var billingaddress = b110Data.Where(d => d.GLAccountId == item.GLAccountId && item.AddressType == "B").FirstOrDefault();
+                    if(billingaddress != null)
+                    {
+                        address = billingaddress.Address1;
+                    }
+                    if (address == null)
+                    {
+                       var  mainaddress = b110Data.Where(d => d.GLAccountId == item.GLAccountId && item.AddressType == "M").FirstOrDefault();
+                        address = mainaddress.Address1;
+                        item.Address1 = address;
+                    }
+                    if (item.Address1 != null)
+                    {
+                        if (item.Address1.Length > 50) { item.Address1.Substring(0, 50); }
+                        myStringBuilder.Append(item.Address1.PadLeft(50, '0'));
+                        if (address.Length > 51)
+                        {
+                            item.Address2 = address.Substring(51, 60);
+                            myStringBuilder.Append(item.Address1.PadLeft(10, '0'));
+                        }
+                    }
+
+                    if (item.City != null)
+                    {
+                        if (item.City.Length > 30) { item.City.Substring(0, 30); }
+                        myStringBuilder.Append(item.City.PadLeft(30, '0'));
+                    }
+                    if (item.ZipCode != null)
+                    {
+                        if (item.ZipCode.Length > 8) { item.ZipCode.Substring(0, 8); }
+                        myStringBuilder.Append(item.ZipCode.PadLeft(8, '0'));
+                    }
+
+                    if (item.CountryName != null)
+                    {
+                        if (item.CountryName.Length > 30) { item.CountryName.Substring(0, 30); }
+                        myStringBuilder.Append(item.CountryName.PadLeft(30, '0'));
+                    }
+                    if (item.CountryCode != null)
+                    {
+                        var partnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(item.CountryCode, "Cust", "Country");
+
+                        if (partnerCode != null)
+                        {
+                            if (partnerCode.Length > 15) { partnerCode.Substring(0, 15); }
+                            myStringBuilder.Append(partnerCode.PadLeft(15, '0'));
+                        }
+
+                     
+                    }
+
+                }
+                else
+                {
+                    myStringBuilder.Append(' ', 60);
+                }
+
+                myStringBuilder.Append(' ', 15);
+                TrailReportM trailReportM = null;
+                if (result.ContainsKey(item.GLAccountId))
+                {
+                    trailReportM =  result[item.GLAccountId];
+                }
+                if (trailReportM != null)
+                {
+                    item.OpeningBalance = trailReportM.LocalOpenBalance;
+                    item.TotalDebit = trailReportM.LocalDebit;
+                    item.TotalCredit = trailReportM.LocalCredit;
+                    if (item.OpeningBalance != null)
+                    {
+                        if (item.OpeningBalance.ToString().Length > 15) { item.OpeningBalance.ToString().Substring(0, 15); }
+                        myStringBuilder.Append(item.OpeningBalance.ToString().PadLeft(15, '0'));
+                    }
+                    if (item.TotalDebit != null)
+                    {
+                        if (item.TotalDebit.ToString().Length > 15) { item.TotalDebit.ToString().Substring(0, 15); }
+                        myStringBuilder.Append(item.TotalDebit.ToString().PadLeft(15, '0'));
+                    }
+                    if (item.TotalCredit != null)
+                    {
+                        if (item.TotalCredit.ToString().Length > 15) { item.TotalCredit.ToString().Substring(0, 15); }
+                        myStringBuilder.Append(item.TotalCredit.ToString().PadLeft(15, '0'));
+                    }
+                }
+                myStringBuilder.Append("0000");
+                if (item.VatNumber != null)
+                {
+                    if (item.VatNumber.Length > 9) { item.VatNumber.Substring(0, 9); }
+                    myStringBuilder.Append(item.VatNumber.PadLeft(9, '0'));
+                }
+                myStringBuilder.Append(' ', 7);
+
+                if(item.IsMultiCurrency== false && item.CurrecnyId != tenantPM.CurrencyId)
+                {
+                    item.OpeningBalanceInForegnCurrency = trailReportM != null? trailReportM.ForeignOpenBalance:null;
+                    if (item.OpeningBalanceInForegnCurrency != null)
+                    {
+                        if (item.OpeningBalanceInForegnCurrency.ToString().Length > 15) { item.OpeningBalanceInForegnCurrency.ToString().Substring(0, 15); }
+                        myStringBuilder.Append(item.OpeningBalanceInForegnCurrency.ToString().PadLeft(15, '0'));
+                    }
+                    if (item.CurrencyCode != null)
+                    {
+                        if (item.CurrencyCode.Length> 3) { item.CurrencyCode.Substring(0, 3); }
+                        myStringBuilder.Append(item.CurrencyCode.PadLeft(3, '0'));
+                    }
+                }
+                else
+                {
+                    myStringBuilder.Append(' ', 18);
+                }
+
+                myStringBuilder.Append(' ', 16);
+                myStringBuilder.Append('\n');
+            }
+
+            
 
             DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, openFormatReportPM);
 
@@ -273,7 +483,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             // user
             User loggedUser = GetLoggedUser(tenant);
-            DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMVDATA", tenant);
+            DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("BKMV", tenant);
 
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
            // string name = "A856." + tenantPM.VatNumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);

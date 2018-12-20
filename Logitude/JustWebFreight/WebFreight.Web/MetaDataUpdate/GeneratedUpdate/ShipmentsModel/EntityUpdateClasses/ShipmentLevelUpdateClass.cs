@@ -327,15 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ShipmentLevelObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentLevel" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ShipmentLevelTextCode_ShipmentLevel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentLevel", DefaultText = "Shipment Level",LocalDefaultText = null, ObjectTableId = ShipmentLevelObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

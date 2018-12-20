@@ -23,7 +23,6 @@
   <Records />
   <DataContracts />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;SystemData&quot;" DefaultText="&quot;System Data&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

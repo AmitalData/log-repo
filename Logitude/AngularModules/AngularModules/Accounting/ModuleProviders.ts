@@ -117,6 +117,7 @@ import {ReconciliationMenuButtonsHandler} from './Components/MenuButtons/Reconci
 import { ExternalReconciliationMenuButtonsHandler } from './Components/MenuButtons/ExternalReconciliationMenuButtonsHandler';
 import { TaxReportMenuButtonsHandler } from './Components/MenuButtons/TaxReportMenuButtonsHandler';
 import { TaxDeductionReportMenuButtonsHandler } from './Components/MenuButtons/TaxDeductionReportMenuButtonsHandler';
+import { OpenFormatReportMenuButtonsHandler } from './Components/MenuButtons/OpenFormatReportMenuButtonsHandler';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -252,6 +253,7 @@ export class ModuleProviders {
             case "ExternalReconciliationMenuButtonsHandler": { myResult = new ExternalReconciliationMenuButtonsHandler; break; }
             case "TaxReportMenuButtonsHandler": { myResult = new TaxReportMenuButtonsHandler; break; }
             case "TaxDeductionReportMenuButtonsHandler": { myResult = new TaxDeductionReportMenuButtonsHandler; break; }
+            case "OpenFormatReportMenuButtonsHandler": { myResult = new OpenFormatReportMenuButtonsHandler; break; }
 
         }
 

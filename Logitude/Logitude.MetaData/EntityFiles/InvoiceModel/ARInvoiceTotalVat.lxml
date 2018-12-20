@@ -17,7 +17,6 @@
   <field Id="&quot;540be6e4-0636-45a6-bc8f-4955130fddd0&quot;" FieldName="&quot;VatTypeCell&quot;" FieldsDataType="&quot;Text&quot;" PMPropertyPath="&quot;VatTypeCell&quot;" ListPropertyPath="&quot;VatTypeCell&quot;" FullFieldLable="&quot;VatTypeCell&quot;" DefaultText="&quot;VatTypeCell&quot;" FullLocalDefaultText="&quot;VatTypeCell&quot;" ListFieldLable="&quot;VatTypeCellListLable&quot;" ListLableDefaultText="&quot;VatTypeCell&quot;" ListLocalDefaultText="&quot;VatTypeCell&quot;" ObjectTableName="&quot;ARInvoiceTotalVAT&quot;" HasPMField="true" HasDataBaseField="false" NoMetaDataField="true" />
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;ARInvoiceTotalVAT&quot;" DefaultText="&quot;A/R Invoice Total VAT&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

@@ -45,9 +45,3 @@ or FieldName = 'MainCarriageETD' or FieldName = 'MainCarriageFinalDestinationATA
 
 
 
-select * from ObjectFields where FieldName = 'AWBCommodityItemNumber'
---AWBCommodityItemNumber --- ShipmentCommodityPM
---FirstPickupLocation -- ShipmentPickUps
-
-
-

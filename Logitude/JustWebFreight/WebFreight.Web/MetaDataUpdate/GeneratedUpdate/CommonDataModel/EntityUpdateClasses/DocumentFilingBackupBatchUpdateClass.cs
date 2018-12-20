@@ -697,15 +697,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable DocumentFilingBackupBatchObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentFilingBackupBatch" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode DocumentFilingBackupBatchTextCode_DocumentFilingBackupBatch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentFilingBackupBatch", DefaultText = "Document Filing Backup Batch",LocalDefaultText = null, ObjectTableId = DocumentFilingBackupBatchObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

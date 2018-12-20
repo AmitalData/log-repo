@@ -619,7 +619,6 @@
     <EventType Code="&quot;EXPD&quot;" ObjectTableName="&quot;Quote&quot;" ShortView="true" IsManualEntry="true" LocalName="&quot;Quote Expired&quot;" EnglishName="&quot;Quote Expired&quot;" EventTypeCategoryCode="&quot;OPE&quot;" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="true" IsFollowUp="true" FollowUpEnglishName="&quot;Quote Expired&quot;" FollowUpLocalName="&quot;Quote Expired&quot;" />
   </EventTypes>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Quote&quot;" DefaultText="&quot;Quote&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;Quote.B.Partners.AddPartners&quot;" DefaultText="&quot;Add Partners&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Quote.O.FollowUps&quot;" DefaultText="&quot;Follow Ups&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Quote.S.Details.Details&quot;" DefaultText="&quot;Details&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
@@ -772,6 +771,10 @@
     <TextCode Code="&quot;Quote.B.Charges.Tariffs&quot;" DefaultText="&quot;Tariffs&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Quote.O.Charges.NoVat&quot;" DefaultText="&quot;No VAT for this date&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Quote.M.DeleteThisPackage&quot;" DefaultText="&quot;Delete this package?&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Quote.M.BuildShipmentMessage&quot;" DefaultText="&quot;Build Shipment is Available Only if Ad-hoc Quotes&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Quote.M.QuoteCancelMessage&quot;" DefaultText="&quot;Quote cannot be Cancelled, since it has connected Shipments&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Quote.M.QuoteReturnMessage&quot;" DefaultText="&quot;Quote can't be returned to draft since it is connected to a shipment&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Quote.O.DeclineReason&quot;" DefaultText="&quot;Decline Reason&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Quote.O.Charges.CostMinAmount&quot;" DefaultText="&quot;Cost%nMin Amount&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Quote.O.Charges.CostMaxAmount&quot;" DefaultText="&quot;Cost%nMax Amount&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Quote.O.Charges.SaleMinAmount&quot;" DefaultText="&quot;Sale%nMin Amount&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />

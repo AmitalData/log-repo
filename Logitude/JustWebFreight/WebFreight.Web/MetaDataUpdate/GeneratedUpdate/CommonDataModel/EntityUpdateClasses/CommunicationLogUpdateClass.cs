@@ -2188,7 +2188,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup CommunicationLogQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "COLG", Name = "Communication Logs" }, queryGroupRepository);
 						QueryGroup CommunicationLogQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "25a7", Name = " Query Group" }, queryGroupRepository);
@@ -2208,7 +2208,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TodayCommunicationLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommunicationLogTextCode_0.Id, Code = "Today Communication Logs",  QueryGroupCode = "COLG", IndexOrder = 0, Tenant = 0, ObjectTableId = CommunicationLogObjectTable.Id, QuerySection = "CommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommunicationLogFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query TodayCommunicationLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommunicationLogTextCode_0.Id, Code = "Today Communication Logs",  QueryGroupCode = "COLG", IndexOrder = 0, Tenant = 0, ObjectTableId = CommunicationLogObjectTable.Id, QuerySection = "CommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommunicationLogFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn TodayCommunicationLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayCommunicationLogsQuery.Id, IndexOrder = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -2237,7 +2237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
   
 	      
 
-			  Query AllCommunicationLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommunicationLogTextCode_1.Id, Code = "All Communication Logs",  QueryGroupCode = "COLG", IndexOrder = 1, Tenant = 0, ObjectTableId = CommunicationLogObjectTable.Id, QuerySection = "CommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommunicationLogFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllCommunicationLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CommunicationLogTextCode_1.Id, Code = "All Communication Logs",  QueryGroupCode = "COLG", IndexOrder = 1, Tenant = 0, ObjectTableId = CommunicationLogObjectTable.Id, QuerySection = "CommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CommunicationLogFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllCommunicationLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCommunicationLogsQuery.Id, IndexOrder = 0, ObjectFieldId = CommunicationLogObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -2342,18 +2342,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature CommunicationLogEventsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "CommunicationLog.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CommunicationLog.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommunicationLogGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGMB",HtmlComponentName = "CommunicationLogMessageBodyComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogMessageBodyComponent", FeatureId = tenantFeatures.Where(d => d.Code == "MESSAGEBODY" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogMessageBodyControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CommunicationLog.TH.MessageBody" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGMB",HtmlComponentName = "CommunicationLogMessageBodyComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogMessageBodyComponent", FeatureId = CommunicationLogMessageBodyFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogMessageBodyControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogMessageBodyTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGER",HtmlComponentName = "CommunicationLogErrorComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogErrorComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ERROR" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogErrorControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CommunicationLog.TH.Error" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGER",HtmlComponentName = "CommunicationLogErrorComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogErrorComponent", FeatureId = CommunicationLogErrorFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogErrorControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogErrorTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGSP",HtmlComponentName = "CommunicationLogStepsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogStepsComponent", FeatureId = tenantFeatures.Where(d => d.Code == "STEPS" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogStepsControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CommunicationLog.TH.Steps" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGSP",HtmlComponentName = "CommunicationLogStepsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/CommunicationLogStepsComponent", FeatureId = CommunicationLogStepsFeature_TH3.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationLogStepsControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogStepsTextCode_TH3.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == CommunicationLogObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "CommunicationLog.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CGEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CommunicationLogEventsFeature_TH4.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CommunicationLogObjectTable.Id, TabNameTextCodeId = CommunicationLogEventsTextCode_TH4.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2432,7 +2432,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable CommunicationLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CommunicationLog" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature CommunicationLogFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RESEND", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "CommunicationLog.Features.Resend", NameTextCodeDefaultText = "Resend", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
@@ -2509,13 +2509,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable CommunicationLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CommunicationLog" && d.Tenant == 0).FirstOrDefault(); 
 
+ 		   TextCode CommunicationLogTextCode_CommunicationLogBDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.B.Details", DefaultText = "Details",LocalDefaultText = @"פרטים", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode CommunicationLogTextCode_CommunicationLogOLogs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Logs", DefaultText = "Logs",LocalDefaultText = @"לוג", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CommunicationLogTextCode_CommunicationLogOCorrelationID = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.CorrelationID", DefaultText = "Correlation ID",LocalDefaultText = @"מתאם", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CommunicationLogTextCode_CommunicationLogOMoreDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.MoreDetails", DefaultText = "More Details",LocalDefaultText = @"פרטים נוספים", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CommunicationLogTextCode_CommunicationLog = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog", DefaultText = "Communication Log",LocalDefaultText = null, ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CommunicationLogTextCode_CommunicationLogBView = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.B.View", DefaultText = "View",LocalDefaultText = @"לצפות", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2526,8 +2526,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
  		   TextCode CommunicationLogTextCode_CommunicationLogOUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.User", DefaultText = "User",LocalDefaultText = @"משתמש", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CommunicationLogTextCode_CommunicationLogOError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Error", DefaultText = "Error",LocalDefaultText = @"שגיאה", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode CommunicationLogTextCode_CommunicationLogBDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.B.Details", DefaultText = "Details",LocalDefaultText = @"פרטים", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

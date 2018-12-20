@@ -61,7 +61,6 @@
   </Screen>
   <EventTypes />
   <AdditionalTextCodes>
-    <TextCode Code="&quot;Address&quot;" DefaultText="&quot;Address&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="true" />
     <TextCode Code="&quot;Address.B.NewAddress&quot;" DefaultText="&quot;New Address&quot;" LocalDefaultText="&quot;כתובת חדשה&quot;" TextCodeTypeCode="&quot;B&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Address.O.MainAddress&quot;" DefaultText="&quot;Main Address&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Address.O.BillingAddress&quot;" DefaultText="&quot;Billing Address&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />

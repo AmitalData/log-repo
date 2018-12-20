@@ -522,15 +522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable FTPDetailObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "FTPDetail" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode FTPDetailTextCode_FTPDetail = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FTPDetail", DefaultText = "FTP Detail",LocalDefaultText = null, ObjectTableId = FTPDetailObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

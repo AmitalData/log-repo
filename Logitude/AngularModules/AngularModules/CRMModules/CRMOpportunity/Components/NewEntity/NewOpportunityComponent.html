@@ -1,4 +1,4 @@
-﻿<style type="text/css">
+<style type="text/css">
     .NoteItemBox {
         height: 80px;
         padding: 5px;
@@ -554,7 +554,7 @@ padding:10px;
                 </td>
 
                 <td style="width: 57px;">
-                    <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    <button id="{{'Cancel-DontAddOpportunity' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
                 </td>
 
                 <td style="width: 5px;">
@@ -562,7 +562,7 @@ padding:10px;
                 </td>
 
                 <td style="width: 57px;">
-                    <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    <button id="{{'Ok-AddOpportunity' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">Ok</button>
                 </td>
             </tr>
         </table>

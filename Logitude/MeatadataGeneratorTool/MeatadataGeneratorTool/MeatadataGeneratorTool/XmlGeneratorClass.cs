@@ -1279,6 +1279,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IndexOrder", table.QueriesObsList.IndexOf(f).ToString(), QueryElement, null);
                 SetAttribute("ObjectTableName", GetStringValue(f.ObjectTableName), QueryElement, null);
                 SetAttribute("QuerySection", GetStringValue(f.QuerySection), QueryElement, null);
+                
                 SetAttribute("SystemLevel", f.SystemLevel.ToString().ToLower(), QueryElement, null);
                 SetAttribute("IsAddNewEntity", f.IsAddNewEntity.ToString().ToLower(), QueryElement, null);
                 SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), QueryElement, null);
@@ -1311,9 +1312,11 @@ namespace MeatadataGeneratorTool
 
 
                 SetAttribute("IsSpellChecked", f.IsSpellChecked.ToString().ToLower(), QueryElement, null);
+                if (!string.IsNullOrEmpty(f.Perspective))
+                {
+                    SetAttribute("Perspective", GetStringValue(f.Perspective), QueryElement, null);
 
-
-
+                }
                 // Query Columns Properties
                 XmlElement QueryColumnsElement = doc.CreateElement("QueryColumns");
                 QueryElement.AppendChild(QueryColumnsElement);

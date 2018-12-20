@@ -2040,7 +2040,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Private Label Short Name",
-                FullFieldLable = "Private Label Short Name",
+                FullFieldLable = "PrivateLabelShortName",
                 FieldName = "PrivateLabelShortName",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2068,7 +2068,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Private Label Name",
-                FullFieldLable = "Private Label Name",
+                FullFieldLable = "PrivateLabelName",
                 FieldName = "PrivateLabelName",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2096,7 +2096,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Private Label Url",
-                FullFieldLable = "Private Label Url",
+                FullFieldLable = "PrivateLabelUrl",
                 FieldName = "PrivateLabelUrl",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2118,7 +2118,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Contact Us Email",
-                FullFieldLable = "Contact Us Email",
+                FullFieldLable = "ContactUsEmail",
                 FieldName = "ContactUsEmail",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2140,7 +2140,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Receive All Statuses",
-                FullFieldLable = "Receive All Statuses",
+                FullFieldLable = "ReceiveAllStatuses",
                 FieldName = "ReceiveAllStatuses",
                 FieldsDataType = "Boolean",
                 IsRequired = true,
@@ -2161,7 +2161,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "In Active",
-                FullFieldLable = "In Active",
+                FullFieldLable = "InActive",
                 FieldName = "InActive",
                 FieldsDataType = "Boolean",
                 IsRequired = true,
@@ -19923,7 +19923,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "State",
-                FullFieldLable = "State_Potential",
+                FullFieldLable = "StateId_Potential",
                 FieldName = "StateId_Potential",
                 FieldsDataType = "LookUp",
                 IsCustom = false,
@@ -20460,7 +20460,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 2,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 0,
-                FullFieldLable = "Name",
+                FullFieldLable = "EnglishName",
                 FullLocalDefaultText = "שם אנגלית",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
@@ -20762,7 +20762,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Payment Term Name",
                 DisplayOnLookUp = false,
-                FullFieldLable = "PaymentTermName",
+                FullFieldLable = "PaymentTermEnglishName",
                 FieldName = "PaymentTermEnglishName",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -33482,7 +33482,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
-                LookUpTableId = UsersObject.Id,
+                LookUpTableId = null,
                 CanFilter = true,
                 DisplayInList = true,
                 ListFieldLable = "TechnologyListLable",
@@ -64281,6 +64281,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.NoVendorTaxWithholdingPercentage", DefaultText = "There is no tax withholding definitions for this vendor, the default tax withholding percentage will be taken from system defaults", LocalDefaultText = "לא מוגדר ללקוח אחוז ניכוי מס במקור, אחוז ניכוי ברירת מחדל ילקח מהגדרות מערכת", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.FullAccountingCashBookCheck", DefaultText = "Cashbook amount is lower than payment amount", LocalDefaultText = "היתרה בקופה הינה קטנה מסכום הוראת התשלום", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.ValueDateCantBeFutureDate", LocalDefaultText = "תאריך ערך לא יכול להיות תאריך עתידי", DefaultText = "Value date can't be future date", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CheckPaymentChequesBeforeCancel", LocalDefaultText = "לא ניתן לבטל את התשלום לספק, משום שהתשלום בוצע ע”י המחאה שנפרעה כבר, יש לבטל את ההתאמה החיצונית ע”מ לעדכן את הסטטוס של ההמחאה", DefaultText = "The payment cheque that connected to the APPayment is redeemed, you should cancel the external reconciliation in order to update the status of the payment cheque", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region 

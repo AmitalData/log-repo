@@ -11,7 +11,6 @@
     <Record Code="&quot;WAC&quot;" SearchFields="&quot;WAC,Waiting for Activation&quot;" Name="&quot;Waiting for Activation&quot;" />
   </Records>
   <AdditionalTextCodes>
-    <TextCode Code="&quot;CustomerStatus&quot;" DefaultText="&quot;Customer Status&quot;" TextCodeTypeCode="&quot;T&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

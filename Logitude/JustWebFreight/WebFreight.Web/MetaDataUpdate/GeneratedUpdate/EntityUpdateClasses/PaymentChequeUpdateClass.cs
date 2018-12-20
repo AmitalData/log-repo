@@ -2682,7 +2682,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup PaymentChequeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "d25b", Name = "PaymentCheque Query Group" }, queryGroupRepository);
 						QueryGroup PaymentChequeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "5eeb", Name = " Query Group" }, queryGroupRepository);
@@ -2753,12 +2753,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature PaymentChequeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PaymentCheque.Tab.Events", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCGN",HtmlComponentName = "PaymentChequeGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/PaymentChequeGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "PaymentCheque.Tab.General" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ControlPath = "", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "PaymentCheque.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCGN",HtmlComponentName = "PaymentChequeGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/PaymentChequeGeneralTabComponent", FeatureId = PaymentChequeGeneralFeature_TH0.Id, ControlPath = "", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "PaymentCheque.Tab.Events" && d.ObjectTableId == PaymentChequeObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "PaymentCheque.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "PCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = PaymentChequeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = PaymentChequeObjectTable.Id, TabNameTextCodeId = PaymentChequeEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2856,7 +2856,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable PaymentChequeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PaymentCheque" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature PaymentChequeFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SAVEASDRAFTT", ObjectTableId = PaymentChequeObjectTable.Id, Tenant = 0, NameTextCodeCode = "PaymentCheque.Features.PCSaveAsDraft", NameTextCodeDefaultText = "Save as draft", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);

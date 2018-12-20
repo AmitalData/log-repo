@@ -1100,8 +1100,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOGrossWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.GrossWeight", DefaultText = "Gross Weight (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage", DefaultText = "Inside Shipment Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
    
 	    
 }
