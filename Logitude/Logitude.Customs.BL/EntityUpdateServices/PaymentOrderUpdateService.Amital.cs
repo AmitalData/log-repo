@@ -79,6 +79,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         toRaiseEventDFN = true;
                         break;
                 }
+
+                if(eventContextTagModel.UnifreighTaskCode == "LP2UB")
+                {
+                    UpdateUnifreightPaymentOrderBLD(dirtyEntityPM, connectedDeclarationPM, loggingUserId);
+                }
             }
 
             toLoadDeclarationPM = (toSendStatusPOP);           
@@ -105,11 +110,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 RaiseEvent("DFN", dirtyEntityPM, connectedDeclarationPM, loggingUserId);
 
-            }
-
-            if (eventContextTagModel != null && eventContextTagModel.FUStatusCode == "LP2UB") // moran 16.11.17 - AMI-61878
-            {
-                UpdateUnifreightPaymentOrder(dirtyEntityPM, connectedDeclarationPM, loggingUserId);
             }
         }
 
@@ -308,14 +308,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
             //Yuval Chalup 25.04.2016 TASK-19778 --->
-            var eventContextTagModel = dirtyEntityPM.CurrentContextTag as EventContextTagModel;
-            if (eventContextTagModel != null && eventContextTagModel.FUStatusCode == "LP2UB") // moran 16.11.17 - AMI-61878
-            {
-                eventContextTagModel.FUStatusCode = "";
-                dirtyEntityPM.CurrentContextTag = eventContextTagModel;
-                OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile,connectedDeclarationPM, "LP2UB", "RSH", true, "");
-                LogMessagingUtil.Instance.AppendLine("UpdateUnifreightPaymentOrder->OpenUnifreighTask->LP2U");
-            }
 
             return;
             // moran 4.6.15 - Task 12424 <--
@@ -371,6 +363,46 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (!String.IsNullOrWhiteSpace(genericResponseObj.Message))
             {
                 LogMessagingUtil.Instance.AppendLine("UpdateUnifreightPaymentOrder>genericResponseObj>Message= " + genericResponseObj.Message);
+            }
+
+        }
+
+        private void UpdateUnifreightPaymentOrderBLD(PaymentOrderPM dirtyEntityPM, DeclarationPM connectedDeclarationPM, string loggingUserId)
+        {
+            LogMessagingUtil.Instance.AppendLine("!UpdateUnifreightBLD>FileState=" + dirtyEntityPM.PaymentStatusCode ?? "NULL");
+
+            var myFile = new LOGIPAYORD();
+            var myLogitudePaymentOrder = new LogitudePaymentOrder();
+            myLogitudePaymentOrder.Type = "PaymentOrder";
+            myLogitudePaymentOrder.Primary = dirtyEntityPM.AccountingCustomFile;
+            myLogitudePaymentOrder.NIS_Amount = dirtyEntityPM.TotalSumToPay.Value.ToString();
+            myLogitudePaymentOrder.AccountingCard = dirtyEntityPM.AccountingCustomFile;
+            if (dirtyEntityPM.TotalSumToPay.Value != dirtyEntityPM.PaymentOrderLeftAmount.Value)
+            {
+                myLogitudePaymentOrder.Reference = dirtyEntityPM.PaymentNumber + "-1"; 
+            }
+            else
+            {
+                myLogitudePaymentOrder.Reference = dirtyEntityPM.PaymentNumber;
+            }
+            if (dirtyEntityPM.ActualPayDate != null)
+            {
+                myLogitudePaymentOrder.Value_Date = dirtyEntityPM.ActualPayDate.Value.ToString("dd.MM.yy hh:mm");
+            }
+            myLogitudePaymentOrder.PaymentProcessCode = dirtyEntityPM.PaymentProcessCode; 
+            if (dirtyEntityPM.PaymentOrderMethods != null && dirtyEntityPM.PaymentOrderMethods.Count() > 0) 
+            {
+                myLogitudePaymentOrder.PaymentMethods = GetPaymentMethods(dirtyEntityPM);
+            }
+            myFile.LogitudePaymentOrder = new LogitudePaymentOrder[] { myLogitudePaymentOrder };
+
+            EventContextTagModel eventContextTagModel = dirtyEntityPM.CurrentContextTag as EventContextTagModel;
+            if (eventContextTagModel != null && eventContextTagModel.UnifreighTaskCode == "LP2UB") // moran 16.11.17 - AMI-61878
+            {
+                eventContextTagModel.UnifreighTaskCode = "";
+                dirtyEntityPM.CurrentContextTag = eventContextTagModel;
+                OpenUnifreighTask(dirtyEntityPM.AccountingCustomFile, connectedDeclarationPM, "LP2UB", "RSH", true, "");
+                LogMessagingUtil.Instance.AppendLine("UpdateUnifreightPaymentOrder->OpenUnifreighTask->LP2U");
             }
 
         }

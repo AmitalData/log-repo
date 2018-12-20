@@ -58,6 +58,7 @@ namespace Logitude.Customs.BL.Models
             DOC_NG_5101_GNMessageToAgentResponseService,
             DeclarationClosure,
             CancelDeclarationClose,
+            TSH_MSG7_AgentPaymentReplyResponseServiceBLD,
         }
         public ProccessEnum CallProccessID { get; set; } //CargoExitFromCheckSite196
         //public PhysicalCheckPM DBOcc { get; set; } 
@@ -69,6 +70,7 @@ namespace Logitude.Customs.BL.Models
         public string StatusObjectTable { get; set; }
         public string StatusEntityId { get; set; }
         public string StatusCustomFileNo { get; set; }
+        public string UnifreighTaskCode { get; set; }
         public DateTime StatusDateTime { get; set; }
 
         public NotificationPM MyNotificationPM { get; set; }

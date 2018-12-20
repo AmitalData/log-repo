@@ -302,19 +302,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 _PaymentOrderPM.CurrentContextTag = null;
             }
             //Yuval Chalup 28.09.2016 --->
-            if (_PaymentOrderPM.CurrentContextTag != null && _DeclarationPM.IsCourierDeclaration) // moran 16.11.17 - AMI-61878
+            if (_DeclarationPM != null && _DeclarationPM.IsCourierDeclaration) // moran 16.11.17 - AMI-61878
             {
-                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_DeclarationPM.Tenant);
-                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_DeclarationPM.Id, false, false);
-                string HighLowValue = "";
-                if (currentDeclarationCourierStatusPM != null)
-                {
-                    HighLowValue =  currentDeclarationCourierStatusPM.HighLowValue;
-                }
                 if (_PaymentOrderPM.PaymentProcessCode == "1" && _PaymentOrderPM.PaymentStatusCode == "3")// && HighLowValue != "L")//Eitan H 12/12/18 task 46063 remove != "L"
                 {
                     var myInsertEventContextTagModel = _PaymentOrderPM.CurrentContextTag as EventContextTagModel;
-                    myInsertEventContextTagModel.FUStatusCode = "LP2UB";
+                    myInsertEventContextTagModel.UnifreighTaskCode = "LP2UB";
                     _PaymentOrderPM.CurrentContextTag = myInsertEventContextTagModel;
                     LogMessagingUtil.Instance.AppendLine("Added LP2UB " + _PaymentOrderPM.CustomFiles);
                 }

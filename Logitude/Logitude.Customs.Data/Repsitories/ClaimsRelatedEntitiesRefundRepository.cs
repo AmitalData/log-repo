@@ -17,8 +17,11 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<ClaimsRelatedEntitiesRefund> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+            ClaimsRelatedEntityKeys claimsRelatedEntityKeys = entityKeys as ClaimsRelatedEntityKeys;
+
+            return (from a in context.ClaimsRelatedEntitiesRefunds
+                    where a.ClaimId == claimsRelatedEntityKeys.ClaimId && a.CounterKey == claimsRelatedEntityKeys.EntityCounterKey
+                    select a).ToList();
         }
 
    }
