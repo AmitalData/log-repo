@@ -56,7 +56,7 @@ namespace Logitude.Accounting.BL.CoreBL
             // A100
             myStringBuilder.Append("A100");
             myStringBuilder.Append("000000001");
-            myStringBuilder.Append(tenantPM.VatNumber);
+         //   myStringBuilder.Append(tenantPM.VatNumber);
             if (tenantPM.VatNumber != null)
             {
                 if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber.Substring(0, 9); }
