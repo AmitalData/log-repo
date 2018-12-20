@@ -156,9 +156,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
+					  						DefaultText =  @"Code",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
+					  						ListLableDefaultText =  @"Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -205,9 +205,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "Name",
+					  						DefaultText =  @"Name",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "Name",
+					  						ListLableDefaultText =  @"Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -254,9 +254,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search ...",
+					  						DefaultText =  @"Search ...",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search ...",
+					  						ListLableDefaultText =  @"Search ...",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -334,7 +334,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
-	    } 
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+}
+
+
 	    public void FillTMLocation()
         { 
             var repo = new TMLocationRepository(0);
