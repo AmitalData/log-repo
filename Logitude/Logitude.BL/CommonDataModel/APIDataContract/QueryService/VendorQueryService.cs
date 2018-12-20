@@ -75,14 +75,25 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                         temp.PaymentTermId = myPaymentTermPM.Id;
                     }
                 }
-                
+                                
                 if (MyEntity.MainAddress != null)
                 {
                     AddressQueryService AddressQueryService = new AddressQueryService(Tenant);
-                    AddressPM address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+                    AddressPM address = AddressQueryService.AddressDataMappingAndValidatin(MyEntity.MainAddress, Tenant);
+                    if (!string.IsNullOrEmpty(MyEntity.MainAddress.City.Code))
+                    {
+                        address = AddressQueryService.AddressCustomDataMappingAndValidatin_CityCountry(MyEntity.MainAddress, Tenant, ComputingPartnerName);
+                    }
+
+                    else if (!string.IsNullOrEmpty(MyEntity.MainAddress.City.Name))
+                    {
+                        address.City = MyEntity.MainAddress.City.Name;
+                    }
+
                     address.AddressTypeId = "M";
                     address.Description = "Main Address";
                     address.Tenant = Tenant;
+
                     temp.Addresses.Add(address);
                 }
 
