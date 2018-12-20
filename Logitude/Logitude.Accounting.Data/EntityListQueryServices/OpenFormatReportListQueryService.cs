@@ -40,12 +40,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          SearchFields = a.SearchFields,
 					
 					                          ReportNumber = a.ReportNumber,
-					
-					                          FromDate = a.FromDate,
-					
-					                          ToDate = a.ToDate,
-					
-					                          DateTypeCode = a.DateTypeCode,
+
+                                                FromDate = a.FromDate,
+
+                                                ToDate = a.ToDate,
+
+                                                DateTypeCode = a.DateTypeCode,
 					
 					                          StatusTypeCode = a.StatusTypeCode,
 					
