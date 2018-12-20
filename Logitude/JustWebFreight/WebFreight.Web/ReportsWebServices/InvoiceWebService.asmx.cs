@@ -633,6 +633,26 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                     #endregion
 
+                    #region Notify1
+                    if (!string.IsNullOrEmpty(shipment.Notify1Id))
+                    {
+                        Card myCard = CardRepository.GetSingleCard(shipment.Notify1Id, tenant, true);
+                        if (myCard != null)
+                        {
+                            invoicedataprovider.Notify1VATNumber = myCard.VatNumber;
+                            
+                            if (!string.IsNullOrEmpty(shipment.Notify1AddressId))
+                            {
+                                Address myAddress = addressRepository.GetSingleAddress(shipment.Notify1AddressId, tenant);
+                                if (myAddress != null)
+                                {
+                                    invoicedataprovider.Notify1Address = DataProviders.General.GetAddress(myAddress);
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
                     if (shipment.DirectionId == "E")
                     {
                         invoicedataprovider.MainCarriageExpectedDate = shipment.MainCarriageETD != null ? String.Format("{0:dd.MMM.yy}", shipment.MainCarriageETD) : "";

@@ -269,7 +269,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         Tenant = this._Tenant,
                         AccountId = r.AccountId,
                         CurrencyId = r.CurrencyId,
-                        DateTypeCode = "1",// BETA-TO DO ...
+                        DateTypeCode = r.DateTypeValue,// "1",// BETA-TO DO ...
                         Year = r.Year,
                         Month = r.Month,
                         ForeignAmountDebit = r.ForeignAmountDebit,
@@ -282,7 +282,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 });
                 tDeltaUpdate.ForEach(r =>
                 {
-                    var poco = myGLAccountTotalByMonthRepository.GetSingle(r.AccountId, "1", r.Year, r.Month, r.CurrencyId, _Tenant);
+                    var poco = myGLAccountTotalByMonthRepository.GetSingle(r.AccountId, r.DateTypeValue, r.Year, r.Month, r.CurrencyId, _Tenant);
                     poco.ForeignAmountCredit -= r.ForeignAmountCredit;
 
                     poco.ForeignAmountDebit -= r.ForeignAmountDebit;
