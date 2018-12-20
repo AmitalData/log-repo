@@ -21,8 +21,8 @@ namespace WebFreight.Web.DataProviders
     {
         public string ShipmentNumber { get; set; }
         public string LineTypeCode { get; set; }
-        public double? Receivables { get; set; }
         public double? Payables { get; set; }
+        public double? Receivables { get; set; }
         public string LongMaster { get; set; }
         public string DirectionPartner { get; set; }
         public string DescriptionOfGoods { get; set; }
@@ -43,5 +43,12 @@ namespace WebFreight.Web.DataProviders
         public string ChargeTypeName { get; set; }
         public string ChargeTypeLocalName { get; set; }
         public string Salesman { get; set; }
+
+        public string VendorName { get; set; }
+        public string BillToName { get; set; }
+        public double? OpenPayables { get; set; }
+        public double? OpenReceivables { get; set; }
+        public double? AccountedPayables { get; set; }
+        public double? AccountedReceivables { get; set; }
     }
 }

@@ -50,15 +50,15 @@ export class ReportComponent {
                             var myResult: ReportList[] = myResponse.Result;
                             
                             myResult.forEach((item) => {
-                                if (item.Code == "AREX") {
-                                    if (SessionLocator.Tenant == 1212) {
-                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
-                                            this.reportList.push(item);
-                                        }
-                                    }
-                                }
+                                //if (item.Code == "AREX") {
+                                //    if (SessionLocator.Tenant == 1212) {
+                                //        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                //            this.reportList.push(item);
+                                //        }
+                                //    }
+                                //}
 
-                                else if (item.Code == "DSCA") {
+                                if (item.Code == "DSCA") {
                                     if (SessionLocator.Tenant != 1212) {
                                         if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                             this.reportList.push(item);
