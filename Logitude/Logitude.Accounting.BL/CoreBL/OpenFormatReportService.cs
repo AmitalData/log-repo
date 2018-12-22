@@ -59,8 +59,12 @@ namespace Logitude.Accounting.BL.CoreBL
          //   myStringBuilder.Append(tenantPM.VatNumber);
             if (tenantPM.VatNumber != null)
             {
-                if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber.Substring(0, 9); }
+                if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber= tenantPM.VatNumber.Substring(0, 9); }
                 myStringBuilder.Append(tenantPM.VatNumber.PadLeft(9, '0'));
+            }
+            else
+            {
+                myStringBuilder.Append('0', 9);
             }
 
             if (openFormatReportPM.ReportNumber != null)
