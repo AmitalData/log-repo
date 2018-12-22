@@ -81,6 +81,7 @@ namespace Logitude.Accounting.BL.DataContract
         public bool IsInternationlPartner { get; set; }
         public string EnglishName { get; set; }
         public decimal? EndYearBalance { get; set; }
+        public string VendorLocalName { get; set; }
     }
 
     public class TotalForCompany
