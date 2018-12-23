@@ -114,6 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsEditable =  true,
 			      				    ClientModuleName =  "Common",
 			      				    Code =  "CUSS",
+			      				    DescriptionDefaultText =  "Define sizes for evaluating the volume of customer business.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

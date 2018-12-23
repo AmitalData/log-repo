@@ -82,7 +82,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsNew =  true,
 			      				    DBTableName =  "CustomerDepositions",
 			      				    OldDBTableName =  "CustomerDepositions",
-			      				    ObjectTableSingular =  "CustomerDeposition",
+			      				    ObjectTableSingular =  "Customer Deposition",
 			      				    ObjectTablePlural =  "CustomerDepositions",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
@@ -114,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customer Deposition",
 			      				    Code =  "969e",
-			      				    Name =  " Query Group",
+			      				    Name =  "CustomerDeposition",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
 			      				    ServerModuleName =  "Common",
@@ -124,7 +124,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
+			      				    IsLookUp =  true,
+			      				    SearchFields =  "CustomerDeposition,CustomerDepositions,,Tenant,Id",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

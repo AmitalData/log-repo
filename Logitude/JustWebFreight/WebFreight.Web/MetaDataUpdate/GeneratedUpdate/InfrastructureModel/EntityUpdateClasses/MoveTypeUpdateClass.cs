@@ -738,7 +738,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup MoveTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "MTQG", Name = "Move Types" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -753,7 +753,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllMoveTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MoveTypeTextCode_0.Id, Code = "All Move Types",  QueryGroupCode = "MTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = MoveTypeObjectTable.Id, QuerySection = "MoveType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MoveTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllMoveTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = MoveTypeTextCode_0.Id, Code = "All Move Types",  QueryGroupCode = "MTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = MoveTypeObjectTable.Id, QuerySection = "MoveType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = MoveTypeFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllMoveTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllMoveTypesQuery.Id, IndexOrder = 0, ObjectFieldId = MoveTypeObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == MoveTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -802,12 +802,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   Feature MoveTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = MoveTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "MoveType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTGT",HtmlComponentName = "MoveTypeGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureOthers/Components/MoveType/MoveTypeGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == MoveTypeObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.MoveTypes.MoveTypeGeneralControl", ObjectTableId = MoveTypeObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "MoveType.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTGT",HtmlComponentName = "MoveTypeGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureOthers/Components/MoveType/MoveTypeGeneralTabComponent", FeatureId = MoveTypeGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.MoveTypes.MoveTypeGeneralControl", ObjectTableId = MoveTypeObjectTable.Id, TabNameTextCodeId = MoveTypeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == MoveTypeObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MoveTypeObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "MoveType.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MoveTypeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MoveTypeObjectTable.Id, TabNameTextCodeId = MoveTypeEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

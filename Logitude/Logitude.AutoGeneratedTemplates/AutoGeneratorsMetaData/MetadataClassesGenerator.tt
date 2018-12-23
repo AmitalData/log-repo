@@ -98,8 +98,8 @@ void SaveUpdateClassOutput(string outputFileName)
 
 
 <#+
-List<string> GeneratedTabFeatures = new List<string>();
-List<string> GeneratedTabTextCodes = new List<string>();
+Dictionary<string, string> GeneratedTabFeatures = new Dictionary<string, string>();
+Dictionary<string, string> GeneratedTabTextCodes = new Dictionary<string, string>();
  private void WriteUpdateClassMethod(XElement entity)
 {
 	string tableName = entity.Attribute(XName.Get("ObjectTableName")).Value.ToString().Trim('"');
@@ -322,8 +322,8 @@ namespace <#= UpdateClassnamespacestring #>
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
 	    {    <#+
-		 GeneratedTabFeatures = new List<string>();
-		 GeneratedTabTextCodes = new List<string>();
+		 GeneratedTabFeatures = new Dictionary<string, string>();
+		 GeneratedTabTextCodes = new Dictionary<string, string>();
 		var Tabs = entity.Elements("Tab").FirstOrDefault();
         if (Tabs != null)
         { #>
@@ -726,33 +726,36 @@ private void WriteAddTabsFeaturesAndTextCodesMethod(XElement entity,XElement Tab
     {
 	      Packagable =  IsPackagable.Value;  
     }
-	if(!GeneratedTabTextCodes.Contains(TextCodeCode) && !GeneratedTabFeatures.Contains(FeatureCode))
+           var featureInstanceName= TblName.Trim('"')+ Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","")+"Feature_TH"+index ;
+            var textCodeInstanceName = TblName.Trim('"')+ Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","")+ "TextCode_TH"+index ;
+	if(!GeneratedTabTextCodes.Keys.Contains(TextCodeCode) && !GeneratedTabFeatures.Keys.Contains(FeatureCode))
 	{
-		GeneratedTabTextCodes.Add(TextCodeCode);
-		GeneratedTabFeatures.Add(FeatureCode);
+         
+		    GeneratedTabTextCodes.Add(TextCodeCode, textCodeInstanceName);
+		    GeneratedTabFeatures.Add(FeatureCode, featureInstanceName);
 		 	  
 #> 
                  
-			   TextCode <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>TextCode_TH<#= index #> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= TextCodeCode #>", DefaultText = <#= Name #>,LocalDefaultText = <#= LocalName #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>Feature_TH<#= index #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#= FeatureCode #>", ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= FeatureTextCodeCode #>", NameTextCodeDefaultText = <#= FeatureDefaultText #>, FeatureTypeCode = "AREA", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   TextCode <#= textCodeInstanceName #> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= TextCodeCode #>", DefaultText = <#= Name #>,LocalDefaultText = <#= LocalName #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature <#= featureInstanceName #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#= FeatureCode #>", ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= FeatureTextCodeCode #>", NameTextCodeDefaultText = <#= FeatureDefaultText #>, FeatureTypeCode = "AREA", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 <#+
 }
 else
 {
-if(!GeneratedTabTextCodes.Contains(TextCodeCode))
+if(!GeneratedTabTextCodes.Keys.Contains(TextCodeCode))
 {
-		GeneratedTabTextCodes.Add(TextCodeCode);
+		GeneratedTabTextCodes.Add(TextCodeCode,textCodeInstanceName);
 #> 
                  
-			   TextCode <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>TextCode_TH<#= index #> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= TextCodeCode #>", DefaultText = <#= Name #>,LocalDefaultText = <#= LocalName #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode <#= textCodeInstanceName #> = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "<#= TextCodeCode #>", DefaultText = <#= Name #>,LocalDefaultText = <#= LocalName #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 <#+
 }
-if(!GeneratedTabFeatures.Contains(FeatureCode))
+if(!GeneratedTabFeatures.Keys.Contains(FeatureCode))
 {
-		GeneratedTabFeatures.Add(FeatureCode);
+		GeneratedTabFeatures.Add(FeatureCode,featureInstanceName);
 #> 
                  
-			   Feature <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>Feature_TH<#= index #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#= FeatureCode #>", ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= FeatureTextCodeCode #>", NameTextCodeDefaultText = <#= FeatureDefaultText #>, FeatureTypeCode = "AREA", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+			   Feature <#= featureInstanceName #> = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "<#= FeatureCode #>", ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, Tenant = 0, NameTextCodeCode = "<#= FeatureTextCodeCode #>", NameTextCodeDefaultText = <#= FeatureDefaultText #>, FeatureTypeCode = "AREA", Packagable = <#= Packagable.ToLower() #> }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 <#+
 }
 }
@@ -1178,11 +1181,12 @@ private void WriteAddTabMethod(XElement entity,XElement Tab,string TblName,int i
 	    if(FeatureCodeAtt != null)
 			FeatureCode = FeatureCodeAtt.Value.ToString().Trim('"');
 
-		 
+        var featureInstanceName= GeneratedTabFeatures[FeatureCode];
+        var textCodeInstanceName= GeneratedTabTextCodes[TextCodeCode];
 	  
 #>
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>Feature_TH<#= index #>.Id, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= TblName.Trim('"') #><#= Name.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","") #>TextCode_TH<#= index #>.Id, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = <#= Code #>,HtmlComponentName = <#= string.IsNullOrEmpty(HtmlComponentName) ? "\"\"" :  HtmlComponentName#>,HtmlComponentUrl = <#= string.IsNullOrEmpty(HtmlComponentURL) ? "\"\"" : HtmlComponentURL #>, FeatureId = <#= featureInstanceName #>.Id, ControlPath = <#= ControlPath #>, ObjectTableId = <#= TblName.Trim('"') #>ObjectTable.Id, TabNameTextCodeId = <#= textCodeInstanceName #>.Id, Tenant = 0, IndexOrder = <#= IndexOrder #> }, objectTableTabsRepository, TenantObjectTableTabs);
    <#+
 }
 

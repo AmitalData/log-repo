@@ -118,6 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CustomFieldsCount =  0,
 			      				    SearchFields =  "State,States,,Id,",
 			      				    ClientModuleName =  "Common",
+			      				    DescriptionDefaultText =  "Logitude supplies the states for you. You can modify the names and add local names.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

@@ -124,6 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    NameField =  "EnglishName",
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./InfrastructureModules/InfrastructureUser/Components/NewUserComponent",
+			      				    DescriptionDefaultText =  "Manage your Logitude users, associate users to roles and define restrictions.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
