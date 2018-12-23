@@ -30,6 +30,9 @@ namespace MeatadataGeneratorTool
 
         void ObjectTableControl_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+
+            System.Windows.Application.Current.Shutdown();
+            Environment.Exit(0);
             //ObjectTableViewModel viewModel = this.DataContext as ObjectTableViewModel;
             //MessageBoxResult result = MessageBox.Show("Do you want to save your changes?", "Save Changes", MessageBoxButton.YesNo);
             //if (result == MessageBoxResult.Yes)
@@ -88,6 +91,7 @@ namespace MeatadataGeneratorTool
                 ObjectTableViewModel viewModel = this.DataContext as ObjectTableViewModel;
                 if (viewModel != null && selected != null)
                 {
+                    selected.ErrorsVisibility = Visibility.Collapsed;
                     viewModel.RemoveFromListMethod(selected);
                 }
             }

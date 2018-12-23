@@ -231,6 +231,8 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.TotalOpenChequesInLocalCur).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<GLAccountMoreData>().Property(x => x.TotFutureOpenChequesInLocalCur).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.LocalAmountDebit).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<GLAccountTotalByMonth>().Property(x => x.LocalAmountCredit).HasPrecision(16, 2);
@@ -536,6 +538,7 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
 			modelBuilder.Configurations.Add(new LogitudeMessagesTransmissionLogMap());
+			modelBuilder.Configurations.Add(new CustomsShipperMap());
 			#endregion
 
             base.OnModelCreating(modelBuilder);

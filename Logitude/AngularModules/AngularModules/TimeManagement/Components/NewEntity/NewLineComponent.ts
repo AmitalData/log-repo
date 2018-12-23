@@ -22,7 +22,6 @@ export class NewLineComponent extends BaseComponent {
     public ObjectTableName = "TMEmployeeTime";
     public EntityPM: TMEmployeeTimePM;
     public LocationCode: any;
-    public EmployeeUserId: string = null;
     private myDomainService: TimeManagementDomainService = new TimeManagementDomainService();
     Father: DailyTimeSheetComponent;
 
@@ -39,7 +38,7 @@ export class NewLineComponent extends BaseComponent {
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.UpdateDate = todayDate;
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.EmployeeUserId = SessionLocator.LoggedUserId;
+       
         this.EntityPM.NeedsProrating = true;
         this.SetUIProperties();
     }
@@ -47,16 +46,16 @@ export class NewLineComponent extends BaseComponent {
     public EntityId = "";
     public IsNew = true;
     SetWindowArgs(args: any) {
-       
         if (args != null) {
             if (!args.IsNew) {
                 this.EntityPM = args.EntityPM;
                 this.EntityId = this.EntityPM.Id;
                 this.DateOfWorkDate.Date = this.EntityPM.DateOfWork;
-                this.DateOfWorkDateFormat = this.ApplyTimeFormat(this.DateOfWorkMinutes);
+                //this.DateOfWorkDateFormat = this.ApplyTimeFormat(this.EntityPM.TimeInMinutes);
+                this.DateOfWorkMinutes = this.EntityPM.TimeInMinutes;
                 this.Father = args.Father;
                 this.LocationCode = args.Father.LocationCode;
-                this.EmployeeUserId = args.Father.EmployeeUserId;
+                //this.EmployeeUserId = args.Father.EmployeeUserId;
                 this.SetUIProperties();
                 this.IsNew = false;
             }
@@ -64,7 +63,7 @@ export class NewLineComponent extends BaseComponent {
                 this.Father = args.Father;
                 this.EntityId = args.EntityId;
                 this.LocationCode = args.LocationCode;
-                this.EmployeeUserId = args.EmployeeUserId;
+                this.EntityPM.EmployeeUserId = SessionLocator.LoggedUserId;
                 this.EntityPM.LocationCode = this.LocationCode;
                 this.ProjectId = args.ProjectId;
                 this.TimeSheetItem.ProjectId_db = args.ProjectId;
@@ -107,6 +106,18 @@ export class NewLineComponent extends BaseComponent {
     set ProjectId(value: string) {
         if (this.EntityPM.ProjectId != value) {
             this.EntityPM.ProjectId = value;
+        }
+        this.SetUIProperties();
+    }
+
+    get EmployeeUserId() {
+        if (this.EntityPM != null) {
+            return this.EntityPM.EmployeeUserId;
+        }
+    }
+    set EmployeeUserId(value: string) {
+        if (this.EntityPM.EmployeeUserId != value) {
+            this.EntityPM.EmployeeUserId = value;
         }
         this.SetUIProperties();
     }
@@ -160,7 +171,7 @@ export class NewLineComponent extends BaseComponent {
         }
     }
     set DateOfWorkMinutes(value: number) {
-        if (this.DateOfWorkDate.Minuts != value) {
+        if (this.DateOfWorkDate != null) {
             this.DateOfWorkDate.Minuts = value;
             this.DateOfWorkDateFormat = this.ApplyTimeFormat(value);
         }
@@ -172,7 +183,7 @@ export class NewLineComponent extends BaseComponent {
     }
     set DateOfWorkDateFormat(value: string) {
         if (this.dateOfWorkDateFormat != value) {
-            this.dateOfWorkDateFormat == value;
+            this.dateOfWorkDateFormat = value;
         }
     }
 
@@ -186,7 +197,7 @@ export class NewLineComponent extends BaseComponent {
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         if (this.DateOfWorkMinutes == null || this.DateOfWorkMinutes == 0) {
-            errors.push("Please fill the total minutes");
+            errors.push("Please fill the Time");
         }
 
         if (this.DateOfWork == null) {

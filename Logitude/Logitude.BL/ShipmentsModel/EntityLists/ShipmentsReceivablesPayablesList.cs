@@ -37,5 +37,12 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? ChargeableWeight { get; set; }
         public int? Quantity { get; set; }
         public double? TEU { get; set; }
+
+        public DateTime? FirstPickupETD { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public string TransportMode { get; set; }
+        public string MainCarriagePortCode { get; set; }
+        public string FinalDestinationPortCode { get; set; }
+        public double? ValueOfGoods { get; set; }
     }
 }

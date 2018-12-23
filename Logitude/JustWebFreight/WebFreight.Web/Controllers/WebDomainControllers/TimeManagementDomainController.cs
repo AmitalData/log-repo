@@ -128,6 +128,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 if (itemPOCO != null)
                                 {
                                     itemPOCO.TimeInMinutes = itemChanged.TimeInMinutes;
+                                    itemPOCO.Description = itemChanged.Description;
+                                    itemPOCO.WINumber = itemChanged.WINumber;
+                                    itemPOCO.EmployeeUserId = itemChanged.EmployeeUserId;
+                                    itemPOCO.SprintId = itemChanged.SprintId;
+                                    itemPOCO.ProjectId = itemChanged.ProjectId;
+                                    itemPOCO.DateOfWork = itemChanged.DateOfWork;
                                     //repository.Update(itemPOCO);
 
                                     itemPOCO.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
@@ -576,7 +582,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetUpdatedTimeSheetList(string projectId, string description, string wiNumber, string employeeUserId, string locationCode, string periodStartDate, string exitDate)
+        public HttpResponseMessage GetUpdatedTimeSheetList(string Id, string employeeUserId, string locationCode, string periodStartDate, string exitDate)
         {
             try
             {
@@ -589,17 +595,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TMEmployeeTimeUpdateService service = new TMEmployeeTimeUpdateService(myContext);
                 TMEmployeeTimeRepository repository = new TMEmployeeTimeRepository(myContext);
 
-                if (wiNumber == "null")
+                if (Id == "null")
                 {
-                    wiNumber = null;
-                }
-                if (description == "null")
-                {
-                    description = null;
-                }
-                if (projectId == "null")
-                {
-                    projectId = null;
+                    Id = null;
                 }
                 if (employeeUserId == "null")
                 {
@@ -618,19 +616,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     exitDate = null;
                 }
 
-                List<TMEmployeeTime> deletedList = (from d in myContext.TMEmployeeTimes
+                TMEmployeeTime deletedItem = (from d in myContext.TMEmployeeTimes
                                                     where d.Tenant == tenant
-                                                    && d.ProjectId == projectId && d.Description == description && d.WINumber == wiNumber
-                                                    select d).ToList();
+                                                    && d.Id == Id
+                                                    select d).FirstOrDefault();
 
                 TimeManagementAPIHelper args = new TimeManagementAPIHelper();
-                if (deletedList != null && deletedList.Count > 0)
+                if (deletedItem != null)
                 {
-                    foreach (var item in deletedList)
-                    {
-                        repository.Remove(item);
-                    }
 
+                    repository.Remove(deletedItem);
                     repository.SubmitChanges();
 
                     DateTime? myStartDate = DateHelper.GetDate(periodStartDate);

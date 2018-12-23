@@ -107,5 +107,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public double? ValueOfGoods { get; set; }
     
     public Currency ValueOfGoodsCurrency { get; set; }
+    
+    public List<Receivable> Receivables { get; set; }
+    
+    public List<Payable> Payables { get; set; }
     }
 } 

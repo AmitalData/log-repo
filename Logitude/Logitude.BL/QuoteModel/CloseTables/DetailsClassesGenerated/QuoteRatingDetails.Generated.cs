@@ -25,7 +25,7 @@ namespace Logitude.BL.QuoteModel
             {    
                 Code = "C", 
                 IndexOrder = 1, 
-                SearchFields = "C,1,Cold,", 
+                SearchFields = "C,Cold", 
                 Name = "Cold", 
 			});
 			 
@@ -33,7 +33,7 @@ namespace Logitude.BL.QuoteModel
             {    
                 Code = "H", 
                 IndexOrder = 4, 
-                SearchFields = "H,4,Hot,", 
+                SearchFields = "H,Hot", 
                 Name = "Hot", 
 			});
 			 
@@ -41,7 +41,7 @@ namespace Logitude.BL.QuoteModel
             {    
                 Code = "N", 
                 IndexOrder = 2, 
-                SearchFields = "N,2,Neutral,", 
+                SearchFields = "N,Neutral", 
                 Name = "Neutral", 
 			});
 			 
@@ -49,7 +49,7 @@ namespace Logitude.BL.QuoteModel
             {    
                 Code = "W", 
                 IndexOrder = 3, 
-                SearchFields = "W,3,Warm,", 
+                SearchFields = "W,Warm", 
                 Name = "Warm", 
 			});
 			

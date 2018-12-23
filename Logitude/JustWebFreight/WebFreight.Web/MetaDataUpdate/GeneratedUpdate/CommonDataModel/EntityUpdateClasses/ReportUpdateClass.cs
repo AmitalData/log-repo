@@ -82,44 +82,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DBTableName =  "Reports",
 			      				    ObjectTableSingular =  "Report",
 			      				    ObjectTablePlural =  "Reports",
-			      				    DefaultText =  "Report",
-			      				    Name =  "Report",
-			      				    IsNewWizard =  false,
 			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  true,
+			      				    IsNewWizard =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  true,
-			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  true,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
+			      				    EnableEditFromLOV =  false,
 			      				    InActive =  false,
-			      				    SearchFields =  "Report,Reports,,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  true,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  10,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  true,
 			      				    HasDynamicHeader =  true,
-			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
-			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
-			      				    ClientModuleName =  "Common",
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  10,
+			      				    DefaultText =  "Report",
 			      				    Code =  "RPRT",
+			      				    Name =  "Report",
+			      				    GenerateDomainService =  false,
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    CustomFieldsCount =  0,
+			      				    SearchFields =  "Report,Reports,,Id,",
+			      				    ClientModuleName =  "Common",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -133,10 +130,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Name",
-					  						MaxLength =  40,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -148,39 +144,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Name",
 					  						ListPropertyPath =  "Name",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  true,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Report",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  @"Name",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  @"Name",
 					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "Name",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
 					  						FullLocalDefaultText =  @"שם",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
 					  						ListLocalDefaultText =  @"שם",
 					  						HelpTextCode =  "Name",
 					  						HelpLocalDefaultText =  @"שם",
@@ -194,10 +194,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "FilterControlName",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
-					  						Code =  "FilterControlName",
-					  						MaxLength =  100,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -209,38 +208,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "FilterControlName",
 					  						ListPropertyPath =  "FilterControlName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  true,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Report",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "FilterControlName",
 					  						DefaultText =  @"FilterControlName",
 					  						ListFieldLable =  "FilterControlNameListLable",
 					  						ListLableDefaultText =  @"FilterControlName",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "FilterControlName",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HelpTextCode =  "FilterControlName",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -252,10 +255,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Description",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Description",
-					  						MaxLength =  250,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  250,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -267,38 +269,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Description",
 					  						ListPropertyPath =  "Description",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  true,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Report",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "Description",
 					  						DefaultText =  @"Description",
 					  						ListFieldLable =  "DescriptionListLable",
 					  						ListLableDefaultText =  @"Description",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "Description",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HelpTextCode =  "Description",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -310,10 +316,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "SearchFields",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
-					  						Code =  "SearchFields",
-					  						MaxLength =  1000,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  1000,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -325,39 +330,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Report",
 					  						ValidForQuerySection2 =  "ReportFollowUp",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  @"Search Tenant / Name / Description",
 					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  @"Searching by :\n1: Tenant \n2: Name \n3: Description",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "SearchFields",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -368,10 +377,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Code",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Code",
-					  						MaxLength =  4,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  true,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -382,38 +390,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Code",
 					  						ListPropertyPath =  "Code",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Report",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  true,
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  @"Code",
 					  						ListFieldLable =  "CodeListLable",
 					  						ListLableDefaultText =  @"Code",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "Code",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HelpTextCode =  "Code",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -425,10 +437,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "InActive",
 					  						ObjectTableName =  "Report",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "InActive",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
@@ -440,38 +451,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "InActive",
 					  						ListPropertyPath =  "InActive",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Report",
-					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  true,
 					  						FullFieldLable =  "InActive",
 					  						DefaultText =  @"InActive",
 					  						ListFieldLable =  "InActiveListLable",
 					  						ListLableDefaultText =  @"InActive",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "InActive",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -536,7 +551,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ReportQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "RPRT", Name = "Report" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -551,7 +566,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportTextCode_0.Id, Code = "All Reports",  QueryGroupCode = "RPRT", IndexOrder = 0, Tenant = 0, ObjectTableId = ReportObjectTable.Id, QuerySection = "Report", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ReportFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllReportsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportTextCode_0.Id, Code = "All Reports",  QueryGroupCode = "RPRT", IndexOrder = 0, Tenant = 0, ObjectTableId = ReportObjectTable.Id, QuerySection = "Report", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ReportFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllReportsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllReportsQuery.Id, IndexOrder = 1, ObjectFieldId = ReportObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -610,14 +625,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature ReportEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Report.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReportGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPTP",HtmlComponentName = "ReportTemplateComponent",HtmlComponentUrl = "./Report/Components/ReportTemplateComponent", FeatureId = tenantFeatures.Where(d => d.Code == "TEMPLATE" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().Id, ControlPath = "Logitude.Reports.ReportTemplateControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Report.TH.Template" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPTP",HtmlComponentName = "ReportTemplateComponent",HtmlComponentUrl = "./Report/Components/ReportTemplateComponent", FeatureId = ReportReportTemplateFeature_TH1.Id, ControlPath = "Logitude.Reports.ReportTemplateControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportReportTemplateTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == ReportObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "Report.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReportEventsFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportEventsTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -631,41 +646,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature ReportFeature_STATISTICSBYAIRLINE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYAIRLINE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsbyAirline", NameTextCodeDefaultText = @"Statistics by Airline" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STATISTICSBYAIRLINE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYAIRLINE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsbyAirline", NameTextCodeDefaultText = @"Statistics by Airline" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_STATISTICSBYSHIPPINGLINES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYSHIPPINGLINES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsbyShippingLines", NameTextCodeDefaultText = @"Statistics by Shipping Lines" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STATISTICSBYSHIPPINGLINES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYSHIPPINGLINES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsbyShippingLines", NameTextCodeDefaultText = @"Statistics by Shipping Lines" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_PROFITBYSHIPMENTSTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROFITBYSHIPMENTSTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ProfitByShipmentStatistics", NameTextCodeDefaultText = @"Profit By Shipment Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_PROFITBYSHIPMENTSTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PROFITBYSHIPMENTSTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ProfitByShipmentStatistics", NameTextCodeDefaultText = @"Profit By Shipment Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_STATISTICSBYCUSTOMER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYCUSTOMER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsByCustomer", NameTextCodeDefaultText = @"Statistics By Customer" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STATISTICSBYCUSTOMER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATISTICSBYCUSTOMER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatisticsByCustomer", NameTextCodeDefaultText = @"Statistics By Customer" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_STATEMENT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATEMENT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.Statement", NameTextCodeDefaultText = @"Statement" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STATEMENT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATEMENT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.Statement", NameTextCodeDefaultText = @"Statement" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_INVOICEBYPARTNER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INVOICEBYPARTNER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.InvoicesByPartner", NameTextCodeDefaultText = @"Invoices By Partner" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_INVOICEBYPARTNER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INVOICEBYPARTNER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.InvoicesByPartner", NameTextCodeDefaultText = @"Invoices By Partner" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_QUOTESSTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUOTESSTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.QuotesStatistics", NameTextCodeDefaultText = @"Quotes Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_QUOTESSTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "QUOTESSTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.QuotesStatistics", NameTextCodeDefaultText = @"Quotes Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_ARINVOICEINCLUDEVAT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARINVOICEINCLUDEVAT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ARInvoiceIncludeVAT", NameTextCodeDefaultText = @"AR Invoice include VAT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_ARINVOICEINCLUDEVAT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARINVOICEINCLUDEVAT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ARInvoiceIncludeVAT", NameTextCodeDefaultText = @"AR Invoice include VAT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_AGEDACCOUNTSRECIEVABLES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGEDACCOUNTSRECIEVABLES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.AgedAccountsReceivable", NameTextCodeDefaultText = @"Aging report - Statement summarized" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_AGEDACCOUNTSRECIEVABLES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AGEDACCOUNTSRECIEVABLES", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.AgedAccountsReceivable", NameTextCodeDefaultText = @"Aging report - Statement summarized" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_OPENFORMATREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENFORMATREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.OpenFormatReport", NameTextCodeDefaultText = @"Open Format Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_OPENFORMATREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENFORMATREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.OpenFormatReport", NameTextCodeDefaultText = @"Open Format Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_IATASTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IATASTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.IATAStatistics", NameTextCodeDefaultText = @"IATA Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_IATASTATISTICS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IATASTATISTICS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.IATAStatistics", NameTextCodeDefaultText = @"IATA Statistics" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_ACCOUNTINGLEDGER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGLEDGER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.AccountingLedger", NameTextCodeDefaultText = @"Accounting Ledger" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_ACCOUNTINGLEDGER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCOUNTINGLEDGER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.AccountingLedger", NameTextCodeDefaultText = @"Accounting Ledger" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_APINVOICEINCLUDEVAT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APINVOICEINCLUDEVAT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.APInvoiceIncludeVAT", NameTextCodeDefaultText = @"AP Invoice Include VAT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_APINVOICEINCLUDEVAT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APINVOICEINCLUDEVAT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.APInvoiceIncludeVAT", NameTextCodeDefaultText = @"AP Invoice Include VAT" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_OCEANSHIPMENTREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OCEANSHIPMENTREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.OceanShipmentReport", NameTextCodeDefaultText = @"Ocean Shipment Report to Client" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_OCEANSHIPMENTREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OCEANSHIPMENTREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.OceanShipmentReport", NameTextCodeDefaultText = @"Ocean Shipment Report to Client" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_STATEMENTBYINVOICEDATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATEMENTBYINVOICEDATE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatementByInvoiceDate", NameTextCodeDefaultText = @"Statement By Invoice Date" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STATEMENTBYINVOICEDATE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STATEMENTBYINVOICEDATE", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StatementByInvoiceDate", NameTextCodeDefaultText = @"Statement By Invoice Date" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_STAGECHANGINGREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STAGECHANGINGREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StageChangingReport", NameTextCodeDefaultText = @"Stage Changing Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_STAGECHANGINGREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "STAGECHANGINGREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.StageChangingReport", NameTextCodeDefaultText = @"Stage Changing Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_MONTHLYCONVERSION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MONTHLYCONVERSION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.MonthlyConversionReport", NameTextCodeDefaultText = @"Monthly Conversion Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_MONTHLYCONVERSION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MONTHLYCONVERSION", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.MonthlyConversionReport", NameTextCodeDefaultText = @"Monthly Conversion Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
-		   Feature ReportFeature_EXPECTEDINCOMEREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPECTEDINCOMEREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = true, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ExpectedIncomeReport", NameTextCodeDefaultText = @"Expected monthly income report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+		   Feature ReportFeature_EXPECTEDINCOMEREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPECTEDINCOMEREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ExpectedIncomeReport", NameTextCodeDefaultText = @"Expected monthly income report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ReportFeature_CONTAINERTRUCKINGREPORT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONTAINERTRUCKINGREPORT", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.ContainerTruckingReport", NameTextCodeDefaultText = @"Container Trucking" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
@@ -806,15 +821,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable ReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Report" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode ReportTextCode_Report = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report", DefaultText = "Report",LocalDefaultText = null, ObjectTableId = ReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

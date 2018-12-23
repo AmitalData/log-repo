@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -169,7 +169,12 @@ export class InvoicesRoutingsFilterComponent extends BaseComponent  {
         if (this.ToDate < this.FromDate) {
             this.ValidationErrorsList.push("From date must be less than to date");
         }
-        else {
+
+        if (!this.InvoiceStatusSelectedItem) {
+            this.ValidationErrorsList.push("Invoice status field is required");
+        }
+        
+        if (this.ValidationErrorsList.length == 0) {
             this.queryFilterItems = new Array<QueryFilterItem>();
 
             this.queryFilterItem = new QueryFilterItem();

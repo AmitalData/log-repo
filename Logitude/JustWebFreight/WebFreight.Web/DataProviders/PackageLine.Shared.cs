@@ -128,6 +128,8 @@ namespace WebFreight.Web.DataProviders
         public string DangerousDescription { get; set; }
         public string Description { get; set; }
         public string InsidePackagesDetails { get; set; }
+        public string Notes { get; set; }
+
     }
 
     public class InsidePackageLine

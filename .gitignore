@@ -226,6 +226,7 @@ PublishScripts/
 # NuGet Packages
 *.nupkg
 **/Logitude/packages/*
+**/LogitudeTools/WorkerRoleSimulation/packages/*
 # The packages folder can be ignored because of Package Restore
 # except build/, which is used as an MSBuild target.
 
@@ -381,3 +382,6 @@ __pycache__/
 /Logitude/JustWebFreight/WebFreight.Web/JustConfig/Master.ConnectionStrings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustConfig/Master.appSettings.config
 /Logitude/MetaDataGenerator/GeneratedFiles/New
+/Logitude/AngularModules/LoginModules/aot/Login
+/Logitude/AngularModules/AngularModules/Common/Services/StandardLists
+/LogitudeTools/WorkerRoleSimulation/packages

@@ -881,6 +881,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<DWHSetting> DWHSettings { get; set; }
 
 
+        public IDbSet<CustomsShipper> CustomsShippers { get; set; }
+        public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
+
+
+
+
         #endregion
 
         #region Webfreight Context
@@ -1583,8 +1589,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<AWBInformation> AWBInformations { get; set; }
         public IDbSet<ShipmentPackageItem> ShipmentPackageItems { get; set; }
         public IDbSet<ShipmentCommodity> ShipmentCommodities { get; set; }
-        public IDbSet<AWBMessagingStock> AWBMessagingStocks { get; set; }
-        public IDbSet<AWBStockUsageHistory> AWBStockUsageHistories { get; set; }
+        public IDbSet<MessagingStock> MessagingStocks { get; set; }
+        public IDbSet<MessagingStockUsageHistory> MessagingStockUsageHistories { get; set; }
         public IDbSet<UserPermittedProduct> UserPermittedProducts { get; set; }
         public IDbSet<AccountingInformationIdentifier> AccountingInformationIdentifiers { get; set; }
         public IDbSet<ManifestStatus> ManifestStatus { get; set; }
@@ -4585,8 +4591,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new SpecialServicesTypeMap());
             modelBuilder.Configurations.Add(new EmailProviderMap());
             modelBuilder.Configurations.Add(new RegionMap());
-            modelBuilder.Configurations.Add(new AWBMessagingStockMap());
-            modelBuilder.Configurations.Add(new AWBStockUsageHistoryMap());
+            modelBuilder.Configurations.Add(new MessagingStockMap());
+            modelBuilder.Configurations.Add(new MessagingStockUsageHistoryMap());
             modelBuilder.Configurations.Add(new QuoteStageMap());
             modelBuilder.Configurations.Add(new QuoteRatingMap());
             modelBuilder.Configurations.Add(new CountryCityMap());
@@ -4718,6 +4724,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
             modelBuilder.Configurations.Add(new ShipmentPackageHarmonizeMap());
             modelBuilder.Configurations.Add(new PickUpDeliveryPackageHarmonizeMap());
+
+
+            modelBuilder.Configurations.Add(new CustomsShipperMap());
+            modelBuilder.Configurations.Add(new CustomerDepositionMap());
+
 
             base.OnModelCreating(modelBuilder);
         }

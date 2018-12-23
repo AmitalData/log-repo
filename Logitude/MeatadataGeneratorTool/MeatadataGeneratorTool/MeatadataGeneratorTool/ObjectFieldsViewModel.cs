@@ -676,6 +676,15 @@ namespace MeatadataGeneratorTool
             set { textCase = value; FirePropertyChanged("TextCase"); }
         }
 
+        bool copyToDW;
+        public bool CopyToDW
+        {
+            get { return copyToDW; }
+            set { copyToDW = value; FirePropertyChanged("CopyToDW"); }
+        }
+
+    
+
         ObjectFieldsViewModel controlFieldViewModel1;
         public ObjectFieldsViewModel ControlFieldViewMode1
         {
@@ -1189,6 +1198,7 @@ namespace MeatadataGeneratorTool
 
         private void OkBtnMethod()
         {
+            ErrorsVisibility = Visibility.Collapsed;
             ErrorMessages = string.Empty;
             if (FieldName.Length > 30)
             {
@@ -1356,6 +1366,10 @@ namespace MeatadataGeneratorTool
             if (ErrorMessages != "")
             {
                 ErrorsVisibility = Visibility.Visible;
+            }
+            else
+            {
+                ErrorsVisibility = Visibility.Collapsed;
             }
 
             FirePropertyChanged("ErrorMessages");

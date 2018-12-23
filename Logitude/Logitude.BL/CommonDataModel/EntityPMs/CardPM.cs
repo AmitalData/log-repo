@@ -19,6 +19,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Code { get; set; }
 
+        public string PartnerCode { get; set; }
+
         public string BankName { get; set; }
         public string BankAddress { get; set; }
         public string Swift { get; set; }

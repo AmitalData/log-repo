@@ -72,5 +72,9 @@ namespace Logitude.BL.QuoteModel.APIDataContract.ApiV1
     public double? CostContainerType5UnitPrice { get; set; }
     
     public double? SaleContainerType5UnitPrice { get; set; }
+    
+    public double? SaleMaxAmount { get; set; }
+    
+    public double? SaleMinAmount { get; set; }
     }
 } 

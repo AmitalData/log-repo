@@ -211,8 +211,8 @@ namespace WebFreight.Web.MetaDataUpdate
         ObjectTable PaymentCurrencyObject;
         ObjectTable CustomPickListObject;
         ObjectTable LogitudeLeadObject;
-        ObjectTable AWBMessagingStockObject;
-        ObjectTable AWBStockUsageHistoryObject;
+        ObjectTable MessagingStockObject;
+        ObjectTable MessagingStockUsageHistoryObject;
         ObjectTable CustomerSizeObject;
         ObjectTable QuoteStageObject;
         ObjectTable QuoteRatingObject;
@@ -325,6 +325,7 @@ namespace WebFreight.Web.MetaDataUpdate
         ObjectTable DWObjectFieldObject;
         ObjectTable ShipmentPackageHarmonizeObject;
         ObjectTable PickUpDeliveryPackageHarmonizeObject;
+        ObjectTable DWSubQueryObject;
         #endregion
 
         #region Create All Object Tables
@@ -1176,6 +1177,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableTypeCode = "MD",
                 ClientModuleName = "Common",
                 NameField = "EnglishName",
+                CodeField = "Code",
+                AllowedForComputingPartners = true,
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
             #endregion
 
@@ -3706,6 +3709,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ClientModuleName = "Infrastructure",
                 AllowedForComputingPartners = true,
                 CodeField="Code",
+                NameField = "Name",
+
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
             #endregion
 
@@ -4689,14 +4694,14 @@ namespace WebFreight.Web.MetaDataUpdate
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
             #endregion
 
-            #region AWBMessagingStock
-            AWBMessagingStockObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
+            #region MessagingStock
+            MessagingStockObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
-                DefaultText = "AWB Messaging Stock",
-                ObjectTableName = "AWBMessagingStock",
-                ObjectTablePlural = "AWB Messaging Stocks",
-                ObjectTableSingular = "AWB Messaging Stock",
-                DBTableName = "AWBMessagingStocks",
+                DefaultText = "Messaging Stock",
+                ObjectTableName = "MessagingStock",
+                ObjectTablePlural = "Messaging Stocks",
+                ObjectTableSingular = "Messaging Stock",
+                DBTableName = "MessagingStocks",
                 Tenant = 0,
                 KeyPropertyPath = "Id",
                 IsMain = true,
@@ -4704,20 +4709,20 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableTypeCode = "MD",
                 IsNewWizard = true,
                 NewWizardControlName = "Simplog.ShipmentLib.NewMessagingStockCommand",
-                NewWizardComponentPath = "./ShipmentModules/ShipmentStock/Components/AWBMessagingStock/StockNewWizardComponent",
+                NewWizardComponentPath = "./ShipmentModules/ShipmentStock/Components/MessagingStock/StockNewWizardComponent",
                 ClientModuleName = "Shipment",
                 HasMenuButtons = true,
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
             #endregion
 
-            #region AWBStockUsageHistory
-            AWBStockUsageHistoryObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
+            #region StockUsageHistory
+            MessagingStockUsageHistoryObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
-                DefaultText = "AWB Stock Usage History",
-                ObjectTableName = "AWBStockUsageHistory",
-                ObjectTablePlural = "AWB Stock Usage Histories",
-                ObjectTableSingular = "AWB Stock Usage History",
-                DBTableName = "AWBStockUsageHistories",
+                DefaultText = "Messaging Stock Usage History",
+                ObjectTableName = "MessagingStockUsageHistory",
+                ObjectTablePlural = "Messaging Stock Usage Histories",
+                ObjectTableSingular = "Messaging Stock Usage History",
+                DBTableName = "MessagingStockUsageHistories",
                 Tenant = 0,
                 KeyPropertyPath = "Id",
                 IsMain = true,
@@ -5734,8 +5739,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 KeyPropertyPath = "Code",
                 IsClosed = true,
+                IsMain = true,
                 IsAutoComplete = true,
-                CacheOnClient = false,
+                CacheOnClient = true,
                 ObjectTableTypeCode = "MD",
                 LookUp1 = "Name",
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -6657,6 +6663,28 @@ namespace WebFreight.Web.MetaDataUpdate
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 
             #endregion
+
+            #region DWSubQueryObject
+            DWSubQueryObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
+            {
+                DefaultText = "DWSubQuery",
+                ObjectTableName = "DWSubQuery",
+                ObjectTablePlural = "DWSubQuerys",
+                ObjectTableSingular = "DWSubQuery",
+                DBTableName = "DWSubQueries",
+                Tenant = 0,
+                KeyPropertyPath = "Id",
+                IsMain = true,
+                IsAutoComplete = true,
+                AutoCompleteSearchWindow = true,
+                EnableSecurity = true,
+                ObjectTableTypeCode = "MD",
+                ClientModuleName = "Infrastructure",
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
+
+            #endregion
+
+            
 
             #region DWObjectTable
             DWObjectFieldObject = AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()

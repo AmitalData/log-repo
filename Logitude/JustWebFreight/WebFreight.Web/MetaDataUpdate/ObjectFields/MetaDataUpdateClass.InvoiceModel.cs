@@ -2117,9 +2117,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ValidForQuerySection1 = "ARInvoice",
                 PMPropertyPath = "CancelledByARInvoiceId",
-                FullLocalDefaultText = "בוטל ע''י חשבונית",
-                ListLocalDefaultText = "בוטל ע''י חשבונית",
-                ShortLocalDefaultText = "בוטל ע''י חשבונית",
+                FullLocalDefaultText = "בוטל של חשבונית",
+                ListLocalDefaultText = "בוטל של חשבונית",
+                ShortLocalDefaultText = "בוטל של חשבונית",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -2623,6 +2623,28 @@ namespace WebFreight.Web.MetaDataUpdate
                 FullLocalDefaultText = "שגיאה בהעברת חשבוניות",
                 ListLocalDefaultText = "שגיאה בהעברת חשבוניות",
                 ShortLocalDefaultText = "שגיאה בהעברת חשבוניות",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Error In Transfer",
+                FullFieldLable = "ErrorInTransfer",
+                FieldName = "ErrorInTransfer",
+                FieldsDataType = "Boolean",
+                IsCustomFilter = true,
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = InvoiceObject.Id,
+                ObjectTableName = "ARInvoice",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "ARInvoice",
+                ListPropertyPath = "ErrorInTransfer",
+                PMPropertyPath = "ErrorInTransfer",
+                FullLocalDefaultText = "Error In Transfer",
+                ListLocalDefaultText = "Error In Transfer",
+                ShortLocalDefaultText = "Error In Transfer",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -4034,6 +4056,48 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private void CreateAPInvoiceFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Draft General Invoices",
+                FullFieldLable = "DraftGeneralAPInvoices",
+                FieldName = "DraftGeneralAPInvoices",
+                FieldsDataType = "Boolean",
+                IsCustomFilter = true,
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = APInvoiceObject.Id,
+                ObjectTableName = "APInvoice",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "APInvoice",
+                ListPropertyPath = "DraftGeneralAPInvoices",
+                PMPropertyPath = "DraftGeneralAPInvoices",
+                FullLocalDefaultText = "חשבוניות בסטטוס טיוטה",
+                ListLocalDefaultText = "חשבוניות בסטטוס טיוטה",
+                ShortLocalDefaultText = "חשבוניות בסטטוס טיוטה",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Approval General APInvoices",
+                FullFieldLable = "ApprovalGeneralAPInvoices",
+                FieldName = "ApprovalGeneralAPInvoices",
+                FieldsDataType = "Boolean",
+                IsCustomFilter = true,
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = APInvoiceObject.Id,
+                ObjectTableName = "APInvoice",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "APInvoice",
+                ListPropertyPath = "ApprovalGeneralAPInvoices",
+                PMPropertyPath = "ApprovalGeneralAPInvoices",
+                FullLocalDefaultText = "חשבוניות מאושרות ",
+                ListLocalDefaultText = "חשבוניות מאושרות ",
+                ShortLocalDefaultText = "חשבוניות מאושרות ",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Amount To Pay",
@@ -5736,6 +5800,30 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListLocalDefaultText = "סניף",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Error In Transfer",
+                FullFieldLable = "ErrorInTransfer",
+                FieldName = "ErrorInTransfer",
+                FieldsDataType = "Boolean",
+                IsCustomFilter = true,
+                MaxLength = 1,
+                MinLength = 0,
+                ObjectTableId = APInvoiceObject.Id,
+                ObjectTableName = "APInvoice",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "APInvoice",
+                ListPropertyPath = "ErrorInTransfer",
+                PMPropertyPath = "ErrorInTransfer",
+                FullLocalDefaultText = "Error In Transfer",
+                ListLocalDefaultText = "Error In Transfer",
+                ShortLocalDefaultText = "Error In Transfer",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
             this.ObjectContext.SaveChanges();
         }
         private void CreateAPInvoiceLineFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
@@ -6955,8 +7043,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "TipoCadenaPago",
                 PMPropertyPath = "TipoCadenaPago",
-                HelpLocalDefaultText = "Clave del tipo de cadena de pago que genera la entidad receptora de pago",
-                HelpTextDefaultText = "Payment Transfer Way",
+               
+                HelpTextDefaultText = "Clave del tipo de cadena de pago que genera la entidad receptora de pago%nPayment Transfer Way",
 
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -6981,8 +7069,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "CertPago",
                 PMPropertyPath = "CertPago",
                 MultiLine = true,
-                HelpLocalDefaultText = "Certificado que corresponde al pago",
-                HelpTextDefaultText = "The certificate that corresponds to the payment. It is a text chain of 64 base format",
+                
+                HelpTextDefaultText = "Certificado que corresponde al pago%nThe certificate that corresponds to the payment. It is a text chain of 64 base format",
 
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -7007,8 +7095,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "CadPago",
                 PMPropertyPath = "CadPago",
-                HelpLocalDefaultText = "Cadena Original del Comprobante de Pago generado por la entidad emisora de la cuenta beneficiaria",
-                HelpTextDefaultText = "Payment original chain sent by the beneficiary's bank institution",
+                
+                HelpTextDefaultText = "Cadena Original del Comprobante de Pago generado por la entidad emisora de la cuenta beneficiaria%nPayment original chain sent by the beneficiary's bank institution",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -7034,8 +7122,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "SelloPago",
                 PMPropertyPath = "SelloPago",
                 MultiLine = true,
-                HelpLocalDefaultText = "Sello digital que se asocie el pago",
-                HelpTextDefaultText = "The digital seal associates the payment. It is a text chain of 64 base format",
+                
+                HelpTextDefaultText = "Sello digital que se asocie el pago%The digital seal associates the payment. It is a text chain of 64 base format",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -7061,7 +7149,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "MetodoPagoCode",
                 PMPropertyPath = "MetodoPagoCode",
-                HelpTextDefaultText = "Way to Pay:\n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice\n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
+                HelpTextDefaultText = "Way to Pay:%n-Pago en una sola exhibición (PUE): payment closed at once in one single payment type performed prior to the issuance of the invoice%n-Pago en parcialidades o diferido (PPD): partial payment or deferred performed after the issuance of the invoice",
 
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -7094,6 +7182,30 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Bank Account",
+                FullFieldLable = "BankAccountName",
+                FieldName = "BankAccountName",
+                FieldsDataType = "Text",
+                MaxLength = 60,
+                MinLength = 0,
+                ObjectTableId = ARPaymentObject.Id,
+                ObjectTableName = ARPaymentObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                DisplayInList = true,
+                ValidForQuerySection1 = "ARPayment",
+                ListFieldLable = "BankAccountNameListLable",
+                ListLableDefaultText = "Bank Account",
+                Operator = "StartsWith",
+                ListPropertyPath = "BankAccountName",
+                PMPropertyPath = "BankAccountName",
+                FullLocalDefaultText = "חשבון בנק",
+                ListLocalDefaultText = "חשבון בנק",
+                ShortLocalDefaultText = "חשבון בנק",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Bank Account",
                 FullFieldLable = "BankAccountLiteId",
                 FieldName = "BankAccountLiteId",
                 FieldsDataType = "LookUp",
@@ -7106,9 +7218,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 TextCodeType = "F",
                 ValidForQuerySection1 = "ARPayment",
                 ListFieldLable = "BankAccountLiteIdListLable",
-                ListLableDefaultText = "Bank Account",
                 Operator = "Equals",
-                DisplayInList = true,
                 ListPropertyPath = "BankAccountLiteId",
                 PMPropertyPath = "BankAccountLiteId",
                 FullLocalDefaultText = "חשבון בנק",

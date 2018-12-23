@@ -158,6 +158,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? totFutureOpenChequesInLocalCur ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? TotFutureOpenChequesInLocalCur  
+	   {
+	    
+	     get
+		{
+		   return totFutureOpenChequesInLocalCur;
+		 }
+		 set
+		 {
+		   if(totFutureOpenChequesInLocalCur != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotFutureOpenChequesInLocalCur",OldValue=totFutureOpenChequesInLocalCur,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   totFutureOpenChequesInLocalCur=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

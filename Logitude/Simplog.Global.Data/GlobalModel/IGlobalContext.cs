@@ -44,7 +44,9 @@ namespace Simplog.Global.Data.GlobalModel
         IDbSet<SessionPolicy> SessionPolicies { get; }
         IDbSet<CaptchaKey> CaptchaKeys { get; }
         IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; }
+        IDbSet<WebhookKeys> WebhookKeys { get; }
         
+
         string GetCurrentConnection();
         void SetAsModified(object entity);
           

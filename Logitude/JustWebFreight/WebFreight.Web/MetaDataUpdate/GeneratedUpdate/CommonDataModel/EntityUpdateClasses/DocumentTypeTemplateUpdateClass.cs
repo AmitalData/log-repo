@@ -82,43 +82,37 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DBTableName =  "DocumentTypeTemplates",
 			      				    ObjectTableSingular =  "Document Type Template",
 			      				    ObjectTablePlural =  "DocumentTypeTemplates",
-			      				    DefaultText =  "Document Type Template",
-			      				    Name =  "DocumentTypeTemplate",
-			      				    IsNewWizard =  false,
 			      				    HasCustomFilter =  false,
+			      				    IsEditable =  true,
+			      				    IsNewWizard =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  true,
 			      				    HasCounter =  false,
-			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  true,
-			      				    CustomFieldsCount =  0,
-			      				    HasCustomFields =  false,
+			      				    EnableEditFromLOV =  false,
+			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
-			      				    SearchFields =  "DocumentTypeTemplate,DocumentTypeTemplates,,Id,",
 			      				    IsSaveButtonVisible =  true,
-			      				    EnableSecurity =  true,
-			      				    ObjectTableTypeCode =  "MD",
 			      				    IsComposition =  false,
-			      				    MaxNumberOfCustomFields =  0,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
-			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
-			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
-			      				    ClientModuleName =  "Common",
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    DefaultText =  "Document Type Template",
+			      				    Code =  "d093",
+			      				    Name =  "DocumentTypeTemplate",
+			      				    GenerateDomainService =  false,
 			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
+			      				    CustomFieldsCount =  0,
+			      				    SearchFields =  "DocumentTypeTemplate,DocumentTypeTemplates,,Id,",
+			      				    ClientModuleName =  "Common",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -132,10 +126,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Description",
 					  						ObjectTableName =  "DocumentTypeTemplate",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Description",
-					  						MaxLength =  40,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  40,
+					  						IsRequired =  true,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -147,37 +140,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Description",
 					  						ListPropertyPath =  "Description",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
+					  						ValidForQuerySection1 =  "Description",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  true,
 					  						FullFieldLable =  "Description",
 					  						DefaultText =  @"Description",
 					  						ListFieldLable =  "DescriptionListLable",
 					  						ListLableDefaultText =  @"Description",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "Description",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HelpTextCode =  "Description",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -189,10 +187,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Language",
 					  						ObjectTableName =  "DocumentTypeTemplate",
 					  						FieldsDataType =  "nText",
-					  						Code =  "Language",
-					  						MaxLength =  100,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  100,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -204,37 +201,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Language",
 					  						ListPropertyPath =  "Language",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
+					  						ValidForQuerySection1 =  "Language",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "Language",
 					  						DefaultText =  @"Language",
 					  						ListFieldLable =  "LanguageListLable",
 					  						ListLableDefaultText =  @"Language",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "Language",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HelpTextCode =  "Language",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -246,10 +248,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "InternalRemarks",
 					  						ObjectTableName =  "DocumentTypeTemplate",
 					  						FieldsDataType =  "nText",
-					  						Code =  "InternalRemarks",
-					  						MaxLength =  500,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  500,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -261,37 +262,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "Language",
 					  						ListPropertyPath =  "Language",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
+					  						ValidForQuerySection1 =  "Language",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "InternalRemarks",
 					  						DefaultText =  @"Remarks",
 					  						ListFieldLable =  "InternalRemarkseListLable",
 					  						ListLableDefaultText =  @"Language",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "InternalRemarks",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HelpTextCode =  "InternalRemarks",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -303,10 +309,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "CountryCode",
 					  						ObjectTableName =  "DocumentTypeTemplate",
 					  						FieldsDataType =  "Text",
-					  						Code =  "CountryCode",
-					  						MaxLength =  2,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  2,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -318,37 +323,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "CountryCode",
 					  						ListPropertyPath =  "CountryCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
+					  						ValidForQuerySection1 =  "CountryCode",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "CountryCode",
 					  						DefaultText =  @"Country",
 					  						ListFieldLable =  "CountryCodeListLable",
 					  						ListLableDefaultText =  @"CountryCode",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "CountryCode",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HelpTextCode =  "CountryCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -360,10 +370,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "IsEnabledForCustomers",
 					  						ObjectTableName =  "DocumentTypeTemplate",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "IsEnabledForCustomers",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -375,37 +384,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "IsEnabledForCustomers",
 					  						ListPropertyPath =  "IsEnabledForCustomers",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
+					  						ValidForQuerySection1 =  "IsEnabledForCustomers",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "IsEnabledForCustomers",
 					  						DefaultText =  @"Enabled for Customers",
 					  						ListFieldLable =  "IsEnabledForCustomersListLable",
 					  						ListLableDefaultText =  @"IsEnabledForCustomers",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "IsEnabledForCustomers",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HelpTextCode =  "IsEnabledForCustomers",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -417,10 +431,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "IsCopiedAtSignup",
 					  						ObjectTableName =  "DocumentTypeTemplate",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "IsCopiedAtSignup",
-					  						MaxLength =  0,
-					  						IsCustom =  false,
 					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
 					  						DisplayOnLookUp =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -432,37 +445,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						DisplayInSearchWindowFilters =  false,
 					  						PMPropertyPath =  "IsCopiedAtSignup",
 					  						ListPropertyPath =  "IsCopiedAtSignup",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
-					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
+					  						ValidForQuerySection1 =  "IsCopiedAtSignup",
 					  						DisplayInEntityVariables =  true,
+					  						NumberOfDigits =  0,
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						NumberOfDigits =  0,
-					  						IsMaxLength =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
 					  						FullFieldLable =  "IsCopiedAtSignup",
 					  						DefaultText =  @"Copy at Signup",
 					  						ListFieldLable =  "IsCopiedAtSignupListLable",
 					  						ListLableDefaultText =  @"IsCopiedAtSignup",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						Code =  "IsCopiedAtSignup",
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
 					  						HelpTextCode =  "IsCopiedAtSignup",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
@@ -516,18 +534,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable DocumentTypeTemplateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentTypeTemplate" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBSetAsInActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.SetAsInActive", DefaultText = "Set As Inactive",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOOriginalTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.OriginalTemplate", DefaultText = "Original Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOInActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.InActive", DefaultText = "Inactive",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.DocumentType", DefaultText = "Document Type",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Type", DefaultText = "Template Type",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOCountry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Country", DefaultText = "Country",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOManageTemplates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.ManageTemplates", DefaultText = "Manage Templates",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOEditDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.EditDocument", DefaultText = "Edit Document",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -556,7 +562,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOMarkAsactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.MarkAsactive", DefaultText = "Mark as active",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate", DefaultText = "Document Type Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBSetAsInActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.SetAsInActive", DefaultText = "Set As Inactive",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOOriginalTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.OriginalTemplate", DefaultText = "Original Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOInActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.InActive", DefaultText = "Inactive",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODocumentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.DocumentType", DefaultText = "Document Type",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Type", DefaultText = "Template Type",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOCountry = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Country", DefaultText = "Country",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateMSelectDocumentToDublicate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.M.SelectDocumentToDublicate", DefaultText = "Please select a document to dublicate",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -566,37 +582,37 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOInsertDataField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.InsertDataField", DefaultText = "Insert Data Field",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBSetAsDefault = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.SetAsDefault", DefaultText = "Set As Default",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateONewPrintTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.NewPrintTemplate", DefaultText = "New Print Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBLoadTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.LoadTemplate", DefaultText = "Load Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateONewHTMLTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.NewHTMLTemplate", DefaultText = "New Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODefault = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Default", DefaultText = "Default",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOEditPrintTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.EditPrintTemplate", DefaultText = "Edit Print Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Description", DefaultText = "Description",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOEditHTMLTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.EditHTMLTemplate", DefaultText = "Edit Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOLastUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.LastUpdate", DefaultText = "Last Update",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOBlank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Blank", DefaultText = "Blank",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOUpdatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.UpdatedBy", DefaultText = "Updated By",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODuplicate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Duplicate", DefaultText = "Duplicate",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateONewPrintTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.NewPrintTemplate", DefaultText = "New Print Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOFromLibrary = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.FromLibrary", DefaultText = "From Library",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateONewHTMLTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.NewHTMLTemplate", DefaultText = "New HTML Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOFromFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.FromFile", DefaultText = "From File",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOEditPrintTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.EditPrintTemplate", DefaultText = "Edit Print Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOStimulSoft = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.StimulSoft", DefaultText = "StimulSoft",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOEditHTMLTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.EditHTMLTemplate", DefaultText = "Edit HTML Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateORichText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.RichText", DefaultText = "RichText",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOBlank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Blank", DefaultText = "Blank",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBSetAsDefault = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.SetAsDefault", DefaultText = "Set As Default",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODuplicate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Duplicate", DefaultText = "Duplicate",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateBLoadTemplate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.B.LoadTemplate", DefaultText = "Load Template",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOFromLibrary = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.FromLibrary", DefaultText = "From Library",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODefault = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Default", DefaultText = "Default",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOFromFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.FromFile", DefaultText = "From File",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateODescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.Description", DefaultText = "Description",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOStimulSoft = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.StimulSoft", DefaultText = "Stimulsoft",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOLastUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.LastUpdate", DefaultText = "Last Update",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateORichText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.RichText", DefaultText = "Rich Text",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeTemplateTextCode_DocumentTypeTemplateOUpdatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeTemplate.O.UpdatedBy", DefaultText = "Updated By",LocalDefaultText = null, ObjectTableId = DocumentTypeTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

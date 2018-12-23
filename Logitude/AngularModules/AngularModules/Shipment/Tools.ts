@@ -2360,22 +2360,17 @@ export class ShipmentGenerator {
         }
 
         // MinMax
-        if (!AppTool.IsNullOrZero(myRecordPM.QuoteCostMinAmount)) {
-            if (AppTool.IsNullOrEmpty(myComputedAmount)) {
-                myComputedAmount = myRecordPM.QuoteCostMinAmount;
+        if (myComputedAmount != null) {
+            if (myRecordPM.QuoteCostMinAmount != null) {
+                if (myComputedAmount < myRecordPM.QuoteCostMinAmount) {
+                    myComputedAmount = myRecordPM.QuoteCostMinAmount;
+                }
             }
 
-            else if (myComputedAmount < myRecordPM.QuoteCostMinAmount) {
-                myComputedAmount = myRecordPM.QuoteCostMinAmount;
-            }
-        }
-        if (!AppTool.IsNullOrZero(myRecordPM.QuoteCostMaxAmount)) {
-            if (AppTool.IsNullOrEmpty(myComputedAmount)) {
-                myComputedAmount = myRecordPM.QuoteCostMaxAmount;
-            }
-
-            else if (myComputedAmount > myRecordPM.QuoteCostMaxAmount) {
-                myComputedAmount = myRecordPM.QuoteCostMaxAmount;
+            if (myRecordPM.QuoteCostMaxAmount != null) {
+                if (myComputedAmount > myRecordPM.QuoteCostMaxAmount) {
+                    myComputedAmount = myRecordPM.QuoteCostMaxAmount;
+                }
             }
         }
 
@@ -2536,6 +2531,12 @@ export class ShipmentGenerator {
                 myRecordPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
 
                 myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
+
+                myRecordPM.IsFromQuote = OriginItemPM.IsFromQuote;
+                myRecordPM.QuoteChargeId = OriginItemPM.QuoteChargeId;
+                myRecordPM.IsChargeBySteps = OriginItemPM.IsChargeBySteps;
+                myRecordPM.QuoteCostMinAmount = OriginItemPM.QuoteCostMinAmount;
+                myRecordPM.QuoteCostMaxAmount = OriginItemPM.QuoteCostMaxAmount;
 
                 //if (OriginItemPM.IsFromQuote) {
                 //    myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
@@ -3005,25 +3006,19 @@ export class ShipmentGenerator {
         }
 
         // MinMax
-        if (!AppTool.IsNullOrZero(myRecordPM.QuoteSaleMinAmount)) {
-            if (AppTool.IsNullOrEmpty(myComputedAmount)) {
-                myComputedAmount = myRecordPM.QuoteSaleMinAmount;
+        if (myComputedAmount != null) {
+            if (myRecordPM.QuoteSaleMinAmount != null) {
+                if (myComputedAmount < myRecordPM.QuoteSaleMinAmount) {
+                    myComputedAmount = myRecordPM.QuoteSaleMinAmount;
+                }
             }
 
-            else if (myComputedAmount < myRecordPM.QuoteSaleMinAmount) {
-                myComputedAmount = myRecordPM.QuoteSaleMinAmount;
+            if (myRecordPM.QuoteSaleMaxAmount != null) {
+                if (myComputedAmount > myRecordPM.QuoteSaleMaxAmount) {
+                    myComputedAmount = myRecordPM.QuoteSaleMaxAmount;
+                }
             }
         }
-        if (!AppTool.IsNullOrZero(myRecordPM.QuoteSaleMaxAmount)) {
-            if (AppTool.IsNullOrEmpty(myComputedAmount)) {
-                myComputedAmount = myRecordPM.QuoteSaleMaxAmount;
-            }
-
-            else if (myComputedAmount > myRecordPM.QuoteSaleMaxAmount) {
-                myComputedAmount = myRecordPM.QuoteSaleMaxAmount;
-            }
-        }
-
 
         if (myRecordPM.IsFixedPrice) {
             myRecordPM.TotalAmount = item.SaleTotalAmount;
@@ -3178,6 +3173,12 @@ export class ShipmentGenerator {
             myRecordPM.IsExpense = OriginItemPM.IsExpense;
 
             myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
+
+            myRecordPM.IsFromQuote = OriginItemPM.IsFromQuote;
+            myRecordPM.QuoteChargeId = OriginItemPM.QuoteChargeId;
+            myRecordPM.IsChargeBySteps = OriginItemPM.IsChargeBySteps;
+            myRecordPM.QuoteSaleMinAmount = OriginItemPM.QuoteSaleMinAmount;
+            myRecordPM.QuoteSaleMaxAmount = OriginItemPM.QuoteSaleMaxAmount;
 
             //if (OriginItemPM.IsFromQuote) {
             //    myRecordPM.VatTypeId = OriginItemPM.VatTypeId;

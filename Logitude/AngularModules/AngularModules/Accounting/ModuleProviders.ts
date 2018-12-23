@@ -80,7 +80,7 @@ import {WithholdingTaxDeductionTypePMService} from './Services/StandardPMs/Withh
 import { ExternalReconciliationPMService } from './Services/StandardPMs/ExternalReconciliationPMService';
 import { GLAccountMoreDataPMService } from './Services/StandardPMs/GLAccountMoreDataPMService';
 import { TaxDeductionReportPMService } from './Services/StandardPMs/TaxDeductionReportPMService';
-
+import { OpenFormatReportPMService } from './Services/StandardPMs/OpenFormatReportPMService';
 
 //#endregion
 import {AccountingPeriodExtendedListService} from './Services/ExtendedLists/AccountingPeriodExtendedListService';
@@ -117,6 +117,7 @@ import {ReconciliationMenuButtonsHandler} from './Components/MenuButtons/Reconci
 import { ExternalReconciliationMenuButtonsHandler } from './Components/MenuButtons/ExternalReconciliationMenuButtonsHandler';
 import { TaxReportMenuButtonsHandler } from './Components/MenuButtons/TaxReportMenuButtonsHandler';
 import { TaxDeductionReportMenuButtonsHandler } from './Components/MenuButtons/TaxDeductionReportMenuButtonsHandler';
+import { OpenFormatReportMenuButtonsHandler } from './Components/MenuButtons/OpenFormatReportMenuButtonsHandler';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -176,7 +177,7 @@ export class ModuleProviders {
                 
             case "TaxDeductionReportPMService": { myResult = new TaxDeductionReportPMService(); break; }
 
-
+            case "OpenFormatReportPMService": { myResult = new OpenFormatReportPMService(); break; }
 
 
             case "AccountingPeriodPMService": { myResult = new AccountingPeriodPMService(); break; }
@@ -252,6 +253,7 @@ export class ModuleProviders {
             case "ExternalReconciliationMenuButtonsHandler": { myResult = new ExternalReconciliationMenuButtonsHandler; break; }
             case "TaxReportMenuButtonsHandler": { myResult = new TaxReportMenuButtonsHandler; break; }
             case "TaxDeductionReportMenuButtonsHandler": { myResult = new TaxDeductionReportMenuButtonsHandler; break; }
+            case "OpenFormatReportMenuButtonsHandler": { myResult = new OpenFormatReportMenuButtonsHandler; break; }
 
         }
 

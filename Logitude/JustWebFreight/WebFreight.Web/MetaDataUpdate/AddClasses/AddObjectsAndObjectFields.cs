@@ -218,7 +218,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 if (tenantZeroTextCodes.Keys.Contains(objectTablesDetails.ObjectTableName + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id))
                 {
                     TextCode updatedTextCode = tenantZeroTextCodes[objectTablesDetails.ObjectTableName + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id];
-                    if (!updatedTextCode.IsSpellChecked)
+                    if (!updatedTextCode.IsSpellChecked || (string.IsNullOrEmpty(updatedTextCode.DefaultText) || string.IsNullOrEmpty(updatedTextCode.DefaultTextPlural)))
                     {
                         updatedTextCode.DefaultText = objectTablesDetails.DefaultText;
                         updatedTextCode.DefaultTextPlural = objectTablesDetails.ObjectTablePlural;
@@ -246,7 +246,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     if (tenantZeroTextCodes.Keys.Contains(objectTablesDetails.ObjectTableName + "Description" + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id))
                     {
                         descriptionTextCode = tenantZeroTextCodes[objectTablesDetails.ObjectTableName + "Description" + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id];
-                        if (!descriptionTextCode.IsSpellChecked)
+                        if (!descriptionTextCode.IsSpellChecked || string.IsNullOrEmpty(descriptionTextCode.DefaultText) || string.IsNullOrEmpty(descriptionTextCode.DefaultTextPlural))
                         {
                             descriptionTextCode.DefaultText = objectTablesDetails.DescriptionDefaultText;
                             descriptionTextCode.DefaultTextPlural = objectTablesDetails.ObjectTablePlural;
@@ -278,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     if (tenantZeroTextCodes.Keys.Contains(objectTablesDetails.ObjectTableName + ".NewButton" + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id))
                     {
                         newButtonTextCode = tenantZeroTextCodes[objectTablesDetails.ObjectTableName + ".NewButton" + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id];
-                        if (!newButtonTextCode.IsSpellChecked)
+                        if (!newButtonTextCode.IsSpellChecked || string.IsNullOrEmpty(newButtonTextCode.DefaultText))
                         {
                             newButtonTextCode.DefaultText = objectTablesDetails.NewButtonDefaultText;
                             newButtonTextCode.DefaultText = objectTablesDetails.NewButtonLocalDefaultText;
@@ -584,6 +584,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.CanAutomateSetValue = objectFieldDetails.CanAutomateSetValue;
                 newObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
                 newObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
+                newObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
                 if (newObjectField.IsCustomFilter)
                 {
                     //newObjectField.CanFilter = true;
@@ -669,6 +670,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
                 updatedObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 updatedObjectField.Code = objectFieldDetails.Code;
+                updatedObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
                 if (string.IsNullOrEmpty(objectFieldDetails.Code))
                 {
                     updatedObjectField.Code = objectFieldDetails.FieldName;
@@ -727,14 +729,51 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
                 if (updatedObjectField.HelpTextCodeId != null)
                 {
-                    TextCode updatedHelpTextCode = tenantZeroTextCodes[(objectFieldDetails.ObjectTableName != null ? objectFieldDetails.ObjectTableName : objectFieldDetails.ValidForQuerySection1) + "." + (objectFieldDetails.HelpTextCode != null ? objectFieldDetails.HelpTextCode : objectFieldDetails.FullFieldLable) + "HelpText" + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId];
-
-                    if (!updatedHelpTextCode.IsSpellChecked)
+                    if (tenantZeroTextCodes.ContainsKey((objectFieldDetails.ObjectTableName != null ? objectFieldDetails.ObjectTableName : objectFieldDetails.ValidForQuerySection1) + "." + (objectFieldDetails.HelpTextCode != null ? objectFieldDetails.HelpTextCode : objectFieldDetails.FullFieldLable) + "HelpText" + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId))
                     {
-                        updatedHelpTextCode.DefaultText = (objectFieldDetails.HelpTextDefaultText != null ? objectFieldDetails.HelpTextDefaultText : string.Empty);
-                        updatedHelpTextCode.InActive = objectFieldDetails.InActive;
-                        updatedHelpTextCode.LocalDefaultText = objectFieldDetails.HelpLocalDefaultText;
-                        textCodeRepository.Update(updatedHelpTextCode);
+                        TextCode updatedHelpTextCode = tenantZeroTextCodes[(objectFieldDetails.ObjectTableName != null ? objectFieldDetails.ObjectTableName : objectFieldDetails.ValidForQuerySection1) + "." + (objectFieldDetails.HelpTextCode != null ? objectFieldDetails.HelpTextCode : objectFieldDetails.FullFieldLable) + "HelpText" + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId];
+
+                        if (!updatedHelpTextCode.IsSpellChecked)
+                        {
+                            updatedHelpTextCode.DefaultText = (objectFieldDetails.HelpTextDefaultText != null ? objectFieldDetails.HelpTextDefaultText : string.Empty);
+                            updatedHelpTextCode.InActive = objectFieldDetails.InActive;
+                            updatedHelpTextCode.LocalDefaultText = objectFieldDetails.HelpLocalDefaultText;
+                            textCodeRepository.Update(updatedHelpTextCode);
+                        }
+                    }
+                    else
+                    {
+                        TextCode helpTextTextCode = null;
+
+                        if (!string.IsNullOrEmpty(objectFieldDetails.HelpTextCode))
+                        {
+                            helpTextTextCode = new TextCode();
+                            helpTextTextCode.Code = objectFieldDetails.ObjectTableName + "." + objectFieldDetails.HelpTextCode + "HelpText";
+                            helpTextTextCode.DefaultText = objectFieldDetails.HelpTextDefaultText;
+                            helpTextTextCode.Id = IdCounter.GetNumber("TextCode", objectFieldDetails.Tenant).ToString();
+                            helpTextTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
+                            helpTextTextCode.Tenant = 0;
+                            helpTextTextCode.TextCodeTypeCode = "H";
+                            helpTextTextCode.InActive = objectFieldDetails.InActive;
+                            helpTextTextCode.LocalDefaultText = objectFieldDetails.HelpLocalDefaultText;
+                            textCodeRepository.Add(helpTextTextCode);
+                            updatedObjectField.HelpTextCodeId = helpTextTextCode.Id;
+                        }
+
+                        else
+                        {
+                            helpTextTextCode = new TextCode();
+                            helpTextTextCode.Code = (!string.IsNullOrEmpty(objectFieldDetails.ObjectTableName) ? objectFieldDetails.ObjectTableName : objectFieldDetails.ValidForQuerySection1) + "." + objectFieldDetails.FullFieldLable + "HelpText";
+                            helpTextTextCode.DefaultText = objectFieldDetails.HelpTextDefaultText;
+                            helpTextTextCode.Id = IdCounter.GetNumber("TextCode", objectFieldDetails.Tenant).ToString();
+                            helpTextTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
+                            helpTextTextCode.Tenant = 0;
+                            helpTextTextCode.TextCodeTypeCode = "H";
+                            helpTextTextCode.InActive = objectFieldDetails.InActive;
+                            helpTextTextCode.LocalDefaultText = objectFieldDetails.HelpLocalDefaultText;
+                            textCodeRepository.Add(helpTextTextCode);
+                            updatedObjectField.HelpTextCodeId = helpTextTextCode.Id;
+                        }
                     }
                 }
 

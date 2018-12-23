@@ -78,14 +78,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "TarrifCharge",
+	             				    IsComposition =  true,
+			      				    ObjectTableName =  "TarrifCharge",
 			      				    DBTableName =  "TarrifCharges",
 			      				    ObjectTableSingular =  "Tariff Charge",
 			      				    ObjectTablePlural =  "TarrifCharges",
 			      				    DefaultText =  "Tariff Charge",
 			      				    Name =  "TarrifCharge",
 			      				    IsNewWizard =  false,
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -104,20 +104,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsSaveButtonVisible =  true,
 			      				    EnableSecurity =  false,
 			      				    ObjectTableTypeCode =  "MD",
-			      				    IsComposition =  false,
 			      				    MaxNumberOfCustomFields =  0,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -132,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "TarrifCharge",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "TarrifHeader",
-					  						Code =  "TarrifHeaderId",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -157,7 +149,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -168,14 +159,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "TarrifHeader",
+					  						DefaultText =  @"Tariff Header",
+					  						HelpTextCode =  "TarrifHeader",
+					  						Code =  "TarrifHeaderId",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "TarrifHeader",
-					  						DefaultText =  @"Tariff Header",
-					  						HelpTextCode =  "TarrifHeader",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -187,7 +181,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "TarrifCharge",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Currency",
-					  						Code =  "CurrencyId",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -213,7 +207,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -224,14 +217,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Currency",
+					  						DefaultText =  @"Currency",
+					  						HelpTextCode =  "Currency",
+					  						Code =  "CurrencyId",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Currency",
-					  						DefaultText =  @"Currency",
-					  						HelpTextCode =  "Currency",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -243,7 +239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "TarrifCharge",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ChargesType",
-					  						Code =  "ChargesTypeId",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -269,7 +265,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -280,14 +275,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "ChargesType",
+					  						DefaultText =  @"Charge Type",
+					  						HelpTextCode =  "ChargesType",
+					  						Code =  "ChargesTypeId",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "ChargesType",
-					  						DefaultText =  @"Charge Type",
-					  						HelpTextCode =  "ChargesType",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -299,7 +297,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "TarrifCharge",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Measurement",
-					  						Code =  "MeasurementId",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -325,7 +323,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -336,14 +333,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Measurement",
+					  						DefaultText =  @"Measurement",
+					  						HelpTextCode =  "Measurement",
+					  						Code =  "MeasurementId",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Measurement",
-					  						DefaultText =  @"Measurement",
-					  						HelpTextCode =  "Measurement",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -354,7 +354,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "MinPrice",
 					  						ObjectTableName =  "TarrifCharge",
 					  						FieldsDataType =  "Double",
-					  						Code =  "MinPrice",
+					  						DataTypeCode =  "Double",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -380,7 +380,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -391,14 +390,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "MinPrice",
+					  						DefaultText =  @"Min",
+					  						HelpTextCode =  "MinPrice",
+					  						Code =  "MinPrice",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "MinPrice",
-					  						DefaultText =  @"Min",
-					  						HelpTextCode =  "MinPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -409,7 +411,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "MaxPrice",
 					  						ObjectTableName =  "TarrifCharge",
 					  						FieldsDataType =  "Double",
-					  						Code =  "MaxPrice",
+					  						DataTypeCode =  "Double",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -435,7 +437,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -446,14 +447,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "MaxPrice",
+					  						DefaultText =  @"Max",
+					  						HelpTextCode =  "MaxPrice",
+					  						Code =  "MaxPrice",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "MaxPrice",
-					  						DefaultText =  @"Max",
-					  						HelpTextCode =  "MaxPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -464,7 +468,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "UnitPrice",
 					  						ObjectTableName =  "TarrifCharge",
 					  						FieldsDataType =  "Double",
-					  						Code =  "UnitPrice",
+					  						DataTypeCode =  "Double",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -490,7 +494,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -501,14 +504,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "UnitPrice",
+					  						DefaultText =  @"Unit Price",
+					  						HelpTextCode =  "UnitPrice",
+					  						Code =  "UnitPrice",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "UnitPrice",
-					  						DefaultText =  @"Unit Price",
-					  						HelpTextCode =  "UnitPrice",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -528,12 +534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable TarrifChargeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TarrifCharge" && d.Tenant == 0).FirstOrDefault(); 
-		   Feature TarrifChargeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TarrifCharge.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TarrifChargeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TarrifCharge.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TarrifChargeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TarrifCharge.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
-		   Feature TarrifChargeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TarrifCharge.Features.PackageFeature", NameTextCodeDefaultText = "TarrifCharge Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);    
+	    {     
 	    
 		}
 
@@ -553,21 +554,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable TarrifChargeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TarrifCharge" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode TarrifChargeTextCode_TarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge", DefaultText = "Tariff Charge",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeBAddTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.B.AddTarrifCharge", DefaultText = "Add Tariff Charge",LocalDefaultText = @"הוסף תעריף חיוב", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeBDeleteTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.B.DeleteTarrifCharge", DefaultText = "Delete Tariff Charge",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeBDeleteTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.B.DeleteTarrifCharge", DefaultText = "Delete Tariff Charge",LocalDefaultText = @"מחק תעריף חיוב", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeMCantAddFreightToSurcharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.CantAddFreightToSurcharge", DefaultText = "Can't add freight charge to surcharge tariff.",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeMCantAddFreightToSurcharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.CantAddFreightToSurcharge", DefaultText = "Cant add Freight Charge to Surcharge Tariff",LocalDefaultText = @"לא ניתן להוסיף סעיף הובלה למחירון חיובים נוספים", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeMTarrifChargeTypeAlreadyAdded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.TarrifChargeTypeAlreadyAdded", DefaultText = "This tariff charge type is already added.",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeMTarrifChargeTypeAlreadyAdded = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.TarrifChargeTypeAlreadyAdded", DefaultText = "This Tariff Charge Type is already Added",LocalDefaultText = @"סוג תעריף החיוב כבר נקלט", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeMMinLessThanMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.MinLessThanMax", DefaultText = "Min should be less than Max",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeMMinLessThanMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.M.MinLessThanMax", DefaultText = "Min Should be less than Max",LocalDefaultText = @"מינימום צריך להיות פחות מהמקסימום", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeOAddTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.O.AddTarrifCharge", DefaultText = "Add Tariff Charge",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeOAddTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.O.AddTarrifCharge", DefaultText = "Add Tariff Charge",LocalDefaultText = @"הוסף תעריף חיוב", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TarrifChargeTextCode_TarrifChargeOEditTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.O.EditTarrifCharge", DefaultText = "Edit Tariff Charge",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode TarrifChargeTextCode_TarrifChargeBAddTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.B.AddTarrifCharge", DefaultText = "Add Tariff Charge",LocalDefaultText = null, ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode TarrifChargeTextCode_TarrifChargeOEditTarrifCharge = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TarrifCharge.O.EditTarrifCharge", DefaultText = "Edit Tariff Charge",LocalDefaultText = @"עריכת תעריף חיוב", ObjectTableId = TarrifChargeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

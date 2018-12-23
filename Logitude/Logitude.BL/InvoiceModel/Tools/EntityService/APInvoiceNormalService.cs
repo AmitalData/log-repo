@@ -294,8 +294,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.VoidAPInvoiceInFullAccounting(entityPM, entityPM.SetVoided);
 
             var IsSetApproved = entityPM.SetApproved;
+
+
+
             APInvoiceHelper helper = new APInvoiceHelper();
-            helper.APInvoiceQuickbooksValidating(entityPM, IsSetApproved, isNewEntity,this.objectContext,this.myCommonContext);
+            if (entityPM.SetReSendQBO)
+            {
+                helper.APInvoiceQuickbooksValidating(entityPM, true, isNewEntity, this.objectContext, this.myCommonContext);
+
+            }
+            else
+            {
+                helper.APInvoiceQuickbooksValidating(entityPM, IsSetApproved, isNewEntity, this.objectContext, this.myCommonContext);
+            }
+
+
+
             APInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity);
 
             // DropBox
@@ -1934,6 +1948,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
                                                             JournalId = journal.Id,
                                                             DebitAccountId = g.Key.ChargeTypeGLAccountId,
+                                                            CreditAccountId = theEntityPm.VendorGLAccountId,
                                                             Line = ++counter,
                                                             DocumentDate = theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
@@ -1978,6 +1993,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Reference1 = theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
+                            CreditAccountId = theEntityPm.VendorGLAccountId,
                         };
 
                         journal.JournalLines.Add(journalLine);

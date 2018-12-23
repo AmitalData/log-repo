@@ -58,6 +58,25 @@ using Simplog.Data.CommonDataModel;
             }
         }
 		
+		public Measurement GetMeasurementByCode(string Code,int Tenant)
+        { 
+		    try
+            {
+
+				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Measurement with Code " + Code + " doesn't exist");
+
+				return MeasurementDataMapping(temp,Tenant);
+			}
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+		
 		public Measurement MeasurementDataMapping(MeasurementPM MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
@@ -67,7 +86,9 @@ using Simplog.Data.CommonDataModel;
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
 				   temp.Name = MyEntityPM.Name;
-				   temp.ShortName = MyEntityPM.ShortName;					
+				   temp.ShortName = MyEntityPM.ShortName;
+				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Measurement");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -86,10 +107,28 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
+					
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
+					} 
+					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
+					{
+						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
+						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"Measurement");
+					    if(string.IsNullOrEmpty(MyCode))
+						{
+						  throw new ApplicationException("Measurement with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
+						}
+						temp = query.GetSinglePMByCode(MyCode, Tenant);
+						
+						
+					}
+					
+					   					   
 					if(temp == null)
 					{
-					    throw new ApplicationException("Measurement with Id " + MyEntity.Id + " doesn't exist");
+					    throw new ApplicationException("Measurement with Code " + MyEntity.Code + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -100,7 +139,11 @@ using Simplog.Data.CommonDataModel;
 						temp.Code = MyEntity.Code;
 					}
 					temp.Name = MyEntity.Name;
-					temp.ShortName = MyEntity.ShortName;					   
+					temp.ShortName = MyEntity.ShortName;
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+						temp.Code = MyEntity.PartnerCode;
+					}					   
 					   return temp;
 		    }
             catch (Exception ex)

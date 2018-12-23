@@ -85,7 +85,7 @@ using Simplog.Data.CommonDataModel;
 				   var temp = new City(); 
 				   temp.Id = MyEntityPM.Id;
 				   temp.Code = MyEntityPM.Code;
-				   temp.EnglishName = MyEntityPM.EnglishName;					
+				   temp.Name = MyEntityPM.EnglishName;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -121,7 +121,7 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp.Code = MyEntity.Code;
 					}
-					temp.EnglishName = MyEntity.EnglishName;					   
+					temp.EnglishName = MyEntity.Name;					   
 					   return temp;
 		    }
             catch (Exception ex)

@@ -271,10 +271,10 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var items: ItemSourceItem[] = this.ItemSource.Collection;
         var itemsChanges: ItemSourceItem[] = this.ItemSource.Collection.filter(f => f.HasChanges == true);
         if (itemsChanges.length > 0) {
-            if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
-                this.IsValid = false;
-                this.ShowMessage("Time and Description fields are required for each line");
-            }
+            //if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
+            //    this.IsValid = false;
+            //    this.ShowMessage("Time and Description fields are required for each line");
+            //}
             if (this.IsValid) {
                 SessionLocator.CurrentSession.StartBusyIndicatorSaving();
                 this.HasChanges = false;
@@ -306,10 +306,10 @@ export class DailyTimeSheetComponent extends BaseComponent {
         var itemsChanges: ItemSourceItem[] = this.ItemSource.Collection.filter(f => f.HasChanges == true);
         if (itemsChanges.length > 0) {
 
-            if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
-                this.IsValid = false;
-                this.ShowMessage("Time and Description fields are required for each line");
-            }
+            //if (items.filter(f => f.TimeInMinutes == 0 || AppTool.IsNullOrEmpty(f.Description)).length > 0) {
+            //    this.IsValid = false;
+            //    this.ShowMessage("Time and Description fields are required for each line");
+            //}
             if (this.IsValid) {
                 SessionLocator.CurrentSession.StartBusyIndicatorSaving();
                 this.HasChanges = false;
@@ -373,7 +373,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
                     if (this.myDomainService == null) {
                         this.myDomainService = new TimeManagementDomainService();
                     }
-                    this.myDomainService.DeleteTimeSheetItem(item.ProjectId, item.Description, item.WINumber, item.EmployeeUserId, item.LocationCode, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
+                    this.myDomainService.DeleteTimeSheetItem(item.Id, item.EmployeeUserId, item.LocationCode, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
                         SessionLocator.CurrentSession.StopBusyIndicator();
                         if (!myResponse.HasError) {
                             this.OnDataLoaded(myResponse.Result);

@@ -165,6 +165,7 @@
     <Compile Include="Azure\IErrorLogsRepository.cs" />
     <Compile Include="Azure\Repositories\CommunicationLogsRepository.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.cs" />
+    <Content Include="InfrastructureModel\DeleteQBOTranslations.sql" />
     <Content Include="InfrastructureModel\DeleteBusinessRecords.sql" />
     <Content Include="InfrastructureModel\DeleteCRMRecords.sql" />
     <Content Include="InfrastructureModel\DeleteCustomerRecords.sql" />
@@ -186,8 +187,10 @@
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerAdditional.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CustomerDeposition.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsInterface.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsInterfaceSetting.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CustomsShipper.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DocumentFilingBackupBatch.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DocumentFilingBackupSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DocumentsFilingsView.cs" />
@@ -351,6 +354,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\VatFormatType.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\VATTypesGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\WarehouseType.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\PaymentGatewayPartners.cs" />
     <Compile Include="CommonDataModel\ICustomersDataViewContext.cs" />
     <Compile Include="CommonDataModel\IDocumentsFilingsViewContext.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentSharedDocumentMap.cs" />
@@ -371,6 +375,7 @@
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerTableMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerTranslationMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CreditLimitSettingMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\CustomerDepositionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerFieldsUpdateSettingMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomersDataViewMap.cs">
       <SubType>Code</SubType>
@@ -379,6 +384,7 @@
     <Compile Include="CommonDataModel\Mapping\CountryCityMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerSizeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTenantAccessCardMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\CustomsShipperMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DocumentFilingBackupBatchMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTenantAccessCardsBatchMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTenantAccessMap.cs" />
@@ -441,6 +447,7 @@
     <Compile Include="CommonDataModel\Mapping\VatFormatTypeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\VATTypesGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\WarehouseTypeMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnersMap.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedDocumentRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedManifestRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AirlineMessagingRuleRepository.cs" />
@@ -461,8 +468,10 @@
     <Compile Include="CommonDataModel\Repositories\ContactsUnseenEntitieRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CountryCityRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CreditLimitSettingRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\CustomerDepositionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerFieldsUpdateSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerSizeRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\CustomsShipperRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\DWHSettingRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\HybridPartnersPermissionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerTenantAccessCardRepository.cs" />
@@ -502,6 +511,7 @@
     <Compile Include="CommonDataModel\Repositories\ReportsTemplateRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ReportsTemplatesVersionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TemperatureUnitRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\PaymentGatewayPartnersRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TenantLoginPolicyRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\TwoFactorAuthenticationDeviceRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\LoginPolicyRepository.cs" />
@@ -690,12 +700,12 @@
     <Compile Include="QuoteModel\Repositories\QuoteTemplateHeaderFieldRepository.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteTemplateSectionModificationRepository.cs" />
     <Compile Include="QuoteModel\Repositories\QuoteTotalVATRepository.cs" />
-    <Compile Include="ShipmentsModel\AWBStocksDataViewContext.cs" />
+    <Compile Include="ShipmentsModel\MessagingStockDataViewContext.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\AccountingInformationIdentifier.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\AWBAdditionalHandlingInfo.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\AWBMessagingStock.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\AWBStocksDataView.cs" />
-    <Compile Include="ShipmentsModel\EntityPOCOs\AWBStockUsageHistory.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\MessagingStock.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\MessagingStockDataView.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\MessagingStockUsageHistory.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\FBLStock.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\CustomsTransmissionsStatus.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\OceanInsightsStatuses.cs" />
@@ -827,12 +837,12 @@
     <Compile Include="CommonDataModel\Mapping\ShippingAgentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ShippingLineMap.cs" />
     <Compile Include="CommonDataModel\Mapping\SmallDocumentMap.cs" />
-    <Compile Include="ShipmentsModel\IAWBStocksDataViewContext.cs" />
+    <Compile Include="ShipmentsModel\IMessagingStockDataViewContext.cs" />
     <Compile Include="ShipmentsModel\Mapping\AccountingInformationIdentifierMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\AWBAdditionalHandlingInfoMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\AWBMessagingStockMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\AWBStocksDataViewMap.cs" />
-    <Compile Include="ShipmentsModel\Mapping\AWBStockUsageHistoryMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\MessagingStockMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\MessagingStockDataViewMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\MessagingStockUsageHistoryMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\FBLStockMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\CustomsTransmissionsStatusMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OceanInsightsStatusesMap.cs" />
@@ -960,8 +970,8 @@
     <Compile Include="CommonDataModel\Repositories\ShippingLineRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\AccountingInformationIdentifierRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\AWBAdditionalHandlingInfoRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\AWBMessagingStockRepository.cs" />
-    <Compile Include="ShipmentsModel\Repositories\AWBStockUsageHistoryRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\MessagingStockRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\MessagingStockUsageHistoryRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\CustomsTransmissionsStatusRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRADocumentTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\INTTRASIStatusRepository.cs" />
@@ -1547,7 +1557,7 @@
     <Content Include="InvoiceModel\AgingReportInvoiceDataViewScript.sql" />
     <Content Include="InvoiceModel\APInvoiceAgingReportScript.sql" />
     <Content Include="QuoteModel\QuotesAutomaticallyClosingDailyJob.sql" />
-    <Content Include="ShipmentsModel\AWBStocksDataView.sql" />
+    <Content Include="ShipmentsModel\MessagingStockDataView.sql" />
     <Content Include="ShipmentsModel\PickUpDeliverySql.sql" />
     <Content Include="ShipmentsModel\ShipmentCountryDashboardViewScript.sql" />
     <Content Include="ShipmentsModel\ShipmentDataViewScipt.sql" />

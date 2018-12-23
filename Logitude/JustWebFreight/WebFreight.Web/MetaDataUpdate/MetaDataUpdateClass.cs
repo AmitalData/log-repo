@@ -22,10 +22,10 @@ namespace WebFreight.Web.MetaDataUpdate
         private ObjectFieldQuery objectFieldsQuery;
         private ObjectTableQuery objectTabelQuery;
 
-        public void LoadUpdateTenantZero(IWebFreightContext context)
+        public void LoadUpdateTenantZero(IWebFreightContext context,bool updateMetadatafields = true)
         {
             isUpdate = true;
-            LoadObjectsTenantZero(context);
+            LoadObjectsTenantZero(context, updateMetadatafields);
         }
 
         public void CreateJustOT(IWebFreightContext context)
@@ -107,7 +107,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         #region LoadObjectsTenantZero()
         bool isUpdate = false;
-        public void LoadObjectsTenantZero(IWebFreightContext context)
+        public void LoadObjectsTenantZero(IWebFreightContext context, bool updateMetadatafields = true)
         {
             CommonDataDomainService commonDomain = new CommonDataDomainService();
             ObjectContext = context;//WebFreightContext.GetContext(0);
@@ -149,230 +149,232 @@ namespace WebFreight.Web.MetaDataUpdate
             CreateDropDirectionCounterDefinitions();
             CreateAllTablesTips(tips, textCodes);
 
-            // Models
-            CreateShipmentModelObjectFields(objectFields, textCodes);
-            CreateQuoteModelObjectFields(objectFields, textCodes);
-            CreateInvoiceModelObjectFields(objectFields, textCodes);
+            if (updateMetadatafields)
+            {
+                // Models
+                CreateShipmentModelObjectFields(objectFields, textCodes);
+                CreateQuoteModelObjectFields(objectFields, textCodes);
+                CreateInvoiceModelObjectFields(objectFields, textCodes);
 
-            CreateFollowUpFields(objectFields, textCodes);
-            CreateVatTypeFields(objectFields, textCodes);
-            CreateVatTypePercentageFields(objectFields, textCodes);
-            CreateCardFields(objectFields, textCodes);
-            CreateCarrierFields(objectFields, textCodes);
-            CreateCustomerFields(objectFields, textCodes);
-            CreateAgentFields(objectFields, textCodes);
-            CreateCustomAgentFields(objectFields, textCodes);
-            CreateShippingAgentFields(objectFields, textCodes);
-            CreateAirlineFields(objectFields, textCodes);
-            CreateShippingLineFields(objectFields, textCodes);
-            CreateTruckerFields(objectFields, textCodes);
-            CreateVendorFields(objectFields, textCodes);
-            CreateAddressFields(objectFields, textCodes);
-            CreateContactFields(objectFields, textCodes);
-            CreateBranchFields(objectFields, textCodes);
-            CreateChargeTypeFields(objectFields, textCodes);
-            CreateChargeTypeAccountingFields(objectFields, textCodes);
-            CreateCountryFields(objectFields, textCodes);
-            CreateCurrencyFields(objectFields, textCodes);
-            CreateDepartmentFields(objectFields, textCodes);
-            CreateExternalDocumentFields();
-            CreateInternalDocumentFields();
-            CreateGlobalZoneFields(objectFields, textCodes);
-            CreateIncotermFields(objectFields, textCodes);
-            CreatePaymentTermsFields(objectFields, textCodes);
-            CreatePortFields(objectFields, textCodes);
-            CreateStatesFields(objectFields, textCodes);
-            CreateCityFields(objectFields, textCodes);
-            CreateUserFields(objectFields, textCodes);
-            CreateVesselFields(objectFields, textCodes);
-            CreateWareHouseFields(objectFields, textCodes);
-            CreateTraceEventFields(objectFields, textCodes);
-            CreateEventTypeFields(objectFields, textCodes);
-            CreateDocumentTypeFields(objectFields, textCodes);
-            CreateDocumentsFilingsFields(objectFields, textCodes);
-            CreatePackageTypeFields(objectFields, textCodes);
-            CreateWeightUnitFields(objectFields, textCodes);
-            CreateRateClassFields(objectFields, textCodes);
-            CreateDimensionsUnitFields(objectFields, textCodes);
-            CreateAccountingSystemFields(objectFields, textCodes);
-            CreateAccountSettingFields(objectFields, textCodes);
-            CreateAWBChargesCodeFields(objectFields, textCodes);
-            CreateAWBSpecialHandlingCodeFields(objectFields, textCodes);
-            CreateVolumeUnitFields(objectFields, textCodes);
-            CreateMesaurmentFields(objectFields, textCodes);
-            CreateDueTypeFields(objectFields, textCodes);
-            CreatePrepaidCollectFields(objectFields, textCodes);
-            CreateContainerTypeFields(objectFields, textCodes);
-            CreateFollowUpTypeFields(objectFields, textCodes);
-            CreateRatesTableFields(objectFields, textCodes);
-            CreateTransportModeFields(objectFields, textCodes);
-            CreateObjectTableFields(objectFields, textCodes);
-            CreateEntityStatusFields(objectFields, textCodes);
-            CreatePartnerTypeFields(objectFields, textCodes);
-            CreateChargeGroupFields(objectFields, textCodes);
-            CreateIATACodesFields(objectFields, textCodes);
-            CreateTemplateFormatFields(objectFields, textCodes);
-            CreateDocumentTypeTemplateFields(objectFields, textCodes);
-            CreateDocumentTypeCustomFields(objectFields, textCodes);
-            CreateDirectionFields(objectFields, textCodes);
-            CreateSystemDataFields(objectFields, textCodes);
-            CreateSharedLogisticsFields(objectFields, textCodes);
-            CreateTenantFields(objectFields, textCodes);
-            CreateDescriptionOfGoodsFields(objectFields, textCodes);
-            CreateCounterDefinitionFields(objectFields, textCodes);
-            CreateTarrifTypesFields(objectFields, textCodes);
-            CreateTarrifFromToTypesFields(objectFields, textCodes);
-            CreateTarrifChargesFields(objectFields, textCodes);
-            CreateTarrifFromTosFields(objectFields, textCodes);
-            CreateTarrifHeadersFields(objectFields, textCodes);
-            CreateTarrifStepsFields(objectFields, textCodes);
-            CreateTextCodeFields(objectFields, textCodes);
-            CreateMAWBStackFields(objectFields, textCodes);
-            CreateRestrictionFields(objectFields, textCodes);
-            CreateRoleFields(objectFields, textCodes);
-            CreateAccountFields(objectFields, textCodes);
-            CreateAccountTypesFields(objectFields, textCodes);
-            CreateRankFields(objectFields, textCodes);
-            CreateCommunicationLogsFields(objectFields, textCodes);
-            CreateCommunicationLogTypesFields(objectFields, textCodes);
-            CreateWarehouseTypesFields(objectFields, textCodes);
-            CreateCommunicationStatusTypesFields(objectFields, textCodes);
-            CreatePasswordPoliciesFields(objectFields, textCodes);
-            CreatePackageFields(objectFields, textCodes);
-            CreateTenantManagementFields(objectFields, textCodes);
-            CreateRecurringPeriodFields(objectFields, textCodes);
-            CreatePaymentChannelFields(objectFields, textCodes);
-            CreateEventTypeCategoryFields(objectFields, textCodes);
-            LoadCreateTestFields(objectFields, textCodes);
-            CreateTermsofUseSignaturesFields(objectFields, textCodes);
-            CreateAnalyzeQueueFields(objectFields, textCodes);
-            CreateCreditCardTypeFields(objectFields, textCodes);
-            CreateErrorLogFields(objectFields, textCodes);
-            CreateSharedLogisticsInvitationStatusFields(objectFields, textCodes);
-            CreateAccountingTransferHeaderFields(objectFields, textCodes);
-            CreateAccountingTransferLineFields(objectFields, textCodes);
-            CreateAccountingTransferTypeFields(objectFields, textCodes);
-            CreateMoveTypeFields(objectFields, textCodes);
-            CreateReportFields(objectFields, textCodes);
-            CreateCommodityFields(objectFields, textCodes);
-            CreateLeadSourceFields(objectFields, textCodes);
-            CreateIndustryFields(objectFields, textCodes);
-            CreateProductTypeFields(objectFields, textCodes);
-            CreateProductPeriodFields(objectFields, textCodes);
-            CreateCustomerProductFields(objectFields, textCodes);
-            CreateCustomerProductActualDataFields(objectFields, textCodes);
-            CreateCustomerProductLocationFields(objectFields, textCodes);
-            CreateCustomerProductLocationActualDataFields(objectFields, textCodes);
-            CreateCompetitorsFields(objectFields, textCodes);
-            CreateCustomerAdditionalServiceFields(objectFields, textCodes);
-            CreateContactDoneMethodFields(objectFields, textCodes);
-            CreateAdditionalServiceFields(objectFields, textCodes);
-            CreateLogitudeLeadFields(objectFields, textCodes);
-            CreateBorderTypeFields(objectFields, textCodes);
-            CreateExternalSystemsTablesCodeFields(objectFields, textCodes);
-            CreateVatUniqueTypeFields(objectFields, textCodes);
-            CreateVatMandatoryTypeFields(objectFields, textCodes);
-            CreateVatFormatTypeFields(objectFields, textCodes);
-            CreateCustomerSalesNoteFields(objectFields, textCodes);
-            CreateAccountingSystemsSettingFields(objectFields, textCodes);
-            CreateAccountingSystemsSyncStatusFields(objectFields, textCodes);
-            CreateCustomerStatusFields(objectFields, textCodes);
-            CreateBusinessUnitFields(objectFields, textCodes);
-            CreateFeatureAccessLevelFields(objectFields, textCodes);
-            CreateSpecialServicesTypeFields(objectFields, textCodes);
-            CreateRegionFields(objectFields, textCodes);
-            CreatePaymentCurrencyFields(objectFields, textCodes);
-            CreateCustomerSizeFields(objectFields, textCodes);
-            CreateDistributorFields(objectFields, textCodes);
-            CreateAccountingInformationIdentifierFields(objectFields, textCodes);
-            CreateComputingPartnerFields(objectFields, textCodes);
-            CreateComputingPartnerCodeFields(objectFields, textCodes);
-            CreateComputingPartnerTableFields(objectFields, textCodes);
-            CreateComputingPartnerTranslationFields(objectFields, textCodes);
-            CreateBluesnapContractFields(objectFields, textCodes);
-            CreateAWBMessagesCCSTypeFields(objectFields, textCodes);
-            CreateDocumentFolderFields(objectFields, textCodes);
-            CreateManifestStatusFields(objectFields, textCodes);
-            CreateCustomsTransmissionsStatusFields(objectFields, textCodes);
-            CreateInboundEmailFields(objectFields, textCodes);
-            CreateInboundEmailLineFields(objectFields, textCodes);
-            CreateDocumentTypeCategoryFields(objectFields, textCodes);
-            CreateCustomerTenantAccessFields(objectFields, textCodes);
-            CreateCustomerTenantAccessStatusType(objectFields, textCodes);
-            CreateCustomerTenantAccessCardFields(objectFields, textCodes);
-            CreateCustomerTenantAccessRequestFields(objectFields, textCodes);
-            CreateHybridPartnerFields(objectFields, textCodes);
-            CreateBusinessHourFields(objectFields, textCodes);
-            CreateBusinessHoursHolidayFields(objectFields, textCodes);
-            CreateAPILogsFields(objectFields, textCodes);
-            CreatePaymentMethodFields(objectFields, textCodes);
-            CreateAPILogsDataFields(objectFields, textCodes);
-            CreateBatchServicesLogFields(objectFields, textCodes);
-            CreateTenantTypeFields(objectFields, textCodes);
-            CreateQueueMessageMoreDetailsFields(objectFields, textCodes);
-            CreateCustomerTenantAccessCardBatchFields(objectFields, textCodes);
-            CreateParticipantFields(objectFields, textCodes);
-            CreateApiCredintials(objectFields, textCodes);
-            CreateAirlineStatisticsFields(objectFields, textCodes);
-            CreateAWBDescriptionOfGoodsFields(objectFields, textCodes);
-            CreateTransmissionLogFields(objectFields, textCodes);
-            CreateFeaturePackageTypeFields(objectFields, textCodes);
-            CreateTenantManagementLicenseFields(objectFields, textCodes);
-            CreatePackageConnectedPackageFields(objectFields, textCodes);
-            CreateUserLicenseFields(objectFields, textCodes);
-            CreateTenantAddOnFields(objectFields, textCodes);
-            CreateAirlineMessagingRuleFields(objectFields, textCodes);
-            CreateAuomationFields(objectFields, textCodes);
-            CreatePaymentTermDateTypeFields(objectFields, textCodes);
-            CreateCustomerFieldsUpdateSettingFields(objectFields, textCodes);
-            CreateTenantManagmentPrivateLabelsFields(objectFields, textCodes);
-            CreateCreditLimitSettingFields(objectFields, textCodes);
-            CreateAgentSharedManifestFields(objectFields, textCodes);
-            CreateCustomerAccountManagerByProductFields(objectFields, textCodes);
-            CreateCardExternalAccountsByProductFields(objectFields, textCodes);
-            CreateCustomsInterfaceFields(objectFields, textCodes);
-            CreateCustomsInterfaceSettingFields(objectFields, textCodes);
-            CreateFTPDetailFields(objectFields, textCodes);
-            CreateSATInterfaceFields(objectFields, textCodes);
-            CreateSATInterfaceSettingFields(objectFields, textCodes);
-            CreateFBLStockFields(objectFields, textCodes);
-            CreateSATPaymentMethodFields(objectFields, textCodes);
-            CreateCardExternalCodeByCurrencyFields(objectFields, textCodes);
-            CreateLoginPolicyFields(objectFields, textCodes);
-            CreateTenantLoginPolicy(objectFields, textCodes);
-            TwoFactorAuthenticationDeviceFields(objectFields, textCodes);
-            CreateMetodoPagoFields(objectFields, textCodes);
-            CreateBatchServicesDefinitionsFields(objectFields, textCodes);
-            CreateAgentSharedDocumentFields(objectFields, textCodes);
-            CreateChargesExternalAccountsByProductFields(objectFields, textCodes);
-            CreateRegistryDateTypeFields(objectFields, textCodes);
-            CreateUsoCFDIFields(objectFields, textCodes);
-            CreateReportsTemplateFields(objectFields, textCodes);
-            CreateReportsTemplatesVersionFields(objectFields, textCodes);
-            CreateObjectFieldFields(objectFields, textCodes);
-            CreateFilingInboxFields(objectFields, textCodes);
-            CreateFilingInboxAttachmentFields(objectFields, textCodes);
-            CreateFilingInboxAttachmentLogFields(objectFields, textCodes);
-            CreateTasksSchedulerObjectFields(objectFields, textCodes);
-            CreateINTTRASettingFields(objectFields, textCodes);
-            CreateINTTRASettingModeFields(objectFields, textCodes);
-            CreateINTTRABranchRegisteredCarrierFields(objectFields, textCodes);
-            CreateTemperatureUnitFields(objectFields, textCodes);
-            CreateINTTRADocumentTypeFields(objectFields, textCodes);
+                CreateFollowUpFields(objectFields, textCodes);
+                CreateVatTypeFields(objectFields, textCodes);
+                CreateVatTypePercentageFields(objectFields, textCodes);
+                CreateCardFields(objectFields, textCodes);
+                CreateCarrierFields(objectFields, textCodes);
+                CreateCustomerFields(objectFields, textCodes);
+                CreateAgentFields(objectFields, textCodes);
+                CreateCustomAgentFields(objectFields, textCodes);
+                CreateShippingAgentFields(objectFields, textCodes);
+                CreateAirlineFields(objectFields, textCodes);
+                CreateShippingLineFields(objectFields, textCodes);
+                CreateTruckerFields(objectFields, textCodes);
+                CreateVendorFields(objectFields, textCodes);
+                CreateAddressFields(objectFields, textCodes);
+                CreateContactFields(objectFields, textCodes);
+                CreateBranchFields(objectFields, textCodes);
+                CreateChargeTypeFields(objectFields, textCodes);
+                CreateChargeTypeAccountingFields(objectFields, textCodes);
+                CreateCountryFields(objectFields, textCodes);
+                CreateCurrencyFields(objectFields, textCodes);
+                CreateDepartmentFields(objectFields, textCodes);
+                CreateExternalDocumentFields();
+                CreateInternalDocumentFields();
+                CreateGlobalZoneFields(objectFields, textCodes);
+                CreateIncotermFields(objectFields, textCodes);
+                CreatePaymentTermsFields(objectFields, textCodes);
+                CreatePortFields(objectFields, textCodes);
+                CreateStatesFields(objectFields, textCodes);
+                CreateCityFields(objectFields, textCodes);
+                CreateUserFields(objectFields, textCodes);
+                CreateVesselFields(objectFields, textCodes);
+                CreateWareHouseFields(objectFields, textCodes);
+                CreateTraceEventFields(objectFields, textCodes);
+                CreateEventTypeFields(objectFields, textCodes);
+                CreateDocumentTypeFields(objectFields, textCodes);
+                CreateDocumentsFilingsFields(objectFields, textCodes);
+                CreatePackageTypeFields(objectFields, textCodes);
+                CreateWeightUnitFields(objectFields, textCodes);
+                CreateRateClassFields(objectFields, textCodes);
+                CreateDimensionsUnitFields(objectFields, textCodes);
+                CreateAccountingSystemFields(objectFields, textCodes);
+                CreateAccountSettingFields(objectFields, textCodes);
+                CreateAWBChargesCodeFields(objectFields, textCodes);
+                CreateAWBSpecialHandlingCodeFields(objectFields, textCodes);
+                CreateVolumeUnitFields(objectFields, textCodes);
+                CreateMesaurmentFields(objectFields, textCodes);
+                CreateDueTypeFields(objectFields, textCodes);
+                CreatePrepaidCollectFields(objectFields, textCodes);
+                CreateContainerTypeFields(objectFields, textCodes);
+                CreateFollowUpTypeFields(objectFields, textCodes);
+                CreateRatesTableFields(objectFields, textCodes);
+                CreateTransportModeFields(objectFields, textCodes);
+                CreateObjectTableFields(objectFields, textCodes);
+                CreateEntityStatusFields(objectFields, textCodes);
+                CreatePartnerTypeFields(objectFields, textCodes);
+                CreateChargeGroupFields(objectFields, textCodes);
+                CreateIATACodesFields(objectFields, textCodes);
+                CreateTemplateFormatFields(objectFields, textCodes);
+                CreateDocumentTypeTemplateFields(objectFields, textCodes);
+                CreateDocumentTypeCustomFields(objectFields, textCodes);
+                CreateDirectionFields(objectFields, textCodes);
+                CreateSystemDataFields(objectFields, textCodes);
+                CreateSharedLogisticsFields(objectFields, textCodes);
+                CreateTenantFields(objectFields, textCodes);
+                CreateDescriptionOfGoodsFields(objectFields, textCodes);
+                CreateCounterDefinitionFields(objectFields, textCodes);
+                CreateTarrifTypesFields(objectFields, textCodes);
+                CreateTarrifFromToTypesFields(objectFields, textCodes);
+                CreateTarrifChargesFields(objectFields, textCodes);
+                CreateTarrifFromTosFields(objectFields, textCodes);
+                CreateTarrifHeadersFields(objectFields, textCodes);
+                CreateTarrifStepsFields(objectFields, textCodes);
+                CreateTextCodeFields(objectFields, textCodes);
+                CreateMAWBStackFields(objectFields, textCodes);
+                CreateRestrictionFields(objectFields, textCodes);
+                CreateRoleFields(objectFields, textCodes);
+                CreateAccountFields(objectFields, textCodes);
+                CreateAccountTypesFields(objectFields, textCodes);
+                CreateRankFields(objectFields, textCodes);
+                CreateCommunicationLogsFields(objectFields, textCodes);
+                CreateCommunicationLogTypesFields(objectFields, textCodes);
+                CreateWarehouseTypesFields(objectFields, textCodes);
+                CreateCommunicationStatusTypesFields(objectFields, textCodes);
+                CreatePasswordPoliciesFields(objectFields, textCodes);
+                CreatePackageFields(objectFields, textCodes);
+                CreateTenantManagementFields(objectFields, textCodes);
+                CreateRecurringPeriodFields(objectFields, textCodes);
+                CreatePaymentChannelFields(objectFields, textCodes);
+                CreateEventTypeCategoryFields(objectFields, textCodes);
+                LoadCreateTestFields(objectFields, textCodes);
+                CreateTermsofUseSignaturesFields(objectFields, textCodes);
+                CreateAnalyzeQueueFields(objectFields, textCodes);
+                CreateCreditCardTypeFields(objectFields, textCodes);
+                CreateErrorLogFields(objectFields, textCodes);
+                CreateSharedLogisticsInvitationStatusFields(objectFields, textCodes);
+                CreateAccountingTransferHeaderFields(objectFields, textCodes);
+                CreateAccountingTransferLineFields(objectFields, textCodes);
+                CreateAccountingTransferTypeFields(objectFields, textCodes);
+                CreateMoveTypeFields(objectFields, textCodes);
+                CreateReportFields(objectFields, textCodes);
+                CreateCommodityFields(objectFields, textCodes);
+                CreateLeadSourceFields(objectFields, textCodes);
+                CreateIndustryFields(objectFields, textCodes);
+                CreateProductTypeFields(objectFields, textCodes);
+                CreateProductPeriodFields(objectFields, textCodes);
+                CreateCustomerProductFields(objectFields, textCodes);
+                CreateCustomerProductActualDataFields(objectFields, textCodes);
+                CreateCustomerProductLocationFields(objectFields, textCodes);
+                CreateCustomerProductLocationActualDataFields(objectFields, textCodes);
+                CreateCompetitorsFields(objectFields, textCodes);
+                CreateCustomerAdditionalServiceFields(objectFields, textCodes);
+                CreateContactDoneMethodFields(objectFields, textCodes);
+                CreateAdditionalServiceFields(objectFields, textCodes);
+                CreateLogitudeLeadFields(objectFields, textCodes);
+                CreateBorderTypeFields(objectFields, textCodes);
+                CreateExternalSystemsTablesCodeFields(objectFields, textCodes);
+                CreateVatUniqueTypeFields(objectFields, textCodes);
+                CreateVatMandatoryTypeFields(objectFields, textCodes);
+                CreateVatFormatTypeFields(objectFields, textCodes);
+                CreateCustomerSalesNoteFields(objectFields, textCodes);
+                CreateAccountingSystemsSettingFields(objectFields, textCodes);
+                CreateAccountingSystemsSyncStatusFields(objectFields, textCodes);
+                CreateCustomerStatusFields(objectFields, textCodes);
+                CreateBusinessUnitFields(objectFields, textCodes);
+                CreateFeatureAccessLevelFields(objectFields, textCodes);
+                CreateSpecialServicesTypeFields(objectFields, textCodes);
+                CreateRegionFields(objectFields, textCodes);
+                CreatePaymentCurrencyFields(objectFields, textCodes);
+                CreateCustomerSizeFields(objectFields, textCodes);
+                CreateDistributorFields(objectFields, textCodes);
+                CreateAccountingInformationIdentifierFields(objectFields, textCodes);
+                CreateComputingPartnerFields(objectFields, textCodes);
+                CreateComputingPartnerCodeFields(objectFields, textCodes);
+                CreateComputingPartnerTableFields(objectFields, textCodes);
+                CreateComputingPartnerTranslationFields(objectFields, textCodes);
+                CreateBluesnapContractFields(objectFields, textCodes);
+                CreateAWBMessagesCCSTypeFields(objectFields, textCodes);
+                CreateDocumentFolderFields(objectFields, textCodes);
+                CreateManifestStatusFields(objectFields, textCodes);
+                CreateCustomsTransmissionsStatusFields(objectFields, textCodes);
+                CreateInboundEmailFields(objectFields, textCodes);
+                CreateInboundEmailLineFields(objectFields, textCodes);
+                CreateDocumentTypeCategoryFields(objectFields, textCodes);
+                CreateCustomerTenantAccessFields(objectFields, textCodes);
+                CreateCustomerTenantAccessStatusType(objectFields, textCodes);
+                CreateCustomerTenantAccessCardFields(objectFields, textCodes);
+                CreateCustomerTenantAccessRequestFields(objectFields, textCodes);
+                CreateHybridPartnerFields(objectFields, textCodes);
+                CreateBusinessHourFields(objectFields, textCodes);
+                CreateBusinessHoursHolidayFields(objectFields, textCodes);
+                CreateAPILogsFields(objectFields, textCodes);
+                CreatePaymentMethodFields(objectFields, textCodes);
+                CreateAPILogsDataFields(objectFields, textCodes);
+                CreateBatchServicesLogFields(objectFields, textCodes);
+                CreateTenantTypeFields(objectFields, textCodes);
+                CreateQueueMessageMoreDetailsFields(objectFields, textCodes);
+                CreateCustomerTenantAccessCardBatchFields(objectFields, textCodes);
+                CreateParticipantFields(objectFields, textCodes);
+                CreateApiCredintials(objectFields, textCodes);
+                CreateAirlineStatisticsFields(objectFields, textCodes);
+                CreateAWBDescriptionOfGoodsFields(objectFields, textCodes);
+                CreateTransmissionLogFields(objectFields, textCodes);
+                CreateFeaturePackageTypeFields(objectFields, textCodes);
+                CreateTenantManagementLicenseFields(objectFields, textCodes);
+                CreatePackageConnectedPackageFields(objectFields, textCodes);
+                CreateUserLicenseFields(objectFields, textCodes);
+                CreateTenantAddOnFields(objectFields, textCodes);
+                CreateAirlineMessagingRuleFields(objectFields, textCodes);
+                CreateAuomationFields(objectFields, textCodes);
+                CreatePaymentTermDateTypeFields(objectFields, textCodes);
+                CreateCustomerFieldsUpdateSettingFields(objectFields, textCodes);
+                CreateTenantManagmentPrivateLabelsFields(objectFields, textCodes);
+                CreateCreditLimitSettingFields(objectFields, textCodes);
+                CreateAgentSharedManifestFields(objectFields, textCodes);
+                CreateCustomerAccountManagerByProductFields(objectFields, textCodes);
+                CreateCardExternalAccountsByProductFields(objectFields, textCodes);
+                CreateCustomsInterfaceFields(objectFields, textCodes);
+                CreateCustomsInterfaceSettingFields(objectFields, textCodes);
+                CreateFTPDetailFields(objectFields, textCodes);
+                CreateSATInterfaceFields(objectFields, textCodes);
+                CreateSATInterfaceSettingFields(objectFields, textCodes);
+                CreateFBLStockFields(objectFields, textCodes);
+                CreateSATPaymentMethodFields(objectFields, textCodes);
+                CreateCardExternalCodeByCurrencyFields(objectFields, textCodes);
+                CreateLoginPolicyFields(objectFields, textCodes);
+                CreateTenantLoginPolicy(objectFields, textCodes);
+                TwoFactorAuthenticationDeviceFields(objectFields, textCodes);
+                CreateMetodoPagoFields(objectFields, textCodes);
+                CreateBatchServicesDefinitionsFields(objectFields, textCodes);
+                CreateAgentSharedDocumentFields(objectFields, textCodes);
+                CreateChargesExternalAccountsByProductFields(objectFields, textCodes);
+                CreateRegistryDateTypeFields(objectFields, textCodes);
+                CreateUsoCFDIFields(objectFields, textCodes);
+                CreateReportsTemplateFields(objectFields, textCodes);
+                CreateReportsTemplatesVersionFields(objectFields, textCodes);
+                CreateObjectFieldFields(objectFields, textCodes);
+                CreateFilingInboxFields(objectFields, textCodes);
+                CreateFilingInboxAttachmentFields(objectFields, textCodes);
+                CreateFilingInboxAttachmentLogFields(objectFields, textCodes);
+                CreateTasksSchedulerObjectFields(objectFields, textCodes);
+                CreateINTTRASettingFields(objectFields, textCodes);
+                CreateINTTRASettingModeFields(objectFields, textCodes);
+                CreateINTTRABranchRegisteredCarrierFields(objectFields, textCodes);
+                CreateTemperatureUnitFields(objectFields, textCodes);
+                CreateINTTRADocumentTypeFields(objectFields, textCodes);
 
-            CreateDocumentFilingBackupBatchFields(objectFields, textCodes);
-            CreateDocumentFilingBackupSettingFields(objectFields, textCodes);
-            CreateDWHSettingFields(objectFields, textCodes);
+                CreateDocumentFilingBackupBatchFields(objectFields, textCodes);
+                CreateDocumentFilingBackupSettingFields(objectFields, textCodes);
+                CreateDWHSettingFields(objectFields, textCodes);
 
-            CreateDWObjectTableFields(objectFields, textCodes);
-            CreateDWObjectFieldFields(objectFields, textCodes);
+                CreateDWObjectTableFields(objectFields, textCodes);
+                CreateDWObjectFieldFields(objectFields, textCodes);
 
-            //if (!isUpdate)
-            //{
-            LoadRolesAndFeatures(0);
-            CreateMenuButtonsForTenant(0);
-            //}          
-
+                //if (!isUpdate)
+                //{
+                LoadRolesAndFeatures(0);
+                CreateMenuButtonsForTenant(0);
+                //}          
+            }
             this.ObjectContext.SaveChanges();
         }
 
@@ -2038,7 +2040,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Private Label Short Name",
-                FullFieldLable = "Private Label Short Name",
+                FullFieldLable = "PrivateLabelShortName",
                 FieldName = "PrivateLabelShortName",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2066,7 +2068,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Private Label Name",
-                FullFieldLable = "Private Label Name",
+                FullFieldLable = "PrivateLabelName",
                 FieldName = "PrivateLabelName",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2094,7 +2096,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Private Label Url",
-                FullFieldLable = "Private Label Url",
+                FullFieldLable = "PrivateLabelUrl",
                 FieldName = "PrivateLabelUrl",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2116,7 +2118,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Contact Us Email",
-                FullFieldLable = "Contact Us Email",
+                FullFieldLable = "ContactUsEmail",
                 FieldName = "ContactUsEmail",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -2138,7 +2140,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Receive All Statuses",
-                FullFieldLable = "Receive All Statuses",
+                FullFieldLable = "ReceiveAllStatuses",
                 FieldName = "ReceiveAllStatuses",
                 FieldsDataType = "Boolean",
                 IsRequired = true,
@@ -2159,7 +2161,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "In Active",
-                FullFieldLable = "In Active",
+                FullFieldLable = "InActive",
                 FieldName = "InActive",
                 FieldsDataType = "Boolean",
                 IsRequired = true,
@@ -7956,6 +7958,25 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "AddressId",
                 HelpTextCode = "AddressId",
                 HelpTextDefaultText = "Your company’s address details will appear on airwaybills and other documents and outgoing messages."
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Local Address",
+                FullFieldLable = "LocalAddressId",
+                FieldName = "LocalAddressId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = AddressObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = TenantObject.Id,
+                ObjectTableName = TenantObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                Operator = "Equals",
+                ValidForQuerySection1 = "Tenant",
+                ListPropertyPath = "LocalAddressId",
+                PMPropertyPath = "LocalAddressId",                
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -15306,8 +15327,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "ContactPosition",
                 PMPropertyPath = "ContactPosition",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
-
-
+            
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Signature",
@@ -17727,7 +17747,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInLookUpIndex = 1,
                 DisplayInSearchWindowFiltersIndex = 1,
                 DisplayInSearchWindowListIndex = 1,
-                FullFieldLable = "English Name",
+                FullFieldLable = "EnglishName",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
                 IsRequired = true,
@@ -19903,7 +19923,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "State",
-                FullFieldLable = "State_Potential",
+                FullFieldLable = "StateId_Potential",
                 FieldName = "StateId_Potential",
                 FieldsDataType = "LookUp",
                 IsCustom = false,
@@ -20440,7 +20460,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowListIndex = 2,
                 DisplayInSearchWindowFilters = true,
                 DisplayInSearchWindowFiltersIndex = 0,
-                FullFieldLable = "Name",
+                FullFieldLable = "EnglishName",
                 FullLocalDefaultText = "שם אנגלית",
                 FieldName = "EnglishName",
                 FieldsDataType = "Text",
@@ -20742,7 +20762,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Payment Term Name",
                 DisplayOnLookUp = false,
-                FullFieldLable = "PaymentTermName",
+                FullFieldLable = "PaymentTermEnglishName",
                 FieldName = "PaymentTermEnglishName",
                 FieldsDataType = "Text",
                 IsCustom = false,
@@ -33462,7 +33482,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
-                LookUpTableId = UsersObject.Id,
+                LookUpTableId = null,
                 CanFilter = true,
                 DisplayInList = true,
                 ListFieldLable = "TechnologyListLable",
@@ -36287,7 +36307,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowFilters = false,
                 DisplayInSearchWindowList = true,
                 DisplayInLookUpIndex = 1,
-                FullFieldLable = "Contact",
+                FullFieldLable = "ContactName",
                 FieldName = "ContactName",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36305,6 +36325,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListLocalDefaultText = "Contact",
                 ValidForQuerySection1 = "CustomerTenantAccess",
+                HelpTextCode = "Contact",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -36315,7 +36336,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DisplayInSearchWindowFilters = false,
                 DisplayInSearchWindowList = true,
                 DisplayInLookUpIndex = 1,
-                FullFieldLable = "Company VAT",
+                FullFieldLable = "CompanyVat",
                 FieldName = "CompanyVat",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36325,7 +36346,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableName = CustomerTenantAccessObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
-                ListFieldLable = "CompanyVATListLable",
+                ListFieldLable = "CompanyVatListLable",
                 ListLableDefaultText = "VAT #",
                 DisplayInList = true,
                 ListPropertyPath = "CompanyVat",
@@ -36333,6 +36354,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListLocalDefaultText = "CompanyVAT",
                 ValidForQuerySection1 = "CustomerTenantAccess",
+                HelpTextCode = "Company VAT",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
 
@@ -36340,7 +36362,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Company Name",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Company",
+                FullFieldLable = "CompanyName",
                 FieldName = "CompanyName",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36358,13 +36380,14 @@ namespace WebFreight.Web.MetaDataUpdate
                 PMPropertyPath = "CompanyName",
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 Operator = "StartsWith",
+                HelpTextCode = "Company",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Company Email",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Company Email",
+                FullFieldLable = "CompanyEmail",
                 FieldName = "CompanyEmail",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36381,13 +36404,14 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "CompanyEmail",
                 PMPropertyPath = "CompanyEmail",
+                HelpTextCode = "Company Email",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Contact Mobile",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Contact Mobile",
+                FullFieldLable = "ContactMobile",
                 FieldName = "ContactMobile",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36403,14 +36427,16 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactMobile",
-                PMPropertyPath = "ContactMobile"
+                PMPropertyPath = "ContactMobile",
+                HelpTextCode = "Contact Mobile",
+
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Contact Phone",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Contact Phone",
+                FullFieldLable = "ContactPhone",
                 FieldName = "ContactPhone",
                 FieldsDataType = "Text",
                 IsRequired = false,
@@ -36426,14 +36452,15 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 Operator = "StartsWith",
                 ListPropertyPath = "ContactPhone",
-                PMPropertyPath = "ContactPhone"
+                PMPropertyPath = "ContactPhone",
+                HelpTextCode = "Contact Phone",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "RequestDateTime",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Request Date",
+                FullFieldLable = "RequestDateTime",
                 FieldName = "RequestDateTime",
                 FieldsDataType = "DateTime",
                 IsRequired = false,
@@ -36448,6 +36475,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Operator = "StartsWith",
                 ListPropertyPath = "RequestDateTime",
                 PMPropertyPath = "RequestDateTime",
+                HelpTextCode = "Request Date",
                 //ConverterName = "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter"
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -36500,7 +36528,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Stock Type",
-                FullFieldLable = "Stock Type",
+                FullFieldLable = "StockTypeCode",
                 FieldName = "StockTypeCode",
                 FieldsDataType = "Text",
                 MaxLength = 15,
@@ -36525,7 +36553,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DefaultText = "UpdatedBy UserId",
                 DisplayOnLookUp = false,
                 IsRequired = false,
-                FullFieldLable = "Updated By User",
+                FullFieldLable = "UpdatedByUserId",
                 FieldName = "UpdatedByUserId",
                 FieldsDataType = "LookUp",
                 LookUpTableId = UsersObject.Id,
@@ -36542,6 +36570,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ValidForQuerySection1 = "CustomerTenantAccess",
                 ListPropertyPath = "UpdatedByUserId",
                 PMPropertyPath = "UpdatedByUserId",
+                HelpTextCode = "Updated By User",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
@@ -36549,7 +36578,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 DefaultText = "Updated By",
                 DisplayOnLookUp = false,
                 IsRequired = false,
-                FullFieldLable = "UpdatedByUser",
+                FullFieldLable = "UpdatedByUserName",
                 FieldName = "UpdatedByUserName",
                 FieldsDataType = "Text",
                 MaxLength = 60,
@@ -36570,7 +36599,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Last Update Date",
-                FullFieldLable = "Last Update Date",
+                FullFieldLable = "LastUpdateDate",
                 FieldName = "LastUpdateDate",
                 FieldsDataType = "DateTime",
                 ObjectTableId = CustomerTenantAccessObject.Id,
@@ -36614,7 +36643,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Last Shipment Date",
-                FullFieldLable = "Last Shipment Date",
+                FullFieldLable = "LastShipmentDate",
                 FieldName = "LastShipmentDate",
                 FieldsDataType = "DateTime",
                 ObjectTableId = CustomerTenantAccessObject.Id,
@@ -55199,7 +55228,7 @@ namespace WebFreight.Web.MetaDataUpdate
             List<ObjectField> specialServicesTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "SpecialServicesType").ToList();
             List<ObjectField> regionObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Region").ToList();
             List<ObjectField> LogitudeLeadObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "LogitudeLead").ToList();
-            List<ObjectField> AWBMessagingStockObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "AWBMessagingStock").ToList();
+            List<ObjectField> MessagingStockObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MessagingStock").ToList();
             List<ObjectField> CustomerSizeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CustomerSize").ToList();
             List<ObjectField> QuoteStageObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QuoteStage").ToList();
             List<ObjectField> CountryCityObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "CountryCity").ToList();
@@ -55286,7 +55315,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTable specialServicesTypeObject = ObjectContext.ObjectTables.Where(d => d.Name == "SpecialServicesType" && d.Tenant == 0).FirstOrDefault();
             ObjectTable regionObject = ObjectContext.ObjectTables.Where(d => d.Name == "Region" && d.Tenant == 0).FirstOrDefault();
             ObjectTable LogitudeLeadObject = ObjectContext.ObjectTables.Where(d => d.Name == "LogitudeLead" && d.Tenant == 0).FirstOrDefault();
-            ObjectTable AWBMessagingStockObject = ObjectContext.ObjectTables.Where(d => d.Name == "AWBMessagingStock" && d.Tenant == 0).FirstOrDefault();
+            ObjectTable MessagingStockObject = ObjectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault();
             ObjectTable CustomerSizeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault();
             ObjectTable QuoteStageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault();
             ObjectTable CountryCityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CountryCity" && d.Tenant == 0).FirstOrDefault();
@@ -55376,7 +55405,7 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryGroup specialServicesTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "STQG", Name = "Special Services Type" }, QueryGroupRepository);
             QueryGroup regionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "RGQG", Name = "Region" }, QueryGroupRepository);
             QueryGroup LogitudeLeadQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "LLQG", Name = "Logitude Leads" }, QueryGroupRepository);
-            QueryGroup AWBMessagingStockQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "AWMS", Name = "AWB Messaging Stocks" }, QueryGroupRepository);
+            QueryGroup MessagingStockQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "AWMS", Name = "Messaging Stocks" }, QueryGroupRepository);
             QueryGroup CustomerSizeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CUSS", Name = "Customer Size" }, QueryGroupRepository);
             QueryGroup QuoteStageQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "QSQG", Name = "Quote Stage" }, QueryGroupRepository);
             QueryGroup CountryCityQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "CCQG", Name = "Country City" }, QueryGroupRepository);
@@ -57383,6 +57412,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature aRGeneralInvoiceFeature_Approval = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "APPROVALGENERALINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aRGeneralInvoiceFeature_All = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "ALLGENERALINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aRInvoiceFeature_SATFailed = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "SATFAILEDINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            Feature aRInvoiceFeature_QBOFailedTransmission = tenantFeatures.Where(d => d.ObjectTableId == InvoiceObject.Id && d.Code == "ErrorInTransfer" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
 
             Query aRInvoiceQuery_All = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.AllInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "All Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_All.Id }, QueriesRepository, tenantQueries);
@@ -57393,6 +57423,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Query aRInvoiceQuery_ErrorInTransfer = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.ErrorInTransferInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Error In Transfer Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 5, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Ascending", DefaultSortName = "InvoiceDate", FeatureId = aRInvoiceFeature_ErrorInTransfer.Id, EditWizardName = "Simplog.InvoiceLib.Views.Tabs.ARInvoiceTabs.ARTransferEditControl", EditWizardComponentPath = "./InvoiceModules/ARInvoice/Components/NewEntity/ARInvoiceTransferTemplate" }, QueriesRepository, tenantQueries);
             Query aRInvoiceQuery_OpenConstituent = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.OpenConstituentInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "OpenConstituent", QueryGroupCode = invoicesGroup.Code, IndexOrder = 6, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_OpenConstituent.Id }, QueriesRepository, tenantQueries);
             Query aRInvoiceQuery_FailedSAT = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.FailedSAT" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Invoices Failed to Open in SAT", QueryGroupCode = invoicesGroup.Code, IndexOrder = 7, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_SATFailed.Id }, QueriesRepository, tenantQueries);
+            Query aRInvoiceQuery_QBOFailedTransmission = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.ErrorInTransfer" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "ErrorInTransfer", QueryGroupCode = invoicesGroup.Code, IndexOrder = 8, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRInvoiceFeature_QBOFailedTransmission.Id }, QueriesRepository, tenantQueries);
 
             // Genaral Invoices 
             Query aRGeneralInvoiceQuery_Draft = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARInvoice.Q.DraftGeneralInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, Code = "Draft General Invoices", QueryGroupCode = invoicesGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceObject.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aRGeneralInvoiceFeature_Draft.Id }, QueriesRepository, tenantQueries);
@@ -57412,7 +57443,6 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn AllGeneralInvoicecol10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_All.Id, IndexOrder = 9, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn AllGeneralInvoicecol11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_All.Id, IndexOrder = 10, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn AllGeneralInvoicecol12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_All.Id, IndexOrder = 11, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter AllGeneralInvoicePredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "IsGeneralInvoice" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aRGeneralInvoiceQuery_All.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion 
 
             #region Draft General Invoices
@@ -57428,7 +57458,6 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn DraftGeneralInvoicecol10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Draft.Id, IndexOrder = 9, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn DraftGeneralInvoicecol11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Draft.Id, IndexOrder = 10, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn DraftGeneralInvoicecol12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Draft.Id, IndexOrder = 11, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter draftGeneralInvoice_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "DraftGeneralInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aRGeneralInvoiceQuery_Draft.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
 
             #endregion 
 
@@ -57445,7 +57474,7 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn ApprovalGeneralInvoicecol10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Approval.Id, IndexOrder = 9, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn ApprovalGeneralInvoicecol11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Approval.Id, IndexOrder = 10, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn ApprovalGeneralInvoicecol12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRGeneralInvoiceQuery_Approval.Id, IndexOrder = 11, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter approvalGeneralInvoice_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "ApprovalGeneralInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aRGeneralInvoiceQuery_Approval.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+
             #endregion
 
             #region All
@@ -57513,7 +57542,7 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn errorInTransferARInvoices_QueryColumn4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 4, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn errorInTransferARInvoices_QueryColumn5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 5, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 50 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn errorInTransferARInvoices_QueryColumn6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 6, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter errorInTransferARInvoices_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "ErrorInTransferInvoices" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aRInvoiceQuery_ErrorInTransfer.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            AdvancedQueryFilter errorInTransferARInvoices_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "TransferStatusCode" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "ET", QueryId = aRInvoiceQuery_ErrorInTransfer.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
             #region Marked As Blocked
@@ -57557,7 +57586,33 @@ namespace WebFreight.Web.MetaDataUpdate
             AdvancedQueryFilter invoiceSATFailed_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "TE", QueryId = aRInvoiceQuery_FailedSAT.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
+            #region QBO failed transmission
+
+            QueryColumn ErrorInTransferInvoicecol0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 0, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "IsPrinted" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 30 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 2, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "Sent" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 30 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 3, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 4, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "ARInvoiceTypeName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 5, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 6, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 7, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 8, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 9, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 10, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 11, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorInTransferInvoicecol12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 12, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+
+          AdvancedQueryFilter QBOFailedTransmition_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = InvoiceObjectFields.Where(d => d.FieldName == "TransferStatusCode" && d.ObjectTableId == InvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "ET", QueryId = aRInvoiceQuery_QBOFailedTransmission.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
+
+            #endregion
+
+
+
+
+
+
+
 
             #region (A/P) Invoice
             Feature aPInvoiceFeature_All = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "ALLINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
@@ -57566,8 +57621,11 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature aPInvoiceFeature_NotReady = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "NOTREADYINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aPInvoiceFeature_MarkedAsBlocked = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "MARKEDASBLOCKEDFORTRANSFER" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature aPInvoiceFeature_ErrorInTransfer = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "ERRORINTRANSFERINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            Feature aPInvoiceFeature_QBOFailedTransmission = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "ErrorInTransfer" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
             Feature aPGeneralInvoiceFeature_All = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "ALLGENERALAPINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            Feature aPGeneralInvoiceFeature_Draft = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "DRAFTGENERALAPINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            Feature aPGeneralInvoiceFeature_Approval = tenantFeatures.Where(d => d.ObjectTableId == APInvoiceObject.Id && d.Code == "APPROVALGENERALAPINVOICES" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
             Query aPInvoiceQuery_All = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.AllAPInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "All Invoices", FullLocalDefaultText = "כל החשבוניות",  QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", FeatureId = aPInvoiceFeature_All.Id }, QueriesRepository, tenantQueries);
             Query aPInvoiceQuery_Waiting = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.WaitingApprovalAPInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "Waiting for Approval", FullLocalDefaultText = "ממתין לאישור", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 1, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortName = "CreateDate", DefaultSortDirection = "Descending", FeatureId = aPInvoiceFeature_Waiting.Id }, QueriesRepository, tenantQueries);
@@ -57575,8 +57633,12 @@ namespace WebFreight.Web.MetaDataUpdate
             Query aPInvoiceQuery_NotReady = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.NotReadyInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "Not Ready Invoices", FullLocalDefaultText = "חשבוניות לא מוכנות", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 3, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Ascending", DefaultSortName = "InvoiceDate", FeatureId = aPInvoiceFeature_NotReady.Id, EditWizardName = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferEditControl", EditWizardComponentPath = "./InvoiceModules/APInvoice/Components/NewEntity/APInvoiceTransferTemplate" }, QueriesRepository, tenantQueries);
             Query aPInvoiceQuery_MarkedAsBlocked = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.MarkedAsBlockedForTransfer" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "Marked as blocked for transfer", FullLocalDefaultText = "סמן כחסום להעברה", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 4, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Ascending", DefaultSortName = "InvoiceDate", FeatureId = aPInvoiceFeature_MarkedAsBlocked.Id, EditWizardName = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferEditControl", EditWizardComponentPath = "./InvoiceModules/APInvoice/Components/NewEntity/APInvoiceTransferTemplate" }, QueriesRepository, tenantQueries);
             Query aPInvoiceQuery_ErrorInTransfer = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.ErrorInTransferInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "Error In Transfer Invoices", FullLocalDefaultText = "שגיאה בהעברת חשבוניות", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 5, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Ascending", DefaultSortName = "InvoiceDate", FeatureId = aPInvoiceFeature_ErrorInTransfer.Id, EditWizardName = "Simplog.InvoiceLib.Views.Tabs.APInvoiceTabs.APTransferEditControl", EditWizardComponentPath = "./InvoiceModules/APInvoice/Components/NewEntity/APInvoiceTransferTemplate" }, QueriesRepository, tenantQueries);
+            Query aPInvoiceQuery_QBOFailedTransmission = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.ErrorInTransfer" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "ErrorInTransfer", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 6, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aPInvoiceFeature_ErrorInTransfer.Id }, QueriesRepository, tenantQueries);
+
             // General AP Invoice
             Query aPGeneralInvoiceQuery_All = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.AllGeneralInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "All General APInvoices", FullLocalDefaultText = "", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aPGeneralInvoiceFeature_All.Id }, QueriesRepository, tenantQueries);
+            Query aPGeneralInvoiceQuery_Draft = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.DraftGeneralInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "Draft General APInvoices", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aPGeneralInvoiceFeature_Draft.Id }, QueriesRepository, tenantQueries);
+            Query aPGeneralInvoiceQuery_Approval = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APInvoice.Q.ApprovalGeneralInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, Code = "Approval General APInvoices", QueryGroupCode = APInvoiceGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = APInvoiceObject.Id, QuerySection = "APInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = aPGeneralInvoiceFeature_Approval.Id }, QueriesRepository, tenantQueries);
 
             #region All General Invoices 
             QueryColumn AllGeneralAPInvoices0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
@@ -57592,6 +57654,39 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn AllGeneralAPInvoices10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 10, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn AllGeneralAPInvoices11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_All.Id, IndexOrder = 11, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter AllGeneralAPInvoicePredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "IsGeneralInvoice" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aPGeneralInvoiceQuery_All.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            #endregion
+
+
+            #region Draft General Invoices 
+            QueryColumn DraftGeneralAPInvoices0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn DraftGeneralAPInvoices1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 1, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn DraftGeneralAPInvoices2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 2, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn DraftGeneralAPInvoices3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 3, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn DraftGeneralAPInvoices4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 4, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn DraftGeneralAPInvoices5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 5, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn DraftGeneralAPInvoices6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 6, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn DraftGeneralAPInvoices7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 7, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn DraftGeneralAPInvoices8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 8, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn DraftGeneralAPInvoices9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 9, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn DraftGeneralAPInvoices10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 10, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn DraftGeneralAPInvoices11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Draft.Id, IndexOrder = 11, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            AdvancedQueryFilter DraftGeneralAPInvoicePredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "DraftGeneralAPInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aPGeneralInvoiceQuery_Draft.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            #endregion
+
+            #region Approval General Invoices 
+            QueryColumn ApprovalGeneralAPInvoices0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ApprovalGeneralAPInvoices1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 1, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ApprovalGeneralAPInvoices2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 2, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ApprovalGeneralAPInvoices3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 3, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ApprovalGeneralAPInvoices4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 4, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ApprovalGeneralAPInvoices5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 5, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ApprovalGeneralAPInvoices6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 6, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ApprovalGeneralAPInvoices7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 7, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ApprovalGeneralAPInvoices8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 8, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ApprovalGeneralAPInvoices9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 9, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ApprovalGeneralAPInvoices10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 10, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ApprovalGeneralAPInvoices11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPGeneralInvoiceQuery_Approval.Id, IndexOrder = 11, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "DueDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            AdvancedQueryFilter ApprovalGeneralAPInvoicePredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "ApprovalGeneralAPInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aPGeneralInvoiceQuery_Approval.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion 
 
             #region All
@@ -57655,7 +57750,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AdvancedQueryFilter aPInvoiceQuery_MarkedAsBlocked_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "MarkedAsBlockedForTransfer" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aPInvoiceQuery_MarkedAsBlocked.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
-            #region Error In Transfer
+            #region Error In Transfer Invoice
             QueryColumn aPInvoiceQuery_ErrorInTransfer_Column00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn aPInvoiceQuery_ErrorInTransfer_Column01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 1, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn aPInvoiceQuery_ErrorInTransfer_Column02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 2, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 190 }, QueryColumnsRepository, tenantQueryColumns);
@@ -57664,6 +57759,28 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn aPInvoiceQuery_ErrorInTransfer_Column05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 5, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "ReadyForTransfer" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 50 }, QueryColumnsRepository, tenantQueryColumns);
             QueryColumn aPInvoiceQuery_ErrorInTransfer_Column06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_ErrorInTransfer.Id, IndexOrder = 6, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter aPInvoiceQuery_ErrorInTransfer_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "ErrorInTransferInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aPInvoiceQuery_ErrorInTransfer.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+            #endregion
+
+
+            #region Error In Transfer 
+            QueryColumn APErrorInTransferInvoicecol00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 0, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn APErrorInTransferInvoicecol0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceNumber" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn APErrorInTransferInvoicecol1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 2, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn APErrorInTransferInvoicecol2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 3, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn APErrorInTransferInvoicecol3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 4, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "InvoiceCurrencyCode" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn APErrorInTransferInvoicecol4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 5, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn APErrorInTransferInvoicecol5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 6, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn APErrorInTransferInvoicecol6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 7, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn APErrorInTransferInvoicecol7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 8, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn APErrorInTransferInvoicecol8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 9, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn APErrorInTransferInvoicecol9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 10, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "AmountInInvoiceCurrency" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn APErrorInTransferInvoicecol10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, IndexOrder = 11, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "AmountDue" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            AdvancedQueryFilter QBOAPFailedTransmition_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APInvoiceObjectFields.Where(d => d.FieldName == "ErrorInTransferInvoices" && d.ObjectTableId == APInvoiceObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = aPInvoiceQuery_QBOFailedTransmission.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+
+
+          
+
+
             #endregion
 
             #endregion
@@ -57708,6 +57825,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARPaymentFeature_NotReady = tenantFeatures.Where(d => d.ObjectTableId == ARPaymentObject.Id && d.Code == "NOTREADYPAYMENTS" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature ARPaymentFeature_MarkedAsBlocked = tenantFeatures.Where(d => d.ObjectTableId == ARPaymentObject.Id && d.Code == "MARKEDASBLOCKEDFORTRANSFER" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature ARPaymentFeature_SATFailedPayments = tenantFeatures.Where(d => d.ObjectTableId == ARPaymentObject.Id && d.Code == "SATFAILEDPAYMENTS" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            Feature ARPaymentFeature_QBOFailedTransmission = tenantFeatures.Where(d => d.ObjectTableId == ARPaymentObject.Id && d.Code == "ErrorInTransfer" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
             Query ARPaymentQuery_All = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.AllPayments" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "All Payments", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_All.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo" }, QueriesRepository, tenantQueries);
             Query ARPaymentQuery_Open = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.OpenPayments" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "Open Payments", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 1, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_Open.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo" }, QueriesRepository, tenantQueries);
@@ -57715,6 +57833,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Query ARPaymentQuery_NotReady = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.NotReadyPayments" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "Not Ready Payments", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 3, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_NotReady.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo", EditWizardComponentPath = "./InvoiceModules/ARPayment/Components/NewEntity/ARPaymentTransferTemplate" }, QueriesRepository, tenantQueries);
             Query ARPaymentQuery_MarkedAsBlocked = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.MarkedAsBlockedForTransfer" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "Marked as blocked for transfer", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 4, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_MarkedAsBlocked.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo", EditWizardComponentPath = "./InvoiceModules/ARPayment/Components/NewEntity/ARPaymentTransferTemplate" }, QueriesRepository, tenantQueries);
             Query ARPaymentQuery_SATFailed = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.FailedSAT" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "Payments Failed to Open in SAT", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 5, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_SATFailedPayments.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo"}, QueriesRepository, tenantQueries);
+            Query ARPaymentQuery_QBOFailedTransmission = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "ARPayment.Q.ErrorInTransfer" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, Code = "ErrorInTransfer", QueryGroupCode = ARPaymentGroup.Code, IndexOrder = 6, Tenant = 0, ObjectTableId = ARPaymentObject.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = ARPaymentFeature_QBOFailedTransmission.Id }, QueriesRepository, tenantQueries);
 
             #region All
             QueryColumn ARPaymentQuery_All01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_All.Id, IndexOrder = 0, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
@@ -57798,6 +57917,29 @@ namespace WebFreight.Web.MetaDataUpdate
 			AdvancedQueryFilter ARPaymentQuery_SATFailedPredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "SATTransferStatusCode" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, PredefinedValue = "TE", QueryId = ARPaymentQuery_SATFailed.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
+
+            #region QBO Error in Transfer 
+
+            #region All
+            QueryColumn ARPaymentQuery_Error00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ARPaymentQuery_Error01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ARPaymentQuery_Error02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 2, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "BillToName" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ARPaymentQuery_Error03 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 3, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "RegisterDate" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ARPaymentQuery_Error04 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 4, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentCurrencyCode" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ARPaymentQuery_Error05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 5, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ARPaymentQuery_Error06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 6, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ARPaymentQuery_Error07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 7, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ARPaymentQuery_Error08 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 8, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentMethodName" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ARPaymentQuery_Error09 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 9, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "AmountInPaymentCurrency" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ARPaymentQuery_Error010 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 10, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "OpenAmount" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ARPaymentQuery_Error011 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 11, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            AdvancedQueryFilter ARPaymentQBOFailedTransmition_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "TransferStatusCode" && d.ObjectTableId == ARPaymentObject.Id).FirstOrDefault().Id, PredefinedValue = "ET", QueryId = ARPaymentQuery_QBOFailedTransmission.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+
+            #endregion
+
+            #endregion
+
+
             #endregion
 
             #region (A/P) Payment
@@ -57806,12 +57948,14 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APPaymentFeature03 = tenantFeatures.Where(d => d.ObjectTableId == APPaymentObject.Id && d.Code == "DRAFTPAYMENTS" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature APPaymentFeature_NotReady = tenantFeatures.Where(d => d.ObjectTableId == APPaymentObject.Id && d.Code == "NOTREADYPAYMENTS" && d.FeatureTypeCode == "QUER").FirstOrDefault();
             Feature APPaymentFeature_MarkedAsBlocked = tenantFeatures.Where(d => d.ObjectTableId == APPaymentObject.Id && d.Code == "MARKEDASBLOCKEDFORTRANSFER" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            Feature APPaymentFeature_QBOFailedTransmission = tenantFeatures.Where(d => d.ObjectTableId == APPaymentObject.Id && d.Code == "ErrorInTransfer" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
             Query allAPPayments = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.AllAPPayments" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "All Payments", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentFeature01.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo" }, QueriesRepository, tenantQueries);
             Query openAPPayments = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.OpenAPPayments" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "Open Payments", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 1, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentFeature02.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo" }, QueriesRepository, tenantQueries);
             Query DraftAPPayments = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.DraftAPPayments" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "Draft Payments", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 1, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentFeature03.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo" }, QueriesRepository, tenantQueries);
             Query APPaymentQuery_NotReady = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.NotReadyPayments" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "Not Ready Payments", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 3, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentFeature_NotReady.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo", EditWizardComponentPath = "./InvoiceModules/APPayment/Components/NewEntity/APPaymentTransferTemplate" }, QueriesRepository, tenantQueries);
             Query APPaymentQuery_MarkedAsBlocked = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.MarkedAsBlockedForTransfer" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "Marked as blocked for transfer", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 4, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = APPaymentFeature_MarkedAsBlocked.Id, DefaultSortDirection = "Descending", DefaultSortName = "PaymentNo", EditWizardComponentPath = "./InvoiceModules/APPayment/Components/NewEntity/APPaymentTransferTemplate" }, QueriesRepository, tenantQueries);
+            Query APPaymentQuery_QBOFailedTransmission = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "APPayment.Q.ErrorInTransfer" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, Code = "ErrorInTransfer", QueryGroupCode = APPaymentGroup.Code, IndexOrder = 6, Tenant = 0, ObjectTableId = APPaymentObject.Id, QuerySection = "APPayment", SystemLevel = true, IsAddNewEntityEnabled = false, DefaultSortDirection = "Descending", DefaultSortName = "CreateDate", FeatureId = APPaymentFeature_QBOFailedTransmission.Id }, QueriesRepository, tenantQueries);
 
             #region All AP Payments            
             QueryColumn AllAPPayments0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAPPayments.Id, IndexOrder = 0, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
@@ -57880,6 +58024,25 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn APPaymentQuery_MarkedAsBlocked07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_MarkedAsBlocked.Id, IndexOrder = 6, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 500 }, QueryColumnsRepository, tenantQueryColumns);
             AdvancedQueryFilter APPaymentQuery_MarkedAsBlockedPredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "MarkedAsBlockedForTransfer" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = APPaymentQuery_MarkedAsBlocked.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
+
+
+            #region APPayment Error in transfer
+
+            #endregion
+            QueryColumn ErrorAPPayments00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 0, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "TransferError" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorAPPayments0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 1, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorAPPayments1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 2, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "VendorName" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorAPPayments2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 3, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "RegisterDate" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorAPPayments3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 4, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "PaymentCurrencyCode" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorAPPayments4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 5, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorAPPayments5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 6, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorAPPayments6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 7, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "StatusName" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorAPPayments7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 8, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "PaymentMethodName" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorAPPayments8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 9, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "AmountInPaymentCurrency" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorAPPayments9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 10, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "OpenAmount" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn ErrorAPPayments10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = APPaymentQuery_QBOFailedTransmission.Id, IndexOrder = 11, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "InternalNotes" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            AdvancedQueryFilter APPaymentQBOFailedTransmition_Filter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = APPaymentObjectFields.Where(d => d.FieldName == "TransferStatusCode" && d.ObjectTableId == APPaymentObject.Id).FirstOrDefault().Id, PredefinedValue = "ET", QueryId = APPaymentQuery_QBOFailedTransmission.Id, Tenant = 0 }, AdvancedQueryFiltersRepository, tenantAdvancedFilters);
+
 
             #endregion
 
@@ -58243,18 +58406,18 @@ namespace WebFreight.Web.MetaDataUpdate
             QueryColumn AllLogitudeLeadsColumn14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllLogitudeLeadsQuery.Id, IndexOrder = 14, ObjectFieldId = LogitudeLeadObjectFields.Where(d => d.FieldName == "Country" && d.ObjectTableId == LogitudeLeadObject.Id).FirstOrDefault().Id, ColumnWidth = 200 }, QueryColumnsRepository, tenantQueryColumns);
             #endregion
 
-            #region AWBMessagingStock
-            Feature aWBMessagingStockFeature01 = tenantFeatures.Where(d => d.Code == "AWBMessagingStock.Q.AllQuery" && d.FeatureTypeCode == "QUER").FirstOrDefault();
+            #region MessagingStock
+            Feature messagingStockFeature01 = tenantFeatures.Where(d => d.Code == "MessagingStock.Q.AllQuery" && d.FeatureTypeCode == "QUER").FirstOrDefault();
 
-            Query allAWBMessagingStocksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "AWBMessagingStock.Q.AllAWBMessagingStocks" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, Code = "All AWB Messaging Stocks", QueryGroupCode = AWBMessagingStockQueryGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = AWBMessagingStockObject.Id, QuerySection = "AWBMessagingStock", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = aWBMessagingStockFeature01.Id }, QueriesRepository, tenantQueries);
-            QueryColumn allAWBMessagingStocksColumn00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 0, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "TenantNumber" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 110 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allAWBMessagingStocksColumn01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 1, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "StartDate" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allAWBMessagingStocksColumn02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 2, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "EndDate" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allAWBMessagingStocksColumn03 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 3, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "Amount" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allAWBMessagingStocksColumn04 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 4, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "Remaining" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allAWBMessagingStocksColumn05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 5, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allAWBMessagingStocksColumn06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 6, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 350 }, QueryColumnsRepository, tenantQueryColumns);
-            QueryColumn allAWBMessagingStocksColumn07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = allAWBMessagingStocksQuery.Id, IndexOrder = 7, ObjectFieldId = AWBMessagingStockObjectFields.Where(d => d.FieldName == "TotalPrice" && d.ObjectTableId == AWBMessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
+            Query messagingStocksQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "MessagingStock.Q.AllMessagingStocks" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, Code = "All Messaging Stocks", QueryGroupCode = MessagingStockQueryGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = MessagingStockObject.Id, QuerySection = "MessagingStock", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = messagingStockFeature01.Id }, QueriesRepository, tenantQueries);
+            QueryColumn allMessagingStocksColumn00 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 0, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "TenantNumber" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 110 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allMessagingStocksColumn01 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 1, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "StartDate" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allMessagingStocksColumn02 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 2, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "EndDate" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allMessagingStocksColumn03 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 3, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Amount" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allMessagingStocksColumn04 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 4, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Remaining" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allMessagingStocksColumn05 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 5, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Status" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allMessagingStocksColumn06 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 6, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "Notes" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 350 }, QueryColumnsRepository, tenantQueryColumns);
+            QueryColumn allMessagingStocksColumn07 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = messagingStocksQuery.Id, IndexOrder = 7, ObjectFieldId = MessagingStockObjectFields.Where(d => d.FieldName == "TotalPrice" && d.ObjectTableId == MessagingStockObject.Id).FirstOrDefault().Id, ColumnWidth = 100 }, QueryColumnsRepository, tenantQueryColumns);
 
             #endregion
 
@@ -58717,7 +58880,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTable ProductTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ProductType" && d.Tenant == 0).FirstOrDefault();
             ObjectTable SpecialServicsTypeTable = ObjectContext.ObjectTables.Where(d => d.Name == "SpecialServicesType" && d.Tenant == 0).FirstOrDefault();
             ObjectTable RegionTable = ObjectContext.ObjectTables.Where(d => d.Name == "Region" && d.Tenant == 0).FirstOrDefault();
-            ObjectTable AWBMessagingStockTable = ObjectContext.ObjectTables.Where(d => d.Name == "AWBMessagingStock" && d.Tenant == 0).FirstOrDefault();
+            ObjectTable MessagingStockTable = ObjectContext.ObjectTables.Where(d => d.Name == "MessagingStock" && d.Tenant == 0).FirstOrDefault();
             ObjectTable CustomerSizeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerSize" && d.Tenant == 0).FirstOrDefault();
             ObjectTable QuoteStageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QuoteStage" && d.Tenant == 0).FirstOrDefault();
             ObjectTable CityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CountryCity" && d.Tenant == 0).FirstOrDefault();
@@ -59195,12 +59358,12 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AccountTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Account.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "ACEV", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
-            #region AWBMessagingStockTable
-            Feature MessagingStockGeneralTabFeature = tenantFeatures.Where(d => d.Code == "AWBMessagingStock.Tab.General" && d.ObjectTableId == AWBMessagingStockTable.Id).FirstOrDefault();
-            Feature MessagingStockEventsTabFeature = tenantFeatures.Where(d => d.Code == "AWBMessagingStock.Tab.Events" && d.ObjectTableId == AWBMessagingStockTable.Id).FirstOrDefault();
+            #region MessagingStockTable
+            Feature MessagingStockGeneralTabFeature = tenantFeatures.Where(d => d.Code == "MessagingStock.Tab.General" && d.ObjectTableId == MessagingStockTable.Id).FirstOrDefault();
+            Feature MessagingStockEventsTabFeature = tenantFeatures.Where(d => d.Code == "MessagingStock.Tab.Events" && d.ObjectTableId == MessagingStockTable.Id).FirstOrDefault();
 
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = MessagingStockGeneralTabFeature.Id, ControlPath = "Simplog.ShipmentLib.Views.AWBMessagingStock.MessagingStockGeneralTabControl", ObjectTableId = AWBMessagingStockTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "AWBMessagingStock.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "MSGN", Tenant = 0, IndexOrder = 0, HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/AWBMessagingStock/StockGeneralTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = MessagingStockEventsTabFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AWBMessagingStockTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "AWBMessagingStock.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "MSEV", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = MessagingStockGeneralTabFeature.Id, ControlPath = "Simplog.ShipmentLib.Views.AWBMessagingStock.MessagingStockGeneralTabControl", ObjectTableId = MessagingStockTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "MessagingStock.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "MSGN", Tenant = 0, IndexOrder = 0, HtmlComponentUrl = "./ShipmentModules/ShipmentStock/Components/MessagingStock/StockGeneralTabComponent" }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = MessagingStockEventsTabFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = MessagingStockTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "MessagingStock.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "MSEV", Tenant = 0, IndexOrder = 1 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             #endregion
 
             #endregion
@@ -59960,7 +60123,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTable RegionTable = ObjectContext.ObjectTables.Where(f => f.Name == "Region" && f.Tenant == 0).FirstOrDefault();
             ObjectTable LogitudeLeadTable = ObjectContext.ObjectTables.Where(f => f.Name == "LogitudeLead" && f.Tenant == 0).FirstOrDefault();
 
-            ObjectTable AWBMessagingStockTable = ObjectContext.ObjectTables.Where(f => f.Name == "AWBMessagingStock" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable MessagingStockTable = ObjectContext.ObjectTables.Where(f => f.Name == "MessagingStock" && f.Tenant == 0).FirstOrDefault();
             ObjectTable CustomerSizeTable = ObjectContext.ObjectTables.Where(f => f.Name == "CustomerSize" && f.Tenant == 0).FirstOrDefault();
             ObjectTable QuoteStageTable = ObjectContext.ObjectTables.Where(f => f.Name == "QuoteStage" && f.Tenant == 0).FirstOrDefault();
             ObjectTable CountryCityTable = ObjectContext.ObjectTables.Where(f => f.Name == "CountryCity" && f.Tenant == 0).FirstOrDefault();
@@ -60381,8 +60544,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SpecialServicesType.TH.Events", DefaultText = "Events", ObjectTableId = SpecialServicesTypesTables.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.TH.General", DefaultText = "General", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Region.TH.Events", DefaultText = "Events", ObjectTableId = RegionTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBMessagingStock.TH.General", DefaultText = "General", ObjectTableId = AWBMessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBMessagingStock.TH.Events", DefaultText = "Events", ObjectTableId = AWBMessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.TH.General", DefaultText = "General", ObjectTableId = MessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.TH.Events", DefaultText = "Events", ObjectTableId = MessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.TH.General", DefaultText = "General", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.TH.Events", DefaultText = "Events", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.TH.General", DefaultText = "General", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textcodes);
@@ -60659,8 +60822,9 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.DraftGeneralInvoices", DefaultText = "Draft Invoices", LocalDefaultText = "חשבוניות בסטטוס טיוטה", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.ApprovalGeneralInvoices", DefaultText = "Approval Invoices", LocalDefaultText = "חשבוניות מאושרות", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.FailedSAT", DefaultText = "SAT Failed Invoices", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.ErrorInTransfer", DefaultText = "Error In Transfer", ObjectTableId = InvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
 
-            
+
             #endregion
 
             #region Accounts Queries
@@ -60674,6 +60838,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.NotReadyPayments", DefaultText = "Not Ready Payments", LocalDefaultText = "לא מוכן תשלומים", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.MarkedAsBlockedForTransfer", DefaultText = "Marked as blocked for transfer", LocalDefaultText = "מסומן כחסום לצורך העברה", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.FailedSAT", DefaultText = "SAT Failed Payments", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.Q.ErrorInTransfer", DefaultText = "Error In Transfer", ObjectTableId = paymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
 
             #endregion
 
@@ -60685,6 +60851,11 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.MarkedAsBlockedForTransfer", DefaultText = "Marked as blocked for transfer", LocalDefaultText = "סמן כחסום להעברה", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.ErrorInTransferInvoices", DefaultText = "Error In Transfer Invoices", LocalDefaultText = "שגיאה בהעברת חשבוניות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.AllGeneralInvoices", DefaultText = "All General Invoices", LocalDefaultText = "כל החשבוניות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.DraftGeneralInvoices", DefaultText = "Draft General APInvoices", LocalDefaultText = "חשבוניות בסטטוס טיוטה", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.ApprovalGeneralInvoices", DefaultText = "Approval General APInvoices", LocalDefaultText = "חשבוניות מאושרות", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.Q.ErrorInTransfer", DefaultText = "Error In Transfer", ObjectTableId = APInvoiceTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region AP Payment Queries
@@ -60693,6 +60864,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.DraftAPPayments", DefaultText = "Draft Payments", LocalDefaultText = "תשלומים בסטטוס טיוטה", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.NotReadyPayments", DefaultText = "Not Ready Payments", LocalDefaultText = "לא מוכן תשלומים", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.MarkedAsBlockedForTransfer", DefaultText = "Marked as blocked for transfer", LocalDefaultText = "מסומן כחסום לצורך העברה", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.Q.ErrorInTransfer", DefaultText = "Error In Transfer", LocalDefaultText = "Error In Transfer", ObjectTableId = APPaymentTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region TenantQuery
@@ -60747,7 +60920,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Industry.Q.AllIndustries", DefaultText = "All Industries", ObjectTableId = IndustryTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BusinessUnit.Q.AllBusinessUnits", DefaultText = "All Business Units", ObjectTableId = BusinessUnitTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LogitudeLead.Q.AllLogitudeLeads", DefaultText = "All Logitude Leads ", ObjectTableId = LogitudeLeadTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AWBMessagingStock.Q.AllAWBMessagingStocks", DefaultText = "All AWB Messaging Stocks", ObjectTableId = AWBMessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MessagingStock.Q.AllMessagingStocks", DefaultText = "All AWB Messaging Stocks", ObjectTableId = MessagingStockTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerSize.Q.AllCustomerSizes", DefaultText = "Customer Sizes", ObjectTableId = CustomerSizeTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteStage.Q.AllQuoteStages", DefaultText = "Quote Stages", ObjectTableId = QuoteStageTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputingPartner.Q.AllComputingPartners", DefaultText = "All Computing Partners", ObjectTableId = ComputingPartnerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textcodes);
@@ -61168,7 +61341,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FilterBy", DefaultText = "Filter By", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FollowUps", DefaultText = "Follow Ups", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Notes", DefaultText = "Notes", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DeletQuery", DefaultText = "Delet Query", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DeletQuery", DefaultText = "Delete Query", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.RenameQuery", DefaultText = "Rename Query", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.SaveAsNewView", DefaultText = "Save as New View", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ViewName", LocalDefaultText = "הצג את השם", DefaultText = "View Name", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
@@ -62717,10 +62890,15 @@ namespace WebFreight.Web.MetaDataUpdate
             #region Messages
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisPartner", DefaultText = "Delete This Partner?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisCharge", DefaultText = "Delete This Charge?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.YouCanTypeSalePrice", DefaultText = "You can type Sale Price ex:(1000)\nOr\nYou can type Sale Markup ex:(+100) Or (+10%)", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.YouCanTypeSalePrice", DefaultText = "You can type Sale Price ex:(1000)%nOr%nYou can type Sale Markup ex:(+100) Or (+10%)", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.UnableToDoAllIn", DefaultText = "Unable to do All In..", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.IfMatchesFrieghtCharge", DefaultText = "Only if matches the Frieght Charge UOM and Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.DeleteThisPackage", DefaultText = "Delete this package?", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.BuildShipmentMessage", DefaultText = "Build Shipment is Available Only if Ad-hoc Quotes", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.QuoteCancelMessage", DefaultText = "Quote cannot be Cancelled, since it has connected Shipments", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.M.QuoteReturnMessage", DefaultText = "Quote can't be returned to draft since it is connected to a shipment", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region Overview
@@ -62869,10 +63047,20 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Fixed", DefaultText = "Fixed", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SameAsCost", DefaultText = "Same as Cost Currency", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostMinAmount", DefaultText = "Cost%nMin Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.CostMaxAmount", DefaultText = "Cost%nMax Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleMinAmount", DefaultText = "Sale%nMin Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SaleMaxAmount", DefaultText = "Sale%nMax Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalSaleAmount", DefaultText = "Total Sale Amount", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.VATDetails", DefaultText = "VAT Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.SubTotal", DefaultText = "Sub-Total", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalVAT", DefaultText = "Total VAT", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.TotalSale", DefaultText = "Total Sale", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Charges.Details", DefaultText = "Details", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O" }, TextCodeRepository, textcodes);
             #endregion
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.Routings", DefaultText = "Routings", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
-
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.O.DeclineReason", DefaultText = "Decline Reason", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "O", }, TextCodeRepository, textcodes);
 
             ObjectContext.SaveChanges();
         }
@@ -62964,7 +63152,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewConsolidationInvoiceErrorMsg6", DefaultText = "Credit limit setting is blocking invoice for bill to", LocalDefaultText = "הגדרת מסגרת האשראי חוסמת את הפקת החשבונית ללקוח זה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg1", DefaultText = "The chosen card doesn’t have GLAccount connected to it", LocalDefaultText = "לכרטיס הנבחר לא קושר כרטיס הנהלת חשבונות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg2", DefaultText = "The invoice currency does not match to the bill to GLAccount", LocalDefaultText = "מטבע החשבונית אינו תואם למטבע המוגדר בכרטיס", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg2", DefaultText = "The invoice currency does not match to the bill to GLAccount", LocalDefaultText = "מטבע החשבונית אינו תואם את מטבע הכרטיס לחיוב", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.NewGeneralInvoiceErrorMsg3", DefaultText = "The chosen card doesn’t have GLAccount connected to it", LocalDefaultText = "לכרטיס הנבחר לא קושר כרטיס הנהלת חשבונות", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.M.DueDateLowerThanInvoiceDate", DefaultText = "The Due date shouldn't be lower than the Accounting date", LocalDefaultText = "לא ניתן להזין תאריך פירעון נמוך מהתאריך החשבונאי", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
 
@@ -64041,8 +64229,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.SearchByMsg", DefaultText = "Search by Invoice #/ Bill To", LocalDefaultText = "חפש לפי חשבונית", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.ARpaymentValueHigherThanCashbookValue", DefaultText = "ARpayment Value is higher than Cashbook Value", LocalDefaultText = "לא ניתן לבטל קבלה - סכום הקבלה גדול מהיתרה בקופה", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CANTCancelARPayment", DefaultText = "Can't Cancel this ARPayment because at least one of the cheques is not in the cashbook: ", LocalDefaultText = "לא ניתן לבטל קבלה , חלק מהצ’יקים אינם בקופה: ", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
-
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARPayment.M.CANTCancelARPayment", DefaultText = "Can’t Cancel this ARPayment because at least one of the cheques is deposited or redeemed, return these cheques to the cashbook and cancel the external reconciliation ", LocalDefaultText = "לא ניתן לבטל את הקבלה, חלק מההמחאות הופקדו/נפרעו כבר, יש להחזיר את ההמחאות לקופה ולבטל את ההתאמה החיצונית ", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             #endregion
 
             #region Column Header
@@ -64094,6 +64281,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.NoVendorTaxWithholdingPercentage", DefaultText = "There is no tax withholding definitions for this vendor, the default tax withholding percentage will be taken from system defaults", LocalDefaultText = "לא מוגדר ללקוח אחוז ניכוי מס במקור, אחוז ניכוי ברירת מחדל ילקח מהגדרות מערכת", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.FullAccountingCashBookCheck", DefaultText = "Cashbook amount is lower than payment amount", LocalDefaultText = "היתרה בקופה הינה קטנה מסכום הוראת התשלום", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M" }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.ValueDateCantBeFutureDate", LocalDefaultText = "תאריך ערך לא יכול להיות תאריך עתידי", DefaultText = "Value date can't be future date", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.CheckPaymentChequesBeforeCancel", LocalDefaultText = "לא ניתן לבטל את התשלום לספק, משום שהתשלום בוצע ע”י המחאה שנפרעה כבר, יש לבטל את ההתאמה החיצונית ע”מ לעדכן את הסטטוס של ההמחאה", DefaultText = "The payment cheque that connected to the APPayment is redeemed, you should cancel the external reconciliation in order to update the status of the payment cheque", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+
             #endregion
 
             #region 
@@ -64742,7 +64931,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTablePM BusinessUnitTable = objectTables.Where(d => d.Name == "BusinessUnit").FirstOrDefault();
             ObjectTablePM SpecialServicesTypeTable = objectTables.Where(d => d.Name == "SpecialServicesType").FirstOrDefault();
             ObjectTablePM RegionTable = objectTables.Where(d => d.Name == "Region").FirstOrDefault();
-            ObjectTablePM AWBMessagingStockTable = objectTables.Where(d => d.Name == "AWBMessagingStock").FirstOrDefault();
+            ObjectTablePM MessagingStockTable = objectTables.Where(d => d.Name == "MessagingStock").FirstOrDefault();
             ObjectTablePM customerSizeObjectTable = objectTables.Where(d => d.Name == "CustomerSize").FirstOrDefault();
             ObjectTablePM QuoteStageObjectTable = objectTables.Where(d => d.Name == "QuoteStage").FirstOrDefault();
             ObjectTablePM CityObjectTable = objectTables.Where(d => d.Name == "CountryCity").FirstOrDefault();
@@ -64860,6 +65049,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             Feature GeneralFBLStockfeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FBLSTOCKS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.FBLStocks", NameTextCodeDefaultText = "FBL Stock", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
+            Feature tenantLocalAddressFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, FeatureTypeCode = "OTH", Packagable = true, Code = "General.Features.CompanyLocalAddress", NameTextCodeCode = "General.Features.CompanyLocalAddress", NameTextCodeDefaultText = "Company Local Address" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             Feature GeneralCreditCardTypeFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREDITCARDTYPES", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.CreditCardTypes", NameTextCodeDefaultText = "Credit Card Types", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature GeneralErrorLogsFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ERRORLOG", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.ErrorLogs", NameTextCodeDefaultText = "Error Logs", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -66244,6 +66434,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARInvoiceFeature_Q010 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLGENERALINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.AllGeneralInvoice", NameTextCodeDefaultText = "All General Invoice", FullLocalDefaultText = "כל החשבוניות הכלליות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATFAILEDINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.SATFailedInvoices", NameTextCodeDefaultText = "Invoices Failed to Open in SAT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARInvoiceFeature_Q12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CHECKSATSTATUS", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.CheckSATStatus", NameTextCodeDefaultText = "Check SAT Status", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ARInvoiceFeature_Q13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", Packagable = true, ObjectTableId = InvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARInvoice.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -66269,6 +66460,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APInvoiceFeature_C05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINT", FeatureTypeCode = "ACT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.Print", NameTextCodeDefaultText = "Print", FullLocalDefaultText = "הדפסה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_C06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiRate", FeatureTypeCode = "ACT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.EnableMultiRate", NameTextCodeDefaultText = "Enable multi-rate", FullLocalDefaultText = "אפשר ריבוי שערים" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_C07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APInvoiceEditExchangeRate", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.EditExchangeRate", NameTextCodeDefaultText = "Edit Exchange Rate", FullLocalDefaultText = "ערוך שער חליפין", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature APInvoiceFeature_C08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.SendToQBO", NameTextCodeDefaultText = "Send to QBO", FullLocalDefaultText = "Send to QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
 
             Feature APInvoiceFeature_Q01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.AllInvoices", NameTextCodeDefaultText = "All Invoices", FullLocalDefaultText = "כל החשבוניות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_Q02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "WAITAPPROVAL", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.WaitingForApproval", NameTextCodeDefaultText = "Waiting for Approval", FullLocalDefaultText = "ממתין לאישור" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
@@ -66277,10 +66470,15 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APInvoiceFeature_Q05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MARKEDASBLOCKEDFORTRANSFER", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.MarkedAsBlockedForTransfer", NameTextCodeDefaultText = "Marked as blocked for transfer", FullLocalDefaultText = "סמן כחסום להעברה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_Q06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ERRORINTRANSFERINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.ErrorInTransferInvoices", NameTextCodeDefaultText = "Error In Transfer Invoices", FullLocalDefaultText = "שגיאה בהעברת חשבוניות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APInvoiceFeature_Q07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLGENERALAPINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.AllGeneralInvoice", NameTextCodeDefaultText = "All General Invoices", FullLocalDefaultText = "כל החשבוניות הכלליות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature APInvoiceFeature_Q08 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DRAFTGENERALAPINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.DraftGeneralAPInvoice", NameTextCodeDefaultText = "Draft General APInvoices", FullLocalDefaultText = "חשבוניות בסטטוס טיוטה" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature APInvoiceFeature_Q09 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPROVALGENERALAPINVOICES", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.ApprovalGeneralAPInvoice", NameTextCodeDefaultText = "Approval General APInvoices", FullLocalDefaultText = "חשבוניות מאושרות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            Feature APInvoiceFeature_Q10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APInvoiceObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APInvoice.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer", FullLocalDefaultText = "Error In Transfer" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
             #endregion
 
-            #region (AR) Payment
-            Feature ARPaymentFeature_01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.New", NameTextCodeDefaultText = "New Payment", FullLocalDefaultText = "תשלום חדש", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+                #region (AR) Payment
+                Feature ARPaymentFeature_01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.New", NameTextCodeDefaultText = "New Payment", FullLocalDefaultText = "תשלום חדש", FeatureTypeCode = "NEW" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_02 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.Edit", NameTextCodeDefaultText = "Edit Payment", FullLocalDefaultText = "עריכת קבלה", FeatureTypeCode = "UPDT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_03 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.Read", NameTextCodeDefaultText = "Read", FullLocalDefaultText = "קריאה", FeatureTypeCode = "READ" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
@@ -66313,6 +66511,9 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ARPaymentFeature_Q04 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NOTREADYPAYMENTS", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.NotReadyPayments", NameTextCodeDefaultText = "Not Ready Payments", FullLocalDefaultText = "קבלות לא מוכנות", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_Q05 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MARKEDASBLOCKEDFORTRANSFER", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.MarkedAsBlockedForTransfer", NameTextCodeDefaultText = "Marked as blocked for transfer", FullLocalDefaultText = "סמן כחסום להעברה", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ARPaymentFeature_Q06 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SATFAILEDPAYMENTS", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.SATFailedPayments", NameTextCodeDefaultText = "Payments Failed to Open in SAT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature ARPaymentFeature_Q07 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = ARPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
 
             #endregion
 
@@ -66336,6 +66537,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature APPaymentFeature17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MARKEDASBLOCKEDFORTRANSFER", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.MarkedAsBlockedForTransfer", NameTextCodeDefaultText = "Marked as blocked for transfer", FullLocalDefaultText = "סמן כחסום להעברה", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APPaymentFeature18 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RecalculateExternals", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.RecalculateExternals", NameTextCodeDefaultText = "Recalculate External IDs" , FullLocalDefaultText = "חישוב מזהים חיצונים מחדש", }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature APPaymentFeature19 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EnableMultiCurrency", Packagable = true, FeatureTypeCode = "ACT", ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "APPayment.Features.EnableMultiCurrency", NameTextCodeDefaultText = "Enable multi-currency", FullLocalDefaultText = "לאפשר ריבוי מטבעות" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature APPaymentFeature20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SendToQBO", ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.SendToQBO", NameTextCodeDefaultText = "Send To QBO", FullLocalDefaultText = "Send To QBO", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature APPaymentFeature21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ErrorInTransfer", Packagable = true, ObjectTableId = APPaymentObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ARPayment.Features.ErrorInTransfer", NameTextCodeDefaultText = "Error In Transfer", FullLocalDefaultText = "Error In Transfer", FeatureTypeCode = "QUER" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
             #endregion
 
@@ -66431,16 +66634,16 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature GeneralRegionFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REGIONS", Packagable = true, ObjectTableId = GeneralObjectTable.Id, Tenant = tenant, NameTextCodeCode = "General.Features.Region", NameTextCodeDefaultText = "Regions", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             #endregion
 
-            #region AWBMessagingStock Features
-            Feature aWBMessagingStockFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.New", NameTextCodeDefaultText = "New Stock" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature aWBMessagingStockFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature aWBMessagingStockFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.Edit", NameTextCodeDefaultText = "Edit Stock" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature aWBMessagingStockFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBMessagingStock.Q.AllQuery", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.AllAWBMessagingStocks", NameTextCodeDefaultText = "All AWB Messaging Stocks" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature aWBMessagingStockFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBMessagingStock.Tab.General", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.General", NameTextCodeDefaultText = "General" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature aWBMessagingStockFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBMessagingStock.M.AWBMessagingStocks", FeatureTypeCode = "MENU", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.AWBMessagingStocks", NameTextCodeDefaultText = "AWB Messaging Stocks" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature aWBMessagingStockFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.PackageFeature", NameTextCodeDefaultText = "AWB Messaging Stock Package Feature" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature aWBMessagingStockFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBMessagingStock.Action.Cancel", FeatureTypeCode = "ACT", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.Cancel", NameTextCodeDefaultText = "Cancel" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            Feature aWBMessagingStockFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AWBMessagingStock.Tab.Events", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = AWBMessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "AWBMessagingStock.Features.Events", NameTextCodeDefaultText = "Events" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            #region MessagingStock Features
+            Feature messagingStockFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.New", NameTextCodeDefaultText = "New Stock" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature messagingStockFeature2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature messagingStockFeature3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.Edit", NameTextCodeDefaultText = "Edit Stock" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature messagingStockFeature4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Q.AllQuery", FeatureTypeCode = "QUER", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.AllMessagingStocks", NameTextCodeDefaultText = "All Messaging Stocks" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature messagingStockFeature5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Tab.General", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.General", NameTextCodeDefaultText = "General" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature messagingStockFeature6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.M.MessagingStocks", FeatureTypeCode = "MENU", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.MessagingStocks", NameTextCodeDefaultText = "Messaging Stocks" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature messagingStockFeature7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.PackageFeature", NameTextCodeDefaultText = "Messaging Stock Package Feature" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature messagingStockFeature8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Action.Cancel", FeatureTypeCode = "ACT", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.Cancel", NameTextCodeDefaultText = "Cancel" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature messagingStockFeature9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MessagingStock.Tab.Events", FeatureTypeCode = "AREA", Packagable = true, ObjectTableId = MessagingStockTable.Id, Tenant = tenant, NameTextCodeCode = "MessagingStock.Features.Events", NameTextCodeDefaultText = "Events" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             #endregion
 
             #region Quote Stage Features

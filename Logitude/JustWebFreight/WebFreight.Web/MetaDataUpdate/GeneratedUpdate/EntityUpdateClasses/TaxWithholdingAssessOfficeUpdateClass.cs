@@ -165,11 +165,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						FullLocalDefaultText =  "קוד",
+					  						DefaultText =  @"Code",
+					  						FullLocalDefaultText =  @"קוד",
 					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
-					  						ListLocalDefaultText =  "קוד",
+					  						ListLableDefaultText =  @"Code",
+					  						ListLocalDefaultText =  @"קוד",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -216,11 +216,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Name",
-					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם באנגלית",
+					  						DefaultText =  @"English Name",
+					  						FullLocalDefaultText =  @"שם באנגלית",
 					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם באנגלית",
+					  						ListLableDefaultText =  @"English Name",
+					  						ListLocalDefaultText =  @"שם באנגלית",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -267,11 +267,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search ...",
-					  						FullLocalDefaultText =  "חיפוש",
+					  						DefaultText =  @"Search ...",
+					  						FullLocalDefaultText =  @"חיפוש",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search ...",
-					  						ListLocalDefaultText =  "חיפוש",
+					  						ListLableDefaultText =  @"Search ...",
+					  						ListLocalDefaultText =  @"חיפוש",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -318,11 +318,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
-					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "שם",
+					  						DefaultText =  @"Local Name",
+					  						FullLocalDefaultText =  @"שם",
 					  						ListFieldLable =  "LocalNameListLable",
-					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "שם",
+					  						ListLableDefaultText =  @"Local Name",
+					  						ListLocalDefaultText =  @"שם",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -369,11 +369,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
-					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "חסום",
+					  						DefaultText =  @"Inactive",
+					  						FullLocalDefaultText =  @"חסום",
 					  						ListFieldLable =  "InactiveListLable",
-					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "חסום",
+					  						ListLableDefaultText =  @"Inactive",
+					  						ListLocalDefaultText =  @"חסום",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -391,7 +391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup TaxWithholdingAssessOfficeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "2822", Name = "TaxWithholdingAssessOffice Query Group" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -459,12 +459,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature TaxWithholdingAssessOfficeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxWithholdingAssessOffice.Tab.Events", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxWithholdingAssessOffice.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TXGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "TaxWithholdingAssessOffice.Tab.General" && d.ObjectTableId == TaxWithholdingAssessOfficeObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TaxWithholdingAssessOffice.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TXGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TaxWithholdingAssessOfficeGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, TabNameTextCodeId = TaxWithholdingAssessOfficeGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TXEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "TaxWithholdingAssessOffice.Tab.Events" && d.ObjectTableId == TaxWithholdingAssessOfficeObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "TaxWithholdingAssessOffice.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TXEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TaxWithholdingAssessOfficeEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TaxWithholdingAssessOfficeObjectTable.Id, TabNameTextCodeId = TaxWithholdingAssessOfficeEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

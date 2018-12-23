@@ -1,4 +1,4 @@
-﻿
+
 export class DWQueryPM {
 
     private id: string;
@@ -9,9 +9,9 @@ export class DWQueryPM {
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { this.tenant = newValue; }
 
-    private dWObjectTableCode: string;
-    public get DWObjectTableCode() { return this.dWObjectTableCode; }
-    public set DWObjectTableCode(newValue: string) { this.dWObjectTableCode = newValue; }
+    //private dWObjectTableCode: string;
+    //public get DWObjectTableCode() { return this.dWObjectTableCode; }
+    //public set DWObjectTableCode(newValue: string) { this.dWObjectTableCode = newValue; }
 
     private sQLString: string;
     public get SQLString() { return this.sQLString; }
@@ -32,5 +32,8 @@ export class DWQueryPM {
     private updatedDate: Date;
     public get UpdatedDate() { return this.updatedDate; }
     public set UpdatedDate(newValue: Date) { this.updatedDate = newValue; }
+
+   
+     
 
 }

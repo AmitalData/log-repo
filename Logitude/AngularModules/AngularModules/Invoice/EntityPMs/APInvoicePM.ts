@@ -659,6 +659,11 @@ export class APInvoicePM {
     public set SetReTransfer(newValue: boolean) { if (this.setReTransfer != newValue) { this.setReTransfer = newValue; this.MarkAsDirty("SetReTransfer"); } }
        
 	 
+    private setReSendQBO: boolean;
+    public get SetReSendQBO() { return this.setReSendQBO; }
+    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
+       
+	 
     private journalNumber: string;
     public get JournalNumber() { return this.journalNumber; }
     public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }

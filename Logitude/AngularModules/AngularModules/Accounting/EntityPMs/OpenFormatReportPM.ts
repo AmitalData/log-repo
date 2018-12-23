@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {OpenFormatReportPMCustomCode} from '../EntityPMCustomCode/OpenFormatReportPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -94,6 +95,11 @@ export class OpenFormatReportPM {
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
        
 	 
+    private dateTypeName: string;
+    public get DateTypeName() { return this.dateTypeName; }
+    public set DateTypeName(newValue: string) { if (this.dateTypeName != newValue) { this.dateTypeName = newValue; this.MarkAsDirty("DateTypeName"); } }
+       
+	 
 
     public OldEntityPM: OpenFormatReportPM;
 		
@@ -103,6 +109,7 @@ export class OpenFormatReportPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            OpenFormatReportPMCustomCode.ApplyEntityChanged(propertyName, this);
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "OpenFormatReport");
            
         }

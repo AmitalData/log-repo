@@ -40,18 +40,19 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          SearchFields = a.SearchFields,
 					
 					                          ReportNumber = a.ReportNumber,
-					
-					                          FromDate = a.FromDate,
-					
-					                          ToDate = a.ToDate,
-					
-					                          DateTypeCode = a.DateTypeCode,
+
+                                                FromDate = a.FromDate,
+
+                                                ToDate = a.ToDate,
+
+                                                DateTypeCode = a.DateTypeCode,
 					
 					                          StatusTypeCode = a.StatusTypeCode,
 					
 					                          ErrorMessage = a.ErrorMessage,
                                               CreatedByUserName = a.CreatedByUser.Contact.LocalName,
                                               Status= a.OpenFormatReportStatus != null? a.OpenFormatReportStatus.LocalName:null,
+                                              DateTypeName = a.OpenFormatDateType != null? a.OpenFormatDateType.LocalName : null
 					
 		                    	            });
             return query;

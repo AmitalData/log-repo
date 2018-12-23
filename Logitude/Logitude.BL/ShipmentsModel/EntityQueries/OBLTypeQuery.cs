@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using System;
@@ -19,6 +20,26 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public OBLTypeQuery(OBLTypeRepository repository)
         {
             this.repository = repository;
+        }
+
+        public OBLTypePM GetSinglePM(string code)
+        {
+            OBLTypePM myResult = null;
+
+            if (code != null)
+            {
+                myResult = (from d in repository.context.OBLTypes
+                            where d.Code == code
+                            select new OBLTypePM
+                            {
+                                Code = d.Code,
+                                Name = d.Name,
+                                SearchFields = d.SearchFields,
+                            }).FirstOrDefault();
+
+            }
+
+            return myResult;
         }
 
         public OBLTypeList GetSingleOBLTypeList(OBLType entity)

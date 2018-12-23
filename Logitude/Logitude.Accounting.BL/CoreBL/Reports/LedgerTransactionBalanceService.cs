@@ -403,7 +403,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 //includeChildAccounts, _Param.IncludeRelatedCurrenciesAccount
                 _allIdAccounts
                 );
-            var To = _Param.To.AddDays(1);
+            var To = _Param.To/*.AddDays(1)*/;
             
             endAccountBalanceService.CalculateBalance(_Param.DateTypeCode,To, includeAccoutingDateLTransaction, false);
             var endAccountBalance = endAccountBalanceService.AccountBalance;

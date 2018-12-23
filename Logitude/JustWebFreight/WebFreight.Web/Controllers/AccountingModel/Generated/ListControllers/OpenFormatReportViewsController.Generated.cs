@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("OpenFormatReport", "READ", authToken.Tenant);
+	                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 OpenFormatReportListQueryService openFormatReportQuery = new OpenFormatReportListQueryService(MyContext);
                 OpenFormatReportList openFormatReportList = openFormatReportQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -81,7 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("OpenFormatReport", "READ", authToken.Tenant);
+	                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 OpenFormatReportListQueryService openFormatReportQuery = new OpenFormatReportListQueryService(MyContext);
                 List<OpenFormatReportList> result = openFormatReportQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -103,7 +105,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("OpenFormatReport", "READ", authToken.Tenant);
+	                
 				int tenant = authToken.Tenant;
 				if(filters.Tenant != null)
 					tenant = filters.Tenant.Value;

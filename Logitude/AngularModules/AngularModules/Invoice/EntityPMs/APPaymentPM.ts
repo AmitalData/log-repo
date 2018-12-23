@@ -323,6 +323,11 @@ export class APPaymentPM {
     public set VendorPartnerTypeId(newValue: string) { if (this.vendorPartnerTypeId != newValue) { this.vendorPartnerTypeId = newValue; this.MarkAsDirty("VendorPartnerTypeId"); } }
        
 	 
+    private setReSendQBO: boolean;
+    public get SetReSendQBO() { return this.setReSendQBO; }
+    public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
+       
+	 
     private taxDeductionLocalAmount: number;
     public get TaxDeductionLocalAmount() { return this.taxDeductionLocalAmount; }
     public set TaxDeductionLocalAmount(newValue: number) { if (this.taxDeductionLocalAmount != newValue) { this.taxDeductionLocalAmount = newValue; this.MarkAsDirty("TaxDeductionLocalAmount"); } }

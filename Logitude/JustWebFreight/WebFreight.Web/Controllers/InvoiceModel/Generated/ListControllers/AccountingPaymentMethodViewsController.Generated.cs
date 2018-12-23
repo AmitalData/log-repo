@@ -57,6 +57,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("AccountingPaymentMethod", "READ", authToken.Tenant);
 				
 		    	IInvoiceContext MyContext = InvoiceContext.GetContext(authToken.Tenant);
 				AccountingPaymentMethodRepository  accountingPaymentMethodRepository = new AccountingPaymentMethodRepository(MyContext);
@@ -94,6 +95,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("AccountingPaymentMethod", "READ", authToken.Tenant);
 
 
 				IInvoiceContext MyContext = InvoiceContext.GetContext(authToken.Tenant);
@@ -126,7 +128,9 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 				int tenant = authToken.Tenant;
 				if(filters.Tenant != null)
 					tenant = filters.Tenant.Value;
-				
+				                
+				SecurityUtility.CheckContactFeature("AccountingPaymentMethod", "READ", authToken.Tenant);
+	
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "AccountingPaymentMethod",

@@ -33,11 +33,14 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
     public Address MainAddress { get; set; }
     
-	[XmlAttribute]
-    public string PartnerCode { get; set; }
-    
     public List<Contact> Contacts { get; set; }
     
     public Address BillingAddress { get; set; }
+    
+    public GLAccount GLAccount { get; set; }
+    
+    public string Code { get; set; }
+    
+    public string PartnerCode { get; set; }
     }
 } 

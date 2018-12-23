@@ -581,14 +581,14 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
-        public IDbSet<AWBMessagingStock> AWBMessagingStocks
+        public IDbSet<MessagingStock> MessagingStocks
         {
             get
             {
                 throw new NotImplementedException();
             }
         }
-        public IDbSet<AWBStockUsageHistory> AWBStockUsageHistories
+        public IDbSet<MessagingStockUsageHistory> MessagingStockUsageHistories
         {
             get
             {

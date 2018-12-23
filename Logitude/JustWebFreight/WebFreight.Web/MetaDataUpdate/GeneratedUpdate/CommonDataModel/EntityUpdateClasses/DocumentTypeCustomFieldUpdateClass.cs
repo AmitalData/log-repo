@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DefaultText =  "Document Type Custom Field",
 			      				    Name =  "DocumentTypeCustomField",
 			      				    IsNewWizard =  false,
-			      				    HasCustomFilter =  false,
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
@@ -110,13 +109,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -130,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "DocumentTypeId",
 					  						ObjectTableName =  "DocumentTypeCustomField",
 					  						FieldsDataType =  "Text",
-					  						Code =  "DocumentTypeId",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -156,7 +148,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -164,6 +155,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
+					  						FullFieldLable =  "DocumentTypeId",
+					  						DefaultText =  @"Document Type",
+					  						HelpTextCode =  "DocumentTypeId",
+					  						Code =  "DocumentTypeId",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -172,9 +168,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "DocumentTypeId",
-					  						DefaultText =  @"Document Type",
-					  						HelpTextCode =  "DocumentTypeId",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -185,7 +178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "FieldCode",
 					  						ObjectTableName =  "DocumentTypeCustomField",
 					  						FieldsDataType =  "Text",
-					  						Code =  "FieldCode",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  30,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -211,7 +204,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -219,6 +211,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
+					  						FullFieldLable =  "FieldCode",
+					  						DefaultText =  @"Code",
+					  						ListFieldLable =  "FieldCodeListLable",
+					  						ListLableDefaultText =  @"Code",
+					  						HelpTextCode =  "FieldCode",
+					  						Code =  "FieldCode",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -227,11 +226,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "FieldCode",
-					  						DefaultText =  @"Code",
-					  						ListFieldLable =  "FieldCodeListLable",
-					  						ListLableDefaultText =  @"Code",
-					  						HelpTextCode =  "FieldCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -242,7 +236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "Name",
 					  						ObjectTableName =  "DocumentTypeCustomField",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Name",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  60,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -268,7 +262,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -276,6 +269,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
+					  						FullFieldLable =  "Name",
+					  						DefaultText =  @"Name",
+					  						ListFieldLable =  "NameListLable",
+					  						ListLableDefaultText =  @"Name",
+					  						HelpTextCode =  "Name",
+					  						Code =  "Name",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -284,11 +284,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "Name",
-					  						DefaultText =  @"Name",
-					  						ListFieldLable =  "NameListLable",
-					  						ListLableDefaultText =  @"Name",
-					  						HelpTextCode =  "Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -299,7 +294,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "FieldDataTypeCode",
 					  						ObjectTableName =  "DocumentTypeCustomField",
 					  						FieldsDataType =  "Text",
-					  						Code =  "FieldDataTypeCode",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  10,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -325,7 +320,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -333,6 +327,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
+					  						FullFieldLable =  "FieldDataTypeCode",
+					  						DefaultText =  @"Data Type",
+					  						ListFieldLable =  "FieldDataTypeCodeListLable",
+					  						ListLableDefaultText =  @"Data Type Code",
+					  						HelpTextCode =  "FieldDataTypeCode",
+					  						Code =  "FieldDataTypeCode",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -341,11 +342,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  true,
-					  						FullFieldLable =  "FieldDataTypeCode",
-					  						DefaultText =  @"Data Type",
-					  						ListFieldLable =  "FieldDataTypeCodeListLable",
-					  						ListLableDefaultText =  @"Data Type Code",
-					  						HelpTextCode =  "FieldDataTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -356,7 +352,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "InActive",
 					  						ObjectTableName =  "DocumentTypeCustomField",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "InActive",
+					  						DataTypeCode =  "Boolean",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -382,7 +378,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -390,6 +385,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
+					  						FullFieldLable =  "InActive",
+					  						DefaultText =  @"Inactive",
+					  						ListFieldLable =  "InActiveListLable",
+					  						ListLableDefaultText =  @"Inactive",
+					  						HelpTextCode =  "InActive",
+					  						Code =  "InActive",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -398,11 +400,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "InActive",
-					  						DefaultText =  @"Inactive",
-					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  @"Inactive",
-					  						HelpTextCode =  "InActive",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -413,7 +410,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "IsRequired",
 					  						ObjectTableName =  "DocumentTypeCustomField",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "IsRequired",
+					  						DataTypeCode =  "Boolean",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -439,7 +436,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -447,6 +443,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
+					  						FullFieldLable =  "IsRequired",
+					  						DefaultText =  @"Required",
+					  						ListFieldLable =  "IsRequiredListLable",
+					  						ListLableDefaultText =  @"Is Required",
+					  						HelpTextCode =  "IsRequired",
+					  						Code =  "IsRequired",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -455,11 +458,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "IsRequired",
-					  						DefaultText =  @"Required",
-					  						ListFieldLable =  "IsRequiredListLable",
-					  						ListLableDefaultText =  @"Is Required",
-					  						HelpTextCode =  "IsRequired",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -470,7 +468,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "MultiLine",
 					  						ObjectTableName =  "DocumentTypeCustomField",
 					  						FieldsDataType =  "Boolean",
-					  						Code =  "MultiLine",
+					  						DataTypeCode =  "Boolean",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -496,7 +494,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -504,6 +501,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
+					  						FullFieldLable =  "MultiLine",
+					  						DefaultText =  @"Multiline Custom Field",
+					  						ListFieldLable =  "MultiLineListLable",
+					  						ListLableDefaultText =  @"Multiline",
+					  						HelpTextCode =  "MultiLine",
+					  						Code =  "MultiLine",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -512,11 +516,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "MultiLine",
-					  						DefaultText =  @"Multiline Custom Field",
-					  						ListFieldLable =  "MultiLineListLable",
-					  						ListLableDefaultText =  @"Multiline",
-					  						HelpTextCode =  "MultiLine",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -527,7 +526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					 						FieldName =  "DefaultValue",
 					  						ObjectTableName =  "DocumentTypeCustomField",
 					  						FieldsDataType =  "Text",
-					  						Code =  "DefaultValue",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  250,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -553,7 +552,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -561,6 +559,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
+					  						FullFieldLable =  "DefaultValue",
+					  						DefaultText =  @"Default Value",
+					  						ListFieldLable =  "DefaultValueListLable",
+					  						ListLableDefaultText =  @"Default Value",
+					  						HelpTextCode =  "DefaultValue",
+					  						Code =  "DefaultValue",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
@@ -569,11 +574,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "DefaultValue",
-					  						DefaultText =  @"Default Value",
-					  						ListFieldLable =  "DefaultValueListLable",
-					  						ListLableDefaultText =  @"Default Value",
-					  						HelpTextCode =  "DefaultValue",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -613,21 +613,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable DocumentTypeCustomFieldObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentTypeCustomField" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField", DefaultText = "Document Type Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
  		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOAdditionalFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.AdditionalFields", DefaultText = "Additional Fields",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOUnknownControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.UnknownControl", DefaultText = "Unknown Control",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBAddCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.AddCustomField", DefaultText = "Add Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBAddCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.AddCustomField", DefaultText = "Add Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBEditCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.EditCustomField", DefaultText = "Edit Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBEditCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.EditCustomField", DefaultText = "Edit Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.Search", DefaultText = "Search",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldBSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.B.Search", DefaultText = "Search",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOAddCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.AddCustomField", DefaultText = "Add Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOAddCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.AddCustomField", DefaultText = "Add Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOEditCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.EditCustomField", DefaultText = "Edit Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode DocumentTypeCustomFieldTextCode_DocumentTypeCustomFieldOEditCustomField = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCustomField.O.EditCustomField", DefaultText = "Edit Custom Field",LocalDefaultText = null, ObjectTableId = DocumentTypeCustomFieldObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

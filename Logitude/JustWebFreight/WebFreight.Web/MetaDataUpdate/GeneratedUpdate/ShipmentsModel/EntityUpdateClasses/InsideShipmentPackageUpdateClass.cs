@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DefaultText =  "Inside Shipment Package",
 			      				    Name =  "InsideShipmentPackage",
 			      				    IsNewWizard =  false,
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -111,13 +110,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -131,7 +123,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "VolumetricWeight",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Double",
-					  						Code =  "VolumetricWeight",
+					  						DataTypeCode =  "Double",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -157,7 +149,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -168,14 +159,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "VolumetricWeight",
+					  						DefaultText =  @"Volumetric Weight (%WeightCode)",
+					  						HelpTextCode =  "VolumetricWeight",
+					  						Code =  "VolumetricWeight",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "VolumetricWeight",
-					  						DefaultText =  @"Volumetric Weight (%WeightCode)",
-					  						HelpTextCode =  "VolumetricWeight",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -186,7 +180,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "ShipmentPackageId",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Text",
-					  						Code =  "ShipmentPackageId",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -212,7 +206,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -223,16 +216,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "ShipmentPackageId",
 					  						DefaultText =  @"Shipment Package",
 					  						ListFieldLable =  "ShipmentPackageIdListLable",
 					  						ListLableDefaultText =  @"Shipment Package ID",
 					  						HelpTextCode =  "ShipmentPackageId",
+					  						Code =  "ShipmentPackageId",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -243,7 +239,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "PackageTypeId",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "LookUp",
-					  						Code =  "PackageTypeId",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -269,7 +265,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -280,16 +275,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "PackageTypeId",
 					  						DefaultText =  @"Package Type",
 					  						ListFieldLable =  "PackageTypeIdListLable",
 					  						ListLableDefaultText =  @"Package Type ID",
 					  						HelpTextCode =  "PackageTypeId",
+					  						Code =  "PackageTypeId",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -300,7 +298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Quantity",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Integer",
-					  						Code =  "Quantity",
+					  						DataTypeCode =  "Integer",
 					  						MaxLength =  0,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -326,7 +324,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -337,16 +334,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  true,
+					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Quantity",
 					  						DefaultText =  @"Quantity",
 					  						ListFieldLable =  "QuantityListLable",
 					  						ListLableDefaultText =  @"Quantity",
 					  						HelpTextCode =  "Quantity",
+					  						Code =  "Quantity",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  true,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -357,7 +357,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Height",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Double",
-					  						Code =  "Height",
+					  						DataTypeCode =  "Double",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -383,7 +383,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -394,16 +393,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Height",
 					  						DefaultText =  @"Height",
 					  						ListFieldLable =  "HeightListLable",
 					  						ListLableDefaultText =  @"Height",
 					  						HelpTextCode =  "Height",
+					  						Code =  "Height",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -414,7 +416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Width",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Double",
-					  						Code =  "Width",
+					  						DataTypeCode =  "Double",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -440,7 +442,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -451,16 +452,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Width",
 					  						DefaultText =  @"Width",
 					  						ListFieldLable =  "WidthListLable",
 					  						ListLableDefaultText =  @"Width",
 					  						HelpTextCode =  "Width",
+					  						Code =  "Width",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -471,7 +475,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Length",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Double",
-					  						Code =  "Length",
+					  						DataTypeCode =  "Double",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -497,7 +501,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -508,16 +511,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Length",
 					  						DefaultText =  @"Length",
 					  						ListFieldLable =  "LengthListLable",
 					  						ListLableDefaultText =  @"Length",
 					  						HelpTextCode =  "Length",
+					  						Code =  "Length",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -528,7 +534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Volume",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Double",
-					  						Code =  "Volume",
+					  						DataTypeCode =  "Double",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -554,7 +560,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -565,16 +570,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
+					  						AllowedInAirlineMessaging =  true,
 					  						FullFieldLable =  "Volume",
 					  						DefaultText =  @"Volume (%VolumeCode)",
 					  						ListFieldLable =  "VolumeListLable",
 					  						ListLableDefaultText =  @"Volume",
 					  						HelpTextCode =  "Volume",
+					  						Code =  "Volume",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -585,7 +593,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Weight",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Double",
-					  						Code =  "Weight",
+					  						DataTypeCode =  "Double",
 					  						MaxLength =  15,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -611,7 +619,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -622,16 +629,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInDocumentReferences =  false,
-					  						CopyToDW =  false,
-					  						HasTemplate =  false,
-					  						IsRequired =  false,
+					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Weight",
 					  						DefaultText =  @"Weight (%WeightCode)",
 					  						ListFieldLable =  "WeightListLable",
 					  						ListLableDefaultText =  @"Weight",
 					  						HelpTextCode =  "Weight",
+					  						Code =  "Weight",
+					  						DependencyFilter3IsList =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInDocumentReferences =  false,
+					  						CopyToDW =  false,
+					  						HasTemplate =  false,
+					  						IsRequired =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -642,7 +652,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					 						FieldName =  "Description",
 					  						ObjectTableName =  "InsideShipmentPackage",
 					  						FieldsDataType =  "Text",
-					  						Code =  "Description",
+					  						DataTypeCode =  "Text",
 					  						MaxLength =  2000,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -668,7 +678,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -679,14 +688,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "Description",
+					  						DefaultText =  @"Description",
+					  						HelpTextCode =  "Description",
+					  						Code =  "Description",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "Description",
-					  						DefaultText =  @"Description",
-					  						HelpTextCode =  "Description",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -1074,6 +1086,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   ObjectTable InsideShipmentPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InsideShipmentPackage" && d.Tenant == 0).FirstOrDefault(); 
 
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageFDimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.F.Dimensions", DefaultText = "Dimensions (L-W-H) (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOAddInsidePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.AddInsidePackage", DefaultText = "Add Inside Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOEditInsidePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.EditInsidePackage", DefaultText = "Edit Inside Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageODimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.Dimensions", DefaultText = "Dimensions (L-W-H) (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOVolume = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.Volume", DefaultText = "Volume (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -1081,14 +1099,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOVolWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.VolWeight", DefaultText = "Volumetric Weight (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOGrossWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.GrossWeight", DefaultText = "Gross Weight (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageFDimensions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.F.Dimensions", DefaultText = "Dimensions (L-W-H) (%UnitCode)",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOAddInsidePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.AddInsidePackage", DefaultText = "Add Inside Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackageOEditInsidePackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage.O.EditInsidePackage", DefaultText = "Edit Inside Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = true }, TextCodeRepository, TextCodes);
-
- 		   TextCode InsideShipmentPackageTextCode_InsideShipmentPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InsideShipmentPackage", DefaultText = "Inside Shipment Package",LocalDefaultText = null, ObjectTableId = InsideShipmentPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
    
 	    

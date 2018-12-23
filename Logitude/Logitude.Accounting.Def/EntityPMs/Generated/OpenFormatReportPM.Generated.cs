@@ -181,12 +181,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime? fromDate ;
+	  private DateTime fromDate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime? FromDate  
+       public DateTime FromDate  
 	   {
 	    
 	     get
@@ -197,19 +197,19 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(fromDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromDate",OldValue=fromDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromDate",OldValue=fromDate,NewValue=value,PropertyType="DateTime"};
 		    NotifyPropertyChanged(values);
 		   fromDate=value;
 		   }
 			
 		 }
 	   }
-	  private DateTime? toDate ;
+	  private DateTime toDate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime? ToDate  
+       public DateTime ToDate  
 	   {
 	    
 	     get
@@ -220,7 +220,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(toDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToDate",OldValue=toDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToDate",OldValue=toDate,NewValue=value,PropertyType="DateTime"};
 		    NotifyPropertyChanged(values);
 		   toDate=value;
 		   }
@@ -338,6 +338,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Status",OldValue=status,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   status=value;
+		   }
+			
+		 }
+	   }
+	  private string dateTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DateTypeName  
+	   {
+	    
+	     get
+		{
+		   return dateTypeName;
+		 }
+		 set
+		 {
+		   if(dateTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DateTypeName",OldValue=dateTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dateTypeName=value;
 		   }
 			
 		 }

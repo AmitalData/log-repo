@@ -164,6 +164,7 @@
     <Compile Include="CoreBL\AccountingSettingResolver.cs" />
     <Compile Include="CoreBL\AutomaticExternalReconcileService.cs" />
     <Compile Include="CoreBL\AutomaticReconcileService.cs" />
+    <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxReportService.cs" />
     <Compile Include="CoreBL\BuildTenant\ClearTenant.cs" />
@@ -172,12 +173,13 @@
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
     <Compile Include="CoreBL\CreateJournalReconcileService.cs" />
     <Compile Include="CoreBL\CashbookService.cs" />
+    <Compile Include="CoreBL\OpenFormatReportService.cs" />
     <Compile Include="CoreBL\Reconcile\AutoReconcileARPaymentService.cs" />
     <Compile Include="CoreBL\Reconcile\CreateReconciliationService.cs" />
     <Compile Include="CoreBL\Dashboard\GLAccountDashboard.cs" />
     <Compile Include="CoreBL\Dashboard\ChartOfAccountBalanceM.cs" />
     <Compile Include="CoreBL\Dashboard\ChartOfAccountDashboard.cs" />
-    <Compile Include="CoreBL\DueLocalBalanceService.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\DueLocalBalanceService.cs" />
     <Compile Include="CoreBL\IAccountingSettingResolver.cs" />
     <Compile Include="CoreBL\IYearTransferService.cs" />
     <Compile Include="CoreBL\JournalApproveParser.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="CoreBL\Reports\TrailReportChartofaccountTypeCurrenciesDetailed.cs" />
     <Compile Include="CoreBL\Reports\TrailReportGLAccount.cs" />
     <Compile Include="CoreBL\Reports\TrailReportService.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\AccountingIntegrityService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerGLAccountBalance.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerLedgerTransactionService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerTotalByMonthService.cs" />
@@ -220,6 +223,8 @@
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckTotals.cs" />
     <Compile Include="CoreBL\TaxDeductionReportService.cs" />
     <Compile Include="CoreBL\YearTransferService.cs" />
+    <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
+    <Compile Include="DataContract\OpenFormatReportData.cs" />
     <Compile Include="DataContract\TaxDeductionReportData.cs" />
     <Compile Include="DataContract\TaxReportLinesCounter.cs" />
     <Compile Include="EntityDataMappings\AccountingCompanyTypeDataMapping.cs" />
@@ -499,6 +504,7 @@
     <Compile Include="EntityUpdateServices\TaxWithholdingAssessOfficeUpdateService.cs" />
     <Compile Include="TestService\BatchTestService.cs" />
     <Compile Include="Utils\AccountingLogger.cs" />
+    <Compile Include="Utils\FutureOpenChequesBatch.cs" />
     <Compile Include="Utils\PostDatedChequesRedemptionBatch.cs" />
     <Compile Include="Validators\AccountingPeriodValidator.cs" />
     <Compile Include="Validators\AutomaticReconcileMethodValidator.cs" />
@@ -671,6 +677,10 @@
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>

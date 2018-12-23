@@ -915,36 +915,44 @@ namespace CommunicationWorkerRole
         {
             GateWay gateWay = GateWay.Amazon;
 
-            int intId;
-            string[] commLogIdSplitted = waitingCommLog.Id.Split('-');
-            
-            if (int.TryParse(commLogIdSplitted[1], out intId))
+            if (LogitudeSettings.ChampEnv == "TEST")
             {
-                int modl = intId % 10;
+                gateWay = GateWay.Amazon;
+            }
 
-                if (waitingCommLog.Retries < 3)
-                {                    
-                    if (modl <= 7)
-                    {
-                        gateWay = GateWay.Amazon;
-                    }
+            else
+            {
+                int intId;
+                string[] commLogIdSplitted = waitingCommLog.Id.Split('-');
 
-                    else
-                    {
-                        gateWay = GateWay.Amital;
-                    }
-                }
-
-                else
+                if (int.TryParse(commLogIdSplitted[1], out intId))
                 {
-                    if (modl <= 7)
+                    int modl = intId % 10;
+
+                    if (waitingCommLog.Retries < 3)
                     {
-                        gateWay = GateWay.Amital;
+                        if (modl <= 7)
+                        {
+                            gateWay = GateWay.Amazon;
+                        }
+
+                        else
+                        {
+                            gateWay = GateWay.Amital;
+                        }
                     }
 
                     else
                     {
-                        gateWay = GateWay.Amazon;
+                        if (modl <= 7)
+                        {
+                            gateWay = GateWay.Amital;
+                        }
+
+                        else
+                        {
+                            gateWay = GateWay.Amazon;
+                        }
                     }
                 }
             }
@@ -984,7 +992,20 @@ namespace CommunicationWorkerRole
 
                         commLogrepository.Update(waitingCommLog);
                         commLogrepository.SubmitChanges();
-                    }                   
+                    }
+
+                    else
+                    {
+                        waitingCommLog.CommunicationStatusTypeCode = "F";
+                        waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                        waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                        waitingCommLog.ExceptionMessage = iResponse.StatusCode.ToString();
+
+                        CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+
+                        commLogrepository.Update(waitingCommLog);
+                        commLogrepository.SubmitChanges();
+                    }
                 }
             }
         }

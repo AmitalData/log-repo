@@ -8,14 +8,16 @@ export class LoginComp {
   navigateTo() {
     // return browser.get('http://test.logitudeworld.com/staging?Menu=protractor');
     return browser.get('http://test.logitudeworld.com/test?Menu=protractor');
-    // return browser.get('http://localhost:4200/');
-
+    // return browser.get('http://localhost:4200?Menu=protractor');
+    
   }
   DoLogin() {
     browser.ignoreSynchronization = true;
-    this.Helper.WaitByIdAndFill('Email','razan@razancompany.com' );
+    this.Helper.WaitByIdAndFill('Email','angular@fnarsoft.com' );
+    this.Helper.WaitByIdAndFill('Password','1' );
 
-    this.Helper.WaitByIdAndFill('Password','!R123456' );
+    this.Helper.WaitByIdAndFill('Email','razan@razancompany.com' );
+    this.Helper.WaitByIdAndFill('Password','!R123J456' );
     this.Helper.ButtonClick('cmdLogin');
 
 

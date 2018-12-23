@@ -216,7 +216,6 @@ using Simplog.Data.ShipmentsModel;
 				   temp.VolumetricWeight = MyEntityPM.VolumetricWeight;
 				   temp.ChargeableWeight = MyEntityPM.ChargeableWeight;
 				   temp.Master = MyEntityPM.Master;
-				   temp.MainCarriageCarrier = MyEntityPM.MainCarriageCarrierCode;
 				   temp.ShipmentNumber = MyEntityPM.ShipmentNumber;			  
 				   if(MyEntityPM.CreatedByUserId != null)
 				   {
@@ -261,7 +260,29 @@ using Simplog.Data.ShipmentsModel;
 					   					   temp.ValueOfGoodsCurrency = CurrencyService17.GetCurrencyById(MyEntityPM.ValueOfGoodsCurrencyId,Tenant); 
 			       
 					   				   }
-				   					
+				   
+				   temp.MainCarriageCarrierNumber = MyEntityPM.MainCarriageCarrierNumber;			  
+				   if(MyEntityPM.MainCarriageCarrierId != null)
+				   {
+					   CardQueryService CardService18 = new CardQueryService(Tenant);
+					   					   temp.MainCarriageCarrier = CardService18.GetCardById(MyEntityPM.MainCarriageCarrierId,Tenant); 
+			       
+					   				   }
+				   
+				if(MyEntityPM.ShipmentReceivables != null && MyEntityPM.ShipmentReceivables.Count > 0)
+				{
+					 ReceivableQueryService ReceivableService19 = new ReceivableQueryService(Tenant);
+					 temp.Receivables = ReceivableService19.ReceivableDataMapping(MyEntityPM.ShipmentReceivables,Tenant);
+				}
+
+							 
+				if(MyEntityPM.ShipmentPayables != null && MyEntityPM.ShipmentPayables.Count > 0)
+				{
+					 PayableQueryService PayableService19 = new PayableQueryService(Tenant);
+					 temp.Payables = PayableService19.PayableDataMapping(MyEntityPM.ShipmentPayables,Tenant);
+				}
+
+							 					
 				   return temp;
 			}
             catch (Exception ex)
@@ -432,22 +453,22 @@ using Simplog.Data.ShipmentsModel;
 					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService18 = new AirPackageQueryService(Tenant);
-						temp.ShipmentPackages = AirPackageService18.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+						AirPackageQueryService AirPackageService19 = new AirPackageQueryService(Tenant);
+						temp.ShipmentPackages = AirPackageService19.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService18 = new OceanOrInlandPackageQueryService(Tenant);
-						temp.ShipmentPackages = OceanOrInlandPackageService18.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService19 = new OceanOrInlandPackageQueryService(Tenant);
+						temp.ShipmentPackages = OceanOrInlandPackageService19.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService18 = new ContainerQueryService(Tenant);
-						temp.ShipmentPackages = ContainerService18.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+						ContainerQueryService ContainerService19 = new ContainerQueryService(Tenant);
+						temp.ShipmentPackages = ContainerService19.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -481,7 +502,6 @@ using Simplog.Data.ShipmentsModel;
 					temp.VolumetricWeight = MyEntity.VolumetricWeight;
 					temp.ChargeableWeight = MyEntity.ChargeableWeight;
 					temp.Master = MyEntity.Master;
-					temp.MainCarriageCarrierCode = MyEntity.MainCarriageCarrier;
 					temp.ShipmentNumber = MyEntity.ShipmentNumber;					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
@@ -496,15 +516,15 @@ using Simplog.Data.ShipmentsModel;
 					
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService18 = new DeliveryQueryService(Tenant);
-						temp.ShipmentDeliveries = DeliveryService18.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
+						DeliveryQueryService DeliveryService19 = new DeliveryQueryService(Tenant);
+						temp.ShipmentDeliveries = DeliveryService19.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService18 = new PickUpQueryService(Tenant);
-						temp.ShipmentPickUps = PickUpService18.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
+						PickUpQueryService PickUpService19 = new PickUpQueryService(Tenant);
+						temp.ShipmentPickUps = PickUpService19.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -541,7 +561,33 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-										   
+					
+					temp.MainCarriageCarrierNumber = MyEntity.MainCarriageCarrierNumber;					CardQueryService MainCarriageCarrierCardService = new CardQueryService(Tenant);
+					if(MyEntity.MainCarriageCarrier != null)
+					{
+						var myMainCarriageCarrierPM = MainCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.MainCarriageCarrier,Tenant,ComputingPartnerName);
+												if(myMainCarriageCarrierPM != null)
+						{
+							temp.MainCarriageCarrierId = myMainCarriageCarrierPM.Id;
+						}
+						 
+					}
+			
+					
+					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
+					{
+						ReceivableQueryService ReceivableService19 = new ReceivableQueryService(Tenant);
+						temp.ShipmentReceivables = ReceivableService19.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
+					}
+
+								 
+					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
+					{
+						PayableQueryService PayableService19 = new PayableQueryService(Tenant);
+						temp.ShipmentPayables = PayableService19.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName);
+					}
+
+								 					   
 					   return temp;
 		    }
             catch (Exception ex)

@@ -82,8 +82,6 @@ using Simplog.Data.CommonDataModel;
 			       
 					   				   }
 				   
-				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  
 				if(MyEntityPM.Contacts != null && MyEntityPM.Contacts.Count > 0)
 				{
 					 ContactQueryService ContactService2 = new ContactQueryService(Tenant);
@@ -97,7 +95,16 @@ using Simplog.Data.CommonDataModel;
 					   					   temp.BillingAddress = AddressService2.GetAddressById(MyEntityPM.BillingAddressId,Tenant); 
 			       
 					   				   }
-				   					
+				   			  
+				   if(MyEntityPM.GLAccountId != null)
+				   {
+					   GLAccountQueryService GLAccountService3 = new GLAccountQueryService(Tenant);
+					   					   temp.GLAccount = GLAccountService3.GLAccountCustomDataMapping(MyEntityPM.GLAccountId,Tenant); 
+			       
+					   				   }
+				   
+				   temp.Code = MyEntityPM.Code;
+				   temp.PartnerCode = MyEntityPM.PartnerCode;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -116,21 +123,7 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-					
-					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
-					{
-						ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant);
-						var MyCode = helper.GetLogitudeCodeTranslation(MyEntity.PartnerCode,ComputingPartnerName,"Card");
-					    if(string.IsNullOrEmpty(MyCode))
-						{
-						  throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
-						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant);
-						
-						
-					}
-					
-					   					   
+										   
 					if(temp == null)
 					{
 					    throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
@@ -164,14 +157,10 @@ using Simplog.Data.CommonDataModel;
 					}
 			
 					
-					if(string.IsNullOrEmpty(temp.Code))
-					{
-						temp.Code = MyEntity.PartnerCode;
-					}
 					if(MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
 					{
-						ContactQueryService ContactService3 = new ContactQueryService(Tenant);
-						temp.Contacts = ContactService3.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName);
+						ContactQueryService ContactService4 = new ContactQueryService(Tenant);
+						temp.Contacts = ContactService4.ContactCustomDataMappingAndValidatin(MyEntity,MyEntity.Contacts,Tenant,ComputingPartnerName);
 					}
 
 								 					AddressQueryService BillingAddressAddressService = new AddressQueryService(Tenant);
@@ -185,7 +174,23 @@ using Simplog.Data.CommonDataModel;
 						 
 					}
 			
-										   
+										GLAccountQueryService GLAccountGLAccountService = new GLAccountQueryService(Tenant);
+					if(MyEntity.GLAccount != null)
+					{
+						var myGLAccountPM = GLAccountGLAccountService.GLAccountCustomDataMappingAndValidatin(MyEntity.GLAccount,Tenant);
+												if(myGLAccountPM != null)
+						{
+							temp.GLAccountId = myGLAccountPM.Id;
+						}
+						 
+					}
+			
+					
+					if(string.IsNullOrEmpty(temp.Code))
+					{
+						temp.Code = MyEntity.Code;
+					}
+					temp.PartnerCode = MyEntity.PartnerCode;					   
 					   return temp;
 		    }
             catch (Exception ex)

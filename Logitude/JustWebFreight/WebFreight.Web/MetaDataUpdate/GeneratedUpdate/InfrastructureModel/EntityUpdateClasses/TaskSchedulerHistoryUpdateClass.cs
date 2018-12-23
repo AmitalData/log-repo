@@ -112,12 +112,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    IsLookUp =  false,
 			      				    IsEditable =  false,
 			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -159,15 +157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable TaskSchedulerHistoryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaskSchedulerHistory" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode TaskSchedulerHistoryTextCode_TaskSchedulerHistory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaskSchedulerHistory", DefaultText = "Task Scheduler History",LocalDefaultText = null, ObjectTableId = TaskSchedulerHistoryObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

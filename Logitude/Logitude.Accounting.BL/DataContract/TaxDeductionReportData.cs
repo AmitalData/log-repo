@@ -20,15 +20,27 @@ namespace Logitude.Accounting.BL.DataContract
         public List<ByMonthList> ByMonthList { get; set; }
         public List<ByVendorList> ByVendorList { get; set; }
         public List<TotalForCompany> TotalForCompany { get; set; }
+        public List<DBVendorsList> DBVendorsList { get; set; }
         public double? TotalAmountInLocalCurrency { get; set; }
         public decimal? TotalDeductionInLocalCurrency { get; set; }
         public double? TotalAmountInLocalCurrency08 { get; set; }
         public decimal? TotalTaxDeductionInLocalCurrency08 { get; set; }
         public decimal? TotalEndBalance  { get; set; }
-
+        public int? VendorsCount { get; set; }
 
     }
 
+
+    public class DBVendorsList
+    {
+        public DateTime? RigesterDate { get; set; }
+       public string VendorId { get; set; }
+        public string GlAccountId { get; set; }
+        public double? AmountInLocalCurrency { get; set; }                     
+       public decimal? TaxDeductionLocalAmount { get; set; }                   
+       public string DeductionFileTypeCode { get; set; }
+      public decimal? EndYearBalance { get; set; }
+    }
 
     public class ByMonthList
     {
@@ -69,6 +81,7 @@ namespace Logitude.Accounting.BL.DataContract
         public bool IsInternationlPartner { get; set; }
         public string EnglishName { get; set; }
         public decimal? EndYearBalance { get; set; }
+        public string VendorLocalName { get; set; }
     }
 
     public class TotalForCompany

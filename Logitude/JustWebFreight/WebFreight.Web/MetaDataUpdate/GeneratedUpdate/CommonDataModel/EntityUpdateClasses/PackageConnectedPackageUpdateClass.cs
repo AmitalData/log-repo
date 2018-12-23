@@ -78,14 +78,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "PackageConnectedPackage",
+	             				    IsComposition =  true,
+			      				    ObjectTableName =  "PackageConnectedPackage",
 			      				    DBTableName =  "PackageConnectedPackages",
 			      				    ObjectTableSingular =  "Package Connected Package",
 			      				    ObjectTablePlural =  "Package Connected Packages",
 			      				    DefaultText =  "Package Connected Package",
 			      				    Name =  "PackageConnectedPackage",
 			      				    IsNewWizard =  false,
-			      				    HasCustomFilter =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -95,7 +95,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    EnableEditFromLOV =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
+			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    CustomFieldsCount =  0,
 			      				    HasCustomFields =  false,
@@ -104,21 +104,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsSaveButtonVisible =  true,
 			      				    EnableSecurity =  false,
 			      				    ObjectTableTypeCode =  "MD",
-			      				    IsComposition =  true,
 			      				    MaxNumberOfCustomFields =  0,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  false,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
+			      				    NoViewsController =  true,
 			      				    ClientModuleName =  "Infrastructure",
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -133,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "PackageConnectedPackage",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Package",
-					  						Code =  "PackageCode",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  5,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -157,10 +150,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "PackageConnectedPackage",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "PackageConnectedPackage",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -171,14 +163,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "PackageCode",
+					  						DefaultText =  @"Package",
+					  						HelpTextCode =  "PackageCode",
+					  						Code =  "PackageCode",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "PackageCode",
-					  						DefaultText =  @"Package",
-					  						HelpTextCode =  "PackageCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -190,7 +185,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "PackageConnectedPackage",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "Package",
-					  						Code =  "ConnectedPackageCode",
+					  						DataTypeCode =  "LookUp",
 					  						MaxLength =  5,
 					  						IsCustom =  false,
 					  						MinLength =  0,
@@ -214,10 +209,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowListIndex =  0,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						IsMulti =  false,
+					  						ValidForQuerySection1 =  "PackageConnectedPackage",
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "PackageConnectedPackage",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						DigitsAfterPoint =  0,
@@ -228,14 +222,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						AllowedInAirlineMessaging =  false,
+					  						FullFieldLable =  "ConnectedPackageCode",
+					  						DefaultText =  @"Connected Package",
+					  						HelpTextCode =  "ConnectedPackageCode",
+					  						Code =  "ConnectedPackageCode",
+					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
-					  						FullFieldLable =  "ConnectedPackageCode",
-					  						DefaultText =  @"Connected Package",
-					  						HelpTextCode =  "ConnectedPackageCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -269,15 +266,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-
-		   		   //--------------> Additional TextCodes <--------------\\
-
- 		   ObjectTable PackageConnectedPackageObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "PackageConnectedPackage" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode PackageConnectedPackageTextCode_PackageConnectedPackage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PackageConnectedPackage", DefaultText = "Package Connected Package",LocalDefaultText = null, ObjectTableId = PackageConnectedPackageObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-   
+	    {     
 	    
 }
 

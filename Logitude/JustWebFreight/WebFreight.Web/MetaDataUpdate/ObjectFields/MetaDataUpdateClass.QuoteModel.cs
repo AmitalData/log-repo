@@ -3830,7 +3830,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListPropertyPath = "QuoteTypeCode",
                 PMPropertyPath = "QuoteTypeCode",
                 HelpTextCode = "QuoteTypeCode",
-                HelpTextDefaultText = "Spot Rate: Use for quoting prices for a specific shipment with a given quantity.\nRouting Rates: Use for quoting your rates for package types, per unit or by price break levels.",
+                HelpTextDefaultText = "Spot Rate: Use for quoting prices for a specific shipment with a given quantity.%nRouting Rates: Use for quoting your rates for package types, per unit or by price break levels.",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()

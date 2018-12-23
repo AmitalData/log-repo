@@ -89,25 +89,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string taxReportStatusCode ;
+	  private string taxReportTransmitStatusCode ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string TaxReportStatusCode  
+       public string TaxReportTransmitStatusCode  
 	   {
 	    
 	     get
 		{
-		   return taxReportStatusCode;
+		   return taxReportTransmitStatusCode;
 		 }
 		 set
 		 {
-		   if(taxReportStatusCode != value)
+		   if(taxReportTransmitStatusCode != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportStatusCode",OldValue=taxReportStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportTransmitStatusCode",OldValue=taxReportTransmitStatusCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   taxReportStatusCode=value;
+		   taxReportTransmitStatusCode=value;
 		   }
 			
 		 }

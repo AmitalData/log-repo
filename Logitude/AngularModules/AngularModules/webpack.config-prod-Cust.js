@@ -548,7 +548,7 @@ module.exports = {
             "license.txt"
           ],
           "perChunkOutput": false,
-          "outputTemplate": "C:\\LW\\Customs\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
+          "outputTemplate": "D:\\Customs\\Logitude\\AngularModules\\AngularModules\\node_modules\\license-webpack-plugin\\output.template.ejs",
           "outputFilename": "3rdpartylicenses.txt",
           "suppressErrors": true,
           "includePackagesWithoutLicense": false,

@@ -63,7 +63,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
 
                         IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-                        GLAccountPM accountPM = glAccountQuery.GetGLAccountByDisplayNumber(item.GLAccountId, MyEntity.Tenant);
+                        GLAccountPM accountPM = glAccountQuery.GetGLAccountByInternalNumber(item.GLAccountId, MyEntity.Tenant);
                         if (accountPM != null)
                         {
                             temp.GLAccountId = accountPM.Id;
@@ -73,10 +73,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                             throw new ApplicationException("Opposite account is not found");
                         }
                     }
-                    else
-                    {
-                        throw new ApplicationException("GLAccount in invoice line is required");
-                    }
+                  
                     CurrencyQueryService ForiegnCurrencyCurrencyService = new CurrencyQueryService(Tenant);
                     if (item.ForeignCurrency != null)
                     {
@@ -161,7 +158,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         GLAccountPM accountPM = glAccountQuery.GetSingleGLAccountPM(item.GLAccountId, MyEntity.Tenant);
                         if (accountPM != null)
                         {
-                            temp.GLAccountId = accountPM.DisplayNumber;
+                            temp.GLAccountId = accountPM.InternalNumber;
                         }
 
                     }

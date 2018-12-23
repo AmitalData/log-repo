@@ -99,6 +99,25 @@ export class TaxReportExtendedPMService {
     }
 
 
+    getErrorsCount(reportId: string) {
+	    var callTime = new Date();
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/GetErrorsCount/?'+'reportId=' + reportId, {
+                headers: authHeader
+            }).map(response => {
+                var result = response.json();
+
+                return result;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+
+        );
+    }
+
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TaxReportPM = null) {
 
 

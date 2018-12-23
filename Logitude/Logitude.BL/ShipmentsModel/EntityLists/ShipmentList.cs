@@ -437,7 +437,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? GrossWeightPerTon { get; set; }
         public DateTime? ManifestLastSharingDate { get; set; }
         //public string MainCarriageFinalDestinationPortId { get; set; }
-        //public string MainCarriageFinalDestinationPortCode { get; set; }
+        public string MainCarriageFinalDestinationPortCode { get; set; }
         //public string MainCarriageFinalDestinationPortName { get; set; }
         //public string MainCarriageFinalDestinationCountryCode { get; set; }
         //public string MainCarriageFinalDestinationCountryName { get; set; }

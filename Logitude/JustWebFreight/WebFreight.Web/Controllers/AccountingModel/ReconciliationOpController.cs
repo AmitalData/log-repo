@@ -465,6 +465,7 @@ tenant);
                     method1 = m1,
                     method2 = m2,
                     method3 = m3,
+                    ClientChooseAutoMethod= true,
                 };
 
                 

@@ -35,8 +35,8 @@ namespace WebFreight.Web.MetaDataUpdate
             CreateShipmentPackageItemFields(objectFields, textCodes);
             CreateShipmentCommodityFields(objectFields, textCodes);
             CreateCommodityPackageFields(objectFields, textCodes);
-            CreateAWBMessagingStockFields(objectFields, textCodes);
-            CreateAWBStockUsageHistoryFields(objectFields, textCodes);
+            CreateMessagingStockFields(objectFields, textCodes);
+            CreateMessagingStockUsageHistoryFields(objectFields, textCodes);
             CreateAWBAdditionalHandlingInfoFields(objectFields, textCodes);
             CreateShipmentOrderObjectFields(objectFields, textCodes);
             CreateContainerFollowUpObjectFields(objectFields, textCodes);
@@ -97,6 +97,33 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private void CreateShipmentFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
+
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Forwarder Partner Id",
+                FullFieldLable = "ForwarderPartnerId",
+                FieldName = "ForwarderPartnerId",
+                FieldsDataType = "LookUp",
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentObject.Id,
+                LookUpTableId = HybridPartnerObject.Id,
+                ObjectTableName = "Shipment",
+                Tenant = 0,
+                TextCodeType = "F",
+                ValidForQuerySection1 = "Shipment",
+                ListFieldLable = "ForwarderPartnerIdListLable",
+                Operator = "Equals",
+                ListPropertyPath = "ForwarderPartnerId",
+                PMPropertyPath = "ForwarderPartnerId",
+                DisplayInList = true,
+                ListLableDefaultText = "Forwarder Partner Id",
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+
+
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Project #",
@@ -8708,7 +8735,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Follow Up Type",
-                FullFieldLable = "FUType",
+                FullFieldLable = "FollowUpType",
                 FieldName = "FollowUpType",
                 FieldsDataType = "Text",
                 MaxLength = 40,
@@ -8759,7 +8786,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Follow Up Date",
-                FullFieldLable = "FUDate",
+                FullFieldLable = "FollowUpDate",
                 FieldName = "FollowUpDate",
                 FieldsDataType = "DateTime",
                 MaxLength = 40,
@@ -8785,7 +8812,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Follow Up Notes",
-                FullFieldLable = "FUNotes",
+                FullFieldLable = "FollowUpNotes",
                 FieldName = "FollowUpNotes",
                 FieldsDataType = "Text",
                 MaxLength = 250,
@@ -11551,9 +11578,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
-                DefaultText = "Missing Documents ",
+                DefaultText = "Missing Documents",
                 FullFieldLable = "MissingDocuments",
-                FieldName = "MissingDocuments ",
+                FieldName = "MissingDocuments",
                 FieldsDataType = "List",
                 ObjectTableId = ShipmentObject.Id,
                 ObjectTableName = ShipmentObject.Name,
@@ -21615,7 +21642,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 40,
                 MinLength = 0,
                 ObjectTableId = ShipmentTypesObject.Id,
-                ObjectTableName = "ShipmentType",
+                ObjectTableName = ShipmentTypesObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 LookUpTableId = null,
@@ -21636,7 +21663,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1,
                 MinLength = 0,
                 ObjectTableId = ShipmentTypesObject.Id,
-                ObjectTableName = "ShipmentType",
+                ObjectTableName = ShipmentTypesObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 LookUpTableId = null,
@@ -21657,7 +21684,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1000,
                 MinLength = 0,
                 ObjectTableId = ShipmentTypesObject.Id,
-                ObjectTableName = "ShipmentType",
+                ObjectTableName = ShipmentTypesObject.Name,
                 ObjectTablePlural = "ShipmentTypes",
                 ObjectTableSingular = "ShipmentType",
                 Tenant = 0,
@@ -24757,7 +24784,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Measurement",
                 DisplayOnLookUp = false,
-                FullFieldLable = "Measurement",
+                FullFieldLable = "MeasurementId",
                 FieldName = "MeasurementId",
                 ShortFieldLable = "MeasurementId",
                 ShortFieldLableDefaultText = "UOM",
@@ -24950,7 +24977,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
                 DefaultText = "Charges Type",
-                FullFieldLable = "ChargesType",
+                FullFieldLable = "ChargesTypeId",
                 FieldName = "ChargesTypeId",
                 FieldsDataType = "LookUp",
                 IsRequired = true,
@@ -25471,7 +25498,7 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 DefaultText = "Charges Type",
                 DisplayOnLookUp = false,
-                FullFieldLable = "ChargesType",
+                FullFieldLable = "ChargesTypeId",
                 FieldName = "ChargesTypeId",
                 FieldsDataType = "LookUp",
                 IsCustom = false,
@@ -27128,7 +27155,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             this.ObjectContext.SaveChanges();
         }
-        private void CreateAWBMessagingStockFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
+        private void CreateMessagingStockFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
@@ -27138,9 +27165,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Text",
                 MaxLength = 100,
                 MinLength = 0,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
@@ -27160,9 +27187,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1,
                 MinLength = 0,
                 IsRequired = true,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
@@ -27182,9 +27209,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1,
                 MinLength = 0,
                 IsRequired = true,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27204,9 +27231,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Double",
                 MaxLength = 1,
                 MinLength = 0,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27226,9 +27253,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Integer",
                 MaxLength = 1,
                 MinLength = 0,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
@@ -27245,9 +27272,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1,
                 MinLength = 0,
                 IsRequired = true,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27269,9 +27296,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 MaxLength = 1,
                 MinLength = 0,
                 IsRequired = true,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27292,9 +27319,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "DateTime",
                 MaxLength = 1,
                 MinLength = 0,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27314,9 +27341,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "DateTime",
                 MaxLength = 1,
                 MinLength = 0,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27337,9 +27364,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 LookUpTableId = UsersObject.Id,
                 MaxLength = 15,
                 MinLength = 0,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27357,9 +27384,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 LookUpTableId = UsersObject.Id,
                 MaxLength = 15,
                 MinLength = 0,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27376,9 +27403,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Boolean",
                 MaxLength = 1,
                 MinLength = 0,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27395,9 +27422,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Text",
                 MaxLength = 10,
                 MinLength = 0,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27418,9 +27445,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "nText",
                 MaxLength = 250,
                 MinLength = 0,
-                ObjectTableId = AWBMessagingStockObject.Id,
-                ObjectTableName = AWBMessagingStockObject.Name,
-                ValidForQuerySection1 = AWBMessagingStockObject.Name,
+                ObjectTableId = MessagingStockObject.Id,
+                ObjectTableName = MessagingStockObject.Name,
+                ValidForQuerySection1 = MessagingStockObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 DisplayInList = true,
@@ -27433,7 +27460,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             this.ObjectContext.SaveChanges();
         }
-        private void CreateAWBStockUsageHistoryFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
+        private void CreateMessagingStockUsageHistoryFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, TextCode> textCodes)
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
@@ -27441,11 +27468,11 @@ namespace WebFreight.Web.MetaDataUpdate
                 FullFieldLable = "StockId",
                 FieldName = "StockId",
                 FieldsDataType = "LookUp",
-                LookUpTableId = AWBMessagingStockObject.Id,
+                LookUpTableId = MessagingStockObject.Id,
                 MaxLength = 15,
                 MinLength = 0,
-                ObjectTableId = AWBStockUsageHistoryObject.Id,
-                ObjectTableName = AWBStockUsageHistoryObject.Name,
+                ObjectTableId = MessagingStockUsageHistoryObject.Id,
+                ObjectTableName = MessagingStockUsageHistoryObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
@@ -27462,8 +27489,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 LookUpTableId = ShipmentObject.Id,
                 MaxLength = 15,
                 MinLength = 0,
-                ObjectTableId = AWBStockUsageHistoryObject.Id,
-                ObjectTableName = AWBStockUsageHistoryObject.Name,
+                ObjectTableId = MessagingStockUsageHistoryObject.Id,
+                ObjectTableName = MessagingStockUsageHistoryObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 Operator = "Equals",
@@ -27479,8 +27506,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Text",
                 MaxLength = 15,
                 MinLength = 0,
-                ObjectTableId = AWBStockUsageHistoryObject.Id,
-                ObjectTableName = AWBStockUsageHistoryObject.Name,
+                ObjectTableId = MessagingStockUsageHistoryObject.Id,
+                ObjectTableName = MessagingStockUsageHistoryObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27500,8 +27527,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Text",
                 MaxLength = 15,
                 MinLength = 0,
-                ObjectTableId = AWBStockUsageHistoryObject.Id,
-                ObjectTableName = AWBStockUsageHistoryObject.Name,
+                ObjectTableId = MessagingStockUsageHistoryObject.Id,
+                ObjectTableName = MessagingStockUsageHistoryObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27521,8 +27548,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Text",
                 MaxLength = 25,
                 MinLength = 0,
-                ObjectTableId = AWBStockUsageHistoryObject.Id,
-                ObjectTableName = AWBStockUsageHistoryObject.Name,
+                ObjectTableId = MessagingStockUsageHistoryObject.Id,
+                ObjectTableName = MessagingStockUsageHistoryObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27542,8 +27569,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Text",
                 MaxLength = 20,
                 MinLength = 0,
-                ObjectTableId = AWBStockUsageHistoryObject.Id,
-                ObjectTableName = AWBStockUsageHistoryObject.Name,
+                ObjectTableId = MessagingStockUsageHistoryObject.Id,
+                ObjectTableName = MessagingStockUsageHistoryObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27563,8 +27590,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "Text",
                 MaxLength = 15,
                 MinLength = 0,
-                ObjectTableId = AWBStockUsageHistoryObject.Id,
-                ObjectTableName = AWBStockUsageHistoryObject.Name,
+                ObjectTableId = MessagingStockUsageHistoryObject.Id,
+                ObjectTableName = MessagingStockUsageHistoryObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27585,8 +27612,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "DateTime",
                 MaxLength = 1,
                 MinLength = 0,
-                ObjectTableId = AWBStockUsageHistoryObject.Id,
-                ObjectTableName = AWBStockUsageHistoryObject.Name,
+                ObjectTableId = MessagingStockUsageHistoryObject.Id,
+                ObjectTableName = MessagingStockUsageHistoryObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27606,8 +27633,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 FieldsDataType = "DateTime",
                 MaxLength = 1,
                 MinLength = 0,
-                ObjectTableId = AWBStockUsageHistoryObject.Id,
-                ObjectTableName = AWBStockUsageHistoryObject.Name,
+                ObjectTableId = MessagingStockUsageHistoryObject.Id,
+                ObjectTableName = MessagingStockUsageHistoryObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27628,8 +27655,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 LookUpTableId = UsersObject.Id,
                 MaxLength = 15,
                 MinLength = 0,
-                ObjectTableId = AWBStockUsageHistoryObject.Id,
-                ObjectTableName = AWBStockUsageHistoryObject.Name,
+                ObjectTableId = MessagingStockUsageHistoryObject.Id,
+                ObjectTableName = MessagingStockUsageHistoryObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -27647,8 +27674,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 LookUpTableId = UsersObject.Id,
                 MaxLength = 15,
                 MinLength = 0,
-                ObjectTableId = AWBStockUsageHistoryObject.Id,
-                ObjectTableName = AWBStockUsageHistoryObject.Name,
+                ObjectTableId = MessagingStockUsageHistoryObject.Id,
+                ObjectTableName = MessagingStockUsageHistoryObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
                 CanFilter = true,
@@ -28766,6 +28793,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "DeliveryTransportModeNameListLable",
                 ListLableDefaultText = "Delivery Transport Mode",
                 DisplayInList = true,
+                HasTemplate = true,
                 Operator = "StartsWith",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
@@ -28808,6 +28836,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ListFieldLable = "ECRTransportModeNameListLable",
                 ListLableDefaultText = "Return Transport Mode",
                 DisplayInList = true,
+                HasTemplate = true,
                 Operator = "StartsWith",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 

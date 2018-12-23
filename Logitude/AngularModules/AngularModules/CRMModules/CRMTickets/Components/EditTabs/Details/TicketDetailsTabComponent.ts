@@ -98,6 +98,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
                     this.GetEntityLinkNumberVisibility();
                     this.CreateEntities();
                     this.UpdateEntityDetails();
+                    this.SetUIProperties();
                 }
             });
         }
@@ -507,6 +508,7 @@ export class TicketDetailsTabComponent extends BaseComponent implements AfterVie
     set EntityType(newValue: string) {
         if (this.EntityPM.EntityType != newValue) {
             this.EntityPM.EntityType = newValue;
+            this.GetEntityLinkNumberVisibility();
         }
     }
 

@@ -12,6 +12,6 @@ namespace Logitude.Accounting.Def.EntityQueryServicesExt
     {
         GLAccountPM GetSingleGLAccountPM(string id, int tenant);
         GLAccountPM GetGLAccountByDisplayNumber(string id, int tenant);
-        //APIDataContract.ApiV1.GLAccount GLAccountDataMappingAndValidatin(GLAccountPM MyEntity, int Tenant, string ComputingPartnerName = "");
+        GLAccountPM GetGLAccountByInternalNumber(string id, int tenant);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
@@ -59,16 +60,37 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     myResult.Branches = branchQuery.GetBranchPMsByTenant(tenant).ToList();
 
                     List<ShippingLinePM> ShippingLines = (from d in context.ShippingLines.Include("Card")
-                                                          where d.Tenant == tenant
-                                                          && d.IsINTTRARegistered == true
+                                                          where d.IsINTTRARegistered == true && d.Tenant == tenant
                                                           select new ShippingLinePM()
                                                           {
                                                               Id = d.Id,
+                                                              Tenant = d.Tenant,
                                                               Code = d.Card.Code,
                                                               EnglishName = d.Card.EnglishName,
-                                                              INTTRARegistrationNotes=d.INTTRARegistrationNotes,
+                                                              INTTRARegistrationNotes = d.INTTRARegistrationNotes,
                                                           }).ToList();
 
+                    if (tenant != 0)
+                    {
+                        List<ShippingLinePM> ShippingLines_0 = (from d in context.ShippingLines.Include("Card")
+                                                                where d.IsINTTRARegistered == true && d.Tenant == 0
+                                                                select new ShippingLinePM()
+                                                                {
+                                                                    Id = d.Id,
+                                                                    Tenant = d.Tenant,
+                                                                    Code = d.Card.Code,
+                                                                    EnglishName = d.Card.EnglishName,
+                                                                    INTTRARegistrationNotes = d.INTTRARegistrationNotes,
+                                                                }).ToList();
+
+                        foreach (ShippingLinePM line in ShippingLines_0)
+                        {
+                            if (!ShippingLines.Where(d => d.Code == line.Code).Any())
+                            {
+                                ShippingLines.Add(line);
+                            }
+                        }
+                    }
 
                     INTTRABranchRegisteredCarrierRepository RegisteredCarrierRepository = new INTTRABranchRegisteredCarrierRepository(context);
                     INTTRABranchRegisteredCarrierQuery RegisteredCarrierQuery = new INTTRABranchRegisteredCarrierQuery(RegisteredCarrierRepository);
@@ -79,20 +101,25 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         myResult.Items.Add(new INTTRASettingsHelperItem()
                         {
-                            Id = line.Id,
+                            CompinedId = line.Id,                            
                             Code = line.Code,
                             Name = line.EnglishName,
-                            IsLineItem = true,
                             Notes = line.INTTRARegistrationNotes,
+                            Tenant = line.Tenant,
+                            ShippingLineId = line.Id,
+                            IsLineItem = true,
                         });
 
                         foreach (BranchPM branch in myResult.Branches)
                         {
                             INTTRASettingsHelperItem item = new INTTRASettingsHelperItem()
                             {
-                                Id = line.Id,
+                                CompinedId = line.Id + "," + branch.Id,                                
                                 Code = line.Code,
                                 Name = line.EnglishName,
+                                Notes = line.INTTRARegistrationNotes,
+                                Tenant = line.Tenant,
+                                ShippingLineId = line.Id,
                                 BranchId = branch.Id,
                             };
 
@@ -130,10 +157,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserId = this.GetLoggedUserId(loggedUserEmail, tenant);
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
-                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                    ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
 
                     #region Setting
-                    INTTRASettingRepository settingRepository = new INTTRASettingRepository(context);
+                    INTTRASettingRepository settingRepository = new INTTRASettingRepository(iContext);
 
                     if (args.INTTRASetting != null)
                     {
@@ -175,7 +202,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     #endregion
 
                     #region Branches
-                    BranchRepository branchRepository = new BranchRepository(context);
+                    BranchRepository branchRepository = new BranchRepository(iContext);
                     List<Branch> AllBranches = branchRepository.GetBranches(tenant).ToList();
 
                     foreach (BranchPM myBranchPM in args.Branches)
@@ -194,25 +221,62 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     #endregion
 
                     #region Carriers
-                    INTTRABranchRegisteredCarrierRepository RegisteredCarrierRepository = new INTTRABranchRegisteredCarrierRepository(context);
+                    CardRepository iCardRepository = new CardRepository(iContext);
+                    ShippingLineRepository iShippingLineRepository = new ShippingLineRepository(iContext);
+                    INTTRABranchRegisteredCarrierRepository RegisteredCarrierRepository = new INTTRABranchRegisteredCarrierRepository(iContext);
                     List<INTTRABranchRegisteredCarrier> AllRegisteredCarriers = RegisteredCarrierRepository.GetAllByTenant(tenant).ToList();
+
                     foreach (INTTRASettingsHelperItem itemPM in args.Items.Where(d => d.IsLineItem == false))
                     {
-                        INTTRABranchRegisteredCarrier itemPOCO = AllRegisteredCarriers.Where(d => d.ShippingLineId == itemPM.Id && d.BranchId == itemPM.BranchId).FirstOrDefault();
+                        INTTRABranchRegisteredCarrier itemPOCO = AllRegisteredCarriers.Where(d => d.ShippingLineId == itemPM.ShippingLineId && d.BranchId == itemPM.BranchId && d.Tenant == tenant).FirstOrDefault();
 
                         if (itemPM.IsRegistered)
                         {
                             if (itemPOCO == null)
                             {
+                                string iShippingLineId = null;
+
                                 itemPOCO = new INTTRABranchRegisteredCarrier()
                                 {
                                     Id = IdCounter.GetNumber("INTTRABranchRegisteredCarrier", tenant).ToString(),
                                     Tenant = tenant,
-                                    BranchId = itemPM.BranchId,
-                                    ShippingLineId = itemPM.Id,
+                                    BranchId = itemPM.BranchId,                                   
                                     UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                                     UpdatedByUserId = loggedUserId,
                                 };
+
+                                if (itemPM.Tenant == 0 && tenant != 0)
+                                {
+                                    ShippingLine iShippingLine = iShippingLineRepository.GetSingleShippingLineByCode(itemPM.Code, tenant);
+                                    if (iShippingLine != null)
+                                    {
+                                        iShippingLineId = iShippingLine.Id;
+                                        iShippingLine.IsINTTRARegistered = true;
+                                        iShippingLine.INTTRARegistrationNotes = itemPM.Notes;
+                                        iShippingLineRepository.Update(iShippingLine);
+                                    }
+
+                                    else
+                                    {
+                                        iShippingLine = iShippingLineRepository.GetSingleShippingLine(itemPM.ShippingLineId, 0);
+                                        if (iShippingLine != null)
+                                        {
+                                            CardQuery iCardQuery = new CardQuery(iCardRepository);
+                                            CardList iCardList = iCardQuery.GetCarrierCopyToCurrentTenant(iShippingLine.Id, tenant, null, null, false, null);
+                                            if (iCardList != null)
+                                            {
+                                                iShippingLineId = iCardList.Id;                                                
+                                            }
+                                        }
+                                    }
+                                }
+
+                                else
+                                {
+                                    iShippingLineId = itemPM.ShippingLineId;
+                                }
+
+                                itemPOCO.ShippingLineId = iShippingLineId;
 
                                 RegisteredCarrierRepository.Add(itemPOCO);
                             }
@@ -227,7 +291,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
 
-                    RegisteredCarrierRepository.SubmitChanges();
+                    iContext.SaveChanges();
                     #endregion
 
                     scope.Complete();
@@ -336,14 +400,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
     }
     public class INTTRASettingsHelperItem
     {
-        public string Id { get; set; }
+        public string CompinedId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public string Notes { get; set; }
         public bool IsLineItem { get; set; }
         public string BranchId { get; set; }
         public string RegisteredCarrierId { get; set; }
         public bool IsRegistered { get; set; }
-        public string Notes { get; set; }
+        public int Tenant { get; set; }
+        public string ShippingLineId { get; set; }
     }
 
     public class INTTRACommunicationSettingsHelper

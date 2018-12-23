@@ -260,12 +260,12 @@
                                                                                                 <table>
                                                                                                     <tr>
                                                                                                         <td style="width:70%;"><p style="display:inline-block;">{{item.Name}}</p></td>
-                                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:5%;"></td>
-                                                                                                        <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span></td>
-                                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:1%;"></td>
-                                                                                                        <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span></td>
-                                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:4%;"></td>
-                                                                                                        <td *ngIf="item &&  item.HasTree" style="width:30%;"></td>
+                                                                                                        <td *ngIf="item" style="width:5%;"></td>
+                                                                                                        <td *ngIf="item && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span></td>
+                                                                                                        <td *ngIf="item " style="width:1%;"></td>
+                                                                                                        <td *ngIf="item && item.ShowBtns == true" style="width:10%;"><span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span></td>
+                                                                                                        <td *ngIf="item" style="width:4%;"></td>
+                                                                                                        <td *ngIf="item && item.HasTree" style="width:30%;"></td>
                                                                                                     </tr>
                                                                                                 </table>
 
@@ -604,6 +604,27 @@
 
                     <td style="width: 57px;">
                         <button class="RedButton" (click)="SaveButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <input type="text" style="float:left;width:120px;" [(ngModel)]="ID" />
+                                </td>
+                                <td style="width: 5px;">
+                                    <div style="width: 5px;height:20px;"></div>
+                                </td>
+                                <td>
+                                    <button class="RedButton" (click)="EditButtonClicked()">Edit</button>
+                                </td>
+                            </tr>
+                        </table>
+                        
                     </td>
 
                 </tr>

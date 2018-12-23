@@ -31,11 +31,12 @@
     </div>
 
     <!-- StatusName -->
-    <div class="TextTrimming" *ngIf="fieldName == 'StatusLocalName'" style="color:#00a24d;padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'" [class.red]='rowData.StatusCode != "6"'>
+    <!-- <div class="TextTrimming" *ngIf="fieldName == 'StatusLocalName'" style="color:#00a24d;padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'" [class.red]='rowData.StatusCode != "6"'>
         {{ rowData["StatusLocalName"] }}
-    </div>
-    <div class="TextTrimming" *ngIf="fieldName == 'StatusEnglishName'" style="color:#00a24d;padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'" [class.red]='rowData.StatusCode != "6"'>
-        {{ rowData["StatusEnglishName"] }}
+    </div> -->
+
+    <div class="TextTrimming" *ngIf="fieldName == 'StatusEnglishName' || fieldName == 'StatusLocalName'" style="color:#00a24d;padding: 0px 2px;" [style.text-align]="isRTL ? 'right' : 'left'" [class.red]='rowData.StatusCode != "6"'>
+        {{ showLocal ? rowData["StatusLocalName"] : rowData["StatusEnglishName"] }}
     </div>
 
     <!-- JournalNumber -->

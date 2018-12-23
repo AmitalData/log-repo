@@ -1,15 +1,18 @@
-﻿import {Component}  from '@angular/core';
+import { Component, OnDestroy}  from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {InfrastructureDomainService, BusinessRecordsSummary} from '../../Services/InfrastructureDomainService';
 import {ServiceResponse} from '../../DataContracts/ServiceResponse';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
+import { BatchTaskExecutionPM } from '../../EntityPMs/BatchTaskExecutionPM';
+import { BatchTaskExecutionListService } from '../../Services/StandardLists/BatchTaskExecutionListService';
+import { BatchTaskExecutionList } from '../../EntityLists/BatchTaskExecutionList';
 
 @Component({
     moduleId: module.id,
     templateUrl: './EraseTenantManagementDataComponent.html',
 })
 
-export class EraseTenantManagementDataComponent {
+export class EraseTenantManagementDataComponent implements OnDestroy {
     private myService: InfrastructureDomainService;
     private entityId: number;
     public Message: string;
@@ -36,9 +39,11 @@ export class EraseTenantManagementDataComponent {
             SessionLocator.CurrentSession.StopBusyIndicator();
         });
     }
-        
+
+    private type: string;
     public DeleteClicked(type: string) {
         this.Message = null;
+        this.type = type;
 
         switch (type) {
             case "B": {                
@@ -84,41 +89,99 @@ export class EraseTenantManagementDataComponent {
         }        
     }
 
+    public IsResponseProgressVisible: boolean = false;
+    CloseResponseProgressClicked() {
+        this.IsResponseProgressVisible = false;       
+
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+
+        this.IsResponseProgressVisible = false;
+    }
+
+    private batchEntity: BatchTaskExecutionPM;
     private DoDelete(type: string) {
         this.Message = null;
-
-        SessionLocator.CurrentSession.StartBusyIndicator("Erasing Data...");
-
+        
         this.myService.DeleteDataForTenant(this.entityId, type).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                this.GetCounts();
-                
-                var window: MessageWindow = new MessageWindow();
+                var mm: ServiceResponse = response;
+                this.batchEntity = mm.Result;
 
-                switch (type) {
-                    case "B": {
-                        window.Show("Erasing Business Records Completed Succesfully");
-                        break;
+                if (this.batchEntity != null) {
+                    this.IsResponseProgressVisible = true;
+                    this.timer = setInterval(() => {
+                        this.GetBTE();
+                    }, this.timerInterval);
+                }
+            }            
+        });
+    }
+
+    // Timer
+    timerInterval: number = 1000;
+    timer: any;
+
+    ngOnDestroy() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+
+        this.IsResponseProgressVisible = false;
+    }
+    
+    private bteList: BatchTaskExecutionList;
+    GetBTE() {
+        var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe(myResult => {
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.bteList = mm.Result;
+                if (this.bteList.StatusCode == "D") // D- Done
+                {
+                    this.GetCounts();
+
+                    var window: MessageWindow = new MessageWindow();
+
+                    switch (this.type) {
+                        case "B": {
+                            window.Show("Erasing Business Records Completed Succesfully");
+                            break;
+                        }
+
+                        case "P": {
+                            window.Show("Erasing Shippers & Consignees Completed Succesfully");
+                            break;
+                        }
+
+                        case "T": {
+                            window.Show("Erasing Tickets Completed Succesfully");
+                            break;
+                        }
+
+                        case "C": {
+                            window.Show("Erasing CRM Data Completed Succesfully");
+                            break;
+                        }
                     }
 
-                    case "P": {
-                        window.Show("Erasing Shippers & Consignees Completed Succesfully");
-                        break;
+                    if (this.timer) {
+                        clearInterval(this.timer);
                     }
 
-                    case "T": {
-                        window.Show("Erasing Tickets Completed Succesfully");
-                        break;
+                    this.IsResponseProgressVisible = false;
+                }
+
+                else if (this.bteList.StatusCode == "F") // F- Failed
+                {
+                    if (this.timer) {
+                        clearInterval(this.timer);
                     }
 
-                    case "C": {
-                        window.Show("Erasing CRM Data Completed Succesfully");
-                        break;
-                    }
+                    this.IsResponseProgressVisible = false;
                 }
             }
-
-            SessionLocator.CurrentSession.StopBusyIndicator();
         });
     }
 

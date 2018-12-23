@@ -38,10 +38,6 @@ export class DWObjectFieldPM {
     private name: string;
     public get Name() { return this.name; }
     public set Name(newValue: string) { if (this.name != newValue) { this.name = newValue; this.MarkAsDirty("Name"); } }
-
-    private displayName: string;
-    public get DisplayName() { return this.displayName; }
-    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
        
 	 
     private code: string;
@@ -97,16 +93,28 @@ export class DWObjectFieldPM {
     private displayInQueryBuilder: boolean;
     public get DisplayInQueryBuilder() { return this.displayInQueryBuilder; }
     public set DisplayInQueryBuilder(newValue: boolean) { if (this.displayInQueryBuilder != newValue) { this.displayInQueryBuilder = newValue; this.MarkAsDirty("DisplayInQueryBuilder"); } }
-
-
+       
+	 
+    private displayName: string;
+    public get DisplayName() { return this.displayName; }
+    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
+       
+	 
     private category1: string;
     public get Category1() { return this.category1; }
     public set Category1(newValue: string) { if (this.category1 != newValue) { this.category1 = newValue; this.MarkAsDirty("Category1"); } }
-
-
+       
+	 
     private category2: string;
     public get Category2() { return this.category2; }
     public set Category2(newValue: string) { if (this.category2 != newValue) { this.category2 = newValue; this.MarkAsDirty("Category2"); } }
+       
+	 
+    private lOVAdditionalColumns: string;
+    public get LOVAdditionalColumns() { return this.lOVAdditionalColumns; }
+    public set LOVAdditionalColumns(newValue: string) { if (this.lOVAdditionalColumns != newValue) { this.lOVAdditionalColumns = newValue; this.MarkAsDirty("LOVAdditionalColumns"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		

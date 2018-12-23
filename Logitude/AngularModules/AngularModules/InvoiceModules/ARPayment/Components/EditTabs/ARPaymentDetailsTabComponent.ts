@@ -355,8 +355,25 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ItemsSource.Clear();
 
         if (!AppTool.IsNullOrEmpty(this.BillToId) && this.EntityPM.StatusCode != "VD") {
+
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                this.LoadPaymentInvoices_IsMatched();
+
+                if (this.EntityPM.PaymentInvoices.length == 1) {
+                    this.LoadPaymentInvoices_Created();
+                    //var iConnectedItem = new ARInvoiceList();
+                    //iConnectedItem.Id = this.EntityPM.PaymentInvoices[0].ARInvoiceId;
+                    //iConnectedItem.InvoiceCurrencyId = this.EntityPM.PaymentInvoices[0].ForeignCurrencyId;
+                    //iConnectedItem.InvoiceCurrencyExchangeRate = this.EntityPM.PaymentInvoices[0].ExchangeRate;
+                    //iConnectedItem.AmountInInvoiceCurrency = this.EntityPM.PaymentInvoices[0].ForeignAmount;
+                    //iConnectedItem.AmountInLocalCurrency = this.EntityPM.PaymentInvoices[0].LocalAmount;
+                    //iConnectedItem.Id = this.EntityPM.PaymentInvoices[0].ARInvoiceId;
+                    //iConnectedItem.MetodoPagoCode = this.EntityPM.PaymentInvoices[0].ARInvoiceMetodoPagoCode;
+                    //this.ConnectedList.push(iConnectedItem);
+                }
+
+                else {
+                    this.LoadPaymentInvoices_IsMatched();
+                }
             }
 
             else {
@@ -368,6 +385,27 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.UpdateSummary();
             this.IsDataLoaded = true;
         }
+    }
+    LoadPaymentInvoices_Created() {
+        var invoiceId = this.EntityPM.PaymentInvoices[0].ARInvoiceId;
+
+        var filters = new ApiQueryFilters();
+        filters.PageIndex = 0;
+        filters.PageSize = 1;
+        filters.SortBy = "InvoiceDate";
+        filters.SortDirection = "Descending";
+
+        filters.addAdditionalFilter("Id", invoiceId, null, null, "Equals", false, false, false, "string");
+
+        var myService = new ARInvoiceListService();
+        myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+
+                this.ConnectedList = myResponse.Result;
+
+                this.LoadPaymentInvoices_IsMatched();
+            }
+        });
     }
     LoadPaymentInvoices_Connected() {
         var filters = new ApiQueryFilters();
@@ -1400,6 +1438,8 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
     public CurrencyId: string = null;
     public CurrencyCode: string = null;
     public InvoiceAmount: number = 0;
+    public TransferStatusCode: string = null;
+
     InitProperties() {
         this.Id = this.Invoice.Id;
         this.DueDate = this.Invoice.DueDate;
@@ -1411,6 +1451,8 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
         this.InvoiceAmount = this.Invoice.AmountInInvoiceCurrency == null ? 0 : this.Invoice.AmountInInvoiceCurrency;
         this.ShipmentNumber = this.Invoice.IsConsolidationInvoice ? "List" : this.Invoice.MainEntityReference;
         this.SATTransferStatus = this.Invoice.SATInvoiceStatusName;
+        this.TransferStatusCode = this.Invoice.TransferStatusCode;
+
     }
 
     public ExchangeRate: number = 0;
@@ -1833,6 +1875,8 @@ export class ARPaymentInvoiceArgs extends BaseComponent {
         itemPM.ForeignAmount = this.ConnectedAmount_INV == null ? 0 : AppTool.Round(this.ConnectedAmount_INV, 2);
         itemPM.PaymentAmount = this.ConnectedAmount_PAY == null ? 0 : AppTool.Round(this.ConnectedAmount_PAY, 2);
         itemPM.ARInvoiceMetodoPagoCode = this.Invoice.MetodoPagoCode;
+        itemPM.ARInvoiceTransferStatusCode = this.TransferStatusCode;
+
         if (this.CurrencyId == this.LocalCurrencyId) {
             itemPM.LocalAmount = itemPM.ForeignAmount;
         }

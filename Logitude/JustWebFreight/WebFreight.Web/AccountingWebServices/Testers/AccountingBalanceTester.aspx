@@ -126,7 +126,8 @@
                 this.Category2Id ="";
                 this.Category3Id ="";
                 this.Category4Id ="";
-                this.Category5Id ="";
+                this.Category5Id = "";
+                this.AccountTypeCode = "2";
                 this.From =  lastMonth;
                 this.To = today;
                 this.IncludeChildAccounts = true;
@@ -847,7 +848,7 @@ div#two {
                         <li>
                             <asp:Button ID="_ButtonJournalApprove" runat="server" Text=".WorkWithoutQueue" OnClick="_ButtonJournalApprove_Click" /></li>
                                                 <li>
-                            <asp:Button ID="Button3" runat="server" Text=".RE STREAM JournalWhileStreamingHadErrorWithStatus4" OnClick="_WorkWithoutQueueStatus4_Click" /></li>
+                            </li>
 
                     </ul>
                 </li>

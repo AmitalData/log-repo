@@ -85,7 +85,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DefaultText =  "Document Type Copy",
 			      				    Name =  "DocumentTypeCopy",
 			      				    IsNewWizard =  false,
-			      				    HasCustomFilter =  false,
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
@@ -110,13 +109,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsEditable =  true,
-			      				    AllowedForComputingPartners =  false,
-			      				    DisableSearchBox =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasMenuButtons =  false,
-			      				    HasFiltersMenu =  false,
-			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -158,8 +150,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 		   		   //--------------> Additional TextCodes <--------------\\
 
  		   ObjectTable DocumentTypeCopyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DocumentTypeCopy" && d.Tenant == 0).FirstOrDefault(); 
-
- 		   TextCode DocumentTypeCopyTextCode_DocumentTypeCopy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCopy", DefaultText = "Document Type Copy",LocalDefaultText = null, ObjectTableId = DocumentTypeCopyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DocumentTypeCopyTextCode_DocumentTypeCopyOCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "DocumentTypeCopy.O.Code", DefaultText = "Code",LocalDefaultText = null, ObjectTableId = DocumentTypeCopyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
