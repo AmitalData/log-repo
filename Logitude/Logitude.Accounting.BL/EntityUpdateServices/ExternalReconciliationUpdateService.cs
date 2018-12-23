@@ -127,6 +127,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 // Update for each bank transaction(In table ReconcileExternalPageLines): IsReconciled=False
                 UpdateBankPages(entityPM);
 
+                // change payment cheque status
+                LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
+                PaymentChequeQueryService paymentChequeQuery = new PaymentChequeQueryService(entityPM.Tenant);
+                List<string> LedgerTransactionIds = entityPM.ExternalReconciliationLines.Where(d => d.LedgerTransactionId != null).Select(d => d.LedgerTransactionId).ToList();
+                List<LedgerTransactionPM> LedgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(LedgerTransactionIds, entityPM.Tenant);
+                foreach (var transactionPM in LedgerTransactions)
+                {
+                    if (transactionPM.SourceTypeCode == "9") // 9- Payment Cheque
+                    {
+                        PaymentChequePM chequePM = paymentChequeQuery.GetSingle(transactionPM.SourceId, false, false);
+                        chequePM.PaymentChequeStatusCode = "2"; // 2- Approved
+                        chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                        PaymentChequeUpdateService paymentChequeUpdateService = new PaymentChequeUpdateService(MainContext, AdditionalContexts, entityPM.Tenant);
+                        paymentChequeUpdateService.Update(chequePM, true);
+                    }
+                }
 
             }
 
