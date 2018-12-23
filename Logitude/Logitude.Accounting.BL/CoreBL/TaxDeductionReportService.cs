@@ -132,11 +132,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     myStringBuilder.Append("00000000");
 
-                if (item.EndYearBalance != null)
+                string endYearBalance = item.EndYearBalance.ToString();
+                if (endYearBalance != null)
                 {
-                    if (item.EndYearBalance.Value.ToString().Length > 8)  item.EndYearBalance.Value.ToString().Substring(0, 7);
+                    if (endYearBalance.Length > 8) endYearBalance= endYearBalance.Substring(0, 8);
 
-                    myStringBuilder.Append("a" + item.EndYearBalance.Value.ToString().PadLeft(8, '0'));
+                    myStringBuilder.Append("a" + endYearBalance.PadLeft(8, '0'));
                 }
              
                 if (item.TaxDeductionPercentage != null)
