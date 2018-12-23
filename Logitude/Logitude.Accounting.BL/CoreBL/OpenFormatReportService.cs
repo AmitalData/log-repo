@@ -117,7 +117,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
              
-                var entityPartnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(item.AccountingEntityCode, "ACC", "AccountingEntity");
+                var entityPartnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(item.AccountingEntityCode, "Cust", "AccountingEntity");
 
                 if (entityPartnerCode != null)
                 {
