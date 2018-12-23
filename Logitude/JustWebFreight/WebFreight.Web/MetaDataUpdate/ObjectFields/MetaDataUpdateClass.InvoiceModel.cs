@@ -2117,9 +2117,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 CanFilter = true,
                 ValidForQuerySection1 = "ARInvoice",
                 PMPropertyPath = "CancelledByARInvoiceId",
-                FullLocalDefaultText = "בוטל ע''י חשבונית",
-                ListLocalDefaultText = "בוטל ע''י חשבונית",
-                ShortLocalDefaultText = "בוטל ע''י חשבונית",
+                FullLocalDefaultText = "בוטל של חשבונית",
+                ListLocalDefaultText = "בוטל של חשבונית",
+                ShortLocalDefaultText = "בוטל של חשבונית",
             }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
 
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
