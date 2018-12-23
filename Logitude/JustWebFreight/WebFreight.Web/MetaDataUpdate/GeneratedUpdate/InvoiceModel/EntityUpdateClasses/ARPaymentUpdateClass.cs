@@ -4550,7 +4550,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ARPaymentQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ARPT", Name = "AR Payments" }, queryGroupRepository);
 						QueryGroup ARPaymentQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3f2e", Name = " Query Group" }, queryGroupRepository);
@@ -4590,7 +4590,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllPaymentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_0.Id, Code = "All Payments",  QueryGroupCode = "ARPT", IndexOrder = 0, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_0.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query AllPaymentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_0.Id, Code = "All Payments",  QueryGroupCode = "ARPT", IndexOrder = 0, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_0.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllPaymentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPaymentsQuery.Id, IndexOrder = 0, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4616,7 +4616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
   
 	      
 
-			  Query OpenPaymentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_1.Id, Code = "Open Payments",  QueryGroupCode = "ARPT", IndexOrder = 1, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_1.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query OpenPaymentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_1.Id, Code = "Open Payments",  QueryGroupCode = "ARPT", IndexOrder = 1, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_1.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn OpenPaymentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenPaymentsQuery.Id, IndexOrder = 0, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4645,7 +4645,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
   
 	      
 
-			  Query DraftPaymentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_2.Id, Code = "Draft Payments",  QueryGroupCode = "ARPT", IndexOrder = 2, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_2.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query DraftPaymentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_2.Id, Code = "Draft Payments",  QueryGroupCode = "ARPT", IndexOrder = 2, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_2.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn DraftPaymentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DraftPaymentsQuery.Id, IndexOrder = 0, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4675,7 +4675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	      
 
 			  Query NotReadyPaymentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_3.Id, Code = "Not Ready Payments",  EditWizardComponentPath = "./InvoiceModules/ARPayment/Components/NewEntity/ARPaymentTransferTemplate",
-			   QueryGroupCode = "ARPT", IndexOrder = 3, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_3.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "ARPT", IndexOrder = 3, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_3.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn NotReadyPaymentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = NotReadyPaymentsQuery.Id, IndexOrder = 0, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "RegisterDate" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4697,7 +4697,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	      
 
 			  Query MarkedasblockedfortransferQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_4.Id, Code = "Marked as blocked for transfer",  EditWizardComponentPath = "./InvoiceModules/ARPayment/Components/NewEntity/ARPaymentTransferTemplate",
-			   QueryGroupCode = "ARPT", IndexOrder = 4, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_4.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "ARPT", IndexOrder = 4, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_4.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn MarkedasblockedfortransferQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MarkedasblockedfortransferQuery.Id, IndexOrder = 0, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "RegisterDate" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4721,7 +4721,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
   
 	      
 
-			  Query PaymentsFailedtoOpeninSATQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_5.Id, Code = "Payments Failed to Open in SAT",  QueryGroupCode = "ARPT", IndexOrder = 5, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_5.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query PaymentsFailedtoOpeninSATQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_5.Id, Code = "Payments Failed to Open in SAT",  QueryGroupCode = "ARPT", IndexOrder = 5, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_5.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn PaymentsFailedtoOpeninSATQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = PaymentsFailedtoOpeninSATQuery.Id, IndexOrder = 0, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "PaymentNo" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4754,7 +4754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
   
 	      
 
-			  Query SATFailedPaymentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_6.Id, Code = "SAT Failed Payments",  QueryGroupCode = "ARPT", IndexOrder = 6, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_6.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending" }, queriesRepository, tenantQueries);
+			  Query SATFailedPaymentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARPaymentTextCode_6.Id, Code = "SAT Failed Payments",  QueryGroupCode = "ARPT", IndexOrder = 6, Tenant = 0, ObjectTableId = ARPaymentObjectTable.Id, QuerySection = "ARPayment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ARPaymentFeature_6.Id, DefaultSortName = "PaymentNo", DefaultSortDirection = "Descending", Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn SATFailedPaymentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATFailedPaymentsQuery.Id, IndexOrder = 0, ObjectFieldId = ARPaymentObjectFields.Where(d => d.FieldName == "RegisterDate" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -4842,22 +4842,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   Feature ARPaymentEventsFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPD",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentDetailsTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "DETAILS" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARPaymentsTabs.ARPaymentsDetailsTabControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ARPayment.TH.Details" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPD",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentDetailsTabComponent", FeatureId = ARPaymentDetailsFeature_TH0.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARPaymentsTabs.ARPaymentsDetailsTabControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = ARPaymentDetailsTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPG",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentGeneralTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ARPayment.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPG",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentGeneralTabComponent", FeatureId = ARPaymentGeneralFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = ARPaymentGeneralTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARDO",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentDocsOutTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "DOCSOUT" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARPaymentsTabs.ARPaymentDocsOutTabControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ARPayment.TH.Docs" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARDO",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentDocsOutTabComponent", FeatureId = ARPaymentDocsOutFeature_TH2.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARPaymentsTabs.ARPaymentDocsOutTabControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = ARPaymentDocsOutTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARDI",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentDocsInTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "DOCSIN" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARPaymentsTabs.ARPaymentsDocsInTabControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ARPayment.TH.DocsIn" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARDI",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentDocsInTabComponent", FeatureId = ARPaymentDocsInFeature_TH3.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARPaymentsTabs.ARPaymentsDocsInTabControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = ARPaymentDocsInTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPT",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentTransferTabComponent", FeatureId = tenantFeatures.Where(d => d.Code == "ACCOUNTINGTRANSFER" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARPaymentsTabs.ARPaymentTransferTabControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ARPayment.TH.TransferDetails" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPT",HtmlComponentName = "",HtmlComponentUrl = "./InvoiceModules/ARPayment/Components/EditTabs/ARPaymentTransferTabComponent", FeatureId = ARPaymentTransferDetailsFeature_TH4.Id, ControlPath = "Simplog.InvoiceLib.Views.Tabs.ARPaymentsTabs.ARPaymentTransferTabControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = ARPaymentTransferDetailsTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "COMMUNICATION" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ARPayment.TH.Communications" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ARPaymentCommunicationFeature_TH5.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = ARPaymentCommunicationTextCode_TH5.Id, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == ARPaymentObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "ARPayment.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ARPE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ARPaymentEventsFeature_TH6.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ARPaymentObjectTable.Id, TabNameTextCodeId = ARPaymentEventsTextCode_TH6.Id, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -5041,7 +5041,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable ARPaymentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARPayment" && d.Tenant == 0).FirstOrDefault();       
     
 			   Feature ARPaymentFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "APPROVE", ObjectTableId = ARPaymentObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARPayment.Features.Approve", NameTextCodeDefaultText = "Approve", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
