@@ -44,6 +44,11 @@ export class CardPM {
     public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
+    private partnerCode: string;
+    public get PartnerCode() { return this.partnerCode; }
+    public set PartnerCode(newValue: string) { if (this.partnerCode != newValue) { this.partnerCode = newValue; this.MarkAsDirty("PartnerCode"); } }
+       
+	 
     private bankName: string;
     public get BankName() { return this.bankName; }
     public set BankName(newValue: string) { if (this.bankName != newValue) { this.bankName = newValue; this.MarkAsDirty("BankName"); } }
