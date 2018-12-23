@@ -269,6 +269,19 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
         this.ChildEntityId = this.SelectedInternalDocument.ChildEntityId ? this.SelectedInternalDocument.ChildEntityId : "";
         this.ChildObjectTableId = this.SelectedInternalDocument.ChildObjectTableId ? this.SelectedInternalDocument.ChildObjectTableId : "";
+
+    
+        if (AppTool.IsNullOrEmpty(this.ChildObjectTableId)) {
+            if (this.SelectedInternalDocument && this.SelectedInternalDocument.DocumentTypePM) {
+                var table = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];
+                var tableId = this.SelectedInternalDocument.DocumentTypePM.ObjectTableId;
+                if (tableId != this.ObjectTableId) {
+                    this.ChildObjectTableId = tableId;
+                }
+            }
+        }
+
+
         this.Tenant = SessionLocator.Tenant;
 
         var table = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];
@@ -544,7 +557,10 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 				this.Cc = !AppTool.IsNullOrEmpty(this.SelectedDocumentTypeTemplateViewModel.Entity.CC) ? this.SelectedDocumentTypeTemplateViewModel.Entity.CC : "";
 
             }
-            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, true, templateId,"", "", this.From,this.ReplyTo,this.Cc).subscribe(res => {
+
+        
+
+            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, true, templateId, "", "", this.From, this.ReplyTo, this.Cc).subscribe(res => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
