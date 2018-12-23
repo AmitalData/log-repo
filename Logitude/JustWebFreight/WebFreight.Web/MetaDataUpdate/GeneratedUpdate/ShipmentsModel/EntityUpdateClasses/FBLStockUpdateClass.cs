@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ServerModuleName =  "ShipmentsModel",
 			      				    HasMenuButtons =  false,
 			      				    CustomFieldsCount =  0,
-			      				    SearchFields =  "FBLStock,FBLStocks,,Id,InsertionDate",
+			      				    SearchFields =  "FBLStock,FBLStocks,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

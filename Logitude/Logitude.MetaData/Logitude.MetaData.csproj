@@ -403,7 +403,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\GlobalModel\TenantType.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\APILogs.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\APILogs.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\InfrastructureModel\BusinessHour.lxml" />
     <None Include="EntityFiles\InfrastructureModel\BusinessHoursHoliday.lxml">
       <SubType>Designer</SubType>
