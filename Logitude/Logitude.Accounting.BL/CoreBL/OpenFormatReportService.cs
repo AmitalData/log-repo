@@ -56,11 +56,15 @@ namespace Logitude.Accounting.BL.CoreBL
             // A100
             myStringBuilder.Append("A100");
             myStringBuilder.Append("000000001");
-            myStringBuilder.Append(tenantPM.VatNumber);
+         //   myStringBuilder.Append(tenantPM.VatNumber);
             if (tenantPM.VatNumber != null)
             {
-                if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber.Substring(0, 9); }
+                if (tenantPM.VatNumber.Length > 9) { tenantPM.VatNumber= tenantPM.VatNumber.Substring(0, 9); }
                 myStringBuilder.Append(tenantPM.VatNumber.PadLeft(9, '0'));
+            }
+            else
+            {
+                myStringBuilder.Append('0', 9);
             }
 
             if (openFormatReportPM.ReportNumber != null)
@@ -113,7 +117,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
              
-                var entityPartnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(item.AccountingEntityCode, "ACC", "AccountingEntity");
+                var entityPartnerCode = computingPartnerTranslationHelper.GetComputingPartnerCodeTranslation(item.AccountingEntityCode, "Cust", "AccountingEntity");
 
                 if (entityPartnerCode != null)
                 {
@@ -140,9 +144,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append(item.Notes.PadLeft(50, '0'));
                 }
 
-                var DocumentDate = String.Format("{0:ddMMyyyy}", item.DocumentDate);
-                var AccountingDate = String.Format("{0:ddMMyyyy}", item.AccountingDate);
-                var CreateDate = String.Format("{0:ddMMyyyy}", item.CreateDate);
+                var DocumentDate = String.Format("{0:yyyyMMdd}", item.DocumentDate);
+                var AccountingDate = String.Format("{0:yyyyMMdd}", item.AccountingDate);
+                var CreateDate = String.Format("{0:yyyyMMdd}", item.CreateDate);
 
                 if (AccountingDate.Length > 8) { AccountingDate.Substring(0, 8); }
                 myStringBuilder.Append(AccountingDate.PadLeft(8, '0'));
@@ -241,7 +245,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var typeservice = TrailReportFactory.CreateNew(trailReportParam);
             var res1 = typeservice.Execute();
             typeservice.Dispose();
-            var result = res1.Where(d=> d.GLAccountId !=null).ToDictionary(x => x.GLAccountId, x => x);
+            var result = res1.Where(d => d.GLAccountId != null).ToDictionary(x => x.GLAccountId, x => x);
 
             foreach (B110Data item in b110Data)
             {
@@ -277,8 +281,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else
                 {
-                    if (item.EnglishName.Length > 50) { item.EnglishName.Substring(0, 50); }
-                    myStringBuilder.Append(item.EnglishName.PadLeft(50, '0'));
+                    if (item.EnglishName != null)
+                    {
+                        if (item.EnglishName.Length > 50) { item.EnglishName.Substring(0, 50); }
+                        myStringBuilder.Append(item.EnglishName.PadLeft(50, '0'));
+                    }
                 }
                 if (item.ChartOfAccountsCode != null)
                 {
@@ -296,21 +303,24 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     string address = null;
                     var billingaddress = b110Data.Where(d => d.GLAccountId == item.GLAccountId && item.AddressType == "B").FirstOrDefault();
-                    if(billingaddress != null)
+                    if (billingaddress != null)
                     {
                         address = billingaddress.Address1;
                     }
                     if (address == null)
                     {
-                       var  mainaddress = b110Data.Where(d => d.GLAccountId == item.GLAccountId && item.AddressType == "M").FirstOrDefault();
-                        address = mainaddress.Address1;
-                        item.Address1 = address;
+                        var mainaddress = b110Data.Where(d => d.GLAccountId == item.GLAccountId && item.AddressType == "M").FirstOrDefault();
+                        if (mainaddress != null)
+                        {
+                            address = mainaddress.Address1;
+                            item.Address1 = address;
+                        }
                     }
                     if (item.Address1 != null)
                     {
                         if (item.Address1.Length > 50) { item.Address1.Substring(0, 50); }
                         myStringBuilder.Append(item.Address1.PadLeft(50, '0'));
-                        if (address.Length > 51)
+                        if (address != null && address.Length > 51)
                         {
                             item.Address2 = address.Substring(51, 60);
                             myStringBuilder.Append(item.Address1.PadLeft(10, '0'));
@@ -343,7 +353,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             myStringBuilder.Append(partnerCode.PadLeft(15, '0'));
                         }
 
-                     
+
                     }
 
                 }
@@ -354,10 +364,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 myStringBuilder.Append(' ', 15);
                 TrailReportM trailReportM = null;
-                if (result.ContainsKey(item.GLAccountId))
-                {
-                    trailReportM =  result[item.GLAccountId];
-                }
+                //if (result.ContainsKey(item.GLAccountId))
+                //{
+                //    trailReportM =  result[item.GLAccountId];
+                //}
                 if (trailReportM != null)
                 {
                     item.OpeningBalance = trailReportM.LocalOpenBalance;
@@ -387,9 +397,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 myStringBuilder.Append(' ', 7);
 
-                if(item.IsMultiCurrency== false && item.CurrecnyId != tenantPM.CurrencyId)
+                if (item.IsMultiCurrency == false && item.CurrecnyId != tenantPM.CurrencyId)
                 {
-                    item.OpeningBalanceInForegnCurrency = trailReportM != null? trailReportM.ForeignOpenBalance:null;
+                    item.OpeningBalanceInForegnCurrency = trailReportM != null ? trailReportM.ForeignOpenBalance : null;
                     if (item.OpeningBalanceInForegnCurrency != null)
                     {
                         if (item.OpeningBalanceInForegnCurrency.ToString().Length > 15) { item.OpeningBalanceInForegnCurrency.ToString().Substring(0, 15); }
@@ -397,7 +407,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     if (item.CurrencyCode != null)
                     {
-                        if (item.CurrencyCode.Length> 3) { item.CurrencyCode.Substring(0, 3); }
+                        if (item.CurrencyCode.Length > 3) { item.CurrencyCode.Substring(0, 3); }
                         myStringBuilder.Append(item.CurrencyCode.PadLeft(3, '0'));
                     }
                 }
@@ -410,7 +420,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append('\n');
             }
 
-            
+
 
             DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, openFormatReportPM);
 
