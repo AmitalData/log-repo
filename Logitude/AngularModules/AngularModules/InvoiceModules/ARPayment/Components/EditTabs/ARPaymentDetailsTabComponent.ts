@@ -81,10 +81,10 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.DisplaySATSettings = true;
         }
 
-        if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
-
+        
         this.SetUIProperties();
         this.ComputeRelativeRateDate();
         this.Listen();
@@ -208,10 +208,7 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, true);
             }
         }
-
-    }
-
-  
+    } 
     
     SetUIProperties_Invoices() {
         if (!this.IsScreenEnabled) {
@@ -242,17 +239,19 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         else {
-            this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, true);
-            this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, true);
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARPaymentEditExchangeRate")) {
+                this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, true);
+                this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, true);
 
-            if (this.EntityPM.PaymentInvoices.length > 0) {
-                this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
-            }
+                if (this.EntityPM.PaymentInvoices.length > 0) {
+                    this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+                    this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
+                }
 
-            if (this.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
+                if (this.PaymentCurrencyId == SessionLocator.TenantPM.CurrencyId) {
+                    this.UIProperties.SetEnabled("PaymentCurrencyExchangeRate", this.ObjectTableName, false);
+                    this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
+                }
             }
         }
     }
