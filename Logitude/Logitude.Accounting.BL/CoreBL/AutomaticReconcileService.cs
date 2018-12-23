@@ -84,9 +84,19 @@ namespace Logitude.Accounting.BL.CoreBL
             qNotReconciled = filter.GetFilteredQuery<LedgerTransaction>(nonListQueryOperation, qNotReconciled);
 
 
-            qNotReconciled = AddMethod(qNotReconciled, method1, fields);
-            qNotReconciled = AddMethod(qNotReconciled, method2, fields);
-            qNotReconciled = AddMethod(qNotReconciled, method3, fields);
+            if (myFilteredReconciliation.ClientChooseAutoMethod)
+            {
+                qNotReconciled = AddMethod(qNotReconciled, myFilteredReconciliation.method1, fields);
+                qNotReconciled = AddMethod(qNotReconciled, myFilteredReconciliation.method2, fields);
+                qNotReconciled = AddMethod(qNotReconciled, myFilteredReconciliation.method3, fields);
+
+            }
+            else
+            {
+                qNotReconciled = AddMethod(qNotReconciled, method1, fields);
+                qNotReconciled = AddMethod(qNotReconciled, method2, fields);
+                qNotReconciled = AddMethod(qNotReconciled, method3, fields);
+            }
             fields = fields.Distinct().ToList();
             if (fields.Count == 0)
             {
@@ -570,7 +580,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public AutomaticReconcilePM.AutomaticReconcileEnum method2 { get; set; }
         public AutomaticReconcilePM.AutomaticReconcileEnum method3 { get; set; }
         public GenericCallBack CallBack { get; set; }
-
+        public bool ClientChooseAutoMethod { get; set; }
     }
    
 }

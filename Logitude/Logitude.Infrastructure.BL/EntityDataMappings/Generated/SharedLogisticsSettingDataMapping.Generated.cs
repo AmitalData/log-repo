@@ -40,7 +40,9 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsCustomsAgentImportShared, 
 	         IsCustomClearancePoinShared, 
 	         IsConsolidatorShared, 
-	         IsReleasingAgentShared,
+	         IsReleasingAgentShared, 
+	         IsShipperShared, 
+	         IsConsigneeShared,
 	      }
 
 
@@ -65,7 +67,9 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         IsCustomsAgentImportShared, 
 	         IsCustomClearancePoinShared, 
 	         IsConsolidatorShared, 
-	         IsReleasingAgentShared,
+	         IsReleasingAgentShared, 
+	         IsShipperShared, 
+	         IsConsigneeShared,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -162,6 +166,16 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReleasingAgentShared))
             {
 				entityPOCO.IsReleasingAgentShared = entityPM.IsReleasingAgentShared;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShipperShared))
+            {
+				entityPOCO.IsShipperShared = entityPM.IsShipperShared;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsigneeShared))
+            {
+				entityPOCO.IsConsigneeShared = entityPM.IsConsigneeShared;
 			}
 			}
 
@@ -263,6 +277,16 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.IsReleasingAgentShared = entityPOCO.IsReleasingAgentShared;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsShipperShared))
+            {
+					entityPM.IsShipperShared = entityPOCO.IsShipperShared;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsConsigneeShared))
+            {
+					entityPM.IsConsigneeShared = entityPOCO.IsConsigneeShared;
+            }
+
 		}
 
 		public void PMToOldPM(SharedLogisticsSettingPM entityPM, SharedLogisticsSettingPM oldEntityPM)
@@ -357,6 +381,16 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsReleasingAgentShared))
             {
                 oldEntityPM.IsReleasingAgentShared = entityPM.IsReleasingAgentShared;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsShipperShared))
+            {
+                oldEntityPM.IsShipperShared = entityPM.IsShipperShared;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConsigneeShared))
+            {
+                oldEntityPM.IsConsigneeShared = entityPM.IsConsigneeShared;
             }
 			
 		}

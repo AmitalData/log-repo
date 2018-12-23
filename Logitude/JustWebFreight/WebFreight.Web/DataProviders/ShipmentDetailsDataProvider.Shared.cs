@@ -72,11 +72,11 @@ namespace WebFreight.Web.DataProviders
         public string DocumentsReadinessDate { get; set; }
         public DateTime? PickupFromDate { get; set; }
         public DateTime? GroupageDate { get; set; }
-        public string DateonboardOrigin { get; set; }
-        public string Dateofarrivaltoport { get; set; }
+        public DateTime? DateonboardOrigin { get; set; }
+        public DateTime? Dateofarrivaltoport { get; set; }
         public DateTime? ImportDeclarationDate { get; set; }
         public DateTime? CustomsClearanceDate { get; set; }
-        public string DeliveryDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
         public DateTime? ClosedDate { get; set; }
         public bool IncludeCustoms { get; set; }
         public string ImportDeclarationNumber { get; set; }

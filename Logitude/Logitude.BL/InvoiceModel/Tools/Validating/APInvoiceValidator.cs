@@ -247,14 +247,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 if (glAccount == null)
                 {
 
-                    string msg = TranslateTextsClass.Translate("APInvoice.M.VendorNoGLAccount",tenant);
+                    string msg = TranslateTextsClass.Translate("APInvoice.M.VendorNoGLAccount",tenant, useLocal);
                     errors += msg + ";";
                 }
                 if (glAccount != null && (glAccount.IsMultiCurrency == null || glAccount.IsMultiCurrency == false))
                 {
                     if (glAccount.CurrencyId != invoiceCurrencyId)
                     {
-                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant)  + glAccount.CurrencyCode;
+                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant, useLocal)  + glAccount.CurrencyCode;
                         errors += msg + ";";
                     }
                 }

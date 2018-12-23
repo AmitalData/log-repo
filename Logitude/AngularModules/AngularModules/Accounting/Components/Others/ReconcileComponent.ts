@@ -490,6 +490,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         if (this.SelectedLines.Length == 0) {
             errors.push(TextCodeTranslator.Translate("Accounting.General.O.NotransactionsSelected"));//"No transactions selected
         }
+
+        //multiple payment check
+        var paymentsCount = this.SelectedLines.Collection.filter(d=>d.SourceTypeCode == "3" || d.SourceTypeCode == "2" ).length;
+        if (paymentsCount > 1)
+        {
+            errors.push(TextCodeTranslator.Translate("Accounting.O.CantIncludeTwoOrMorePayment"));
+            this.ValidationErrorsList = errors;
+            return;
+        }
+
         if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
             //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
             //this.AdjustButton();

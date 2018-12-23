@@ -119,6 +119,16 @@ export class SharedLogisticsSettingPM {
     public set IsReleasingAgentShared(newValue: boolean) { if (this.isReleasingAgentShared != newValue) { this.isReleasingAgentShared = newValue; this.MarkAsDirty("IsReleasingAgentShared"); } }
        
 	 
+    private isShipperShared: boolean;
+    public get IsShipperShared() { return this.isShipperShared; }
+    public set IsShipperShared(newValue: boolean) { if (this.isShipperShared != newValue) { this.isShipperShared = newValue; this.MarkAsDirty("IsShipperShared"); } }
+       
+	 
+    private isConsigneeShared: boolean;
+    public get IsConsigneeShared() { return this.isConsigneeShared; }
+    public set IsConsigneeShared(newValue: boolean) { if (this.isConsigneeShared != newValue) { this.isConsigneeShared = newValue; this.MarkAsDirty("IsConsigneeShared"); } }
+       
+	 
 
     public OldEntityPM: SharedLogisticsSettingPM;
 		

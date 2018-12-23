@@ -51,7 +51,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             , string glAccountId = null
             )
         {
-
+            bool check20181209 = false;
 
             var qLedgerTransByAcountingDate =
                 this.repository.GetAll(tenant).Where(rec =>
@@ -83,7 +83,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                            select trans
                      );
             var qGroupByJournalLineAccCurr = qLedgerTransByAcountingDate
-                .GroupBy(rec => new { rec.JournalId, jLine = rec.JournalLineNumber, rec.AccountId, rec.CurrencyId })
+                .GroupBy(rec => new { rec.JournalId, jLine = rec.JournalLineNumber, rec.AccountId, rec.CurrencyId,
+                    rec.AccountingDate ,
+                    rec.DueDate,
+                    rec.DocumentDate
+                })
                 .Select(g => new JournalLineLedgerDTO()
                 {
                     CHANGE_TYPE = "",
@@ -99,12 +103,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     ForeignAmountCredit = (double)g.Sum(x => x.ForeignAmountCredit),
                     ForeignAmountDebit = (double)g.Sum(x => x.ForeignAmountDebit),
 
+                    AccountingDate = g.Key.AccountingDate,
+                    DueDate = g.Key.DueDate,
+                    DocumentDate = g.Key.DocumentDate,
+
                     //DocumentDate =
                 })//.AsEnumerable().Select( rec=> new 
                 ;
             var qLedgerTrans = qGroupByJournalLineAccCurr;
 
 
+            if (check20181209)
+            {
+                var qtest = qLedgerTrans.ToList();
+            }
 
 
             var qsJournalLine = new JournalLineQueryService(this.MainContext as IAccountingContext);
@@ -113,11 +125,34 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 , glAccountId
                 );
 
+            if (check20181209)
+            {
+                var qtest = qJLAll.ToList();
+            }
 
             var qNotinJournalLine = (
                 from t in qLedgerTrans
                 join jl in qJLAll
-                on new { t.JournalId, t.JournalLineNumber, t.AccountId, t.CurrencyId } equals new { jl.JournalId, jl.JournalLineNumber, jl.AccountId, jl.CurrencyId }
+                on new
+                {
+                    t.JournalId,
+                    t.JournalLineNumber,
+                    t.AccountId,
+                    t.CurrencyId,
+                    t.AccountingDate,
+                    t.DueDate,
+                    t.DocumentDate
+                } 
+                equals new
+                {
+                    jl.JournalId,
+                    jl.JournalLineNumber,
+                    jl.AccountId,
+                    jl.CurrencyId,
+                    jl.AccountingDate,
+                    jl.DueDate,
+                    jl.DocumentDate
+                }
                 into joinT
                 from joinr in joinT.DefaultIfEmpty()
                 where joinr == null
@@ -137,15 +172,43 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     ForeignAmountDebit = t.ForeignAmountDebit,
 
                     //DocumentDate = t.DocumentDate
+                    AccountingDate=t.AccountingDate,
+                    DueDate=t.DueDate,
+                    DocumentDate=t.DocumentDate
+
 
                 }
                 );
 
+            if (check20181209)
+            {
+                var qtest = qNotinJournalLine.ToList();
+            }
+
+            
+
             var qNotinLedgerTrans = (
                 from jl in qJLAll
                 join t in qLedgerTrans
-                on new { jl.JournalId, jl.JournalLineNumber, jl.AccountId, jl.CurrencyId }
-                equals new { t.JournalId, t.JournalLineNumber, t.AccountId, t.CurrencyId }
+                on new
+                {
+                    jl.JournalId,
+                    jl.JournalLineNumber,
+                    jl.AccountId,
+                    jl.CurrencyId,
+                    jl.AccountingDate,
+                    jl.DueDate,
+                    jl.DocumentDate
+                }
+                equals new {
+                    t.JournalId,
+                    t.JournalLineNumber,
+                    t.AccountId,
+                    t.CurrencyId,
+                    t.AccountingDate,
+                    t.DueDate,
+                    t.DocumentDate
+                }
                 into joinT
                 from joinr in joinT.DefaultIfEmpty()
                 where joinr == null
@@ -165,11 +228,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     ForeignAmountDebit = jl.ForeignAmountDebit,
 
                     //DocumentDate = jl.DocumentDate
+                    AccountingDate=jl.AccountingDate,
+                    DueDate=jl.DueDate,
+                    DocumentDate=jl.DocumentDate
+
                 }
                 );
-
+            if (check20181209)
+            {
+                var qtest = qNotinLedgerTrans.ToList();
+            }
             //ProblemWithEqualAccIDCreditDebit(qLedgerTrans, qJLAll);
-
 
             var qJLAllG = (from jl in qJLAll
                            group jl by new
@@ -177,7 +246,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                jl.JournalId,
                                //jl.JournalLineNumber,
                                jl.AccountId,
-                               jl.CurrencyId
+                               jl.CurrencyId,
+                               jl.AccountingDate,
+                               jl.DueDate,
+                               jl.DocumentDate
+
                            } into g
                            select new JournalLineLedgerDTO()
                            {
@@ -193,8 +266,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                                ForeignAmountCredit = (double)g.Sum(x => x.ForeignAmountCredit),
                                ForeignAmountDebit = (double)g.Sum(x => x.ForeignAmountDebit),
+
+                               AccountingDate= g.Key.AccountingDate,
+                               DueDate= g.Key.DueDate,
+                               DocumentDate= g.Key.DocumentDate
+
                            }
                 );
+
+            if (check20181209)
+            {
+                var qtest = qJLAllG.ToList();
+            }
+
+            
 
             var qLedgerTransG = (from t in qLedgerTrans
                                  group t by new
@@ -202,7 +287,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                      t.JournalId,
                                      //jl.JournalLineNumber,
                                      t.AccountId,
-                                     t.CurrencyId
+                                     t.CurrencyId,
+
+
+                                     t.AccountingDate,
+                                     t.DueDate,
+                                     t.DocumentDate
+
                                  } into g
                                  select new JournalLineLedgerDTO()
                                  {
@@ -218,14 +309,33 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                                      ForeignAmountCredit = (double)g.Sum(x => x.ForeignAmountCredit),
                                      ForeignAmountDebit = (double)g.Sum(x => x.ForeignAmountDebit),
+
+
+                                     AccountingDate= g.Key.AccountingDate,
+                                     DueDate= g.Key.DueDate,
+                                     DocumentDate= g.Key.DocumentDate
+
                                  }
                 );
+            if (check20181209)
+            {
+                var qtest = qLedgerTransG.ToList();
+            }
 
-            var qDiff = (
+
+            var qDiffAmount = (
                from jlG in qJLAllG
                join tG in qLedgerTransG
-               on new { jlG.JournalId, jlG.JournalLineNumber, jlG.AccountId, jlG.CurrencyId }
-               equals new { tG.JournalId, tG.JournalLineNumber, tG.AccountId, tG.CurrencyId }
+               on new { jlG.JournalId, jlG.JournalLineNumber, jlG.AccountId, jlG.CurrencyId ,
+                   jlG.AccountingDate,
+                   jlG.DueDate,
+                   jlG.DocumentDate
+               }
+               equals new { tG.JournalId, tG.JournalLineNumber, tG.AccountId, tG.CurrencyId ,
+                   tG.AccountingDate,
+                   tG.DueDate,
+                   tG.DocumentDate
+               }
                into joinT
                from joinr in joinT
                where jlG.LocalAmountDebit != joinr.LocalAmountDebit ||
@@ -233,13 +343,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                jlG.ForeignAmountCredit != joinr.ForeignAmountCredit ||
 #if true
  Math.Abs(jlG.ForeignAmountDebit - joinr.ForeignAmountDebit) > 0.001 //fuck the round !!!!
-#else           
+#else
                 //jl.ForeignAmountDebit != joinr.ForeignAmountDebit //||
                 //bad Math.Round in Vat            
 #endif
 
-
-               select new JournalLineLedgerDTO()
+            
+            select new JournalLineLedgerDTO()
                {
                    CHANGE_TYPE = "Different(Delta)",
                    JournalId = jlG.JournalId,
@@ -254,24 +364,31 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                    ForeignAmountCredit = (jlG.ForeignAmountCredit - joinr.ForeignAmountCredit),
                    ForeignAmountDebit = (jlG.ForeignAmountDebit - joinr.ForeignAmountDebit),
 
-                   //DocumentDate = jl.DocumentDate
-               }
+                //DocumentDate = jl.DocumentDate
+                AccountingDate=jlG.AccountingDate,
+                DueDate=jlG.DueDate,
+                DocumentDate=jlG.DocumentDate
+
+            }
                );
 
-
+            if (check20181209)
+            {
+                var qtest = qDiffAmount.ToList();
+            }
             bool fast_butShowDiffDueRoundISBad = false;
             if (fast_butShowDiffDueRoundISBad)
             {
                 var qReport =
                     //qNotinJournalLine.Union(qNotinLedgerTrans).Union(qDiff);
-                    qNotinJournalLine.Concat(qNotinLedgerTrans).Concat(qDiff);
+                    qNotinJournalLine.Concat(qNotinLedgerTrans).Concat(qDiffAmount);
                 return qReport.ToList();
             }
             else
             {
                 var rqNotinJournalLine = qNotinJournalLine.ToList();
                 var rqNotinLedgerTrans = qNotinLedgerTrans.ToList();
-                var rqDiff = qDiff.ToList();
+                var rqDiff = qDiffAmount.ToList();
                 return //rqNotinJournalLine.Union(rqNotinLedgerTrans).Union(rqDiff).ToList();
                 rqNotinJournalLine.Concat(rqNotinLedgerTrans).Concat(rqDiff).ToList();
             }
@@ -495,9 +612,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public double ForeignAmountDebit { get; set; }
 
         public string CHANGE_TYPE { get; set; }
-
-
-
+        public DateTime AccountingDate { get;  set; }
+        public DateTime DueDate { get;  set; }
+        public DateTime DocumentDate { get;  set; }
     }
 
 
