@@ -38,7 +38,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             // Map To CustomsShipperPM
             entityPOCO.ValidDepositionNumber = entityPM.ValidDepositionNumber;
             entityPOCO.CustomsShipperCode = entityPM.CustomsShipperCode;
-            entityPOCO.FutureDepositionExist = entityPM.FutureDepositionExist;
             entityPOCO.ValidityStartDate = entityPM.ValidityStartDate;
             entityPOCO.ValidityEndDate = entityPM.ValidityEndDate;
 

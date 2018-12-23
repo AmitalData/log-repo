@@ -280,6 +280,10 @@
     <Compile Include="Migrations\201812161311487_AddIsINTTRAStockPrepaid.Designer.cs">
       <DependentUpon>201812161311487_AddIsINTTRAStockPrepaid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812231027196_AddIsINTTRAOnlyDemo.cs" />
+    <Compile Include="Migrations\201812231027196_AddIsINTTRAOnlyDemo.Designer.cs">
+      <DependentUpon>201812231027196_AddIsINTTRAOnlyDemo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -343,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812130302503_AddPackageCodeSearchFieldInTenantManagement_Maheera.resx">
       <DependentUpon>201812130302503_AddPackageCodeSearchFieldInTenantManagement_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231027196_AddIsINTTRAOnlyDemo.resx">
+      <DependentUpon>201812231027196_AddIsINTTRAOnlyDemo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
