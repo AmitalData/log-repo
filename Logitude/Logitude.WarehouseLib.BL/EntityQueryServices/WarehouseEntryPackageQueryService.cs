@@ -142,9 +142,12 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                                                         ShipperId = a.WarehouseEntry != null ? a.WarehouseEntry.ShipperId : "",
                                                                                         ConsigneeId = a.WarehouseEntry != null ? a.WarehouseEntry.ConsigneeId : "",
                                                                                         DirectionId = a.WarehouseEntry != null ? a.WarehouseEntry.DirectionId : "",
-                                                                                        GrossWeight = a.Weight!=null ? a.Weight.ToString() +" "+ (a.WarehouseEntry != null ? a.WarehouseEntry.GrossWeightUnitCode : "" ):"",
+                                                                                        GrossWeight = a.Weight,
+                                                                                        Volume = a.Volume,
+                                                                                        Quantity = a.Quantity,
                                                                                         InternalNotes = a.WarehouseEntry.Notes,
                                                                                         SpecialInstructions = a.WarehouseEntry.SpecialInstruction,
+                                                                                        
                                                                                     });
 
 
