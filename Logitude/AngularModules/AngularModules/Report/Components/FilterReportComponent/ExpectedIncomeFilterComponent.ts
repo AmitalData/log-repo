@@ -65,83 +65,96 @@ export class ExpectedIncomeFilterComponent extends BaseComponent  {
     public PaymentChannelCode: string = null;
     public CountryId: string = null;
     public ResellerId: string = null;
+    public ValidationErrorsList: string[];
+
     RunReport() {
         this.queryFilterItems = new Array<QueryFilterItem>();
 
-        if (this.FromDate != null) {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "FromDate";
-            this.queryFilterItem.FieldValue = this.FromDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItems.push(this.queryFilterItem);
+
+        this.ValidationErrorsList = [];
+
+
+        if (!this.SelectedItemComboBox) {
+            this.ValidationErrorsList.push("Recurring field is required");
         }
 
-        if (this.ToDate != null) {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ToDate";
-            this.queryFilterItem.FieldValue = this.ToDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
+        if (this.ValidationErrorsList.length == 0) {
 
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "Recurring";
-        this.queryFilterItem.FieldValue = this.SelectedItemComboBox.Code;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem); 
-
-        if (this.SalesmanId) {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "SalesmanId";
-            this.queryFilterItem.FieldValue = this.SalesmanId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
-
-        if (this.PaymentChannelCode) {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "PaymentChannelCode";
-            this.queryFilterItem.FieldValue = this.PaymentChannelCode;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-        }
-
-        if (this.CountryId) {
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CountryId";
-            this.queryFilterItem.FieldValue = this.CountryId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-        }
-
-        if (this.IsCRMTenant) {
-            if (this.ResellerId) {
+            if (this.FromDate != null) {
                 this.queryFilterItem = new QueryFilterItem();
                 this.queryFilterItem.DisplayInList = false;
-                this.queryFilterItem.FieldName = "ResellerId";
-                this.queryFilterItem.FieldValue = this.ResellerId;
+                this.queryFilterItem.FieldName = "FromDate";
+                this.queryFilterItem.FieldValue = this.FromDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            if (this.ToDate != null) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "ToDate";
+                this.queryFilterItem.FieldValue = this.ToDate;
+                this.queryFilterItem.FieldDataType = "Date";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "Recurring";
+            this.queryFilterItem.FieldValue = this.SelectedItemComboBox.Code;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            if (this.SalesmanId) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "SalesmanId";
+                this.queryFilterItem.FieldValue = this.SalesmanId;
                 this.queryFilterItem.Operator = "Equals";
                 this.queryFilterItems.push(this.queryFilterItem);
             }
+
+            if (this.PaymentChannelCode) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "PaymentChannelCode";
+                this.queryFilterItem.FieldValue = this.PaymentChannelCode;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+
+            }
+
+            if (this.CountryId) {
+                this.queryFilterItem = new QueryFilterItem();
+                this.queryFilterItem.DisplayInList = false;
+                this.queryFilterItem.FieldName = "CountryId";
+                this.queryFilterItem.FieldValue = this.CountryId;
+                this.queryFilterItem.Operator = "Equals";
+                this.queryFilterItems.push(this.queryFilterItem);
+            }
+
+            if (this.IsCRMTenant) {
+                if (this.ResellerId) {
+                    this.queryFilterItem = new QueryFilterItem();
+                    this.queryFilterItem.DisplayInList = false;
+                    this.queryFilterItem.FieldName = "ResellerId";
+                    this.queryFilterItem.FieldValue = this.ResellerId;
+                    this.queryFilterItem.Operator = "Equals";
+                    this.queryFilterItems.push(this.queryFilterItem);
+                }
+            }
+
+            this.reportFliter = new ReportFliter();
+            this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+            this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+            this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+            this.reportFliter.NumberOfPage = 1;
+            this.reportFliter.ProcessType = "GenerateReport";
+
+            this.ReportsPreview.GenerateReport(this.reportFliter, true);
         }
-
-        this.reportFliter = new ReportFliter();
-        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
-        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-        this.reportFliter.NumberOfPage = 1;
-        this.reportFliter.ProcessType = "GenerateReport";
-
-        this.ReportsPreview.GenerateReport(this.reportFliter, true);
     }
 
     SetDate(year: number, month: number, day: number) {

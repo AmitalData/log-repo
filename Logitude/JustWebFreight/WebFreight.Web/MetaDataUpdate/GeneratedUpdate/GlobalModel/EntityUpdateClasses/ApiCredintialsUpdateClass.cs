@@ -786,7 +786,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup ApiCredintialsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "APIC", Name = "ApiCredintials" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -803,7 +803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 
 			  Query ApiCredintialsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ApiCredintialsTextCode_0.Id, Code = "ApiCredintials",  EditWizardName = "Simplog.Infrastructure.Views.ApiCredintials.AddEditApiCredintialsControl",
 			   EditWizardComponentPath = "./InfrastructureModules/InfrastructureOthers/Components/ApiCredintials/ApiCredintialsComponent",
-			   QueryGroupCode = "APIC", IndexOrder = 0, Tenant = 0, ObjectTableId = ApiCredintialsObjectTable.Id, QuerySection = "ApiCredintials", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ApiCredintialsFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			   QueryGroupCode = "APIC", IndexOrder = 0, Tenant = 0, ObjectTableId = ApiCredintialsObjectTable.Id, QuerySection = "ApiCredintials", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ApiCredintialsFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn ApiCredintialsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ApiCredintialsQuery.Id, IndexOrder = 0, ObjectFieldId = ApiCredintialsObjectFields.Where(d => d.FieldName == "UsedFor" && d.ObjectTableId == ApiCredintialsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 

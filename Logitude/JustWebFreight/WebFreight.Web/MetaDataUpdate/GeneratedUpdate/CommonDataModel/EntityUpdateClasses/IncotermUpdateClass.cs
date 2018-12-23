@@ -120,6 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CodeField =  "Code",
 			      				    NameField =  "Name",
 			      				    ClientModuleName =  "Common",
+			      				    DescriptionDefaultText =  "Define delivery terms specifying the default method – collect or prepaid – for freight and other charges.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

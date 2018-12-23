@@ -82,7 +82,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    IsNew =  true,
 			      				    DBTableName =  "CustomsShippers",
 			      				    OldDBTableName =  "CustomsShippers",
-			      				    ObjectTableSingular =  "CustomsShipper",
+			      				    ObjectTableSingular =  "Customs Shipper",
 			      				    ObjectTablePlural =  "CustomsShippers",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
@@ -114,7 +114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Shipper",
 			      				    Code =  "52d7",
-			      				    Name =  " Query Group",
+			      				    Name =  "CustomsShipper",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
@@ -123,7 +123,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
+			      				    IsLookUp =  true,
+			      				    SearchFields =  "CustomsShipper,CustomsShippers,,Id,Id",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

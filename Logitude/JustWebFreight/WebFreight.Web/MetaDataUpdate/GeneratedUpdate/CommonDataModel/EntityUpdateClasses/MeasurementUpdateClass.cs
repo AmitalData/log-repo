@@ -121,12 +121,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
+			      				    AllowedForComputingPartners =  true,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
+			      				    IsLookUp =  true,
 			      				    SearchFields =  "Measurement,Measurements,,Id,",
+			      				    DescriptionDefaultText =  "Manage the unit of measurement names to be printed in documents.",
+			      				    CodeField =  "Code",
+			      				    NameField =  "Name",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

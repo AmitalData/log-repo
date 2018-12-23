@@ -1199,7 +1199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
 	    {  
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
-            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 	        QueryGroup APILogsQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "APLG", Name = "API Logs" }, queryGroupRepository);
 				        queryGroupRepository.SubmitChanges();
@@ -1218,7 +1218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	        FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TodayAPILogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APILogsTextCode_0.Id, Code = "Today API Logs",  QueryGroupCode = "APLG", IndexOrder = 0, Tenant = 0, ObjectTableId = APILogsObjectTable.Id, QuerySection = "APILogs", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APILogsFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query TodayAPILogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APILogsTextCode_0.Id, Code = "Today API Logs",  QueryGroupCode = "APLG", IndexOrder = 0, Tenant = 0, ObjectTableId = APILogsObjectTable.Id, QuerySection = "APILogs", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APILogsFeature_0.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn TodayAPILogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayAPILogsQuery.Id, IndexOrder = 0, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1243,7 +1243,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
   
 	      
 
-			  Query AllAPILogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APILogsTextCode_1.Id, Code = "All API Logs",  QueryGroupCode = "APLG", IndexOrder = 1, Tenant = 0, ObjectTableId = APILogsObjectTable.Id, QuerySection = "APILogs", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APILogsFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null }, queriesRepository, tenantQueries);
+			  Query AllAPILogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = APILogsTextCode_1.Id, Code = "All API Logs",  QueryGroupCode = "APLG", IndexOrder = 1, Tenant = 0, ObjectTableId = APILogsObjectTable.Id, QuerySection = "APILogs", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = APILogsFeature_1.Id, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, queriesRepository, tenantQueries);
 	
 			 QueryColumn AllAPILogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllAPILogsQuery.Id, IndexOrder = 0, ObjectFieldId = APILogsObjectFields.Where(d => d.FieldName == "Subject" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
 
@@ -1333,18 +1333,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   Feature APILogsExceptionsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXCEPTIONS", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.Exceptions", NameTextCodeDefaultText = "Messages", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
-			 List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
-			 List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = APILogsObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APILogs.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APGN",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = APILogsGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = APILogsObjectTable.Id, TabNameTextCodeId = APILogsGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APDL",HtmlComponentName = "APILogsDiagnosticComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/APILogs/APILogsDiagnosticComponent", FeatureId = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.APILogs.APILogsDiagnosticLogBodyControl", ObjectTableId = APILogsObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APILogs.TH.DiagnosticLog" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APDL",HtmlComponentName = "APILogsDiagnosticComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/APILogs/APILogsDiagnosticComponent", FeatureId = APILogsGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.Views.APILogs.APILogsDiagnosticLogBodyControl", ObjectTableId = APILogsObjectTable.Id, TabNameTextCodeId = APILogsDiagnosticLogTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APRQ",HtmlComponentName = "APILogsRequestBodyComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/APILogs/APILogsRequestBodyComponent", FeatureId = tenantFeatures.Where(d => d.Code == "REQUESTS" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.APILogs.APILogsRequestBodyControl", ObjectTableId = APILogsObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APILogs.TH.RequestBody" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APRQ",HtmlComponentName = "APILogsRequestBodyComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/APILogs/APILogsRequestBodyComponent", FeatureId = APILogsRequestBodyFeature_TH2.Id, ControlPath = "Simplog.Infrastructure.Views.APILogs.APILogsRequestBodyControl", ObjectTableId = APILogsObjectTable.Id, TabNameTextCodeId = APILogsRequestBodyTextCode_TH2.Id, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APRS",HtmlComponentName = "APILogsResponceBodyComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/APILogs/APILogsResponceBodyComponent", FeatureId = tenantFeatures.Where(d => d.Code == "RESPONCE" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.APILogs.APILogsResponceBodyControl", ObjectTableId = APILogsObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APILogs.TH.ResponseBody" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APRS",HtmlComponentName = "APILogsResponceBodyComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/APILogs/APILogsResponceBodyComponent", FeatureId = APILogsResponseBodyFeature_TH3.Id, ControlPath = "Simplog.Infrastructure.Views.APILogs.APILogsResponceBodyControl", ObjectTableId = APILogsObjectTable.Id, TabNameTextCodeId = APILogsResponseBodyTextCode_TH3.Id, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APER",HtmlComponentName = "APILogsErrorsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/APILogs/APILogsErrorsComponent", FeatureId = tenantFeatures.Where(d => d.Code == "EXCEPTIONS" && d.ObjectTableId == APILogsObjectTable.Id).FirstOrDefault().Id, ControlPath = "Simplog.Infrastructure.Views.APILogs.APILogsErrorsControl", ObjectTableId = APILogsObjectTable.Id, TabNameTextCodeId = tenantTextCodes.Where(d => d.Code == "APILogs.TH.Exceptions" && d.Tenant == 0).FirstOrDefault().Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "APER",HtmlComponentName = "APILogsErrorsComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureCommunications/Components/APILogs/APILogsErrorsComponent", FeatureId = APILogsExceptionsFeature_TH4.Id, ControlPath = "Simplog.Infrastructure.Views.APILogs.APILogsErrorsControl", ObjectTableId = APILogsObjectTable.Id, TabNameTextCodeId = APILogsExceptionsTextCode_TH4.Id, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -1372,7 +1372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
 	    {  
 		   FeatureRepository featureRepository = new FeatureRepository(0); 
-		   List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
+		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable APILogsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "APILogs" && d.Tenant == 0).FirstOrDefault(); 			   Feature APILogsFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReturnToQueue", ObjectTableId = APILogsObjectTable.Id, Tenant = 0, NameTextCodeCode = "APILogs.Features.ReturnToQueue", NameTextCodeDefaultText = "Return To Queue", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
               
 
