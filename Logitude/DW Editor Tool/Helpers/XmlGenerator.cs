@@ -212,6 +212,12 @@ namespace DW_Editor_Tool.Helpers
         {
             if (value != null)
             {
+                if (string.IsNullOrEmpty(value.ToString())) value = null;
+            }
+
+
+            if (value != null)
+            {
                 return "\"" + value.ToString().Replace("\"", "\u0022") + "\""; 
             }
             else

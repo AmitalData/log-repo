@@ -1104,7 +1104,7 @@ export class ShipmentPayableItem extends BaseComponent {
     public IsProfitAmountVisible: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     SetUIProperties() {
-        if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentEditExchangeRate")) {
+        if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
 
@@ -1146,10 +1146,12 @@ export class ShipmentPayableItem extends BaseComponent {
             if (this.IsNewEntity) {
                 isChargeEnabled = true;
             }
-
-            if (this.CurrencyId != null) {
-                if (this.CurrencyId != SessionLocator.LocalCurrencyId) {
-                    isRateEnabled = true;
+            
+            if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentEditExchangeRate")) {
+                if (this.CurrencyId != null) {
+                    if (this.CurrencyId != SessionLocator.LocalCurrencyId) {
+                        isRateEnabled = true;
+                    }
                 }
             }
 
@@ -1159,25 +1161,9 @@ export class ShipmentPayableItem extends BaseComponent {
                 isTotalAmountEnabled = true;
             }                       
         }
-
-
-        //if (this.EntityPM.IsBackToBack) {
-        //    var receivable: ShipmentReceivablePM = null;
-        //    if (this.EntityPM.ReceivableId != null) {
-        //        receivable = this.ShipmentPM.ShipmentReceivables.filter(t => t.Id == this.EntityPM.ReceivableId)[0];
-        //    }
-        //    if (isLineAttachted || (receivable!= null && receivable.ARInvoiceId != null)) {
-        //        isEditingEnabled = false;
-        //        isRateEnabled = false;
-        //        isChargeEnabled = false;
-        //        isQuantityEnabled = false;
-        //        isUnitPriceEnabled = false;
-        //        isTotalAmountEnabled = false;
-        //        isOpenAmountEnabled = false;
-        //    }
-        //}
-
-        this.IsRateEnabled = isRateEnabled;
+        
+        //this.IsRateEnabled = isRateEnabled;
+        this.IsRateEnabled = true;
         this.IsQuantityEnabled = isQuantityEnabled;
         this.IsUnitPriceEnabled = isUnitPriceEnabled;
         this.IsTotalAmountEnabled = isTotalAmountEnabled;
