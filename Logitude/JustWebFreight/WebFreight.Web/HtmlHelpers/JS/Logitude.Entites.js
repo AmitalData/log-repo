@@ -61,6 +61,7 @@ var ShipmentListClass = function () {
     this.ShipmentId = "";
     this.ShipmentNumber = "";
     this.MyReference = "";
+    this.MyReferenceLabel = "My Ref";
     this.MyPartnerName = "";
     this.IncotermCode = "";
     this.FromPortCode = ""
@@ -118,6 +119,9 @@ var ShipmentListClass = function () {
     this.LableShipmentNumber = "";
     this.LastLogDateShort = "";
     this.LastLogDateLong = "";
+
+    this.DeliveryDate = "";
+    this.DeliveryDateVisibility = "collapse";
 };
 
 var InvoiceListClass = function () {
@@ -280,6 +284,32 @@ function BuildShipmentsList(shipments, TenantDateTimeFormat) {
 
         item.MyReference = $.trim(_myRef) != "" ? _myRef : "";
         item.MyPartnerName = $.trim(_myPartnerName) != "" ? _myPartnerName : "";
+
+        if (shipment.Tenant == 1495) {
+            item.MyReferenceLabel = "Project #";
+            item.MyReference = $.trim(shipment.ProjectNumber) != "" ? shipment.ProjectNumber : "";
+
+
+            if ($.trim(shipment.Field2) != "") {
+                var fieldValue = shipment.Field2;
+
+                if ($.trim(fieldValue) != "") {
+
+                    var date = new Date();
+                    date.setUTCFullYear(Number(fieldValue.substr(0, 4)));
+                    date.setUTCMonth(Number(fieldValue.substr(4, 2)) - 1);
+                    date.setUTCDate(Number(fieldValue.substr(6, 2)));
+                    date.setUTCHours(Number(fieldValue.substr(8, 2)));
+                    date.setUTCMinutes(Number(fieldValue.substr(10, 2)));
+                    date.setUTCSeconds(Number(fieldValue.substr(12, 2)));
+
+                    item.DeliveryDate = $.trim(date) != "" ? $.Convert.ToShortDate(date, TenantDateTimeFormat) : "";
+
+                }
+            } 
+
+            item.DeliveryDateVisibility = "visible";
+        }
 
         switch (shipment.DirectionId) {
 
@@ -496,31 +526,35 @@ function BuildShipmentBackAreaViewModel(shipment, PathPrefix) {
 
     return viewModel;
 }
-function BuildShipmentHeaderViewModel(shipment, PathPrefix) {
+function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix) {
 
     $(".ShowPartnerData").hide();
+    $(".ShowTenant1495Data").hide();
 
     var viewModel =
-        {
-            MyReference: ko.observable(""),
-            House: ko.observable(shipment.House),
-            Routing: ko.observable(shipment.Routing),
-            Status: ko.observable(shipment.StatusName),
-            StatusColor : $.Convert.ToColor(shipment.StatusName),
+    {
+        MyReference: ko.observable(""),
+        MyReferenceLabel: ko.observable("Ref."),
+        House: ko.observable(shipment.House),
+        Routing: ko.observable(shipment.Routing),
+        Status: ko.observable(shipment.StatusName),
+        StatusColor: $.Convert.ToColor(shipment.StatusName),
 
-            ShipmentNumber: ko.observable(shipment.ShipmentNumber),
-            PartnerTitle: ko.observable(""),
-            PartnerName: ko.observable(""),
-            PartnerAddress: ko.observable(""),
-            PartnerContact: ko.observable(""),
-            PartnerCountrySRC: ko.observable(""),
+        ShipmentNumber: ko.observable(shipment.ShipmentNumber),
+        PartnerTitle: ko.observable(""),
+        PartnerName: ko.observable(""),
+        PartnerAddress: ko.observable(""),
+        PartnerContact: ko.observable(""),
+        PartnerCountrySRC: ko.observable(""),
 
-            FromCountySRC: ko.observable(""), 
-            ToCountySRC: ko.observable(""),
+        FromCountySRC: ko.observable(""),
+        ToCountySRC: ko.observable(""),
 
-            FromPortName: ko.observable(shipment.MainCarriageFromPortName),
-            ToPortName: ko.observable(shipment.MainCarriageFinalDestinationPortName),
-        };
+        FromPortName: ko.observable(shipment.MainCarriageFromPortName),
+        ToPortName: ko.observable(shipment.MainCarriageFinalDestinationPortName),
+
+        DeliveryDate: ko.observable(""),
+    };
 
     viewModel.FromCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFromPortCountryCode + ".png";
     viewModel.ToCountySRC = PathPrefix + "images/Flags/" + shipment.MainCarriageFinalDestinationPortCountryCode + ".png";
@@ -585,6 +619,30 @@ function BuildShipmentHeaderViewModel(shipment, PathPrefix) {
     }
 
     viewModel.MyReference = $.trim(_myRef) != "" ? _myRef : "";
+
+    if (shipment.Tenant == 1495) {
+        viewModel.MyReferenceLabel = "Project #";
+        viewModel.MyReference = $.trim(shipment.ProjectNumber) != "" ? shipment.ProjectNumber : "";
+
+        if ($.trim(shipment.Field2) != "") {
+            var fieldValue = shipment.Field2.Value;
+
+            if ($.trim(fieldValue) != "") {
+
+                var date = new Date();
+                date.setUTCFullYear(Number(fieldValue.substr(0, 4)));
+                date.setUTCMonth(Number(fieldValue.substr(4, 2)) - 1);
+                date.setUTCDate(Number(fieldValue.substr(6, 2)));
+                date.setUTCHours(Number(fieldValue.substr(8, 2)));
+                date.setUTCMinutes(Number(fieldValue.substr(10, 2)));
+                date.setUTCSeconds(Number(fieldValue.substr(12, 2)));
+
+                viewModel.DeliveryDate = $.trim(date) != "" ? $.Convert.ToShortDate(date, TenantDateTimeFormat) : "";
+            }
+        }        
+
+        $(".ShowTenant1495Data").show();
+    }
 
     return viewModel;
 }
@@ -1132,6 +1190,12 @@ function BuildPackagesTabPageViewModel(shipment) {
             if (IsLCLShipment(shipment)) {
                 PackagesGridColumns.push({ title: "Package Type", field: "Type" });
                 PackagesGridColumns.push({ title: "Packages", field: "Quantity", width: 70, template: "<div class='k-numeric'>#= Quantity #</div>" });
+
+                if (shipment.Tenant == 1495) {
+                    PackagesGridColumns.push({ title: "Commodity Code", field: "CommodityCode", width: "120px" });
+                    PackagesGridColumns.push({ title: "Commodity Name", field: "CommodityName", width: "120px" });
+                }
+
                 PackagesGridColumns.push({ title: "Container #", field: "ContainerNumber" });
                 PackagesGridColumns.push({ title: VolumeTitle, field: "Volume", width: "100px", template: "<div class='k-numeric'>#= Volume #</div>" });
                 //PackagesGridColumns.push({ title: VolumetricTitle, field: "VolumetricWeight", width: "150px", template: "<div class='k-numeric'>#= VolumetricWeight #</div>" });
@@ -1147,6 +1211,9 @@ function BuildPackagesTabPageViewModel(shipment) {
                     //var itemVolumetricWeight = $.trim(item.VolumetricWeight) == "" ? 0 : item.VolumetricWeight;
                     var itemGrossWeight = $.trim(item.Weight) == "" ? 0 : item.Weight;
 
+                    var iCommodityCode = $.trim(item.CommodityNumber) == "" ? "" : item.CommodityNumber;
+                    var iCommodityName = $.trim(item.CommodityName) == "" ? "" : item.CommodityName;
+
                     PackagesGridDataSource.push({
                         Type: itemType,
                         Quantity: itemQuantity,
@@ -1157,6 +1224,9 @@ function BuildPackagesTabPageViewModel(shipment) {
                         Description: item.Description,
                         DescriptionIconVisibility: $.trim(item.Description) != "" ? "visible" : "collapse",
                         DescriptionHelpVisibility: "collapse",
+
+                        CommodityCode: iCommodityCode,
+                        CommodityName: iCommodityName,
 
                         showDescription: function (e) {
                             if (e == true)
@@ -1232,7 +1302,6 @@ function BuildPackagesTabPageViewModel(shipment) {
         }
 
         else {
-
             PackagesGridColumns.push({ title: "Container Type", field: "PackageTypeName" });
         }
 
