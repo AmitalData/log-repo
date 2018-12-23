@@ -109,7 +109,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     from tot in quaryablMonthTotals
                     join acc in quaryAllGLAccount
                     on tot.AccountId equals acc.AccountId
-                    where (tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency != 0)
+                    where (tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency >= 0.001m  || tot.BalanceInLocalCurrency - acc.BalanceInLocalCurrency <= -0.001m )
                     select new GLAccountBalanceDTO
                     {
                         AccountId = tot.AccountId,
