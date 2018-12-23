@@ -59,13 +59,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloseTables\DetailsClassesGenerated\BatchTaskExecutionStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\BIReportsTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\BatchTaskExecutionStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\BIReportsTypeStruct.Generated.cs" />
     <Compile Include="EntityDataMappings\BatchTaskExecutionDataMapping.cs" />
     <Compile Include="EntityDataMappings\BatchTaskExecutionStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BIReportDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BIReportsTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\BusinessProcessQueueDataMapping.cs" />
     <Compile Include="EntityDataMappings\BusinessRoleDataMapping.cs" />
     <Compile Include="EntityDataMappings\Generated\BatchTaskExecutionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BatchTaskExecutionStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BIReportDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BIReportsTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BusinessProcessQueueDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\BusinessRoleDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LBPTeamMemberDataMapping.Generated.cs" />
@@ -78,6 +84,8 @@
     <Compile Include="EntityDataMappings\TeamMemberBusinessRoleDataMapping.cs" />
     <Compile Include="EntityPMs\Generated\BatchTaskExecutionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BatchTaskExecutionStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BIReportPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BIReportsTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BusinessProcessQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\BusinessRolePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LBPTeamMemberPM.Generated.cs" />
@@ -86,6 +94,8 @@
     <Compile Include="EntityPMs\Generated\TeamPM.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BatchTaskExecutionStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BIReportQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BIReportsTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BusinessProcessQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BusinessRoleQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LBPTeamMemberQueryService.Generated.cs" />
@@ -98,6 +108,8 @@
     <Compile Include="EntityUpdateServices\BusinessRoleUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\BatchTaskExecutionStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BatchTaskExecutionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BIReportsTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\BIReportUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BusinessProcessQueueUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\BusinessRoleUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LBPTeamMemberUpdateService.Generated.cs" />

@@ -122,7 +122,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
-			      				    SearchFields =  "AWBStockUsageHistory,AWBStockUsageHistories,,Id,TenantNumber",
+			      				    SearchFields =  "MessagingStockUsageHistory,MessagingStockUsageHistories,,Id,TenantNumber",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

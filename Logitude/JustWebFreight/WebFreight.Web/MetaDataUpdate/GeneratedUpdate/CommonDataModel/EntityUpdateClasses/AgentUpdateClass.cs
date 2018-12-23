@@ -117,6 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./CommonModules/CommonAgent/Components/NewEntity/NewAgentComponent",
 			      				    Code =  "AGNT",
+			      				    DescriptionDefaultText =  "Add and manage information about freight forwarders who are your logistics partners abroad. Specify communication, address and billing details, and create list of contacts.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

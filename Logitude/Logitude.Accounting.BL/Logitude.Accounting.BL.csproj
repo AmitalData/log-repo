@@ -179,7 +179,7 @@
     <Compile Include="CoreBL\Dashboard\GLAccountDashboard.cs" />
     <Compile Include="CoreBL\Dashboard\ChartOfAccountBalanceM.cs" />
     <Compile Include="CoreBL\Dashboard\ChartOfAccountDashboard.cs" />
-    <Compile Include="CoreBL\DueLocalBalanceService.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\DueLocalBalanceService.cs" />
     <Compile Include="CoreBL\IAccountingSettingResolver.cs" />
     <Compile Include="CoreBL\IYearTransferService.cs" />
     <Compile Include="CoreBL\JournalApproveParser.cs" />
@@ -210,6 +210,7 @@
     <Compile Include="CoreBL\Reports\TrailReportChartofaccountTypeCurrenciesDetailed.cs" />
     <Compile Include="CoreBL\Reports\TrailReportGLAccount.cs" />
     <Compile Include="CoreBL\Reports\TrailReportService.cs" />
+    <Compile Include="CoreBL\ReverseEngineer\AccountingIntegrityService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerGLAccountBalance.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerLedgerTransactionService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\ReverseEngineerTotalByMonthService.cs" />

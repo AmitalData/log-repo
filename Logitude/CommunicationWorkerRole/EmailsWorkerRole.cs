@@ -992,7 +992,20 @@ namespace CommunicationWorkerRole
 
                         commLogrepository.Update(waitingCommLog);
                         commLogrepository.SubmitChanges();
-                    }                   
+                    }
+
+                    else
+                    {
+                        waitingCommLog.CommunicationStatusTypeCode = "F";
+                        waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+                        waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
+                        waitingCommLog.ExceptionMessage = iResponse.StatusCode.ToString();
+
+                        CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
+
+                        commLogrepository.Update(waitingCommLog);
+                        commLogrepository.SubmitChanges();
+                    }
                 }
             }
         }

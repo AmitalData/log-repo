@@ -151,5 +151,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
 
         public string PackageCodeSearchField { get; set; }
+
+        public bool IsINTTRAOnlyDemo { get; set; }
+
     }
 }

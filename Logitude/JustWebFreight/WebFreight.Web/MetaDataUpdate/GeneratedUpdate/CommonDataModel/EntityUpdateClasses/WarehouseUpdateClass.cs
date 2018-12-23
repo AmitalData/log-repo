@@ -127,6 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    SearchFields =  "Warehouse,Warehouses,Simplog.FreightLib.NewWarehouseCommand,Id,",
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./CommonModules/CommonPartners/Components/NewEntity/NewWarehouseComponent",
+			      				    DescriptionDefaultText =  "Add and manage information about the warehouses you work with and those of your partners.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

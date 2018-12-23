@@ -632,8 +632,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                           IsInternationalPartner = a.IsInternationalPartner,
                                           EnglishName= a.EnglishName,
                                           VatNumber = a.VatNumber,
-                                          
-                                  }
+                                          LocalName = a.LocalName
+                                      }
                                       ).ToList();
 
             List<GLAccountList> glaccounts = (from a in context.GLAccounts.Include("AccountingCompanyType").Include("TaxWithholdingAssessOffice").Include("WithholdingTaxDeductionType")
@@ -801,7 +801,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         byVendorList.VendorCity = selectedVendor.CityName;
                         byVendorList.IsAutonomy = selectedVendor.IsAutonomy;
                         byVendorList.IsInternationlPartner = selectedVendor.IsInternationalPartner;
-                    
+                    byVendorList.VendorLocalName = selectedVendor.LocalName;
                 }
                 byVendorList.SumOfAmountInLocalCurrency = item.AmountInLocalCurrency;
                 byVendorList.SumOfTaxDeductionLocalAmount = item.TaxDeductionLocalAmount;
@@ -857,6 +857,76 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             taxDeduction.TotalEndBalance = DBVendorsList.Sum(d => d.EndYearBalance);
             return taxDeduction;
 
+
+        }
+
+        public List<B110Data> GetB110sForGLAccounts(int tenant)
+        {
+            List<B110Data> b110s = new List<B110Data>();
+            List<GLAccountPM> glaccounts = (from a in context.GLAccounts
+                                            join c in context.ChartOfAccounts on a.ChartOfAccountsId equals c.Id
+
+                                            where a.Inactive == false && a.Tenant == tenant
+                                            select new GLAccountPM()
+                                            {
+                                                Id = a.Id,
+                                                Tenant = a.Tenant,
+                                                ChartOfAccountsCode = c.Code,
+                                                DisplayNumber = a.DisplayNumber,
+                                                LocalName = a.LocalName,
+                                                EnglishName = a.EnglishName,
+                                                ChartOfAccountsName = c.LocalName,
+                                                AccountTypeCode = a.AccountTypeCode,
+                                                IsMultiCurrency = a.IsMultiCurrency,
+                                                CurrencyId = a.CurrencyId,
+                                                CurrencyCode = a.Currency.Code
+                                            }).ToList();
+
+            
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            List<AddressData> addresses = (from a in commonDataContext.Cards
+                                         join d in commonDataContext.Addresses on a.Id equals d.CardId
+                                         join dt in commonDataContext.AddressTypes on d.AddressTypeId equals dt.Id
+                                         where a.Tenant == tenant
+                                         select new AddressData()
+                                         {
+                                             GLAccountId = a.GLAccountId,
+                                            CardId= a.Id,
+                                            AddressType = dt.Id,
+                                            VatNumber = a.VatNumber,
+                                            CountryCode = a.CountryCode,
+                                            City = a.CityName,
+                                            CountryName = a.CountryName,
+                                            Address1 = d.Address1,
+                                            ZipCode = a.ZipCode,
+                                         }).ToList();
+
+            b110s = (from a in glaccounts
+                                    join d in addresses on a.Id equals d.GLAccountId 
+                                    select new B110Data()
+                                    {
+                                        ChartOfAccountsCode =a.ChartOfAccountsCode,
+                                        DisplayNumber = a.DisplayNumber,
+                                        LocalName = a.LocalName,
+                                        EnglishName = a.EnglishName,
+                                        ChartOfAccountsName = a.ChartOfAccountsName,
+                                        AccountTypeCode = a.AccountTypeCode,
+                                        GLAccountId = a.Id,
+                                        CardId = a.Id,
+                                        AddressType = d.AddressType,
+                                        VatNumber = a.VatNumber,
+                                        CountryCode = d.CountryCode,
+                                        City = d.City,
+                                        CountryName = d.CountryName,
+                                        Address1 = d.Address1,
+                                        ZipCode = d.ZipCode,
+                                        IsMultiCurrency = a.IsMultiCurrency,
+                                        CurrecnyId = a.CurrencyId
+
+                                    }).ToList();
+
+
+            return b110s;
 
         }
 

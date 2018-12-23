@@ -116,6 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ClientModuleName =  "Common",
 			      				    NewWizardComponentPath =  "./CommonModules/CommonAirline/Components/NewEntity/NewAirlineComponent",
 			      				    Code =  "ARLN",
+			      				    DescriptionDefaultText =  "The airline companies are supplied by Logitude. You can maintain information about the companies you work with: communication, address and billing details, airway bill stacks for inventory control, surcharge tariffs and contact lists.",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}

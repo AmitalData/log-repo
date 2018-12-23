@@ -47,7 +47,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             ValidDepositionNumber = a.ValidDepositionNumber,
                                                             ValidityStartDate = a.ValidityStartDate,
                                                             ValidityEndDate = a.ValidityEndDate,
-                                                            FutureDepositionExist = a.FutureDepositionExist,
+                            
 
 
                                                         };
@@ -70,7 +70,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                ValidDepositionNumber = a.ValidDepositionNumber,
                                                ValidityStartDate = a.ValidityStartDate,
                                                ValidityEndDate = a.ValidityEndDate,
-                                               FutureDepositionExist = a.FutureDepositionExist,
+                                        
                                            }).FirstOrDefault();
 
 
@@ -90,7 +90,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                          ValidDepositionNumber = a.ValidDepositionNumber,
                                                                          ValidityStartDate = a.ValidityStartDate,
                                                                          ValidityEndDate = a.ValidityEndDate,
-                                                                         FutureDepositionExist = a.FutureDepositionExist,
+                                                  
                                                                      };
             return CustomsShipperPMs;
         }
@@ -107,7 +107,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                              ValidDepositionNumber = a.ValidDepositionNumber,
                                                                              ValidityStartDate = a.ValidityStartDate,
                                                                              ValidityEndDate = a.ValidityEndDate,
-                                                                             FutureDepositionExist = a.FutureDepositionExist,
+
                                                                          };
             return CustomsShipperLists;
         }
@@ -126,7 +126,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ValidDepositionNumber = a.ValidDepositionNumber,
                                            ValidityStartDate = a.ValidityStartDate,
                                            ValidityEndDate = a.ValidityEndDate,
-                                           FutureDepositionExist = a.FutureDepositionExist,
+                            
                                        }).FirstOrDefault();
 
             if (entity != null)

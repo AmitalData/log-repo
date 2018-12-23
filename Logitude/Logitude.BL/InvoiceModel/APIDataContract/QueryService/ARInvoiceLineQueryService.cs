@@ -158,7 +158,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         GLAccountPM accountPM = glAccountQuery.GetSingleGLAccountPM(item.GLAccountId, MyEntity.Tenant);
                         if (accountPM != null)
                         {
-                            temp.GLAccountId = accountPM.DisplayNumber;
+                            temp.GLAccountId = accountPM.InternalNumber;
                         }
 
                     }

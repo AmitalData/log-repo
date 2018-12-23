@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL;
+﻿//test task 46490!!
+using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.CoreBL.Mapping;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.Def.EntityPMs;

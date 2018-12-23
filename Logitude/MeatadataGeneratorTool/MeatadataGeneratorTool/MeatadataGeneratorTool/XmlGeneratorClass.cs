@@ -969,6 +969,10 @@ namespace MeatadataGeneratorTool
                 RemoveAttribute("DescriptionLocalDefaultText", entityElement);
             }
 
+           
+             
+          
+
             SetAttribute("HasCustomFilter", table.HasCustomFilter.ToString().ToLower(), entityElement);
             SetAttribute("HasCustomFields", table.HasCustomFields.ToString().ToLower(), entityElement);
 

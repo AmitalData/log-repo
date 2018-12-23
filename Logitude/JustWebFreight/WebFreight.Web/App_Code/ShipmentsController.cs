@@ -911,7 +911,7 @@ namespace WebFreight.Web
                              ToPortId = !string.IsNullOrEmpty(f.MainCarriageToPortId) ? f.MainCarriageToPortId : f.ToPortId,
                              ToPort = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortCode) ? f.MainCarriageFinalDestinationPortCode : f.ToPortCode,
                              ToPortName = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortName) ? f.MainCarriageFinalDestinationPortName : f.ToPortName,
-                            ToCountryCode = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationCountryCode) ? f.MainCarriageFinalDestinationCountryCode : f.ToPortCountryCode,
+                             ToCountryCode = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationCountryCode) ? f.MainCarriageFinalDestinationCountryCode : f.ToPortCountryCode,
                              ToPortCountry = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationCountryName) ? f.MainCarriageFinalDestinationCountryName : f.ToPortCountryName,
                              FromCountryCode = f.ShipmentLevelCode == "H" && string.IsNullOrEmpty(f.MasterShipmentDataId) ? f.FromPortCountryCode : f.MainCarriageFromPortCountryCode,
                              //ToCountryCode = f.ShipmentLevelCode == "H" && string.IsNullOrEmpty(f.MasterShipmentDataId) ? f.ToPortCountryCode : f.MainCarriageToPortCountryCode,
@@ -948,6 +948,8 @@ namespace WebFreight.Web
                              StatusLocation = f.MasterShipmentDataId != null ? (f.ShipmentMasterDataStatusWeight > f.ShipmentStatusWeight ? f.ShipmentMasterDataStatusLocation : f.ShipmentStatusLocation) : (f.ShipmentStatusLocation),
                              LongMaster = f.TransportModeId == "A" ? (!string.IsNullOrEmpty(f.AirlinePrefix) && !string.IsNullOrEmpty(f.Master) ? f.AirlinePrefix + "-" + f.Master : "") : f.Master,
                              DescriptionOfGoods = f.DescriptionOfGoods,
+                             ProjectNumber = f.ProjectNumber,
+                             Tenant = f.Tenant,
                          };
 
             return query2;
@@ -1952,6 +1954,8 @@ namespace WebFreight.Web
             {
                 SharedLogisticsSettingRepository sharedLogisticsSettingRepository = new SharedLogisticsSettingRepository(shipment.Tenant);
                 SharedLogisticsSetting sharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle(shipment.Tenant.ToString(), shipment.Tenant);
+                bool isShipperShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsShipperShared;
+                bool isConsigneeShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsigneeShared;
                 bool isAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsAgentShared;
                 bool isColoaderShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsColoaderShared;
                 bool isConsigneeNotImporterShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsConsigneeNotImporterShared;
@@ -1966,7 +1970,7 @@ namespace WebFreight.Web
                 bool isReleasingAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsReleasingAgentShared;
                 bool isIssuingCarrierAgentShared = sharedLogisticsSetting == null ? true : sharedLogisticsSetting.IsIssuingCarrierAgentShared;
 
-                if (!string.IsNullOrEmpty(shipment.ShipperId))
+                if (!string.IsNullOrEmpty(shipment.ShipperId) && isShipperShared)
                 {
                     #region Shipper
                     CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
@@ -2017,7 +2021,7 @@ namespace WebFreight.Web
                     #endregion
                 }
 
-                if (!string.IsNullOrEmpty(shipment.ConsigneeId))
+                if (!string.IsNullOrEmpty(shipment.ConsigneeId) && isConsigneeShared)
                 {
                     #region Consignee
                     ShipmentPartnerPM item = new ShipmentPartnerPM();
